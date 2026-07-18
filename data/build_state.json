@@ -48,6 +48,7 @@
   "updated_at": "2026-07-18T15:55:00.000Z",
   "last_updated": "2026-07-18T15:55:00.000Z",
   "timezone": "America/Chicago",
+  "commit_hash": "51aa464",
   "deployment_status": "blocked_operator_netlify_site",
   "notes": "Step 5.5 intelligence engines implemented. Live apply/API event paths gated until Step 4 AUTH. Do not begin Step 6."
 }
