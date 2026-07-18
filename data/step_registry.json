@@ -89,13 +89,25 @@
       "status": "complete",
       "completed_at": "2026-07-18T16:20:00.000Z",
       "script": "KCCC-STEP-05.6-AUTHENTICATED-OPERATIONS-UNLOCK-1.0",
+      "commit_hash": "fd5afd4",
+      "tip_after_stamp": "83c2bd4",
       "notes": "Session-derived actors + live mutations. candidate_data_ready remains false."
+    },
+    {
+      "id": "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+      "number": 5.7,
+      "name": "Netlify Auth and Live Mutation Proof",
+      "status": "pending",
+      "deploy_tip": "83c2bd4",
+      "script": "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+      "notes": "Operator gate: APP_SESSION_SECRET, deploy, 401/403/409 proof, synthetic live mutations, operator acceptance. Not Step 6. candidate_data_ready remains false."
     },
     {
       "id": "KCCC-STEP-06-MOBILE-COMMAND-SHELL",
       "number": 6,
       "name": "Mobile Command Shell",
-      "status": "pending"
+      "status": "pending",
+      "blocked_until": "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF"
     }
   ]
 }

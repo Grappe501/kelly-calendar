@@ -3,7 +3,7 @@
   "updated_at": "2026-07-18T16:30:00.000Z",
   "overall": "PARTIAL",
   "gate_count": 128,
-  "notes": "Technical unlock COMPLETE locally. Overall PARTIAL because Netlify APP_SESSION_SECRET and live deploy remain blocked; Steps 5/5.5 broader UX still partial; candidate_data_ready false.",
+  "notes": "Step 5.6 technical unlock COMPLETE on main@83c2bd4. Immediate next is KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF (not Step 6). G124 remains BLOCKED until that gate. candidate_data_ready false.",
   "gates": [
     { "id": "G1", "name": "Correct workspace", "result": "PASS" },
     { "id": "G2", "name": "Git baseline inspected", "result": "PASS" },
@@ -132,6 +132,6 @@
     { "id": "G125", "name": "Build state updated", "result": "PASS" },
     { "id": "G126", "name": "Handoff updated", "result": "PASS" },
     { "id": "G127", "name": "Step 6 remains unstarted", "result": "PASS" },
-    { "id": "G128", "name": "Step 6 marked next", "result": "PASS" }
+    { "id": "G128", "name": "Step 6 marked eventual next after 5.7 gate", "result": "PASS" }
   ]
 }

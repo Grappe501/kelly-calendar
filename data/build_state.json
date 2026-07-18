@@ -14,7 +14,8 @@
     "KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR",
     "KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE"
   ],
-  "next_step": "KCCC-STEP-06-MOBILE-COMMAND-SHELL",
+  "next_step": "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+  "eventual_next_after_gate": "KCCC-STEP-06-MOBILE-COMMAND-SHELL",
   "total_primary_steps": 25,
   "overall_completion_percent": 24,
   "owned_database_schema": "kelly_calendar",
@@ -43,10 +44,11 @@
   "external_google_sync_enabled": false,
   "netlify_app_session_secret_configured": false,
   "production_deployment_ready": false,
-  "deployment_status": "blocked_operator_netlify_site",
-  "updated_at": "2026-07-18T16:30:00.000Z",
-  "last_updated": "2026-07-18T16:30:00.000Z",
+  "live_mutation_proof_accepted": false,
+  "deployment_status": "blocked_pending_step_5_7_netlify_auth_proof",
+  "updated_at": "2026-07-18T16:15:00.000Z",
+  "last_updated": "2026-07-18T16:15:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "fd5afd4",
-  "notes": "Step 5.6 unlocked authenticated mutations. Steps 5/5.5 remain partial for broader federation UX/import catalogue work. Candidate data disabled. Do not begin Step 6 until Netlify secret configured and mutation proof accepted."
+  "commit_hash": "83c2bd4",
+  "notes": "Step 5.6 complete on main@83c2bd4. Immediate next is Step 5.7 Netlify auth + live mutation proof. Do not begin Step 6 until that gate and operator acceptance pass. candidate_data_ready remains false."
 }

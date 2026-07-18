@@ -12,6 +12,7 @@ const required = [
   "docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md",
   "develop_notes/KCCC_NEW_THREAD_HANDOFF.md",
   "develop_notes/KCCC_STEP_05_6_IMPLEMENTATION_REPORT.md",
+  "develop_notes/KCCC_STEP_05_7_NETLIFY_AUTH_AND_LIVE_MUTATION_PROOF.md",
 ];
 
 let failed = false;
@@ -66,11 +67,20 @@ if (buildState.candidate_data_ready === true || buildState.real_candidate_data_e
   console.log("PASS: candidate data remains disabled");
 }
 
-if (buildState.next_step !== "KCCC-STEP-06-MOBILE-COMMAND-SHELL") {
-  console.error("FAIL: next_step must be KCCC-STEP-06-MOBILE-COMMAND-SHELL");
+if (buildState.next_step !== "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF") {
+  console.error(
+    "FAIL: next_step must be KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+  );
   failed = true;
 } else {
-  console.log("PASS: next_step is Step 6");
+  console.log("PASS: next_step is Step 5.7 Netlify auth + live mutation proof");
+}
+
+if (buildState.eventual_next_after_gate !== "KCCC-STEP-06-MOBILE-COMMAND-SHELL") {
+  console.error("FAIL: eventual_next_after_gate must be Step 6");
+  failed = true;
+} else {
+  console.log("PASS: eventual next after gate is Step 6");
 }
 
 if (
