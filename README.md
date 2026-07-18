@@ -38,9 +38,9 @@ Read in order:
 
 ## Current build step
 
-**Step 1 — Master Product Constitution** ✅ (this commit)
+**Step 1 — Master Product Constitution** ✅ (ratified; constitution v1.0.1)
 
-Next: **Step 2 — Standalone Application Scaffold** (Next.js, TypeScript, Git, Netlify config)
+Next: **Step 2 — Standalone Application Scaffold** (Next.js, TypeScript, lint, tests, Netlify config)
 
 ---
 

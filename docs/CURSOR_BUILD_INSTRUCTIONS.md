@@ -3,7 +3,7 @@
 **Kelly Campaign Command Calendar (KCCC)**  
 Agent operating manual — paste into new Cursor threads working on this lane.
 
-Version: **1.0.0**
+Version: **1.0.1**
 
 ---
 
@@ -166,3 +166,4 @@ Stop immediately and report if:
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0.0 | 2026-07-17 | Initial agent manual for Step 1 |
+| 1.0.1 | 2026-07-18 | Align with constitution v1.0.1 navigation + AI capability list |

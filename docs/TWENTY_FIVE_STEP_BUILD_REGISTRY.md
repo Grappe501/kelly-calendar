@@ -1,7 +1,7 @@
 # Twenty-Five Step Build Registry
 
 **Kelly Campaign Command Calendar (KCCC)**  
-Registry version: **1.0.0**
+Registry version: **1.0.1**
 
 Each step is one commit-ready pass. Status updates in README after each push.
 
@@ -138,3 +138,4 @@ Days 4–7 RedDirt work continues in parallel lane — no code imports between l
 | Version | Date | Notes |
 |---------|------|-------|
 | 1.0.0 | 2026-07-17 | Initial registry with Step 1 complete |
+| 1.0.1 | 2026-07-18 | Constitution polish: Tomorrow / Election Countdown / AI Assistant; optimizer + follow-up AI; soft-cancel doctrine |

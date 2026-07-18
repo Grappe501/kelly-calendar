@@ -1,7 +1,7 @@
 # Master Product Constitution
 
 **Kelly Campaign Command Calendar (KCCC)**  
-Version: **1.0.0**  
+Version: **1.0.1**  
 Step: **1 of 25**  
 Status: **Ratified — build authority document**
 
@@ -97,6 +97,15 @@ Today | Calendar | + Add | Search | More
 
 Center **+ Add** opens: Speak · Type · Scan · Quick · Copy · Import
 
+From Today / Calendar / More, Kelly can also reach:
+
+```text
+Today · Tomorrow · Week · Month · Campaign Year
+Election Countdown · Map · Search · AI Assistant
+```
+
+Floating AI control answers: “What is next?”, “When do we leave?”, “Who will be there?”, “What do I still need to prepare?”, “Where are the schedule risks this week?”
+
 ---
 
 ## Article V — Calendar views (v1 scope)
@@ -104,12 +113,15 @@ Center **+ Add** opens: Speak · Type · Scan · Quick · Copy · Import
 | View | Purpose |
 |------|---------|
 | **Today** | Operational command — next event, departure, prep status, risks |
+| **Tomorrow** | Next-day command preview (same intelligence model as Today) |
 | **Day** | Hourly timeline with travel, prep, events, protected time |
 | **Week** | Workload, travel, county coverage, gaps |
 | **Month** | Conventional month + density + filters |
 | **Campaign Year** | Now → Election Day — milestones, county visits, deadlines, gaps |
+| **Election Countdown** | Days remaining, critical deadlines, prep warnings |
 | **Hourly** | Operational micro-timeline (depart, arrive, meet host, etc.) |
 | **Map** | Geographic event layers (today / week / county / unvisited) |
+| **AI Assistant** | Conversational schedule help; proposals only until approved |
 
 ---
 
@@ -180,6 +192,8 @@ Every AI output labels each field:
 3. Conflict and completeness analyst
 4. Daily and event briefings (evidence-grounded)
 5. NL search and calendar conversation
+6. Schedule Optimizer (suggests grouping, rest blocks, coverage gaps — never auto-applies)
+7. Follow-Up Generator (dictated post-event notes → proposed tasks, people notes, invitations)
 
 ---
 
@@ -307,6 +321,13 @@ No cross-lane imports without Steve-approved integration packet.
 - Autonomous AI scheduling (no auto-apply)
 - Native App Store / Play Store apps on day one
 
+### Data safety
+
+- **No hard deletes** of calendar events in v1 — cancel / archive / soft-cancel only
+- No real voter or donor PII in seeds, smoke tests, or screenshots
+- No unsourced opponent claims in AI briefings or talking-point drafts
+- No secret values in docs, chat, logs, commits, or screenshots
+
 ---
 
 ## Article XVI — Milestone deliverables
@@ -357,6 +378,6 @@ Success is measured by questions only this system can answer:
 
 ## Ratification
 
-This document is Step 1 deliverable. Step 2 begins application scaffold only after this constitution is committed to GitHub.
+This document is Step 1 deliverable. It was first ratified and pushed on **2026-07-17** (`7feb928`). Version **1.0.1** closes navigation and AI-capability gaps from the full product brief without changing Step 1 status.
 
 **Next action:** [`TWENTY_FIVE_STEP_BUILD_REGISTRY.md`](TWENTY_FIVE_STEP_BUILD_REGISTRY.md) → Step 2.

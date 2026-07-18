@@ -32,7 +32,7 @@ Every step must pass its gate before starting the next step.
 | S1-G | `docs/CURSOR_BUILD_INSTRUCTIONS.md` complete | ✅ |
 | S1-H | `scripts/run-with-h-drive-env.cjs` present | ✅ |
 | S1-I | `.npmrc` points cache to H: | ✅ |
-| S1-J | Pushed to GitHub | pending this pass |
+| S1-J | Pushed to GitHub | ✅ (`7feb928`, refined in later Step 1 polish) |
 
 ---
 
