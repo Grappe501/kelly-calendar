@@ -9,8 +9,9 @@
 
 Built the operational intelligence layer between the protected `kelly_calendar` database and future mobile UI:
 
-- Versioned workflow definition registry (30+ workflows)
+- Versioned workflow definition registry (37 workflows: 11 rich + 26 lean via `basePublic`)
 - Deterministic recommendation rules (festival, fundraiser, debate, travel, press, social, county, protected)
+- Template-effectiveness analyzer (admin recommendations only; no auto-rewrite)
 - Explainable readiness + completion engines with critical blocker override
 - Timeline generator (including accelerated / missed labels)
 - Candidate run-of-show generator (permission-aware omissions)
@@ -18,10 +19,11 @@ Built the operational intelligence layer between the protected `kelly_calendar` 
 - Historical pattern rebuild (reviewed evidence only)
 - County coverage + candidate workload analyzers
 - Fast-entry recommendation service (non-persistent)
-- Today command summary builder
-- OI persistence tables migration
-- Protected APIs + minimal `/system/*` validation pages
-- Unit tests and validation scripts
+- Today / week / range / counties / workload command-summary API stubs
+- OI persistence tables migration + gated repositories
+- Full protected OI API surface (401 until Step 4) including recommendation decisions and conflict acknowledge/override
+- Minimal `/system/*` validation pages
+- Unit tests (78) and validation scripts
 
 ## Honest blockers
 

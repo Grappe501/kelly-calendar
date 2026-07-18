@@ -12,6 +12,9 @@ export type ExistingPlan = {
   communicationsKeys?: string[];
 };
 
+/**
+ * Preview-only expansion. Live apply is `expandWorkflowForEvent` (auth + transaction).
+ */
 export function previewWorkflowExpansion(input: {
   eventId: string;
   eventVersion: number;
@@ -140,4 +143,28 @@ export function previewWorkflowExpansion(input: {
     })),
     requiresHumanApproval: true,
   };
+}
+
+/**
+ * Authenticated apply entry point — blocked until Step 4.
+ * Preview remains available via `previewWorkflowExpansion`.
+ */
+export async function expandWorkflowForEvent(_input: {
+  eventId: string;
+  workflowId: string;
+  expectedEventVersion: number;
+  mode: string;
+  selectedSections?: string[];
+  actorUserId?: string | null;
+}): Promise<never> {
+  void _input;
+  throw Object.assign(
+    new Error(
+      "Workflow apply requires Step 4 authentication and an explicit approved preview.",
+    ),
+    {
+      code: "AUTHENTICATION_REQUIRED",
+      status: 401,
+    },
+  );
 }

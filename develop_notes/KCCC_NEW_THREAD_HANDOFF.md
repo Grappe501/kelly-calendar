@@ -23,9 +23,9 @@ NOT completed:
 KCCC-STEP-04-AUTH-RBAC
 
 Step 5.5 capabilities (compute + registry):
-- Workflow definition registry (30+ versioned workflows)
-- Workflow preview / duplicate detection (apply gated)
-- Deterministic recommendation rules
+- Workflow definition registry (37 versioned workflows: 11 rich + 26 lean)
+- Workflow preview / duplicate detection (apply gated via expandWorkflowForEvent)
+- Deterministic recommendation rules + template-effectiveness analyzer
 - Event readiness + completion engines
 - Timeline + accelerated milestones
 - Candidate run-of-show generator
@@ -34,7 +34,8 @@ Step 5.5 capabilities (compute + registry):
 - County coverage + candidate workload
 - Fast-entry recommendations (non-persistent)
 - Command summary builder
-- OI persistence tables migration
+- OI persistence tables + gated repositories
+- Protected OI API surface (401 until Step 4)
 - /system/step-5-5 validation pages
 
 Live flags:
