@@ -1,6 +1,8 @@
 /**
  * Idempotent synthetic auth seed for Step 4.
  * No real candidate PII. Passwords come from KCCC_SEED_PASSWORD or a local default.
+ * Never runs automatically in Netlify/production unless KCCC_ALLOW_PRODUCTION_SEED=true
+ * and KCCC_DEPLOYMENT_PROOF_MODE=true (explicit proof window only).
  */
 import { spawnSync } from "node:child_process";
 import path from "node:path";
@@ -8,6 +10,20 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { scryptSync, randomBytes } from "node:crypto";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+const isProdRuntime =
+  process.env.NETLIFY === "true" ||
+  process.env.NODE_ENV === "production" ||
+  process.env.CONTEXT === "production";
+const allowProdSeed =
+  process.env.KCCC_ALLOW_PRODUCTION_SEED === "true" &&
+  process.env.KCCC_DEPLOYMENT_PROOF_MODE === "true";
+if (isProdRuntime && !allowProdSeed) {
+  console.error(
+    "REFUSED: auth:seed is blocked in production/Netlify without explicit proof flags.",
+  );
+  process.exit(1);
+}
 
 spawnSync(process.execPath, ["scripts/ensure-app-session-secret.mjs"], {
   cwd: root,

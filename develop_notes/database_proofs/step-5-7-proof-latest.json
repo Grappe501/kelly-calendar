@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-07-18T16:29:32.759Z",
+  "step": "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+  "status": "BLOCKED",
+  "blockers": [
+    "Canonical Netlify site not verified",
+    "Netlify CLI session expired / operator login required",
+    "APP_SESSION_SECRET not proven in Netlify",
+    "Deployed mutation proofs not executed",
+    "Operator acceptance pending"
+  ],
+  "netlifyTarget": {
+    "status": "unverified",
+    "repository": "https://github.com/Grappe501/kelly-calendar",
+    "productionBranch": "main",
+    "siteName": null,
+    "siteId": null,
+    "productionUrl": null
+  },
+  "candidate_data_ready": false,
+  "step6_held": true,
+  "localBaseline": {
+    "step56UnlockCommit": "83c2bd4",
+    "tip": "pending"
+  }
+}

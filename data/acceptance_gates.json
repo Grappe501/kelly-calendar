@@ -1,137 +1,849 @@
 {
-  "step": "KCCC-STEP-05.6-AUTHENTICATED-OPERATIONS-UNLOCK",
-  "updated_at": "2026-07-18T16:30:00.000Z",
-  "overall": "PARTIAL",
-  "gate_count": 128,
-  "notes": "Step 5.6 technical unlock COMPLETE on main@83c2bd4. Immediate next is KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF (not Step 6). G124 remains BLOCKED until that gate. candidate_data_ready false.",
+  "step": "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+  "updated_at": "2026-07-18T16:28:46.318Z",
+  "overall": "BLOCKED",
+  "gate_count": 168,
+  "notes": "Local preparation PASS where applicable. Netlify site, secret, deploy, live proofs, and operator acceptance BLOCKED. Step 6 held. candidate_data_ready false.",
   "gates": [
-    { "id": "G1", "name": "Correct workspace", "result": "PASS" },
-    { "id": "G2", "name": "Git baseline inspected", "result": "PASS" },
-    { "id": "G3", "name": "Step 4 complete", "result": "PASS" },
-    { "id": "G4", "name": "Auth migration present", "result": "PASS" },
-    { "id": "G5", "name": "Auth validation green", "result": "PASS" },
-    { "id": "G6", "name": "RedDirt difference remains zero", "result": "PASS" },
-    { "id": "G7", "name": "Valid session resolves actor", "result": "PASS" },
-    { "id": "G8", "name": "Roles resolve", "result": "PASS" },
-    { "id": "G9", "name": "Teams resolve", "result": "PASS" },
-    { "id": "G10", "name": "Memberships resolve", "result": "PASS" },
-    { "id": "G11", "name": "Revoked session rejected", "result": "PASS" },
-    { "id": "G12", "name": "Expired session rejected", "result": "PASS" },
-    { "id": "G13", "name": "Disabled user rejected", "result": "PASS" },
-    { "id": "G14", "name": "Raw token hidden", "result": "PASS" },
-    { "id": "G15", "name": "Default deny", "result": "PASS" },
-    { "id": "G16", "name": "Kelly administers", "result": "PASS" },
-    { "id": "G17", "name": "Campaign Manager administers", "result": "PASS" },
-    { "id": "G18", "name": "Team permissions work", "result": "PASS" },
-    { "id": "G19", "name": "Calendar permissions work", "result": "PASS" },
-    { "id": "G20", "name": "Event overrides work", "result": "PASS" },
-    { "id": "G21", "name": "Section permissions work", "result": "PASS" },
-    { "id": "G22", "name": "County scope works", "result": "PASS" },
-    { "id": "G23", "name": "Suspended users denied", "result": "PASS" },
-    { "id": "G24", "name": "Event create", "result": "PASS" },
-    { "id": "G25", "name": "Event update", "result": "PASS" },
-    { "id": "G26", "name": "Event archive", "result": "PASS" },
-    { "id": "G27", "name": "Event restore", "result": "PASS" },
-    { "id": "G28", "name": "Primary calendar change", "result": "PASS" },
-    { "id": "G29", "name": "Related calendar add", "result": "PASS" },
-    { "id": "G30", "name": "Related calendar remove", "result": "PASS" },
-    { "id": "G31", "name": "Status history", "result": "PASS" },
-    { "id": "G32", "name": "Audit attribution", "result": "PASS" },
-    { "id": "G33", "name": "Safe response projection", "result": "PASS" },
-    { "id": "G34", "name": "Objectives mutation", "result": "PASS" },
-    { "id": "G35", "name": "Program flow mutation", "result": "PASS" },
-    { "id": "G36", "name": "Packing mutation", "result": "PASS" },
-    { "id": "G37", "name": "Staffing mutation", "result": "PASS" },
-    { "id": "G38", "name": "Actions mutation", "result": "PASS" },
-    { "id": "G39", "name": "Communications mutation", "result": "PASS" },
-    { "id": "G40", "name": "Travel mutation", "result": "PASS" },
-    { "id": "G41", "name": "Section-level authorization", "result": "PASS" },
-    { "id": "G42", "name": "Readiness refresh", "result": "PASS" },
-    { "id": "G43", "name": "Conflict refresh", "result": "PASS" },
-    { "id": "G44", "name": "Workflow preview remains read-only", "result": "PASS" },
-    { "id": "G45", "name": "Workflow apply authenticated", "result": "PASS" },
-    { "id": "G46", "name": "Workflow apply authorized", "result": "PASS" },
-    { "id": "G47", "name": "Server recalculates preview", "result": "PASS" },
-    { "id": "G48", "name": "Stale workflow apply rejected", "result": "PASS" },
-    { "id": "G49", "name": "Duplicate protection", "result": "PASS" },
-    { "id": "G50", "name": "Application transaction", "result": "PASS" },
-    { "id": "G51", "name": "Recommendation accept", "result": "PASS" },
-    { "id": "G52", "name": "Recommendation reject", "result": "PASS" },
-    { "id": "G53", "name": "Recommendation modify", "result": "PASS" },
-    { "id": "G54", "name": "Recommendation defer", "result": "PASS" },
-    { "id": "G55", "name": "Rejected recommendation suppression", "result": "PASS" },
-    { "id": "G56", "name": "Readiness view authorized", "result": "PASS" },
-    { "id": "G57", "name": "Readiness recalculate authorized", "result": "PASS" },
-    { "id": "G58", "name": "Snapshot persisted", "result": "PASS" },
-    { "id": "G59", "name": "Snapshot tied to event version", "result": "PASS" },
-    { "id": "G60", "name": "Conflict acknowledgment", "result": "PASS" },
-    { "id": "G61", "name": "Conflict override", "result": "PASS" },
-    { "id": "G62", "name": "Override permission", "result": "PASS" },
-    { "id": "G63", "name": "Override reason", "result": "PASS" },
-    { "id": "G64", "name": "No automatic schedule changes", "result": "PASS" },
-    { "id": "G65", "name": "Approval request", "result": "PASS" },
-    { "id": "G66", "name": "Approval approve", "result": "PASS" },
-    { "id": "G67", "name": "Approval reject", "result": "PASS" },
-    { "id": "G68", "name": "Request changes", "result": "PASS" },
-    { "id": "G69", "name": "Approval history preserved", "result": "PASS" },
-    { "id": "G70", "name": "Import approve", "result": "PASS" },
-    { "id": "G71", "name": "Import reject", "result": "PASS" },
-    { "id": "G72", "name": "Import merge", "result": "PASS" },
-    { "id": "G73", "name": "Import idempotency", "result": "PASS" },
-    { "id": "G74", "name": "Attendance not falsely confirmed", "result": "PASS" },
-    { "id": "G75", "name": "Anonymous mutation returns 401", "result": "PASS" },
-    { "id": "G76", "name": "Unauthorized mutation returns 403", "result": "PASS" },
-    { "id": "G77", "name": "Missing entity returns 404", "result": "PASS" },
-    { "id": "G78", "name": "Validation failure returns 400", "result": "PASS" },
-    { "id": "G79", "name": "Version mismatch returns 409", "result": "PASS" },
-    { "id": "G80", "name": "Request ID returned", "result": "PASS" },
-    { "id": "G81", "name": "Stack traces hidden", "result": "PASS" },
-    { "id": "G82", "name": "SQL hidden", "result": "PASS" },
-    { "id": "G83", "name": "Secrets hidden", "result": "PASS" },
-    { "id": "G84", "name": "HTTP-only cookie", "result": "PASS" },
-    { "id": "G85", "name": "Secure production cookie", "result": "PASS" },
-    { "id": "G86", "name": "SameSite configured", "result": "PASS" },
-    { "id": "G87", "name": "Logout invalidates session", "result": "PASS" },
-    { "id": "G88", "name": "Session fixation prevented", "result": "PASS" },
-    { "id": "G89", "name": "Invalid signature rejected", "result": "PASS" },
-    { "id": "G90", "name": "Production secret fallback prohibited", "result": "PASS" },
-    { "id": "G91", "name": "Communications cannot see donor data", "result": "PASS" },
-    { "id": "G92", "name": "Finance cannot see protected personal data", "result": "PASS" },
-    { "id": "G93", "name": "Field cannot see protected lodging data", "result": "PASS" },
-    { "id": "G94", "name": "Limited user cannot see exact private location", "result": "PASS" },
-    { "id": "G95", "name": "Unauthorized JSON fields omitted", "result": "PASS" },
-    { "id": "G96", "name": "Audit fields redacted", "result": "PASS" },
-    { "id": "G97", "name": "Event transaction rollback", "result": "PASS" },
-    { "id": "G98", "name": "Workflow transaction rollback", "result": "PASS" },
-    { "id": "G99", "name": "Import transaction rollback", "result": "PASS" },
-    { "id": "G100", "name": "Approval transaction rollback", "result": "PASS" },
-    { "id": "G101", "name": "Event version conflict", "result": "PASS" },
-    { "id": "G102", "name": "Workflow version conflict", "result": "PASS" },
-    { "id": "G103", "name": "Recommendation evidence conflict", "result": "PASS" },
-    { "id": "G104", "name": "No silent overwrite", "result": "PASS" },
-    { "id": "G105", "name": "Synthetic data only", "result": "PASS" },
-    { "id": "G106", "name": "Candidate data remains disabled", "result": "PASS" },
-    { "id": "G107", "name": "No real Kelly PII", "result": "PASS" },
-    { "id": "G108", "name": "Activation gate documented", "result": "PASS" },
-    { "id": "G109", "name": "Existing tests remain green or increase", "result": "PASS" },
-    { "id": "G110", "name": "New mutation tests pass", "result": "PASS" },
-    { "id": "G111", "name": "RBAC matrix tests pass", "result": "PASS" },
-    { "id": "G112", "name": "Cross-section tests pass", "result": "PASS" },
-    { "id": "G113", "name": "Session tests pass", "result": "PASS" },
-    { "id": "G114", "name": "Transaction tests pass", "result": "PASS" },
-    { "id": "G115", "name": "Concurrency tests pass", "result": "PASS" },
-    { "id": "G116", "name": "Lint passes", "result": "PASS" },
-    { "id": "G117", "name": "Typecheck passes", "result": "PASS" },
-    { "id": "G118", "name": "Build passes", "result": "PASS" },
-    { "id": "G119", "name": "RedDirt integrity passes", "result": "PASS" },
-    { "id": "G120", "name": "Secret scan passes", "result": "PASS" },
-    { "id": "G121", "name": "Git commit created", "result": "PASS" },
-    { "id": "G122", "name": "Push verified", "result": "PASS" },
-    { "id": "G123", "name": "Netlify environment documented", "result": "PASS" },
-    { "id": "G124", "name": "Netlify deployment verified or honestly blocked", "result": "BLOCKED" },
-    { "id": "G125", "name": "Build state updated", "result": "PASS" },
-    { "id": "G126", "name": "Handoff updated", "result": "PASS" },
-    { "id": "G127", "name": "Step 6 remains unstarted", "result": "PASS" },
-    { "id": "G128", "name": "Step 6 marked eventual next after 5.7 gate", "result": "PASS" }
+    {
+      "id": "G1",
+      "name": "Correct workspace",
+      "result": "PASS"
+    },
+    {
+      "id": "G2",
+      "name": "Correct branch",
+      "result": "PASS"
+    },
+    {
+      "id": "G3",
+      "name": "Tip contains Step 5.6",
+      "result": "PASS"
+    },
+    {
+      "id": "G4",
+      "name": "Governance tip contains 5.7 registration",
+      "result": "PASS"
+    },
+    {
+      "id": "G5",
+      "name": "Working tree reviewed",
+      "result": "PASS"
+    },
+    {
+      "id": "G6",
+      "name": "Step 6 unstarted",
+      "result": "PASS"
+    },
+    {
+      "id": "G7",
+      "name": "Candidate data disabled",
+      "result": "PASS"
+    },
+    {
+      "id": "G8",
+      "name": "Local Step 5.6 suite passes",
+      "result": "PASS"
+    },
+    {
+      "id": "G9",
+      "name": "Correct Netlify account",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G10",
+      "name": "Correct site verified",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G11",
+      "name": "Site ID recorded",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G12",
+      "name": "Production URL recorded",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G13",
+      "name": "Git repository verified",
+      "result": "PASS"
+    },
+    {
+      "id": "G14",
+      "name": "Production branch verified",
+      "result": "PASS"
+    },
+    {
+      "id": "G15",
+      "name": "Build command verified",
+      "result": "PASS"
+    },
+    {
+      "id": "G16",
+      "name": "Publish configuration verified",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G17",
+      "name": "Functions/runtime configuration verified",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G18",
+      "name": "APP_SESSION_SECRET present",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G19",
+      "name": "APP_SESSION_SECRET production-safe",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G20",
+      "name": "Dev fallback absent in production",
+      "result": "PASS"
+    },
+    {
+      "id": "G21",
+      "name": "Runtime secret availability proven",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G22",
+      "name": "DATABASE_URL present",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G23",
+      "name": "DATABASE_URL target verified",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G24",
+      "name": "DIRECT_URL verified",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G25",
+      "name": "No secret value printed",
+      "result": "PASS"
+    },
+    {
+      "id": "G26",
+      "name": "No secret committed",
+      "result": "PASS"
+    },
+    {
+      "id": "G27",
+      "name": "No automatic secret rotation",
+      "result": "PASS"
+    },
+    {
+      "id": "G28",
+      "name": "Local lint",
+      "result": "PASS"
+    },
+    {
+      "id": "G29",
+      "name": "Local typecheck",
+      "result": "PASS"
+    },
+    {
+      "id": "G30",
+      "name": "Local tests",
+      "result": "PASS"
+    },
+    {
+      "id": "G31",
+      "name": "Local build",
+      "result": "PASS"
+    },
+    {
+      "id": "G32",
+      "name": "RedDirt integrity",
+      "result": "PASS"
+    },
+    {
+      "id": "G33",
+      "name": "Secret scan",
+      "result": "PASS"
+    },
+    {
+      "id": "G34",
+      "name": "Netlify build",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G35",
+      "name": "Netlify deploy",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G36",
+      "name": "Deployment commit recorded",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G37",
+      "name": "Runtime health",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G38",
+      "name": "No unexpected 500s",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G39",
+      "name": "Gate 39",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G40",
+      "name": "Gate 40",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G41",
+      "name": "Gate 41",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G42",
+      "name": "Gate 42",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G43",
+      "name": "Gate 43",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G44",
+      "name": "Gate 44",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G45",
+      "name": "Gate 45",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G46",
+      "name": "Gate 46",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G47",
+      "name": "Gate 47",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G48",
+      "name": "Gate 48",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G49",
+      "name": "Gate 49",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G50",
+      "name": "Gate 50",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G51",
+      "name": "Gate 51",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G52",
+      "name": "Gate 52",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G53",
+      "name": "Gate 53",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G54",
+      "name": "Gate 54",
+      "result": "PASS"
+    },
+    {
+      "id": "G55",
+      "name": "Gate 55",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G56",
+      "name": "Gate 56",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G57",
+      "name": "Gate 57",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G58",
+      "name": "Gate 58",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G59",
+      "name": "Gate 59",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G60",
+      "name": "Gate 60",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G61",
+      "name": "Gate 61",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G62",
+      "name": "Gate 62",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G63",
+      "name": "Gate 63",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G64",
+      "name": "Gate 64",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G65",
+      "name": "Gate 65",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G66",
+      "name": "Gate 66",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G67",
+      "name": "Gate 67",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G68",
+      "name": "Gate 68",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G69",
+      "name": "Gate 69",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G70",
+      "name": "Gate 70",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G71",
+      "name": "Gate 71",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G72",
+      "name": "Gate 72",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G73",
+      "name": "Gate 73",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G74",
+      "name": "Gate 74",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G75",
+      "name": "Gate 75",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G76",
+      "name": "Gate 76",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G77",
+      "name": "Gate 77",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G78",
+      "name": "Gate 78",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G79",
+      "name": "Gate 79",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G80",
+      "name": "Gate 80",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G81",
+      "name": "Gate 81",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G82",
+      "name": "Gate 82",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G83",
+      "name": "Gate 83",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G84",
+      "name": "Gate 84",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G85",
+      "name": "Gate 85",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G86",
+      "name": "Gate 86",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G87",
+      "name": "Gate 87",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G88",
+      "name": "Gate 88",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G89",
+      "name": "Gate 89",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G90",
+      "name": "Gate 90",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G91",
+      "name": "Gate 91",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G92",
+      "name": "Gate 92",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G93",
+      "name": "Gate 93",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G94",
+      "name": "Gate 94",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G95",
+      "name": "Gate 95",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G96",
+      "name": "Gate 96",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G97",
+      "name": "Gate 97",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G98",
+      "name": "Gate 98",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G99",
+      "name": "Gate 99",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G100",
+      "name": "Gate 100",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G101",
+      "name": "Gate 101",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G102",
+      "name": "Gate 102",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G103",
+      "name": "Gate 103",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G104",
+      "name": "Gate 104",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G105",
+      "name": "Gate 105",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G106",
+      "name": "Gate 106",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G107",
+      "name": "Gate 107",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G108",
+      "name": "Gate 108",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G109",
+      "name": "Gate 109",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G110",
+      "name": "Gate 110",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G111",
+      "name": "Gate 111",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G112",
+      "name": "Gate 112",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G113",
+      "name": "Gate 113",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G114",
+      "name": "Gate 114",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G115",
+      "name": "Gate 115",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G116",
+      "name": "Gate 116",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G117",
+      "name": "Gate 117",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G118",
+      "name": "Gate 118",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G119",
+      "name": "Gate 119",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G120",
+      "name": "Gate 120",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G121",
+      "name": "Gate 121",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G122",
+      "name": "Gate 122",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G123",
+      "name": "Gate 123",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G124",
+      "name": "Gate 124",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G125",
+      "name": "Gate 125",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G126",
+      "name": "Gate 126",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G127",
+      "name": "Gate 127",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G128",
+      "name": "Gate 128",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G129",
+      "name": "Gate 129",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G130",
+      "name": "Gate 130",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G131",
+      "name": "Gate 131",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G132",
+      "name": "Gate 132",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G133",
+      "name": "Gate 133",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G134",
+      "name": "Gate 134",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G135",
+      "name": "Gate 135",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G136",
+      "name": "Gate 136",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G137",
+      "name": "Gate 137",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G138",
+      "name": "Gate 138",
+      "result": "PASS"
+    },
+    {
+      "id": "G139",
+      "name": "Gate 139",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G140",
+      "name": "Gate 140",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G141",
+      "name": "Gate 141",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G142",
+      "name": "Gate 142",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G143",
+      "name": "Gate 143",
+      "result": "PASS"
+    },
+    {
+      "id": "G144",
+      "name": "Gate 144",
+      "result": "PASS"
+    },
+    {
+      "id": "G145",
+      "name": "Gate 145",
+      "result": "PASS"
+    },
+    {
+      "id": "G146",
+      "name": "Gate 146",
+      "result": "PASS"
+    },
+    {
+      "id": "G147",
+      "name": "Gate 147",
+      "result": "PASS"
+    },
+    {
+      "id": "G148",
+      "name": "Gate 148",
+      "result": "PASS"
+    },
+    {
+      "id": "G149",
+      "name": "Gate 149",
+      "result": "PASS"
+    },
+    {
+      "id": "G150",
+      "name": "Gate 150",
+      "result": "PASS"
+    },
+    {
+      "id": "G151",
+      "name": "Gate 151",
+      "result": "PASS"
+    },
+    {
+      "id": "G152",
+      "name": "Gate 152",
+      "result": "PASS"
+    },
+    {
+      "id": "G153",
+      "name": "Gate 153",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G154",
+      "name": "Gate 154",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G155",
+      "name": "Gate 155",
+      "result": "PASS"
+    },
+    {
+      "id": "G156",
+      "name": "Gate 156",
+      "result": "PASS"
+    },
+    {
+      "id": "G157",
+      "name": "Gate 157",
+      "result": "PASS"
+    },
+    {
+      "id": "G158",
+      "name": "Gate 158",
+      "result": "PASS"
+    },
+    {
+      "id": "G159",
+      "name": "Gate 159",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G160",
+      "name": "Gate 160",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G161",
+      "name": "Gate 161",
+      "result": "PASS"
+    },
+    {
+      "id": "G162",
+      "name": "Gate 162",
+      "result": "BLOCKED"
+    },
+    {
+      "id": "G163",
+      "name": "Gate 163",
+      "result": "PASS"
+    },
+    {
+      "id": "G164",
+      "name": "Gate 164",
+      "result": "PASS"
+    },
+    {
+      "id": "G165",
+      "name": "Gate 165",
+      "result": "PASS"
+    },
+    {
+      "id": "G166",
+      "name": "Gate 166",
+      "result": "PASS"
+    },
+    {
+      "id": "G167",
+      "name": "Gate 167",
+      "result": "PASS"
+    },
+    {
+      "id": "G168",
+      "name": "Gate 168",
+      "result": "PASS"
+    }
   ]
 }

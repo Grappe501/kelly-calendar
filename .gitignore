@@ -9,6 +9,8 @@ out/
 .env
 .env.local
 .env.*.local
+.env.production.secret
+.local/operator-secrets/
 
 # Debug / logs
 npm-debug.log*

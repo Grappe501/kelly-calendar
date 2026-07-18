@@ -3,6 +3,10 @@ import {
   SESSION_COOKIE_NAME,
   SESSION_TTL_SECONDS,
 } from "@/lib/auth/session-constants";
+import {
+  assertProductionSessionSecretOrThrow,
+  classifyAppSessionSecret,
+} from "@/lib/auth/session-secret-policy";
 
 export { SESSION_COOKIE_NAME, SESSION_TTL_SECONDS };
 
@@ -15,15 +19,25 @@ export type SessionCookiePayload = {
 
 function getSessionSecret(): string {
   const secret = process.env.APP_SESSION_SECRET?.trim();
-  if (!secret || secret.length < 32) {
-    throw new Error("APP_SESSION_SECRET must be set (min 32 characters) for Step 4 sessions");
+  assertProductionSessionSecretOrThrow(secret);
+  const classified = classifyAppSessionSecret(secret);
+  if (!classified.present || !classified.lengthOk) {
+    throw new Error(
+      "APP_SESSION_SECRET must be set (min 32 characters) for sessions",
+    );
   }
-  return secret;
+  return secret as string;
 }
 
 export function isSessionSecretConfigured(): boolean {
-  const secret = process.env.APP_SESSION_SECRET?.trim();
-  return Boolean(secret && secret.length >= 32);
+  const classified = classifyAppSessionSecret(process.env.APP_SESSION_SECRET);
+  if (!classified.present || !classified.lengthOk) return false;
+  try {
+    assertProductionSessionSecretOrThrow(process.env.APP_SESSION_SECRET);
+  } catch {
+    return false;
+  }
+  return true;
 }
 
 export function newTokenId(): string {

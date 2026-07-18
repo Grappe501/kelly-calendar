@@ -58,3 +58,14 @@ Burt script IDs ADR-061–067 for this unlock collide with Step 5.5; repository 
 - ADR-072 Operational Intelligence Applies Through Ordinary Mutations
 - ADR-073 Candidate Data Remains Disabled After Technical Unlock
 - ADR-074 Netlify Fails Closed Without Session Secret
+
+## Deployment proof (ADR-075–080)
+
+Burt Step 5.7 ADR labels 068–073 map here to avoid collisions:
+
+- ADR-075 Production Authentication Requires an Explicit Runtime Secret
+- ADR-076 Deployment Proof Uses Synthetic Data Only
+- ADR-077 Proof Mode Cannot Bypass Security
+- ADR-078 Operator Acceptance Is a Separate Gate
+- ADR-079 Step 6 Depends on Deployed Mutation Proof
+- ADR-080 Proof Records Must Be Isolated

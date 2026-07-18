@@ -342,6 +342,42 @@
       "title": "Technical Unlock Mistaken for Candidate-Data Ready",
       "status": "mitigated",
       "mitigation": "candidate_data_ready remains false until explicit activation gate."
+    },
+    {
+      "id": "RISK-079",
+      "title": "Missing Production Session Secret",
+      "status": "open",
+      "mitigation": "Fail closed; block Step 5.7 acceptance until Netlify secret configured."
+    },
+    {
+      "id": "RISK-080",
+      "title": "Incorrect Netlify Target",
+      "status": "open",
+      "mitigation": "Verify site ID, repository, branch, and URL in data/netlify_target.json before deploy."
+    },
+    {
+      "id": "RISK-081",
+      "title": "Production Secret Leakage",
+      "status": "permanent",
+      "mitigation": "Redaction, secret scan, operator-only secret file, no report printing."
+    },
+    {
+      "id": "RISK-082",
+      "title": "Synthetic Proof Records Pollute Operations",
+      "status": "open",
+      "mitigation": "Isolated proof calendar and exclusion rules; cleanup standard after acceptance."
+    },
+    {
+      "id": "RISK-083",
+      "title": "Staging Accounts Remain Active",
+      "status": "open",
+      "mitigation": "Disable or tightly restrict after acceptance."
+    },
+    {
+      "id": "RISK-084",
+      "title": "Step 6 Begins Before Acceptance",
+      "status": "controlled",
+      "mitigation": "Governance keeps next_step on 5.7 until operator_acceptance_recorded."
     }
   ]
 }

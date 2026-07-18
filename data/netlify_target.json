@@ -1,0 +1,22 @@
+{
+  "product": "Kelly Campaign Command Calendar",
+  "repository": "https://github.com/Grappe501/kelly-calendar",
+  "productionBranch": "main",
+  "buildCommand": "npm ci && npm run build",
+  "publishDirectory": ".next",
+  "plugin": "@netlify/plugin-nextjs",
+  "nodeVersion": "20",
+  "siteName": null,
+  "siteId": null,
+  "productionUrl": null,
+  "functionsDirectory": null,
+  "databaseTargetClassification": "kelly_calendar schema on shared Postgres (operator-verified)",
+  "status": "unverified",
+  "blocker": "BLOCKED — CANONICAL NETLIFY SITE NOT VERIFIED",
+  "notes": [
+    "Do not assume the RedDirt Netlify site is the Kelly Calendar site.",
+    "Operator must create/import Grappe501/kelly-calendar and record site name, site ID, and production URL here.",
+    "Netlify CLI session was expired during Step 5.7 Pass A; site could not be auto-discovered."
+  ],
+  "updated_at": "2026-07-18T16:30:00.000Z"
+}

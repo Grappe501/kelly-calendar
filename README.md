@@ -1,33 +1,30 @@
 # Kelly Campaign Command Calendar (KCCC)
 
-**Kelly’s daily campaign operating system** — authenticated mutations unlocked; Netlify live proof next; then mobile shell.
+**Status:** Step 5.6 unlock complete · **Step 5.7 Netlify proof ACTIVE / BLOCKED** · Step 6 held
 
 | Field | Value |
 |-------|-------|
 | Path | `H:\SOSWebsite\kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
-| Tip | `83c2bd4` |
-| Completed | Steps 1–4 + **5.6 authenticated ops unlock** |
-| Partial | Steps 5 + 5.5 |
-| Immediate next | **Step 5.7** — Netlify auth + live mutation proof |
-| After 5.7 | Step 6 — Mobile Command Shell |
-| Owned schema | `kelly_calendar` |
+| Mutation unlock | `83c2bd4` |
+| Active step | **5.7** Netlify auth + live mutation proof |
+| Next after acceptance | Step 6 — Mobile Command Shell |
 | Candidate data | **Disabled** |
 
-## Auth + mutations (local)
+## Local preflight
 
 ```powershell
 cd H:\SOSWebsite\kelly-calendar
-npm run auth:ensure-secret
-npm run auth:seed
-npm run step5.6:validate
-npm run step5.6:all
+npm run step5.7:local
 ```
 
-Sign in at `/login`. Validation surfaces: `/system/step-5-6`, `/system/auth-debug`, `/system/mutation-test`, `/system/permissions`, `/system/audit`.
+## Operator Netlify actions (required)
 
-## Step 5.7 gate (operator)
-
-Deploy tip `83c2bd4` only after setting production `APP_SESSION_SECRET` (32+ chars) in Netlify. Prove 401/403/409 and synthetic authenticated mutations. Keep `candidate_data_ready: false`. See `develop_notes/KCCC_STEP_05_7_NETLIFY_AUTH_AND_LIVE_MUTATION_PROOF.md`.
+1. `netlify login` and verify the **kelly-calendar** site (not RedDirt).
+2. `npm run auth:secret:generate-production` — paste secret into Netlify only.
+3. Set `APP_SESSION_SECRET`, `DATABASE_URL`, `DIRECT_URL`, `ENV_FALLBACK_TO_REDDIRT=false`.
+4. Record site ID/URL in `data/netlify_target.json`.
+5. Deploy and run live proofs per `develop_notes/KCCC_STEP_05_7_DEPLOYMENT_RUNBOOK.md`.
+6. Sign `develop_notes/KCCC_STEP_05_7_OPERATOR_ACCEPTANCE.md`.
 
 Handoff: `develop_notes/KCCC_NEW_THREAD_HANDOFF.md`

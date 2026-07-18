@@ -27,3 +27,12 @@ Import/entry: RISK-037–046.
 - RISK-076 Authenticated assumed authorized — mitigated (action authorize + default deny)
 - RISK-077 Netlify missing APP_SESSION_SECRET — open (fail closed; operator)
 - RISK-078 Technical unlock ≠ candidate data — mitigated (`candidate_data_ready: false`)
+
+## Step 5.7 deployment proof (RISK-079–084)
+
+- RISK-079 Missing production session secret — open
+- RISK-080 Incorrect Netlify target — open
+- RISK-081 Production secret leakage — permanent control
+- RISK-082 Synthetic proof pollutes ops — open during proof
+- RISK-083 Staging accounts remain active — open during proof
+- RISK-084 Step 6 before acceptance — controlled (governance hold)

@@ -434,6 +434,49 @@
       "status": "accepted",
       "date": "2026-07-18",
       "decision": "Production authentication may not use a development fallback when APP_SESSION_SECRET is missing."
+    },
+    {
+      "id": "ADR-075",
+      "title": "Production Authentication Requires an Explicit Runtime Secret",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "The deployed application must fail closed when APP_SESSION_SECRET is missing or invalid.",
+      "note": "Burt Step 5.7 script listed related items as ADR-068–073; repository continues numbering after Step 5.6 ADRs."
+    },
+    {
+      "id": "ADR-076",
+      "title": "Deployment Proof Uses Synthetic Data Only",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Production-environment verification may not require real candidate information."
+    },
+    {
+      "id": "ADR-077",
+      "title": "Proof Mode Cannot Bypass Security",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Deployment-proof tooling must exercise the real authentication, authorization, versioning, transaction, audit, and projection layers."
+    },
+    {
+      "id": "ADR-078",
+      "title": "Operator Acceptance Is a Separate Gate",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Automated technical validation cannot substitute for operator review and sign-off."
+    },
+    {
+      "id": "ADR-079",
+      "title": "Step 6 Depends on Deployed Mutation Proof",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "The mobile command shell may not begin against unproven production authentication and mutation behavior."
+    },
+    {
+      "id": "ADR-080",
+      "title": "Proof Records Must Be Isolated",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Synthetic deployment-proof records must not affect real operational summaries, county metrics, candidate workload, sync, or public surfaces."
     }
   ]
 }

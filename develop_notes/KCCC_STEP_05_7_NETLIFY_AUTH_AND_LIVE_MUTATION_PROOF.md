@@ -1,8 +1,8 @@
 # KCCC Step 5.7 — Netlify Auth and Live Mutation Proof
 
 **Script ID:** `KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF`  
-**Status:** pending  
-**Deploy tip:** `83c2bd4`  
+**Status:** BLOCKED — OPERATOR ACTION REQUIRED  
+**Deploy tip:** `83c2bd4` (or later tip containing it)  
 **Prerequisite:** Step 5.6 complete  
 **Next after pass:** `KCCC-STEP-06-MOBILE-COMMAND-SHELL`
 
