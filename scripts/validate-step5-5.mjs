@@ -29,15 +29,18 @@ for (const rel of required) {
 }
 
 const build = JSON.parse(fs.readFileSync(path.join(root, "data/build_state.json"), "utf8"));
-if (build.authentication_complete === true) fail("do not claim auth complete");
-else pass("authentication_complete remains false");
-if (build.database_mutations_authorized === true) fail("mutations must stay unauthorized");
-else pass("mutations unauthorized");
 if (build.ai_enabled === true) fail("ai must remain disabled");
 else pass("ai disabled");
-if (build.current_step !== "KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE") {
-  fail("current_step must be Step 5.5");
-} else pass("current_step is Step 5.5");
+if (build.candidate_data_ready === true) fail("candidate_data_ready must stay false");
+else pass("candidate_data_ready remains false");
+if (build.autonomous_event_changes === true) fail("autonomous changes forbidden");
+else pass("no autonomous event changes");
+if (
+  build.current_step !== "KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE" &&
+  build.current_step !== "KCCC-STEP-04-AUTH-RBAC"
+) {
+  fail("current_step unexpected");
+} else pass(`current_step is ${build.current_step}`);
 
 const sql = fs.readFileSync(
   path.join(
@@ -50,4 +53,4 @@ if (/CREATE TABLE\s+"?public"?\./i.test(sql)) fail("public tables");
 else pass("OI migration stays in kelly_calendar");
 
 if (failed) process.exit(1);
-console.log("Step 5.5 validation passed (intelligence layer; auth still open).");
+console.log("Step 5.5 validation passed.");

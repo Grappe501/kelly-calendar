@@ -14,43 +14,33 @@ Completed:
 KCCC-STEP-01-PRODUCT-CONSTITUTION
 KCCC-STEP-02-APP-SCAFFOLD
 KCCC-STEP-03-SECURE-INGEST-FAST-ENTRY
+KCCC-STEP-04-AUTH-RBAC
 
 Partial:
 KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR
 KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE
 
-NOT completed:
-KCCC-STEP-04-AUTH-RBAC
-
-Step 5.5 capabilities (compute + registry):
-- Workflow definition registry (37 versioned workflows: 11 rich + 26 lean)
-- Workflow preview / duplicate detection (apply gated via expandWorkflowForEvent)
-- Deterministic recommendation rules + template-effectiveness analyzer
-- Event readiness + completion engines
-- Timeline + accelerated milestones
-- Candidate run-of-show generator
-- Conflict / travel feasibility / staff overlap
-- Historical patterns (reviewed-only)
-- County coverage + candidate workload
-- Fast-entry recommendations (non-persistent)
-- Command summary builder
-- OI persistence tables + gated repositories
-- Protected OI API surface (401 until Step 4)
-- /system/step-5-5 validation pages
+Auth (Step 4):
+- App session cookies (APP_SESSION_SECRET)
+- SystemRole + User + Team + TeamMembership + AuthSession
+- Middleware protects non-public routes
+- Kelly / Campaign Manager full calendar access
+- Login at /login ; npm run auth:seed for synthetic users
+- candidate_data_ready: false (still)
 
 Live flags:
-- authentication_complete: false
-- database_mutations_authorized: false
+- authentication_complete: true
+- database_mutations_authorized: true (authenticated mutators only)
 - candidate_data_ready: false
 - ai_enabled: false
 - autonomous_event_changes: false
 
 Next required:
-KCCC-STEP-04-AUTH-RBAC
+Finish Step 5 / 5.5 live mutation wiring now that auth exists
+(apply workflows, event CRUD paths, recommendation decisions)
 
 Then:
-Finish Step 5.5 transactional apply/decision wiring
-Then KCCC-STEP-06-MOBILE-COMMAND-SHELL
+KCCC-STEP-06-MOBILE-COMMAND-SHELL
 
-Do not begin Step 6 now.
+Do not begin Step 6 until live ops paths are wired.
 ```

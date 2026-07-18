@@ -54,12 +54,15 @@ if (!/CREATE SCHEMA IF NOT EXISTS\s+"kelly_calendar"/i.test(sql)) {
 } else pass("migration creates kelly_calendar");
 
 const build = JSON.parse(fs.readFileSync(path.join(root, "data/build_state.json"), "utf8"));
-if (build.authentication_complete === true) {
-  fail("do not claim auth complete without Step 4");
-} else pass("authentication_complete remains false");
-if (build.database_mutations_authorized === true && build.authentication_complete !== true) {
+if (
+  build.database_mutations_authorized === true &&
+  build.authentication_complete !== true
+) {
   fail("mutations cannot be authorized without auth");
 } else pass("mutations authorization honest");
+if (build.candidate_data_ready === true) {
+  fail("candidate_data_ready must stay false until certified");
+} else pass("candidate_data_ready remains false");
 
 if (failed) process.exit(1);
-console.log("Step 5 validation passed (schema foundation; auth prerequisite still open).");
+console.log("Step 5 validation passed.");

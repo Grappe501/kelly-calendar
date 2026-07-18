@@ -8,6 +8,7 @@ export type SafeErrorCode =
   | "CONFLICT"
   | "EXTERNAL_SERVICE_ERROR"
   | "DATABASE_UNAVAILABLE"
+  | "NOT_IMPLEMENTED"
   | "INTERNAL_ERROR";
 
 export type SafeErrorBody = {

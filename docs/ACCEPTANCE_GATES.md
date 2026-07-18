@@ -64,14 +64,14 @@ Every step must pass its gate before starting the next step.
 
 ---
 
-## Step 4 — Authentication
+## Step 4 — Authentication ✅
 
-| Gate | Criteria |
-|------|----------|
-| S4-A | Login flow completes |
-| S4-B | Unauthenticated users cannot reach app routes |
-| S4-C | Role enum enforced server-side |
-| S4-D | Kelly role has full access |
+| Gate | Criteria | Status |
+|------|----------|--------|
+| S4-A | Login flow completes | ✅ app session cookie via `/api/auth/login` |
+| S4-B | Unauthenticated users cannot reach app routes | ✅ middleware redirect / 401 |
+| S4-C | Role enum enforced server-side | ✅ `SystemRole` + session |
+| S4-D | Kelly role has full access | ✅ ADMINISTER via `roleHasFullCalendarAccess` |
 
 ---
 

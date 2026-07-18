@@ -1,3 +1,5 @@
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
+
 export type SecurityCapabilityStatus = {
   headers: true;
   contentSecurityPolicy: "staged";
@@ -11,12 +13,13 @@ export type SecurityCapabilityStatus = {
   redirectFoundation: true;
   originFoundation: true;
   csrfFoundation: true;
-  authenticationComplete: false;
+  authenticationComplete: boolean;
   candidateDataReady: false;
-  databaseMutationsAuthorized: false;
+  databaseMutationsAuthorized: boolean;
 };
 
 export function getSecurityCapabilityStatus(): SecurityCapabilityStatus {
+  const flags = getSharedAuthFlags();
   return {
     headers: true,
     contentSecurityPolicy: "staged",
@@ -30,8 +33,8 @@ export function getSecurityCapabilityStatus(): SecurityCapabilityStatus {
     redirectFoundation: true,
     originFoundation: true,
     csrfFoundation: true,
-    authenticationComplete: false,
+    authenticationComplete: flags.authenticationComplete,
     candidateDataReady: false,
-    databaseMutationsAuthorized: false,
+    databaseMutationsAuthorized: flags.databaseMutationsAuthorized,
   };
 }

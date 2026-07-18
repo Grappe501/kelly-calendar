@@ -1,6 +1,6 @@
 {
   "name": "kelly-campaign-command-calendar",
-  "version": "0.5.5-partial",
+  "version": "0.4.0-auth",
   "private": true,
   "description": "Kelly Campaign Command Calendar (KCCC) — candidate daily operating system",
   "engines": {
@@ -24,7 +24,11 @@
     "security:bundle": "node scripts/verify-client-bundle-secrets.mjs",
     "security:headers": "node scripts/inspect-security-headers.mjs",
     "db:diagnose": "node scripts/check-red-dirt-db-connection.mjs",
+    "auth:ensure-secret": "node scripts/ensure-app-session-secret.mjs",
+    "auth:seed": "node scripts/seed-auth-users.mjs",
     "auth:validate": "node scripts/validate-auth.mjs",
+    "step4:validate": "node scripts/validate-step4.mjs",
+    "step4:all": "npm run drive:validate && npm run auth:ensure-secret && npm run governance:validate && npm run env:validate && npm run auth:validate && npm run db:preflight && npm run db:sql:safety && npm run lint && npm run typecheck && npm run test && npm run build && npm run db:reddirt:integrity && npm run step4:validate",
     "db:classify": "node scripts/database-classify-target.mjs",
     "db:preflight": "node scripts/database-preflight.mjs",
     "db:snapshot": "node scripts/database-capture-structural-snapshot.mjs",

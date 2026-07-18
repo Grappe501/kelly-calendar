@@ -1,25 +1,50 @@
 import "server-only";
 
-import { AUTH_STATUS } from "@/server/auth/auth-status";
+import { refreshAuthStatus } from "@/server/auth/auth-status";
+import { getSessionViewer } from "@/server/auth/session";
+import { resolveCalendarAccess } from "@/server/authorization/resolve-calendar-access";
 
 /**
- * Default-deny until Step 4 resolves system role + membership + team bindings.
+ * Default-deny calendar access until a session + membership/role resolves.
  */
-export function canAccessCalendar(_input: {
+export async function canAccessCalendar(input: {
   calendarId: string;
   viewerUserId?: string | null;
-}): { allowed: boolean; accessLevel: "NO_ACCESS"; reason: string } {
-  void _input;
-  if (!AUTH_STATUS.authenticationComplete) {
+}): Promise<{ allowed: boolean; accessLevel: string; reason: string }> {
+  const status = refreshAuthStatus();
+  if (!status.authenticationComplete) {
     return {
       allowed: false,
       accessLevel: "NO_ACCESS",
-      reason: "Step 4 authentication not complete — default deny",
+      reason: "Authentication not configured — default deny",
     };
   }
+
+  const viewer = await getSessionViewer();
+  if (!viewer) {
+    return {
+      allowed: false,
+      accessLevel: "NO_ACCESS",
+      reason: "Unauthenticated — default deny",
+    };
+  }
+  if (input.viewerUserId && input.viewerUserId !== viewer.userId) {
+    return {
+      allowed: false,
+      accessLevel: "NO_ACCESS",
+      reason: "Viewer mismatch",
+    };
+  }
+
+  const resolved = await resolveCalendarAccess({
+    calendarId: input.calendarId,
+    viewerUserId: viewer.userId,
+    systemRole: viewer.systemRole,
+    teamIds: viewer.teamIds,
+  });
   return {
-    allowed: false,
-    accessLevel: "NO_ACCESS",
-    reason: "No calendar membership resolved",
+    allowed: resolved.allowed,
+    accessLevel: resolved.accessLevel,
+    reason: resolved.reason,
   };
 }

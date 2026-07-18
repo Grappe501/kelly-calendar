@@ -1,6 +1,7 @@
 import { getStandingAvailabilityPolicy } from "@/lib/campaign/availability-policy";
 import { getEnvironmentCapabilityStatus } from "@/lib/env/environment-status";
 import { getSecurityCapabilityStatus } from "@/lib/security/security-status";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import {
   CURRENT_STEP_ID,
   CURRENT_STEP_NUMBER,
@@ -46,7 +47,7 @@ export type CapabilityStatus = {
   authentication: {
     publicConfigurationPresent: boolean;
     serviceConfigurationPresent: boolean;
-    enabled: false;
+    enabled: boolean;
     plannedStep: 4;
   };
   ai: {
@@ -70,6 +71,7 @@ export function getCapabilityStatus(options?: {
 }): CapabilityStatus {
   const envStatus = getEnvironmentCapabilityStatus();
   const security = getSecurityCapabilityStatus();
+  const authFlags = getSharedAuthFlags();
 
   return {
     ok: true,
@@ -100,9 +102,11 @@ export function getCapabilityStatus(options?: {
       migrationAuthorized: false,
     },
     authentication: {
-      publicConfigurationPresent: envStatus.supabaseBrowser === "configured",
-      serviceConfigurationPresent: envStatus.supabaseServer === "configured",
-      enabled: false,
+      publicConfigurationPresent:
+        envStatus.supabaseBrowser === "configured" || authFlags.authenticationComplete,
+      serviceConfigurationPresent:
+        envStatus.supabaseServer === "configured" || authFlags.authenticationComplete,
+      enabled: authFlags.authenticationComplete,
       plannedStep: 4,
     },
     ai: {
@@ -117,7 +121,9 @@ export function getCapabilityStatus(options?: {
       provider: "netlify",
     },
     warnings: [
-      "The environment and security foundation is active, but authentication and calendar data protections are not complete. Do not enter real candidate schedule information.",
+      authFlags.authenticationComplete
+        ? "Authentication is enabled. Real candidate schedule PII remains prohibited until candidate_data_ready is certified."
+        : "Authentication is not configured (set APP_SESSION_SECRET). Do not enter real candidate schedule information.",
       "Monday–Friday 8am–noon and 1pm–5pm are standing work-unavailable blocks (vacation override required).",
       "Tuesdays default to Little Rock unless overridden.",
     ],

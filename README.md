@@ -1,33 +1,37 @@
 # Kelly Campaign Command Calendar (KCCC)
 
-**Kelly’s daily campaign operating system** — intelligence layer before polished mobile UI.
+**Kelly’s daily campaign operating system** — auth + intelligence before polished mobile UI.
 
 | Field | Value |
 |-------|-------|
 | Path | `H:\SOSWebsite\kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
-| Current step | **5.5** — Operational intelligence (**PARTIAL**) |
-| Blocking next | **Step 4 — Auth + RBAC** |
-| Eventual next | Step 6 — Mobile Command Shell |
+| Current step | **4** — AUTH-RBAC (**COMPLETE**) |
+| Still partial | Steps 5 + 5.5 live mutation wiring |
+| Next UI | Step 6 — Mobile Command Shell (not started) |
 | Owned schema | `kelly_calendar` |
 | Timezone | `America/Chicago` |
 
-> Real candidate schedule data stays prohibited until authentication and mutation authorization are certified.
+> Real candidate schedule PII stays prohibited until `candidate_data_ready` is certified.
 
-## What exists now
+## Auth (Step 4)
 
-- Protected database foundation (`kelly_calendar`)
-- Federated calendars + canonical events (schema)
-- **Step 5.5 engines:** workflows, deterministic recommendations, readiness, timeline, conflicts, patterns, summaries
-- Validation pages under `/system/step-5-5`, `/system/workflows`, `/system/readiness`, …
+```powershell
+cd H:\SOSWebsite\kelly-calendar
+npm run auth:ensure-secret
+npm run db:migration:apply   # after KCCC_ALLOW_SCHEMA_MIGRATION=1
+npm run auth:seed
+npm run auth:validate
+npm run step4:validate
+```
+
+Sign in at `/login` with seeded `@example.invalid` accounts.
 
 ## Commands
 
 ```powershell
-cd H:\SOSWebsite\kelly-calendar
-npm run workflow:validate
+npm run step4:all
 npm run step5.5:validate
-npm run step5.5:all
 ```
 
 Handoff: `develop_notes/KCCC_NEW_THREAD_HANDOFF.md`

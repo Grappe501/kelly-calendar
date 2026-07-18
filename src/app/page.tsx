@@ -26,8 +26,9 @@ export default function TodayPage() {
         <div className="empty-state">
           <strong>No confirmed event is currently loaded.</strong>
           <p className="muted">
-            Schedule intelligence appears here after the calendar database is connected
-            (Step 5) and events can be created (Step 7).
+            You are signed in. Live schedule mutations are unlocking after Step 4 auth;
+            real candidate PII remains prohibited until separately certified. Event CRUD
+            completes in Step 7.
           </p>
         </div>
       </section>

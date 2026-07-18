@@ -32,8 +32,11 @@
       "id": "KCCC-STEP-04-AUTH-RBAC",
       "number": 4,
       "name": "Authentication and Roles",
-      "status": "pending",
-      "blocker_for": ["KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR live mutations"]
+      "status": "complete",
+      "completed_at": "2026-07-18T16:00:00.000Z",
+      "provider": "app_session",
+      "migration": "20260718180000_auth_rbac_identity",
+      "notes": "App sessions + SystemRole RBAC. Supabase optional. candidate_data_ready remains false."
     },
     {
       "id": "KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR",

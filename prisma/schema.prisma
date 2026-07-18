@@ -1,6 +1,6 @@
 // Kelly Campaign Command Calendar — owned schema: kelly_calendar
-// Step 5 foundation. Do not place tables in public.
-// Live mutations require Step 4 AUTH-RBAC.
+// Step 4 AUTH-RBAC identity + Step 5 federated calendar foundation.
+// Do not place tables in public. Do not mutate RedDirt schemas.
 
 generator client {
   provider        = "prisma-client-js"
@@ -48,6 +48,19 @@ enum CalendarAccessLevel {
   EDIT
   MANAGE
   ADMINISTER
+
+  @@schema("kelly_calendar")
+}
+
+/// Constitution Art. XII system roles (not event staffing roles).
+enum SystemRole {
+  KELLY
+  CAMPAIGN_MANAGER
+  SCHEDULER
+  STAFF
+  VOLUNTEER
+  READ_ONLY_ADVISOR
+  SYSTEM_AI
 
   @@schema("kelly_calendar")
 }
@@ -1817,5 +1830,83 @@ model OperationalConflictAction {
   conflict OperationalConflictRecord @relation(fields: [conflictId], references: [id])
 
   @@index([conflictId])
+  @@schema("kelly_calendar")
+}
+
+// ─── Step 4 AUTH-RBAC identity (kelly_calendar only) ─────────────────
+
+model User {
+  id                 String     @id @default(cuid())
+  email              String     @unique
+  displayName        String
+  systemRole         SystemRole
+  /// scrypt hash (salt:hash). Null when using external Auth only.
+  passwordHash       String?
+  /// Supabase auth.users UUID when linked — never mutates auth schema.
+  externalAuthId     String?    @unique
+  isActive           Boolean    @default(true)
+  mustResetPassword  Boolean    @default(false)
+  lastLoginAt        DateTime?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  teamMemberships TeamMembership[]
+  sessions        AuthSession[]
+
+  @@index([systemRole])
+  @@index([isActive])
+  @@schema("kelly_calendar")
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  memberships TeamMembership[]
+
+  @@schema("kelly_calendar")
+}
+
+model TeamMembership {
+  id        String    @id @default(cuid())
+  teamId    String
+  userId    String
+  roleLabel String?
+  isActive  Boolean   @default(true)
+  startsAt  DateTime  @default(now())
+  endsAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  team Team @relation(fields: [teamId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([teamId, userId])
+  @@index([userId])
+  @@index([teamId, isActive])
+  @@schema("kelly_calendar")
+}
+
+model AuthSession {
+  id               String    @id @default(cuid())
+  userId           String
+  /// Opaque token id embedded in signed cookie (not the raw secret).
+  tokenId          String    @unique
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  lastSeenAt       DateTime  @default(now())
+  ipHash           String?
+  userAgentHash    String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
   @@schema("kelly_calendar")
 }
