@@ -45,20 +45,34 @@ if (build.next_step === "KCCC-STEP-06-MOBILE-COMMAND-SHELL" && !build.operator_a
   fail("Step 6 must not be next_step before operator acceptance");
 } else pass("Step 6 not promoted without acceptance");
 
+const step57Complete = build.completed_steps?.includes(
+  "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+);
 if (
+  !step57Complete &&
   build.current_step !== "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF" &&
   build.next_step !== "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF"
 ) {
-  fail("Step 5.7 must be current or next");
-} else pass("Step 5.7 is active in build_state");
+  fail("Step 5.7 must be current, next, or completed");
+} else pass("Step 5.7 is tracked in build_state");
 
 const acceptance = fs.readFileSync(
   path.join(root, "develop_notes/KCCC_STEP_05_7_OPERATOR_ACCEPTANCE.md"),
   "utf8",
 );
-if (/Operator decision:\s*\n\s*\[x\]\s*ACCEPT/i.test(acceptance)) {
-  fail("Operator ACCEPT checked without Steve sign-off authority in this pass");
-} else pass("Operator acceptance not falsely marked ACCEPT");
+const acceptChecked = /Operator decision:\s*\n\s*\[x\]\s*ACCEPT/i.test(acceptance);
+const steveSigned = /Operator signature\/name:\s*Steve Grappe/i.test(acceptance);
+if (acceptChecked && !steveSigned) {
+  fail("Operator ACCEPT checked without Steve Grappe signature");
+} else if (build.operator_acceptance_recorded && (!acceptChecked || !steveSigned)) {
+  fail("operator_acceptance_recorded true but acceptance doc incomplete");
+} else {
+  pass(
+    acceptChecked
+      ? "Operator ACCEPT recorded with Steve Grappe signature"
+      : "Operator acceptance not falsely marked ACCEPT",
+  );
+}
 
 if (failed) process.exit(1);
 console.log("Step 5.7 structural validation passed (deploy/operator gates remain separate).");

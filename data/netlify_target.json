@@ -22,11 +22,12 @@
   "verified_at": "2026-07-18T21:05:00.000Z",
   "verification_source": "netlify-cli",
   "authenticatedAccount": "Steve Grappe",
-  "blocker": "BLOCKED — PRODUCTION ENVIRONMENT INCOMPLETE (APP_SESSION_SECRET, DATABASE_URL, DIRECT_URL, ENV_FALLBACK_TO_REDDIRT not present in production context)",
+  "blocker": null,
   "notes": [
     "Linked via netlify link --id 7d3d021a-ccf1-401f-800f-8e1d1671445c",
     "Local .netlify/state.json is gitignored",
-    "Production env:list --context production currently shows only NODE_VERSION / NPM_* from netlify.toml"
+    "Production env PRESENT (names only): APP_SESSION_SECRET, DATABASE_URL, DIRECT_URL, ENV_FALLBACK_TO_REDDIRT",
+    "Step 5.7 live proof completed against https://kelly-calendar.netlify.app on deploy commit 239f697"
   ],
-  "updated_at": "2026-07-18T21:05:00.000Z"
+  "updated_at": "2026-07-18T21:50:00.000Z"
 }

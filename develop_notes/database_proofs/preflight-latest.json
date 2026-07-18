@@ -1,14 +1,17 @@
 {
-  "generatedAt": "2026-07-18T15:05:37.206Z",
+  "generatedAt": "2026-07-18T21:34:47.423Z",
   "targetClass": "hosted postgresql",
   "hosted": true,
   "databaseReachable": true,
   "directUrlConfigured": true,
-  "kellyCalendarSchemaPresent": false,
-  "kellyCalendarTableCount": 0,
+  "kellyCalendarSchemaPresent": true,
+  "kellyCalendarTableCount": 70,
   "publicSchemaTableCount": 303,
   "pendingMigrations": [
-    "20260718160000_kelly_calendar_foundation"
+    "20260718160000_kelly_calendar_foundation",
+    "20260718163000_kelly_calendar_additive_fields",
+    "20260718170000_operational_intelligence_foundation",
+    "20260718180000_auth_rbac_identity"
   ],
   "authenticationComplete": false,
   "mutationsAuthorized": false,

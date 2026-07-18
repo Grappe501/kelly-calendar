@@ -1,9 +1,10 @@
 # OPERATOR_ACCEPTANCE.md
 
 **Step:** KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF  
-**Status:** BLOCKED — OPERATOR ACTION REQUIRED  
-**Date:** 2026-07-18
+**Status:** ACCEPT  
+**Date:** 2026-07-18  
+**Operator:** Steve Grappe  
+**Deploy URL:** https://kelly-calendar.netlify.app  
+**Deploy commit:** 239f697  
 
-This evidence slot is prepared. Deployed proof has not been executed because the canonical Netlify site and production `APP_SESSION_SECRET` are not yet operator-verified.
-
-Do not treat this file as a PASS.
+Accepted after production credential wiring, fresh deploy, migration readiness, anonymous validators, and authenticated synthetic proof. See `develop_notes/KCCC_STEP_05_7_OPERATOR_ACCEPTANCE.md`.
