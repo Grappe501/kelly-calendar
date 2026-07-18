@@ -48,7 +48,7 @@
   "updated_at": "2026-07-18T15:40:00.000Z",
   "last_updated": "2026-07-18T15:40:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "pending",
+  "commit_hash": "2726561",
   "deployment_status": "blocked_operator_netlify_site",
   "notes": "Step 5.5 intelligence engines + full OI API stubs. Live apply/decisions gated until Step 4 AUTH. Do not begin Step 6."
 }
