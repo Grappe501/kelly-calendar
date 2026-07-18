@@ -47,6 +47,6 @@
   "updated_at": "2026-07-18T16:30:00.000Z",
   "last_updated": "2026-07-18T16:30:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "pending",
+  "commit_hash": "fd5afd4",
   "notes": "Step 5.6 unlocked authenticated mutations. Steps 5/5.5 remain partial for broader federation UX/import catalogue work. Candidate data disabled. Do not begin Step 6 until Netlify secret configured and mutation proof accepted."
 }
