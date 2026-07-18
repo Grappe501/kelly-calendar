@@ -2,4 +2,12 @@
 
 Machine-readable source: `data/architecture_decisions.json`
 
-Step 2–3 additions: see `data/architecture_decisions.json` (ADR-009 through ADR-023).
+Federation (2026-07-18):
+
+- ADR-024 Federated Command Calendar
+- ADR-025 Many-to-Many Event Calendar Membership
+- ADR-026 Multi-Level Calendar Permissions
+- ADR-027 Configurable Command Roll-Up
+- ADR-028 External Calendars Never Authoritative
+
+Also: ADR-009–023 (scaffold, env/security, standing availability).

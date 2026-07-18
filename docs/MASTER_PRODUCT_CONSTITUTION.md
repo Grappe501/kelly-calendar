@@ -1,8 +1,8 @@
 # Master Product Constitution
 
 **Kelly Campaign Command Calendar (KCCC)**  
-Version: **1.0.1**  
-Step: **1 of 25**  
+Version: **1.1.0**  
+Step: **1 of 25 (living authority; amended through Step 3)**  
 Status: **Ratified — build authority document**
 
 ---
@@ -10,6 +10,12 @@ Status: **Ratified — build authority document**
 ## Preamble
 
 This constitution governs the Kelly Grappe for Arkansas standalone calendar program. It exists so every builder — human or AI — ships the same product: **Kelly’s daily operating system**, not a decorative calendar.
+
+**Permanent federation rule:**
+
+> The Kelly Grappe Command Calendar is the authoritative roll-up of campaign time, commitments, deadlines, preparation, travel, communications, and operational activity. Specialized calendars may be independently managed by authorized teams, but all calendars must use shared event, permission, audit, and conflict-detection standards so the campaign can operate from one reliable source of truth.
+
+We build **one application** containing a **calendar federation** — not disconnected calendar products.
 
 ---
 
@@ -65,6 +71,69 @@ Saline County Community Meeting
 ```
 
 **Implementation:** flexible **event-node graph** — events link to subevents, people, places, tasks, files, notes, counties, conversations, expenses, and follow-ups. Drill-down is deep and structured; it is not infinite nesting of arbitrary pages.
+
+---
+
+## Article III-A — Calendar federation (Command + subcalendars)
+
+The Command Calendar is the master operational truth. Specialized calendars are workspaces that roll into it under permission and roll-up rules.
+
+```text
+Kelly Grappe Command Calendar
+├── Candidate Schedule
+├── Travel Calendar
+├── Public Events Calendar
+├── Internal Meetings Calendar
+├── Communications Calendar
+├── Social Media Calendar
+├── Press and Media Calendar
+├── Field Organizing Calendar
+├── County Activity Calendars
+├── Fundraising Calendar
+├── Compliance Calendar
+├── Volunteer Calendar
+├── Debate and Preparation Calendar
+├── Surrogate Calendar
+├── Staff Work Schedules
+├── Personal and Protected-Time Calendar
+└── Future specialized calendars
+```
+
+### Calendar kinds
+
+- **System calendars** — platform-controlled (Command, Candidate, Travel, Communications, Compliance, …)
+- **Team calendars** — campaign units (Comms, Field, Finance, county/region teams, …)
+- **Personal calendars** — authorized individuals; may roll availability without full detail
+
+### Calendar groups
+
+Candidate Operations · Public Engagement · Communications · Campaign Operations
+
+### Events belong to multiple calendars
+
+Canonical event + many-to-many memberships (`primary` + connected). Never a single flat `calendar_type` as the only model.
+
+### Permissions (default deny)
+
+| Level | Modes |
+|-------|--------|
+| Calendar | `NO_ACCESS` · `AVAILABILITY_ONLY` · `VIEW` · `CONTRIBUTE` · `EDIT` · `MANAGE` · `ADMINISTER` |
+| Event | Overrides calendar defaults (public rally vs donor strategy vs protected personal) |
+| Section | Public fields vs internal fields (security, phones, talking points, private notes) |
+
+**Availability only** shows busy time without why, where, or whom.
+
+### Roll-up into Command Calendar
+
+`FULL_DETAIL` · `TITLE_ONLY` · `BUSY_ONLY` · `MILESTONES_ONLY` · `DO_NOT_ROLL_UP`
+
+Command must remain readable. Cross-calendar conflicts (travel vs livestream vs recording) are detected at command level while respecting permissions.
+
+### Layers and saved views
+
+Map-style layer toggles and saved views (My Day, Travel Only, Communications Week, County Events, Leadership Operations, …).
+
+Full specification: [`CALENDAR_FEDERATION_ARCHITECTURE.md`](CALENDAR_FEDERATION_ARCHITECTURE.md).
 
 ---
 
@@ -240,38 +309,50 @@ Pin exact package versions in Step 2 — no uncontrolled major upgrades mid-camp
 
 ## Article XI — Data architecture (modular from day one)
 
-Core entities (namespace `kelly_calendar`):
+Core entities (namespace `kelly_calendar` / `kccc_*` as implemented in Step 5):
 
 ```text
-users, roles
-calendar_events, event_occurrences
+users, roles, teams
+kccc_calendars, kccc_calendar_groups
+kccc_calendar_memberships, kccc_calendar_permissions
+kccc_calendar_rollup_rules, kccc_saved_calendar_views
+kccc_events, event_occurrences
+kccc_event_calendar_memberships
+kccc_event_visibility, kccc_event_section_permissions
 event_relationships, event_sections, event_notes
 event_people, event_locations, event_tasks, event_files
 event_tags, event_reminders, event_assignments
 event_status_history, event_change_log, event_ai_proposals
 event_followups, event_travel_segments, event_expenses
+kccc_calendar_external_connections, kccc_calendar_audit_log
 people, organizations, locations, counties
 campaign_milestones, saved_searches
-notification_preferences, external_calendar_connections
+notification_preferences
 ```
 
 **Event relationships** connect events to people, counties, tasks, documents, trips, milestones — enabling graph queries without schema churn.
+
+**Federation path:** `User → membership → calendar → event membership → canonical event`.
 
 Kelly Calendar **does not** write into RedDirt application tables.
 
 ---
 
-## Article XII — User roles
+## Article XII — User roles and calendar membership
+
+System roles (baseline):
 
 | Role | Authority |
 |------|-----------|
-| **Kelly** | Full visibility; final approval on all changes |
-| **Campaign Manager** | Create, modify, assign, confirm |
-| **Scheduler** | Events, travel, confirmations |
-| **Staff** | Assigned events and prep items |
-| **Volunteer** | Explicitly shared events/tasks only |
+| **Kelly** | Full command visibility; final approval |
+| **Campaign Manager** | Command + delegated administer |
+| **Scheduler** | Candidate/travel/events coordination |
+| **Staff** | Assigned calendars and prep items |
+| **Volunteer** | Explicitly shared calendars/tasks only |
 | **Read-Only Advisor** | Selected visibility, no edits |
 | **System AI** | Propose only — cannot approve |
+
+**Additionally (Step 4+):** every user acts through **calendar memberships** and **team memberships**. System role alone is insufficient — calendar-level, event-level, and section-level grants control exposure. Team calendars (comms, field, county) use delegated managers.
 
 ---
 
@@ -311,15 +392,16 @@ No cross-lane imports without Steve-approved integration packet.
 
 ## Article XV — Scope boundaries (Version 1)
 
-**In scope:** scheduling, drill-down events, travel intelligence, AI-assisted creation with approval, search, PWA, role-based auth.
+**In scope:** Command Calendar + federated subcalendars, drill-down events, travel intelligence, AI-assisted creation with approval, search, PWA, role- and membership-based access, layer/saved views, cross-calendar conflict detection.
 
 **Out of scope for v1:**
 
-- Full CRM, email client, volunteer platform, accounting
-- Public event website
+- Full CRM, email client, volunteer platform, accounting product
+- Fully public event website (export feeds may come later)
 - RedDirt replacement
 - Autonomous AI scheduling (no auto-apply)
 - Native App Store / Play Store apps on day one
+- Automatic external calendar as authoritative master
 
 ### Data safety
 
@@ -332,17 +414,17 @@ No cross-lane imports without Steve-approved integration packet.
 
 ## Article XVI — Milestone deliverables
 
-### After Step 10 — Working calendar
+### After Step 10 — Working federated calendar
 
-Secure login, mobile shell, CRUD, Today/Day/Hour/Week/Month/Campaign-Year views, search-ready data, Netlify deploy.
+Secure login + membership permissions, mobile shell, event CRUD with primary/connected calendars, Today merging authorized layers, Day/Hour/Week/Month/Campaign-Year with layer controls, search-ready data, Netlify deploy.
 
 ### After Step 20 — AI scheduling system
 
-Voice + typed AI creation, conflict detection, briefings, NL search, travel warnings, human approval loop.
+Voice + typed AI creation, **cross-calendar** conflict detection (permission-aware), briefings, NL search across authorized calendars, travel warnings, human approval loop.
 
 ### After Step 25 — Candidate-grade platform
 
-Notifications, offline PWA, ICS import/export, campaign dashboard, launch certification, module API for v2.
+Notifications, offline PWA, controlled external sync, intelligence dashboard (coverage, bottlenecks, county gaps), launch certification, module API for v2.
 
 ---
 
@@ -373,11 +455,17 @@ Success is measured by questions only this system can answer:
 - Where is travel load excessive?
 - Which counties have no visit before Election Day?
 - What must Kelly know before she walks into the room?
+- What does communications need from Kelly this week?
+- Where are travel vs recording vs livestream conflicts?
+- Which counties have events awaiting approval?
+- Who is covering Saturday’s events — and where are coverage gaps?
 
 ---
 
 ## Ratification
 
-This document is Step 1 deliverable. It was first ratified and pushed on **2026-07-17** (`7feb928`). Version **1.0.1** closes navigation and AI-capability gaps from the full product brief without changing Step 1 status.
+This document is Step 1 deliverable. First ratified **2026-07-17** (`7feb928`).  
+**v1.0.1** — navigation / AI capability polish.  
+**v1.1.0** — calendar federation amendment (Command + subcalendars, permissions, roll-up, M2M memberships).
 
-**Next action:** [`TWENTY_FIVE_STEP_BUILD_REGISTRY.md`](TWENTY_FIVE_STEP_BUILD_REGISTRY.md) → Step 2.
+**Next action:** [`TWENTY_FIVE_STEP_BUILD_REGISTRY.md`](TWENTY_FIVE_STEP_BUILD_REGISTRY.md) → Step 4 (Auth + calendar membership RBAC).

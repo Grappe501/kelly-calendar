@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.1.0",
   "decisions": [
     {
       "id": "ADR-015",
@@ -65,6 +65,44 @@
       "date": "2026-07-18",
       "decision": "Encode weekday work-unavailable blocks, vacation override capability, and Tuesday Little Rock default as policy before database events exist.",
       "boundary": "No database event rows are created in Step 3."
+    },
+    {
+      "id": "ADR-024",
+      "title": "Federated Command Calendar",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Build one application with a Command Calendar roll-up and specialized calendar workspaces (travel, communications, social, county, staff, etc.).",
+      "reason": "Teams need owned areas while leadership needs a single operational truth and cross-calendar conflict detection."
+    },
+    {
+      "id": "ADR-025",
+      "title": "Many-to-Many Event Calendar Membership",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Canonical events relate to calendars through memberships (primary + connected), not a single calendar_type field alone."
+    },
+    {
+      "id": "ADR-026",
+      "title": "Multi-Level Calendar Permissions",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Enforce calendar-, event-, and section-level access including AVAILABILITY_ONLY, with default-deny.",
+      "boundary": "Busy blocks must not leak title, location, or attendees to unauthorized viewers."
+    },
+    {
+      "id": "ADR-027",
+      "title": "Configurable Command Roll-Up",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Each calendar defines roll-up mode: FULL_DETAIL, TITLE_ONLY, BUSY_ONLY, MILESTONES_ONLY, or DO_NOT_ROLL_UP.",
+      "reason": "Prevent Command Calendar unreadability from minor team activity."
+    },
+    {
+      "id": "ADR-028",
+      "title": "External Calendars Never Authoritative",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Imported/synced external events retain origin and sync status; Command Calendar remains internal master."
     }
   ]
 }

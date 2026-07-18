@@ -1,11 +1,13 @@
 # Twenty-Five Step Build Registry
 
 **Kelly Campaign Command Calendar (KCCC)**  
-Registry version: **1.0.1**
+Registry version: **1.1.0**
 
 Each step is one commit-ready pass. Status updates in README after each push.
 
 Legend: ⬜ pending · 🔄 in progress · ✅ complete
+
+**Federation note:** Steps 4–25 implement the Command Calendar + subcalendar federation per [`CALENDAR_FEDERATION_ARCHITECTURE.md`](CALENDAR_FEDERATION_ARCHITECTURE.md) and Constitution Article III-A.
 
 ---
 
@@ -13,11 +15,11 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 
 | Step | Name | Deliverable | Status |
 |------|------|-------------|--------|
-| **1** | Master Product Constitution | Vision, AI doctrine, H: protocol, this registry, acceptance gates | ✅ |
+| **1** | Master Product Constitution | Vision, AI doctrine, H: protocol, federation rule | ✅ |
 | **2** | Standalone Application Scaffold | Next.js + TS + lint + test + Git + Netlify config | ✅ |
-| **3** | Environment and Security Layer | Validated env loader, RedDirt fallback, security foundation | ✅ |
-| **4** | Authentication and Roles | Secure login, Kelly RBAC | ⬜ |
-| **5** | Calendar Data Foundation | Prisma schema `kelly_calendar`, migrations, seed, audit fields | ⬜ |
+| **3** | Environment and Security Layer | Env loader, RedDirt fallback, security, feature-flag groundwork | ✅ |
+| **4** | Authentication and Calendar RBAC | Login + system roles + calendar/event/section memberships + availability-only | ⬜ |
+| **5** | Federated Calendar Data Foundation | Calendars, groups, M2M memberships, roll-up, visibility, audit | ⬜ |
 
 ---
 
@@ -26,12 +28,12 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 | Step | Name | Deliverable | Status |
 |------|------|-------------|--------|
 | **6** | Mobile Application Shell | Bottom nav, headers, responsive layout, a11y base | ⬜ |
-| **7** | Event Creation and Editing | Manual CRUD (before AI) | ⬜ |
-| **8** | Today Command Center | Kelly's Day — next event, leave-by, prep | ⬜ |
-| **9** | Day and Hourly Timeline | Travel, prep, buffer blocks | ⬜ |
-| **10** | Week, Month, Campaign-Year Views | All major modes + election countdown | ⬜ |
+| **7** | Event Creation and Editing | CRUD with primary/connected calendars, visibility, roll-up | ⬜ |
+| **8** | Today Command Center | Merged authorized layers — next event, leave-by, prep | ⬜ |
+| **9** | Day and Hourly Timeline | Travel, prep, buffer blocks across layers | ⬜ |
+| **10** | Multi-View + Layers | Week/Month/Campaign-Year + layer filters + saved views | ⬜ |
 
-**Checkpoint:** Usable calendar without AI.
+**Checkpoint:** Usable federated calendar without AI.
 
 ---
 
@@ -39,11 +41,11 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 
 | Step | Name | Deliverable | Status |
 |------|------|-------------|--------|
-| **11** | Event Command Page | Full drill-down sections | ⬜ |
+| **11** | Event Command Page | Full drill-down + section ACL | ⬜ |
 | **12** | People, Organizations, Locations | Reusable records + event links | ⬜ |
-| **13** | Tasks, Assignments, Checklists | Before / during / after workflows | ⬜ |
-| **14** | Files, Photos, Notes | Attachments and internal notes | ⬜ |
-| **15** | Travel and Departure Intelligence | Maps links, departure calc, segments | ⬜ |
+| **13** | Tasks and Assignments | Source / assignee / event / command-when-needed | ⬜ |
+| **14** | Files, Photos, Notes | Attachments with visibility | ⬜ |
+| **15** | Travel and Departure Intelligence | Maps, departure calc, segments | ⬜ |
 
 ---
 
@@ -51,11 +53,11 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 
 | Step | Name | Deliverable | Status |
 |------|------|-------------|--------|
-| **16** | AI Event Creation | Typed NL → structured proposal → approve | ⬜ |
-| **17** | Voice Event Creation | Speech capture + review workflow | ⬜ |
-| **18** | AI Conflict Analysis | Overlap, travel, missing data detection | ⬜ |
-| **19** | Daily and Event Briefings | Evidence-grounded candidate briefings | ⬜ |
-| **20** | AI Search and Conversation | NL calendar Q&A | ⬜ |
+| **16** | AI Event Creation | NL → structured proposal → approve | ⬜ |
+| **17** | Voice Event Creation | Speech capture + review | ⬜ |
+| **18** | AI Conflict Analyst | Cross-calendar conflicts (permission-aware) | ⬜ |
+| **19** | Daily and Event Briefings | Evidence-grounded briefings | ⬜ |
+| **20** | AI Search and Conversation | NL across authorized calendars | ⬜ |
 
 **Checkpoint:** AI-assisted scheduling with human approval.
 
@@ -65,63 +67,45 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 
 | Step | Name | Deliverable | Status |
 |------|------|-------------|--------|
-| **21** | Notifications and Reminders | Push, departure warnings, follow-ups | ⬜ |
-| **22** | PWA Install and Offline | Manifest, service worker, IndexedDB sync | ⬜ |
-| **23** | External Calendar Import/Export | ICS first, then controlled sync | ⬜ |
-| **24** | Campaign Intelligence Dashboard | County coverage, prep health, travel load | ⬜ |
-| **25** | Launch Certification | Security/a11y/AI audits, module API, v2 roadmap | ⬜ |
+| **21** | Notifications and Reminders | Push, departure, follow-ups, approval alerts | ⬜ |
+| **22** | PWA Install and Offline | Manifest, SW, IndexedDB sync | ⬜ |
+| **23** | External Calendar Sync | ICS + controlled provider sync (never master) | ⬜ |
+| **24** | Campaign Intelligence Dashboard | Coverage, conflicts, bottlenecks, county gaps | ⬜ |
+| **25** | Launch Certification | Audits, module API, v2 roadmap | ⬜ |
 
 ---
 
-## Step detail — Step 1 ✅
+## Step detail — completed
 
-**Files created:**
-
-- `README.md`
-- `_WORKSPACE_LANE_MARKER.txt`
-- `.gitignore`, `.npmrc`
-- `scripts/run-with-h-drive-env.cjs`
-- `docs/MASTER_PRODUCT_CONSTITUTION.md`
-- `docs/H_DRIVE_FOREVER_PROTOCOL.md`
-- `docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md` (this file)
-- `docs/ARCHITECTURE_RULES.md`
-- `docs/ENVIRONMENT_PROTOCOL.md`
-- `docs/GITHUB_NETLIFY_PROTOCOL.md`
-- `docs/ACCEPTANCE_GATES.md`
-- `docs/CURSOR_BUILD_INSTRUCTIONS.md`
-
-**Acceptance:** All Step 1 gates in `ACCEPTANCE_GATES.md` pass; pushed to GitHub.
-
----
-
-## Step detail — Step 2 ✅
-
-**Completed:** 2026-07-18  
-**Report:** `develop_notes/KCCC_STEP_02_IMPLEMENTATION_REPORT.md`
-
-**Delivered:** Next.js 16 App Router shell, mobile nav, health/status APIs, Vitest/Playwright foundations, Netlify config, read-only DB diagnostic, governance data files.
-
-**Next:** Step 3 — Environment and Security Layer.
-
-## Step detail — Step 3 ✅
-
-**Completed:** 2026-07-18  
-**Report:** `develop_notes/KCCC_STEP_03_IMPLEMENTATION_REPORT.md`  
-Also encoded standing availability policy (weekday work blocks, vacation override, Tuesday Little Rock).
+| Step | Report |
+|------|--------|
+| 1 | Constitution (+ v1.1.0 federation amendment) |
+| 2 | `develop_notes/KCCC_STEP_02_IMPLEMENTATION_REPORT.md` |
+| 3 | `develop_notes/KCCC_STEP_03_IMPLEMENTATION_REPORT.md` |
 
 ## Step detail — Step 4 (next)
 
-Authentication and Kelly-specific RBAC.
+Authentication **and** calendar membership RBAC:
+
+- System roles
+- Calendar / event / section permissions
+- Availability-only access
+- Team membership + delegated calendar management
+- Default-deny enforcement on all schedule APIs
+
+## Step detail — Step 5
+
+Federated schema: `kccc_calendars`, groups, memberships, permissions, roll-up rules, M2M event memberships, visibility, saved views, external connections, audit log. Seed system calendars + standing availability policy (work blocks, Tuesday Little Rock) as calendar data — no real PII.
 
 ---
 
 ## Compression guidance
 
-Steps 6–10 can ship incrementally to Netlify — Kelly gets value after Step 8 (Today view).
+Steps 6–10 can ship incrementally — Kelly gets value after Step 8 (merged Today).
 
-Steps 16–20 should not start until Step 7 manual CRUD is stable.
+Do not implement every team calendar UI in Step 5; seed system calendars and permission model first, expand team workspaces as modules.
 
-Days 4–7 RedDirt work continues in parallel lane — no code imports between lanes.
+Steps 16–20 require stable Step 7 CRUD + Step 4 permissions.
 
 ---
 
@@ -129,5 +113,6 @@ Days 4–7 RedDirt work continues in parallel lane — no code imports between l
 
 | Version | Date | Notes |
 |---------|------|-------|
-| 1.0.0 | 2026-07-17 | Initial registry with Step 1 complete |
-| 1.0.1 | 2026-07-18 | Constitution polish: Tomorrow / Election Countdown / AI Assistant; optimizer + follow-up AI; soft-cancel doctrine |
+| 1.0.0 | 2026-07-17 | Initial registry |
+| 1.0.1 | 2026-07-18 | Constitution polish |
+| 1.1.0 | 2026-07-18 | Federation amendment — broaden Steps 4–5, 7–8, 10, 13, 18, 20, 24 |

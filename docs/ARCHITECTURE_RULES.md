@@ -1,7 +1,7 @@
 # Architecture Rules
 
 **Kelly Campaign Command Calendar (KCCC)**  
-Version: **1.0.0**
+Version: **1.1.0**
 
 ---
 
@@ -96,21 +96,38 @@ prisma/
 
 ---
 
-## 5. Event graph model
+## 5. Calendar federation model
+
+Authoritative detail: [`CALENDAR_FEDERATION_ARCHITECTURE.md`](CALENDAR_FEDERATION_ARCHITECTURE.md).
 
 ```text
-CalendarEvent
-    ├── EventOccurrence[]      (recurrence instances)
-    ├── EventRelationship[]    (edges to Person, County, Event, Task…)
-    ├── EventSection[]         (structured drill-down content)
-    ├── EventTask[]
-    ├── EventTravelSegment[]
+Calendar (system | team | personal)
+    ├── CalendarMembership[] + CalendarPermission
+    ├── CalendarRollupRule → Command Calendar
+    └── EventCalendarMembership[] → canonical Event
+
+Event (one record)
+    ├── EventOccurrence[]
+    ├── EventVisibility / EventSectionPermission[]
+    ├── EventRelationship[]
+    ├── EventSection[] / EventTask[] / EventTravelSegment[]
     └── EventAiProposal[]
 ```
 
 Relationship types (enum, extensible):
 
-`parent_of`, `child_of`, `related_to`, `follows`, `requires_travel_from`, `assigned_to`, `hosted_by`, `in_county`, `references_person`, `references_document`
+`parent_of`, `child_of`, `related_to`, `follows`, `requires_travel_from`, `assigned_to`, `hosted_by`, `in_county`, `references_person`, `references_document`, `connected_calendar`
+
+**Hard rules:**
+
+| Rule | Detail |
+|------|--------|
+| **F1** | Command Calendar is roll-up truth, not a separate disconnected store of duplicate events |
+| **F2** | Events use many-to-many calendar memberships (primary + connected) |
+| **F3** | Default-deny; availability-only must not leak title/location/attendees |
+| **F4** | Section-level ACL required for public vs internal event fields |
+| **F5** | External sync never becomes authoritative master |
+| **F6** | Cross-calendar conflict analysis respects viewer permissions |
 
 ---
 
@@ -256,3 +273,4 @@ Models (configurable via env):
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0.0 | 2026-07-17 | Initial architecture for Step 1 |
+| 1.1.0 | 2026-07-18 | Calendar federation model (Command + subcalendars) |

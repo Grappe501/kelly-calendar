@@ -3,7 +3,7 @@
 **Kelly Campaign Command Calendar (KCCC)**  
 Agent operating manual — paste into new Cursor threads working on this lane.
 
-Version: **1.0.1**
+Version: **1.1.0**
 
 ---
 
@@ -27,7 +27,8 @@ Path:     H:\SOSWebsite\kelly-calendar\
 Git:      https://github.com/Grappe501/kelly-calendar
 Deploy:   Netlify (separate from RedDirt)
 Env:      Fallback to H:\SOSWebsite\RedDirt\.env.local
-Current:  Step 2 complete — begin Step 3 (ENV-SECURITY) when assigned
+Current:  Step 3 complete — begin Step 4 (AUTH + calendar membership RBAC)
+Federation: docs/CALENDAR_FEDERATION_ARCHITECTURE.md is binding
 ```
 
 RedDirt work continues in parallel — this lane is independent.
@@ -112,17 +113,17 @@ Bad: `Event starting soon!!!`
 
 ## Step-by-step agent prompts
 
-### Step 2 prompt
+### Step 4 prompt
 
-> Scaffold Next.js App Router + TypeScript in kelly-calendar. Wrap all npm scripts with run-with-h-drive-env.cjs. Add netlify.toml, health route, typecheck, minimal home page. Pass Step 2 acceptance gates. Commit and push.
-
-### Step 3 prompt
-
-> Implement validated env loader with RedDirt fallback per ENVIRONMENT_PROTOCOL.md. Add npm run env:check. Pass Step 3 gates. Commit and push.
+> Implement auth + calendar membership RBAC per CALENDAR_FEDERATION_ARCHITECTURE.md: system roles, calendar/event/section permissions, AVAILABILITY_ONLY, default-deny. No real schedule PII. Commit and push.
 
 ### Step 5 prompt
 
-> Create Prisma schema in kelly_calendar namespace with calendar_events, event_change_log, event_ai_proposals, users/roles. Migrations + fake seed data only. Pass Step 5 gates. Commit and push.
+> Create federated Prisma schema (kccc_calendars, groups, memberships, permissions, roll-up rules, M2M event memberships, visibility, audit). Seed system calendars + standing availability. No real PII. Commit and push.
+
+### Step 7 prompt
+
+> Event CRUD with primary + connected calendars, visibility, and Command roll-up behavior. Commit and push.
 
 ### Step 8 prompt
 
@@ -168,3 +169,4 @@ Stop immediately and report if:
 |---------|------|--------|
 | 1.0.0 | 2026-07-17 | Initial agent manual for Step 1 |
 | 1.0.1 | 2026-07-18 | Align with constitution v1.0.1 navigation + AI capability list |
+| 1.1.0 | 2026-07-18 | Federated Command Calendar — Step 4/5 prompts broadened |

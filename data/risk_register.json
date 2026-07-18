@@ -66,6 +66,30 @@
       "title": "Work Blocks Forgotten When Events Land",
       "status": "open",
       "mitigation": "Standing availability policy encoded now; materialize in Steps 5–10."
+    },
+    {
+      "id": "RISK-027",
+      "title": "Subcalendars Become Siloed Apps",
+      "status": "mitigated",
+      "mitigation": "Federation constitution + shared event/permission/audit standards; one canonical event record."
+    },
+    {
+      "id": "RISK-028",
+      "title": "Command Calendar Noise Overload",
+      "status": "open",
+      "mitigation": "Roll-up modes (BUSY_ONLY / MILESTONES_ONLY / DO_NOT_ROLL_UP) enforced at schema and UI."
+    },
+    {
+      "id": "RISK-029",
+      "title": "Availability-Only Leak of Private Detail",
+      "status": "open",
+      "mitigation": "Section/event ACL tests in Step 4–5; never return title/location on AVAILABILITY_ONLY."
+    },
+    {
+      "id": "RISK-030",
+      "title": "External Sync Overwrites Master",
+      "status": "mitigated",
+      "mitigation": "ADR-028 — external calendars never authoritative; retain origin + sync status."
     }
   ]
 }
