@@ -55,3 +55,6 @@ data/exports/
 data/ingest_staging/**
 !data/ingest_staging/.gitignore
 !data/ingest_staging/README.md
+
+# Local Netlify folder
+.netlify

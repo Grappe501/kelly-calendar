@@ -1,22 +1,32 @@
 {
   "product": "Kelly Campaign Command Calendar",
+  "application": "Kelly Campaign Command Calendar",
   "repository": "https://github.com/Grappe501/kelly-calendar",
   "productionBranch": "main",
-  "buildCommand": "npm ci && npm run build",
+  "branch": "main",
+  "buildCommand": "npm ci && npx prisma generate && npm run build",
   "publishDirectory": ".next",
   "plugin": "@netlify/plugin-nextjs",
   "nodeVersion": "20",
-  "siteName": null,
-  "siteId": null,
-  "productionUrl": null,
+  "site_name": "kelly-calendar",
+  "siteName": "kelly-calendar",
+  "site_id": "7d3d021a-ccf1-401f-800f-8e1d1671445c",
+  "siteId": "7d3d021a-ccf1-401f-800f-8e1d1671445c",
+  "production_url": "https://kelly-calendar.netlify.app",
+  "productionUrl": "https://kelly-calendar.netlify.app",
+  "adminUrl": "https://app.netlify.com/projects/kelly-calendar",
   "functionsDirectory": null,
   "databaseTargetClassification": "kelly_calendar schema on shared Postgres (operator-verified)",
-  "status": "unverified",
-  "blocker": "BLOCKED — CANONICAL NETLIFY SITE NOT VERIFIED",
+  "status": "verified",
+  "verified": true,
+  "verified_at": "2026-07-18T21:05:00.000Z",
+  "verification_source": "netlify-cli",
+  "authenticatedAccount": "Steve Grappe",
+  "blocker": "BLOCKED — PRODUCTION ENVIRONMENT INCOMPLETE (APP_SESSION_SECRET, DATABASE_URL, DIRECT_URL, ENV_FALLBACK_TO_REDDIRT not present in production context)",
   "notes": [
-    "Do not assume the RedDirt Netlify site is the Kelly Calendar site.",
-    "Operator must create/import Grappe501/kelly-calendar and record site name, site ID, and production URL here.",
-    "Netlify CLI session was expired during Step 5.7 Pass A; site could not be auto-discovered."
+    "Linked via netlify link --id 7d3d021a-ccf1-401f-800f-8e1d1671445c",
+    "Local .netlify/state.json is gitignored",
+    "Production env:list --context production currently shows only NODE_VERSION / NPM_* from netlify.toml"
   ],
-  "updated_at": "2026-07-18T16:30:00.000Z"
+  "updated_at": "2026-07-18T21:05:00.000Z"
 }
