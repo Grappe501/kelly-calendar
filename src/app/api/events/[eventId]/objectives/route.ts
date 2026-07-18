@@ -1,15 +1,38 @@
-import { blockUnauthorizedMutation } from "@/lib/api/mutation-blocked";
+import { z } from "zod";
+import { withAuthenticatedMutation } from "@/server/auth/api-mutation";
+import { replaceObjectives } from "@/server/services/event-plan-service";
+import { ValidationError } from "@/lib/security/safe-error";
 
 export const dynamic = "force-dynamic";
-
 type Ctx = { params: Promise<{ eventId: string }> };
 
 export async function PUT(request: Request, context: Ctx) {
   const { eventId } = await context.params;
-  void eventId;
-  return blockUnauthorizedMutation(
+  return withAuthenticatedMutation(
     request,
     "/api/events/[eventId]/objectives",
-    "Event objectives updates are disabled until authentication and RBAC (Step 4) are complete.",
+    async ({ actor, requestId }) => {
+      const body = z
+        .object({
+          expectedVersion: z.number().int().positive(),
+          items: z.array(
+            z.object({
+              objectiveType: z.string(),
+              description: z.string(),
+              isPrimary: z.boolean().optional(),
+              successDefinition: z.string().optional(),
+            }),
+          ),
+        })
+        .safeParse(await request.json());
+      if (!body.success) throw new ValidationError("Invalid objectives payload.");
+      return replaceObjectives({
+        actor,
+        eventId,
+        expectedVersion: body.data.expectedVersion,
+        items: body.data.items,
+        requestId,
+      });
+    },
   );
 }

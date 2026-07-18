@@ -1,72 +1,60 @@
-import { NextResponse } from "next/server";
-import { mutationsAuthorized } from "@/server/authorization/mutation-gate";
-import { getRequestIdFromHeaders } from "@/server/middleware/with-request-context";
-import { jsonSafeError } from "@/server/middleware/with-safe-errors";
-import { AppError } from "@/lib/security/safe-error";
+import { z } from "zod";
+import { withAuthenticatedMutation, withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSafeEventForViewer, updateEvent } from "@/server/services/event-service";
+import { ValidationError } from "@/lib/security/safe-error";
 
 export const dynamic = "force-dynamic";
 
 type Ctx = { params: Promise<{ eventId: string }> };
 
+const patchSchema = z.object({
+  expectedVersion: z.number().int().positive(),
+  internalTitle: z.string().min(1).max(300).optional(),
+  campaignDisplayTitle: z.string().max(300).optional(),
+  publicTitle: z.string().max(300).optional(),
+  eventType: z.string().max(120).optional(),
+  status: z.string().optional(),
+  startsAt: z.string().optional(),
+  endsAt: z.string().optional(),
+  timezone: z.string().optional(),
+  city: z.string().optional(),
+  countyId: z.string().nullable().optional(),
+  venueName: z.string().nullable().optional(),
+  candidateRole: z.string().nullable().optional(),
+  privateNotes: z.string().nullable().optional(),
+});
+
 export async function GET(request: Request, context: Ctx) {
-  const requestId = getRequestIdFromHeaders(request.headers);
   const { eventId } = await context.params;
-  return NextResponse.json(
-    {
-      ok: false,
-      error: {
-        code: "AUTHENTICATION_REQUIRED",
-        message: "Event detail requires Step 4 authentication.",
-      },
-      eventId,
-      requestId,
+  return withAuthenticatedQuery(
+    request,
+    "/api/events/[eventId]",
+    async ({ actor }) => {
+      const event = await getSafeEventForViewer({
+        eventId,
+        viewerUserId: actor.userId,
+      });
+      return { event };
     },
-    { status: 401, headers: { "x-request-id": requestId } },
   );
 }
 
 export async function PATCH(request: Request, context: Ctx) {
-  const requestId = getRequestIdFromHeaders(request.headers);
   const { eventId } = await context.params;
-  void eventId;
-  try {
-    if (!mutationsAuthorized()) {
-      throw new AppError({
-        code: "AUTHENTICATION_REQUIRED",
-        status: 401,
-        publicMessage:
-          "Event updates are disabled until authentication and RBAC (Step 4) are complete.",
+  return withAuthenticatedMutation(
+    request,
+    "/api/events/[eventId]",
+    async ({ actor, requestId }) => {
+      const parsed = patchSchema.safeParse(await request.json());
+      if (!parsed.success) {
+        throw new ValidationError("Invalid event update payload.");
+      }
+      const event = await updateEvent({
+        actor,
+        eventId,
+        data: { ...parsed.data, requestId, status: parsed.data.status as never },
       });
-    }
-    throw new AppError({
-      code: "INTERNAL_ERROR",
-      status: 500,
-      publicMessage: "Unexpected mutation path.",
-    });
-  } catch (error) {
-    return jsonSafeError(error, requestId, "/api/events/[eventId]");
-  }
-}
-
-export async function DELETE(request: Request, context: Ctx) {
-  const requestId = getRequestIdFromHeaders(request.headers);
-  const { eventId } = await context.params;
-  void eventId;
-  try {
-    if (!mutationsAuthorized()) {
-      throw new AppError({
-        code: "AUTHENTICATION_REQUIRED",
-        status: 401,
-        publicMessage:
-          "Event deletion is disabled until authentication and RBAC (Step 4) are complete.",
-      });
-    }
-    throw new AppError({
-      code: "INTERNAL_ERROR",
-      status: 500,
-      publicMessage: "Unexpected mutation path.",
-    });
-  } catch (error) {
-    return jsonSafeError(error, requestId, "/api/events/[eventId]");
-  }
+      return { event };
+    },
+  );
 }

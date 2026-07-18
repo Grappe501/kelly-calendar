@@ -53,9 +53,10 @@
       "reddirt_structure_diff": 0,
       "script": "KCCC-BURT-PROTECTED-DATABASE-BUILD-1.0",
       "known_blockers": [
-        "Step 4 AUTH-RBAC incomplete — mutations gated",
-        "Netlify site not connected",
-        "SHADOW_DATABASE_URL not configured for full migrate-diff"
+        "Broader federation UX / import catalogue incomplete",
+        "Netlify site not connected / APP_SESSION_SECRET pending",
+        "SHADOW_DATABASE_URL not configured for full migrate-diff",
+        "candidate_data_ready remains false"
       ],
       "primary_files": [
         "prisma/schema.prisma",
@@ -76,9 +77,19 @@
       "started_at": "2026-07-18T15:30:00.000Z",
       "migration": "20260718170000_operational_intelligence_foundation",
       "known_blockers": [
-        "Step 4 AUTH-RBAC incomplete — apply/decision APIs gated",
-        "Netlify site not connected"
+        "Broader OI UX / pattern catalogue incomplete",
+        "Netlify site not connected / APP_SESSION_SECRET pending",
+        "candidate_data_ready remains false"
       ]
+    },
+    {
+      "id": "KCCC-STEP-05.6-AUTHENTICATED-OPERATIONS-UNLOCK",
+      "number": 5.6,
+      "name": "Authenticated Operations Unlock",
+      "status": "complete",
+      "completed_at": "2026-07-18T16:20:00.000Z",
+      "script": "KCCC-STEP-05.6-AUTHENTICATED-OPERATIONS-UNLOCK-1.0",
+      "notes": "Session-derived actors + live mutations. candidate_data_ready remains false."
     },
     {
       "id": "KCCC-STEP-06-MOBILE-COMMAND-SHELL",

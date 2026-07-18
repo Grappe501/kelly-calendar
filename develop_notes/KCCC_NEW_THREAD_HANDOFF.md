@@ -15,32 +15,29 @@ KCCC-STEP-01-PRODUCT-CONSTITUTION
 KCCC-STEP-02-APP-SCAFFOLD
 KCCC-STEP-03-SECURE-INGEST-FAST-ENTRY
 KCCC-STEP-04-AUTH-RBAC
+KCCC-STEP-05.6-AUTHENTICATED-OPERATIONS-UNLOCK
 
 Partial:
 KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR
 KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE
 
-Auth (Step 4):
-- App session cookies (APP_SESSION_SECRET)
-- SystemRole + User + Team + TeamMembership + AuthSession
-- Middleware protects non-public routes
-- Kelly / Campaign Manager full calendar access
-- Login at /login ; npm run auth:seed for synthetic users
-- candidate_data_ready: false (still)
+Unlocked (5.6):
+- Session-derived actors
+- Action-based authorize()
+- Live event + plan mutations
+- Workflow apply, recommendation decisions
+- Readiness snapshots, conflict actions
+- Approvals + import review decisions
+- Audit attribution
 
-Live flags:
-- authentication_complete: true
-- database_mutations_authorized: true (authenticated mutators only)
-- candidate_data_ready: false
-- ai_enabled: false
-- autonomous_event_changes: false
+Still false:
+- candidate_data_ready
+- live_calendar_data_enabled (product flag)
+- Netlify APP_SESSION_SECRET configured
+- AI / autonomous scheduling
 
-Next required:
-Finish Step 5 / 5.5 live mutation wiring now that auth exists
-(apply workflows, event CRUD paths, recommendation decisions)
-
-Then:
+Next:
 KCCC-STEP-06-MOBILE-COMMAND-SHELL
 
-Do not begin Step 6 until live ops paths are wired.
+Do not start Step 6 until operator accepts mutation proof + Netlify secret.
 ```

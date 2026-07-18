@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-18T16:10:35.382Z",
+  "step": "KCCC-STEP-05.6-AUTHENTICATED-OPERATIONS-UNLOCK",
+  "candidate_data_ready": false,
+  "surfaces": {
+    "actorResolution": true,
+    "actionAuthorization": true,
+    "eventMutations": true,
+    "planMutations": true,
+    "workflowApply": true,
+    "recommendationDecisions": true,
+    "readinessSnapshots": true,
+    "conflictActions": true,
+    "approvals": true,
+    "importDecisions": true
+  },
+  "notes": [
+    "Synthetic users/events only",
+    "No Step 6 mobile shell",
+    "Netlify requires APP_SESSION_SECRET"
+  ]
+}

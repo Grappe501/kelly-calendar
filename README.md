@@ -1,37 +1,29 @@
 # Kelly Campaign Command Calendar (KCCC)
 
-**Kelly’s daily campaign operating system** — auth + intelligence before polished mobile UI.
+**Kelly’s daily campaign operating system** — authenticated mutations unlocked; mobile shell next.
 
 | Field | Value |
 |-------|-------|
 | Path | `H:\SOSWebsite\kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
-| Current step | **4** — AUTH-RBAC (**COMPLETE**) |
-| Still partial | Steps 5 + 5.5 live mutation wiring |
-| Next UI | Step 6 — Mobile Command Shell (not started) |
+| Completed | Steps 1–4 + **5.6 authenticated ops unlock** |
+| Partial | Steps 5 + 5.5 (schema/engines exist; broader ops still evolving) |
+| Next | Step 6 — Mobile Command Shell |
 | Owned schema | `kelly_calendar` |
-| Timezone | `America/Chicago` |
+| Candidate data | **Disabled** |
 
-> Real candidate schedule PII stays prohibited until `candidate_data_ready` is certified.
-
-## Auth (Step 4)
+## Auth + mutations
 
 ```powershell
 cd H:\SOSWebsite\kelly-calendar
 npm run auth:ensure-secret
-npm run db:migration:apply   # after KCCC_ALLOW_SCHEMA_MIGRATION=1
 npm run auth:seed
-npm run auth:validate
-npm run step4:validate
+npm run step5.6:validate
+npm run step5.6:all
 ```
 
-Sign in at `/login` with seeded `@example.invalid` accounts.
+Sign in at `/login`. Validation surfaces: `/system/step-5-6`, `/system/auth-debug`, `/system/mutation-test`, `/system/permissions`, `/system/audit`.
 
-## Commands
-
-```powershell
-npm run step4:all
-npm run step5.5:validate
-```
+Netlify must set `APP_SESSION_SECRET` (32+ chars) before production deploy.
 
 Handoff: `develop_notes/KCCC_NEW_THREAD_HANDOFF.md`

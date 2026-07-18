@@ -1,31 +1,29 @@
-import { mutationsAuthorized } from "@/server/authorization/mutation-gate";
-import { getRequestIdFromHeaders } from "@/server/middleware/with-request-context";
-import { jsonSafeError } from "@/server/middleware/with-safe-errors";
-import { AppError } from "@/lib/security/safe-error";
+import { z } from "zod";
+import { withAuthenticatedMutation } from "@/server/auth/api-mutation";
+import { restoreEvent } from "@/server/services/event-service";
+import { ValidationError } from "@/lib/security/safe-error";
 
 export const dynamic = "force-dynamic";
 
 type Ctx = { params: Promise<{ eventId: string }> };
 
 export async function POST(request: Request, context: Ctx) {
-  const requestId = getRequestIdFromHeaders(request.headers);
   const { eventId } = await context.params;
-  void eventId;
-  try {
-    if (!mutationsAuthorized()) {
-      throw new AppError({
-        code: "AUTHENTICATION_REQUIRED",
-        status: 401,
-        publicMessage:
-          "Restore is disabled until authentication and RBAC (Step 4) are complete.",
+  return withAuthenticatedMutation(
+    request,
+    "/api/events/[eventId]/restore",
+    async ({ actor, requestId }) => {
+      const body = z
+        .object({ expectedVersion: z.number().int().positive() })
+        .safeParse(await request.json());
+      if (!body.success) throw new ValidationError("expectedVersion is required.");
+      const event = await restoreEvent({
+        actor,
+        eventId,
+        expectedVersion: body.data.expectedVersion,
+        requestId,
       });
-    }
-    throw new AppError({
-      code: "INTERNAL_ERROR",
-      status: 500,
-      publicMessage: "Unexpected mutation path.",
-    });
-  } catch (error) {
-    return jsonSafeError(error, requestId, "/api/events/[eventId]/restore");
-  }
+      return { event };
+    },
+  );
 }

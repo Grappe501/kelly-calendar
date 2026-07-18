@@ -46,3 +46,15 @@ Occupied time visible; calendar name; safe titles; location disclosure; server s
 - ADR-065 Conflicts Are Advisory
 - ADR-066 Readiness and Completion Are Separate
 - ADR-067 Command Summaries Are Permission-Filtered
+
+## Authenticated operations unlock (ADR-068–074)
+
+Burt script IDs ADR-061–067 for this unlock collide with Step 5.5; repository uses ADR-068–074:
+
+- ADR-068 Authenticated Actor Comes Only From the Server Session
+- ADR-069 Authorization Is Action-Based
+- ADR-070 Authentication and Authorization Are Separate
+- ADR-071 Mutation Responses Use Safe Projections
+- ADR-072 Operational Intelligence Applies Through Ordinary Mutations
+- ADR-073 Candidate Data Remains Disabled After Technical Unlock
+- ADR-074 Netlify Fails Closed Without Session Secret

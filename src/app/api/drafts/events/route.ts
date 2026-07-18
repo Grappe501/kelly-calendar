@@ -1,14 +1,19 @@
-import { NextResponse } from "next/server";
 import { listDrafts, saveDraft } from "@/features/event-drafts/draft-store";
+import {
+  withAuthenticatedMutation,
+  withAuthenticatedQuery,
+} from "@/server/auth/api-mutation";
+import { requireAuthorized } from "@/server/auth/authorization";
 import { enforceScaffoldRateLimit } from "@/server/middleware/with-rate-limit";
-import { getRequestIdFromHeaders } from "@/server/middleware/with-request-context";
-import { jsonSafeError } from "@/server/middleware/with-safe-errors";
 
 export const dynamic = "force-dynamic";
 
-export function GET(request: Request) {
-  const requestId = getRequestIdFromHeaders(request.headers);
-  try {
+export async function GET(request: Request) {
+  return withAuthenticatedQuery(request, "/api/drafts/events", async ({ actor, requestId }) => {
+    await requireAuthorized(actor, {
+      action: "EVENT_VIEW",
+      resource: { type: "system" },
+    });
     enforceScaffoldRateLimit("/api/drafts/events", requestId);
     const drafts = listDrafts().map((d) => ({
       draftId: d.draftId,
@@ -19,32 +24,23 @@ export function GET(request: Request) {
       liveCalendar: false,
       databaseWriteAttempted: false,
     }));
-    return NextResponse.json(
-      { ok: true, drafts, requestId },
-      { headers: { "x-request-id": requestId } },
-    );
-  } catch (error) {
-    return jsonSafeError(error, requestId, "/api/drafts/events");
-  }
+    return { drafts };
+  });
 }
 
 export async function POST(request: Request) {
-  const requestId = getRequestIdFromHeaders(request.headers);
-  try {
+  return withAuthenticatedMutation(request, "/api/drafts/events", async ({ actor, requestId }) => {
+    await requireAuthorized(actor, {
+      action: "EVENT_CREATE",
+      resource: { type: "system" },
+    });
     enforceScaffoldRateLimit("/api/drafts/events", requestId);
     const body = await request.json();
     const draft = saveDraft(body);
-    return NextResponse.json(
-      {
-        ok: true,
-        draft,
-        banner: "DRAFT — NOT YET ON LIVE CALENDAR",
-        databaseWriteAttempted: false,
-        requestId,
-      },
-      { headers: { "x-request-id": requestId } },
-    );
-  } catch (error) {
-    return jsonSafeError(error, requestId, "/api/drafts/events");
-  }
+    return {
+      draft,
+      banner: "DRAFT — NOT YET ON LIVE CALENDAR",
+      databaseWriteAttempted: false,
+    };
+  });
 }

@@ -20,3 +20,10 @@ Import/entry: RISK-037–046.
 - RISK-056 Location exposure — mitigated (disclosure + projection)
 - RISK-057 Import ≠ attendance — mitigated (distinct flags)
 - RISK-058 Wrong-target migration — mitigated (preflight/classify)
+
+## Authenticated operations unlock (RISK-075–078)
+
+- RISK-075 Client supplies mutation actor — mitigated (session-only actor)
+- RISK-076 Authenticated assumed authorized — mitigated (action authorize + default deny)
+- RISK-077 Netlify missing APP_SESSION_SECRET — open (fail closed; operator)
+- RISK-078 Technical unlock ≠ candidate data — mitigated (`candidate_data_ready: false`)

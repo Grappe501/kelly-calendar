@@ -384,6 +384,56 @@
       "status": "accepted",
       "date": "2026-07-18",
       "decision": "Operational summaries use the same protected projection and section-permission system as individual event views."
+    },
+    {
+      "id": "ADR-068",
+      "title": "Authenticated Actor Comes Only From the Server Session",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Client input may never identify the mutation actor; actors resolve only from the app-signed HTTP-only session.",
+      "note": "Burt Step 5.6 script listed this as ADR-061; numbering continues after Step 5.5 ADRs."
+    },
+    {
+      "id": "ADR-069",
+      "title": "Authorization Is Action-Based",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Routes authorize named actions against resources instead of scattering role-name checks."
+    },
+    {
+      "id": "ADR-070",
+      "title": "Authentication and Authorization Are Separate",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "A valid session proves identity but does not automatically grant access; default remains deny."
+    },
+    {
+      "id": "ADR-071",
+      "title": "Mutation Responses Use Safe Projections",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Successful writes return only fields the acting viewer may access."
+    },
+    {
+      "id": "ADR-072",
+      "title": "Operational Intelligence Applies Through Ordinary Mutations",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Workflow and recommendation acceptance may not bypass event authorization, version checks, validation, or audit."
+    },
+    {
+      "id": "ADR-073",
+      "title": "Candidate Data Remains Disabled After Technical Unlock",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Technical mutation readiness does not itself authorize real Kelly data."
+    },
+    {
+      "id": "ADR-074",
+      "title": "Netlify Fails Closed Without Session Secret",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Production authentication may not use a development fallback when APP_SESSION_SECRET is missing."
     }
   ]
 }

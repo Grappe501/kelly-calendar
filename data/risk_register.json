@@ -318,6 +318,30 @@
       "title": "Step 5.5 Becomes a Replacement for Step 6",
       "status": "mitigated",
       "mitigation": "Minimal /system validation pages only; final UX reserved for Step 6."
+    },
+    {
+      "id": "RISK-075",
+      "title": "Client Supplies Mutation Actor Identity",
+      "status": "mitigated",
+      "mitigation": "Actors resolve only from signed HTTP-only session; body.userId rejected."
+    },
+    {
+      "id": "RISK-076",
+      "title": "Authenticated User Assumed Authorized",
+      "status": "mitigated",
+      "mitigation": "Action-based authorize() with default deny; section-safe projections."
+    },
+    {
+      "id": "RISK-077",
+      "title": "Netlify Missing APP_SESSION_SECRET",
+      "status": "open",
+      "mitigation": "Fail closed in production; operator must inject secret; no build-time generation."
+    },
+    {
+      "id": "RISK-078",
+      "title": "Technical Unlock Mistaken for Candidate-Data Ready",
+      "status": "mitigated",
+      "mitigation": "candidate_data_ready remains false until explicit activation gate."
     }
   ]
 }

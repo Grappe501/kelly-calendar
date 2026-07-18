@@ -1,0 +1,52 @@
+export const MUTATION_ACTIONS = [
+  "EVENT_CREATE",
+  "EVENT_VIEW",
+  "EVENT_EDIT",
+  "EVENT_ARCHIVE",
+  "EVENT_RESTORE",
+  "EVENT_CHANGE_PRIMARY_CALENDAR",
+  "EVENT_MANAGE_CALENDARS",
+  "EVENT_OBJECTIVES_EDIT",
+  "EVENT_PROGRAM_FLOW_EDIT",
+  "EVENT_PACKING_EDIT",
+  "EVENT_STAFFING_EDIT",
+  "EVENT_ACTIONS_EDIT",
+  "EVENT_COMMUNICATIONS_EDIT",
+  "EVENT_TRAVEL_EDIT",
+  "WORKFLOW_PREVIEW",
+  "WORKFLOW_APPLY",
+  "RECOMMENDATION_VIEW",
+  "RECOMMENDATION_DECIDE",
+  "READINESS_VIEW",
+  "READINESS_RECALCULATE",
+  "READINESS_SNAPSHOT_WRITE",
+  "CONFLICT_VIEW",
+  "CONFLICT_ACKNOWLEDGE",
+  "CONFLICT_OVERRIDE",
+  "APPROVAL_REQUEST",
+  "APPROVAL_RESOLVE",
+  "HISTORICAL_IMPORT_VIEW",
+  "HISTORICAL_IMPORT_APPROVE",
+  "HISTORICAL_IMPORT_REJECT",
+  "HISTORICAL_IMPORT_MERGE",
+  "CALENDAR_MEMBERSHIP_MANAGE",
+  "TEAM_MEMBERSHIP_MANAGE",
+  "SYSTEM_ROLE_MANAGE",
+  "AUDIT_VIEW",
+] as const;
+
+export type MutationAction = (typeof MUTATION_ACTIONS)[number];
+
+export type AuthorizationResource = {
+  type:
+    | "event"
+    | "calendar"
+    | "conflict"
+    | "approval"
+    | "import_record"
+    | "system";
+  id?: string;
+  calendarId?: string;
+  section?: string;
+  countyId?: string;
+};
