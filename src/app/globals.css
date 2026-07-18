@@ -282,10 +282,92 @@ input {
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 999px;
   background: var(--color-primary);
   color: var(--color-primary-contrast);
   box-shadow: var(--shadow-md);
+}
+
+.command-count-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.command-count-grid li {
+  display: grid;
+  gap: 0.2rem;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+}
+
+.command-count-grid strong {
+  font-size: 1.4rem;
+  line-height: 1.1;
+}
+
+.command-event-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.command-event-card {
+  display: grid;
+  gap: 0.35rem;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+}
+
+.command-event-time {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.command-event-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.loading-panel {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.loading-bar {
+  height: 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 76, 92, 0.15),
+    rgba(15, 76, 92, 0.45),
+    rgba(15, 76, 92, 0.15)
+  );
+  background-size: 200% 100%;
+  animation: loading-shine 1.2s linear infinite;
+}
+
+@keyframes loading-shine {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 @media (min-width: 768px) {

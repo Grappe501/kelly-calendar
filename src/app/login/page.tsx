@@ -8,8 +8,8 @@ export default function LoginPage() {
         <p className="muted">Kelly Campaign Command Calendar</p>
         <h1>Sign in</h1>
         <p className="muted">
-          Step 4 authentication. Use a seeded campaign account. Real candidate
-          schedule data remains prohibited until separately certified.
+          Sign in with your campaign account. Real candidate schedule data remains
+          prohibited until separately certified.
         </p>
       </header>
 

@@ -88,12 +88,12 @@ Every step must pass its gate before starting the next step.
 
 ## Step 6 — Mobile Shell
 
-| Gate | Criteria |
-|------|----------|
-| S6-A | Bottom nav renders at 375px |
-| S6-B | Touch targets ≥ 44px |
-| S6-C | Loading and error boundaries present |
-| S6-D | Lighthouse mobile accessibility ≥ 90 (target) |
+| Gate | Criteria | Status |
+|------|----------|--------|
+| S6-A | Bottom nav renders at 375px | ✅ shell `data-viewport-target="375"` + nav contract |
+| S6-B | Touch targets ≥ 44px | ✅ CSS `min-height: 44px` on nav/buttons |
+| S6-C | Loading and error boundaries present | ✅ `loading.tsx` + `error.tsx` |
+| S6-D | Lighthouse mobile accessibility ≥ 90 (target) | 🟡 structural a11y baseline; Lighthouse score target |
 
 ---
 

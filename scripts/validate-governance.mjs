@@ -34,16 +34,27 @@ const buildState = JSON.parse(
   fs.readFileSync(path.join(repoRoot, "data/build_state.json"), "utf8"),
 );
 
-const expectedStep = "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF";
-if (buildState.current_step !== expectedStep) {
-  console.error(`FAIL: build_state current_step must be ${expectedStep}`);
+const step57 = "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF";
+const step06 = "KCCC-STEP-06-MOBILE-COMMAND-SHELL";
+const expectedStep = step57;
+const allowedCurrent = new Set([step57, step06]);
+if (!allowedCurrent.has(buildState.current_step)) {
+  console.error(
+    `FAIL: build_state current_step must be ${step57} or ${step06}`,
+  );
   failed = true;
 } else {
-  console.log("PASS: build_state current_step is Step 5.7");
+  console.log(`PASS: build_state current_step is ${buildState.current_step}`);
 }
 
-if (!["blocked", "partial", "complete"].includes(buildState.current_step_status)) {
-  console.error("FAIL: current_step_status must be blocked|partial|complete");
+if (
+  !["blocked", "partial", "complete", "ready", "in_progress"].includes(
+    buildState.current_step_status,
+  )
+) {
+  console.error(
+    "FAIL: current_step_status must be blocked|partial|complete|ready|in_progress",
+  );
   failed = true;
 } else {
   console.log(`PASS: build_state marked ${buildState.current_step_status}`);
@@ -70,9 +81,20 @@ if (buildState.candidate_data_ready === true || buildState.real_candidate_data_e
   console.log("PASS: candidate data remains disabled");
 }
 
-if (buildState.operator_acceptance_recorded === true && buildState.current_step_status !== "complete") {
-  console.error("FAIL: acceptance recorded but step not complete");
+if (
+  buildState.operator_acceptance_recorded === true &&
+  buildState.current_step === "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF" &&
+  buildState.current_step_status !== "complete"
+) {
+  console.error("FAIL: Step 5.7 acceptance recorded but step not complete");
   failed = true;
+} else if (
+  buildState.operator_acceptance_recorded === true &&
+  buildState.completed_steps?.includes(
+    "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
+  )
+) {
+  console.log("PASS: Step 5.7 operator acceptance retained after promotion");
 }
 
 if (
@@ -81,8 +103,14 @@ if (
 ) {
   console.error("FAIL: Step 6 must remain held until operator acceptance");
   failed = true;
-} else if (buildState.next_step === expectedStep || buildState.eventual_next_after_gate === "KCCC-STEP-06-MOBILE-COMMAND-SHELL") {
-  console.log("PASS: Step 6 remains held / eventual after gate");
+} else if (
+  buildState.current_step === "KCCC-STEP-06-MOBILE-COMMAND-SHELL" ||
+  buildState.next_step === "KCCC-STEP-06-MOBILE-COMMAND-SHELL" ||
+  buildState.eventual_next_after_gate === "KCCC-STEP-06-MOBILE-COMMAND-SHELL"
+) {
+  console.log("PASS: Step 6 is active or correctly queued");
+} else if (buildState.next_step === expectedStep) {
+  console.log("PASS: next_step matches expected gate");
 } else {
   console.error("FAIL: next_step / eventual_next_after_gate misconfigured");
   failed = true;

@@ -1,38 +1,29 @@
-import Link from "next/link";
+import { TodayCommandPanels } from "@/components/today/TodayCommandPanels";
 import { getStandingAvailabilityPolicy } from "@/lib/campaign/availability-policy";
 import { formatCampaignDate, getElectionCountdown } from "@/lib/dates/election";
 import { getPublicAppConfig } from "@/lib/env/public-config";
+import { requireActiveAuthenticatedActor } from "@/server/auth/actor";
+import { getTodayCommandShellData } from "@/server/services/command-summary-today";
 
-export default function TodayPage() {
+export const dynamic = "force-dynamic";
+
+export default async function TodayPage() {
   const config = getPublicAppConfig();
   const countdown = getElectionCountdown();
   const todayLabel = formatCampaignDate();
   const availability = getStandingAvailabilityPolicy();
+  const actor = await requireActiveAuthenticatedActor();
+  const data = await getTodayCommandShellData(actor);
 
   return (
     <div className="page-stack">
-      <header className="page-header">
-        <p className="muted">{config.appName}</p>
-        <h1>Kelly’s Day</h1>
-        <p>
-          {todayLabel}
-          <br />
-          {countdown.label}
-        </p>
-      </header>
-
-      <section className="panel" aria-labelledby="next-heading">
-        <h2 id="next-heading">Next</h2>
-        <div className="empty-state">
-          <strong>No confirmed event is currently loaded.</strong>
-          <p className="muted">
-            You are signed in. Live schedule mutations are unlocking after Step 4 auth;
-            real candidate PII remains prohibited until separately certified. Event CRUD
-            completes in Step 7.
-          </p>
-        </div>
-      </section>
-
+      <TodayCommandPanels
+        data={data}
+        todayLabel={todayLabel}
+        countdownLabel={countdown.label}
+        appName={config.appName}
+        nested
+      />
       <section className="panel" aria-labelledby="availability-heading">
         <h2 id="availability-heading">Standing availability</h2>
         <ul>
@@ -41,33 +32,9 @@ export default function TodayPage() {
           ))}
         </ul>
         <p className="muted">
-          Vacation and explicit releases can override work blocks through the Command Calendar.
+          Vacation and explicit releases can override work blocks through the Command
+          Calendar.
         </p>
-      </section>
-
-      <section className="panel" aria-labelledby="today-heading">
-        <h2 id="today-heading">Today</h2>
-        <p className="muted">
-          Your schedule will appear here after the calendar database is connected.
-        </p>
-      </section>
-
-      <section className="panel" aria-labelledby="actions-heading">
-        <h2 id="actions-heading">Quick actions</h2>
-        <div className="button-row">
-          <Link className="button" href="/add">
-            Add event
-          </Link>
-          <Link className="button secondary" href="/search">
-            Search calendar
-          </Link>
-          <Link className="button secondary" href="/calendar">
-            View calendar
-          </Link>
-          <Link className="button secondary" href="/system/status">
-            System status
-          </Link>
-        </div>
       </section>
     </div>
   );

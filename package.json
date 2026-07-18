@@ -1,6 +1,6 @@
 {
   "name": "kelly-campaign-command-calendar",
-  "version": "0.5.7-proof",
+  "version": "0.6.0-shell",
   "private": true,
   "description": "Kelly Campaign Command Calendar (KCCC) — candidate daily operating system",
   "engines": {
@@ -55,6 +55,8 @@
     "step5.7:validate": "node scripts/validate-step5-7.mjs",
     "step5.7:local": "npm run drive:validate && npm run governance:validate && npm run env:validate && npm run auth:validate && npm run step4:validate && npm run step5.6:all && npm run netlify:fail-closed:validate && npm run netlify:production-auth-env:validate && npm run secret:scan && npm run lint && npm run typecheck && npm run test && npm run build && npm run db:reddirt:integrity && npm run step5.7:validate",
     "step5.7:all": "npm run step5.7:local && npm run netlify:target:validate && npm run deploy:auth-routes:validate && npm run deploy:status-contracts:validate && npm run deploy:safe-projections:validate && npm run deploy:audit-proof:validate && npm run deploy:proof-data:validate && npm run step5.7:report && npm run step5.7:validate",
+    "step6:validate": "node scripts/validate-step6.mjs",
+    "step6:all": "npm run drive:validate && npm run governance:validate && npm run env:validate && npm run auth:validate && npm run step6:validate && npm run lint && npm run typecheck && npm run test",
     "db:classify": "node scripts/database-classify-target.mjs",
     "db:preflight": "node scripts/database-preflight.mjs",
     "db:snapshot": "node scripts/database-capture-structural-snapshot.mjs",

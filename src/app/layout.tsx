@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import { AppShell } from "@/components/app-shell/AppShell";
 import { getPublicAppConfig } from "@/lib/env/public-config";
 import "./globals.css";
@@ -30,7 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppShell>{children}</AppShell>
+        <Suspense fallback={<main id="main-content">{children}</main>}>
+          <AppShell>{children}</AppShell>
+        </Suspense>
       </body>
     </html>
   );

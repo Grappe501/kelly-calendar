@@ -1,5 +1,5 @@
-export const CURRENT_STEP_ID = "KCCC-STEP-04-AUTH-RBAC";
-export const CURRENT_STEP_NUMBER = 4;
+export const CURRENT_STEP_ID = "KCCC-STEP-06-MOBILE-COMMAND-SHELL";
+export const CURRENT_STEP_NUMBER = 6;
 export const TOTAL_STEPS = 25;
 export const PRODUCT_CODE = "KCCC";
 export const SERVICE_NAME = "kelly-campaign-command-calendar";
