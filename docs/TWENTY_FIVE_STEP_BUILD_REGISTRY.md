@@ -14,7 +14,7 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 | Step | Name | Deliverable | Status |
 |------|------|-------------|--------|
 | **1** | Master Product Constitution | Vision, AI doctrine, H: protocol, this registry, acceptance gates | ✅ |
-| **2** | Standalone Application Scaffold | Next.js + TS + lint + test + Git + Netlify config | ⬜ |
+| **2** | Standalone Application Scaffold | Next.js + TS + lint + test + Git + Netlify config | ✅ |
 | **3** | Environment and Security Layer | Validated env loader, RedDirt fallback, startup diagnostics | ⬜ |
 | **4** | Authentication and Roles | Secure login, Kelly RBAC | ⬜ |
 | **5** | Calendar Data Foundation | Prisma schema `kelly_calendar`, migrations, seed, audit fields | ⬜ |
@@ -94,32 +94,18 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 
 ---
 
-## Step detail — Step 2 (next)
+## Step detail — Step 2 ✅
 
-**Create:**
+**Completed:** 2026-07-18  
+**Report:** `develop_notes/KCCC_STEP_02_IMPLEMENTATION_REPORT.md`
 
-```text
-kelly-calendar/
-├── package.json          (scripts wrap run-with-h-drive-env.cjs)
-├── tsconfig.json
-├── next.config.ts
-├── eslint.config.mjs
-├── vitest.config.ts
-├── netlify.toml
-├── public/manifest.json  (stub)
-└── src/app/              (minimal layout + health route)
-```
+**Delivered:** Next.js 16 App Router shell, mobile nav, health/status APIs, Vitest/Playwright foundations, Netlify config, read-only DB diagnostic, governance data files.
 
-**Commands:**
+**Next:** Step 3 — Environment and Security Layer.
 
-```powershell
-cd H:\SOSWebsite\kelly-calendar
-node scripts/run-with-h-drive-env.cjs npm install
-node scripts/run-with-h-drive-env.cjs npm run typecheck
-node scripts/run-with-h-drive-env.cjs npm run build
-```
+## Step detail — Step 3 (next)
 
-**Acceptance:** Build green; H: preflight pass; Netlify config present.
+Validated env loader, RedDirt fallback controls, `npm run env:check`, secret non-exposure guarantees.
 
 ---
 

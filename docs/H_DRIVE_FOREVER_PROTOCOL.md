@@ -20,8 +20,8 @@ The `C:\` system drive is full. Every Kelly Calendar build pass must keep **all 
 |------|-------------|
 | **H1** | Project root is `H:\SOSWebsite\kelly-calendar\` |
 | **H2** | Run `npm install`, `npm run build`, `npx`, `tsx`, and Prisma only from the lane root, wrapped with `node scripts/run-with-h-drive-env.cjs` |
-| **H3** | npm cache → `H:\SOSWebsite\.local\npm-cache` (via `.npmrc` + wrapper) |
-| **H4** | Temp files → `H:\SOSWebsite\.local\temp\kelly-calendar\` |
+| **H3** | npm cache → `H:\SOSWebsite\.cache\npm` (via `.npmrc` + wrapper) |
+| **H4** | Temp / Playwright / Next / Prisma caches → `H:\SOSWebsite\.cache\` subfolders |
 | **H5** | Never change global npm or git config to redirect caches to `C:\` |
 | **H6** | Never create large scratch files under `C:\Users\User\AppData\Local\Temp` when an H: path exists |
 | **H7** | `node_modules`, `.next`, test output, and Playwright artifacts live inside the lane on H: |
@@ -33,10 +33,12 @@ The `C:\` system drive is full. Every Kelly Calendar build pass must keep **all 
 
 ```text
 H:\SOSWebsite\
-├── .local\
-│   ├── npm-cache\              ← shared npm cache (all SOSWebsite lanes)
-│   └── temp\
-│       └── kelly-calendar\     ← Kelly Calendar temp (isolated subfolder)
+├── .cache\
+│   ├── npm\                    ← npm cache
+│   ├── temp\                   ← TEMP/TMP
+│   ├── playwright\             ← browser binaries
+│   ├── next\
+│   └── prisma\
 ├── kelly-calendar\             ← THIS APPLICATION
 │   ├── node_modules\
 │   ├── .next\
@@ -95,8 +97,8 @@ node scripts/run-with-h-drive-env.cjs node -e "console.log('TEMP='+process.env.T
 
 **Pass criteria:**
 
-- `TEMP` contains `H:\SOSWebsite\.local\temp\kelly-calendar`
-- `npm_config_cache` contains `H:\SOSWebsite\.local\npm-cache` (or `.npmrc` equivalent)
+- `TEMP` contains `H:\SOSWebsite\.cache\temp`
+- `npm_config_cache` contains `H:\SOSWebsite\.cache\npm` (or `.npmrc` equivalent)
 
 ---
 
@@ -106,13 +108,13 @@ Safe to delete when no build is running:
 
 ```text
 H:\SOSWebsite\kelly-calendar\.next\
-H:\SOSWebsite\.local\temp\kelly-calendar\
+H:\SOSWebsite\.cache\temp\
 ```
 
 Shared cache (affects all lanes):
 
 ```text
-H:\SOSWebsite\.local\npm-cache\
+H:\SOSWebsite\.cache\npm\
 ```
 
 After Step 2 scaffold: `node scripts/run-with-h-drive-env.cjs npm run build:clean` (when script exists).

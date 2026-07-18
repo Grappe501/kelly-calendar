@@ -1,0 +1,18 @@
+{
+  "name": "Kelly Campaign Command Calendar",
+  "short_name": "KCCC",
+  "description": "Kelly’s daily campaign operating system",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3efe6",
+  "theme_color": "#0f4c5c",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

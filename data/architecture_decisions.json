@@ -1,0 +1,53 @@
+{
+  "version": "1.0.1",
+  "decisions": [
+    {
+      "id": "ADR-009",
+      "title": "Next.js App Router Scaffold",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Use Next.js App Router with TypeScript.",
+      "reason": "Supports server routes, mobile web delivery, PWA growth, Netlify deployment, and independent application ownership."
+    },
+    {
+      "id": "ADR-010",
+      "title": "No Calendar Models Until Step 5",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Step 2 creates no database models.",
+      "reason": "Database ownership, migration safety, and calendar namespace must be deliberately implemented in Step 5."
+    },
+    {
+      "id": "ADR-011",
+      "title": "Development Shell Before Authentication",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Permit a non-production development shell before authentication is implemented.",
+      "boundary": "No real candidate schedule data may be entered or displayed."
+    },
+    {
+      "id": "ADR-012",
+      "title": "Safe Database Diagnostics",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Permit a read-only connection probe against RedDirt’s PostgreSQL database.",
+      "boundary": "No schema changes, table writes, or migrations."
+    },
+    {
+      "id": "ADR-013",
+      "title": "Mobile Bottom Navigation",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Use Today, Calendar, Add, Search, and More as the primary mobile navigation.",
+      "reason": "These actions map directly to field use and future product growth."
+    },
+    {
+      "id": "ADR-014",
+      "title": "Configurable Election Milestone",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Use a configurable November 3, 2026 election date for initial countdown behavior.",
+      "reason": "The interface must show present-day-to-election context while remaining reusable."
+    }
+  ]
+}

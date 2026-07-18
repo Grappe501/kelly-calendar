@@ -1,0 +1,13 @@
+// Kelly Campaign Command Calendar — Prisma placeholder (Step 2)
+// NO MODELS. Step 5 owns the first calendar migration and kelly_calendar namespace.
+// Do not run migrate / db push from this step.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}

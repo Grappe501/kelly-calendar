@@ -1,0 +1,23 @@
+# Kelly Campaign Command Calendar — Netlify
+# Separate site from RedDirt. Do not place secrets here.
+
+[build]
+  command = "npm ci && npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_CONFIG_PRODUCTION = "false"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# Unpinned Next.js runtime plugin (same pattern as RedDirt).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Documented env vars (set in Netlify UI — never commit values):
+# DATABASE_URL, DIRECT_URL
+# NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+# SUPABASE_SERVICE_ROLE_KEY
+# OPENAI_API_KEY (server only — Step 16+)
+# NEXT_PUBLIC_APP_URL, NEXT_PUBLIC_APP_NAME
+# NEXT_PUBLIC_CAMPAIGN_TIMEZONE, NEXT_PUBLIC_ELECTION_DATE

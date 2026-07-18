@@ -1,0 +1,45 @@
+{
+  "version": "1.0.1",
+  "risks": [
+    {
+      "id": "RISK-011",
+      "title": "Scaffold Becomes Fake Product",
+      "severity": "medium",
+      "status": "mitigated",
+      "risk": "Placeholder interfaces appear functional when backend systems are not implemented.",
+      "mitigation": "Clearly label unavailable features and avoid fake records."
+    },
+    {
+      "id": "RISK-012",
+      "title": "Framework Version Mismatch",
+      "severity": "medium",
+      "status": "open",
+      "risk": "Calendar dependencies diverge from RedDirt or Netlify support.",
+      "mitigation": "Inspect RedDirt, pin versions, validate production build. KCCC uses Next 16 while RedDirt remains on Next 15."
+    },
+    {
+      "id": "RISK-013",
+      "title": "Database Diagnostic Accidentally Mutates",
+      "severity": "high",
+      "status": "mitigated",
+      "risk": "Connection test runs unsafe operations.",
+      "mitigation": "Permit only a simple SELECT 1 probe."
+    },
+    {
+      "id": "RISK-014",
+      "title": "Environment Fallback Leaks Secrets",
+      "severity": "high",
+      "status": "open",
+      "risk": "Reading RedDirt environment files exposes values.",
+      "mitigation": "Load server-side only, report presence rather than content, complete full controls in Step 3."
+    },
+    {
+      "id": "RISK-015",
+      "title": "Mobile Shell Overdesigned Too Early",
+      "severity": "low",
+      "status": "mitigated",
+      "risk": "Time is spent polishing a shell instead of delivering scheduling capability.",
+      "mitigation": "Build a clear reusable shell, then stop at Step 2 acceptance."
+    }
+  ]
+}

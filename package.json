@@ -1,0 +1,47 @@
+{
+  "name": "kelly-campaign-command-calendar",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Kelly Campaign Command Calendar (KCCC) — candidate daily operating system",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node scripts/run-with-h-drive-env.cjs next dev",
+    "build": "node scripts/run-with-h-drive-env.cjs next build",
+    "start": "node scripts/run-with-h-drive-env.cjs next start",
+    "lint": "node scripts/run-with-h-drive-env.cjs eslint .",
+    "typecheck": "node scripts/run-with-h-drive-env.cjs tsc --noEmit",
+    "test": "node scripts/run-with-h-drive-env.cjs vitest run",
+    "test:watch": "node scripts/run-with-h-drive-env.cjs vitest",
+    "test:e2e": "node scripts/run-with-h-drive-env.cjs playwright test",
+    "drive:validate": "node scripts/validate-h-drive.mjs",
+    "governance:validate": "node scripts/validate-governance.mjs",
+    "scaffold:validate": "node scripts/validate-scaffold.mjs",
+    "db:diagnose": "node scripts/check-red-dirt-db-connection.mjs",
+    "env:safety": "node scripts/verify-env-safety.mjs",
+    "status": "node scripts/print-build-status.mjs",
+    "check": "npm run drive:validate && npm run governance:validate && npm run env:safety && npm run scaffold:validate && npm run lint && npm run typecheck && npm run test",
+    "step2:validate": "npm run check && npm run build && npm run db:diagnose && npm run status"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0",
+    "next": "16.2.10",
+    "pg": "8.16.3",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.54.2",
+    "@types/node": "22.17.0",
+    "@types/pg": "8.15.5",
+    "@types/react": "19.1.9",
+    "@types/react-dom": "19.1.7",
+    "eslint": "9.32.0",
+    "eslint-config-next": "16.2.10",
+    "prisma": "5.22.0",
+    "typescript": "5.8.3",
+    "vitest": "3.2.4"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "step": "KCCC-STEP-02-APP-SCAFFOLD",
+  "updated_at": "2026-07-18T14:15:00.000Z",
+  "gates": [
+    { "id": "G1", "name": "Correct Workspace", "result": "PASS" },
+    { "id": "G2", "name": "Package Installation Safety", "result": "PASS" },
+    { "id": "G3", "name": "Application Boots", "result": "PASS" },
+    { "id": "G4", "name": "Production Build", "result": "PASS" },
+    { "id": "G5", "name": "Type Safety", "result": "PASS" },
+    { "id": "G6", "name": "Lint", "result": "PASS" },
+    { "id": "G7", "name": "Unit Tests", "result": "PASS" },
+    { "id": "G8", "name": "Mobile Shell", "result": "PASS" },
+    { "id": "G9", "name": "Accessibility Foundation", "result": "PASS" },
+    { "id": "G10", "name": "Health Endpoint", "result": "PASS" },
+    { "id": "G11", "name": "System Status", "result": "PASS" },
+    { "id": "G12", "name": "Environment Safety", "result": "PASS" },
+    { "id": "G13", "name": "Database Safety", "result": "PASS" },
+    { "id": "G14", "name": "RedDirt Integrity", "result": "PASS" },
+    { "id": "G15", "name": "Database Diagnostic", "result": "PASS" },
+    { "id": "G16", "name": "Governance Validation", "result": "PASS" },
+    { "id": "G17", "name": "Git Integrity", "result": "PASS" },
+    { "id": "G18", "name": "GitHub Push", "result": "PENDING" },
+    { "id": "G19", "name": "Netlify Deployment", "result": "BLOCKED" },
+    { "id": "G20", "name": "Step 2 Handoff", "result": "PASS" }
+  ]
+}

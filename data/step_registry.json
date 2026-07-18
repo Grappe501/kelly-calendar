@@ -1,0 +1,39 @@
+{
+  "version": "1.0.1",
+  "steps": [
+    {
+      "id": "KCCC-STEP-01-PRODUCT-CONSTITUTION",
+      "number": 1,
+      "name": "Master Product Constitution",
+      "status": "complete",
+      "completed_at": "2026-07-17T22:51:00.000Z",
+      "commit_hash": "7feb928"
+    },
+    {
+      "id": "KCCC-STEP-02-APP-SCAFFOLD",
+      "number": 2,
+      "name": "Standalone Application Scaffold",
+      "status": "complete",
+      "completed_at": "2026-07-18T14:00:00.000Z",
+      "commit_hash": null,
+      "deployment_status": "blocked_operator_netlify_site",
+      "validation_status": "pass",
+      "primary_files": [
+        "package.json",
+        "src/app/page.tsx",
+        "src/app/api/health/route.ts",
+        "netlify.toml",
+        "scripts/check-red-dirt-db-connection.mjs"
+      ],
+      "known_blockers": [
+        "Netlify site not connected — operator must import Grappe501/kelly-calendar"
+      ]
+    },
+    {
+      "id": "KCCC-STEP-03-ENV-SECURITY",
+      "number": 3,
+      "name": "Environment and Security Layer",
+      "status": "pending"
+    }
+  ]
+}

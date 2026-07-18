@@ -27,9 +27,10 @@ Path:     H:\SOSWebsite\kelly-calendar\
 Git:      https://github.com/Grappe501/kelly-calendar
 Deploy:   Netlify (separate from RedDirt)
 Env:      Fallback to H:\SOSWebsite\RedDirt\.env.local
+Current:  Step 2 complete — begin Step 3 (ENV-SECURITY) when assigned
 ```
 
-RedDirt Day 3 work continues in parallel — this lane is independent.
+RedDirt work continues in parallel — this lane is independent.
 
 ---
 

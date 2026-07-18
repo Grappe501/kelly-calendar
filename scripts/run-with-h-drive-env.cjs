@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 /**
  * Kelly Calendar — H: drive environment wrapper.
- * Pins TEMP/TMP and npm cache to H:\SOSWebsite\.local\ on Windows local dev.
+ * Pins TEMP/TMP, npm cache, and Playwright browsers to H:\SOSWebsite\.cache\ on Windows local dev.
  *
  * Usage: node scripts/run-with-h-drive-env.cjs <command> [args...]
- * Example: node scripts/run-with-h-drive-env.cjs npm run dev
  */
 const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
@@ -12,11 +11,14 @@ const path = require("node:path");
 
 const repoRoot = path.resolve(__dirname, "..");
 const workspaceRoot = path.resolve(repoRoot, "..");
-const localRoot = path.join(workspaceRoot, ".local");
-const tempDir = path.join(localRoot, "temp", "kelly-calendar");
-const npmCache = path.join(localRoot, "npm-cache");
+const cacheRoot = path.join(workspaceRoot, ".cache");
+const tempDir = path.join(cacheRoot, "temp");
+const npmCache = path.join(cacheRoot, "npm");
+const playwrightDir = path.join(cacheRoot, "playwright");
+const nextCache = path.join(cacheRoot, "next");
+const prismaCache = path.join(cacheRoot, "prisma");
 
-for (const dir of [localRoot, tempDir, npmCache]) {
+for (const dir of [cacheRoot, tempDir, npmCache, playwrightDir, nextCache, prismaCache]) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
@@ -27,6 +29,8 @@ const isCiBuild = Boolean(
     process.env.CI ||
     process.env.CONTINUOUS_INTEGRATION,
 );
+
+const localBin = path.join(repoRoot, "node_modules", ".bin");
 
 const env = {
   ...process.env,
@@ -39,16 +43,19 @@ if (!env.NODE_OPTIONS?.includes("max-old-space-size")) {
   env.NODE_OPTIONS = [env.NODE_OPTIONS, "--max-old-space-size=4096"].filter(Boolean).join(" ");
 }
 
+const pathParts = [localBin];
 if (!isCiBuild && process.platform === "win32") {
   env.npm_config_cache = npmCache;
-  const nodeDirs = [
-    path.dirname(process.execPath),
-    "C:\\Program Files\\nodejs",
-  ].filter((d, i, a) => d && a.indexOf(d) === i && fs.existsSync(d));
-  if (nodeDirs.length) {
-    env.PATH = `${nodeDirs.join(path.delimiter)}${path.delimiter}${env.PATH ?? ""}`;
-  }
+  env.PLAYWRIGHT_BROWSERS_PATH = playwrightDir;
+  env.NEXT_CACHE_DIR = nextCache;
+  pathParts.push(
+    ...[
+      path.dirname(process.execPath),
+      "C:\\Program Files\\nodejs",
+    ].filter((d, i, a) => d && a.indexOf(d) === i && fs.existsSync(d)),
+  );
 }
+env.PATH = `${pathParts.join(path.delimiter)}${path.delimiter}${env.PATH ?? ""}`;
 
 const args = process.argv.slice(2);
 if (args.length === 0) {

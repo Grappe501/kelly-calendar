@@ -9,11 +9,12 @@
 | **Lane path** | `H:\SOSWebsite\kelly-calendar\` |
 | **GitHub** | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
 | **Deploy target** | Netlify (separate site from RedDirt) |
-| **Election anchor** | Tuesday, November 3, 2026 |
+| **Election anchor** | Configurable (`NEXT_PUBLIC_ELECTION_DATE`, default `2026-11-03`) |
+| **Timezone** | `America/Chicago` |
 
 ---
 
-## What this is
+## Product purpose
 
 Not a generic calendar with campaign colors. **Kelly’s daily operating system** — a mobile-first, AI-assisted command center that answers:
 
@@ -21,52 +22,106 @@ Not a generic calendar with campaign colors. **Kelly’s daily operating system*
 
 ---
 
+## Current application status
+
+| Item | Status |
+|------|--------|
+| **Build step** | **Step 2 of 25 complete** — Standalone Application Scaffold |
+| **Next step** | Step 3 — Environment and Security Layer |
+| **Auth** | Not enabled |
+| **AI** | Not enabled (proposal-only doctrine later) |
+| **Calendar DB tables** | None yet (Step 5) |
+| **Event creation** | Not available (Step 7) |
+
+> **Do not enter real candidate schedule information until authentication and database protections are implemented.**
+
+---
+
+## Technology stack
+
+- Next.js 16 App Router · React 19 · TypeScript
+- PostgreSQL via Prisma placeholder (no models in Step 2)
+- Zod · Vitest · Playwright · ESLint
+- Netlify (`@netlify/plugin-nextjs`)
+
+---
+
 ## Start here (humans and AI)
 
-Read in order:
-
-1. [`docs/MASTER_PRODUCT_CONSTITUTION.md`](docs/MASTER_PRODUCT_CONSTITUTION.md) — vision, scope, AI doctrine, roles
-2. [`docs/H_DRIVE_FOREVER_PROTOCOL.md`](docs/H_DRIVE_FOREVER_PROTOCOL.md) — **mandatory** local toolchain; nothing writes to `C:\`
-3. [`docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md`](docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md) — phased build plan
-4. [`docs/ARCHITECTURE_RULES.md`](docs/ARCHITECTURE_RULES.md) — stack, data model, integration boundaries
-5. [`docs/ENVIRONMENT_PROTOCOL.md`](docs/ENVIRONMENT_PROTOCOL.md) — RedDirt env fallback, secrets, validation
-6. [`docs/GITHUB_NETLIFY_PROTOCOL.md`](docs/GITHUB_NETLIFY_PROTOCOL.md) — commit-after-pass, deploy workflow
-7. [`docs/ACCEPTANCE_GATES.md`](docs/ACCEPTANCE_GATES.md) — quality gates per step
-8. [`docs/CURSOR_BUILD_INSTRUCTIONS.md`](docs/CURSOR_BUILD_INSTRUCTIONS.md) — agent operating manual
+1. [`docs/MASTER_PRODUCT_CONSTITUTION.md`](docs/MASTER_PRODUCT_CONSTITUTION.md)
+2. [`docs/H_DRIVE_FOREVER_PROTOCOL.md`](docs/H_DRIVE_FOREVER_PROTOCOL.md)
+3. [`docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md`](docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md)
+4. [`develop_notes/KCCC_STEP_02_IMPLEMENTATION_REPORT.md`](develop_notes/KCCC_STEP_02_IMPLEMENTATION_REPORT.md)
+5. [`develop_notes/KCCC_NEW_THREAD_HANDOFF.md`](develop_notes/KCCC_NEW_THREAD_HANDOFF.md)
 
 ---
 
-## Current build step
+## Local setup (H-drive)
 
-**Step 1 — Master Product Constitution** ✅ (ratified; constitution v1.0.1)
+```powershell
+New-Item -ItemType Directory -Force -Path `
+  "H:\SOSWebsite\.cache\npm", `
+  "H:\SOSWebsite\.cache\temp", `
+  "H:\SOSWebsite\.cache\playwright", `
+  "H:\SOSWebsite\.cache\next", `
+  "H:\SOSWebsite\.cache\prisma" | Out-Null
 
-Next: **Step 2 — Standalone Application Scaffold** (Next.js, TypeScript, lint, tests, Netlify config)
+$env:TEMP="H:\SOSWebsite\.cache\temp"
+$env:TMP="H:\SOSWebsite\.cache\temp"
+$env:npm_config_cache="H:\SOSWebsite\.cache\npm"
+$env:PLAYWRIGHT_BROWSERS_PATH="H:\SOSWebsite\.cache\playwright"
+
+cd H:\SOSWebsite\kelly-calendar
+node scripts/run-with-h-drive-env.cjs npm install
+```
+
+Optional: copy `.env.example` → `.env.local`, or rely on RedDirt env fallback for `DATABASE_URL` (Step 3 hardens this).
 
 ---
 
-## Hard rules (summary)
-
-- All local files, caches, temp, `node_modules`, and build artifacts stay on **`H:\`**
-- Separate app from RedDirt — no imports from `RedDirt/src/**`
-- Shared secrets via RedDirt `.env.local` fallback — never copy into source
-- `OPENAI_API_KEY` server-only — never `NEXT_PUBLIC_*`
-- AI proposes; humans approve — no silent event publication
-- Commit and push after every completed build pass
-- No deletes of existing SOSWebsite lane files without explicit approval
-
----
-
-## Commands (after Step 2 scaffold exists)
+## Commands
 
 ```powershell
 cd H:\SOSWebsite\kelly-calendar
-node scripts/run-with-h-drive-env.cjs npm install
-node scripts/run-with-h-drive-env.cjs npm run dev
-node scripts/run-with-h-drive-env.cjs npm run typecheck
+npm run dev
+npm run build
+npm run check
+npm run step2:validate
+npm run db:diagnose
 ```
 
 ---
 
-## Lane marker
+## Route inventory
 
-This folder is an independent product lane inside `H:\SOSWebsite`. See `_WORKSPACE_LANE_MARKER.txt`.
+| Route | Purpose |
+|-------|---------|
+| `/` | Today shell |
+| `/calendar` | Calendar shell |
+| `/add` | Add preview (Step 7) |
+| `/search` | Search shell |
+| `/more` | System links |
+| `/system/status` | Status UI |
+| `/api/health` | Health JSON |
+| `/api/system/status` | Capability JSON |
+
+---
+
+## Safety statements
+
+- **Database:** Shared RedDirt Postgres allowed later; Step 2 performs read-only diagnostics only — no migrations/mutations.
+- **Authentication:** Development shell only — not production-safe for candidate schedules.
+- **AI:** No OpenAI calls in Step 2. Future AI is proposal-only with human approval.
+- **Secrets:** Never commit `.env.local`. Never put `OPENAI_API_KEY` in `NEXT_PUBLIC_*`.
+
+---
+
+## Deployment status
+
+GitHub remote exists. Netlify site connection is an operator action (see `develop_notes/KCCC_STEP_02_DEPLOYMENT_REPORT.md`).
+
+---
+
+## Exact next step
+
+**KCCC-STEP-03-ENV-SECURITY** — validated environment loading, RedDirt fallback controls, startup diagnostics.

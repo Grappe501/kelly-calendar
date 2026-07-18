@@ -36,17 +36,20 @@ Every step must pass its gate before starting the next step.
 
 ---
 
-## Step 2 — Application Scaffold
+## Step 2 — Application Scaffold ✅
 
-| Gate | Criteria |
-|------|----------|
-| S2-A | `package.json` with wrapped npm scripts |
-| S2-B | Next.js App Router boots on `npm run dev` |
-| S2-C | `npm run typecheck` exit 0 |
-| S2-D | `npm run build` exit 0 |
-| S2-E | `netlify.toml` + Next plugin configured |
-| S2-F | `GET /api/health` returns 200 |
-| S2-G | `.env.example` documents required vars |
+| Gate | Criteria | Status |
+|------|----------|--------|
+| S2-A | `package.json` with wrapped npm scripts | ✅ |
+| S2-B | Next.js App Router boots on `npm run dev` | ✅ |
+| S2-C | `npm run typecheck` exit 0 | ✅ |
+| S2-D | `npm run build` exit 0 | ✅ |
+| S2-E | `netlify.toml` + Next plugin configured | ✅ |
+| S2-F | `GET /api/health` returns 200 | ✅ |
+| S2-G | `.env.example` documents required vars | ✅ |
+| S2-H | Mobile shell + e2e pass | ✅ |
+| S2-I | Read-only DB diagnose | ✅ |
+| S2-J | Netlify production deploy | BLOCKED (operator) |
 
 ---
 
