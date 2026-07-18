@@ -2,7 +2,9 @@
 # Separate site from RedDirt. Do not place secrets here.
 
 [build]
-  command = "npm ci && npm run build"
+  # prisma generate is required on Netlify: dependency cache skips Prisma Client codegen.
+  # See https://pris.ly/d/netlify-build
+  command = "npm ci && npx prisma generate && npm run build"
   publish = ".next"
 
 [build.environment]
