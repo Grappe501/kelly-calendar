@@ -90,7 +90,7 @@
     { "id": "G85", "name": "Git diff contains no secrets", "result": "PASS" },
     { "id": "G86", "name": "Migration files are committed", "result": "PASS" },
     { "id": "G87", "name": "Git commit exists", "result": "PASS" },
-    { "id": "G88", "name": "GitHub push verified", "result": "PASS" },
+    { "id": "G88", "name": "GitHub push verified", "result": "PASS", "commit": "bf63513" },
     { "id": "G89", "name": "Netlify build verified", "result": "BLOCKED" },
     { "id": "G90", "name": "Build state shows Step 5 complete", "result": "FAIL" },
     { "id": "G91", "name": "Handoff identifies Step 6", "result": "FAIL" },

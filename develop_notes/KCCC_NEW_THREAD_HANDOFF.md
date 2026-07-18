@@ -62,6 +62,9 @@ November 1, 2025
 Migration applied:
 20260718160000_kelly_calendar_foundation
 
+Commit:
+bf63513 (main, pushed to origin)
+
 Database target:
 Hosted PostgreSQL (Supabase pooler) — credentials redacted
 

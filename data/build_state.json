@@ -41,9 +41,10 @@
   "candidate_data_ready": false,
   "database_mutations_authorized": false,
   "external_google_sync_enabled": false,
-  "updated_at": "2026-07-18T15:20:00.000Z",
-  "last_updated": "2026-07-18T15:20:00.000Z",
+  "updated_at": "2026-07-18T15:25:00.000Z",
+  "last_updated": "2026-07-18T15:25:00.000Z",
   "timezone": "America/Chicago",
+  "commit_hash": "bf63513",
   "deployment_status": "blocked_operator_netlify_site",
   "notes": "Step 5 schema + seed applied on kelly_calendar. Step 4 AUTH incomplete — mutations and candidate data remain disabled. Do not claim Step 5 complete until auth gates pass."
 }
