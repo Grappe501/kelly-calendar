@@ -1,0 +1,4 @@
+SOSWebsite product lane: kelly-calendar (Kelly Campaign Command Calendar / KCCC)
+Parent workspace: H:\SOSWebsite
+Independent git repository — not a subdirectory of RedDirt git root.
+Do not import from RedDirt/src/** into this lane without an approved integration packet.
