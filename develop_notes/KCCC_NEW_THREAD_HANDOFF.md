@@ -2,7 +2,7 @@
 
 ```text
 Product:
-Kelly Campaign Command Calendar (federated)
+Kelly Campaign Command Calendar
 
 Workspace:
 H:\SOSWebsite\kelly-calendar
@@ -10,66 +10,35 @@ H:\SOSWebsite\kelly-calendar
 Shared database:
 Existing RedDirt PostgreSQL database
 
-RedDirt path:
-H:\SOSWebsite\RedDirt
-
 Completed:
 KCCC-STEP-01-PRODUCT-CONSTITUTION
 KCCC-STEP-02-APP-SCAFFOLD
-KCCC-STEP-03-ENV-SECURITY
+KCCC-STEP-03-SECURE-INGEST-FAST-ENTRY
 
 Permanent calendar rule:
-Protected events remain visible to authenticated campaign users as occupied time blocks.
+Protected events remain visible as occupied blocks (calendar name + safe title + general location + times).
 
-Default limited display:
-- Primary calendar name
-- Safe event title
-- General location when available and safe
-- Start time
-- End time
+Historical import:
+- Floor: November 1, 2025
+- Public iCal + API contract
+- Stage/review only — no PostgreSQL writes
+- UI: /import/google-calendar
 
-Protected details:
-Removed server-side unless viewer is authorized.
+Fast entry:
+- /add/quick and /add/full
+- Dropdowns, checkboxes, templates, plan-of-action
+- Drafts on H-drive staging (non-live)
 
-Current capabilities:
-- Standalone application
-- Mobile-first shell
-- Environment validation
-- Safe RedDirt environment fallback
-- Secret isolation
-- Security headers
-- Structured logging foundation
-- Safe error foundation
-- Read-only database diagnostics
-- Standing availability policy (weekday blocks + Tuesday Little Rock)
-- Calendar visibility doctrine
-- Safe event-view contracts
-- Visibility resolution prototype
-- Demonstration visibility page (/system/visibility)
+AI:
+- Suggestion contracts only; AI disabled
 
 Not yet available:
-- Authentication
-- User roles
-- Live calendar permissions
-- Calendar tables
-- Event creation
-- Real candidate data
-- AI event creation
-- External calendar synchronization
+- Authentication / RBAC
+- Canonical calendar tables
+- Live Google sync
+- OpenAI calls
+- Netlify production site
 
 Next:
 KCCC-STEP-04-AUTH-RBAC
 ```
-
-## Read first
-
-1. `docs/MASTER_PRODUCT_CONSTITUTION.md` (v1.1.0)
-2. `docs/CALENDAR_FEDERATION_ARCHITECTURE.md`
-3. `develop_notes/KCCC_CALENDAR_VISIBILITY_DOCTRINE.md`
-4. `docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md`
-
-## Notes
-
-- Netlify site still requires operator connection
-- Do not begin Step 4 until this handoff is confirmed
-- Step 5 seeds system calendars + materializes standing availability — no real PII

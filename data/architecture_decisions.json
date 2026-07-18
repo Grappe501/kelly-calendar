@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "decisions": [
     {
       "id": "ADR-015",
@@ -159,6 +159,76 @@
       "date": "2026-07-18",
       "decision": "A canonical event may belong to multiple subcalendars, but one primary calendar supplies the default category label for limited display.",
       "boundary": "Additional memberships are not exposed when they would reveal protected strategy."
+    },
+    {
+      "id": "ADR-036",
+      "title": "Historical Calendar Floor",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "First historical Google Calendar import begins November 1, 2025."
+    },
+    {
+      "id": "ADR-037",
+      "title": "External Events Enter Through Staging",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Google events must be fetched, normalized, deduplicated, reviewed, and approved before canonical persistence."
+    },
+    {
+      "id": "ADR-038",
+      "title": "Public iCal and API Provider Contracts",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Support public iCalendar ingestion and a future OAuth-backed Google Calendar API source."
+    },
+    {
+      "id": "ADR-039",
+      "title": "External Identity Preservation",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Preserve Google event IDs, iCal UIDs, recurrence identities, and source fingerprints."
+    },
+    {
+      "id": "ADR-040",
+      "title": "No Blind Historical Claims",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Imported events do not prove Kelly attended until reviewed."
+    },
+    {
+      "id": "ADR-041",
+      "title": "Structured Entry Before Free Text",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Prefer dropdowns, checkboxes, presets, and structured controls for calendar entry."
+    },
+    {
+      "id": "ADR-042",
+      "title": "Every Event May Carry a Full Operational Plan",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Events may include objectives, program flow, staffing, packing, travel, communications, and follow-up."
+    },
+    {
+      "id": "ADR-043",
+      "title": "AI Suggestions Are Evidence-Based and Selectable",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "AI may recommend values using reviewed patterns; every suggestion requires explicit human selection."
+    },
+    {
+      "id": "ADR-044",
+      "title": "Reviewed History Powers Future Recommendations",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Only reviewed and approved historical events may serve as trusted pattern sources."
+    },
+    {
+      "id": "ADR-045",
+      "title": "Drafts Are Clearly Non-Live",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Step 3 drafts and imports must be visually and technically distinguished from live calendar events."
     }
   ]
 }

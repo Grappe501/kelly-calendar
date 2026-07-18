@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "presets": [
+    "Arrival",
+    "Host greeting",
+    "Private briefing",
+    "Meet leadership",
+    "Photo line",
+    "Candidate remarks",
+    "Questions and answers",
+    "Media availability",
+    "Departure"
+  ]
+}

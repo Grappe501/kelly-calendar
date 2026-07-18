@@ -6,8 +6,9 @@
 |-------|-------|
 | Path | `H:\SOSWebsite\kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
-| Current step | **3 of 25** — Environment, Security & Calendar Visibility |
+| Current step | **3 of 25** — Secure ingest, fast entry & visibility |
 | Next step | Step 4 — Auth + calendar membership RBAC |
+| Historical import floor | **2025-11-01** (Google Calendar staging) |
 | Timezone | `America/Chicago` |
 | Election date | `2026-11-03` (configurable) |
 
@@ -54,6 +55,12 @@ See `.env.example` and `develop_notes/KCCC_ENVIRONMENT_ARCHITECTURE.md`.
 
 ---
 
+## Historical Google import & fast entry
+
+- Import UI: `/import/google-calendar` (preview/stage/review — no PostgreSQL writes)
+- Quick entry: `/add/quick` · Full plan: `/add/full`
+- Staging: `data/ingest_staging/` (gitignored)
+
 ## Commands
 
 ```powershell
@@ -61,12 +68,11 @@ cd H:\SOSWebsite\kelly-calendar
 npm run dev
 npm run build
 npm run check
+npm run import:validate
+npm run drafts:validate
 npm run visibility:validate
-npm run visibility:test
 npm run step3:all
 npm run db:diagnose
-npm run env:readiness
-npm run security:headers
 ```
 
 ---

@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "templates": [
+    "county_visit",
+    "festival",
+    "fundraiser",
+    "candidate_forum",
+    "debate",
+    "press_interview",
+    "social_recording",
+    "volunteer_canvass",
+    "community_meeting",
+    "donor_call_time",
+    "travel_block",
+    "internal_meeting",
+    "personal_protected"
+  ]
+}

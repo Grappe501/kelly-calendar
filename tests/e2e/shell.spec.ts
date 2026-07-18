@@ -43,6 +43,17 @@ test.describe("KCCC Step 3 shell", () => {
     await expect(page.getByText(/Women for Kelly Reception/i).first()).toBeVisible();
   });
 
+  test("import and quick-add pages load", async ({ page }) => {
+    await page.goto("/import/google-calendar");
+    await expect(page.getByRole("heading", { level: 1, name: /Import Google Calendar/i })).toBeVisible();
+    await expect(page.getByText(/November 1, 2025/i).first()).toBeVisible();
+    await expect(page.getByText(/Database writes are disabled/i).first()).toBeVisible();
+
+    await page.goto("/add/quick");
+    await expect(page.getByRole("heading", { level: 1, name: /Quick entry/i })).toBeVisible();
+    await expect(page.getByText(/DRAFT — NOT YET ON LIVE CALENDAR/i).first()).toBeVisible();
+  });
+
   test("APIs return safe JSON without secrets", async ({ request }) => {
     for (const path of [
       "/api/health",
@@ -50,6 +61,7 @@ test.describe("KCCC Step 3 shell", () => {
       "/api/system/environment",
       "/api/system/security",
       "/api/system/visibility",
+      "/api/system/imports",
     ]) {
       const response = await request.get(path);
       expect(response.ok()).toBeTruthy();

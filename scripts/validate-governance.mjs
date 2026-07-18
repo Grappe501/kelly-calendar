@@ -30,8 +30,12 @@ const buildState = JSON.parse(
   fs.readFileSync(path.join(repoRoot, "data/build_state.json"), "utf8"),
 );
 
-if (buildState.current_step !== "KCCC-STEP-03-ENV-SECURITY") {
-  console.error("FAIL: build_state current_step must be KCCC-STEP-03-ENV-SECURITY");
+const allowedStep3 = new Set([
+  "KCCC-STEP-03-ENV-SECURITY",
+  "KCCC-STEP-03-SECURE-INGEST-FAST-ENTRY",
+]);
+if (!allowedStep3.has(buildState.current_step)) {
+  console.error("FAIL: build_state current_step must be revised Step 3");
   failed = true;
 } else {
   console.log("PASS: build_state current_step is Step 3");

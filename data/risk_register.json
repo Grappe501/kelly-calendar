@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "risks": [
     {
       "id": "RISK-016",
@@ -126,6 +126,66 @@
       "title": "Users Mistake Limited Access for Missing Information",
       "status": "mitigated",
       "mitigation": "SafeEventBlock shows limited-access text notice while preserving scheduling context."
+    },
+    {
+      "id": "RISK-037",
+      "title": "Public Calendar Link Exposure",
+      "status": "mitigated",
+      "mitigation": "Redact identifiers; exclude from Git and status APIs; session-only URL handling."
+    },
+    {
+      "id": "RISK-038",
+      "title": "Duplicate Historical Events",
+      "status": "mitigated",
+      "mitigation": "Fingerprints, similarity detection, review queue, idempotent restage awareness."
+    },
+    {
+      "id": "RISK-039",
+      "title": "Recurring Event Explosion",
+      "status": "mitigated",
+      "mitigation": "Bounded ranges and recurrence expansion limits."
+    },
+    {
+      "id": "RISK-040",
+      "title": "Imported Event Mistaken for Confirmed Attendance",
+      "status": "mitigated",
+      "mitigation": "Review enrichment; no blind attendance claims."
+    },
+    {
+      "id": "RISK-041",
+      "title": "Incomplete Historical Catalogue",
+      "status": "open",
+      "mitigation": "Disclose coverage, review counts, gaps, sync dates in future reports."
+    },
+    {
+      "id": "RISK-042",
+      "title": "Fast Form Becomes Overwhelming",
+      "status": "mitigated",
+      "mitigation": "Quick mode, progressive sections, templates."
+    },
+    {
+      "id": "RISK-043",
+      "title": "Checkbox Overload",
+      "status": "mitigated",
+      "mitigation": "Group checklists by phase; show subsets by default."
+    },
+    {
+      "id": "RISK-044",
+      "title": "AI Prefills Incorrect Information",
+      "status": "mitigated",
+      "mitigation": "AI disabled; suggestions evidence-based and uncommitted until selected."
+    },
+    {
+      "id": "RISK-045",
+      "title": "Planning Details Leak Through Limited View",
+      "status": "mitigated",
+      "mitigation": "Separate safe summaries from protected plan sections (visibility doctrine)."
+    },
+    {
+      "id": "RISK-046",
+      "title": "Staging Files Enter Git",
+      "status": "mitigated",
+      "mitigation": "ingest_staging gitignore + validation gates."
     }
   ]
 }

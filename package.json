@@ -26,9 +26,14 @@
     "db:diagnose": "node scripts/check-red-dirt-db-connection.mjs",
     "visibility:validate": "node scripts/validate-calendar-visibility-policy.mjs",
     "visibility:test": "node scripts/run-with-h-drive-env.cjs vitest run tests/unit/calendar-security",
+    "import:validate": "node scripts/validate-google-import-foundation.mjs",
+    "import:preview": "node scripts/preview-google-calendar-import.mjs",
+    "import:staging:validate": "node scripts/validate-import-staging.mjs",
+    "drafts:validate": "node scripts/validate-event-draft-foundation.mjs",
+    "templates:validate": "node scripts/validate-event-templates.mjs",
     "step3:validate": "node scripts/validate-step3.mjs",
     "status": "node scripts/print-build-status.mjs",
-    "check": "npm run drive:validate && npm run governance:validate && npm run scaffold:validate && npm run env:validate && npm run env:safety && npm run visibility:validate && npm run lint && npm run typecheck && npm run test && npm run step3:validate",
+    "check": "npm run drive:validate && npm run governance:validate && npm run scaffold:validate && npm run env:validate && npm run env:safety && npm run visibility:validate && npm run import:validate && npm run import:staging:validate && npm run drafts:validate && npm run templates:validate && npm run lint && npm run typecheck && npm run test && npm run step3:validate",
     "step3:all": "npm run check && npm run build && npm run security:bundle && npm run db:diagnose && npm run env:readiness && npm run security:headers && npm run status"
   },
   "dependencies": {

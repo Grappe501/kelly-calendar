@@ -50,6 +50,18 @@ export default function MorePage() {
           <Link className="button secondary" href="/system/security">
             Security status
           </Link>
+          <Link className="button secondary" href="/system/visibility">
+            Calendar visibility
+          </Link>
+          <Link className="button secondary" href="/system/imports">
+            Imports status
+          </Link>
+          <Link className="button secondary" href="/import/google-calendar">
+            Google Calendar import
+          </Link>
+          <Link className="button secondary" href="/add/quick">
+            Quick event entry
+          </Link>
           <Link className="button secondary" href="/api/health">
             Health endpoint (JSON)
           </Link>

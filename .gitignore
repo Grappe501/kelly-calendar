@@ -48,3 +48,8 @@ prisma/*.db-journal
 # Temporary exports
 data/exports/
 *.sql.gz
+
+# Import / draft staging (keep folder + README; ignore contents)
+data/ingest_staging/**
+!data/ingest_staging/.gitignore
+!data/ingest_staging/README.md
