@@ -314,6 +314,76 @@
       "status": "accepted",
       "date": "2026-07-18",
       "decision": "Database schema may be applied before auth is complete, but live mutations and candidate-data entry stay disabled until Step 4 gates pass."
+    },
+    {
+      "id": "ADR-058",
+      "title": "Operational Intelligence Precedes Final UI",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Workflow, readiness, conflict, timeline, and recommendation logic are built before the final mobile Command Calendar interface."
+    },
+    {
+      "id": "ADR-059",
+      "title": "Deterministic Rules Before AI",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Explicit campaign rules generate recommendations before probabilistic AI is used."
+    },
+    {
+      "id": "ADR-060",
+      "title": "Workflow Applications Are Versioned",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Applied workflows preserve definition version and do not change when the source workflow is later edited."
+    },
+    {
+      "id": "ADR-061",
+      "title": "Readiness Is Explainable",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Every readiness score includes domain weights, missing items, blockers, and next actions."
+    },
+    {
+      "id": "ADR-062",
+      "title": "Critical Blockers Override Numeric Scores",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "An event cannot be labeled ready while a critical safety, travel, approval, or compliance blocker remains."
+    },
+    {
+      "id": "ADR-063",
+      "title": "Suggestions Require Human Approval",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Workflow expansions and recommendations are previews until explicitly accepted."
+    },
+    {
+      "id": "ADR-064",
+      "title": "Historical Patterns Use Reviewed Evidence",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Only reviewed and eligible historical records may contribute trusted operational patterns."
+    },
+    {
+      "id": "ADR-065",
+      "title": "Conflicts Are Advisory",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Conflict detection may identify and recommend, but may not move, cancel, or alter events autonomously."
+    },
+    {
+      "id": "ADR-066",
+      "title": "Readiness and Completion Are Separate",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Preparation readiness and post-event completion use separate calculations."
+    },
+    {
+      "id": "ADR-067",
+      "title": "Command Summaries Are Permission-Filtered",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Operational summaries use the same protected projection and section-permission system as individual event views."
     }
   ]
 }

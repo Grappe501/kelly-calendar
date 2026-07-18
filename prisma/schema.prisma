@@ -727,6 +727,9 @@ model Event {
   externalIdentities   ExternalEventIdentity[]
   aiSuggestionRuns     AiSuggestionRun[]
   dataAccessLogs       DataAccessLog[]
+  workflowApplications EventWorkflowApplication[]
+  readinessSnapshots   EventReadinessSnapshot[]
+  operationalRecommendations OperationalRecommendationRecord[]
 
   @@index([startsAt, endsAt])
   @@index([status])
@@ -1669,13 +1672,150 @@ model AiSuggestionDecision {
 }
 
 model EventPatternSignal {
-  id          String   @id @default(cuid())
-  signalKey   String
-  signalValue Json?
-  sourceEventId String?
-  reviewedOnly Boolean @default(true)
-  createdAt   DateTime @default(now())
+  id                 String    @id @default(cuid())
+  signalKey          String
+  patternType        String?
+  scopeType          String?   @default("GLOBAL")
+  scopeKey           String?
+  sampleSize         Int       @default(0)
+  dateRangeStart     DateTime?
+  dateRangeEnd       DateTime?
+  confidence         Float?
+  signalValue        Json?
+  evidenceSummary    String?
+  calculationVersion String?
+  calculatedAt       DateTime  @default(now())
+  expiresAt          DateTime?
+  isActive           Boolean   @default(true)
+  sourceEventId      String?
+  reviewedOnly       Boolean   @default(true)
+  createdAt          DateTime  @default(now())
 
   @@index([signalKey])
+  @@index([patternType, scopeType, scopeKey])
+  @@schema("kelly_calendar")
+}
+
+// ─── Step 5.5 Operational intelligence persistence ───────────────────
+
+model EventWorkflowApplication {
+  id                   String   @id @default(cuid())
+  eventId              String
+  workflowDefinitionId String
+  workflowVersion      Int
+  applicationMode      String
+  appliedByUserId      String?
+  appliedAt            DateTime @default(now())
+  generatedSummary     Json?
+  sourceEventVersion   Int?
+  createdAt            DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId])
+  @@index([workflowDefinitionId, workflowVersion])
+  @@schema("kelly_calendar")
+}
+
+model EventReadinessSnapshot {
+  id               String   @id @default(cuid())
+  eventId          String
+  eventVersion     Int
+  calculationVersion String
+  overallScore     Int
+  readinessLevel   String
+  domainScores     Json
+  criticalBlockers Json?
+  calculatedAt     DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId, calculatedAt])
+  @@schema("kelly_calendar")
+}
+
+model OperationalRecommendationRecord {
+  id                 String   @id @default(cuid())
+  eventId            String
+  recommendationKey  String
+  recommendationType String
+  title              String
+  description        String?
+  confidence         Float
+  priority           String
+  action             String
+  fieldPath          String?
+  proposedValue      Json?
+  reasons            Json
+  evidence           Json?
+  requiresHumanApproval Boolean @default(true)
+  status             String   @default("PENDING")
+  eventVersion       Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  event     Event                                @relation(fields: [eventId], references: [id])
+  decisions OperationalRecommendationDecision[]
+
+  @@index([eventId, status])
+  @@index([recommendationKey])
+  @@schema("kelly_calendar")
+}
+
+model OperationalRecommendationDecision {
+  id               String   @id @default(cuid())
+  recommendationId String
+  decision         String
+  decidedByUserId  String?
+  decidedAt        DateTime @default(now())
+  modifiedValue    Json?
+  reason           String?
+  eventVersion     Int?
+
+  recommendation OperationalRecommendationRecord @relation(fields: [recommendationId], references: [id])
+
+  @@index([recommendationId])
+  @@schema("kelly_calendar")
+}
+
+model OperationalConflictRecord {
+  id              String   @id @default(cuid())
+  conflictKey     String
+  conflictType    String
+  severity        String
+  primaryEntityType String
+  primaryEntityId String
+  primaryLabel    String?
+  relatedEntityType String?
+  relatedEntityId String?
+  relatedLabel    String?
+  startsAt        DateTime?
+  endsAt          DateTime?
+  explanation     String
+  evidence        Json?
+  suggestedResolutions Json?
+  status          String   @default("OPEN")
+  automaticallyResolved Boolean @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  actions OperationalConflictAction[]
+
+  @@unique([conflictKey])
+  @@index([severity, status])
+  @@schema("kelly_calendar")
+}
+
+model OperationalConflictAction {
+  id          String   @id @default(cuid())
+  conflictId  String
+  action      String
+  actorUserId String?
+  reason      String?
+  createdAt   DateTime @default(now())
+
+  conflict OperationalConflictRecord @relation(fields: [conflictId], references: [id])
+
+  @@index([conflictId])
   @@schema("kelly_calendar")
 }

@@ -7,9 +7,6 @@ Kelly Campaign Command Calendar
 Workspace:
 H:\SOSWebsite\kelly-calendar
 
-Shared PostgreSQL database:
-Existing RedDirt database infrastructure (hosted)
-
 Owned schema:
 kelly_calendar
 
@@ -18,72 +15,41 @@ KCCC-STEP-01-PRODUCT-CONSTITUTION
 KCCC-STEP-02-APP-SCAFFOLD
 KCCC-STEP-03-SECURE-INGEST-FAST-ENTRY
 
-Partial (schema foundation; auth-gated):
+Partial:
 KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR
+KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE
 
 NOT completed:
 KCCC-STEP-04-AUTH-RBAC
 
-Migrations applied:
-- 20260718160000_kelly_calendar_foundation
-- 20260718163000_kelly_calendar_additive_fields
+Step 5.5 capabilities (compute + registry):
+- Workflow definition registry (30+ versioned workflows)
+- Workflow preview / duplicate detection (apply gated)
+- Deterministic recommendation rules
+- Event readiness + completion engines
+- Timeline + accelerated milestones
+- Candidate run-of-show generator
+- Conflict / travel feasibility / staff overlap
+- Historical patterns (reviewed-only)
+- County coverage + candidate workload
+- Fast-entry recommendations (non-persistent)
+- Command summary builder
+- OI persistence tables migration
+- /system/step-5-5 validation pages
 
-Database capabilities (schema + seed):
-- Dedicated application schema kelly_calendar (60 tables)
-- Command Calendar roll-up surface + 16 specialized calendars
-- Calendar groups, memberships, team bindings, roll-up rules, saved views
-- Canonical events + event numbers + multi-calendar memberships
-- Visibility overrides + section permissions
-- Operational plans (objectives, program flow, packing, staffing, actions, communications, travel)
-- People/organizations with externalCrmId linkage fields
-- 75 Arkansas counties + regions
-- Historical Google import persistence + external identities
-- Import approval transaction contracts (mutations gated)
-- Templates, approvals, audit, AI suggestion tables
-- Protected APIs return 401 until Step 4
-
-Permanent limited-view rule:
-- Primary calendar name
-- Safe event title
-- General location when safe
-- Start / end times
-
-Historical floor:
-November 1, 2025
-
-Database target:
-Hosted PostgreSQL (Supabase pooler) — credentials redacted
-
-RedDirt integrity:
-Structural before/after difference: 0
-
-Live flags (honest):
+Live flags:
 - authentication_complete: false
 - database_mutations_authorized: false
 - candidate_data_ready: false
-- live_calendar_data_enabled: false
-
-Missing Step 4 gates:
-- Auth provider module
-- session.ts identity contract
-- System roles
-- Team memberships
-- Session validation
-- Protected route middleware (beyond mutation gate)
+- ai_enabled: false
+- autonomous_event_changes: false
 
 Next required:
 KCCC-STEP-04-AUTH-RBAC
 
-Then resume Step 5 live mutation wiring.
+Then:
+Finish Step 5.5 transactional apply/decision wiring
+Then KCCC-STEP-06-MOBILE-COMMAND-SHELL
 
-Do not begin:
-KCCC-STEP-06-MOBILE-COMMAND-SHELL
-
-Netlify:
-Operator site connection still required
-
-Blockers:
-1. Step 4 authentication / RBAC
-2. Netlify site + injected env
-3. Optional SHADOW_DATABASE_URL for full migrate-diff
+Do not begin Step 6 now.
 ```

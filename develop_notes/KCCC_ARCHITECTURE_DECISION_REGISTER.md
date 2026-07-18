@@ -33,3 +33,16 @@ Occupied time visible; calendar name; safe titles; location disclosure; server s
 - ADR-055 Audit Records Are Redacted
 - ADR-056 Reference Seeds Are Idempotent
 - ADR-057 Step 5 Schema Without Step 4 Keeps Mutations Off
+
+## Operational intelligence (ADR-058–067)
+
+- ADR-058 Operational Intelligence Precedes Final UI
+- ADR-059 Deterministic Rules Before AI
+- ADR-060 Workflow Applications Are Versioned
+- ADR-061 Readiness Is Explainable
+- ADR-062 Critical Blockers Override Numeric Scores
+- ADR-063 Suggestions Require Human Approval
+- ADR-064 Historical Patterns Use Reviewed Evidence
+- ADR-065 Conflicts Are Advisory
+- ADR-066 Readiness and Completion Are Separate
+- ADR-067 Command Summaries Are Permission-Filtered

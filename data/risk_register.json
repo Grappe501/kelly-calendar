@@ -258,6 +258,66 @@
       "title": "Migration Applied to Wrong Database",
       "status": "mitigated",
       "mitigation": "Target classification, operator preflight, explicit environment report, migration gate flag."
+    },
+    {
+      "id": "RISK-065",
+      "title": "Workflow Engine Creates Duplicate Plan Items",
+      "status": "mitigated",
+      "mitigation": "Preview, duplicate matching, transactional application after approval."
+    },
+    {
+      "id": "RISK-066",
+      "title": "Readiness Score Creates False Confidence",
+      "status": "mitigated",
+      "mitigation": "Critical blocker override, transparent domains, calculation version."
+    },
+    {
+      "id": "RISK-067",
+      "title": "Recommendation Rules Become Unmanageable",
+      "status": "open",
+      "mitigation": "Typed registry, precedence, validation scripts, coverage reports."
+    },
+    {
+      "id": "RISK-068",
+      "title": "Historical Patterns Reinforce Bad Practices",
+      "status": "mitigated",
+      "mitigation": "Reviewed records only, confidence, sample size, human approval."
+    },
+    {
+      "id": "RISK-069",
+      "title": "Rules Override Protected Visibility",
+      "status": "mitigated",
+      "mitigation": "Protected/safety rules outrank public promotion recommendations."
+    },
+    {
+      "id": "RISK-070",
+      "title": "Timeline Generator Creates Impossible Deadlines",
+      "status": "mitigated",
+      "mitigation": "Missed and accelerated classifications; no silent past deadlines."
+    },
+    {
+      "id": "RISK-071",
+      "title": "Too Many Recommendations Overwhelm Users",
+      "status": "open",
+      "mitigation": "Ranking, priority, next-best actions, reject/defer suppression."
+    },
+    {
+      "id": "RISK-072",
+      "title": "Conflict Warnings Become Noise",
+      "status": "open",
+      "mitigation": "Severity levels, deduplication, acknowledgment after Step 4."
+    },
+    {
+      "id": "RISK-073",
+      "title": "Candidate Workload Analysis Treated as Medical Advice",
+      "status": "mitigated",
+      "mitigation": "Operational language only; explicit non-medical note."
+    },
+    {
+      "id": "RISK-074",
+      "title": "Step 5.5 Becomes a Replacement for Step 6",
+      "status": "mitigated",
+      "mitigation": "Minimal /system validation pages only; final UX reserved for Step 6."
     }
   ]
 }

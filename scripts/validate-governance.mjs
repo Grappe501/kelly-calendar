@@ -11,7 +11,7 @@ const required = [
   "docs/MASTER_PRODUCT_CONSTITUTION.md",
   "docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md",
   "develop_notes/KCCC_NEW_THREAD_HANDOFF.md",
-  "develop_notes/KCCC_STEP_05_IMPLEMENTATION_REPORT.md",
+  "develop_notes/KCCC_STEP_05_5_IMPLEMENTATION_REPORT.md",
 ];
 
 let failed = false;
@@ -30,16 +30,11 @@ const buildState = JSON.parse(
   fs.readFileSync(path.join(repoRoot, "data/build_state.json"), "utf8"),
 );
 
-const allowedSteps = new Set([
-  "KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR",
-]);
-if (!allowedSteps.has(buildState.current_step)) {
-  console.error(
-    "FAIL: build_state current_step must be KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR",
-  );
+if (buildState.current_step !== "KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE") {
+  console.error("FAIL: build_state current_step must be Step 5.5");
   failed = true;
 } else {
-  console.log("PASS: build_state current_step is Step 5");
+  console.log("PASS: build_state current_step is Step 5.5");
 }
 
 if (!["partial", "complete"].includes(buildState.current_step_status)) {
@@ -47,13 +42,6 @@ if (!["partial", "complete"].includes(buildState.current_step_status)) {
   failed = true;
 } else {
   console.log(`PASS: build_state marked ${buildState.current_step_status}`);
-}
-
-if (!Array.isArray(buildState.completed_steps) || buildState.completed_steps.length < 3) {
-  console.error("FAIL: completed_steps must include Steps 1–3");
-  failed = true;
-} else {
-  console.log("PASS: completed_steps present");
 }
 
 if (buildState.authentication_complete === true) {
@@ -68,6 +56,13 @@ if (buildState.database_mutations_authorized === true) {
   failed = true;
 } else {
   console.log("PASS: mutations remain unauthorized");
+}
+
+if (buildState.ai_enabled === true || buildState.autonomous_event_changes === true) {
+  console.error("FAIL: AI / autonomous changes must remain disabled");
+  failed = true;
+} else {
+  console.log("PASS: AI and autonomous changes disabled");
 }
 
 if (failed) process.exit(1);

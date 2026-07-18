@@ -66,6 +66,18 @@
       ]
     },
     {
+      "id": "KCCC-STEP-05.5-OPERATIONAL-INTELLIGENCE",
+      "number": 5.5,
+      "name": "Operational Intelligence and Workflow Engine",
+      "status": "partial",
+      "started_at": "2026-07-18T15:30:00.000Z",
+      "migration": "20260718170000_operational_intelligence_foundation",
+      "known_blockers": [
+        "Step 4 AUTH-RBAC incomplete — apply/decision APIs gated",
+        "Netlify site not connected"
+      ]
+    },
+    {
       "id": "KCCC-STEP-06-MOBILE-COMMAND-SHELL",
       "number": 6,
       "name": "Mobile Command Shell",
