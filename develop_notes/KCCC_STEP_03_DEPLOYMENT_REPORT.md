@@ -1,5 +1,5 @@
 # Step 3 Deployment Report (Revised)
 
-- GitHub: push in closeout
-- Netlify: BLOCKED (operator site connection)
-- Import staging and drafts remain local H-drive artifacts (not deployed secrets)
+- **GitHub:** `main` @ `ca6863f` pushed
+- **Netlify:** BLOCKED (operator must connect site)
+- Import staging/drafts stay on H-drive locally; never commit ICS/source URLs

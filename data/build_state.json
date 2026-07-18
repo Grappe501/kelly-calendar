@@ -35,7 +35,7 @@
   "updated_at": "2026-07-18T15:55:00.000Z",
   "last_updated": "2026-07-18T15:55:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": null,
+  "commit_hash": "ca6863f",
   "deployment_status": "blocked_operator_netlify_site",
   "standing_availability_policy": "encoded",
   "notes": "Revised Step 3: visibility + Google historical staging import + fast/full entry + AI contracts. No PostgreSQL event writes."
