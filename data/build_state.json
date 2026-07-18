@@ -25,7 +25,7 @@
   "updated_at": "2026-07-18T15:15:00.000Z",
   "last_updated": "2026-07-18T15:15:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": null,
+  "commit_hash": "a5c818d",
   "deployment_status": "blocked_operator_netlify_site",
   "standing_availability_policy": "encoded",
   "notes": "Step 3 complete with calendar visibility doctrine. Default limited display: calendar name + safe title + general location + times. No calendar tables. No live candidate data."
