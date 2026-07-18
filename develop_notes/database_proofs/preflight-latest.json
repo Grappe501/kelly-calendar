@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-07-18T15:05:37.206Z",
+  "targetClass": "hosted postgresql",
+  "hosted": true,
+  "databaseReachable": true,
+  "directUrlConfigured": true,
+  "kellyCalendarSchemaPresent": false,
+  "kellyCalendarTableCount": 0,
+  "publicSchemaTableCount": 303,
+  "pendingMigrations": [
+    "20260718160000_kelly_calendar_foundation"
+  ],
+  "authenticationComplete": false,
+  "mutationsAuthorized": false,
+  "forbiddenSqlDetected": false,
+  "notes": "Step 4 AUTH incomplete — live mutations remain disabled even if schema is applied."
+}

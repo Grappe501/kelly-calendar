@@ -11,7 +11,7 @@ const required = [
   "docs/MASTER_PRODUCT_CONSTITUTION.md",
   "docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md",
   "develop_notes/KCCC_NEW_THREAD_HANDOFF.md",
-  "develop_notes/KCCC_STEP_03_IMPLEMENTATION_REPORT.md",
+  "develop_notes/KCCC_STEP_05_IMPLEMENTATION_REPORT.md",
 ];
 
 let failed = false;
@@ -30,22 +30,23 @@ const buildState = JSON.parse(
   fs.readFileSync(path.join(repoRoot, "data/build_state.json"), "utf8"),
 );
 
-const allowedStep3 = new Set([
-  "KCCC-STEP-03-ENV-SECURITY",
-  "KCCC-STEP-03-SECURE-INGEST-FAST-ENTRY",
+const allowedSteps = new Set([
+  "KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR",
 ]);
-if (!allowedStep3.has(buildState.current_step)) {
-  console.error("FAIL: build_state current_step must be revised Step 3");
+if (!allowedSteps.has(buildState.current_step)) {
+  console.error(
+    "FAIL: build_state current_step must be KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR",
+  );
   failed = true;
 } else {
-  console.log("PASS: build_state current_step is Step 3");
+  console.log("PASS: build_state current_step is Step 5");
 }
 
-if (buildState.current_step_status !== "complete") {
-  console.error("FAIL: build_state current_step_status must be complete");
+if (!["partial", "complete"].includes(buildState.current_step_status)) {
+  console.error("FAIL: build_state current_step_status must be partial or complete");
   failed = true;
 } else {
-  console.log("PASS: build_state marked complete");
+  console.log(`PASS: build_state marked ${buildState.current_step_status}`);
 }
 
 if (!Array.isArray(buildState.completed_steps) || buildState.completed_steps.length < 3) {
@@ -53,6 +54,20 @@ if (!Array.isArray(buildState.completed_steps) || buildState.completed_steps.len
   failed = true;
 } else {
   console.log("PASS: completed_steps present");
+}
+
+if (buildState.authentication_complete === true) {
+  console.error("FAIL: authentication_complete must remain false until Step 4");
+  failed = true;
+} else {
+  console.log("PASS: authentication_complete remains false");
+}
+
+if (buildState.database_mutations_authorized === true) {
+  console.error("FAIL: database_mutations_authorized must remain false until Step 4");
+  failed = true;
+} else {
+  console.log("PASS: mutations remain unauthorized");
 }
 
 if (failed) process.exit(1);

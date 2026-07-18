@@ -2,18 +2,28 @@
 
 ## Principle
 
-KCCC may share RedDirt’s PostgreSQL **instance** and use approved secrets via env fallback, but must not casually write RedDirt application tables.
+KCCC may share RedDirt’s PostgreSQL **instance** and use approved secrets via env fallback, but must not alter RedDirt-owned schemas, tables, migrations, or source.
 
-## Step 2–3 rules
+## Ownership
 
-- Read-only probe only: `SELECT 1` (+ optional `current_schema()`)
-- Env fallback allowlist for `DATABASE_URL` / `DIRECT_URL`
-- No migrations
-- No `prisma db push`
-- No seeding
-- No schema creation
+| Concern | Owner |
+|---------|--------|
+| RedDirt `public` / app tables | RedDirt (read-only to KCCC) |
+| Schema `kelly_calendar` | Kelly Calendar |
+| Migration history for KCCC | `kelly-calendar/prisma/migrations` |
+| Auth identities (future) | Step 4 — stable user IDs, no RedDirt table mutation |
 
-## Later
+## Step 5 rules
 
-- Step 5 introduces `kelly_calendar` namespace / namespaced tables
-- RedDirt migrations remain owned by RedDirt
+- All KCCC tables in `kelly_calendar.*`
+- Preflight + classify target before migrate
+- Capture RedDirt structural snapshot before/after (expect diff **0**)
+- `prisma migrate deploy` only (never `migrate reset`, never production `db push`)
+- Reference seed only inside `kelly_calendar`
+- No real PII / no Google source URLs in plaintext seed
+
+## Forbidden
+
+- ALTER/DROP/RENAME RedDirt objects
+- Changing RedDirt migrations or Prisma under `H:\SOSWebsite\RedDirt`
+- Resetting the shared database

@@ -1,13 +1,1676 @@
-// Kelly Campaign Command Calendar — Prisma placeholder (Step 2)
-// NO MODELS. Step 5 owns the first calendar migration and kelly_calendar namespace.
-// Do not run migrate / db push from this step.
+// Kelly Campaign Command Calendar — owned schema: kelly_calendar
+// Step 5 foundation. Do not place tables in public.
+// Live mutations require Step 4 AUTH-RBAC.
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+  schemas   = ["kelly_calendar"]
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────
+
+enum CalendarType {
+  COMMAND
+  CANDIDATE
+  TRAVEL
+  FUNDRAISING
+  PUBLIC_EVENTS
+  INTERNAL_MEETINGS
+  COMMUNICATIONS
+  SOCIAL_MEDIA
+  PRESS_MEDIA
+  FIELD
+  COUNTY_ACTIVITY
+  VOLUNTEER
+  COMPLIANCE
+  STAFF_WORK
+  DEBATE_PREP
+  SURROGATE
+  PROTECTED_PERSONAL
+  CUSTOM
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarAccessLevel {
+  NO_ACCESS
+  AVAILABILITY_ONLY
+  VIEW_LIMITED
+  VIEW_FULL
+  CONTRIBUTE
+  EDIT
+  MANAGE
+  ADMINISTER
+
+  @@schema("kelly_calendar")
+}
+
+enum EventVisibilityLevel {
+  FULL
+  LIMITED
+  TITLE_LOCATION
+  BUSY_WITH_CATEGORY
+  BUSY_ONLY
+  CAMPAIGN_AUTHENTICATED
+  TEAM_ONLY
+  LEADERSHIP_ONLY
+  NAMED_USERS
+  PUBLIC
+  PROTECTED
+
+  @@schema("kelly_calendar")
+}
+
+enum LocationDisclosure {
+  EXACT
+  VENUE
+  CITY
+  COUNTY
+  REGION
+  HIDDEN
+
+  @@schema("kelly_calendar")
+}
+
+enum RollupMode {
+  FULL_DETAIL
+  TITLE_LOCATION
+  BUSY_WITH_CATEGORY
+  BUSY_ONLY
+  MILESTONES_ONLY
+  REQUIRED_ACTIONS_ONLY
+  DO_NOT_ROLL_UP
+
+  @@schema("kelly_calendar")
+}
+
+enum EventStatus {
+  DRAFT
+  REQUESTED
+  TENTATIVE
+  HOLD
+  UNDER_REVIEW
+  APPROVED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  DECLINED
+  POSTPONED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum HistoricalReviewStatus {
+  UNREVIEWED
+  NEEDS_EDIT
+  NEEDS_CLASSIFICATION
+  APPROVED
+  REJECTED
+  MERGED
+  DUPLICATE
+  INCOMPLETE
+
+  @@schema("kelly_calendar")
+}
+
+enum ChecklistState {
+  NOT_NEEDED
+  NEEDED
+  ASSIGNED
+  IN_PROGRESS
+  PACKED
+  LOADED
+  DELIVERED
+  COMPLETED
+  RETURNED
+  MISSING
+  BLOCKED
+
+  @@schema("kelly_calendar")
+}
+
+enum TaskStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  BLOCKED
+  WAITING
+  READY_FOR_REVIEW
+  COMPLETE
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum ApprovalStatus {
+  NOT_REQUIRED
+  PENDING
+  APPROVED
+  REJECTED
+  CHANGES_REQUESTED
+  WITHDRAWN
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalProvider {
+  GOOGLE_CALENDAR
+  APPLE_CALENDAR
+  MICROSOFT_OUTLOOK
+  ICS
+  MANUAL
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum SyncDirection {
+  IMPORT_ONLY
+  EXPORT_ONLY
+  TWO_WAY
+  NONE
+
+  @@schema("kelly_calendar")
+}
+
+enum SyncStatus {
+  NOT_CONFIGURED
+  PENDING
+  ACTIVE
+  PAUSED
+  ERROR
+  DISCONNECTED
+
+  @@schema("kelly_calendar")
+}
+
+enum EventMembershipType {
+  PRIMARY
+  RELATED
+  GENERATED
+  REFERENCE
+
+  @@schema("kelly_calendar")
+}
+
+enum EventSection {
+  BASIC
+  LOCATION
+  PARTICIPANTS
+  PRIVATE_NOTES
+  PROGRAM_FLOW
+  PACKING
+  STAFFING
+  TRAVEL
+  COMMUNICATIONS
+  SOCIAL_MEDIA
+  FUNDRAISING
+  COMPLIANCE
+  SECURITY
+  FILES
+  FOLLOWUP
+  OUTCOMES
+  AUDIT
+  AI_SUGGESTIONS
+
+  @@schema("kelly_calendar")
+}
+
+enum VisibilityTargetType {
+  USER
+  TEAM
+  ROLE
+  CALENDAR_MEMBER
+  AUTHENTICATED_CAMPAIGN
+  PUBLIC
+
+  @@schema("kelly_calendar")
+}
+
+enum ActionPhase {
+  PRE_EVENT
+  EVENT_DAY
+  POST_EVENT
+  TRAVEL
+  COMMUNICATIONS
+  COMPLIANCE
+  FOLLOWUP
+
+  @@schema("kelly_calendar")
+}
+
+enum StaffRoleType {
+  EVENT_LEAD
+  CANDIDATE_LEAD
+  ADVANCE_LEAD
+  TRAVEL_LEAD
+  DRIVER
+  COMMUNICATIONS_LEAD
+  PRESS_LIAISON
+  PHOTOGRAPHER
+  VIDEOGRAPHER
+  VOLUNTEER_LEAD
+  FINANCE_LEAD
+  COMPLIANCE_LEAD
+  SECURITY_LEAD
+  FOLLOWUP_OWNER
+  CUSTOM
+
+  @@schema("kelly_calendar")
+}
+
+enum PackingCategory {
+  CAMPAIGN_MATERIAL
+  CANDIDATE_MATERIAL
+  TECHNOLOGY
+  SIGNAGE
+  VOLUNTEER
+  HOSPITALITY
+  WEATHER
+  SAFETY
+  PERSONAL
+  CUSTOM
+
+  @@schema("kelly_calendar")
+}
+
+enum FlowActivityType {
+  ARRIVAL
+  HOST_GREETING
+  PRIVATE_BRIEFING
+  LEADERSHIP_MEETING
+  PHOTO_LINE
+  CANDIDATE_REMARKS
+  QUESTIONS
+  MEDIA_AVAILABILITY
+  VOLUNTEER_GREETING
+  MEAL
+  TRAVEL_TRANSITION
+  DEPARTURE
+  FOLLOWUP
+  CUSTOM
+
+  @@schema("kelly_calendar")
+}
+
+enum ObjectiveType {
+  BUILD_RELATIONSHIPS
+  EARN_MEDIA
+  RECRUIT_VOLUNTEERS
+  RAISE_MONEY
+  MEET_VOTERS
+  REACH_TARGET_AUDIENCE
+  SUPPORT_ORGANIZATION
+  DELIVER_MESSAGE
+  GATHER_INFORMATION
+  PREPARE_CANDIDATE
+  COMPLIANCE
+  CREATE_CONTENT
+  INTERNAL_COORDINATION
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum CommChannel {
+  EMAIL
+  SMS
+  WEBSITE
+  FACEBOOK
+  INSTAGRAM
+  X
+  TIKTOK
+  YOUTUBE
+  PRESS
+  PRINT
+  INTERNAL
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum CommType {
+  ANNOUNCEMENT
+  PROMOTION
+  REMINDER
+  PRESS_ADVISORY
+  PRESS_RELEASE
+  TALKING_POINTS
+  SPEECH
+  LIVESTREAM
+  PHOTO
+  VIDEO
+  RECAP
+  THANK_YOU
+  RAPID_RESPONSE
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum TravelSegmentType {
+  DRIVE
+  FLIGHT
+  TRAIN
+  WALK
+  RIDESHARE
+  RENTAL
+  HOTEL
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum PersonEventRole {
+  HOST
+  PRIMARY_CONTACT
+  ATTENDEE
+  INTRODUCER
+  SPEAKER
+  MEDIA
+  ELECTED_OFFICIAL
+  DONOR
+  VOLUNTEER
+  STAFF
+  SECURITY
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum DuplicateStatus {
+  NEW
+  EXACT_DUPLICATE
+  LIKELY_DUPLICATE
+  POSSIBLE_DUPLICATE
+  NEEDS_REVIEW
+
+  @@schema("kelly_calendar")
+}
+
+enum ImportRunStatus {
+  STARTED
+  FETCHED
+  NORMALIZED
+  STAGED
+  PARTIAL
+  FAILED
+  COMPLETED
+
+  @@schema("kelly_calendar")
+}
+
+enum AiSuggestionDecisionType {
+  ACCEPTED
+  REJECTED
+  MODIFIED
+  IGNORED
+
+  @@schema("kelly_calendar")
+}
+
+enum ColorToken {
+  candidate
+  travel
+  fundraising
+  events
+  communications
+  social
+  press
+  field
+  county
+  volunteer
+  compliance
+  staff
+  personal
+  command
+
+  @@schema("kelly_calendar")
+}
+
+// ─── A. Calendar registry ────────────────────────────────────────────
+
+model CalendarGroup {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  name          String
+  description   String?
+  displayOrder  Int       @default(0)
+  isSystemGroup Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  archivedAt    DateTime?
+
+  calendars Calendar[]
+
+  @@schema("kelly_calendar")
+}
+
+model Calendar {
+  id                         String               @id @default(cuid())
+  slug                       String               @unique
+  name                       String
+  shortName                  String?
+  description                String?
+  calendarType               CalendarType
+  calendarGroupId            String?
+  ownerUserId                String?
+  managingTeamId             String?
+  isSystemCalendar           Boolean              @default(false)
+  isCommandCalendar          Boolean              @default(false)
+  isActive                   Boolean              @default(true)
+  defaultVisibility          EventVisibilityLevel @default(TITLE_LOCATION)
+  defaultLocationDisclosure  LocationDisclosure   @default(CITY)
+  defaultRollupMode          RollupMode           @default(TITLE_LOCATION)
+  defaultEventDurationMinutes Int                 @default(60)
+  allowsPublicEvents         Boolean              @default(false)
+  allowsExternalImport       Boolean              @default(true)
+  allowsExternalExport       Boolean              @default(false)
+  requiresApproval           Boolean              @default(false)
+  allowsDirectEventCreation  Boolean              @default(true)
+  displayOrder               Int                  @default(0)
+  displayColorToken          ColorToken           @default(events)
+  createdAt                  DateTime             @default(now())
+  updatedAt                  DateTime             @updatedAt
+  archivedAt                 DateTime?
+
+  calendarGroup          CalendarGroup?            @relation(fields: [calendarGroupId], references: [id])
+  memberships            CalendarMembership[]
+  teamBindings           CalendarTeamBinding[]
+  rollupRulesAsSource    CalendarRollupRule[]      @relation("RollupSource")
+  rollupRulesAsTarget    CalendarRollupRule[]      @relation("RollupTarget")
+  viewLayers             CalendarViewLayer[]
+  primaryEvents          Event[]                   @relation("PrimaryCalendar")
+  eventMemberships       EventCalendarMembership[]
+
+  @@index([calendarType])
+  @@index([isCommandCalendar])
+  @@schema("kelly_calendar")
+}
+
+model CalendarMembership {
+  id                         String              @id @default(cuid())
+  calendarId                 String
+  userId                     String
+  accessLevel                CalendarAccessLevel @default(NO_ACCESS)
+  canViewParticipants        Boolean             @default(false)
+  canViewNotes               Boolean             @default(false)
+  canViewFiles               Boolean             @default(false)
+  canViewTravelDetails       Boolean             @default(false)
+  canViewCommunicationsPlan  Boolean             @default(false)
+  canViewFundraisingDetails  Boolean             @default(false)
+  canViewSecurityDetails     Boolean             @default(false)
+  canCreateEvents            Boolean             @default(false)
+  canEditEvents              Boolean             @default(false)
+  canDeleteEvents            Boolean             @default(false)
+  canManageMemberships       Boolean             @default(false)
+  startsAt                   DateTime            @default(now())
+  endsAt                     DateTime?
+  grantedByUserId            String?
+  grantReason                String?
+  createdAt                  DateTime            @default(now())
+  updatedAt                  DateTime            @updatedAt
+  revokedAt                  DateTime?
+  revokedByUserId            String?
+
+  calendar Calendar @relation(fields: [calendarId], references: [id])
+
+  @@index([userId])
+  @@index([calendarId])
+  @@index([userId, calendarId, revokedAt])
+  @@schema("kelly_calendar")
+}
+
+model CalendarTeamBinding {
+  id                 String              @id @default(cuid())
+  calendarId         String
+  teamId             String
+  accessLevel        CalendarAccessLevel @default(VIEW_LIMITED)
+  sectionPermissions Json?
+  startsAt           DateTime            @default(now())
+  endsAt             DateTime?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  revokedAt          DateTime?
+
+  calendar Calendar @relation(fields: [calendarId], references: [id])
+
+  @@index([teamId])
+  @@index([calendarId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarRollupRule {
+  id                 String     @id @default(cuid())
+  sourceCalendarId   String
+  targetCalendarId   String
+  rollupMode         RollupMode @default(TITLE_LOCATION)
+  includeTentative   Boolean    @default(true)
+  includeCancelled   Boolean    @default(false)
+  includeCompleted   Boolean    @default(true)
+  includeTasks       Boolean    @default(false)
+  includeMilestones  Boolean    @default(true)
+  includeLocation    Boolean    @default(true)
+  includeSafeTitle   Boolean    @default(true)
+  includeCalendarName Boolean   @default(true)
+  priority           Int        @default(0)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+
+  sourceCalendar Calendar @relation("RollupSource", fields: [sourceCalendarId], references: [id])
+  targetCalendar Calendar @relation("RollupTarget", fields: [targetCalendarId], references: [id])
+
+  @@index([targetCalendarId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarSavedView {
+  id               String   @id @default(cuid())
+  ownerUserId      String?
+  name             String
+  description      String?
+  isDefault        Boolean  @default(false)
+  isShared         Boolean  @default(false)
+  isSystemView     Boolean  @default(false)
+  sharedWithTeamId String?
+  dateRangeMode    String?
+  viewMode         String?
+  filtersJson      Json?
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  archivedAt       DateTime?
+
+  layers CalendarViewLayer[]
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarViewLayer {
+  id           String   @id @default(cuid())
+  savedViewId  String
+  calendarId   String
+  enabled      Boolean  @default(true)
+  displayOrder Int      @default(0)
+  displayMode  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  savedView CalendarSavedView @relation(fields: [savedViewId], references: [id])
+  calendar  Calendar          @relation(fields: [calendarId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventNumberCounter {
+  year      Int @id
+  nextValue Int @default(1)
+
+  @@schema("kelly_calendar")
+}
+
+// ─── B. Canonical events ─────────────────────────────────────────────
+
+model Event {
+  id                          String                 @id @default(cuid())
+  eventNumber                 String                 @unique
+  sourceType                  String                 @default("MANUAL")
+  createdByUserId             String?
+  ownerUserId                 String?
+  primaryCalendarId           String
+  templateId                  String?
+
+  internalTitle               String
+  campaignDisplayTitle        String
+  restrictedDisplayTitle      String?
+  publicTitle                 String?
+
+  eventType                   String?
+  eventSubtype                String?
+  status                      EventStatus            @default(DRAFT)
+  priority                    String                 @default("Normal")
+  confirmationSource          String?
+  confirmationStatus          String?
+
+  startsAt                    DateTime
+  endsAt                      DateTime
+  timezone                    String                 @default("America/Chicago")
+  isAllDay                    Boolean                @default(false)
+  isMultiDay                  Boolean                @default(false)
+
+  arrivalAt                   DateTime?
+  departureAt                 DateTime?
+  setupStartsAt               DateTime?
+  breakdownEndsAt             DateTime?
+
+  defaultVisibility           EventVisibilityLevel   @default(TITLE_LOCATION)
+  locationDisclosure          LocationDisclosure     @default(CITY)
+  sensitivityLevel            String                 @default("NORMAL")
+
+  venueName                   String?
+  streetAddress               String?
+  addressLine2                String?
+  city                        String?
+  countyId                    String?
+  state                       String                 @default("Arkansas")
+  postalCode                  String?
+  regionId                    String?
+  locationNotes               String?
+  virtualMeetingUrl           String?
+  mapUrl                      String?
+
+  publicDescription           String?
+  campaignDescription         String?
+  privateNotes                String?
+
+  candidateAttendance         Boolean?
+  candidateRole               String?
+  expectedAttendance          Int?
+  actualAttendance            Int?
+
+  historicalReviewStatus      HistoricalReviewStatus @default(UNREVIEWED)
+  historicalAttendanceConfirmed Boolean              @default(false)
+  historicalOccurredConfirmed Boolean                @default(false)
+  historicalReviewedByUserId  String?
+  historicalReviewedAt        DateTime?
+
+  isImported                  Boolean                @default(false)
+  isRecurring                 Boolean                @default(false)
+  recurrenceSeriesId          String?
+  recurrenceRule              String?
+  originalOccurrenceAt        DateTime?
+
+  version                     Int                    @default(1)
+  createdAt                   DateTime               @default(now())
+  updatedAt                   DateTime               @updatedAt
+  archivedAt                  DateTime?
+  archivedByUserId            String?
+  archiveReason               String?
+
+  primaryCalendar      Calendar                   @relation("PrimaryCalendar", fields: [primaryCalendarId], references: [id])
+  county               ArkansasCounty?            @relation(fields: [countyId], references: [id])
+  region               ArkansasRegion?            @relation(fields: [regionId], references: [id])
+  template             EventTemplate?             @relation(fields: [templateId], references: [id])
+  calendarMemberships  EventCalendarMembership[]
+  visibilityOverrides  EventVisibilityOverride[]
+  sectionPermissions   EventSectionPermission[]
+  statusHistory        EventStatusHistory[]
+  eventTags            EventTag[]
+  objectives           EventObjective[]
+  programFlowItems     EventProgramFlowItem[]
+  packingItems         EventPackingItem[]
+  actionItems          EventActionItem[]
+  staffAssignments     EventStaffAssignment[]
+  communicationsItems  EventCommunicationsItem[]
+  travelPlans          EventTravelPlan[]
+  briefings            EventBriefing[]
+  links                EventLink[]
+  files                EventFile[]
+  notes                EventNote[]
+  outcomes             EventOutcome[]
+  followups            EventFollowup[]
+  eventPeople          EventPerson[]
+  eventOrganizations   EventOrganization[]
+  geographies          EventGeography[]
+  importRecords        CalendarImportRecord[]
+  externalIdentities   ExternalEventIdentity[]
+  aiSuggestionRuns     AiSuggestionRun[]
+  dataAccessLogs       DataAccessLog[]
+
+  @@index([startsAt, endsAt])
+  @@index([status])
+  @@index([primaryCalendarId])
+  @@index([countyId])
+  @@index([ownerUserId])
+  @@index([historicalReviewStatus])
+  @@index([archivedAt])
+  @@schema("kelly_calendar")
+}
+
+model EventCalendarMembership {
+  id                String              @id @default(cuid())
+  eventId           String
+  calendarId        String
+  membershipType    EventMembershipType @default(RELATED)
+  isPrimary         Boolean             @default(false)
+  rollupOverride    RollupMode?
+  visibilityOverride EventVisibilityLevel?
+  createdByUserId   String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  removedAt         DateTime?
+
+  event    Event    @relation(fields: [eventId], references: [id])
+  calendar Calendar @relation(fields: [calendarId], references: [id])
+
+  @@index([calendarId])
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model EventVisibilityOverride {
+  id                       String               @id @default(cuid())
+  eventId                  String
+  targetType               VisibilityTargetType
+  targetUserId             String?
+  targetTeamId             String?
+  targetRole               String?
+  visibilityLevel          EventVisibilityLevel
+  locationDisclosure       LocationDisclosure?
+  canOpen                  Boolean              @default(false)
+  canViewParticipants      Boolean              @default(false)
+  canViewNotes             Boolean              @default(false)
+  canViewFiles             Boolean              @default(false)
+  canViewTravelDetails     Boolean              @default(false)
+  canViewCommunications    Boolean              @default(false)
+  canViewFundraising       Boolean              @default(false)
+  canViewSecurity          Boolean              @default(false)
+  createdByUserId          String?
+  createdAt                DateTime             @default(now())
+  updatedAt                DateTime             @updatedAt
+  revokedAt                DateTime?
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model EventSectionPermission {
+  id              String               @id @default(cuid())
+  eventId         String
+  section         EventSection
+  targetType      VisibilityTargetType
+  targetUserId    String?
+  targetTeamId    String?
+  targetRole      String?
+  accessLevel     CalendarAccessLevel  @default(NO_ACCESS)
+  createdByUserId String?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  revokedAt       DateTime?
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId, section])
+  @@schema("kelly_calendar")
+}
+
+model EventStatusHistory {
+  id            String      @id @default(cuid())
+  eventId       String
+  fromStatus    EventStatus?
+  toStatus      EventStatus
+  changedByUserId String?
+  reason        String?
+  createdAt     DateTime    @default(now())
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  eventTags EventTag[]
+
+  @@schema("kelly_calendar")
+}
+
+model EventTag {
+  id      String @id @default(cuid())
+  eventId String
+  tagId   String
+
+  event Event @relation(fields: [eventId], references: [id])
+  tag   Tag   @relation(fields: [tagId], references: [id])
+
+  @@unique([eventId, tagId])
+  @@schema("kelly_calendar")
+}
+
+// ─── C. Event operations ─────────────────────────────────────────────
+
+model EventObjective {
+  id                String        @id @default(cuid())
+  eventId           String
+  objectiveType     ObjectiveType @default(OTHER)
+  isPrimary         Boolean       @default(false)
+  description       String?
+  successDefinition String?
+  targetAudience    String?
+  desiredOutcome    String?
+  priority          String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model EventProgramFlowItem {
+  id                 String           @id @default(cuid())
+  eventId            String
+  sequence           Int
+  startsAt           DateTime?
+  endsAt             DateTime?
+  durationMinutes    Int?
+  activityType       FlowActivityType @default(CUSTOM)
+  title              String
+  description        String?
+  responsibleUserId  String?
+  responsibleTeamId  String?
+  locationLabel      String?
+  candidateAction    String?
+  requiredMaterials  String?
+  status             TaskStatus       @default(NOT_STARTED)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  completedAt        DateTime?
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId, sequence])
+  @@schema("kelly_calendar")
+}
+
+model EventPackingItem {
+  id             String          @id @default(cuid())
+  eventId        String
+  templateItemId String?
+  category       PackingCategory @default(CUSTOM)
+  itemName       String
+  quantity       Int             @default(1)
+  state          ChecklistState  @default(NEEDED)
+  assignedUserId String?
+  assignedTeamId String?
+  neededBy       DateTime?
+  packedAt       DateTime?
+  loadedAt       DateTime?
+  deliveredAt    DateTime?
+  returnedAt     DateTime?
+  notes          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model EventActionItem {
+  id                String       @id @default(cuid())
+  eventId           String
+  phase             ActionPhase
+  actionType        String?
+  title             String
+  description       String?
+  assignedUserId    String?
+  assignedTeamId    String?
+  dueAt             DateTime?
+  status            TaskStatus   @default(NOT_STARTED)
+  priority          String?
+  requiresApproval  Boolean      @default(false)
+  approvalRequestId String?
+  completedAt       DateTime?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([assignedUserId])
+  @@index([assignedTeamId])
+  @@index([dueAt])
+  @@index([status])
+  @@index([eventId, phase])
+  @@schema("kelly_calendar")
+}
+
+model EventStaffAssignment {
+  id             String        @id @default(cuid())
+  eventId        String
+  roleType       StaffRoleType
+  assignedUserId String?
+  assignedTeamId String?
+  status         TaskStatus    @default(NOT_STARTED)
+  startsAt       DateTime?
+  endsAt         DateTime?
+  instructions   String?
+  confirmedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model EventCommunicationsItem {
+  id             String         @id @default(cuid())
+  eventId        String
+  channel        CommChannel
+  communicationType CommType    @default(OTHER)
+  audience       String?
+  objective      String?
+  ownerUserId    String?
+  ownerTeamId    String?
+  draftDueAt     DateTime?
+  approvalDueAt  DateTime?
+  publishAt      DateTime?
+  publishedAt    DateTime?
+  status         TaskStatus     @default(NOT_STARTED)
+  approvalStatus ApprovalStatus @default(NOT_REQUIRED)
+  assetUrl       String?
+  internalNotes  String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@index([publishAt])
+  @@index([status])
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model EventTravelPlan {
+  id                       String    @id @default(cuid())
+  eventId                  String
+  travelRequired           Boolean   @default(false)
+  originPlaceId            String?
+  destinationPlaceId       String?
+  departureAt              DateTime?
+  targetArrivalAt          DateTime?
+  estimatedDurationMinutes Int?
+  bufferMinutes            Int?
+  estimatedDistanceMiles   Float?
+  driverUserId             String?
+  vehicleDescription       String?
+  rentalRequired           Boolean   @default(false)
+  flightRequired           Boolean   @default(false)
+  lodgingRequired          Boolean   @default(false)
+  overnightStay            Boolean   @default(false)
+  parkingInstructions      String?
+  mealPlan                 String?
+  weatherConcern           String?
+  securitySensitive        Boolean   @default(false)
+  returnPlan               String?
+  notes                    String?
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  event    Event                @relation(fields: [eventId], references: [id])
+  segments EventTravelSegment[]
+
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model EventTravelSegment {
+  id                          String            @id @default(cuid())
+  travelPlanId                String
+  sequence                    Int
+  segmentType                 TravelSegmentType @default(DRIVE)
+  originLabel                 String?
+  destinationLabel            String?
+  startsAt                    DateTime?
+  endsAt                      DateTime?
+  distanceMiles               Float?
+  provider                    String?
+  confirmationReferenceEncrypted String?
+  status                      TaskStatus        @default(NOT_STARTED)
+  notes                       String?
+  createdAt                   DateTime          @default(now())
+  updatedAt                   DateTime          @updatedAt
+
+  travelPlan EventTravelPlan @relation(fields: [travelPlanId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventBriefing {
+  id        String   @id @default(cuid())
+  eventId   String
+  title     String
+  body      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventLink {
+  id        String   @id @default(cuid())
+  eventId   String
+  label     String
+  url       String
+  createdAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventFile {
+  id           String   @id @default(cuid())
+  eventId      String
+  fileName     String
+  storageKey   String?
+  contentType  String?
+  sensitivity  String   @default("INTERNAL")
+  createdAt    DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventNote {
+  id        String   @id @default(cuid())
+  eventId   String
+  noteType  String   @default("PRIVATE")
+  body      String
+  createdByUserId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventOutcome {
+  id        String   @id @default(cuid())
+  eventId   String
+  summary   String?
+  lessons   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventFollowup {
+  id             String     @id @default(cuid())
+  eventId        String
+  title          String
+  assignedUserId String?
+  dueAt          DateTime?
+  status         TaskStatus @default(NOT_STARTED)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+// ─── D. People / orgs ────────────────────────────────────────────────
+
+model Person {
+  id                    String    @id @default(cuid())
+  displayName           String
+  firstName             String?
+  lastName              String?
+  preferredName         String?
+  title                 String?
+  organizationId        String?
+  publicEmail           String?
+  privateEmailEncrypted String?
+  publicPhone           String?
+  privatePhoneEncrypted String?
+  notes                 String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  archivedAt            DateTime?
+
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  eventPeople  EventPerson[]
+  contactMethods ContactMethod[]
+
+  @@schema("kelly_calendar")
+}
+
+model Organization {
+  id             String    @id @default(cuid())
+  name           String
+  organizationType String?
+  websiteUrl     String?
+  city           String?
+  countyId       String?
+  state          String    @default("Arkansas")
+  externalCrmId  String?
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  archivedAt     DateTime?
+
+  people             Person[]
+  eventOrganizations EventOrganization[]
+  county             ArkansasCounty? @relation(fields: [countyId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventPerson {
+  id       String          @id @default(cuid())
+  eventId  String
+  personId String
+  role     PersonEventRole @default(OTHER)
+
+  event  Event  @relation(fields: [eventId], references: [id])
+  person Person @relation(fields: [personId], references: [id])
+
+  @@unique([eventId, personId, role])
+  @@schema("kelly_calendar")
+}
+
+model EventOrganization {
+  id             String @id @default(cuid())
+  eventId        String
+  organizationId String
+  role           String @default("HOST")
+
+  event        Event        @relation(fields: [eventId], references: [id])
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@unique([eventId, organizationId])
+  @@schema("kelly_calendar")
+}
+
+model ContactMethod {
+  id        String  @id @default(cuid())
+  personId  String
+  method    String
+  value     String
+  isPrivate Boolean @default(true)
+
+  person Person @relation(fields: [personId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+// ─── E. Geography ────────────────────────────────────────────────────
+
+model ArkansasRegion {
+  id       String  @id @default(cuid())
+  slug     String  @unique
+  name     String
+  isActive Boolean @default(true)
+
+  counties ArkansasCounty[]
+  events   Event[]
+  places   Place[]
+
+  @@schema("kelly_calendar")
+}
+
+model ArkansasCounty {
+  id       String  @id @default(cuid())
+  fipsCode String  @unique
+  name     String
+  slug     String  @unique
+  regionId String?
+  isActive Boolean @default(true)
+
+  region        ArkansasRegion? @relation(fields: [regionId], references: [id])
+  events        Event[]
+  places        Place[]
+  organizations Organization[]
+  geographies   EventGeography[]
+
+  @@schema("kelly_calendar")
+}
+
+model Place {
+  id                       String             @id @default(cuid())
+  name                     String
+  placeType                String?
+  venueName                String?
+  streetAddress            String?
+  city                     String?
+  countyId                 String?
+  state                    String             @default("Arkansas")
+  postalCode               String?
+  regionId                 String?
+  latitude                 Float?
+  longitude                Float?
+  locationDisclosureDefault LocationDisclosure @default(CITY)
+  isPrivate                Boolean            @default(false)
+  createdAt                DateTime           @default(now())
+  updatedAt                DateTime           @updatedAt
+  archivedAt               DateTime?
+
+  county      ArkansasCounty?  @relation(fields: [countyId], references: [id])
+  region      ArkansasRegion?  @relation(fields: [regionId], references: [id])
+  geographies EventGeography[]
+
+  @@schema("kelly_calendar")
+}
+
+model EventGeography {
+  id       String  @id @default(cuid())
+  eventId  String
+  countyId String?
+  placeId  String?
+
+  event  Event           @relation(fields: [eventId], references: [id])
+  county ArkansasCounty? @relation(fields: [countyId], references: [id])
+  place  Place?          @relation(fields: [placeId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+// ─── F. Historical import ────────────────────────────────────────────
+
+model ExternalCalendarSource {
+  id                         String          @id @default(cuid())
+  provider                   ExternalProvider @default(GOOGLE_CALENDAR)
+  sourceType                 String
+  displayName                String
+  sourceFingerprint          String          @unique
+  externalCalendarIdEncrypted String?
+  sourceUrlEncrypted         String?
+  syncDirection              SyncDirection   @default(IMPORT_ONLY)
+  syncStatus                 SyncStatus      @default(NOT_CONFIGURED)
+  historicalFloor            DateTime
+  lastSuccessfulImportAt     DateTime?
+  lastAttemptAt              DateTime?
+  lastErrorCode              String?
+  lastErrorSummary           String?
+  createdByUserId            String?
+  createdAt                  DateTime        @default(now())
+  updatedAt                  DateTime        @updatedAt
+  disabledAt                 DateTime?
+
+  importRuns         CalendarImportRun[]
+  externalIdentities ExternalEventIdentity[]
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarImportRun {
+  id              String          @id @default(cuid())
+  externalSourceId String
+  requestedStart  DateTime
+  requestedEnd    DateTime
+  startedAt       DateTime        @default(now())
+  completedAt     DateTime?
+  status          ImportRunStatus @default(STARTED)
+  fetchedCount    Int             @default(0)
+  parsedCount     Int             @default(0)
+  normalizedCount Int             @default(0)
+  stagedCount     Int             @default(0)
+  approvedCount   Int             @default(0)
+  rejectedCount   Int             @default(0)
+  duplicateCount  Int             @default(0)
+  errorCount      Int             @default(0)
+  manifestJson    Json?
+  operatorUserId  String?
+  requestId       String?
+  createdAt       DateTime        @default(now())
+
+  externalSource ExternalCalendarSource @relation(fields: [externalSourceId], references: [id])
+  records        CalendarImportRecord[]
+
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CalendarImportRecord {
+  id                      String                 @id @default(cuid())
+  importRunId             String
+  externalEventIdentityId String?
+  rawFingerprint          String
+  normalizedPayload       Json?
+  proposedEventPayload    Json?
+  reviewStatus            HistoricalReviewStatus @default(UNREVIEWED)
+  duplicateStatus         DuplicateStatus        @default(NEW)
+  canonicalEventId        String?
+  reviewedByUserId        String?
+  reviewedAt              DateTime?
+  reviewNotes             String?
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+
+  importRun       CalendarImportRun      @relation(fields: [importRunId], references: [id])
+  canonicalEvent  Event?                 @relation(fields: [canonicalEventId], references: [id])
+  duplicateMatches CalendarImportDuplicateMatch[] @relation("ImportRecord")
+  matchedAs        CalendarImportDuplicateMatch[] @relation("MatchedRecord")
+  reviewActions    CalendarImportReviewAction[]
+
+  @@index([reviewStatus])
+  @@index([duplicateStatus])
+  @@schema("kelly_calendar")
+}
+
+model CalendarImportDuplicateMatch {
+  id                String          @id @default(cuid())
+  importRecordId    String
+  matchedRecordId   String?
+  status            DuplicateStatus
+  reasons           String[]
+  createdAt         DateTime        @default(now())
+
+  importRecord  CalendarImportRecord  @relation("ImportRecord", fields: [importRecordId], references: [id])
+  matchedRecord CalendarImportRecord? @relation("MatchedRecord", fields: [matchedRecordId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarImportReviewAction {
+  id             String   @id @default(cuid())
+  importRecordId String
+  actorUserId    String?
+  action         String
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  importRecord CalendarImportRecord @relation(fields: [importRecordId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model ExternalEventIdentity {
+  id                   String           @id @default(cuid())
+  provider             ExternalProvider @default(GOOGLE_CALENDAR)
+  externalSourceId     String
+  externalEventId      String?
+  iCalUid              String?
+  recurringEventId     String?
+  originalOccurrenceAt DateTime?
+  sourceSequence       Int?
+  sourceUpdatedAt      DateTime?
+  canonicalEventId     String?
+  fingerprint          String
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  deletedAt            DateTime?
+
+  externalSource ExternalCalendarSource @relation(fields: [externalSourceId], references: [id])
+  canonicalEvent Event?                 @relation(fields: [canonicalEventId], references: [id])
+
+  @@unique([externalSourceId, fingerprint])
+  @@index([externalSourceId, externalEventId])
+  @@index([iCalUid])
+  @@schema("kelly_calendar")
+}
+
+// ─── G. Templates ────────────────────────────────────────────────────
+
+model EventTemplate {
+  id                          String               @id @default(cuid())
+  slug                        String               @unique
+  name                        String
+  description                 String?
+  primaryCalendarType         CalendarType
+  eventType                   String?
+  defaultDurationMinutes      Int                  @default(60)
+  defaultVisibility           EventVisibilityLevel @default(TITLE_LOCATION)
+  defaultLocationDisclosure   LocationDisclosure   @default(CITY)
+  requiresTravelQuestions     Boolean              @default(false)
+  requiresCommunicationsPlan  Boolean              @default(false)
+  requiresComplianceReview    Boolean              @default(false)
+  isSystemTemplate            Boolean              @default(false)
+  isActive                    Boolean              @default(true)
+  version                     Int                  @default(1)
+  snapshotJson                Json?
+  createdAt                   DateTime             @default(now())
+  updatedAt                   DateTime             @updatedAt
+
+  events   Event[]
+  sections EventTemplateSection[]
+
+  @@schema("kelly_calendar")
+}
+
+model EventTemplateSection {
+  id         String @id @default(cuid())
+  templateId String
+  section    String
+  payload    Json
+
+  template EventTemplate @relation(fields: [templateId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model PackingTemplate {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  name           String
+  isSystemTemplate Boolean @default(false)
+  version        Int      @default(1)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  items PackingTemplateItem[]
+
+  @@schema("kelly_calendar")
+}
+
+model PackingTemplateItem {
+  id         String          @id @default(cuid())
+  templateId String
+  category   PackingCategory @default(CAMPAIGN_MATERIAL)
+  itemName   String
+  quantity   Int             @default(1)
+
+  template PackingTemplate @relation(fields: [templateId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model ProgramFlowTemplate {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String
+  isSystemTemplate Boolean  @default(false)
+  version          Int      @default(1)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  items ProgramFlowTemplateItem[]
+
+  @@schema("kelly_calendar")
+}
+
+model ProgramFlowTemplateItem {
+  id           String           @id @default(cuid())
+  templateId   String
+  sequence     Int
+  activityType FlowActivityType @default(CUSTOM)
+  title        String
+
+  template ProgramFlowTemplate @relation(fields: [templateId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model ActionTemplate {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String
+  isSystemTemplate Boolean  @default(false)
+  version          Int      @default(1)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  items ActionTemplateItem[]
+
+  @@schema("kelly_calendar")
+}
+
+model ActionTemplateItem {
+  id         String      @id @default(cuid())
+  templateId String
+  phase      ActionPhase
+  title      String
+
+  template ActionTemplate @relation(fields: [templateId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+// ─── H. Approvals / audit ────────────────────────────────────────────
+
+model ApprovalRequest {
+  id               String         @id @default(cuid())
+  entityType       String
+  entityId         String
+  approvalType     String
+  requestedByUserId String?
+  assignedToUserId String?
+  assignedToTeamId String?
+  status           ApprovalStatus @default(PENDING)
+  requestedAt      DateTime       @default(now())
+  dueAt            DateTime?
+  resolvedAt       DateTime?
+  resolutionNotes  String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  actions ApprovalAction[]
+
+  @@index([entityType, entityId])
+  @@schema("kelly_calendar")
+}
+
+model ApprovalAction {
+  id                String   @id @default(cuid())
+  approvalRequestId String
+  actorUserId       String?
+  action            String
+  comment           String?
+  createdAt         DateTime @default(now())
+
+  approvalRequest ApprovalRequest @relation(fields: [approvalRequestId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model AuditLog {
+  id                    String   @id @default(cuid())
+  actorUserId           String?
+  actorType             String   @default("USER")
+  action                String
+  entityType            String
+  entityId              String?
+  requestId             String?
+  source                String?
+  reason                String?
+  previousStateRedacted Json?
+  newStateRedacted      Json?
+  metadataRedacted      Json?
+  ipHash                String?
+  userAgentSummary      String?
+  createdAt             DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@schema("kelly_calendar")
+}
+
+model DataAccessLog {
+  id           String   @id @default(cuid())
+  viewerUserId String?
+  eventId      String?
+  section      EventSection
+  accessResult String
+  reasonCode   String?
+  requestId    String?
+  createdAt    DateTime @default(now())
+
+  event Event? @relation(fields: [eventId], references: [id])
+
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+// ─── I. AI suggestion foundation ─────────────────────────────────────
+
+model AiSuggestionRun {
+  id               String    @id @default(cuid())
+  eventId          String?
+  draftId          String?
+  suggestionType   String
+  modelProvider    String?
+  modelName        String?
+  inputFingerprint String?
+  policyVersion    String?
+  startedAt        DateTime  @default(now())
+  completedAt      DateTime?
+  status           String    @default("DISABLED")
+  createdByUserId  String?
+  createdAt        DateTime  @default(now())
+
+  event       Event?               @relation(fields: [eventId], references: [id])
+  suggestions AiFieldSuggestion[]
+
+  @@schema("kelly_calendar")
+}
+
+model AiFieldSuggestion {
+  id                    String   @id @default(cuid())
+  suggestionRunId       String
+  fieldPath             String
+  suggestedValue        Json?
+  confidence            Float
+  reasonSummary         String?
+  evidenceSummary       String?
+  requiresHumanApproval Boolean  @default(true)
+  createdAt             DateTime @default(now())
+
+  suggestionRun AiSuggestionRun         @relation(fields: [suggestionRunId], references: [id])
+  decisions     AiSuggestionDecision[]
+
+  @@schema("kelly_calendar")
+}
+
+model AiSuggestionDecision {
+  id            String                   @id @default(cuid())
+  suggestionId  String
+  decision      AiSuggestionDecisionType
+  decidedByUserId String?
+  decidedAt     DateTime                 @default(now())
+  modifiedValue Json?
+  decisionNote  String?
+
+  suggestion AiFieldSuggestion @relation(fields: [suggestionId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model EventPatternSignal {
+  id          String   @id @default(cuid())
+  signalKey   String
+  signalValue Json?
+  sourceEventId String?
+  reviewedOnly Boolean @default(true)
+  createdAt   DateTime @default(now())
+
+  @@index([signalKey])
+  @@schema("kelly_calendar")
 }

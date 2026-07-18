@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "risks": [
     {
       "id": "RISK-016",
@@ -186,6 +186,78 @@
       "title": "Staging Files Enter Git",
       "status": "mitigated",
       "mitigation": "ingest_staging gitignore + validation gates."
+    },
+    {
+      "id": "RISK-047",
+      "title": "Shared Database Migration Damages RedDirt",
+      "status": "mitigated",
+      "mitigation": "Dedicated kelly_calendar schema, SQL inspection, namespace audit, before/after structural snapshot (diff 0)."
+    },
+    {
+      "id": "RISK-048",
+      "title": "Duplicate Event Records Across Calendars",
+      "status": "mitigated",
+      "mitigation": "Canonical event plus many-to-many calendar memberships."
+    },
+    {
+      "id": "RISK-049",
+      "title": "Command Calendar Becomes Unreadable",
+      "status": "open",
+      "mitigation": "Roll-up modes, saved views, calendar groups, required-action filtering."
+    },
+    {
+      "id": "RISK-050",
+      "title": "Permissions Leak Protected Sections",
+      "status": "open",
+      "mitigation": "Server-side safe projection, section permissions, default deny, tests; full membership resolution awaits Step 4."
+    },
+    {
+      "id": "RISK-051",
+      "title": "Imported Google Events Duplicate Canonical History",
+      "status": "mitigated",
+      "mitigation": "External identity constraints, fingerprints, review transaction, idempotency (approval gated until auth)."
+    },
+    {
+      "id": "RISK-052",
+      "title": "Templates Rewrite Historical Events",
+      "status": "mitigated",
+      "mitigation": "Template snapshots and version preservation."
+    },
+    {
+      "id": "RISK-053",
+      "title": "Concurrent Event Edits Overwrite Work",
+      "status": "mitigated",
+      "mitigation": "Optimistic version checking and conflict responses (wired after Step 4)."
+    },
+    {
+      "id": "RISK-054",
+      "title": "Audit Logs Store Sensitive Data",
+      "status": "mitigated",
+      "mitigation": "Central redaction and restricted audit payload schemas."
+    },
+    {
+      "id": "RISK-055",
+      "title": "Operational Form Creates Excessive Relational Complexity",
+      "status": "open",
+      "mitigation": "Normalize meaningful recurring structures; bounded JSON for minor extension metadata."
+    },
+    {
+      "id": "RISK-056",
+      "title": "Exact Travel or Personal Location Exposure",
+      "status": "mitigated",
+      "mitigation": "Location disclosure fields, encrypted sensitive columns when certified, safe event projection."
+    },
+    {
+      "id": "RISK-057",
+      "title": "Historical Import Mistaken for Verified Attendance",
+      "status": "mitigated",
+      "mitigation": "Separate imported, reviewed, occurred-confirmed, and attendance-confirmed states."
+    },
+    {
+      "id": "RISK-058",
+      "title": "Migration Applied to Wrong Database",
+      "status": "mitigated",
+      "mitigation": "Target classification, operator preflight, explicit environment report, migration gate flag."
     }
   ]
 }

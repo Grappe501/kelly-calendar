@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "decisions": [
     {
       "id": "ADR-015",
@@ -229,6 +229,91 @@
       "status": "accepted",
       "date": "2026-07-18",
       "decision": "Step 3 drafts and imports must be visually and technically distinguished from live calendar events."
+    },
+    {
+      "id": "ADR-046",
+      "title": "Dedicated PostgreSQL Schema",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "All Kelly Calendar-owned tables live inside schema kelly_calendar on the shared RedDirt database server.",
+      "boundary": "No RedDirt-owned objects may be altered by Kelly Calendar migrations."
+    },
+    {
+      "id": "ADR-047",
+      "title": "One Canonical Event",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "A real-world commitment has one canonical event associated with multiple calendars via memberships."
+    },
+    {
+      "id": "ADR-048",
+      "title": "Command Calendar Is a Roll-Up Surface",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "The Command Calendar derives from subcalendar memberships and roll-up policies rather than duplicating event records."
+    },
+    {
+      "id": "ADR-049",
+      "title": "Event Details Are Section-Protected",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Permissions may differ for basic details, travel, communications, fundraising, files, and protected notes."
+    },
+    {
+      "id": "ADR-050",
+      "title": "Historical Imports Require Approval",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Google Calendar records enter canonical history only through reviewed, transactional approval."
+    },
+    {
+      "id": "ADR-051",
+      "title": "External Identity Is Preserved in Database",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Imported events preserve external IDs, iCal UIDs, recurrence identities, and source fingerprints in kelly_calendar tables."
+    },
+    {
+      "id": "ADR-052",
+      "title": "Optimistic Concurrency",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Event updates use version checking to prevent silent overwrites (409 EVENT_VERSION_CONFLICT)."
+    },
+    {
+      "id": "ADR-053",
+      "title": "Operational Plans Are Structured Data",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Program flow, packing, staffing, communications, travel, and follow-up are normalized event records."
+    },
+    {
+      "id": "ADR-054",
+      "title": "Templates Are Snapshotted",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Applying a template copies or snapshots its version so later template edits do not rewrite historical events."
+    },
+    {
+      "id": "ADR-055",
+      "title": "Audit Records Are Redacted",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Audit logs preserve accountability without storing secrets or unrestricted sensitive content."
+    },
+    {
+      "id": "ADR-056",
+      "title": "Reference Seeds Are Idempotent",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "System calendars, counties, templates, and default views may be seeded repeatedly without duplication."
+    },
+    {
+      "id": "ADR-057",
+      "title": "Step 5 Schema Without Step 4 Keeps Mutations Off",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Database schema may be applied before auth is complete, but live mutations and candidate-data entry stay disabled until Step 4 gates pass."
     }
   ]
 }

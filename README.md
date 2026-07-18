@@ -6,13 +6,14 @@
 |-------|-------|
 | Path | `H:\SOSWebsite\kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
-| Current step | **3 of 25** — Secure ingest, fast entry & visibility |
-| Next step | Step 4 — Auth + calendar membership RBAC |
-| Historical import floor | **2025-11-01** (Google Calendar staging) |
+| Current step | **5 of 25** — Database foundation (**PARTIAL**) |
+| Blocking next | **Step 4 — Auth + RBAC** (required before live mutations) |
+| Owned schema | `kelly_calendar` |
+| Historical import floor | **2025-11-01** |
 | Timezone | `America/Chicago` |
 | Election date | `2026-11-03` (configurable) |
 
-> Real candidate schedule information remains prohibited until authentication, role-based access control, and the protected calendar database layer are implemented and certified.
+> Real candidate schedule information remains prohibited until authentication, role-based access control, and protected mutation paths are certified. Schema exists; live writes are off.
 
 ### Permanent visibility rule
 
@@ -23,7 +24,25 @@ When a viewer lacks full access, the time block **stays visible** with:
 3. General location (when safe)  
 4. Start / end times  
 
-Protected notes, people, logistics, and strategy are omitted server-side. Demo: `/system/visibility` · Doctrine: `develop_notes/KCCC_CALENDAR_VISIBILITY_DOCTRINE.md`
+Protected notes, people, logistics, and strategy are omitted server-side.
+
+---
+
+## Database (Step 5)
+
+- Shared RedDirt PostgreSQL **server**; owned schema **`kelly_calendar`**
+- Migration: `20260718160000_kelly_calendar_foundation`
+- 60 tables; 75 Arkansas counties seeded; 17 system calendars including Command Calendar
+- RedDirt structural integrity before/after: **0** difference
+- Mutations: **unauthorized** until Step 4
+
+```powershell
+npm run db:classify
+npm run db:preflight
+npm run db:schema:verify
+npm run db:seed:reference
+npm run step5:validate
+```
 
 ---
 
@@ -31,60 +50,25 @@ Protected notes, people, logistics, and strategy are omitted server-side. Demo: 
 
 One app. Many calendar workspaces. The **Command Calendar** is the authoritative roll-up; teams manage their own areas under shared permissions, audit, and conflict standards.
 
-See [`docs/CALENDAR_FEDERATION_ARCHITECTURE.md`](docs/CALENDAR_FEDERATION_ARCHITECTURE.md) and Constitution Article III-A.
-
-Examples of workspaces: Candidate · Travel · Public Events · Communications · Social · Press · Field · County · Fundraising · Compliance · Volunteer · Debate · Surrogate · Staff Work · Personal/Protected.
-
-## Standing availability (from day one)
-
-- **Mon–Fri 8:00 AM–12:00 PM and 1:00 PM–5:00 PM** — unavailable (Kelly’s day job)
-- **Vacation / explicit release** — Command Calendar may override those blocks
-- **Every Tuesday** — default location Little Rock unless overridden
-
-Policy code: `src/lib/campaign/availability-policy.ts` (not DB events yet).
-
----
-
-## Environment
-
-**Precedence:** `process.env` → `.env.local` → `.env` → approved RedDirt fallback (local only).
-
-**Production (Netlify):** injected env vars only; `ENV_FALLBACK_TO_REDDIRT=false`.
-
-See `.env.example` and `develop_notes/KCCC_ENVIRONMENT_ARCHITECTURE.md`.
-
----
-
-## Historical Google import & fast entry
-
-- Import UI: `/import/google-calendar` (preview/stage/review — no PostgreSQL writes)
-- Quick entry: `/add/quick` · Full plan: `/add/full`
-- Staging: `data/ingest_staging/` (gitignored)
-
 ## Commands
 
 ```powershell
 cd H:\SOSWebsite\kelly-calendar
 npm run dev
 npm run build
-npm run check
-npm run import:validate
-npm run drafts:validate
-npm run visibility:validate
-npm run step3:all
-npm run db:diagnose
+npm run auth:validate
+npm run step5:all
 ```
 
 ---
 
 ## Status
 
-- Auth / calendar memberships: not implemented (Step 4)
-- Federated schema: not implemented (Step 5)
-- AI: disabled (proposal-only later)
-- Calendar tables: none
-- Database mutations: not authorized
+- Auth / RBAC: **not implemented** (Step 4) — next required work
+- Federated schema: **applied** (Step 5 partial)
+- AI: disabled
+- Database mutations: **not authorized**
 - Netlify: operator must connect site
 
 Handoff: `develop_notes/KCCC_NEW_THREAD_HANDOFF.md`  
-Federation: `docs/CALENDAR_FEDERATION_ARCHITECTURE.md`
+Readiness: `develop_notes/KCCC_STEP_05_DATABASE_READINESS_REPORT.md`

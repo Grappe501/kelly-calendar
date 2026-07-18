@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-07-18T15:05:38.809Z",
+  "migrations": [
+    {
+      "name": "20260718160000_kelly_calendar_foundation",
+      "bytes": 63837,
+      "createsSchema": true,
+      "createsPublicTable": false,
+      "dropPublic": false,
+      "tableCreates": 60,
+      "enumCreates": 29
+    }
+  ],
+  "applyCommand": "npm run db:migration:apply",
+  "note": "Inspect SQL before apply. Mutations remain disabled without Step 4 auth."
+}

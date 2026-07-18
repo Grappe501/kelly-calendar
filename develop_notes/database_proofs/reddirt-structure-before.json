@@ -1,0 +1,1497 @@
+{
+  "label": "before",
+  "capturedAt": "2026-07-18T15:05:40.638Z",
+  "schemas": [
+    "auth",
+    "extensions",
+    "graphql",
+    "graphql_public",
+    "pg_temp_10",
+    "pg_temp_12",
+    "pg_temp_13",
+    "pg_temp_14",
+    "pg_temp_17",
+    "pg_temp_18",
+    "pg_temp_19",
+    "pg_temp_20",
+    "pg_temp_22",
+    "pg_temp_23",
+    "pg_temp_26",
+    "pg_temp_27",
+    "pg_temp_28",
+    "pg_temp_29",
+    "pg_temp_3",
+    "pg_temp_30",
+    "pg_temp_31",
+    "pg_temp_33",
+    "pg_temp_35",
+    "pg_temp_37",
+    "pg_temp_39",
+    "pg_temp_4",
+    "pg_temp_40",
+    "pg_temp_41",
+    "pg_temp_42",
+    "pg_temp_44",
+    "pg_temp_45",
+    "pg_temp_47",
+    "pg_temp_48",
+    "pg_temp_50",
+    "pg_temp_52",
+    "pg_temp_53",
+    "pg_temp_55",
+    "pg_temp_56",
+    "pg_temp_57",
+    "pg_temp_58",
+    "pg_temp_59",
+    "pg_temp_7",
+    "pg_temp_8",
+    "pg_temp_9",
+    "pg_toast_temp_10",
+    "pg_toast_temp_12",
+    "pg_toast_temp_13",
+    "pg_toast_temp_14",
+    "pg_toast_temp_17",
+    "pg_toast_temp_18",
+    "pg_toast_temp_19",
+    "pg_toast_temp_20",
+    "pg_toast_temp_22",
+    "pg_toast_temp_23",
+    "pg_toast_temp_26",
+    "pg_toast_temp_27",
+    "pg_toast_temp_28",
+    "pg_toast_temp_29",
+    "pg_toast_temp_3",
+    "pg_toast_temp_30",
+    "pg_toast_temp_31",
+    "pg_toast_temp_33",
+    "pg_toast_temp_35",
+    "pg_toast_temp_37",
+    "pg_toast_temp_39",
+    "pg_toast_temp_4",
+    "pg_toast_temp_40",
+    "pg_toast_temp_41",
+    "pg_toast_temp_42",
+    "pg_toast_temp_44",
+    "pg_toast_temp_45",
+    "pg_toast_temp_47",
+    "pg_toast_temp_48",
+    "pg_toast_temp_50",
+    "pg_toast_temp_52",
+    "pg_toast_temp_53",
+    "pg_toast_temp_55",
+    "pg_toast_temp_56",
+    "pg_toast_temp_57",
+    "pg_toast_temp_58",
+    "pg_toast_temp_59",
+    "pg_toast_temp_7",
+    "pg_toast_temp_8",
+    "pg_toast_temp_9",
+    "pgbouncer",
+    "public",
+    "realtime",
+    "storage",
+    "supabase_migrations",
+    "vault"
+  ],
+  "tables": [
+    {
+      "table_schema": "auth",
+      "table_name": "audit_log_entries"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "custom_oauth_providers"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "flow_state"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "identities"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "instances"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_amr_claims"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_challenges"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "mfa_factors"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_authorizations"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_client_states"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_clients"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "oauth_consents"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "one_time_tokens"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "refresh_tokens"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "saml_providers"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "saml_relay_states"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "schema_migrations"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sessions"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sso_domains"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "sso_providers"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "users"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_challenges"
+    },
+    {
+      "table_schema": "auth",
+      "table_name": "webauthn_credentials"
+    },
+    {
+      "table_schema": "extensions",
+      "table_name": "pg_stat_statements"
+    },
+    {
+      "table_schema": "extensions",
+      "table_name": "pg_stat_statements_info"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "AdminContentBlock"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "AnalyticsEvent"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "AnalyticsRecommendationOutcome"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ArkansasFestivalIngest"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "AudienceSegment"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "BudgetLine"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "BudgetPlan"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CalendarAlert"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CalendarSource"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CalendarWatchChannel"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignBranding"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignEvent"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignEventLedgerRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignFeatureFlags"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignLesson"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignMembership"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignObservation"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignProject"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignSettings"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignTask"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CampaignTenant"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "Commitment"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommsPlanAudienceSegment"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommsPlanAudienceSegmentMember"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationActionQueue"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationCampaign"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationCampaignRecipient"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationDraft"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationIdentity"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationIdentitySignal"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationLinkDefinition"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationMessage"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationPlan"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationProfileMatchCandidate"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationRecipient"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationRecipientEvent"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationSend"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationTag"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationTemplate"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationThread"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationThreadTag"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunicationVariant"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbench"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchCommittee"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchEvent"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchIntel"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchLeadership"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchMission"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchNote"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchPilotDefect"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchRelationship"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CommunityWorkbenchVoteCushion"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ComplianceDocument"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ContactPreference"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ContentDecision"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ContentItemOverride"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ConversationAnalysis"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ConversationCluster"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ConversationClusterItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ConversationItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ConversationOpportunity"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ConversationWatchlist"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CopilotBriefSnapshot"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CopilotSession"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CopilotTaskExecution"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CountyCampaignStats"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CountyElectedOfficial"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CountyPublicDemographics"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CountyRegistrationSnapshot"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "CountyStrategyKpi"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionCandidateResult"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionContestResult"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionCountyResult"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionPlanFieldEntry"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionPlanOperator"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionPlanVoterContact"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionPrecinctCandidateResult"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionPrecinctResult"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ElectionResultSource"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailAudienceDefinition"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailAudienceHint"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailAudiencePreviewRun"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailContactImportBatch"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailContactImportDecision"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailContactImportRow"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailContactProfile"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailContactProfileFact"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailContactProfileFactSuggestion"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailSendApproval"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailSendExecution"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailSendRecipient"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EmailWorkflowItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EventAnalyticsSnapshot"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EventApproval"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EventRequest"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EventSignup"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EventStageChangeLog"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "EventSyncLog"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ExternalIngestRun"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ExternalMediaIngestRun"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ExternalMediaMention"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ExternalMediaSource"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "FestivalCoveragePlanSnapshot"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "FestivalIngestRun"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "FieldAssignment"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "FieldUnit"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "FinancialTransaction"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "GmailMessageParticipant"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "GmailMessageRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "GoogleCalendarEventParticipant"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "GoogleCalendarEventRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "GoogleContactRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "HomepageConfig"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "HumanApprovalRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "InboundContentItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "KellyCalendarDecision"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "KellyCalendarPromotion"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "LessonApprovalDecision"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "LocalCoverageRequest"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "MediaIngestBatch"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "MediaOutreachItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "MessageStudioDraft"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "MessageStudioDraftRevision"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionAccountabilityItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionBillRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionElectionPattern"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionEntity"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionFinanceRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionMessageRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionNewsMention"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionSource"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OppositionVideoRecord"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OrchestrationOutcome"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaAnnotation"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaAsset"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaCollection"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaCollectionItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaDerivativeJob"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaQuoteCandidate"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaReviewLog"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "OwnedMediaTranscript"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "PlatformConnection"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "PlatformMetricSnapshot"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "PositionSeat"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "RecommendationMemory"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "RelationalContact"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "RoleOnboardingState"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SearchChunk"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SendGridAudienceMap"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SendGridContactMap"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SendGridContactSyncRun"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SendGridEvent"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SendGridSuppression"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SignupSheetDocument"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SignupSheetEntry"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SignupSheetExtraction"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SiteSettings"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SocialAccount"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SocialContentDraft"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SocialContentItem"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SocialContentMediaRef"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SocialContentStrategicInsight"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SocialPerformanceSnapshot"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SocialPlatformVariant"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "StaffGmailAccount"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "SyncedPost"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "TeamRoleAssignment"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "TrainingModuleProgress"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "User"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "VolunteerAsk"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "VolunteerLeaderRosterPerson"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "VolunteerMatchCandidate"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "VolunteerOpsTeam"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "VolunteerOpsTeamInvitation"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "VolunteerOpsTeamMember"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "VolunteerProfile"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "WeeklyBigRock"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "WeeklyCampaignPlan"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "WorkflowAction"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "WorkflowIntake"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "WorkflowRun"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "WorkflowTemplate"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "WorkflowTemplateTask"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "_prisma_migrations"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ar02_voter_dem_lean"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ar02_voter_race"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ar02_voters"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ballot_initiatives"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ballot_items"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "bls_county_economics"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "candidates"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "census_block_groups"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "census_demographics"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "census_tracts"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "civic_engagement_index"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "civic_lookup"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "contact_origins"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "contact_voter_matches"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "contacts"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "contest_partisan_index"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "contests"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "counties"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "county_campaign_targets"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "county_results"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "county_turnout"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "donations"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "election_candidates"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "election_contests"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "election_results"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "elections"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "event_notifications"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "event_requests"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "events"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "external_intelligence_sources"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "external_records"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "followups"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "geographic_scores"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "geographic_units"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "geography_columns"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "geography_leaders"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "geometry_columns"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ingestion_entities"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ingestion_extractions"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ingestion_files"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ingestion_jobs"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ingestion_mapping_suggestions"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ingestion_reviews"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "ingestion_write_events"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "initiative_signatures"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "intelligence_links"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "interactions"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "leadership_roles"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "locations"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "media_assets"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "media_entity_links"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "media_tags"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "message_audience_members"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "message_audiences"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "message_campaigns"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "message_events"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "message_queue"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "message_templates"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organization_types"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organizations"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organizer_assignments"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organizing_targets"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organizing_unit_hierarchy"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organizing_unit_memberships"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organizing_unit_types"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "organizing_units"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "path_to_victory"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "people"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "person_geography"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "person_profiles"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "petition_signatures"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "petitions"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "precinct_scores"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "profiles"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "results"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "runoff_fracture_index"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "shifts"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "spatial_ref_sys"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "statewide_win_targets"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "submissions"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "target_universes"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "tasks"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "telemetry_events"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_certifications"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_courses"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_enrollments"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_events"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_modules"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_path_modules"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_paths"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_progress"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "training_records"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "turf_people"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "turfs"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "user_auth_methods"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "users"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "volunteer_intake_submissions"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "volunteer_profiles"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "volunteer_signups"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "volunteer_sources"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "volunteers"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_block_group_map"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_geocoded"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_import_batches"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_party_model"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_profiles"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_registry"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_scores"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_vote_history"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voter_vote_history_raw"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "voters"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "washington_county_report"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "workspace_feature_flags"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "workspace_geography_scope"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "workspace_members"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "workspace_roles"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "workspace_types"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "workspaces"
+    },
+    {
+      "table_schema": "public",
+      "table_name": "youth_profiles"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages_2026_03_06"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages_2026_03_07"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages_2026_03_08"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages_2026_03_09"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages_2026_03_10"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages_2026_03_11"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "messages_2026_03_12"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "schema_migrations"
+    },
+    {
+      "table_schema": "realtime",
+      "table_name": "subscription"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets_analytics"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "buckets_vectors"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "migrations"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "objects"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "s3_multipart_uploads_parts"
+    },
+    {
+      "table_schema": "storage",
+      "table_name": "vector_indexes"
+    },
+    {
+      "table_schema": "supabase_migrations",
+      "table_name": "schema_migrations"
+    },
+    {
+      "table_schema": "vault",
+      "table_name": "decrypted_secrets"
+    },
+    {
+      "table_schema": "vault",
+      "table_name": "secrets"
+    }
+  ],
+  "columnSignature": "d6943a2c72055cbbf81a4685ffe3c64e2db606f76dd66f7ab638070ecb4ac6b2",
+  "tableCount": 349,
+  "columnCount": 4134
+}

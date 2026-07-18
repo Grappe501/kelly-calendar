@@ -18,3 +18,18 @@ Occupied time visible; calendar name; safe titles; location disclosure; server s
 - ADR-043 AI Suggestions Evidence-Based
 - ADR-044 Reviewed History Powers Recommendations
 - ADR-045 Drafts Are Clearly Non-Live
+
+## Database foundation (ADR-046–057)
+
+- ADR-046 Dedicated PostgreSQL Schema (`kelly_calendar`)
+- ADR-047 One Canonical Event
+- ADR-048 Command Calendar Is a Roll-Up Surface
+- ADR-049 Event Details Are Section-Protected
+- ADR-050 Historical Imports Require Approval
+- ADR-051 External Identity Is Preserved in Database
+- ADR-052 Optimistic Concurrency
+- ADR-053 Operational Plans Are Structured Data
+- ADR-054 Templates Are Snapshotted
+- ADR-055 Audit Records Are Redacted
+- ADR-056 Reference Seeds Are Idempotent
+- ADR-057 Step 5 Schema Without Step 4 Keeps Mutations Off

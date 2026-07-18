@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-07-18T15:10:00.678Z",
+  "schema": "kelly_calendar",
+  "authenticationComplete": false,
+  "mutationsAuthorized": false,
+  "candidateDataReady": false,
+  "liveCalendarDataEnabled": false,
+  "reddirtStructureDifference": 0,
+  "note": "Step 5 schema foundation; Step 4 AUTH required before live mutations."
+}
