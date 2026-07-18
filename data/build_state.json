@@ -47,7 +47,7 @@
   "updated_at": "2026-07-18T16:40:00.000Z",
   "last_updated": "2026-07-18T16:40:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "pending",
+  "commit_hash": "9152f4a",
   "step_5_6_unlock_commit": "83c2bd4",
   "governance_baseline_at_start": "d6d0096",
   "notes": "Step 5.7 ACTIVE and BLOCKED on operator Netlify site verification, APP_SESSION_SECRET configuration, deploy, live mutation proof, and operator acceptance. Step 6 held. candidate_data_ready false."
