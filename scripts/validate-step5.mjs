@@ -23,8 +23,13 @@ const required = [
   "scripts/database-preflight.mjs",
   "scripts/database-namespace-audit.mjs",
   "scripts/database-seed-reference.mjs",
+  "scripts/database-forbidden-sql-scan.mjs",
+  "scripts/database-red-dirt-integrity-check.mjs",
+  "scripts/database-capture-structural-snapshot.mjs",
   "develop_notes/KCCC_DATABASE_NAMESPACE_PROTOCOL.md",
   "develop_notes/KCCC_STEP_05_IMPLEMENTATION_REPORT.md",
+  "develop_notes/KCCC_REDDIRT_DATABASE_INTEGRITY_REPORT.md",
+  "develop_notes/KCCC_APPROVAL_AND_AUDIT_MODEL.md",
 ];
 
 for (const rel of required) {

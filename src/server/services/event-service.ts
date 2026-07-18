@@ -8,8 +8,12 @@ import { AppError } from "@/lib/security/safe-error";
 export async function getSafeEventForViewer(input: {
   eventId: string;
   viewerUserId?: string | null;
+  requestedSections?: string[];
+  requestContext?: { requestId?: string };
   viewerAccess?: "NO_ACCESS" | "AVAILABILITY_ONLY" | "VIEW_LIMITED" | "VIEW_FULL" | "FULL";
 }) {
+  void input.requestedSections;
+  void input.requestContext;
   if (!input.viewerUserId) {
     throw new AppError({
       code: "AUTHENTICATION_REQUIRED",
@@ -34,6 +38,18 @@ export async function getSafeEventForViewer(input: {
   });
 }
 
-export async function createCanonicalEvent() {
-  requireAuthorizedMutation("createCanonicalEvent");
-}
+const gated =
+  (action: string) =>
+  async (input?: unknown) => {
+    void input;
+    requireAuthorizedMutation(action);
+  };
+
+export const createEvent = gated("createEvent");
+export const updateEvent = gated("updateEvent");
+export const archiveEvent = gated("archiveEvent");
+export const restoreEvent = gated("restoreEvent");
+export const changePrimaryCalendar = gated("changePrimaryCalendar");
+export const addEventCalendarMembership = gated("addEventCalendarMembership");
+export const removeEventCalendarMembership = gated("removeEventCalendarMembership");
+export const createCanonicalEvent = gated("createCanonicalEvent");

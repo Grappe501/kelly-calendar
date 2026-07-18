@@ -11,6 +11,7 @@ function fakeEvent(overrides: Partial<Event> = {}): Event {
     ownerUserId: null,
     primaryCalendarId: "cal_1",
     templateId: null,
+    templateVersion: null,
     internalTitle: "Dinner with named donors",
     campaignDisplayTitle: "Women for Kelly Reception",
     restrictedDisplayTitle: "Fundraising Meeting",

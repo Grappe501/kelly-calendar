@@ -1,0 +1,9 @@
+{
+  "generatedAt": "2026-07-18T15:23:50.689Z",
+  "beforeSignature": "d6943a2c72055cbbf81a4685ffe3c64e2db606f76dd66f7ab638070ecb4ac6b2",
+  "afterSignature": "d6943a2c72055cbbf81a4685ffe3c64e2db606f76dd66f7ab638070ecb4ac6b2",
+  "beforeTableCount": 349,
+  "afterTableCount": 349,
+  "structuralDifference": 0,
+  "note": "Compares non-kelly_calendar schemas only."
+}

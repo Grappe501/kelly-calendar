@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import pg from "pg";
 
@@ -41,24 +42,53 @@ export function loadDatabaseEnv() {
 }
 
 export function classifyTarget(databaseUrl) {
-  if (!databaseUrl) return { class: "missing", hosted: false };
+  if (!databaseUrl) {
+    return {
+      class: "missing",
+      hosted: false,
+      connectionPresent: false,
+      loopback: false,
+      productionLikelihood: "unknown",
+    };
+  }
   try {
     const u = new URL(databaseUrl);
     const host = u.hostname;
+    const loopback = host === "localhost" || host === "127.0.0.1" || host === "::1";
     const hosted =
       host.includes("supabase") ||
       host.includes("neon") ||
       host.includes("amazonaws") ||
       host.includes("azure") ||
       host.includes("rds") ||
-      (!host.includes("localhost") && host !== "127.0.0.1");
+      !loopback;
+    const dbNameFingerprint = createHash("sha256")
+      .update(u.pathname || "/")
+      .digest("hex")
+      .slice(0, 12);
+    const sslMode = u.searchParams.get("sslmode") || (hosted ? "likely-required" : "unknown");
     return {
       class: hosted ? "hosted postgresql" : "local postgresql",
       hosted,
+      connectionPresent: true,
+      loopback,
       hostnameRedacted: host.replace(/^[^.]+/, "***"),
+      databaseNameFingerprint: dbNameFingerprint,
+      sslConfiguration: sslMode,
+      productionLikelihood: hosted ? "high" : "low",
+      productionLikelihoodWarning: hosted
+        ? "Hosted target — treat as shared/production-adjacent; never reset."
+        : null,
     };
   } catch {
-    return { class: "unparseable", hosted: false };
+    return {
+      class: "unparseable",
+      hosted: false,
+      connectionPresent: true,
+      loopback: false,
+      productionLikelihood: "unknown",
+      productionLikelihoodWarning: "Unparseable DATABASE_URL — stop migration.",
+    };
   }
 }
 

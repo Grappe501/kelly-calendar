@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T15:05:38.809Z",
+  "generatedAt": "2026-07-18T15:23:28.442Z",
   "migrations": [
     {
       "name": "20260718160000_kelly_calendar_foundation",
@@ -9,6 +9,15 @@
       "dropPublic": false,
       "tableCreates": 60,
       "enumCreates": 29
+    },
+    {
+      "name": "20260718163000_kelly_calendar_additive_fields",
+      "bytes": 615,
+      "createsSchema": false,
+      "createsPublicTable": false,
+      "dropPublic": false,
+      "tableCreates": 0,
+      "enumCreates": 0
     }
   ],
   "applyCommand": "npm run db:migration:apply",

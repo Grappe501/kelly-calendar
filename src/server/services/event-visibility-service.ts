@@ -23,7 +23,16 @@ export type SafeEventProjection = {
   };
   visibilityLevel: string;
   canOpen: boolean;
-  capabilities: Record<string, boolean>;
+  capabilities: {
+    canEdit: boolean;
+    canArchive: boolean;
+    canViewParticipants: boolean;
+    canViewNotes: boolean;
+    canViewFiles: boolean;
+    canViewTravel: boolean;
+    canViewCommunications: boolean;
+    canViewFundraising: boolean;
+  };
   protectedSectionsOmitted: string[];
 };
 
@@ -120,9 +129,12 @@ export function projectSafeEvent(input: {
     visibilityLevel,
     canOpen: !limited,
     capabilities: {
+      canEdit: !limited,
+      canArchive: !limited,
+      canViewParticipants: !limited,
       canViewNotes: !limited,
-      canViewTravel: !limited,
       canViewFiles: !limited,
+      canViewTravel: !limited,
       canViewCommunications: !limited,
       canViewFundraising: !limited,
     },

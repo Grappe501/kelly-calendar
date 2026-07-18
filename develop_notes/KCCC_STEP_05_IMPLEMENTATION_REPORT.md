@@ -3,13 +3,18 @@
 **Document ID:** KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR  
 **Status:** PARTIAL  
 **Date:** 2026-07-18  
-**Workspace:** `H:\SOSWebsite\kelly-calendar`
+**Workspace:** `H:\SOSWebsite\kelly-calendar`  
+**Script:** `KCCC-BURT-PROTECTED-DATABASE-BUILD-1.0`
 
 ## Summary
 
 Permanent PostgreSQL foundation applied in owned schema `kelly_calendar` on the shared RedDirt hosted database. Federated calendars, canonical events, operational plans, historical import persistence tables, templates, approvals, audit, and AI suggestion contracts exist.
 
-**Live mutations and candidate-data entry remain disabled** because Step 4 AUTH-RBAC is incomplete. Schema work proceeded per Step 5 directive; authentication was not fabricated.
+Additive migration added `templateVersion`, `canArchiveEvents`, and CRM linkage fields (`externalCrmId` / `externalSystem`).
+
+Master-script safety scripts added: forbidden SQL scan, structural snapshot alias, RedDirt integrity check. Protected API surface expanded (calendars/events/plan/import approve|reject|merge) — all mutations return 401.
+
+**Live mutations and candidate-data entry remain disabled** because Step 4 AUTH-RBAC is incomplete. Authentication was not fabricated.
 
 ## What shipped
 

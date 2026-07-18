@@ -41,10 +41,14 @@
       "name": "Protected Database, Federated Calendars, Event Operations",
       "status": "partial",
       "started_at": "2026-07-18T15:00:00.000Z",
-      "migration": "20260718160000_kelly_calendar_foundation",
+      "migrations": [
+        "20260718160000_kelly_calendar_foundation",
+        "20260718163000_kelly_calendar_additive_fields"
+      ],
       "schema": "kelly_calendar",
       "tables": 60,
       "reddirt_structure_diff": 0,
+      "script": "KCCC-BURT-PROTECTED-DATABASE-BUILD-1.0",
       "known_blockers": [
         "Step 4 AUTH-RBAC incomplete — mutations gated",
         "Netlify site not connected",
@@ -53,8 +57,10 @@
       "primary_files": [
         "prisma/schema.prisma",
         "prisma/migrations/20260718160000_kelly_calendar_foundation/migration.sql",
+        "prisma/migrations/20260718163000_kelly_calendar_additive_fields/migration.sql",
         "src/server/db/prisma.ts",
         "src/server/services/event-visibility-service.ts",
+        "scripts/database-forbidden-sql-scan.mjs",
         "scripts/database-seed-reference.mjs",
         "develop_notes/KCCC_STEP_05_IMPLEMENTATION_REPORT.md"
       ]

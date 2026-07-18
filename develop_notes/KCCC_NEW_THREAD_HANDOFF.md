@@ -24,46 +24,32 @@ KCCC-STEP-05-DATABASE-FEDERATED-CALENDAR
 NOT completed:
 KCCC-STEP-04-AUTH-RBAC
 
+Migrations applied:
+- 20260718160000_kelly_calendar_foundation
+- 20260718163000_kelly_calendar_additive_fields
+
 Database capabilities (schema + seed):
-- Dedicated application schema kelly_calendar
-- Command Calendar (roll-up surface)
-- Specialized subcalendars (17 system calendars)
-- Calendar groups
-- User and team membership tables
-- Calendar permissions vocabulary
-- Event-level visibility overrides
-- Section-level permissions
-- Canonical events + event numbers
-- Many-to-many calendar memberships
-- Event objectives, program flows, packing, staffing, actions
-- Communications and travel plans
-- People and organizations
-- Arkansas county references (75)
-- Historical Google import persistence tables
-- External identity preservation
+- Dedicated application schema kelly_calendar (60 tables)
+- Command Calendar roll-up surface + 16 specialized calendars
+- Calendar groups, memberships, team bindings, roll-up rules, saved views
+- Canonical events + event numbers + multi-calendar memberships
+- Visibility overrides + section permissions
+- Operational plans (objectives, program flow, packing, staffing, actions, communications, travel)
+- People/organizations with externalCrmId linkage fields
+- 75 Arkansas counties + regions
+- Historical Google import persistence + external identities
 - Import approval transaction contracts (mutations gated)
-- Event templates + saved views
-- Approval workflows + audit + AI suggestion tables
+- Templates, approvals, audit, AI suggestion tables
+- Protected APIs return 401 until Step 4
 
 Permanent limited-view rule:
-Authenticated campaign users normally see:
 - Primary calendar name
 - Safe event title
 - General location when safe
-- Start time
-- End time
-
-Protected sections:
-Removed server-side unless authorized.
+- Start / end times
 
 Historical floor:
 November 1, 2025
-
-Migration applied:
-20260718160000_kelly_calendar_foundation
-
-Commit:
-bf63513 (main, pushed to origin)
 
 Database target:
 Hosted PostgreSQL (Supabase pooler) — credentials redacted
@@ -77,11 +63,18 @@ Live flags (honest):
 - candidate_data_ready: false
 - live_calendar_data_enabled: false
 
+Missing Step 4 gates:
+- Auth provider module
+- session.ts identity contract
+- System roles
+- Team memberships
+- Session validation
+- Protected route middleware (beyond mutation gate)
+
 Next required:
 KCCC-STEP-04-AUTH-RBAC
 
-Then resume:
-Wire Step 5 mutation services + import approval + Command Calendar membership queries
+Then resume Step 5 live mutation wiring.
 
 Do not begin:
 KCCC-STEP-06-MOBILE-COMMAND-SHELL
@@ -92,5 +85,5 @@ Operator site connection still required
 Blockers:
 1. Step 4 authentication / RBAC
 2. Netlify site + injected env
-3. Optional SHADOW_DATABASE_URL for full migrate-diff drift CI
+3. Optional SHADOW_DATABASE_URL for full migrate-diff
 ```

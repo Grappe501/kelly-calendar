@@ -511,6 +511,7 @@ model CalendarMembership {
   canViewSecurityDetails     Boolean             @default(false)
   canCreateEvents            Boolean             @default(false)
   canEditEvents              Boolean             @default(false)
+  canArchiveEvents           Boolean             @default(false)
   canDeleteEvents            Boolean             @default(false)
   canManageMemberships       Boolean             @default(false)
   startsAt                   DateTime            @default(now())
@@ -628,6 +629,7 @@ model Event {
   ownerUserId                 String?
   primaryCalendarId           String
   templateId                  String?
+  templateVersion             Int?
 
   internalTitle               String
   campaignDisplayTitle        String
@@ -1142,6 +1144,8 @@ model Person {
   publicPhone           String?
   privatePhoneEncrypted String?
   notes                 String?
+  externalCrmId         String?
+  externalSystem        String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
   archivedAt            DateTime?
@@ -1162,6 +1166,7 @@ model Organization {
   countyId       String?
   state          String    @default("Arkansas")
   externalCrmId  String?
+  externalSystem String?
   notes          String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
