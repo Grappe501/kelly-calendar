@@ -1,15 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { getCapabilityStatus } from "@/lib/system/capabilities";
+import { getSecurityCapabilityStatus } from "@/lib/security/security-status";
+import { CURRENT_STEP_NUMBER } from "@/lib/system/constants";
 
-describe("getCapabilityStatus", () => {
-  it("reports scaffold capabilities without claiming auth or AI", () => {
-    const status = getCapabilityStatus({ databaseTested: false });
-    expect(status.application.ready).toBe(true);
-    expect(status.application.step).toBe(2);
-    expect(status.authentication.enabled).toBe(false);
-    expect(status.ai.enabled).toBe(false);
-    expect(status.ai.authority).toBe("proposal_only");
-    expect(status.database.mutable).toBe(false);
-    expect(status.database.tested).toBe(false);
+describe("capability honesty", () => {
+  it("keeps auth incomplete, AI disabled, and candidate data not ready", () => {
+    const security = getSecurityCapabilityStatus();
+    expect(CURRENT_STEP_NUMBER).toBe(3);
+    expect(security.authenticationComplete).toBe(false);
+    expect(security.candidateDataReady).toBe(false);
+    expect(security.databaseMutationsAuthorized).toBe(false);
+    expect(security.rateLimitDistributed).toBe(false);
   });
 });

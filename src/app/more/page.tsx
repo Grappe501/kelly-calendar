@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CURRENT_STEP_ID, CURRENT_STEP_NUMBER, TOTAL_STEPS } from "@/lib/system/capabilities";
+import {
+  CURRENT_STEP_ID,
+  CURRENT_STEP_NUMBER,
+  TOTAL_STEPS,
+} from "@/lib/system/constants";
 
 export const metadata: Metadata = {
   title: "More",
@@ -29,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>KCCC-STEP-03-ENV-SECURITY</strong>
+            <strong>KCCC-STEP-04-AUTH-RBAC</strong>
           </li>
         </ul>
       </section>
@@ -38,13 +42,16 @@ export default function MorePage() {
         <h2>System</h2>
         <div className="button-row">
           <Link className="button secondary" href="/system/status">
-            System status page
+            System status
+          </Link>
+          <Link className="button secondary" href="/system/environment">
+            Environment readiness
+          </Link>
+          <Link className="button secondary" href="/system/security">
+            Security status
           </Link>
           <Link className="button secondary" href="/api/health">
             Health endpoint (JSON)
-          </Link>
-          <Link className="button secondary" href="/api/system/status">
-            Status endpoint (JSON)
           </Link>
         </div>
       </section>
@@ -53,16 +60,9 @@ export default function MorePage() {
         <h2>Privacy classification</h2>
         <p>
           This application is an <strong>internal campaign operations tool</strong>. It is not a
-          public calendar. Do not publish candidate schedule data. Authentication and role-based
-          access arrive in Step 4.
-        </p>
-      </section>
-
-      <section className="panel">
-        <h2>Settings placeholders</h2>
-        <p className="muted">
-          Notification preferences, external calendar connections, and role management will appear
-          in later steps.
+          public calendar. Real candidate schedule information remains prohibited until
+          authentication, role-based access control, and the protected calendar database layer are
+          implemented and certified.
         </p>
       </section>
     </div>

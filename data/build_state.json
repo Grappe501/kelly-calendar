@@ -1,20 +1,29 @@
 {
   "product": "Kelly Campaign Command Calendar",
   "product_code": "KCCC",
-  "current_step": "KCCC-STEP-02-APP-SCAFFOLD",
+  "current_step": "KCCC-STEP-03-ENV-SECURITY",
   "current_step_status": "complete",
   "completed_steps": [
     "KCCC-STEP-01-PRODUCT-CONSTITUTION",
-    "KCCC-STEP-02-APP-SCAFFOLD"
+    "KCCC-STEP-02-APP-SCAFFOLD",
+    "KCCC-STEP-03-ENV-SECURITY"
   ],
-  "next_step": "KCCC-STEP-03-ENV-SECURITY",
+  "next_step": "KCCC-STEP-04-AUTH-RBAC",
   "total_steps": 25,
-  "overall_completion_percent": 8,
-  "foundation_phase_percent": 40,
-  "updated_at": "2026-07-18T14:15:00.000Z",
+  "overall_completion_percent": 12,
+  "foundation_phase_percent": 60,
+  "environment_foundation": "complete",
+  "security_foundation": "complete",
+  "authentication_complete": false,
+  "database_schema_complete": false,
+  "candidate_data_ready": false,
+  "database_mutations_authorized": false,
+  "ai_enabled": false,
+  "updated_at": "2026-07-18T14:30:00.000Z",
+  "last_updated": "2026-07-18T14:30:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "0c94844",
+  "commit_hash": null,
   "deployment_status": "blocked_operator_netlify_site",
-  "local_runtime_verified": "http://127.0.0.1:3000",
-  "notes": "Standalone Next.js scaffold complete. No calendar tables. No auth. No AI calls. DB diagnose SELECT 1 PASS."
+  "standing_availability_policy": "encoded",
+  "notes": "Env/security foundation complete. Weekday work blocks + Tuesday Little Rock policy encoded. No calendar tables."
 }

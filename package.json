@@ -1,6 +1,6 @@
 {
   "name": "kelly-campaign-command-calendar",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Kelly Campaign Command Calendar (KCCC) — candidate daily operating system",
   "engines": {
@@ -18,11 +18,16 @@
     "drive:validate": "node scripts/validate-h-drive.mjs",
     "governance:validate": "node scripts/validate-governance.mjs",
     "scaffold:validate": "node scripts/validate-scaffold.mjs",
-    "db:diagnose": "node scripts/check-red-dirt-db-connection.mjs",
+    "env:validate": "node scripts/validate-environment.mjs",
+    "env:readiness": "node scripts/print-environment-readiness.mjs",
     "env:safety": "node scripts/verify-env-safety.mjs",
+    "security:bundle": "node scripts/verify-client-bundle-secrets.mjs",
+    "security:headers": "node scripts/inspect-security-headers.mjs",
+    "db:diagnose": "node scripts/check-red-dirt-db-connection.mjs",
+    "step3:validate": "node scripts/validate-step3.mjs",
     "status": "node scripts/print-build-status.mjs",
-    "check": "npm run drive:validate && npm run governance:validate && npm run env:safety && npm run scaffold:validate && npm run lint && npm run typecheck && npm run test",
-    "step2:validate": "npm run check && npm run build && npm run db:diagnose && npm run status"
+    "check": "npm run drive:validate && npm run governance:validate && npm run scaffold:validate && npm run env:validate && npm run env:safety && npm run lint && npm run typecheck && npm run test && npm run step3:validate",
+    "step3:all": "npm run check && npm run build && npm run security:bundle && npm run db:diagnose && npm run env:readiness && npm run security:headers && npm run status"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
@@ -30,6 +35,7 @@
     "pg": "8.16.3",
     "react": "19.2.7",
     "react-dom": "19.2.7",
+    "server-only": "^0.0.1",
     "zod": "3.25.76"
   },
   "devDependencies": {

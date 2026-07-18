@@ -15,7 +15,7 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 |------|------|-------------|--------|
 | **1** | Master Product Constitution | Vision, AI doctrine, H: protocol, this registry, acceptance gates | ✅ |
 | **2** | Standalone Application Scaffold | Next.js + TS + lint + test + Git + Netlify config | ✅ |
-| **3** | Environment and Security Layer | Validated env loader, RedDirt fallback, startup diagnostics | ⬜ |
+| **3** | Environment and Security Layer | Validated env loader, RedDirt fallback, security foundation | ✅ |
 | **4** | Authentication and Roles | Secure login, Kelly RBAC | ⬜ |
 | **5** | Calendar Data Foundation | Prisma schema `kelly_calendar`, migrations, seed, audit fields | ⬜ |
 
@@ -103,9 +103,15 @@ Legend: ⬜ pending · 🔄 in progress · ✅ complete
 
 **Next:** Step 3 — Environment and Security Layer.
 
-## Step detail — Step 3 (next)
+## Step detail — Step 3 ✅
 
-Validated env loader, RedDirt fallback controls, `npm run env:check`, secret non-exposure guarantees.
+**Completed:** 2026-07-18  
+**Report:** `develop_notes/KCCC_STEP_03_IMPLEMENTATION_REPORT.md`  
+Also encoded standing availability policy (weekday work blocks, vacation override, Tuesday Little Rock).
+
+## Step detail — Step 4 (next)
+
+Authentication and Kelly-specific RBAC.
 
 ---
 

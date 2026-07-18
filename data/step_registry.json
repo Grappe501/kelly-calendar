@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "steps": [
     {
       "id": "KCCC-STEP-01-PRODUCT-CONSTITUTION",
@@ -14,25 +14,35 @@
       "number": 2,
       "name": "Standalone Application Scaffold",
       "status": "complete",
-      "completed_at": "2026-07-18T14:00:00.000Z",
-      "commit_hash": "0c94844",
-      "deployment_status": "blocked_operator_netlify_site",
-      "validation_status": "pass",
-      "primary_files": [
-        "package.json",
-        "src/app/page.tsx",
-        "src/app/api/health/route.ts",
-        "netlify.toml",
-        "scripts/check-red-dirt-db-connection.mjs"
-      ],
-      "known_blockers": [
-        "Netlify site not connected — operator must import Grappe501/kelly-calendar"
-      ]
+      "completed_at": "2026-07-18T14:15:00.000Z",
+      "commit_hash": "0c94844"
     },
     {
       "id": "KCCC-STEP-03-ENV-SECURITY",
       "number": 3,
-      "name": "Environment and Security Layer",
+      "name": "Environment and Security Foundation",
+      "status": "complete",
+      "completed_at": "2026-07-18T14:30:00.000Z",
+      "commit_hash": null,
+      "deployment_status": "blocked_operator_netlify_site",
+      "validation_status": "pending_local_run",
+      "environment_readiness": "complete",
+      "security_readiness": "complete",
+      "primary_files": [
+        "src/lib/env/load-server-environment.ts",
+        "src/middleware.ts",
+        "src/lib/campaign/availability-policy.ts",
+        "src/app/system/environment/page.tsx",
+        "src/app/system/security/page.tsx"
+      ],
+      "known_blockers": [
+        "Netlify site not connected"
+      ]
+    },
+    {
+      "id": "KCCC-STEP-04-AUTH-RBAC",
+      "number": 4,
+      "name": "Authentication and Roles",
       "status": "pending"
     }
   ]

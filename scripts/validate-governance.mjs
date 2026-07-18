@@ -11,7 +11,7 @@ const required = [
   "docs/MASTER_PRODUCT_CONSTITUTION.md",
   "docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md",
   "develop_notes/KCCC_NEW_THREAD_HANDOFF.md",
-  "develop_notes/KCCC_STEP_02_IMPLEMENTATION_REPORT.md",
+  "develop_notes/KCCC_STEP_03_IMPLEMENTATION_REPORT.md",
 ];
 
 let failed = false;
@@ -30,22 +30,22 @@ const buildState = JSON.parse(
   fs.readFileSync(path.join(repoRoot, "data/build_state.json"), "utf8"),
 );
 
-if (buildState.current_step !== "KCCC-STEP-02-APP-SCAFFOLD") {
-  console.error("FAIL: build_state current_step must be KCCC-STEP-02-APP-SCAFFOLD for Step 2 closeout");
+if (buildState.current_step !== "KCCC-STEP-03-ENV-SECURITY") {
+  console.error("FAIL: build_state current_step must be KCCC-STEP-03-ENV-SECURITY");
   failed = true;
 } else {
-  console.log("PASS: build_state current_step is Step 2");
+  console.log("PASS: build_state current_step is Step 3");
 }
 
 if (buildState.current_step_status !== "complete") {
-  console.error("FAIL: build_state current_step_status must be complete at Step 2 closeout");
+  console.error("FAIL: build_state current_step_status must be complete");
   failed = true;
 } else {
   console.log("PASS: build_state marked complete");
 }
 
-if (!Array.isArray(buildState.completed_steps) || buildState.completed_steps.length < 2) {
-  console.error("FAIL: completed_steps must include Steps 1 and 2");
+if (!Array.isArray(buildState.completed_steps) || buildState.completed_steps.length < 3) {
+  console.error("FAIL: completed_steps must include Steps 1–3");
   failed = true;
 } else {
   console.log("PASS: completed_steps present");

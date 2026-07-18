@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getStandingAvailabilityPolicy } from "@/lib/campaign/availability-policy";
 
 export const metadata: Metadata = {
   title: "Calendar",
@@ -7,12 +8,30 @@ export const metadata: Metadata = {
 const FUTURE_VIEWS = ["Day", "Week", "Month", "Campaign year"] as const;
 
 export default function CalendarPage() {
+  const availability = getStandingAvailabilityPolicy();
+
   return (
     <div className="page-stack">
       <header className="page-header">
         <h1>Calendar</h1>
         <p>Module shell — full views arrive in Steps 9–10.</p>
       </header>
+
+      <section className="panel" aria-labelledby="standing-heading">
+        <h2 id="standing-heading">Standing rules (all views)</h2>
+        <p className="muted">
+          Noted from the beginning for Day, Week, Month, and Campaign Year. Not yet written as
+          database events.
+        </p>
+        <ul>
+          {availability.rules.map((rule) => (
+            <li key={rule.id}>
+              <strong>{rule.summary}</strong>
+              {rule.overrideAllowed ? " — Command Calendar can override (e.g. vacation)." : null}
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section className="panel" aria-labelledby="views-heading">
         <h2 id="views-heading">Planned views</h2>
@@ -26,15 +45,6 @@ export default function CalendarPage() {
             </span>
           ))}
         </div>
-      </section>
-
-      <section className="panel">
-        <h2>What comes next</h2>
-        <ul>
-          <li>Step 8 — Today command center with live next-event intelligence</li>
-          <li>Step 9 — Day and hourly timeline</li>
-          <li>Step 10 — Week, month, and campaign-year views</li>
-        </ul>
       </section>
     </div>
   );

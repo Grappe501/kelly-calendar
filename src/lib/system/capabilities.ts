@@ -1,77 +1,125 @@
-import { getSecretPresence, redactConnectionTarget } from "@/lib/env/server-presence";
+import { getStandingAvailabilityPolicy } from "@/lib/campaign/availability-policy";
+import { getEnvironmentCapabilityStatus } from "@/lib/env/environment-status";
+import { getSecurityCapabilityStatus } from "@/lib/security/security-status";
+import {
+  CURRENT_STEP_ID,
+  CURRENT_STEP_NUMBER,
+  TOTAL_STEPS,
+} from "@/lib/system/constants";
 
-export const CURRENT_STEP_ID = "KCCC-STEP-02-APP-SCAFFOLD";
-export const CURRENT_STEP_NUMBER = 2;
-export const TOTAL_STEPS = 25;
-export const PRODUCT_CODE = "KCCC";
-export const SERVICE_NAME = "kelly-campaign-command-calendar";
+export {
+  CURRENT_STEP_ID,
+  CURRENT_STEP_NUMBER,
+  TOTAL_STEPS,
+  PRODUCT_CODE,
+  SERVICE_NAME,
+} from "@/lib/system/constants";
 
 export type CapabilityStatus = {
+  ok: true;
   application: {
     ready: boolean;
     step: number;
     totalSteps: number;
     stepId: string;
+    environment: string;
+    commitRef: string | null;
+  };
+  environment: {
+    publicConfigurationValid: boolean;
+    database: string;
+    directDatabase: string;
+    supabaseBrowser: string;
+    supabaseServer: string;
+    openAi: string;
+    redDirtFallbackEnabled: boolean;
+    redDirtFallbackUsed: boolean;
   };
   database: {
     configured: boolean;
     tested: boolean;
+    succeeded?: boolean;
+    targetClass: string;
     mutable: false;
-    targetType: "missing" | "local_loopback" | "hosted_postgresql" | "unknown";
+    migrationAuthorized: false;
   };
   authentication: {
+    publicConfigurationPresent: boolean;
+    serviceConfigurationPresent: boolean;
     enabled: false;
+    plannedStep: 4;
   };
   ai: {
     configured: boolean;
     enabled: false;
     authority: "proposal_only";
+    plannedStep: 16;
   };
+  security: ReturnType<typeof getSecurityCapabilityStatus>;
+  campaignAvailability: ReturnType<typeof getStandingAvailabilityPolicy>;
   deployment: {
     provider: "netlify";
-    environment: string;
   };
-  environment: {
-    publicConfigReady: boolean;
-    secretsConfiguredCount: number;
-  };
+  warnings: string[];
 };
 
 export function getCapabilityStatus(options?: {
   databaseTested?: boolean;
+  databaseSucceeded?: boolean;
+  databaseTargetClass?: string;
 }): CapabilityStatus {
-  const secrets = getSecretPresence();
-  const target = redactConnectionTarget(process.env.DATABASE_URL);
-  const secretsConfiguredCount = Object.values(secrets).filter(Boolean).length;
+  const envStatus = getEnvironmentCapabilityStatus();
+  const security = getSecurityCapabilityStatus();
 
   return {
+    ok: true,
     application: {
       ready: true,
       step: CURRENT_STEP_NUMBER,
       totalSteps: TOTAL_STEPS,
       stepId: CURRENT_STEP_ID,
-    },
-    database: {
-      configured: secrets.databaseUrl,
-      tested: Boolean(options?.databaseTested),
-      mutable: false,
-      targetType: target.targetType,
-    },
-    authentication: {
-      enabled: false,
-    },
-    ai: {
-      configured: secrets.openaiApiKey,
-      enabled: false,
-      authority: "proposal_only",
-    },
-    deployment: {
-      provider: "netlify",
       environment: process.env.NODE_ENV ?? "development",
+      commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
     },
     environment: {
-      publicConfigReady: true,
-      secretsConfiguredCount,
+      publicConfigurationValid: envStatus.publicConfigurationValid,
+      database: envStatus.database,
+      directDatabase: envStatus.directDatabase,
+      supabaseBrowser: envStatus.supabaseBrowser,
+      supabaseServer: envStatus.supabaseServer,
+      openAi: envStatus.openAi,
+      redDirtFallbackEnabled: envStatus.redDirtFallback.enabled,
+      redDirtFallbackUsed: envStatus.redDirtFallback.used,
     },
+    database: {
+      configured: envStatus.database === "configured",
+      tested: Boolean(options?.databaseTested),
+      succeeded: options?.databaseSucceeded,
+      targetClass: options?.databaseTargetClass ?? "unknown",
+      mutable: false,
+      migrationAuthorized: false,
+    },
+    authentication: {
+      publicConfigurationPresent: envStatus.supabaseBrowser === "configured",
+      serviceConfigurationPresent: envStatus.supabaseServer === "configured",
+      enabled: false,
+      plannedStep: 4,
+    },
+    ai: {
+      configured: envStatus.openAi === "configured",
+      enabled: false,
+      authority: "proposal_only",
+      plannedStep: 16,
+    },
+    security,
+    campaignAvailability: getStandingAvailabilityPolicy(),
+    deployment: {
+      provider: "netlify",
+    },
+    warnings: [
+      "The environment and security foundation is active, but authentication and calendar data protections are not complete. Do not enter real candidate schedule information.",
+      "Monday–Friday 8am–noon and 1pm–5pm are standing work-unavailable blocks (vacation override required).",
+      "Tuesdays default to Little Rock unless overridden.",
+    ],
   };
 }

@@ -1,53 +1,70 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "decisions": [
     {
-      "id": "ADR-009",
-      "title": "Next.js App Router Scaffold",
+      "id": "ADR-015",
+      "title": "Approved RedDirt Environment Fallback",
       "status": "accepted",
       "date": "2026-07-18",
-      "decision": "Use Next.js App Router with TypeScript.",
-      "reason": "Supports server routes, mobile web delivery, PWA growth, Netlify deployment, and independent application ownership."
+      "decision": "Calendar-local environment values take precedence; approved missing values may be loaded server-side from RedDirt environment files.",
+      "boundary": "RedDirt values are allowlisted and never exposed to client code."
     },
     {
-      "id": "ADR-010",
-      "title": "No Calendar Models Until Step 5",
+      "id": "ADR-016",
+      "title": "Netlify Uses Injected Environment Variables",
       "status": "accepted",
       "date": "2026-07-18",
-      "decision": "Step 2 creates no database models.",
-      "reason": "Database ownership, migration safety, and calendar namespace must be deliberately implemented in Step 5."
+      "decision": "Production deployment uses Netlify environment variables rather than filesystem fallback."
     },
     {
-      "id": "ADR-011",
-      "title": "Development Shell Before Authentication",
+      "id": "ADR-017",
+      "title": "Separate Public and Server Environment Schemas",
       "status": "accepted",
       "date": "2026-07-18",
-      "decision": "Permit a non-production development shell before authentication is implemented.",
-      "boundary": "No real candidate schedule data may be entered or displayed."
+      "decision": "Browser-safe and server-only variables use separate validation and access paths."
     },
     {
-      "id": "ADR-012",
-      "title": "Safe Database Diagnostics",
+      "id": "ADR-018",
+      "title": "Safe Structured Logging",
       "status": "accepted",
       "date": "2026-07-18",
-      "decision": "Permit a read-only connection probe against RedDirt’s PostgreSQL database.",
-      "boundary": "No schema changes, table writes, or migrations."
+      "decision": "All application logging passes through redaction-aware structured logging."
     },
     {
-      "id": "ADR-013",
-      "title": "Mobile Bottom Navigation",
+      "id": "ADR-019",
+      "title": "Security Headers Before Authentication",
       "status": "accepted",
       "date": "2026-07-18",
-      "decision": "Use Today, Calendar, Add, Search, and More as the primary mobile navigation.",
-      "reason": "These actions map directly to field use and future product growth."
+      "decision": "Establish security headers and request safety before login is implemented."
     },
     {
-      "id": "ADR-014",
-      "title": "Configurable Election Milestone",
+      "id": "ADR-020",
+      "title": "Honest Capability Reporting",
       "status": "accepted",
       "date": "2026-07-18",
-      "decision": "Use a configurable November 3, 2026 election date for initial countdown behavior.",
-      "reason": "The interface must show present-day-to-election context while remaining reusable."
+      "decision": "System status distinguishes configured, enabled, complete, and production-ready."
+    },
+    {
+      "id": "ADR-021",
+      "title": "No Distributed Rate-Limit Claim",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Any in-memory limiter is development-only and must not be described as distributed production protection."
+    },
+    {
+      "id": "ADR-022",
+      "title": "Candidate Data Remains Prohibited",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Real candidate schedule information remains prohibited until authentication, permissions, and calendar schema protections are complete."
+    },
+    {
+      "id": "ADR-023",
+      "title": "Standing Availability Policy Before Schema",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Encode weekday work-unavailable blocks, vacation override capability, and Tuesday Little Rock default as policy before database events exist.",
+      "boundary": "No database event rows are created in Step 3."
     }
   ]
 }

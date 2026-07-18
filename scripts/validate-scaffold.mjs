@@ -17,8 +17,13 @@ const requiredPaths = [
   "src/app/search/page.tsx",
   "src/app/more/page.tsx",
   "src/app/system/status/page.tsx",
+  "src/app/system/environment/page.tsx",
+  "src/app/system/security/page.tsx",
   "src/app/api/health/route.ts",
   "src/app/api/system/status/route.ts",
+  "src/app/api/system/environment/route.ts",
+  "src/app/api/system/security/route.ts",
+  "src/middleware.ts",
   "src/components/navigation/BottomNav.tsx",
   "prisma/schema.prisma",
   "prisma/README.md",
@@ -47,7 +52,7 @@ if (/^\s*model\s+/m.test(schema)) {
 }
 
 const pkg = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
-for (const script of ["dev", "build", "typecheck", "lint", "test", "check", "step2:validate"]) {
+for (const script of ["dev", "build", "typecheck", "lint", "test", "check", "step3:validate", "step3:all"]) {
   if (!pkg.scripts?.[script]) {
     console.error(`FAIL: missing npm script ${script}`);
     failed = true;

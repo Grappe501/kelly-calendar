@@ -1,45 +1,71 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "risks": [
     {
-      "id": "RISK-011",
-      "title": "Scaffold Becomes Fake Product",
-      "severity": "medium",
+      "id": "RISK-016",
+      "title": "RedDirt Fallback Becomes Hidden Production Dependency",
       "status": "mitigated",
-      "risk": "Placeholder interfaces appear functional when backend systems are not implemented.",
-      "mitigation": "Clearly label unavailable features and avoid fake records."
+      "mitigation": "Disable filesystem fallback in Netlify and production contexts."
     },
     {
-      "id": "RISK-012",
-      "title": "Framework Version Mismatch",
-      "severity": "medium",
+      "id": "RISK-017",
+      "title": "Public Variable Misclassification",
+      "status": "mitigated",
+      "mitigation": "Separate schemas, bundle scanning, explicit allowlist."
+    },
+    {
+      "id": "RISK-018",
+      "title": "Secret Appears in Error or Log",
+      "status": "mitigated",
+      "mitigation": "Central error and logging sanitization."
+    },
+    {
+      "id": "RISK-019",
+      "title": "CSP Breaks Application Runtime",
       "status": "open",
-      "risk": "Calendar dependencies diverge from RedDirt or Netlify support.",
-      "mitigation": "Inspect RedDirt, pin versions, validate production build. KCCC uses Next 16 while RedDirt remains on Next 15."
+      "mitigation": "Staged CSP with unsafe-inline styles/scripts; nonce path later."
     },
     {
-      "id": "RISK-013",
-      "title": "Database Diagnostic Accidentally Mutates",
-      "severity": "high",
+      "id": "RISK-020",
+      "title": "In-Memory Rate Limiting Misrepresented",
       "status": "mitigated",
-      "risk": "Connection test runs unsafe operations.",
-      "mitigation": "Permit only a simple SELECT 1 probe."
+      "mitigation": "Labeled development-only / not distributed."
     },
     {
-      "id": "RISK-014",
-      "title": "Environment Fallback Leaks Secrets",
-      "severity": "high",
+      "id": "RISK-021",
+      "title": "Environment Status Reveals Infrastructure",
+      "status": "mitigated",
+      "mitigation": "Capability and broad target classification only."
+    },
+    {
+      "id": "RISK-022",
+      "title": "Database Diagnostic Leaks Host Information",
+      "status": "mitigated",
+      "mitigation": "Redact host and omit user/database names."
+    },
+    {
+      "id": "RISK-023",
+      "title": "Safe Redirect Bypass",
+      "status": "mitigated",
+      "mitigation": "Single redirect helper with tests."
+    },
+    {
+      "id": "RISK-024",
+      "title": "Error Handling Hides Operational Failures",
+      "status": "mitigated",
+      "mitigation": "Safe public responses + redacted server logs + request IDs."
+    },
+    {
+      "id": "RISK-025",
+      "title": "Security Foundation Mistaken for Full Security",
+      "status": "mitigated",
+      "mitigation": "candidate_data_ready false; auth incomplete warnings."
+    },
+    {
+      "id": "RISK-026",
+      "title": "Work Blocks Forgotten When Events Land",
       "status": "open",
-      "risk": "Reading RedDirt environment files exposes values.",
-      "mitigation": "Load server-side only, report presence rather than content, complete full controls in Step 3."
-    },
-    {
-      "id": "RISK-015",
-      "title": "Mobile Shell Overdesigned Too Early",
-      "severity": "low",
-      "status": "mitigated",
-      "risk": "Time is spent polishing a shell instead of delivering scheduling capability.",
-      "mitigation": "Build a clear reusable shell, then stop at Step 2 acceptance."
+      "mitigation": "Standing availability policy encoded now; materialize in Steps 5–10."
     }
   ]
 }

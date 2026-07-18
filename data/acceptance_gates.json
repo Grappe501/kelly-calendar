@@ -1,106 +1,40 @@
 {
-  "step": "KCCC-STEP-02-APP-SCAFFOLD",
-  "updated_at": "2026-07-18T14:17:27.358Z",
+  "step": "KCCC-STEP-03-ENV-SECURITY",
+  "updated_at": "2026-07-18T14:45:00.000Z",
   "gates": [
-    {
-      "id": "G1",
-      "name": "Correct Workspace",
-      "result": "PASS"
-    },
-    {
-      "id": "G2",
-      "name": "Package Installation Safety",
-      "result": "PASS"
-    },
-    {
-      "id": "G3",
-      "name": "Application Boots",
-      "result": "PASS"
-    },
-    {
-      "id": "G4",
-      "name": "Production Build",
-      "result": "PASS"
-    },
-    {
-      "id": "G5",
-      "name": "Type Safety",
-      "result": "PASS"
-    },
-    {
-      "id": "G6",
-      "name": "Lint",
-      "result": "PASS"
-    },
-    {
-      "id": "G7",
-      "name": "Unit Tests",
-      "result": "PASS"
-    },
-    {
-      "id": "G8",
-      "name": "Mobile Shell",
-      "result": "PASS"
-    },
-    {
-      "id": "G9",
-      "name": "Accessibility Foundation",
-      "result": "PASS"
-    },
-    {
-      "id": "G10",
-      "name": "Health Endpoint",
-      "result": "PASS"
-    },
-    {
-      "id": "G11",
-      "name": "System Status",
-      "result": "PASS"
-    },
-    {
-      "id": "G12",
-      "name": "Environment Safety",
-      "result": "PASS"
-    },
-    {
-      "id": "G13",
-      "name": "Database Safety",
-      "result": "PASS"
-    },
-    {
-      "id": "G14",
-      "name": "RedDirt Integrity",
-      "result": "PASS"
-    },
-    {
-      "id": "G15",
-      "name": "Database Diagnostic",
-      "result": "PASS"
-    },
-    {
-      "id": "G16",
-      "name": "Governance Validation",
-      "result": "PASS"
-    },
-    {
-      "id": "G17",
-      "name": "Git Integrity",
-      "result": "PASS"
-    },
-    {
-      "id": "G18",
-      "name": "GitHub Push",
-      "result": "PASS"
-    },
-    {
-      "id": "G19",
-      "name": "Netlify Deployment",
-      "result": "BLOCKED"
-    },
-    {
-      "id": "G20",
-      "name": "Step 2 Handoff",
-      "result": "PASS"
-    }
+    { "id": "G1", "name": "Correct Workspace", "result": "PASS" },
+    { "id": "G2", "name": "H-Drive Safety", "result": "PASS" },
+    { "id": "G3", "name": "Environment Precedence", "result": "PASS" },
+    { "id": "G4", "name": "Approved Variable Allowlist", "result": "PASS" },
+    { "id": "G5", "name": "Client/Server Separation", "result": "PASS" },
+    { "id": "G6", "name": "Environment Validation", "result": "PASS" },
+    { "id": "G7", "name": "Secret Redaction", "result": "PASS" },
+    { "id": "G8", "name": "Client Bundle Safety", "result": "PASS" },
+    { "id": "G9", "name": "Security Headers", "result": "PASS" },
+    { "id": "G10", "name": "CSP Foundation", "result": "PASS" },
+    { "id": "G11", "name": "Permission Policy", "result": "PASS" },
+    { "id": "G12", "name": "Safe Cookie Foundation", "result": "PASS" },
+    { "id": "G13", "name": "Safe Redirects", "result": "PASS" },
+    { "id": "G14", "name": "Origin Defense Foundation", "result": "PASS" },
+    { "id": "G15", "name": "Request IDs", "result": "PASS" },
+    { "id": "G16", "name": "Safe Errors", "result": "PASS" },
+    { "id": "G17", "name": "Structured Logging", "result": "PASS" },
+    { "id": "G18", "name": "Rate-Limit Foundation", "result": "PASS" },
+    { "id": "G19", "name": "Database Diagnostic", "result": "PASS" },
+    { "id": "G20", "name": "No Database Mutation", "result": "PASS" },
+    { "id": "G21", "name": "RedDirt Integrity", "result": "PASS" },
+    { "id": "G22", "name": "System Status Accuracy", "result": "PASS" },
+    { "id": "G23", "name": "Authentication Honesty", "result": "PASS" },
+    { "id": "G24", "name": "AI Honesty", "result": "PASS" },
+    { "id": "G25", "name": "Candidate Data Prohibition", "result": "PASS" },
+    { "id": "G26", "name": "Unit Tests", "result": "PASS" },
+    { "id": "G27", "name": "End-to-End Tests", "result": "PASS" },
+    { "id": "G28", "name": "Production Build", "result": "PASS" },
+    { "id": "G29", "name": "Git Integrity", "result": "PASS" },
+    { "id": "G30", "name": "GitHub Push", "result": "PENDING" },
+    { "id": "G31", "name": "Netlify Deployment", "result": "BLOCKED" },
+    { "id": "G32", "name": "Documentation", "result": "PASS" },
+    { "id": "G33", "name": "Build State", "result": "PASS" },
+    { "id": "G34", "name": "Handoff", "result": "PASS" }
   ]
 }

@@ -16,36 +16,40 @@ H:\SOSWebsite\RedDirt
 Completed:
 KCCC-STEP-01-PRODUCT-CONSTITUTION
 KCCC-STEP-02-APP-SCAFFOLD
-
-Active application state:
-Standalone Next.js application scaffolded
-Mobile-first shell available
-Health endpoint available
-System status available
-No calendar database tables yet
-No authentication yet
-No AI calls yet
-No event creation yet
-
-Next:
 KCCC-STEP-03-ENV-SECURITY
 
-Nonnegotiable boundaries:
-- H-drive project storage only
-- No RedDirt source changes
-- No RedDirt database table mutation
-- No migration until Step 5
-- No real candidate schedule data
-- No public calendar
-- No external calendar synchronization
-- No autonomous AI mutations
-- No secret exposure
+Current capabilities:
+- Standalone Next.js application
+- Mobile-first shell
+- Safe RedDirt environment fallback
+- Typed environment validation
+- Secret isolation and redaction
+- Safe database diagnostics
+- Security headers
+- Safe error foundation
+- Structured logging foundation
+- Request IDs
+- Cookie and redirect helpers
+- Origin and CSRF foundation
+- Rate-limit interface
+- System environment and security dashboards
+- Standing availability policy (weekday work blocks, vacation override, Tuesday Little Rock default)
+
+Not yet available:
+- Authentication
+- User roles
+- Calendar tables
+- Event creation
+- Real candidate data
+- AI calls
+- External calendar sync
+- Public calendar
+
+Next:
+KCCC-STEP-04-AUTH-RBAC
 ```
 
-## Runtime / Git
+## Notes
 
-- Local URL verified: `http://127.0.0.1:3000`
-- Stack: Next.js 16.2.10 / React 19.2.7 / TypeScript 5.8.3
-- DB diagnostic: PASS (read-only `SELECT 1`, hosted PostgreSQL via RedDirt env fallback)
-- GitHub remote: present
-- Netlify: blocked until Steve connects the site
+- Netlify site still requires operator connection
+- Materialize availability policy into recurring calendar blocks in Steps 5–10

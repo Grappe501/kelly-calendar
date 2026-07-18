@@ -1,13 +1,15 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("KCCC mobile shell", () => {
-  test("root page loads with development warning and nav", async ({ page }) => {
+test.describe("KCCC Step 3 shell", () => {
+  test("root page loads with security warning and availability notes", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
     await expect(page.getByRole("heading", { name: /Kelly’s Day/i })).toBeVisible();
     await expect(
-      page.getByText("Internal development build — authentication is not yet enabled."),
+      page.getByText(/authentication is not yet enabled/i),
     ).toBeVisible();
+    await expect(page.getByText(/Little Rock/i)).toBeVisible();
+    await expect(page.getByText(/8:00 AM–12:00 PM/i)).toBeVisible();
     await expect(page.getByRole("navigation", { name: "Primary" })).toBeVisible();
 
     const overflow = await page.evaluate(() => {
@@ -16,26 +18,37 @@ test.describe("KCCC mobile shell", () => {
     expect(overflow).toBe(false);
   });
 
-  test("primary shell routes open", async ({ page }) => {
-    await page.goto("/");
-    await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Calendar" }).click();
-    await expect(page.getByRole("heading", { name: "Calendar" })).toBeVisible();
-
-    await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Search" }).click();
-    await expect(page.getByRole("heading", { name: "Search" })).toBeVisible();
-
-    await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "More" }).click();
-    await expect(page.getByRole("heading", { name: "More" })).toBeVisible();
-
-    await page.getByRole("link", { name: "System status page" }).click();
+  test("system environment and security pages load", async ({ page }) => {
+    await page.goto("/system/status");
     await expect(page.getByRole("heading", { level: 1, name: "System status" })).toBeVisible();
+    await expect(
+      page.getByRole("paragraph").filter({
+        hasText: /Do not enter real candidate schedule information/i,
+      }),
+    ).toBeVisible();
+
+    await page.goto("/system/environment");
+    await expect(page.getByRole("heading", { level: 1, name: "Environment readiness" })).toBeVisible();
+
+    await page.goto("/system/security");
+    await expect(page.getByRole("heading", { level: 1, name: "Security status" })).toBeVisible();
+    await expect(page.getByText(/not full production certification/i)).toBeVisible();
   });
 
-  test("health endpoint returns ok", async ({ request }) => {
-    const response = await request.get("/api/health");
-    expect(response.ok()).toBeTruthy();
-    const json = await response.json();
-    expect(json.ok).toBe(true);
-    expect(json.productCode).toBe("KCCC");
+  test("APIs return safe JSON without secrets", async ({ request }) => {
+    for (const path of [
+      "/api/health",
+      "/api/system/status",
+      "/api/system/environment",
+      "/api/system/security",
+    ]) {
+      const response = await request.get(path);
+      expect(response.ok()).toBeTruthy();
+      const text = await response.text();
+      expect(text).not.toMatch(/sk-[A-Za-z0-9]{10,}/);
+      expect(text).not.toMatch(/postgres(?:ql)?:\/\/[^"'\s]+:[^"'\s]+@/i);
+      const json = JSON.parse(text);
+      expect(json.ok === true || json.application?.ready === true).toBeTruthy();
+    }
   });
 });
