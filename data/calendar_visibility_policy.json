@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "default_authenticated_campaign_visibility": "TITLE_LOCATION",
+  "default_unauthenticated_visibility": "HIDDEN_FROM_UNAUTHENTICATED",
+  "show_calendar_name": true,
+  "show_safe_event_title": true,
+  "show_general_location_when_available": true,
+  "show_start_and_end": true,
+  "deliver_protected_fields_to_client": false,
+  "location_default": "CITY",
+  "high_sensitivity_fallback": "BUSY_WITH_CATEGORY",
+  "protected_personal_fallback": "BUSY_ONLY",
+  "occupied_time_always_visible_to_authenticated": true,
+  "primary_calendar_label_required": true,
+  "multi_calendar_show_additional_memberships_by_default": false
+}

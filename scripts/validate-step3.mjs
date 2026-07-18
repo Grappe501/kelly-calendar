@@ -27,16 +27,25 @@ const required = [
   "src/lib/logging/logger.ts",
   "src/lib/db/connection-diagnostic.ts",
   "src/lib/campaign/availability-policy.ts",
+  "src/lib/calendar-security/resolve-event-visibility.ts",
+  "src/lib/calendar-security/sanitize-event-for-viewer.ts",
+  "src/lib/calendar-security/safe-event-view.ts",
+  "src/components/calendar/safe-event-block.tsx",
   "src/middleware.ts",
   "src/app/system/environment/page.tsx",
   "src/app/system/security/page.tsx",
+  "src/app/system/visibility/page.tsx",
   "src/app/api/system/environment/route.ts",
   "src/app/api/system/security/route.ts",
+  "src/app/api/system/visibility/route.ts",
+  "data/calendar_visibility_policy.json",
   "scripts/validate-environment.mjs",
+  "scripts/validate-calendar-visibility-policy.mjs",
   "scripts/verify-client-bundle-secrets.mjs",
   "scripts/inspect-security-headers.mjs",
   "scripts/validate-step3.mjs",
   "develop_notes/KCCC_STEP_03_IMPLEMENTATION_REPORT.md",
+  "develop_notes/KCCC_CALENDAR_VISIBILITY_DOCTRINE.md",
 ];
 
 for (const rel of required) {
@@ -67,6 +76,25 @@ if (buildState.candidate_data_ready !== false) fail("candidate_data_ready must b
 else pass("candidate_data_ready false");
 if (buildState.authentication_complete !== false) fail("authentication_complete must be false");
 else pass("authentication incomplete");
+if (buildState.calendar_visibility_doctrine !== "complete") {
+  fail("calendar_visibility_doctrine must be complete");
+} else pass("calendar visibility doctrine complete");
+if (buildState.visibility_resolver_prototype !== "complete") {
+  fail("visibility_resolver_prototype must be complete");
+} else pass("visibility resolver prototype complete");
+if (buildState.live_calendar_data_enabled !== false) {
+  fail("live_calendar_data_enabled must be false");
+} else pass("live calendar data disabled");
+
+const policy = JSON.parse(
+  fs.readFileSync(path.join(repoRoot, "data/calendar_visibility_policy.json"), "utf8"),
+);
+if (policy.default_authenticated_campaign_visibility !== "TITLE_LOCATION") {
+  fail("visibility policy default must be TITLE_LOCATION");
+} else pass("visibility policy TITLE_LOCATION default");
+if (policy.deliver_protected_fields_to_client !== false) {
+  fail("policy must not deliver protected fields");
+} else pass("policy omits protected fields");
 
 const availability = fs.readFileSync(
   path.join(repoRoot, "src/lib/campaign/availability-policy.ts"),

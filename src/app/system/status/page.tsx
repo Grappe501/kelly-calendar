@@ -36,6 +36,9 @@ export default async function SystemStatusPage() {
           <Link className="button secondary" href="/system/security">
             Security status
           </Link>
+          <Link className="button secondary" href="/system/visibility">
+            Calendar visibility
+          </Link>
           <Link className="button secondary" href="/more">
             Back to More
           </Link>

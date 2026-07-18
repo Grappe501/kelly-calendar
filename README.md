@@ -6,12 +6,23 @@
 |-------|-------|
 | Path | `H:\SOSWebsite\kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
-| Current step | **3 of 25** — Environment & Security Foundation |
+| Current step | **3 of 25** — Environment, Security & Calendar Visibility |
 | Next step | Step 4 — Auth + calendar membership RBAC |
 | Timezone | `America/Chicago` |
 | Election date | `2026-11-03` (configurable) |
 
 > Real candidate schedule information remains prohibited until authentication, role-based access control, and the protected calendar database layer are implemented and certified.
+
+### Permanent visibility rule
+
+When a viewer lacks full access, the time block **stays visible** with:
+
+1. Primary calendar name  
+2. Safe event title  
+3. General location (when safe)  
+4. Start / end times  
+
+Protected notes, people, logistics, and strategy are omitted server-side. Demo: `/system/visibility` · Doctrine: `develop_notes/KCCC_CALENDAR_VISIBILITY_DOCTRINE.md`
 
 ---
 
@@ -50,6 +61,8 @@ cd H:\SOSWebsite\kelly-calendar
 npm run dev
 npm run build
 npm run check
+npm run visibility:validate
+npm run visibility:test
 npm run step3:all
 npm run db:diagnose
 npm run env:readiness

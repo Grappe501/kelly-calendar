@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.2.0",
   "risks": [
     {
       "id": "RISK-016",
@@ -81,15 +81,51 @@
     },
     {
       "id": "RISK-029",
-      "title": "Availability-Only Leak of Private Detail",
-      "status": "open",
-      "mitigation": "Section/event ACL tests in Step 4–5; never return title/location on AVAILABILITY_ONLY."
+      "title": "Limited Display Reveals Sensitive Details",
+      "status": "mitigated",
+      "mitigation": "Amended doctrine: AVAILABILITY_ONLY shows calendar name + safe title + general location + times only. Protected fields omitted server-side (ADR-033). Restricted titles and CITY location default."
     },
     {
       "id": "RISK-030",
       "title": "External Sync Overwrites Master",
       "status": "mitigated",
       "mitigation": "ADR-028 — external calendars never authoritative; retain origin + sync status."
+    },
+    {
+      "id": "RISK-031",
+      "title": "Hidden Events Cause Scheduling Confusion",
+      "status": "mitigated",
+      "mitigation": "ADR-029 — occupied time remains visible with calendar type, safe title, and general location."
+    },
+    {
+      "id": "RISK-032",
+      "title": "Browser Receives Protected Fields",
+      "status": "mitigated",
+      "mitigation": "ADR-033 — sanitize before client delivery; sanitization tests assert omitted keys."
+    },
+    {
+      "id": "RISK-033",
+      "title": "Exact Location Creates Security Exposure",
+      "status": "mitigated",
+      "mitigation": "ADR-032 — default CITY disclosure for limited viewers; HIDDEN for protected personal."
+    },
+    {
+      "id": "RISK-034",
+      "title": "Calendar Category Reveals Too Much",
+      "status": "open",
+      "mitigation": "Sensitive calendars may use safe category names such as Protected Personal Time."
+    },
+    {
+      "id": "RISK-035",
+      "title": "Multiple Calendar Membership Leaks Strategy",
+      "status": "mitigated",
+      "mitigation": "ADR-035 — display only primary calendar unless additional memberships authorized."
+    },
+    {
+      "id": "RISK-036",
+      "title": "Users Mistake Limited Access for Missing Information",
+      "status": "mitigated",
+      "mitigation": "SafeEventBlock shows limited-access text notice while preserving scheduling context."
     }
   ]
 }

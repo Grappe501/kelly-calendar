@@ -17,45 +17,59 @@ Completed:
 KCCC-STEP-01-PRODUCT-CONSTITUTION
 KCCC-STEP-02-APP-SCAFFOLD
 KCCC-STEP-03-ENV-SECURITY
-+ Constitution v1.1.0 / federation architecture amendment
 
-Architecture (ratified):
-- Command Calendar = authoritative roll-up
-- Subcalendars = workspaces (travel, events, communications, social,
-  press, field, county, fundraising, compliance, volunteer, debate,
-  surrogate, staff work, personal/protected, …)
-- Many-to-many event ↔ calendar memberships
-- Calendar / event / section permissions + AVAILABILITY_ONLY
-- Roll-up modes + layer toggles + saved views
-- Standing availability: Mon–Fri work blocks (overrideable), Tuesday Little Rock
+Permanent calendar rule:
+Protected events remain visible to authenticated campaign users as occupied time blocks.
 
-Current code capabilities:
-- Standalone Next.js app + mobile shell
-- Env/security foundation
-- Standing availability policy encoded (not DB events yet)
+Default limited display:
+- Primary calendar name
+- Safe event title
+- General location when available and safe
+- Start time
+- End time
+
+Protected details:
+Removed server-side unless viewer is authorized.
+
+Current capabilities:
+- Standalone application
+- Mobile-first shell
+- Environment validation
+- Safe RedDirt environment fallback
+- Secret isolation
+- Security headers
+- Structured logging foundation
+- Safe error foundation
+- Read-only database diagnostics
+- Standing availability policy (weekday blocks + Tuesday Little Rock)
+- Calendar visibility doctrine
+- Safe event-view contracts
+- Visibility resolution prototype
+- Demonstration visibility page (/system/visibility)
 
 Not yet available:
-- Authentication / calendar memberships
+- Authentication
+- User roles
+- Live calendar permissions
 - Calendar tables
 - Event creation
 - Real candidate data
-- AI calls
-- External calendar sync
-- Public calendar
+- AI event creation
+- External calendar synchronization
 
 Next:
 KCCC-STEP-04-AUTH-RBAC
-(expand to system roles + calendar/event/section membership permissions)
 ```
 
 ## Read first
 
 1. `docs/MASTER_PRODUCT_CONSTITUTION.md` (v1.1.0)
 2. `docs/CALENDAR_FEDERATION_ARCHITECTURE.md`
-3. `docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md` (v1.1.0)
-4. `docs/ARCHITECTURE_RULES.md`
+3. `develop_notes/KCCC_CALENDAR_VISIBILITY_DOCTRINE.md`
+4. `docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md`
 
 ## Notes
 
 - Netlify site still requires operator connection
+- Do not begin Step 4 until this handoff is confirmed
 - Step 5 seeds system calendars + materializes standing availability — no real PII

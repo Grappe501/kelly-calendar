@@ -33,6 +33,14 @@ test.describe("KCCC Step 3 shell", () => {
     await page.goto("/system/security");
     await expect(page.getByRole("heading", { level: 1, name: "Security status" })).toBeVisible();
     await expect(page.getByText(/not full production certification/i)).toBeVisible();
+
+    await page.goto("/system/visibility");
+    await expect(page.getByRole("heading", { level: 1, name: "Calendar visibility" })).toBeVisible();
+    await expect(
+      page.getByText(/demonstration visibility examples/i),
+    ).toBeVisible();
+    await expect(page.getByText("Fundraising").first()).toBeVisible();
+    await expect(page.getByText(/Women for Kelly Reception/i).first()).toBeVisible();
   });
 
   test("APIs return safe JSON without secrets", async ({ request }) => {
@@ -41,6 +49,7 @@ test.describe("KCCC Step 3 shell", () => {
       "/api/system/status",
       "/api/system/environment",
       "/api/system/security",
+      "/api/system/visibility",
     ]) {
       const response = await request.get(path);
       expect(response.ok()).toBeTruthy();

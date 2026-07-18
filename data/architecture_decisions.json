@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "decisions": [
     {
       "id": "ADR-015",
@@ -86,8 +86,9 @@
       "title": "Multi-Level Calendar Permissions",
       "status": "accepted",
       "date": "2026-07-18",
-      "decision": "Enforce calendar-, event-, and section-level access including AVAILABILITY_ONLY, with default-deny.",
-      "boundary": "Busy blocks must not leak title, location, or attendees to unauthorized viewers."
+      "amended": "2026-07-18",
+      "decision": "Enforce calendar-, event-, and section-level access including AVAILABILITY_ONLY, with default-deny for protected fields.",
+      "boundary": "AVAILABILITY_ONLY / limited viewers receive SafeCalendarEventView (calendar name, safe title, general location, times) — never private notes, people, logistics, or strategy. Busy-only is reserved for protected personal / security-sensitive cases."
     },
     {
       "id": "ADR-027",
@@ -103,6 +104,61 @@
       "status": "accepted",
       "date": "2026-07-18",
       "decision": "Imported/synced external events retain origin and sync status; Command Calendar remains internal master."
+    },
+    {
+      "id": "ADR-029",
+      "title": "Occupied Time Must Remain Visible",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Protected events remain visible as occupied calendar blocks to authenticated campaign users.",
+      "reason": "Campaign teams must understand candidate availability even when details are restricted."
+    },
+    {
+      "id": "ADR-030",
+      "title": "Calendar Name Is Always Operational Context",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Limited event representations display the event’s primary calendar name.",
+      "reason": "The calendar name explains the nature of the commitment without exposing sensitive details."
+    },
+    {
+      "id": "ADR-031",
+      "title": "Safe Event Titles Are Visible by Default",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Authenticated campaign users normally see a safe event title.",
+      "boundary": "Sensitive events may substitute a restricted title."
+    },
+    {
+      "id": "ADR-032",
+      "title": "General Location Is Visible When Safe",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Limited viewers see a general location when available.",
+      "boundary": "Exact private or security-sensitive locations must be generalized or hidden."
+    },
+    {
+      "id": "ADR-033",
+      "title": "Server-Side Event Sanitization",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Unauthorized event fields are removed before data reaches the client.",
+      "reason": "Client-side hiding is not a security boundary."
+    },
+    {
+      "id": "ADR-034",
+      "title": "Visibility Is Layered",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "Access is resolved through authentication, roles, teams, calendar permissions, event overrides, section permissions, sensitivity, and location disclosure."
+    },
+    {
+      "id": "ADR-035",
+      "title": "One Event, Multiple Calendars — Primary Label",
+      "status": "accepted",
+      "date": "2026-07-18",
+      "decision": "A canonical event may belong to multiple subcalendars, but one primary calendar supplies the default category label for limited display.",
+      "boundary": "Additional memberships are not exposed when they would reveal protected strategy."
     }
   ]
 }
