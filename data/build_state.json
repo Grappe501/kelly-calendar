@@ -35,7 +35,7 @@
   "updated_at": "2026-07-18T16:00:00.000Z",
   "last_updated": "2026-07-18T16:00:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "pending",
+  "commit_hash": "48751d5",
   "deployment_status": "blocked_operator_netlify_site",
   "notes": "Step 4 AUTH-RBAC complete: app sessions, system roles, teams, middleware gate, Kelly full access. Candidate PII still gated. Wire live Step 5/5.5 mutations next; do not begin Step 6 until ops paths are live."
 }
