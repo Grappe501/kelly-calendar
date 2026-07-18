@@ -13,7 +13,7 @@
   "foundation_phase_percent": 40,
   "updated_at": "2026-07-18T14:15:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": null,
+  "commit_hash": "0c94844",
   "deployment_status": "blocked_operator_netlify_site",
   "local_runtime_verified": "http://127.0.0.1:3000",
   "notes": "Standalone Next.js scaffold complete. No calendar tables. No auth. No AI calls. DB diagnose SELECT 1 PASS."
