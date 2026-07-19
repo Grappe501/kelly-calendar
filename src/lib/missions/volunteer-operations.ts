@@ -116,6 +116,14 @@ export type VolunteerOperationsHome = {
     trainingReminders: UnknownFact;
     talkingPointsPlanReadyMissions: number;
   } | null;
+  /** Consumed from Logistics Operations — never owned here. */
+  logisticsConsume: {
+    driverAssignmentsKnown: number;
+    driverAssignmentsNeeded: number;
+    transportationAvailability: string;
+    equipmentIssued: UnknownFact;
+    checkoutStatus: UnknownFact;
+  } | null;
 };
 
 export type VolunteerMissionInput = {
@@ -317,6 +325,7 @@ export function buildVolunteerOperationsHome(input: {
   missions: VolunteerMissionInput[];
   now?: Date;
   communicationsConsume?: VolunteerOperationsHome["communicationsConsume"];
+  logisticsConsume?: VolunteerOperationsHome["logisticsConsume"];
 }): VolunteerOperationsHome {
   const now = input.now ?? new Date();
   const missionCapacity = input.missions
@@ -447,6 +456,7 @@ export function buildVolunteerOperationsHome(input: {
       })),
     },
     communicationsConsume: input.communicationsConsume ?? null,
+    logisticsConsume: input.logisticsConsume ?? null,
   };
 }
 

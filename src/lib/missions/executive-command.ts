@@ -6,6 +6,7 @@
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
 import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
+import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { VolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
@@ -103,6 +104,8 @@ export type ExecutiveCommand = {
   volunteerFeed: VolunteerOperationsHome["executiveFeed"] | null;
   /** Consumed from Communications Operations (7.5) — plan readiness. */
   communicationsFeed: CommunicationsOperationsHome["executiveFeed"] | null;
+  /** Consumed from Logistics Operations (7.6) — execute-ability. */
+  logisticsFeed: LogisticsOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -123,12 +126,14 @@ export function buildDeterministicExecutiveBriefing(
   countyFeed?: CountyOperationsHome["executiveFeed"] | null,
   volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null,
   communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null,
+  logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
       countyFeed?.briefingLine,
       volunteerFeed?.briefingLine,
       communicationsFeed?.briefingLine,
+      logisticsFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -144,6 +149,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (communicationsFeed?.briefingLine) {
     parts.push(communicationsFeed.briefingLine);
+  }
+  if (logisticsFeed?.briefingLine) {
+    parts.push(logisticsFeed.briefingLine);
   }
   if (countyFeed?.briefingLine) {
     parts.push(countyFeed.briefingLine);
@@ -205,6 +213,7 @@ export function buildExecutiveCommand(input: {
   countyFeed?: CountyOperationsHome["executiveFeed"] | null;
   volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null;
   communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null;
+  logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -212,6 +221,7 @@ export function buildExecutiveCommand(input: {
   const countyFeed = input.countyFeed ?? null;
   const volunteerFeed = input.volunteerFeed ?? null;
   const communicationsFeed = input.communicationsFeed ?? null;
+  const logisticsFeed = input.logisticsFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -263,6 +273,20 @@ export function buildExecutiveCommand(input: {
       label: "Communications risk",
       detail: top ? top.detail : communicationsFeed.briefingLine,
       href: "/communications",
+      urgency: "NOW",
+    });
+  }
+  if (
+    logisticsFeed &&
+    (logisticsFeed.logisticsBlockers > 0 ||
+      logisticsFeed.travelRisk === "CRITICAL" ||
+      logisticsFeed.travelRisk === "HIGH")
+  ) {
+    const top = logisticsFeed.topBlockers[0];
+    topPriorities.push({
+      label: "Logistics blocker",
+      detail: top ? top.detail : logisticsFeed.briefingLine,
+      href: "/logistics",
       urgency: "NOW",
     });
   }
@@ -512,6 +536,25 @@ export function buildExecutiveCommand(input: {
   if (volunteerFeed?.unassignedTrainedCanvassersStatus === "unknown") {
     alerts.push("Trained canvasser pool Unknown (not zero)");
   }
+  if (communicationsFeed && communicationsFeed.rapidResponseNeeded > 0) {
+    alerts.push(
+      `${communicationsFeed.rapidResponseNeeded} rapid response item(s) open`,
+    );
+  }
+  if (communicationsFeed && communicationsFeed.pressDeadlinesAtRisk > 0) {
+    alerts.push(
+      `${communicationsFeed.pressDeadlinesAtRisk} communications deadline(s) at risk`,
+    );
+  }
+  if (communicationsFeed?.todaysMessageStatus === "unknown") {
+    alerts.push("Today’s unified campaign message Unknown");
+  }
+  if (logisticsFeed && logisticsFeed.logisticsBlockers > 0) {
+    alerts.push(`${logisticsFeed.logisticsBlockers} logistics blocker(s)`);
+  }
+  if (logisticsFeed?.vehicleStatusUnknown) {
+    alerts.push("Vehicle fleet status Unknown");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -560,6 +603,7 @@ export function buildExecutiveCommand(input: {
         countyFeed,
         volunteerFeed,
         communicationsFeed,
+        logisticsFeed,
       ),
       source: "deterministic_v1",
     },
@@ -567,6 +611,7 @@ export function buildExecutiveCommand(input: {
     countyFeed,
     volunteerFeed,
     communicationsFeed,
+    logisticsFeed,
   };
 }
 
@@ -596,5 +641,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     countyFeed: command.countyFeed,
     volunteerFeed: command.volunteerFeed,
     communicationsFeed: command.communicationsFeed,
+    logisticsFeed: command.logisticsFeed,
   };
 }

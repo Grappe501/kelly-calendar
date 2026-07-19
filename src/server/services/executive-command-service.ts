@@ -4,6 +4,7 @@ import { buildCommunicationsOperationsHome } from "@/lib/missions/communications
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
 import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
+import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
@@ -16,7 +17,8 @@ export type ExecutiveCommandPayload = {
 };
 
 /**
- * Authenticated Executive Command — consumes Field, County, Volunteer, Communications feeds.
+ * Authenticated Executive Command — consumes Field, County, Volunteer,
+ * Communications, and Logistics feeds (no duplicate engines).
  */
 export async function getExecutiveCommand(
   actor: AuthenticatedActor,
@@ -39,13 +41,26 @@ export async function getExecutiveCommand(
       readiness: mission.todayReadiness,
       volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
       comms: context.comms.get(mission.missionId) ?? null,
+      logistics: context.logistics.get(mission.missionId) ?? null,
     };
+  });
+
+  const logistics = buildLogisticsOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const communications = buildCommunicationsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+    logisticsConsume: {
+      literatureAvailable: String(logistics.communicationsFeed.literatureAvailable),
+      signageStatus: String(logistics.communicationsFeed.signageStatus),
+      mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
+      pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
+    },
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -53,6 +68,7 @@ export async function getExecutiveCommand(
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
     communicationsConsume: communications.volunteerFeed,
+    logisticsConsume: logistics.volunteerFeed,
   });
 
   const field = buildFieldOperationsHome({
@@ -61,6 +77,7 @@ export async function getExecutiveCommand(
     missions: missionInputs,
     volunteerFieldFeed: volunteers.fieldFeed.missions,
     communicationsFieldFeed: communications.fieldFeed.missions,
+    logisticsFieldFeed: logistics.fieldFeed.missions,
   });
 
   const counties = buildCountyOperationsHome({
@@ -75,6 +92,7 @@ export async function getExecutiveCommand(
     })),
     volunteerFeed: volunteers.countyFeed,
     communicationsFeed: communications.countyFeed,
+    logisticsFeed: logistics.countyFeed,
   });
 
   const command = buildExecutiveCommand({
@@ -85,6 +103,7 @@ export async function getExecutiveCommand(
     countyFeed: counties.executiveFeed,
     volunteerFeed: volunteers.executiveFeed,
     communicationsFeed: communications.executiveFeed,
+    logisticsFeed: logistics.executiveFeed,
   });
 
   return {

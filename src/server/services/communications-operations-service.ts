@@ -4,6 +4,7 @@ import {
   buildCommunicationsOperationsHome,
   type CommunicationsOperationsHome,
 } from "@/lib/missions/communications-operations";
+import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
@@ -14,9 +15,6 @@ export type CommunicationsOperationsPayload = {
   candidateDataReady: false;
 };
 
-/**
- * Authenticated Communications Operations — plan readiness, not a send client.
- */
 export async function getCommunicationsOperations(
   actor: AuthenticatedActor,
 ): Promise<CommunicationsOperationsPayload> {
@@ -24,21 +22,36 @@ export async function getCommunicationsOperations(
   const ids = briefPayload.allMissionsToday.map((m) => m.missionId);
   const context = await loadMissionContextForIds(ids);
 
+  const missionInputs = briefPayload.allMissionsToday.map((mission) => {
+    const geo = context.geo.get(mission.missionId);
+    return {
+      mission,
+      countyName:
+        briefPayload.countiesByMission.find((c) => c.missionId === mission.missionId)
+          ?.countyName ??
+        geo?.countyName ??
+        null,
+      comms: context.comms.get(mission.missionId) ?? null,
+      logistics: context.logistics.get(mission.missionId) ?? null,
+    };
+  });
+
+  const logistics = buildLogisticsOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
+  });
+
   const communications = buildCommunicationsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
-    missions: briefPayload.allMissionsToday.map((mission) => {
-      const geo = context.geo.get(mission.missionId);
-      return {
-        mission,
-        countyName:
-          briefPayload.countiesByMission.find((c) => c.missionId === mission.missionId)
-            ?.countyName ??
-          geo?.countyName ??
-          null,
-        comms: context.comms.get(mission.missionId) ?? null,
-      };
-    }),
+    missions: missionInputs,
+    logisticsConsume: {
+      literatureAvailable: String(logistics.communicationsFeed.literatureAvailable),
+      signageStatus: String(logistics.communicationsFeed.signageStatus),
+      mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
+      pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
+    },
   });
 
   return {

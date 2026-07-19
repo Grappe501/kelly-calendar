@@ -15,6 +15,10 @@ import {
   type CommunicationsCountyRow,
 } from "@/lib/missions/communications-operations";
 import {
+  countyLogisticsFact,
+  type LogisticsCountyRow,
+} from "@/lib/missions/logistics-operations";
+import {
   countyVolunteerFact,
   type OperationalNumber,
   type VolunteerCountyCapacity,
@@ -88,6 +92,15 @@ export type CountyCommandNode = {
     localMediaActivity: OperationalNumber;
     localMessagingPackages: "UNKNOWN";
     messagingRisk: string;
+  } | null;
+  /** Consumed from Logistics Operations. */
+  logistics: {
+    venueReadiness: string;
+    transportationReadiness: string;
+    materialAvailability: OperationalNumber;
+    resourceInventory: "UNKNOWN";
+    localLogisticsCoordinator: "UNKNOWN";
+    logisticsRisk: string;
   } | null;
 };
 
@@ -417,6 +430,22 @@ function communicationsForCounty(
   };
 }
 
+function logisticsForCounty(
+  countyName: string,
+  feed: LogisticsCountyRow[] | null | undefined,
+): CountyCommandNode["logistics"] {
+  const fact = countyLogisticsFact(feed, countyName);
+  if (!fact) return null;
+  return {
+    venueReadiness: fact.venueReadiness,
+    transportationReadiness: fact.transportationReadiness,
+    materialAvailability: fact.materialAvailability,
+    resourceInventory: "UNKNOWN",
+    localLogisticsCoordinator: "UNKNOWN",
+    logisticsRisk: fact.logisticsRisk,
+  };
+}
+
 export function buildCountyCommandNode(input: {
   countyName: string;
   missions: CountyMissionInput[];
@@ -424,6 +453,7 @@ export function buildCountyCommandNode(input: {
   fieldHelp: Array<{ detail: string; severity: string }>;
   volunteerFeed?: VolunteerCountyCapacity[] | null;
   communicationsFeed?: CommunicationsCountyRow[] | null;
+  logisticsFeed?: LogisticsCountyRow[] | null;
   now: Date;
 }): CountyCommandNode {
   const { countyName, missions, fieldHeat, fieldHelp, now } = input;
@@ -494,6 +524,7 @@ export function buildCountyCommandNode(input: {
     missionCountToday: missions.length,
     href: `/counties/${slug}`,
     communications: communicationsForCounty(countyName, input.communicationsFeed),
+    logistics: logisticsForCounty(countyName, input.logisticsFeed),
   };
 }
 
@@ -512,6 +543,7 @@ export function buildCountyOperationsHome(input: {
   fieldHelp?: Array<{ countyLabel: string; detail: string; severity: string }>;
   volunteerFeed?: VolunteerCountyCapacity[] | null;
   communicationsFeed?: CommunicationsCountyRow[] | null;
+  logisticsFeed?: LogisticsCountyRow[] | null;
   countyNames?: readonly string[];
   now?: Date;
 }): CountyOperationsHome {
@@ -546,6 +578,7 @@ export function buildCountyOperationsHome(input: {
       fieldHelp: helpByCounty.get(countyName) ?? [],
       volunteerFeed: input.volunteerFeed,
       communicationsFeed: input.communicationsFeed,
+      logisticsFeed: input.logisticsFeed,
       now,
     }),
   );

@@ -113,6 +113,13 @@ export type CommunicationsOperationsHome = {
     trainingReminders: UnknownFact;
     talkingPointsPlanReadyMissions: number;
   };
+  /** Consumed from Logistics — literature/signage plan status. */
+  logisticsConsume: {
+    literatureAvailable: string;
+    signageStatus: string;
+    mediaKitDelivered: UnknownFact;
+    pressBackdropAvailable: UnknownFact;
+  } | null;
 };
 
 export type CommunicationsMissionInput = {
@@ -330,6 +337,7 @@ export function buildCommunicationsOperationsHome(input: {
   timezone: string;
   missions: CommunicationsMissionInput[];
   now?: Date;
+  logisticsConsume?: CommunicationsOperationsHome["logisticsConsume"];
 }): CommunicationsOperationsHome {
   const now = input.now ?? new Date();
   const missionRows = input.missions
@@ -512,6 +520,7 @@ export function buildCommunicationsOperationsHome(input: {
       trainingReminders: TRAINING_UNKNOWN,
       talkingPointsPlanReadyMissions: talkingPointsReadyMissions,
     },
+    logisticsConsume: input.logisticsConsume ?? null,
   };
 }
 

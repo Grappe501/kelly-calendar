@@ -1,6 +1,7 @@
 import "server-only";
 
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
+import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import {
   buildVolunteerOperationsHome,
   type VolunteerOperationsHome,
@@ -35,13 +36,26 @@ export async function getVolunteerOperations(
       staffRequiredCount: geo?.staffRequiredCount ?? 0,
       volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
       comms: context.comms.get(mission.missionId) ?? null,
+      logistics: context.logistics.get(mission.missionId) ?? null,
     };
+  });
+
+  const logistics = buildLogisticsOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const communications = buildCommunicationsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+    logisticsConsume: {
+      literatureAvailable: String(logistics.communicationsFeed.literatureAvailable),
+      signageStatus: String(logistics.communicationsFeed.signageStatus),
+      mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
+      pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
+    },
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -49,6 +63,7 @@ export async function getVolunteerOperations(
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
     communicationsConsume: communications.volunteerFeed,
+    logisticsConsume: logistics.volunteerFeed,
   });
 
   return {

@@ -156,6 +156,32 @@ export function VolunteerOperationsView({
         </Link>
       </section>
 
+      <section className="panel" aria-labelledby="vol-logistics">
+        <h2 id="vol-logistics">Transportation (consumed)</h2>
+        <p className="muted">Owned by Logistics Operations — Volunteer Ops only consumes.</p>
+        {volunteers.logisticsConsume ? (
+          <ul className="volunteer-unknown-list">
+            <li>
+              <strong>Driver assignments</strong>
+              <p>
+                {volunteers.logisticsConsume.driverAssignmentsKnown}/
+                {volunteers.logisticsConsume.driverAssignmentsNeeded} known ·
+                transport {volunteers.logisticsConsume.transportationAvailability}
+              </p>
+            </li>
+            <li>
+              <strong>Equipment issued / check-out</strong>
+              <p>{volunteers.logisticsConsume.equipmentIssued.reason}</p>
+            </li>
+          </ul>
+        ) : (
+          <p className="muted">Logistics feed not attached.</p>
+        )}
+        <Link className="button secondary" href="/logistics">
+          Open Logistics Ops
+        </Link>
+      </section>
+
       <section className="panel" aria-labelledby="vol-unknown">
         <h2 id="vol-unknown">First-class Unknowns</h2>
         <p className="muted">

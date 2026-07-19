@@ -98,6 +98,15 @@ export type FieldTeamCard = {
     pressContactStatus: "UNKNOWN";
     localIssueBriefStatus: "UNKNOWN";
   } | null;
+  /** Consumed from Logistics Operations — not owned here. */
+  logisticsSignals: {
+    assignedVehicle: string;
+    travelConfidence: string;
+    materialDeliveryStatus: string;
+    venueAccess: string;
+    setupReadiness: string;
+    missionLogisticsReadiness: string;
+  } | null;
 };
 
 export type HelpQueueItem = {
@@ -158,6 +167,16 @@ export type FieldCommunicationsMissionSignal = {
   talkingPointsStatus: string;
   eventMessagingStatus: string;
   messagingRisk: string;
+};
+
+export type FieldLogisticsMissionSignal = {
+  missionId: string;
+  assignedVehicle: string;
+  travelConfidence: string;
+  materialDeliveryStatus: string;
+  venueAccess: string;
+  setupReadiness: string;
+  missionLogisticsReadiness: string;
 };
 
 export type FieldMissionInput = {
@@ -233,6 +252,7 @@ export function buildFieldTeamCard(
   input: FieldMissionInput,
   volunteerSignal?: FieldVolunteerMissionSignal | null,
   communicationsSignal?: FieldCommunicationsMissionSignal | null,
+  logisticsSignal?: FieldLogisticsMissionSignal | null,
 ): FieldTeamCard {
   const { mission } = input;
   const county = input.countyName?.trim() || null;
@@ -322,6 +342,16 @@ export function buildFieldTeamCard(
           localIssueBriefStatus: "UNKNOWN",
         }
       : null,
+    logisticsSignals: logisticsSignal
+      ? {
+          assignedVehicle: logisticsSignal.assignedVehicle,
+          travelConfidence: logisticsSignal.travelConfidence,
+          materialDeliveryStatus: logisticsSignal.materialDeliveryStatus,
+          venueAccess: logisticsSignal.venueAccess,
+          setupReadiness: logisticsSignal.setupReadiness,
+          missionLogisticsReadiness: logisticsSignal.missionLogisticsReadiness,
+        }
+      : null,
   };
 }
 
@@ -332,6 +362,7 @@ export function buildFieldOperationsHome(input: {
   missions: FieldMissionInput[];
   volunteerFieldFeed?: FieldVolunteerMissionSignal[] | null;
   communicationsFieldFeed?: FieldCommunicationsMissionSignal[] | null;
+  logisticsFieldFeed?: FieldLogisticsMissionSignal[] | null;
 }): FieldOperationsHome {
   const now = input.now ?? new Date();
   const volByMission = new Map(
@@ -340,12 +371,16 @@ export function buildFieldOperationsHome(input: {
   const commsByMission = new Map(
     (input.communicationsFieldFeed ?? []).map((c) => [c.missionId, c]),
   );
+  const logisticsByMission = new Map(
+    (input.logisticsFieldFeed ?? []).map((l) => [l.missionId, l]),
+  );
   const cards = input.missions
     .map((m) =>
       buildFieldTeamCard(
         m,
         volByMission.get(m.mission.missionId) ?? null,
         commsByMission.get(m.mission.missionId) ?? null,
+        logisticsByMission.get(m.mission.missionId) ?? null,
       ),
     )
     .filter((c) => c.missionStatus !== "COMPLETE")
@@ -360,6 +395,7 @@ export function buildFieldOperationsHome(input: {
       m,
       volByMission.get(m.mission.missionId) ?? null,
       commsByMission.get(m.mission.missionId) ?? null,
+      logisticsByMission.get(m.mission.missionId) ?? null,
     ),
   );
   const activeMissions = allCards.filter((c) => c.missionStatus !== "COMPLETE").length;

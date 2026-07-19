@@ -3,6 +3,7 @@ import "server-only";
 import { calculateEventReadiness } from "@/features/operational-intelligence/services/readiness-service";
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 import type { CommunicationsPlanSnapshot } from "@/lib/missions/communications-operations";
+import type { LogisticsPlanSnapshot } from "@/lib/missions/logistics-operations";
 import type { MissionTimelineInput } from "@/lib/missions/mission-timeline";
 import { prisma } from "@/server/db/prisma";
 
@@ -33,6 +34,7 @@ export type MissionGeoSnapshot = {
 };
 
 export type MissionCommsSnapshot = CommunicationsPlanSnapshot;
+export type MissionLogisticsSnapshot = LogisticsPlanSnapshot;
 
 export type MissionContextBundle = {
   readiness: Map<string, EventReadinessResult>;
@@ -40,6 +42,7 @@ export type MissionContextBundle = {
   day: Map<string, MissionDaySnapshotRow>;
   geo: Map<string, MissionGeoSnapshot>;
   comms: Map<string, MissionCommsSnapshot>;
+  logistics: Map<string, MissionLogisticsSnapshot>;
 };
 
 /**
@@ -54,8 +57,9 @@ export async function loadMissionContextForIds(
   const day = new Map<string, MissionDaySnapshotRow>();
   const geo = new Map<string, MissionGeoSnapshot>();
   const comms = new Map<string, MissionCommsSnapshot>();
+  const logistics = new Map<string, MissionLogisticsSnapshot>();
   const ids = [...new Set(eventIds)].slice(0, 12);
-  if (ids.length === 0) return { readiness, travel, day, geo, comms };
+  if (ids.length === 0) return { readiness, travel, day, geo, comms, logistics };
   const nowMs = Date.now();
 
   const rows = await prisma.event.findMany({
@@ -80,6 +84,43 @@ export async function loadMissionContextForIds(
       departureAt: plan?.departureAt?.toISOString() ?? null,
       targetArrivalAt: plan?.targetArrivalAt?.toISOString() ?? null,
     });
+
+    const packing = event.packingItems;
+    const litItems = packing.filter(
+      (p) =>
+        p.category === "CAMPAIGN_MATERIAL" || p.category === "CANDIDATE_MATERIAL",
+    );
+    const signItems = packing.filter((p) => p.category === "SIGNAGE");
+    logistics.set(event.id, {
+      travelRequired: plan?.travelRequired ?? false,
+      hasDriver: Boolean(plan?.driverUserId),
+      hasVehicleDescription: Boolean(plan?.vehicleDescription?.trim()),
+      departureAt: plan?.departureAt?.toISOString() ?? null,
+      targetArrivalAt: plan?.targetArrivalAt?.toISOString() ?? null,
+      estimatedDurationMinutes: plan?.estimatedDurationMinutes ?? null,
+      bufferMinutes: plan?.bufferMinutes ?? null,
+      estimatedDistanceMiles: plan?.estimatedDistanceMiles ?? null,
+      rentalRequired: plan?.rentalRequired ?? false,
+      flightRequired: plan?.flightRequired ?? false,
+      lodgingRequired: plan?.lodgingRequired ?? false,
+      overnightStay: plan?.overnightStay ?? false,
+      packingCount: packing.length,
+      packingPackedCount: packing.filter((p) => Boolean(p.packedAt)).length,
+      packingLoadedCount: packing.filter((p) => Boolean(p.loadedAt)).length,
+      packingDeliveredCount: packing.filter((p) => Boolean(p.deliveredAt)).length,
+      packingSignageCount: signItems.length,
+      packingSignagePackedCount: signItems.filter((p) => Boolean(p.packedAt)).length,
+      packingLiteratureCount: litItems.length,
+      packingLiteraturePackedCount: litItems.filter((p) => Boolean(p.packedAt))
+        .length,
+      venueName: event.venueName,
+      city: event.city,
+      hasStreetAddress: Boolean(event.streetAddress?.trim()),
+      locationPresent: Boolean(
+        event.city || event.venueName || event.countyId || event.streetAddress,
+      ),
+    });
+
     day.set(event.id, {
       version: event.version,
       status: event.status,
@@ -175,7 +216,7 @@ export async function loadMissionContextForIds(
     );
   }
 
-  return { readiness, travel, day, geo, comms };
+  return { readiness, travel, day, geo, comms, logistics };
 }
 
 /** @deprecated use loadMissionContextForIds */

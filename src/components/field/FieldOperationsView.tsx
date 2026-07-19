@@ -218,6 +218,39 @@ export function FieldOperationsView({
                       </div>
                     </>
                   ) : null}
+                  {team.logisticsSignals ? (
+                    <>
+                      <div>
+                        <dt>Vehicle</dt>
+                        <dd>
+                          {team.logisticsSignals.assignedVehicle.replace(/_/g, " ")}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Travel confidence</dt>
+                        <dd>
+                          {team.logisticsSignals.travelConfidence.replace(/_/g, " ")}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Materials / venue / setup</dt>
+                        <dd>
+                          {team.logisticsSignals.materialDeliveryStatus} ·{" "}
+                          {team.logisticsSignals.venueAccess} ·{" "}
+                          {team.logisticsSignals.setupReadiness}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Logistics readiness</dt>
+                        <dd>
+                          {team.logisticsSignals.missionLogisticsReadiness.replace(
+                            /_/g,
+                            " ",
+                          )}
+                        </dd>
+                      </div>
+                    </>
+                  ) : null}
                 </dl>
                 <ul className="field-resource-strip" aria-label="Resource status">
                   {(

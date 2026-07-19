@@ -5,6 +5,7 @@ import {
   buildFieldOperationsHome,
   type FieldOperationsHome,
 } from "@/lib/missions/field-operations";
+import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
@@ -37,13 +38,26 @@ export async function getFieldOperations(
       readiness: mission.todayReadiness,
       volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
       comms: context.comms.get(mission.missionId) ?? null,
+      logistics: context.logistics.get(mission.missionId) ?? null,
     };
+  });
+
+  const logistics = buildLogisticsOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const communications = buildCommunicationsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+    logisticsConsume: {
+      literatureAvailable: String(logistics.communicationsFeed.literatureAvailable),
+      signageStatus: String(logistics.communicationsFeed.signageStatus),
+      mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
+      pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
+    },
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -51,6 +65,7 @@ export async function getFieldOperations(
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
     communicationsConsume: communications.volunteerFeed,
+    logisticsConsume: logistics.volunteerFeed,
   });
 
   const field = buildFieldOperationsHome({
@@ -59,6 +74,7 @@ export async function getFieldOperations(
     missions: missionInputs,
     volunteerFieldFeed: volunteers.fieldFeed.missions,
     communicationsFieldFeed: communications.fieldFeed.missions,
+    logisticsFieldFeed: logistics.fieldFeed.missions,
   });
 
   return {

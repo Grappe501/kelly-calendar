@@ -157,6 +157,14 @@ export function ExecutiveCommandView({
             </Link>
           </p>
         ) : null}
+        {command.logisticsFeed ? (
+          <p>
+            <strong>Logistics:</strong> {command.logisticsFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/logistics">
+              Open Logistics Ops
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">

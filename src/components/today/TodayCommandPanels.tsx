@@ -109,6 +109,9 @@ export function TodayCommandPanels({
           <Link className="button secondary" href="/communications">
             Comms
           </Link>
+          <Link className="button secondary" href="/logistics">
+            Logistics
+          </Link>
           <Link className="button secondary" href="/brief">
             Campaign Brief
           </Link>
