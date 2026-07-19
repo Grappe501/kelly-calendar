@@ -1,50 +1,27 @@
 # KCCC Governance State v1.0
 
-**Architecture 1.0 lifecycle:** CLOSED  
+**Architecture 1.0 lifecycle:** COMPLETE / CLOSED  
 **Baseline:** RELEASED  
 **Governance:** LOCKED  
-**Tip at program close:** `2dbc1d9`  
-**Recorded:** 2026-07-19 (America/Chicago)
+**Close Commit:** `2dbc1d9`  
+**Register Commit (final archival marker):** `6690ce2`
 
-**Canonical documents:**
+## Canonical Governance Set
 
-| Document | Purpose |
-|----------|---------|
-| `KCCC_CONSTITUTION_v1.0.md` | Enduring principles and doctrines |
-| `KCCC_ARCHITECTURE_FREEZE_v1.0.md` | Frozen baseline contents |
-| This file | Change control, RFCs, certifications |
-| `KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md` | Baseline release declaration |
-| `KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md` | Formal program close |
+| Artifact | Role |
+|----------|------|
+| `KCCC_CONSTITUTION_v1.0.md` | Constitutional principles |
+| `KCCC_ARCHITECTURE_FREEZE_v1.0.md` | Immutable 1.0 scope |
+| This file | Change control, certification, RFC policy |
+| `KCCC_ARCHITECTURE_REGISTER_v1.0.md` | Official registry / lifecycle |
 
 ```text
-KCCC GOVERNANCE STATE
-
-Architecture ................. BASELINE RELEASED
-Lifecycle .................... CLOSED
-Version ...................... 1.0
-
-Operational Kernel ........... Frozen / Certified
-Capability Layer ............. Frozen / Certified
-
-Constitution ................. Canonical
-Architecture Freeze .......... Canonical
-Governance State ............. Canonical
-
-Architecture Review .......... Active
-Phase 3 Exit Review .......... NOT STARTED
-Phase 3 Implementation ....... NOT AUTHORIZED
-
-Future Changes ............... Proposal Required
-Breaking Changes ............. RFC Required
+Architecture Track — Frozen under 1.0; Proposal or RFC for change
+Engineering Track — Continues under 1.0; stay within constitutional boundaries
+Phase 3 Track — Architecture Review only; implementation NOT AUTHORIZED
 ```
 
-## Authorized work under Architecture 1.0
-
-**May:** bug fixes · performance · UX · accessibility · testing · documentation · production hardening · implementations within constitutional boundaries
-
-**Must not:** new canonical owners · alter constitutional doctrine · bypass governance · begin Phase 3 implementation · weaken ownership/readiness without approved RFC
-
-## Governance paths
+## Change control
 
 | Work Type | Governance Path |
 |-----------|-----------------|
@@ -53,20 +30,17 @@ Breaking Changes ............. RFC Required
 | New capability | Architecture proposal |
 | Constitutional change | Formal RFC |
 
-## Versioning (architecture ≠ application)
+## Versioning
 
 | Track | Current |
 |-------|---------|
-| Architecture | **1.0** CLOSED / RELEASED |
-| Application | **0.8.4-petition** (separate track; may advance under 1.0) |
+| Architecture | **1.0** COMPLETE / CLOSED |
+| Application | **0.8.4-petition** (independent) |
 
-## Next major milestone
+## Phase 3 sequence
 
-**Phase 3 Exit Review** — `KCCC_PHASE_03_EXIT_REVIEW.md` — Status: **NOT STARTED**  
-(Design-governance only — see Architecture Register.)
+Exit Review (design) → Governance Decision → **Phase 3 AUTHORIZED** (planning) → **Implementation Authorization** (separate) → code.
 
-Required models: trust · identity & authorization · automation governance · campaign boundary · audit & recovery
+Until Exit Review approves: Phase 3 Implementation **NOT AUTHORIZED**.
 
-Outcome: approve → **Phase 3 AUTHORIZED** (then implementation *planning* may begin; not implementation itself). Reject → remain **NOT AUTHORIZED**.
-
-Official register: `KCCC_ARCHITECTURE_REGISTER_v1.0.md`
+See `KCCC_PHASE_03_EXIT_REVIEW.md` · `KCCC_ARCHITECTURE_REGISTER_v1.0.md`.

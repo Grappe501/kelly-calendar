@@ -1,65 +1,99 @@
 # KCCC Architecture Register v1.0
 
-**Official conclusion of the Architecture 1.0 Program.**  
-**Recorded:** 2026-07-19 (America/Chicago)
+**Final archival marker:** Git commit `6690ce2`  
+**Lifecycle:** COMPLETE  
+**Program State:** CLOSED  
+**Role:** Official registry for Architecture 1.0 baseline — no longer an active design effort; constitutional reference for future work.
 
 ```text
 KELLY CAMPAIGN CALENDAR
 CAMPAIGN OPERATING SYSTEM
 
-Architecture ................. 1.0
-Status ....................... BASELINE RELEASE
+ARCHITECTURE REGISTER v1.0
 
+Architecture ................. 1.0 BASELINE RELEASE
+Lifecycle .................... COMPLETE
 Program State ................ CLOSED
-Governance ................... LOCKED
 
 Close Commit ................. 2dbc1d9
-Repository Head (at register)  10d485f
-
-Phase 1 ...................... CERTIFIED
-Phase 2 ...................... CERTIFIED
+Register Commit .............. 6690ce2
 
 Architecture Review .......... ACTIVE
 Phase 3 Exit Review .......... NOT STARTED
 Phase 3 Implementation ....... NOT AUTHORIZED
 ```
 
-## Permanent normative references (Architecture 1.0)
+## Canonical Governance Set (Architecture 1.0 corpus)
 
 | Artifact | Role |
 |----------|------|
-| `KCCC_CONSTITUTION_v1.0.md` | Enduring principles and doctrines |
-| `KCCC_ARCHITECTURE_FREEZE_v1.0.md` | Frozen baseline contents |
-| `KCCC_GOVERNANCE_STATE_v1.0.md` | Proposals, RFCs, certifications |
+| `KCCC_CONSTITUTION_v1.0.md` | Constitutional principles governing the platform |
+| `KCCC_ARCHITECTURE_FREEZE_v1.0.md` | Immutable scope of the 1.0 baseline |
+| `KCCC_GOVERNANCE_STATE_v1.0.md` | Governance, change control, certification, RFC policy |
+| `KCCC_ARCHITECTURE_REGISTER_v1.0.md` | This registry — baseline and lifecycle state |
 
-Supporting close records: `KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md` · `KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md`
+Together these form the **authoritative architectural corpus** for Version 1.0.
 
-These are the normative references for evaluating future proposals and RFCs.
-
-## Phase 3 Exit Review
-
-Artifact: `KCCC_PHASE_03_EXIT_REVIEW.md`  
-Nature: **Design-governance only** — answers authorization questions; does not implement.
-
-Authorization questions:
-
-1. **Trust Model** — How external information is accepted, reconciled, and prevented from becoming canonical operational truth.  
-2. **Identity & Authorization Model** — Users, roles, organizations, campaigns, and permission boundaries.  
-3. **Automation Governance** — Approval requirements, execution authority, rollback, and accountability.  
-4. **Campaign Boundary Model** — Isolation between campaigns, data ownership, and multi-campaign architecture.  
-5. **Audit & Recovery Model** — Traceability, observability, reconciliation, backup, and disaster recovery.  
-
-Only after review and approval:
+## Governance tracks
 
 ```text
-Phase 3 ............... AUTHORIZED
+Architecture Track
+------------------
+Frozen under Architecture 1.0
+Changes require Proposal or RFC.
+
+Engineering Track
+-----------------
+Continues under Architecture 1.0.
+Implementation must remain within constitutional boundaries.
+
+Phase 3 Track
+-------------
+Architecture Review only.
+No implementation authorized.
 ```
 
-Then **implementation planning** (not implementation itself) may begin under approved architectural guidance.
+## Phase 3 authorization sequence
 
-## Governance going forward
+```text
+Architecture Review
+        │
+        ▼
+Phase 3 Exit Review
+(design answers only)
+        │
+        ▼
+Governance Decision
+        │
+        ├── Reject → Remain in Architecture Review
+        │
+        └── Approve
+                │
+                ▼
+Phase 3 AUTHORIZED
+(planning only)
+                │
+                ▼
+Implementation Authorization
+(separate governance decision)
+```
 
-- Architecture **1.0** is the constitutional baseline.  
-- Application releases continue independently on their own version track.  
-- Architectural evolution requires proposals or RFCs per Governance State.  
-- Phase 3 remains blocked until Exit Review explicitly authorizes it.
+Design approval ≠ planning authority ≠ implementation authorization.
+
+## Architecture 1.0 legacy (founding baseline)
+
+- Single canonical ownership for every operational fact  
+- Executive-question-driven architecture  
+- Explicit Unknown  
+- Minimum-of-required readiness  
+- Capability orchestration without duplication  
+- Human-gated execution  
+- External integrations subordinate to canonical operational truth  
+- AI advisory / non-authoritative  
+- Formal governance for architectural evolution  
+
+## Supporting records
+
+- Program close: `KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md`  
+- Baseline release: `KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md`  
+- Phase 3 Exit Review: `KCCC_PHASE_03_EXIT_REVIEW.md`  

@@ -239,6 +239,7 @@ Before unlocking Phase 3 implementation, design review must answer conclusively:
 | 1.0 | 2026-07-19 | **BASELINE LOCKED.** Governance state recorded. Change control + dual versioning + Phase 3 exit criteria. |
 | 1.0 | 2026-07-19 | **BASELINE RELEASE CLOSED.** Constitutional layer sealed until RFC. Permanent reference baseline declared. |
 | 1.0 | 2026-07-19 | **PROGRAM CLOSED** at tip `2dbc1d9`. Phase 3 Exit Review is next milestone (NOT STARTED). |
+| 1.0 | 2026-07-19 | **REGISTER ARCHIVED** at `6690ce2`. Lifecycle COMPLETE. Corpus of four normative docs sealed. |
 
 ---
 

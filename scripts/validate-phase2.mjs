@@ -98,11 +98,11 @@ const exitReview = read("develop_notes/KCCC_PHASE_03_EXIT_REVIEW.md");
 if (
   exitReview.includes("NOT STARTED") &&
   exitReview.includes("Phase 3 AUTHORIZED") &&
-  exitReview.includes("implementation planning") &&
+  exitReview.includes("Implementation Authorization") &&
   exitReview.includes("Trust Model") &&
   exitReview.includes("Identity & Authorization")
 ) {
-  pass("Phase 3 Exit Review present (NOT STARTED, design-governance)");
+  pass("Phase 3 Exit Review present (NOT STARTED, sequenced authorization)");
 } else {
   fail("Phase 3 Exit Review incomplete");
 }
@@ -110,12 +110,14 @@ if (
 const register = read("develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md");
 if (
   register.includes("BASELINE RELEASE") &&
+  register.includes("COMPLETE") &&
   register.includes("CLOSED") &&
   register.includes("2dbc1d9") &&
-  register.includes("10d485f") &&
+  register.includes("6690ce2") &&
+  register.includes("Implementation Authorization") &&
   register.includes("NOT AUTHORIZED")
 ) {
-  pass("Architecture Register v1.0 present");
+  pass("Architecture Register v1.0 archived at 6690ce2");
 } else {
   fail("Architecture Register incomplete");
 }
@@ -210,17 +212,22 @@ if (
 
 if (
   build.architecture_version === "1.0" &&
-  build.architecture_lifecycle === "CLOSED" &&
+  build.architecture_lifecycle === "COMPLETE" &&
+  build.architecture_program_state === "CLOSED" &&
   build.architecture_baseline_released === true &&
   build.architecture_1_0_close_tip === "2dbc1d9" &&
-  build.architecture_register_at_head === "10d485f" &&
+  build.architecture_register_commit === "6690ce2" &&
   build.architecture_register === "KCCC_ARCHITECTURE_REGISTER_v1.0" &&
+  build.architecture_register_canonical === true &&
+  Array.isArray(build.canonical_governance_set) &&
+  build.canonical_governance_set.length === 4 &&
   build.constitutional_layer_sealed === true &&
   build.architecture_immutable_except_rfc === true &&
   build.project_state === "architecture_review" &&
   build.architecture_review_status === "active" &&
   build.implementation_status === "not_authorized" &&
   build.phase_3_implementation_authorized === false &&
+  build.phase_3_planning_authorized === false &&
   build.phase_3_exit_review_status === "not_started" &&
   build.constitution_canonical === true &&
   build.architecture_freeze_canonical === true &&
@@ -236,24 +243,25 @@ if (
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Architecture 1.0 PROGRAM CLOSED; Exit Review not started; Phase 3 not authorized");
+  pass("Architecture 1.0 COMPLETE; archived at 6690ce2; Phase 3 not authorized");
 } else {
-  fail("Program close / Exit Review gate incorrect");
+  fail("Architecture archive / Phase 3 authorization gate incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
 if (
   constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
   constants.includes("ARCHITECTURE_REVIEW") &&
-  constants.includes("PROGRAM_CLOSED") &&
+  constants.includes("LIFECYCLE_COMPLETE") &&
   constants.includes("NOT_AUTHORIZED") &&
   constants.includes("NOT_STARTED") &&
   constants.includes("2dbc1d9") &&
+  constants.includes("6690ce2") &&
   constants.includes("0.8.4-petition")
 ) {
-  pass("constants reflect program closed / exit review not started");
+  pass("constants reflect Architecture 1.0 archived / complete");
 } else {
-  fail("constants missing program closed state");
+  fail("constants missing Architecture 1.0 archive state");
 }
 
 if (failed) {
@@ -261,5 +269,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 PROGRAM CLOSED at 2dbc1d9; Phase 3 Exit Review NOT STARTED; implementation NOT AUTHORIZED).",
+  "Phase 2 structural validation passed (Architecture 1.0 COMPLETE; Register 6690ce2; Phase 3 Exit Review NOT STARTED; implementation NOT AUTHORIZED).",
 );

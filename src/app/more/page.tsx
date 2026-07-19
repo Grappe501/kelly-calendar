@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Architecture Register 1.0 · Exit Review not started</strong>
+            <strong>Architecture 1.0 COMPLETE · archived at 6690ce2</strong>
           </li>
         </ul>
       </section>
