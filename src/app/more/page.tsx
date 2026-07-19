@@ -41,7 +41,10 @@ export default function MorePage() {
       <section className="panel">
         <h2>Command</h2>
         <div className="button-row">
-          <Link className="button" href="/brief">
+          <Link className="button" href="/command">
+            Executive Command
+          </Link>
+          <Link className="button secondary" href="/brief">
             Today’s Campaign Brief
           </Link>
           <Link className="button secondary" href="/">

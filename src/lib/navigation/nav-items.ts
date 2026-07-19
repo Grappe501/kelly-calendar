@@ -21,7 +21,8 @@ export function resolveActiveNavId(pathname: string): NavItem["id"] {
   if (
     pathname.startsWith("/more") ||
     pathname.startsWith("/system") ||
-    pathname.startsWith("/brief")
+    pathname.startsWith("/brief") ||
+    pathname.startsWith("/command")
   ) {
     return "more";
   }

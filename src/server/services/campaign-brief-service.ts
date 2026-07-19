@@ -5,7 +5,7 @@ import {
   buildCampaignBrief,
   type CampaignBrief,
 } from "@/lib/missions/campaign-brief";
-import { toMissionCard } from "@/lib/missions/mission-card";
+import { toMissionCard, type MissionCard } from "@/lib/missions/mission-card";
 import { computeMissionTimeline } from "@/lib/missions/mission-timeline";
 import {
   buildMissionTodayReadiness,
@@ -31,6 +31,8 @@ function chicagoDateKey(iso: string | Date): string {
 
 export type CampaignBriefPayload = {
   brief: CampaignBrief;
+  allMissionsToday: MissionCard[];
+  countiesByMission: Array<{ missionId: string; countyName: string | null }>;
   viewerDisplayName: string;
   candidateDataReady: false;
 };
@@ -116,6 +118,11 @@ export async function getCampaignBrief(
     })),
   );
 
+  const countiesByMission = eventsToday.map((e) => ({
+    missionId: e.eventId,
+    countyName: context.geo.get(e.eventId)?.countyName ?? null,
+  }));
+
   const brief = buildCampaignBrief({
     date: todayKey,
     timezone: TIMEZONE,
@@ -124,10 +131,7 @@ export async function getCampaignBrief(
     nextMission,
     todayReadiness,
     conflicts,
-    countiesByMission: eventsToday.map((e) => ({
-      missionId: e.eventId,
-      countyName: context.geo.get(e.eventId)?.countyName ?? null,
-    })),
+    countiesByMission,
     staffingByMission: eventsToday.map((e) => {
       const geo = context.geo.get(e.eventId);
       return {
@@ -140,6 +144,8 @@ export async function getCampaignBrief(
 
   return {
     brief,
+    allMissionsToday,
+    countiesByMission,
     viewerDisplayName: actor.displayName,
     candidateDataReady: false,
   };

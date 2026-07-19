@@ -630,6 +630,74 @@ input {
   border-style: dashed;
 }
 
+.executive-command .exec-priority-list,
+.executive-command .exec-inbox-list,
+.executive-command .exec-rhythm-list,
+.executive-command .exec-county-chips,
+.executive-command .exec-alerts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.exec-priority-list li,
+.exec-inbox-list li,
+.exec-rhythm-list li {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.exec-priority-list li[data-urgency="NOW"] {
+  border-color: rgba(155, 28, 28, 0.4);
+}
+
+.exec-inbox-list li[data-status="unknown"] {
+  border-style: dashed;
+  opacity: 0.92;
+}
+
+.exec-county-chips {
+  grid-template-columns: 1fr 1fr;
+}
+
+.exec-county-chips li {
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+}
+
+.exec-ar-silhouette {
+  max-width: 10rem;
+  margin: 0 0 var(--space-3);
+}
+
+.exec-ar-silhouette svg {
+  width: 100%;
+  height: auto;
+}
+
+.exec-rhythm-list li[data-current="true"] {
+  border-color: rgba(15, 76, 92, 0.45);
+  box-shadow: 0 0 0 1px rgba(15, 76, 92, 0.12);
+}
+
+.exec-briefing-text {
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.exec-section .button {
+  min-height: 44px;
+}
+
 .mission-day-feedback.err {
   display: grid;
   gap: var(--space-2);

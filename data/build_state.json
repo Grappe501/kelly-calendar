@@ -46,7 +46,8 @@
   "step6_holds_certified_absent": true,
   "step6_accepted_at": "2026-07-19T03:45:00.000Z",
   "step7_charter": "campaign_operations_not_crud",
-  "step7_status": "open",
+  "step7_status": "in_progress",
+  "step7_increment": "7.1-executive-command",
   "step7_purpose": "Coordinate, direct, and execute campaign activities",
   "step7_explicitly_not": [
     "crud",
@@ -62,6 +63,8 @@
     "operational_intelligence",
     "after_action_accountability"
   ],
+  "executive_command_enabled": true,
+  "executive_question_doctrine": true,
   "live_command_summary_enabled": true,
   "mission_cards_enabled": true,
   "mission_timeline_engine_enabled": true,
@@ -90,15 +93,15 @@
   "netlify_app_session_secret_configured": true,
   "production_deployment_ready": true,
   "deployment_status": "production_live",
-  "updated_at": "2026-07-19T03:45:00.000Z",
-  "last_updated": "2026-07-19T03:45:00.000Z",
+  "updated_at": "2026-07-19T03:55:00.000Z",
+  "last_updated": "2026-07-19T03:55:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "99f603b",
+  "commit_hash": "pending-7.1",
   "step_5_6_unlock_commit": "83c2bd4",
   "step_5_7_deploy_commit": "239f697",
   "step_5_7_closure_commit": "fc13413",
   "step_6_engineering_tip": "08ada56",
   "step_6_closure_commit": "99f603b",
   "governance_baseline_at_start": "d6d0096",
-  "notes": "Step 6 COMPLETE after human operator pilot ACCEPT (no HOLDs). Freeze lifted. Step 7 OPEN under Campaign Operations charter (not CRUD). candidate_data_ready false."
+  "notes": "Step 6 COMPLETE. Step 7.1 Executive Command in progress (/command morning briefing). Doctrine: every module answers an executive question. candidate_data_ready false."
 }

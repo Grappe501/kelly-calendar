@@ -94,7 +94,10 @@ export function TodayCommandPanels({
       <section className="panel" aria-labelledby="actions-heading">
         <h2 id="actions-heading">Quick actions</h2>
         <div className="button-row">
-          <Link className="button" href="/brief">
+          <Link className="button" href="/command">
+            Executive Command
+          </Link>
+          <Link className="button secondary" href="/brief">
             Campaign Brief
           </Link>
           <Link className="button" href="/add">

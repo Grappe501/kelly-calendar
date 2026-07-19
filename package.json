@@ -57,6 +57,8 @@
     "step5.7:all": "npm run step5.7:local && npm run netlify:target:validate && npm run deploy:auth-routes:validate && npm run deploy:status-contracts:validate && npm run deploy:safe-projections:validate && npm run deploy:audit-proof:validate && npm run deploy:proof-data:validate && npm run step5.7:report && npm run step5.7:validate",
     "step6:validate": "node scripts/validate-step6.mjs",
     "step6:all": "npm run drive:validate && npm run governance:validate && npm run env:validate && npm run auth:validate && npm run step6:validate && npm run lint && npm run typecheck && npm run test",
+    "step7:validate": "node scripts/validate-step7.mjs",
+    "step7:all": "npm run step6:validate && npm run step7:validate && npm run typecheck && npm run test",
     "db:classify": "node scripts/database-classify-target.mjs",
     "db:preflight": "node scripts/database-preflight.mjs",
     "db:snapshot": "node scripts/database-capture-structural-snapshot.mjs",

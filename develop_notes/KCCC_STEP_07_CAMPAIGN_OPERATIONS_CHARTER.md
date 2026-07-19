@@ -41,6 +41,10 @@ Never:
 - No cross-lane imports from RedDirt/AJAX/PhatLip/countyWorkbench/sos-public without an approved integration packet.  
 - Shared `OPENAI_API_KEY` usage must attribute `application=kelly-calendar` in AI audit metadata.
 
-## First increments (to be chartered when work begins)
+## Active increment
 
-Do not start feature work until Steve names the first Step 7 increment. Prefer one workstream slice that extends command operations rather than opening a general admin UI.
+**Step 7.1 — Executive Command Center** (`/command`)
+
+See `develop_notes/KCCC_STEP_07_1_EXECUTIVE_COMMAND.md`.
+
+Doctrine: every module must answer an executive question. Executive Command answers *What do I do today?*

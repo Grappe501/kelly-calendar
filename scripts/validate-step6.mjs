@@ -372,7 +372,10 @@ if (build.completed_steps?.includes("KCCC-STEP-06-MOBILE-COMMAND-SHELL")) {
   } else {
     fail("Step 6 listed complete but acceptance fields incomplete");
   }
-  if (build.step7_status === "open" && build.step7_charter === "campaign_operations_not_crud") {
+  if (
+    (build.step7_status === "open" || build.step7_status === "in_progress") &&
+    build.step7_charter === "campaign_operations_not_crud"
+  ) {
     pass("Step 7 open under Campaign Operations charter");
   } else {
     fail("Step 7 not correctly opened after Step 6 ACCEPT");
