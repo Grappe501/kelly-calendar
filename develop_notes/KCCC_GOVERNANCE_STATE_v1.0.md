@@ -1,84 +1,69 @@
 # KCCC Governance State v1.0
 
-**Baseline release:** Architecture Version 1.0  
-**Status:** BASELINE RELEASE · CLOSED · GOVERNANCE LOCKED  
-**Recorded:** 2026-07-19 (America/Chicago)  
-**Governing documents (canonical):**
+**Architecture 1.0 lifecycle:** CLOSED  
+**Baseline:** RELEASED  
+**Governance:** LOCKED  
+**Tip at program close:** `2dbc1d9`  
+**Recorded:** 2026-07-19 (America/Chicago)
 
-- `KCCC_CONSTITUTION_v1.0.md` — principles and doctrines  
-- `KCCC_ARCHITECTURE_FREEZE_v1.0.md` — frozen baseline contents  
-- This file — change control, RFCs, certifications  
-- `KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md` — release declaration  
+**Canonical documents:**
+
+| Document | Purpose |
+|----------|---------|
+| `KCCC_CONSTITUTION_v1.0.md` | Enduring principles and doctrines |
+| `KCCC_ARCHITECTURE_FREEZE_v1.0.md` | Frozen baseline contents |
+| This file | Change control, RFCs, certifications |
+| `KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md` | Baseline release declaration |
+| `KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md` | Formal program close |
 
 ```text
 KCCC GOVERNANCE STATE
 
-Architecture ................. BASELINE LOCKED / RELEASED
-Version ...................... 1.0 (CLOSED)
+Architecture ................. BASELINE RELEASED
+Lifecycle .................... CLOSED
+Version ...................... 1.0
 
-Operational Kernel ........... Frozen
-Capability Layer ............. Frozen
+Operational Kernel ........... Frozen / Certified
+Capability Layer ............. Frozen / Certified
 
 Constitution ................. Canonical
 Architecture Freeze .......... Canonical
 Governance State ............. Canonical
 
-Architecture Review .......... Open (Phase 3)
-Implementation ............... NOT AUTHORIZED
+Architecture Review .......... Active
+Phase 3 Exit Review .......... NOT STARTED
+Phase 3 Implementation ....... NOT AUTHORIZED
 
 Future Changes ............... Proposal Required
 Breaking Changes ............. RFC Required
 ```
 
-## Baseline immutability
+## Authorized work under Architecture 1.0
 
-Architecture **1.0** is **closed** as a baseline release. It is the permanent reference baseline for evaluating future proposals.
+**May:** bug fixes · performance · UX · accessibility · testing · documentation · production hardening · implementations within constitutional boundaries
 
-Do **not** add to the constitutional layer until a formal RFC requires it.
+**Must not:** new canonical owners · alter constitutional doctrine · bypass governance · begin Phase 3 implementation · weaken ownership/readiness without approved RFC
 
-Future changes are **evolutionary** (application releases under Architecture 1.0, or Architecture 2.0 via RFC) — not incremental edits that quietly rewrite the foundation.
+## Governance paths
 
-## Change control
-
-| Type | Requires |
-|------|----------|
-| Bug fix / engineering within Architecture 1.0 | Normal engineering review |
-| Feature within existing doctrine | Design review |
+| Work Type | Governance Path |
+|-----------|-----------------|
+| Defect correction | Engineering review |
+| Implementation inside Architecture 1.0 | Design review |
 | New capability | Architecture proposal |
-| Change to Constitution or ownership model | Formal RFC and Architecture Board approval |
+| Constitutional change | Formal RFC |
 
 ## Versioning (architecture ≠ application)
 
-| Track | Current | Notes |
-|-------|---------|-------|
-| Architecture | **1.0** (CLOSED / RELEASED) | Changes only via RFC → Architecture 2.0 |
-| Application | **0.8.4-petition** | May advance under Architecture 1.0 |
+| Track | Current |
+|-------|---------|
+| Architecture | **1.0** CLOSED / RELEASED |
+| Application | **0.8.4-petition** (separate track; may advance under 1.0) |
 
-```text
-Architecture ............. 1.0
-Application .............. 0.8.4-petition → 0.9.x → 1.0 (still Architecture 1.0)
+## Next major milestone
 
-Only after constitutional RFC:
-Architecture ............. 2.0
-Application .............. 2.x
-```
+**Phase 3 Exit Review** — `KCCC_PHASE_03_EXIT_REVIEW.md` — Status: **NOT STARTED**
 
-## Success criteria before leaving Architecture Review
+Required models: trust · identity · automation governance · multi-campaign boundary · audit & recovery · AI vs canonical distinction
 
-Before unlocking Phase 3 implementation (**NOT AUTHORIZED** until then), design review must answer **conclusively**:
-
-1. Is every external integration subordinate to canonical ownership?  
-2. Does every automation preserve the **Approve → Execute** model where appropriate?  
-3. Can every externally sourced fact be traced and audited?  
-4. Can multiple campaigns coexist without data leakage or ownership ambiguity?  
-5. Can every AI-generated recommendation be distinguished from canonical operational truth?  
-
-## Project posture
-
-```text
-Architecture 1.0 ............. BASELINE RELEASE (CLOSED · LOCKED)
-Phase 1 ...................... COMPLETE · Certified · Frozen
-Phase 2 ...................... COMPLETE · Certified · Frozen
-Phase 3 ...................... Architecture Review (Open)
-Implementation ............... NOT AUTHORIZED until exit criteria met
-```
+Outcome: approve or reject **Phase 3 Authorized**. Until then, remain in Architecture Review with implementation **NOT AUTHORIZED**.

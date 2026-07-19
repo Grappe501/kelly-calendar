@@ -1,9 +1,10 @@
 # KCCC Phase 3 — Trusted Connected Platform
 
 **Script ID:** `KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM`  
-**Status:** Architecture Review — implementation **NOT AUTHORIZED**  
-**Prerequisite:** Phase 1–2 CERTIFIED + Architecture 1.0 BASELINE RELEASE CLOSED  
-**Governing documents:** Constitution · Freeze · Governance State · Baseline Release  
+**Status:** Architecture Review (Active) — implementation **NOT AUTHORIZED**  
+**Exit Review:** `KCCC_PHASE_03_EXIT_REVIEW.md` — **NOT STARTED**  
+**Prerequisite:** Architecture 1.0 program CLOSED / baseline RELEASED  
+**Governing documents:** Constitution · Freeze · Governance State · Program Close  
 **Former working title:** Integration & Scale (superseded)
 
 ## Current platform state

@@ -4,35 +4,34 @@
 Product:
 Kelly Campaign Command Calendar (Campaign Operating System)
 
-ARCHITECTURE 1.0 — BASELINE RELEASE (CLOSED)
+ARCHITECTURE 1.0 PROGRAM — CLOSED
+Baseline ..................... RELEASED
 Governance ................... LOCKED
-Architecture Review .......... Open (Phase 3 only)
-Implementation ............... NOT AUTHORIZED (Phase 3)
+Tip at close ................. 2dbc1d9
 
-Application track ............ 0.8.4-petition (separate from architecture)
+Architecture Review .......... Active
+Phase 3 Exit Review .......... NOT STARTED
+Phase 3 Implementation ....... NOT AUTHORIZED
 
-Canonical docs:
-- KCCC_CONSTITUTION_v1.0.md .............. principles
-- KCCC_ARCHITECTURE_FREEZE_v1.0.md ....... frozen baseline
-- KCCC_GOVERNANCE_STATE_v1.0.md .......... RFCs / change control
-- KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md
+Application track ............ 0.8.4-petition
 
-Phase 1 .................... COMPLETE ✓
-Phase 2 .................... COMPLETE ✓
-Architecture 1.0 ........... RELEASED ✓
-Phase 3 .................... Architecture Review
-Phase 3 implementation ..... NOT AUTHORIZED
+Canonical:
+- KCCC_CONSTITUTION_v1.0.md
+- KCCC_ARCHITECTURE_FREEZE_v1.0.md
+- KCCC_GOVERNANCE_STATE_v1.0.md
+- KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md
+- KCCC_PHASE_03_EXIT_REVIEW.md
 
-Still false:
-- candidate_data_ready
-- real_candidate_data_enabled
-- ai_enabled
+Phase 1 / 2 .................. COMPLETE ✓
+Architecture 1.0 ............. RELEASED ✓ (CLOSED)
 
-Allowed:
-- Engineering within Architecture 1.0 boundaries
+Authorized under 1.0:
+Bug fixes, performance, UX, a11y, tests, docs, hardening,
+implementations inside constitutional boundaries
 
-Not allowed without process:
-- Constitutional edits (RFC required)
-- New capabilities (architecture proposal)
-- Phase 3 implementation (exit criteria + Architecture Review close)
+Not authorized:
+New canonical owners, doctrine edits, Phase 3 impl, RFC-free ownership changes
+
+Next milestone:
+PHASE 3 EXIT REVIEW (not started) → approve/reject Phase 3 Authorized
 ```

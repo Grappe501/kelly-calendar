@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Architecture 1.0 BASELINE RELEASE · Phase 3 not authorized</strong>
+            <strong>Architecture 1.0 CLOSED · Phase 3 Exit Review not started</strong>
           </li>
         </ul>
       </section>

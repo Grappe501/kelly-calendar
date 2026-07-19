@@ -32,6 +32,8 @@ const required = [
   ["freeze", "develop_notes/KCCC_ARCHITECTURE_FREEZE_v1.0.md"],
   ["gov", "develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md"],
   ["rel", "develop_notes/KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md"],
+  ["close", "develop_notes/KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md"],
+  ["exit", "develop_notes/KCCC_PHASE_03_EXIT_REVIEW.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
@@ -56,27 +58,51 @@ if (
 
 const governance = read("develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md");
 if (
-  governance.includes("BASELINE RELEASE") &&
+  governance.includes("CLOSED") &&
   governance.includes("NOT AUTHORIZED") &&
+  governance.includes("NOT STARTED") &&
   governance.includes("Proposal Required") &&
   governance.includes("RFC Required") &&
-  governance.includes("0.8.4-petition") &&
-  governance.includes("subordinate to canonical ownership")
+  governance.includes("0.8.4-petition")
 ) {
-  pass("Governance State v1.0 present (baseline closed)");
+  pass("Governance State v1.0 present (program closed)");
 } else {
   fail("Governance State v1.0 incomplete");
 }
 
 const release = read("develop_notes/KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md");
 if (
-  release.includes("BASELINE RELEASE") &&
+  release.includes("Lifecycle State") &&
+  release.includes("CLOSED") &&
   release.includes("NOT AUTHORIZED") &&
-  release.includes("Architecture 1.0 ........... RELEASED")
+  release.includes("2dbc1d9")
 ) {
   pass("Architecture 1.0 Baseline Release declaration present");
 } else {
   fail("Baseline Release declaration incomplete");
+}
+
+const programClose = read("develop_notes/KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md");
+if (
+  programClose.includes("Lifecycle State .............. CLOSED") &&
+  programClose.includes("2dbc1d9") &&
+  programClose.includes("PHASE 3 EXIT REVIEW")
+) {
+  pass("Architecture 1.0 Program Close recorded");
+} else {
+  fail("Program Close incomplete");
+}
+
+const exitReview = read("develop_notes/KCCC_PHASE_03_EXIT_REVIEW.md");
+if (
+  exitReview.includes("NOT STARTED") &&
+  exitReview.includes("Phase 3 Authorized") &&
+  exitReview.includes("Trust") &&
+  exitReview.includes("Identity")
+) {
+  pass("Phase 3 Exit Review present (NOT STARTED)");
+} else {
+  fail("Phase 3 Exit Review incomplete");
 }
 
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
@@ -169,13 +195,16 @@ if (
 
 if (
   build.architecture_version === "1.0" &&
-  build.architecture_status === "baseline_release_closed" &&
+  build.architecture_lifecycle === "CLOSED" &&
   build.architecture_baseline_released === true &&
+  build.architecture_1_0_close_tip === "2dbc1d9" &&
   build.constitutional_layer_sealed === true &&
   build.architecture_immutable_except_rfc === true &&
   build.project_state === "architecture_review" &&
+  build.architecture_review_status === "active" &&
   build.implementation_status === "not_authorized" &&
   build.phase_3_implementation_authorized === false &&
+  build.phase_3_exit_review_status === "not_started" &&
   build.constitution_canonical === true &&
   build.architecture_freeze_canonical === true &&
   build.governance_state_canonical === true &&
@@ -190,23 +219,24 @@ if (
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Architecture 1.0 BASELINE RELEASE CLOSED; Phase 3 not authorized");
+  pass("Architecture 1.0 PROGRAM CLOSED; Exit Review not started; Phase 3 not authorized");
 } else {
-  fail("Baseline release / Phase 3 authorization gate incorrect");
+  fail("Program close / Exit Review gate incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
 if (
   constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
   constants.includes("ARCHITECTURE_REVIEW") &&
-  constants.includes("BASELINE_RELEASE_CLOSED") &&
+  constants.includes("PROGRAM_CLOSED") &&
   constants.includes("NOT_AUTHORIZED") &&
-  constants.includes("Trusted Connected Platform") &&
+  constants.includes("NOT_STARTED") &&
+  constants.includes("2dbc1d9") &&
   constants.includes("0.8.4-petition")
 ) {
-  pass("constants reflect BASELINE RELEASE CLOSED / not authorized");
+  pass("constants reflect program closed / exit review not started");
 } else {
-  fail("constants missing BASELINE RELEASE CLOSED");
+  fail("constants missing program closed state");
 }
 
 if (failed) {
@@ -214,5 +244,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 BASELINE RELEASE CLOSED; Phase 3 Architecture Review; implementation NOT AUTHORIZED).",
+  "Phase 2 structural validation passed (Architecture 1.0 PROGRAM CLOSED at 2dbc1d9; Phase 3 Exit Review NOT STARTED; implementation NOT AUTHORIZED).",
 );

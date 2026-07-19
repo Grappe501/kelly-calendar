@@ -1,7 +1,9 @@
 # KCCC Architecture 1.0 — Baseline Release
 
-**Status:** CLOSED · BASELINE RELEASE · GOVERNANCE LOCKED  
-**Released:** 2026-07-19 (America/Chicago)  
+**Lifecycle State:** CLOSED (program closed)  
+**Status:** BASELINE RELEASED · GOVERNANCE LOCKED  
+**Released / closed tip:** `2dbc1d9`  
+**Closed:** 2026-07-19 (America/Chicago)  
 **Permanent reference baseline** against which all future architectural proposals are evaluated.
 
 ```text
@@ -10,18 +12,19 @@ CAMPAIGN OPERATING SYSTEM
 
 ARCHITECTURE 1.0
 
-Status ....................... BASELINE RELEASE
+Lifecycle State .............. CLOSED
+Baseline ..................... RELEASED
 Governance ................... LOCKED
 
 Kernel ........................ Certified
 Capability Layer .............. Certified
 
-Architecture Review ........... Open
-Implementation ................ Locked
-
 Constitution ................. Canonical
 Architecture Freeze .......... Canonical
 Governance State ............. Canonical
+
+Architecture Review .......... Active
+Phase 3 Implementation ....... NOT AUTHORIZED
 ```
 
 ## Phase status
@@ -30,9 +33,10 @@ Governance State ............. Canonical
 Phase 1 .................... COMPLETE ✓
 Phase 2 .................... COMPLETE ✓
 
-Architecture 1.0 ........... RELEASED ✓
+Architecture 1.0 ........... RELEASED ✓ (program CLOSED)
 
-Phase 3 .................... Architecture Review
+Phase 3 .................... Architecture Review (Active)
+Phase 3 Exit Review ........ NOT STARTED
 Implementation ............. NOT AUTHORIZED
 ```
 
@@ -43,12 +47,11 @@ Implementation ............. NOT AUTHORIZED
 | `KCCC_CONSTITUTION_v1.0.md` | Enduring architectural principles and doctrines |
 | `KCCC_ARCHITECTURE_FREEZE_v1.0.md` | What Architecture 1.0 includes; freezes that baseline |
 | `KCCC_GOVERNANCE_STATE_v1.0.md` | How future decisions, proposals, certifications, and RFCs are managed |
+| `KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md` | Formal program close record |
+| `KCCC_PHASE_03_EXIT_REVIEW.md` | Next architectural milestone (not started) |
 
 No further additions to the constitutional layer until a formal RFC requires them.
 
-## Governance going forward
+## Authorized / prohibited work
 
-- **Engineering work** may continue within Architecture 1.0 boundaries.  
-- **New capabilities** require an architectural proposal.  
-- **Constitutional changes** require an RFC.  
-- **Phase 3 implementation** remains prohibited until all five exit criteria are satisfied and Architecture Review concludes.
+See Program Close and Governance State. Engineering may continue within Architecture 1.0; Phase 3 implementation is **NOT AUTHORIZED** until Exit Review approves.
