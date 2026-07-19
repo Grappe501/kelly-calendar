@@ -15,8 +15,12 @@ Staged (Unknown times — not live):
 Superseded CANCELLED:
   Carroll County picnic/travel · prior Wed–Sun Pass-1 itinerary · fabricated NAACP 6pm
 
+Data quality pass ...... COMPLETE (evidence only)
+  Active live 7 · Cancelled superseded 14 · 1 timed overlap
+  Command: npm run events:data-quality:operator-week
+
 NOW
-  EA-10 Technical Debt — OPENED (do not mix into ingest passes)
+  EA-10 Technical Debt — OPENED (do not mix into ingest/DQ passes)
 
 View: /calendar?view=week&date=2026-07-19
 ```

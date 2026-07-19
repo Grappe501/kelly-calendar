@@ -1,0 +1,269 @@
+{
+  "pass": "LIVE-CALENDAR-DATA-QUALITY-2026-07-19",
+  "generatedAt": "2026-07-19T19:58:51.629Z",
+  "gitNote": "Authoritative tip after Pass 2 is 3fdd190 — not 8610f7e Pass-1 expand",
+  "featureFreeze": "honored",
+  "aiPatternRecognition": "not_run",
+  "counts": {
+    "operatorTaggedTotal": 21,
+    "activeLive": 7,
+    "cancelledSuperseded": 14,
+    "stagedDraftsExpected": 2,
+    "stagedDraftsPresent": 2,
+    "overlapPairs": 1,
+    "findings": 2,
+    "followUps": 4
+  },
+  "activeInventory": [
+    {
+      "eventNumber": "KCCC-2026-0004",
+      "key": "fundraiser-cd2-2026-07-19",
+      "status": "CONFIRMED",
+      "calendar": "fundraising",
+      "type": "FUNDRAISING",
+      "chicago": "2026-07-19 17:00–19:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": "ATTENDING",
+      "candidateAttendance": null,
+      "isAllDay": false
+    },
+    {
+      "eventNumber": "KCCC-2026-0022",
+      "key": "overnight-blytheville-2026-07-19",
+      "status": "CONFIRMED",
+      "calendar": "travel",
+      "type": "TRAVEL",
+      "chicago": "2026-07-19 19:00–08:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null,
+      "isAllDay": false
+    },
+    {
+      "eventNumber": "KCCC-2026-0005",
+      "key": "isp-window-2026-07-20",
+      "status": "CONFIRMED",
+      "calendar": "protected-personal",
+      "type": "PROTECTED_PERSONAL",
+      "chicago": "2026-07-20 08:00–10:00",
+      "visibility": "BUSY_ONLY",
+      "candidateRole": null,
+      "candidateAttendance": null,
+      "isAllDay": false
+    },
+    {
+      "eventNumber": "KCCC-2026-0006",
+      "key": "property-walk-2026-07-20",
+      "status": "CONFIRMED",
+      "calendar": "protected-personal",
+      "type": "PROTECTED_PERSONAL",
+      "chicago": "2026-07-20 08:30–11:00",
+      "visibility": "BUSY_ONLY",
+      "candidateRole": null,
+      "candidateAttendance": null,
+      "isAllDay": false
+    },
+    {
+      "eventNumber": "KCCC-2026-0007",
+      "key": "england-dems-kelly-2026-07-20",
+      "status": "CONFIRMED",
+      "calendar": "public-events",
+      "type": "PUBLIC_EVENTS",
+      "chicago": "2026-07-20 17:30–17:31",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": "SPEAKING",
+      "candidateAttendance": null,
+      "isAllDay": false
+    },
+    {
+      "eventNumber": "KCCC-2026-0023",
+      "key": "kelly-work-littlerock-2026-07-21",
+      "status": "CONFIRMED",
+      "calendar": "protected-personal",
+      "type": "PROTECTED_PERSONAL",
+      "chicago": "2026-07-21 00:00–23:59",
+      "visibility": "BUSY_ONLY",
+      "candidateRole": null,
+      "candidateAttendance": null,
+      "isAllDay": true
+    },
+    {
+      "eventNumber": "KCCC-2026-0024",
+      "key": "cave-city-christy-low-2026-07-24",
+      "status": "TENTATIVE",
+      "calendar": "volunteer",
+      "type": "VOLUNTEER",
+      "chicago": "2026-07-24 00:00–23:59",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": false,
+      "isAllDay": true
+    }
+  ],
+  "cancelledInventory": [
+    {
+      "eventNumber": "KCCC-2026-0008",
+      "key": "naacp-steve-jonesboro-2026-07-20",
+      "title": "Steve speaks — Jonesboro NAACP (Voter Registration & Deployment)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0009",
+      "key": "farm-depart-carroll-prep-2026-07-20",
+      "title": "Meet at farm — depart prep for Carroll County"
+    },
+    {
+      "eventNumber": "KCCC-2026-0010",
+      "key": "carroll-dems-picnic-2026-07-21",
+      "title": "Carroll County Democrats Picnic"
+    },
+    {
+      "eventNumber": "KCCC-2026-0011",
+      "key": "return-farm-late-2026-07-21",
+      "title": "Return to farm — late Tuesday (approximate)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0012",
+      "key": "depart-hsv-after-work-2026-07-22",
+      "title": "Depart Little Rock for Hot Springs Village (after Kelly work)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0013",
+      "key": "lodging-hsv-wed-2026-07-22",
+      "title": "Lodging — Hot Springs Village (Democrats · Wed night)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0014",
+      "key": "kelly-work-hsv-2026-07-23",
+      "title": "Kelly work day — Hot Springs Village"
+    },
+    {
+      "eventNumber": "KCCC-2026-0015",
+      "key": "lodging-farm-thu-2026-07-23",
+      "title": "Lodging — farm (Thu night before Friday procedure)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0016",
+      "key": "steve-fasting-start-2026-07-23",
+      "title": "Steve medical prep — fasting starts (gastric bypass)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0017",
+      "key": "steve-procedure-2026-07-24",
+      "title": "Steve — gastric bypass procedure + ultrasound"
+    },
+    {
+      "eventNumber": "KCCC-2026-0018",
+      "key": "cave-city-watermelon-2026-07-25",
+      "title": "Cave City Watermelon Festival & Parade — volunteer activation"
+    },
+    {
+      "eventNumber": "KCCC-2026-0019",
+      "key": "lodging-batesville-sat-2026-07-25",
+      "title": "Lodging — Batesville (Sat night)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0020",
+      "key": "blytheville-churches-2026-07-26",
+      "title": "Blytheville — multiple church visits (Sunday morning)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0021",
+      "key": "blytheville-forum-2026-07-26",
+      "title": "Blytheville candidate forum (Sunday night)"
+    }
+  ],
+  "overlaps": [
+    {
+      "a": "KCCC-2026-0005",
+      "b": "KCCC-2026-0006",
+      "aTitle": "Internet service install window",
+      "bTitle": "Property walk / farm clean-up consult (Don Henry)",
+      "note": "Time ranges overlap — not auto-resolved"
+    }
+  ],
+  "travelContinuity": [
+    {
+      "chain": "Fundraiser → Blytheville overnight",
+      "ok": true,
+      "detail": "Overnight starts at fundraiser end (7pm) by design"
+    },
+    {
+      "chain": "Blytheville overnight end vs farm internet 8am",
+      "ok": true,
+      "conflict": true,
+      "detail": "Overnight ends 8:00 AM; internet at farm 8:00 AM — travel/availability pressure (DQ conflict)"
+    },
+    {
+      "chain": "England → Return to farm",
+      "ok": false,
+      "staged": true,
+      "detail": "Return staged (UNKNOWN times) — no live travel block after England"
+    },
+    {
+      "chain": "Carroll County picnic / Mon 8pm farm depart",
+      "ok": true,
+      "superseded": true,
+      "detail": "CANCELLED under Pass 2 — must not appear as active plan"
+    }
+  ],
+  "staged": [
+    {
+      "file": "draft_pass2_naacp_steve_jonesboro.json",
+      "present": true,
+      "liveCalendar": false
+    },
+    {
+      "file": "draft_pass2_return_farm_after_england.json",
+      "present": true,
+      "liveCalendar": false
+    }
+  ],
+  "findings": [
+    {
+      "severity": "Medium",
+      "code": "DQ-TIME-01",
+      "event": "KCCC-2026-0007",
+      "detail": "End time UNKNOWN — schema uses +1min placeholder; UI may look like a 1-minute event"
+    },
+    {
+      "severity": "High",
+      "code": "DQ-CONFLICT-01",
+      "event": "KCCC-2026-0005/KCCC-2026-0006",
+      "detail": "Internet service install window overlaps Property walk / farm clean-up consult (Don Henry)"
+    }
+  ],
+  "followUps": [
+    {
+      "event": "KCCC-2026-0022",
+      "field": "lodging",
+      "action": "Record Blytheville lodging when available"
+    },
+    {
+      "event": "KCCC-2026-0007",
+      "field": "endsAt",
+      "action": "Confirm England meeting end time with host"
+    },
+    {
+      "event": "KCCC-2026-0023",
+      "field": "workHours",
+      "action": "Optional: replace all-day busy with exact 8–12 / 1–5 block if operator wants clock precision"
+    },
+    {
+      "event": "KCCC-2026-0024",
+      "field": "volunteerShift",
+      "action": "Confirm Christy Low shift, assignment, meeting point; Kelly/Steve attendance"
+    }
+  ],
+  "readinessVerdict": {
+    "dataReadyForOperatorViewing": true,
+    "dataReadyForAiPatterns": false,
+    "reasonAiBlocked": "Feature Freeze + insufficient confirmed structure + XR-8 not authorized",
+    "strongestOperationalConcerns": [
+      "Mon morning ISP ∩ Don Henry overlap",
+      "Blytheville overnight end vs farm ISP at 8:00 AM",
+      "England end UNKNOWN (+1min placeholder)",
+      "Steve NAACP and return-to-farm still staged (no live clock)",
+      "No simultaneous Kelly/Steve dual-city Monday evening on LIVE calendar (NAACP not live) — Pass 2 corrected Pass-1 pressure"
+    ]
+  }
+}
