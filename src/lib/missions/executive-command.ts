@@ -6,6 +6,7 @@
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
 import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
+import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
@@ -106,6 +107,8 @@ export type ExecutiveCommand = {
   communicationsFeed: CommunicationsOperationsHome["executiveFeed"] | null;
   /** Consumed from Logistics Operations (7.6) — execute-ability. */
   logisticsFeed: LogisticsOperationsHome["executiveFeed"] | null;
+  /** Consumed from Finance & Resources Operations (7.7) — sustain-ability. */
+  financeFeed: FinanceOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -127,6 +130,7 @@ export function buildDeterministicExecutiveBriefing(
   volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null,
   communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null,
   logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null,
+  financeFeed?: FinanceOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -134,6 +138,7 @@ export function buildDeterministicExecutiveBriefing(
       volunteerFeed?.briefingLine,
       communicationsFeed?.briefingLine,
       logisticsFeed?.briefingLine,
+      financeFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -152,6 +157,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (logisticsFeed?.briefingLine) {
     parts.push(logisticsFeed.briefingLine);
+  }
+  if (financeFeed?.briefingLine) {
+    parts.push(financeFeed.briefingLine);
   }
   if (countyFeed?.briefingLine) {
     parts.push(countyFeed.briefingLine);
@@ -214,6 +222,7 @@ export function buildExecutiveCommand(input: {
   volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null;
   communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null;
   logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null;
+  financeFeed?: FinanceOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -222,6 +231,7 @@ export function buildExecutiveCommand(input: {
   const volunteerFeed = input.volunteerFeed ?? null;
   const communicationsFeed = input.communicationsFeed ?? null;
   const logisticsFeed = input.logisticsFeed ?? null;
+  const financeFeed = input.financeFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -290,6 +300,18 @@ export function buildExecutiveCommand(input: {
       urgency: "NOW",
     });
   }
+  if (
+    financeFeed &&
+    (financeFeed.financialBlockers > 0 || financeFeed.financeLeadGaps > 0)
+  ) {
+    const top = financeFeed.topBlockers[0];
+    topPriorities.push({
+      label: "Resource / finance risk",
+      detail: top ? top.detail : financeFeed.briefingLine,
+      href: "/finance",
+      urgency: "NOW",
+    });
+  }
   if (brief.topBlocker) {
     topPriorities.push({
       label: "Resolve top blocker",
@@ -338,6 +360,9 @@ export function buildExecutiveCommand(input: {
   }
   if ((countyFeed?.needsImmediate ?? 0) > 0) {
     decisions.push("Stabilize counties needing immediate attention");
+  }
+  if ((financeFeed?.financialBlockers ?? 0) > 0) {
+    decisions.push("Clear resource blockers (finance lead / dual-state gaps)");
   }
   if (decisions.length === 0 && brief.nextMission) {
     decisions.push("Confirm next mission is ready to execute");
@@ -408,12 +433,25 @@ export function buildExecutiveCommand(input: {
       status: "actionable",
     });
   }
+  if (financeFeed && financeFeed.financialBlockers > 0) {
+    inbox.push({
+      id: "inbox-finance",
+      category: "APPROVAL",
+      title: "Resource blockers",
+      detail: financeFeed.briefingLine,
+      href: "/finance",
+      status: "actionable",
+    });
+  }
   inbox.push({
     id: "inbox-approvals",
     category: "APPROVAL",
-    title: "Approvals waiting",
-    detail: "Approval queue not yet wired to Executive Command.",
-    href: null,
+    title: "Spending approvals",
+    detail:
+      financeFeed?.pendingApprovalsStatus === "unknown"
+        ? "Pending spending approvals Unknown — money surface not implemented."
+        : "Approval queue not yet wired to Executive Command.",
+    href: "/finance",
     status: "unknown",
   });
   inbox.push({
@@ -555,6 +593,12 @@ export function buildExecutiveCommand(input: {
   if (logisticsFeed?.vehicleStatusUnknown) {
     alerts.push("Vehicle fleet status Unknown");
   }
+  if (financeFeed && financeFeed.financialBlockers > 0) {
+    alerts.push(`${financeFeed.financialBlockers} resource blocker(s)`);
+  }
+  if (financeFeed?.cashPositionStatus === "unknown") {
+    alerts.push("Cash position Unknown");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -604,6 +648,7 @@ export function buildExecutiveCommand(input: {
         volunteerFeed,
         communicationsFeed,
         logisticsFeed,
+        financeFeed,
       ),
       source: "deterministic_v1",
     },
@@ -612,6 +657,7 @@ export function buildExecutiveCommand(input: {
     volunteerFeed,
     communicationsFeed,
     logisticsFeed,
+    financeFeed,
   };
 }
 
@@ -642,5 +688,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     volunteerFeed: command.volunteerFeed,
     communicationsFeed: command.communicationsFeed,
     logisticsFeed: command.logisticsFeed,
+    financeFeed: command.financeFeed,
   };
 }

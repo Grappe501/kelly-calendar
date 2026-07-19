@@ -3,6 +3,7 @@ import "server-only";
 import { calculateEventReadiness } from "@/features/operational-intelligence/services/readiness-service";
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 import type { CommunicationsPlanSnapshot } from "@/lib/missions/communications-operations";
+import type { FinancePlanSnapshot } from "@/lib/missions/finance-operations";
 import type { LogisticsPlanSnapshot } from "@/lib/missions/logistics-operations";
 import type { MissionTimelineInput } from "@/lib/missions/mission-timeline";
 import { prisma } from "@/server/db/prisma";
@@ -35,6 +36,7 @@ export type MissionGeoSnapshot = {
 
 export type MissionCommsSnapshot = CommunicationsPlanSnapshot;
 export type MissionLogisticsSnapshot = LogisticsPlanSnapshot;
+export type MissionFinanceSnapshot = FinancePlanSnapshot;
 
 export type MissionContextBundle = {
   readiness: Map<string, EventReadinessResult>;
@@ -43,6 +45,7 @@ export type MissionContextBundle = {
   geo: Map<string, MissionGeoSnapshot>;
   comms: Map<string, MissionCommsSnapshot>;
   logistics: Map<string, MissionLogisticsSnapshot>;
+  finance: Map<string, MissionFinanceSnapshot>;
 };
 
 /**
@@ -58,8 +61,11 @@ export async function loadMissionContextForIds(
   const geo = new Map<string, MissionGeoSnapshot>();
   const comms = new Map<string, MissionCommsSnapshot>();
   const logistics = new Map<string, MissionLogisticsSnapshot>();
+  const finance = new Map<string, MissionFinanceSnapshot>();
   const ids = [...new Set(eventIds)].slice(0, 12);
-  if (ids.length === 0) return { readiness, travel, day, geo, comms, logistics };
+  if (ids.length === 0) {
+    return { readiness, travel, day, geo, comms, logistics, finance };
+  }
   const nowMs = Date.now();
 
   const rows = await prisma.event.findMany({
@@ -72,6 +78,7 @@ export async function loadMissionContextForIds(
       communicationsItems: true,
       travelPlans: true,
       county: true,
+      primaryCalendar: true,
     },
   });
 
@@ -119,6 +126,23 @@ export async function loadMissionContextForIds(
       locationPresent: Boolean(
         event.city || event.venueName || event.countyId || event.streetAddress,
       ),
+    });
+
+    finance.set(event.id, {
+      isFundraisingCalendar:
+        event.primaryCalendar?.calendarType === "FUNDRAISING",
+      financeLeadAssigned: event.staffAssignments.some(
+        (s) => s.roleType === "FINANCE_LEAD" && Boolean(s.assignedUserId),
+      ),
+      complianceLeadAssigned: event.staffAssignments.some(
+        (s) => s.roleType === "COMPLIANCE_LEAD" && Boolean(s.assignedUserId),
+      ),
+      rentalRequired: plan?.rentalRequired ?? false,
+      flightRequired: plan?.flightRequired ?? false,
+      lodgingRequired: plan?.lodgingRequired ?? false,
+      overnightStay: plan?.overnightStay ?? false,
+      estimatedDistanceMiles: plan?.estimatedDistanceMiles ?? null,
+      packingCount: packing.length,
     });
 
     day.set(event.id, {
@@ -216,7 +240,7 @@ export async function loadMissionContextForIds(
     );
   }
 
-  return { readiness, travel, day, geo, comms, logistics };
+  return { readiness, travel, day, geo, comms, logistics, finance };
 }
 
 /** @deprecated use loadMissionContextForIds */

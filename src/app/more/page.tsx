@@ -59,6 +59,9 @@ export default function MorePage() {
           <Link className="button" href="/logistics">
             Logistics Operations
           </Link>
+          <Link className="button" href="/finance">
+            Finance & Resources Operations
+          </Link>
           <Link className="button secondary" href="/brief">
             Today’s Campaign Brief
           </Link>

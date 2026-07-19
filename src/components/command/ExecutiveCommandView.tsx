@@ -165,6 +165,14 @@ export function ExecutiveCommandView({
             </Link>
           </p>
         ) : null}
+        {command.financeFeed ? (
+          <p>
+            <strong>Finance:</strong> {command.financeFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/finance">
+              Open Finance Ops
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">

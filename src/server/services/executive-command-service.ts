@@ -4,6 +4,7 @@ import { buildCommunicationsOperationsHome } from "@/lib/missions/communications
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
 import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
+import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
@@ -18,7 +19,7 @@ export type ExecutiveCommandPayload = {
 
 /**
  * Authenticated Executive Command — consumes Field, County, Volunteer,
- * Communications, and Logistics feeds (no duplicate engines).
+ * Communications, Logistics, and Finance feeds (no duplicate engines).
  */
 export async function getExecutiveCommand(
   actor: AuthenticatedActor,
@@ -42,6 +43,7 @@ export async function getExecutiveCommand(
       volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
       comms: context.comms.get(mission.missionId) ?? null,
       logistics: context.logistics.get(mission.missionId) ?? null,
+      finance: context.finance.get(mission.missionId) ?? null,
     };
   });
 
@@ -49,6 +51,21 @@ export async function getExecutiveCommand(
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+  });
+
+  const opsByMission = new Map(
+    logistics.missionRows.map((m) => [m.missionId, m.missionReadiness]),
+  );
+
+  const finance = buildFinanceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      finance: row.finance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
   });
 
   const communications = buildCommunicationsOperationsHome({
@@ -61,6 +78,7 @@ export async function getExecutiveCommand(
       mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
       pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
     },
+    financeConsume: finance.communicationsFeed,
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -69,6 +87,7 @@ export async function getExecutiveCommand(
     missions: missionInputs,
     communicationsConsume: communications.volunteerFeed,
     logisticsConsume: logistics.volunteerFeed,
+    financeConsume: finance.volunteerFeed,
   });
 
   const field = buildFieldOperationsHome({
@@ -93,6 +112,7 @@ export async function getExecutiveCommand(
     volunteerFeed: volunteers.countyFeed,
     communicationsFeed: communications.countyFeed,
     logisticsFeed: logistics.countyFeed,
+    financeFeed: finance.countyFeed,
   });
 
   const command = buildExecutiveCommand({
@@ -104,6 +124,7 @@ export async function getExecutiveCommand(
     volunteerFeed: volunteers.executiveFeed,
     communicationsFeed: communications.executiveFeed,
     logisticsFeed: logistics.executiveFeed,
+    financeFeed: finance.executiveFeed,
   });
 
   return {

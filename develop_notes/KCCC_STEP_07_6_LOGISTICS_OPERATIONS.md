@@ -1,7 +1,7 @@
 # KCCC Step 7.6 — Logistics Operations
 
 **Script ID:** `KCCC-STEP-07.6-LOGISTICS-OPERATIONS`  
-**Status:** IN PROGRESS  
+**Status:** ACCEPTED  
 **Parent:** Step 7 Campaign Operations  
 
 ## Doctrine

@@ -9,7 +9,8 @@
 2. Every operational fact has exactly one canonical source.  
 3. Unknown is a first-class operational state (not zero).  
 4. Every operational artifact has one owner and many consumers.  
-5. **Operational readiness equals the minimum readiness of all required operational domains** (not an average).
+5. **Operational readiness equals the minimum readiness of all required operational domains** (not an average).  
+6. **Every operational commitment has both an operational state and a resource state.**
 
 ## Doctrine questions
 
@@ -21,6 +22,7 @@
 | Field Operations | Who needs help right now? |
 | Volunteer Operations | Do we have enough people? |
 | Logistics Operations | Can we actually execute today’s plan? |
+| Finance & Resources Operations | Do we have the resources to sustain the campaign? |
 | Calendar | What must happen and when? |
 
 ## Active increments
@@ -32,4 +34,5 @@
 | 7.3 County Operations | `/counties` | ACCEPTED |
 | 7.4 Volunteer Operations | `/volunteers` | ACCEPTED |
 | 7.5 Communications Operations | `/communications` | ACCEPTED |
-| 7.6 Logistics Operations | `/logistics` | IN PROGRESS |
+| 7.6 Logistics Operations | `/logistics` | ACCEPTED |
+| 7.7 Finance & Resources Operations | `/finance` | IN PROGRESS |

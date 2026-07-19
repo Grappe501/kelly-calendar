@@ -1,24 +1,24 @@
 import "server-only";
 
-import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import {
-  buildLogisticsOperationsHome,
-  type LogisticsOperationsHome,
-} from "@/lib/missions/logistics-operations";
+  buildFinanceOperationsHome,
+  type FinanceOperationsHome,
+} from "@/lib/missions/finance-operations";
+import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 
-export type LogisticsOperationsPayload = {
-  logistics: LogisticsOperationsHome;
+export type FinanceOperationsPayload = {
+  finance: FinanceOperationsHome;
   viewerDisplayName: string;
   candidateDataReady: false;
 };
 
-/** Authenticated Logistics Operations — can we execute today's plan? */
-export async function getLogisticsOperations(
+/** Authenticated Finance & Resources Operations — can we sustain the campaign? */
+export async function getFinanceOperations(
   actor: AuthenticatedActor,
-): Promise<LogisticsOperationsPayload> {
+): Promise<FinanceOperationsPayload> {
   const briefPayload = await getCampaignBrief(actor);
   const ids = briefPayload.allMissionsToday.map((m) => m.missionId);
   const context = await loadMissionContextForIds(ids);
@@ -37,14 +37,14 @@ export async function getLogisticsOperations(
     };
   });
 
-  const logisticsBase = buildLogisticsOperationsHome({
+  const logistics = buildLogisticsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
   });
 
   const opsByMission = new Map(
-    logisticsBase.missionRows.map((m) => [m.missionId, m.missionReadiness]),
+    logistics.missionRows.map((m) => [m.missionId, m.missionReadiness]),
   );
 
   const finance = buildFinanceOperationsHome({
@@ -58,15 +58,8 @@ export async function getLogisticsOperations(
     })),
   });
 
-  const logistics = buildLogisticsOperationsHome({
-    date: briefPayload.brief.date,
-    timezone: briefPayload.brief.timezone,
-    missions: missionInputs,
-    financeConsume: finance.logisticsFeed,
-  });
-
   return {
-    logistics,
+    finance,
     viewerDisplayName: briefPayload.viewerDisplayName,
     candidateDataReady: false,
   };

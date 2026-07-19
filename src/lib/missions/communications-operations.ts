@@ -7,6 +7,7 @@
  * and earned media remain first-class Unknown.
  */
 
+import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
 
@@ -120,6 +121,8 @@ export type CommunicationsOperationsHome = {
     mediaKitDelivered: UnknownFact;
     pressBackdropAvailable: UnknownFact;
   } | null;
+  /** Consumed from Finance — literature/ad/print authorizations. */
+  financeConsume: FinanceOperationsHome["communicationsFeed"] | null;
 };
 
 export type CommunicationsMissionInput = {
@@ -338,6 +341,7 @@ export function buildCommunicationsOperationsHome(input: {
   missions: CommunicationsMissionInput[];
   now?: Date;
   logisticsConsume?: CommunicationsOperationsHome["logisticsConsume"];
+  financeConsume?: CommunicationsOperationsHome["financeConsume"];
 }): CommunicationsOperationsHome {
   const now = input.now ?? new Date();
   const missionRows = input.missions
@@ -521,6 +525,7 @@ export function buildCommunicationsOperationsHome(input: {
       talkingPointsPlanReadyMissions: talkingPointsReadyMissions,
     },
     logisticsConsume: input.logisticsConsume ?? null,
+    financeConsume: input.financeConsume ?? null,
   };
 }
 

@@ -4,6 +4,7 @@ import {
   buildCommunicationsOperationsHome,
   type CommunicationsOperationsHome,
 } from "@/lib/missions/communications-operations";
+import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
@@ -33,6 +34,7 @@ export async function getCommunicationsOperations(
         null,
       comms: context.comms.get(mission.missionId) ?? null,
       logistics: context.logistics.get(mission.missionId) ?? null,
+      finance: context.finance.get(mission.missionId) ?? null,
     };
   });
 
@@ -40,6 +42,21 @@ export async function getCommunicationsOperations(
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+  });
+
+  const opsByMission = new Map(
+    logistics.missionRows.map((m) => [m.missionId, m.missionReadiness]),
+  );
+
+  const finance = buildFinanceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      finance: row.finance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
   });
 
   const communications = buildCommunicationsOperationsHome({
@@ -52,6 +69,7 @@ export async function getCommunicationsOperations(
       mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
       pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
     },
+    financeConsume: finance.communicationsFeed,
   });
 
   return {

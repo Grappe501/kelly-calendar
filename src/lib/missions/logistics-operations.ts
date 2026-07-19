@@ -10,6 +10,7 @@
  * required operational domains (not an average / optimistic %).
  */
 
+import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
 
@@ -129,6 +130,8 @@ export type LogisticsOperationsHome = {
     equipmentIssued: UnknownFact;
     checkoutStatus: UnknownFact;
   };
+  /** Consumed from Finance — travel/lodging/supply authorizations. */
+  financeConsume: FinanceOperationsHome["logisticsFeed"] | null;
 };
 
 export type LogisticsMissionInput = {
@@ -394,6 +397,7 @@ export function buildLogisticsOperationsHome(input: {
   timezone: string;
   missions: LogisticsMissionInput[];
   now?: Date;
+  financeConsume?: LogisticsOperationsHome["financeConsume"];
 }): LogisticsOperationsHome {
   const now = input.now ?? new Date();
   const missionRows = input.missions
@@ -602,6 +606,7 @@ export function buildLogisticsOperationsHome(input: {
       equipmentIssued: CHECKOUT_UNKNOWN,
       checkoutStatus: CHECKOUT_UNKNOWN,
     },
+    financeConsume: input.financeConsume ?? null,
   };
 }
 

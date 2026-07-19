@@ -7,6 +7,7 @@
  * until those sub-surfaces exist (Unknown is first-class — not zero).
  */
 
+import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 
 /** First-class Unknown — not zero, false, empty, or assumed. */
@@ -124,6 +125,8 @@ export type VolunteerOperationsHome = {
     equipmentIssued: UnknownFact;
     checkoutStatus: UnknownFact;
   } | null;
+  /** Consumed from Finance — mileage/expense/support funding. */
+  financeConsume: FinanceOperationsHome["volunteerFeed"] | null;
 };
 
 export type VolunteerMissionInput = {
@@ -326,6 +329,7 @@ export function buildVolunteerOperationsHome(input: {
   now?: Date;
   communicationsConsume?: VolunteerOperationsHome["communicationsConsume"];
   logisticsConsume?: VolunteerOperationsHome["logisticsConsume"];
+  financeConsume?: VolunteerOperationsHome["financeConsume"];
 }): VolunteerOperationsHome {
   const now = input.now ?? new Date();
   const missionCapacity = input.missions
@@ -457,6 +461,7 @@ export function buildVolunteerOperationsHome(input: {
     },
     communicationsConsume: input.communicationsConsume ?? null,
     logisticsConsume: input.logisticsConsume ?? null,
+    financeConsume: input.financeConsume ?? null,
   };
 }
 
