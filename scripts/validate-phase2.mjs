@@ -110,7 +110,7 @@ if (
 
 const register = read("develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md");
 if (
-  register.includes("BASELINE RELEASE") &&
+  register.includes("RELEASED") &&
   register.includes("COMPLETE") &&
   register.includes("6690ce2") &&
   register.includes("4252827") &&
