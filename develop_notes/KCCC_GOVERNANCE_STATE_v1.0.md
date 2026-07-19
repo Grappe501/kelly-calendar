@@ -5,7 +5,8 @@
 **Governance:** LOCKED  
 **Close Commit:** `2dbc1d9`  
 **Canonical Register Commit (immutable architecture baseline):** `6690ce2`  
-**Repository tip:** advances over time — post-archive maintenance does not redefine the baseline
+**Tip at final archival seal:** `4252827` — tip advances; does not redefine the baseline  
+**Final archival state:** `KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md`
 
 ## Canonical Governance Set
 

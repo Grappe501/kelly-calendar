@@ -1,26 +1,30 @@
 # KCCC New Thread Handoff
 
 ```text
-ARCHITECTURE 1.0 ARCHIVE COMPLETE
+ARCHITECTURE 1.0 — FINAL ARCHIVAL STATE
 
-Architecture baseline (immutable) .... 6690ce2
-Repository tip ....................... advances (maintenance ≠ new baseline)
+Baseline ..................... RELEASED
+Lifecycle .................... COMPLETE
+Governance ................... LOCKED
 
-Lifecycle ............................ COMPLETE
-Program State ........................ CLOSED
+Canonical Register Commit .... 6690ce2  (immutable)
+Tip at archival seal ......... 4252827  (tip advances)
 
-Corpus (normative):
-- KCCC_CONSTITUTION_v1.0.md
-- KCCC_ARCHITECTURE_FREEZE_v1.0.md
-- KCCC_GOVERNANCE_STATE_v1.0.md
-- KCCC_ARCHITECTURE_REGISTER_v1.0.md
+Corpus sealed:
+Constitution · Freeze · Governance State · Register
 
-Architecture Review .................. ACTIVE
-Phase 3 Exit Review .................. NOT STARTED
-Phase 3 Implementation ............... NOT AUTHORIZED
+Architecture Review .......... ACTIVE
+Phase 3 Exit Review .......... NOT STARTED
+Phase 3 Implementation ....... NOT AUTHORIZED
 
-Path: Exit Review → Decision → AUTHORIZED (planning)
-      → Implementation Authorization → Phase 3 Engineering
+Until Exit Review approved:
+- Govern under Architecture 1.0
+- Engineer only within 1.0 boundaries
+- Phase 3 = design-governance only
 
-Application track: 0.8.4-petition (independent)
+Path:
+Review → Exit Review → Decision → AUTHORIZED (planning)
+→ Implementation Authorization → Engineering
+
+See: KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md
 ```

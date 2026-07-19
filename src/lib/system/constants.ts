@@ -14,6 +14,8 @@ export const APPLICATION_VERSION = "0.8.4-petition";
 export const ARCHITECTURE_1_0_CLOSE_TIP = "2dbc1d9";
 /** Immutable Architecture 1.0 baseline — not the advancing repo tip. */
 export const ARCHITECTURE_REGISTER_COMMIT = "6690ce2";
+/** Repository tip at final archival seal — tip may advance afterward. */
+export const ARCHITECTURE_FINAL_ARCHIVAL_SEAL_TIP = "4252827";
 export const ARCHITECTURE_ARCHIVE_COMPLETE = true;
 export const PHASE_1_STATUS = "CERTIFIED";
 export const PHASE_1_VERSION = "0.7.11-ops";

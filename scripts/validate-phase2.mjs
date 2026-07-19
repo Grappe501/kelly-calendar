@@ -35,6 +35,7 @@ const required = [
   ["close", "develop_notes/KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md"],
   ["exit", "develop_notes/KCCC_PHASE_03_EXIT_REVIEW.md"],
   ["reg", "develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md"],
+  ["final", "develop_notes/KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
@@ -111,16 +112,29 @@ const register = read("develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md");
 if (
   register.includes("BASELINE RELEASE") &&
   register.includes("COMPLETE") &&
-  register.includes("CLOSED") &&
   register.includes("6690ce2") &&
+  register.includes("4252827") &&
   register.includes("immutable") &&
-  register.includes("advances over time") &&
   register.includes("Implementation Authorization") &&
   register.includes("NOT AUTHORIZED")
 ) {
-  pass("Architecture Register v1.0 archive complete; baseline 6690ce2 immutable");
+  pass("Architecture Register v1.0 final archival; baseline 6690ce2");
 } else {
   fail("Architecture Register incomplete");
+}
+
+const finalArchival = read(
+  "develop_notes/KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md",
+);
+if (
+  finalArchival.includes("FINAL") &&
+  finalArchival.includes("6690ce2") &&
+  finalArchival.includes("4252827") &&
+  finalArchival.includes("Canonical Corpus")
+) {
+  pass("Final Archival State recorded");
+} else {
+  fail("Final Archival State incomplete");
 }
 
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
@@ -220,6 +234,7 @@ if (
   build.architecture_register_commit === "6690ce2" &&
   build.architecture_baseline_immutable_at === "6690ce2" &&
   build.architecture_archive_complete === true &&
+  build.architecture_final_archival_seal_tip === "4252827" &&
   build.repository_tip_advances_independently === true &&
   build.architecture_register === "KCCC_ARCHITECTURE_REGISTER_v1.0" &&
   build.architecture_register_canonical === true &&

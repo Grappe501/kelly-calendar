@@ -44,6 +44,8 @@
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
   "architecture_archive_complete": true,
+  "architecture_final_archival_state": "KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE",
+  "architecture_final_archival_seal_tip": "4252827",
   "repository_tip_advances_independently": true,
   "step7_status": "phase_1_certified",
   "step7_increment": "7.9-constituent-operations",
@@ -82,10 +84,10 @@
   "ai_enabled": false,
   "production_deployment_ready": true,
   "deployment_status": "production_live",
-  "updated_at": "2026-07-19T13:20:00.000Z",
+  "updated_at": "2026-07-19T13:25:00.000Z",
   "timezone": "America/Chicago",
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Architecture 1.0 ARCHIVE COMPLETE. Immutable baseline = Register Commit 6690ce2. Repository tip advances independently (e.g. a2e4ba8 maintenance). Corpus of four normative docs. Phase 3 Exit Review NOT STARTED; planning and implementation not authorized until sequenced decisions. Maturity flags remain false."
+  "notes": "Architecture 1.0 FINAL ARCHIVAL STATE. Immutable baseline 6690ce2; seal tip 4252827 (tip advances). Four-doc corpus sealed. Phase 3 Exit Review NOT STARTED; no planning/implementation until sequenced governance. Maturity flags remain false."
 }
