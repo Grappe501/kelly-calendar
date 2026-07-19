@@ -1,8 +1,9 @@
 # KCCC Step 6 — Mobile Command Shell (Increment 1)
 
 **Script ID:** `KCCC-STEP-06-MOBILE-COMMAND-SHELL`  
-**Status:** IN PROGRESS  
-**Date:** 2026-07-18  
+**Status:** COMPLETE (operator ACCEPT 2026-07-19)  
+**Date:** 2026-07-19  
+**Closure tip:** see `build_state.json` `step_6_closure_commit` 
 
 ## Increment 1 (shipped)
 

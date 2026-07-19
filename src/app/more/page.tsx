@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>KCCC-STEP-04-AUTH-RBAC</strong>
+            <strong>KCCC-STEP-07-CAMPAIGN-OPERATIONS</strong>
           </li>
         </ul>
       </section>

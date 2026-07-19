@@ -366,6 +366,19 @@ if (
   pass("Step 6 tracked in build_state");
 }
 
+if (build.completed_steps?.includes("KCCC-STEP-06-MOBILE-COMMAND-SHELL")) {
+  if (build.step6_status === "complete" && build.step6_operator_acceptance === "accepted") {
+    pass("Step 6 operator ACCEPT recorded");
+  } else {
+    fail("Step 6 listed complete but acceptance fields incomplete");
+  }
+  if (build.step7_status === "open" && build.step7_charter === "campaign_operations_not_crud") {
+    pass("Step 7 open under Campaign Operations charter");
+  } else {
+    fail("Step 7 not correctly opened after Step 6 ACCEPT");
+  }
+}
+
 if (failed) {
   console.error(`Step 6 validation failed (${failed})`);
   process.exit(1);
