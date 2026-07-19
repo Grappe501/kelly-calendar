@@ -1,7 +1,7 @@
-export const CURRENT_STEP_ID = "KCCC-ARCHITECTURE-1.0-ARCHIVED";
+export const CURRENT_STEP_ID = "KCCC-ARCHITECTURE-1.0-TERMINAL";
 export const CURRENT_STEP_NUMBER = 8;
 export const ARCHITECTURE_VERSION = "1.0";
-export const ARCHITECTURE_STATUS = "BASELINE_RELEASE_LIFECYCLE_COMPLETE";
+export const ARCHITECTURE_STATUS = "TERMINAL_ARCHIVAL_BASELINE_RELEASE";
 export const ARCHITECTURE_LIFECYCLE = "COMPLETE";
 export const PROJECT_STATE = "ARCHITECTURE_REVIEW";
 export const IMPLEMENTATION_STATUS = "NOT_AUTHORIZED";
@@ -10,12 +10,14 @@ export const CONSTITUTION_ID = "KCCC_CONSTITUTION_v1.0";
 export const GOVERNANCE_STATE_ID = "KCCC_GOVERNANCE_STATE_v1.0";
 export const ARCHITECTURE_FREEZE_ID = "KCCC_ARCHITECTURE_FREEZE_v1.0";
 export const ARCHITECTURE_REGISTER_ID = "KCCC_ARCHITECTURE_REGISTER_v1.0";
+export const FINAL_ARCHIVAL_STATE_ID = "KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE";
 export const APPLICATION_VERSION = "0.8.4-petition";
-export const ARCHITECTURE_1_0_CLOSE_TIP = "2dbc1d9";
-/** Immutable Architecture 1.0 baseline — not the advancing repo tip. */
+/** 1. Immutable architectural baseline */
 export const ARCHITECTURE_REGISTER_COMMIT = "6690ce2";
-/** Repository tip at final archival seal — tip may advance afterward. */
-export const ARCHITECTURE_FINAL_ARCHIVAL_SEAL_TIP = "4252827";
+/** 3. Archive seal commit */
+export const ARCHITECTURE_ARCHIVE_SEAL_COMMIT = "4252827";
+/** 4. Tip at terminal archival record (successors advance) */
+export const ARCHITECTURE_TERMINAL_RECORD_TIP = "a64eef3";
 export const ARCHITECTURE_ARCHIVE_COMPLETE = true;
 export const PHASE_1_STATUS = "CERTIFIED";
 export const PHASE_1_VERSION = "0.7.11-ops";
