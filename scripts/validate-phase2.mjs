@@ -384,7 +384,7 @@ if (
   exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md") &&
   exists("develop_notes/KCCC_CALENDAR_FOUNDATION.md") &&
   read("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md").includes("VERSION 1 COMPLETE") &&
-  read("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md").includes("**PASS**") &&
+  read("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md").includes("**Status:** PASS") &&
   exists("src/components/calendar/WeekView.tsx") &&
   exists("src/components/calendar/MonthView.tsx") &&
   exists("src/server/services/calendar-week-view-service.ts") &&
