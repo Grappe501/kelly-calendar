@@ -1,42 +1,102 @@
-# KCCC Step 6 — Closure Preparation (post-6.6)
+# KCCC Step 6 — Operator Acceptance Gate
 
-**Status:** PREP ONLY — do not mark Step 6 complete until integrated production walkthrough and acceptance gates pass.  
-**Date:** 2026-07-19  
-**Tip at prep:** pending after 6.6 ship
+**Status:** PENDING PRODUCTION OPERATOR ACCEPTANCE  
+**Engineering quality:** PASS  
+**Architecture:** PASS  
+**Operational model:** PASS  
+**Step 6 complete:** NO — do not mark complete and do not start Step 7 until ACCEPT  
+**Production tip at gate:** `08ada56`  
+**Production URL:** https://kelly-calendar.netlify.app  
+**Date recorded:** 2026-07-19  
 
-## Increment inventory
+## Standing decision
 
-| Increment | Status | Notes |
-|-----------|--------|-------|
-| Today command surface | Shipped | Authenticated Today + `/api/command-summary/today` |
-| Mission Cards | Shipped (6.2) | When/where/why/owner/readiness/risk/action |
-| Mission Timeline | Shipped (6.3) | Deterministic Leave By; no external maps |
-| Today’s Readiness | Shipped (6.4) | Ready / Needs Attention / Blocked / Unknown |
-| One-Tap Completion | Shipped (6.5) | Start / Arrived / Complete / Needs attention |
-| Campaign Brief | Shipped (6.6) | Deterministic leadership brief + optional advisory |
+Steve will not accept Step 6 on engineering alone. Step 6 is the first surface campaign staff will live in. Closure requires a dedicated **20–30 minute production walkthrough** on the deployed site only (field-organizer hat, ~7:00 AM scenario).
 
-## Trust layer (must remain green)
+## Shipped increments (engineering complete)
 
-| Gate | Expected |
-|------|----------|
-| Authentication | Production session proven (5.7) |
-| RBAC | Mutation + brief query actor-scoped |
-| Safe projections | No protected notes / private contacts in Brief |
-| Audit | Day actions + AI advisory attribution |
-| Mobile behavior | 44px targets; loading/empty/error/partial |
-| Production deployment | Netlify `kelly-calendar` live on tip |
+| Increment | Tip area | Engineering |
+|-----------|----------|-------------|
+| Today command surface | 6.1 | PASS |
+| Mission Cards | 6.2 | PASS |
+| Mission Timeline Engine | 6.3 | PASS |
+| Today’s Readiness | 6.4 | PASS |
+| One-Tap Completion | 6.5 | PASS |
+| Campaign Brief | 6.6 | PASS |
 
-## Closure checklist (operator)
+## Official ACCEPT walkthrough
 
-- [ ] Sign in on production mobile viewport
-- [ ] Today shows next mission + readiness
-- [ ] One-tap action updates mission with audit
-- [ ] `/brief` shows hierarchy in under ~10 seconds
-- [ ] Top blocker visible without scroll when present
-- [ ] Brief without `advisory=1` works with no AI call
-- [ ] Brief with `advisory=1` either shows labeled advisory or graceful unavailable
-- [ ] No Step 6 “complete” claim until Steve ACCEPT
+Perform entirely on production, mobile-first, one-handed where possible.
 
-## Explicit non-closure
+### 1. Morning launch (30 seconds)
 
-Shipping 6.6 alone does **not** close Step 6. Close only after the integrated walkthrough above.
+- Can I tell where I need to be next without thinking?
+- Do I immediately understand today’s priorities?
+- Does the screen reduce anxiety instead of creating it?
+
+**Accept if:** Orient in under 10 seconds.
+
+### 2. Mission flow
+
+Walk one mission: Card → Timeline → Readiness → Status → One-tap → return to Today.
+
+**Accept if:** Feels like completing work, not editing records / navigating a database.
+
+### 3. Campaign Brief
+
+- Could Kelly glance before a meeting?
+- Could a field director decide from this screen?
+- Is the most important problem at the top?
+
+**Accept if:** No hunting; hierarchy is clear.
+
+### 4. Mobile thumb test
+
+Every primary action reachable with the thumb. No accidental taps. No tiny controls.
+
+### 5. Failure behavior
+
+Intentionally test: offline/poor connection, stale data, 409 conflict, unauthorized action, empty day, partial readiness.
+
+**Accept if:** App explains what happened and what to do next.
+
+### 6. Campaign realism (synthetic day)
+
+Create a synthetic day with: multiple counties, overlapping volunteers, travel, one blocked mission, one missing owner, one completed, one in progress.
+
+Ask: Would I trust this while running a statewide campaign?
+
+## Sign-off matrix (all required)
+
+```text
+Today surface ............... ACCEPT / HOLD
+Mission Cards ............... ACCEPT / HOLD
+Mission Timeline ............ ACCEPT / HOLD
+Today's Readiness ........... ACCEPT / HOLD
+One-Tap Completion .......... ACCEPT / HOLD
+Campaign Brief .............. ACCEPT / HOLD
+Operator flow ............... ACCEPT / HOLD
+Mobile usability ............ ACCEPT / HOLD
+Production behavior ......... ACCEPT / HOLD
+Failure handling ............ ACCEPT / HOLD
+```
+
+Record ACCEPT only when every line is ACCEPT. Then mark Step 6 COMPLETE and unlock Step 7.
+
+## Step 7 philosophy lock (pre-brief)
+
+Do **not** let Step 7 become general CRUD.
+
+Operator mindset must remain:
+
+> “I’m running today’s campaign.”
+
+Never:
+
+> “I’m editing an event.”
+
+## After ACCEPT
+
+1. Update `data/build_state.json`: `step6_status=complete`, `step6_operator_acceptance=accepted`, move Step 6 into `completed_steps`, set `next_step` toward Step 7.
+2. Commit tip of closure record.
+3. Only then open Step 7 under the campaign-operations philosophy above.
