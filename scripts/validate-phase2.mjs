@@ -69,11 +69,17 @@ if (
 
 const phase3 = read("develop_notes/KCCC_PHASE_03_CHARTER.md");
 if (
-  phase3.includes("OPEN FOR DEFINITION") &&
-  phase3.includes("Integration & Scale") &&
-  phase3.includes("External Integrations")
+  phase3.includes("DEFINITION ONLY") &&
+  phase3.includes("Trusted Connected Platform") &&
+  phase3.includes("No external integration may become the canonical owner") &&
+  phase3.includes("Phase 3A") &&
+  phase3.includes("Phase 3B") &&
+  phase3.includes("Phase 3C") &&
+  phase3.includes("Phase 3D") &&
+  phase3.includes("Approve → Execute") &&
+  phase3.includes("Integration Trust Model")
 ) {
-  pass("Phase 3 charter open for definition");
+  pass("Phase 3 Trusted Connected Platform charter (definition only)");
 } else {
   fail("Phase 3 charter missing or incomplete");
 }
@@ -115,18 +121,26 @@ if (
   fail("Phase 2 certification missing from build_state");
 }
 
-if (build.phase_3_status === "open_for_definition") {
-  pass("Phase 3 open for definition (no 2.6)");
+if (
+  build.phase_3_status === "definition_only" &&
+  build.phase_3_implementation_started === false &&
+  build.phase3_external_not_canonical_principle === true &&
+  build.candidate_data_ready === false &&
+  build.real_candidate_data_enabled === false &&
+  build.ai_enabled === false
+) {
+  pass("Phase 3 definition only; maturity flags false; no implementation");
 } else {
-  fail("Phase 3 definition gate missing");
+  fail("Phase 3 definition gate / maturity flags incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
 if (
   constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
-  constants.includes("OPEN_FOR_DEFINITION")
+  constants.includes("DEFINITION_ONLY") &&
+  constants.includes("Trusted Connected Platform")
 ) {
-  pass("constants reflect Phase 2 CERTIFIED");
+  pass("constants reflect Phase 2 CERTIFIED / Phase 3 definition only");
 } else {
   fail("constants missing Phase 2 CERTIFIED / Phase 3 definition");
 }
@@ -136,5 +150,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (PHASE 2 CERTIFIED; Phase 3 definition only).",
+  "Phase 2 structural validation passed (PHASE 2 CERTIFIED; Phase 3 Trusted Connected Platform = definition only).",
 );

@@ -50,4 +50,4 @@ Corollaries:
 
 ## Next
 
-Do **not** open Phase 2.6. Define **Phase 3 — Integration & Scale** (`KCCC_PHASE_03_CHARTER.md`).
+Do **not** open Phase 2.6. Define **Phase 3 — Trusted Connected Platform** (`KCCC_PHASE_03_CHARTER.md`). Definition only — no implementation yet.

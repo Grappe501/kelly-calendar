@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>KCCC-PHASE-03-INTEGRATION-SCALE (definition)</strong>
+            <strong>KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM (definition only)</strong>
           </li>
         </ul>
       </section>

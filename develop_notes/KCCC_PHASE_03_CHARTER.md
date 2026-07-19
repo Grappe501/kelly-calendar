@@ -1,32 +1,114 @@
-# KCCC Phase 3 — Integration & Scale Charter
+# KCCC Phase 3 — Trusted Connected Platform
 
-**Script ID:** `KCCC-PHASE-03-INTEGRATION-SCALE`  
-**Status:** OPEN FOR DEFINITION (not started)  
-**Prerequisite:** Phase 1 CERTIFIED + Phase 2 CERTIFIED
+**Script ID:** `KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM`  
+**Status:** DEFINITION ONLY — implementation not started  
+**Prerequisite:** Phase 1 CERTIFIED + Phase 2 CERTIFIED  
+**Former working title:** Integration & Scale (superseded)
 
-## Why Phase 3 is different
+## Current platform state
 
-Phase 2 added standalone campaign capabilities. Phase 3 should not continue that pattern as “2.6+.”
+```text
+KCCC CAMPAIGN OPERATING SYSTEM
 
-Phase 3 themes are **integration and scale** — they attach to the Phase 1 kernel as the integration point and consume (never bypass) canonical operational state.
+Phase 1 ............... Certified
+Phase 2 ............... Certified
 
-## Candidate themes (definition only)
+Operational Kernel .... Stable
+Capability Layer ...... Stable
 
-| Theme | Intent | Constraint |
-|-------|--------|------------|
-| External Integrations | Google Calendar, email, mapping, messaging | Integrate via Phase 1 kernel — do not invent parallel ops truth |
-| Automation & Workflow | Human-approval gates; automations consume canonical state | Automations must not bypass ownership or readiness domains |
-| Analytics & Reporting | Campaign leadership views | Consume canonical data; do not become a second system of record |
-| Multi-campaign Framework | Reuse OS across future campaigns | Isolate campaign data; preserve per-campaign Unknown honesty |
+Phase 3 ............... Definition Only
+Implementation ........ Not Started
+```
+
+Maturity flags (remain explicitly false until unlocked):
+
+```text
+candidate_data_ready ............ false
+real_candidate_data_enabled ..... false
+ai_enabled ...................... false
+```
+
+## Purpose
+
+Phase 3 is **not** about adding features.
+
+Its purpose is to allow the operating system to **interact safely with the outside world** — trust, connectivity, governance, and scalability — without destabilizing the certified kernel or capability layer.
+
+Do **not** continue as Phase 2.6.
+
+## First principle (lock immediately)
+
+> **No external integration may become the canonical owner of campaign operational truth.**
+
+Examples:
+
+| External system | May | Canonical owner remains |
+|-----------------|-----|-------------------------|
+| Google Calendar | Suggest schedule updates | Calendar / mission schedule |
+| CRM | Import contacts | Constituent Operations (relationship state) |
+| Email provider | Report delivery | Communications Operations (readiness) |
+| SMS / mapping / weather | Supply signals | Consuming Phase 1 module |
+
+The kernel remains authoritative. External systems are **sources of information**, not owners of campaign truth.
+
+## Pillars (definition only)
+
+### Phase 3A — Trusted Integrations
+
+**Executive question:** *Can we trust the information entering the system?*
+
+Examples: Google Calendar, Gmail, SMS providers, mapping, weather, event registration, external CRMs.
+
+**Principle:** Kernel remains authoritative; externals inform — they do not own.
+
+### Phase 3B — Human-Gated Automation
+
+**Executive question:** *Can repetitive work be reduced without removing human accountability?*
+
+Examples: suggested follow-ups, reminder generation, daily briefing generation, candidate packet assembly, volunteer reminders.
+
+**Rule:** Approve → Execute. Never automatically execute.
+
+### Phase 3C — Executive Analytics
+
+**Executive question:** *What should leadership understand this week that wasn't obvious yesterday?*
+
+Examples: operational trends, burnout signals, travel efficiency, volunteer utilization, county readiness trends, communication effectiveness.
+
+**Rule:** Pure interpretation. No operational ownership. Aligns with Operational Intelligence doctrine (interpret, never override).
+
+### Phase 3D — Campaign Platform
+
+**Executive question:** *Can this operating system safely support another campaign?*
+
+Multi-campaign architecture belongs **here** — not before. Isolation, identity, and Unknown honesty across campaigns are prerequisites.
 
 ## Draft principles (to lock when Phase 3 opens for build)
 
-1. The Phase 1 kernel remains the integration point for external systems.  
-2. Automations consume canonical state and require human approval where campaign risk warrants it.  
-3. Analytics interpret and present — they do not redefine ownership.  
-4. Multi-campaign reuse must preserve data isolation and explicit Unknown.  
-5. No Phase 3 work reopens Phase 1/2 ownership disputes without an approved integration packet.
+1. **No external integration may become the canonical owner of campaign operational truth.**  
+2. The Phase 1 kernel remains the integration point for external systems.  
+3. Automations consume canonical state; risky or campaign-facing actions require human approval (Approve → Execute).  
+4. Analytics interpret and present — they do not redefine ownership.  
+5. Multi-campaign reuse (3D) must preserve data isolation and explicit Unknown.  
+6. No Phase 3 work reopens Phase 1/2 ownership disputes without an approved integration packet.
+
+## Design review (required before any implementation)
+
+Do not begin Phase 3 implementation until these are answered and accepted:
+
+1. **Integration Trust Model** — How is external data verified and reconciled?  
+2. **Identity & Permissions** — How are users, roles, and organizations represented across campaigns?  
+3. **Automation Governance** — Which actions require approval? Which can be automated?  
+4. **Multi-Tenant Boundaries** — How is campaign isolation enforced?  
+5. **Observability & Audit** — How are imports, automations, and integrations logged and traced?  
+6. **Disaster Recovery** — What happens when an integration is unavailable or returns conflicting data?
 
 ## Sequencing rule
 
-Do not start Phase 3 implementation increments until Steve accepts a scoped Phase 3 build plan. This charter is the pause point after Phase 2 CERTIFIED.
+| Allowed now | Not allowed yet |
+|-------------|-----------------|
+| Charter refinement | Feature code for 3A–3D |
+| Design review answers | Production integrations assuming readiness flags |
+| Architecture sketches | Bypass of Phase 1 ownership |
+
+Implementation starts only after Steve accepts a scoped Phase 3 build plan that answers the design-review questions above.

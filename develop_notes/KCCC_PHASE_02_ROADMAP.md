@@ -26,4 +26,4 @@ Version ......................................... 0.8.4-petition
 
 ## Next
 
-Pause capability expansion. Open Phase 3 definition — Integration & Scale (`KCCC_PHASE_03_CHARTER.md`).
+Pause capability expansion. Phase 3 definition — Trusted Connected Platform (`KCCC_PHASE_03_CHARTER.md`). Implementation not started.

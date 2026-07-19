@@ -53,9 +53,10 @@ The first **campaign capability layer** — workflow and experience orchestratio
 - A voter-file / signature warehouse  
 - Election administration  
 - A parallel CRM, finance ledger, or messaging platform  
-- An automation or analytics platform (those are Phase 3 themes)
+- An automation or analytics platform (those are Phase 3 — Trusted Connected Platform themes)
 
 ## Next
 
 Do **not** open Phase 2.6.  
-Pause and define **Phase 3 — Integration & Scale** (see `KCCC_PHASE_03_CHARTER.md`).
+Define **Phase 3 — Trusted Connected Platform** (see `KCCC_PHASE_03_CHARTER.md`).  
+Definition only — no implementation until design review is accepted.

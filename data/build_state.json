@@ -11,8 +11,12 @@
   "phase_2_status": "CERTIFIED",
   "phase_2_production_ready": true,
   "phase_2_increment": "2.5-petition-ballot-operations",
-  "phase_3_status": "open_for_definition",
+  "phase_3_status": "definition_only",
+  "phase_3_title": "Trusted Connected Platform",
+  "phase_3_script_id": "KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM",
+  "phase_3_implementation_started": false,
   "phase_3_increment": null,
+  "phase3_external_not_canonical_principle": true,
   "constituent_operations_enabled": true,
   "constituent_operations_accepted": true,
   "candidate_operations_enabled": true,
@@ -35,10 +39,10 @@
   "ai_enabled": false,
   "production_deployment_ready": true,
   "deployment_status": "production_live",
-  "updated_at": "2026-07-19T12:40:00.000Z",
+  "updated_at": "2026-07-19T12:45:00.000Z",
   "timezone": "America/Chicago",
   "phase_2_5_tip": "fb69bad",
-  "phase_2_certification_tip": "fb69bad",
+  "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "PHASE 2 CERTIFIED / PRODUCTION READY at 0.8.4-petition. All 2.1–2.5 ACCEPTED. No Phase 2.6 — Phase 3 Integration & Scale OPEN FOR DEFINITION only. candidate_data_ready remains false."
+  "notes": "Phase 1 + Phase 2 CERTIFIED (stable). Phase 3 Trusted Connected Platform is DEFINITION ONLY — no implementation. First principle: no external integration may become canonical owner of campaign operational truth. Maturity flags remain false."
 }
