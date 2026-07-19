@@ -80,4 +80,62 @@ export function formatWeekRangeLabel(weekKeys: string[]): string {
   return `${fmt(start, { month: "short", day: "numeric" })} – ${fmt(end, { month: "short", day: "numeric" })}`;
 }
 
+export function startOfMonthDateKey(dateKey: string): string {
+  return `${dateKey.slice(0, 7)}-01`;
+}
+
+export function daysInMonthForDateKey(dateKey: string): number {
+  const [y, m] = dateKey.split("-").map(Number);
+  return new Date(Date.UTC(y, m, 0)).getUTCDate();
+}
+
+/** All YYYY-MM-DD keys in the calendar month containing dateKey. */
+export function monthDateKeys(dateKey: string): string[] {
+  const start = startOfMonthDateKey(dateKey);
+  const count = daysInMonthForDateKey(dateKey);
+  return Array.from({ length: count }, (_, i) => shiftChicagoDateKey(start, i));
+}
+
+/**
+ * Monday-start traditional month grid (leading/trailing days from adjacent months).
+ */
+export function monthGridDateKeys(dateKey: string): string[] {
+  const inMonth = monthDateKeys(dateKey);
+  const first = inMonth[0];
+  const last = inMonth[inMonth.length - 1];
+  const gridStart = startOfWeekDateKey(first);
+  const lastWeekStart = startOfWeekDateKey(last);
+  const gridEnd = shiftChicagoDateKey(lastWeekStart, 6);
+  const keys: string[] = [];
+  let cursor = gridStart;
+  while (cursor <= gridEnd) {
+    keys.push(cursor);
+    cursor = shiftChicagoDateKey(cursor, 1);
+  }
+  return keys;
+}
+
+export function formatMonthLabel(dateKey: string): string {
+  const [y, m, d] = dateKey.split("-").map(Number);
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(Date.UTC(y, m - 1, d, 12, 0, 0)));
+}
+
+/** Shift by whole months, clamping day into the target month. */
+export function shiftMonthDateKey(dateKey: string, deltaMonths: number): string {
+  const [y, m, d] = dateKey.split("-").map(Number);
+  const target = new Date(Date.UTC(y, m - 1 + deltaMonths, 1, 12, 0, 0));
+  const dim = new Date(
+    Date.UTC(target.getUTCFullYear(), target.getUTCMonth() + 1, 0),
+  ).getUTCDate();
+  const day = Math.min(d, dim);
+  const yy = target.getUTCFullYear();
+  const mm = String(target.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(day).padStart(2, "0");
+  return `${yy}-${mm}-${dd}`;
+}
+
 export const CAMPAIGN_CALENDAR_TIMEZONE = TIMEZONE;

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { DayView } from "@/components/calendar/DayView";
+import { MonthView } from "@/components/calendar/MonthView";
 import { WeekView } from "@/components/calendar/WeekView";
 import { requireActiveAuthenticatedActor } from "@/server/auth/actor";
 import { getCalendarDayViewData } from "@/server/services/calendar-day-view-service";
+import { getCalendarMonthViewData } from "@/server/services/calendar-month-view-service";
 import { getCalendarWeekViewData } from "@/server/services/calendar-week-view-service";
 
 export const metadata: Metadata = {
@@ -14,8 +16,8 @@ export const dynamic = "force-dynamic";
 type SearchParams = Promise<{ view?: string; date?: string }>;
 
 /**
- * Calendar Experience Track A — Day + Week Views.
- * Month / Agenda / Timeline / Mission remain sequence placeholders.
+ * Calendar Experience Track A — Day, Week, Month.
+ * Agenda / Timeline / Mission remain sequence placeholders pending Calendar Experience Review.
  */
 export default async function CalendarPage({
   searchParams,
@@ -24,7 +26,13 @@ export default async function CalendarPage({
 }) {
   const params = await searchParams;
   const actor = await requireActiveAuthenticatedActor();
-  const view = params.view === "week" ? "week" : "day";
+  const view =
+    params.view === "week" || params.view === "month" ? params.view : "day";
+
+  if (view === "month") {
+    const data = await getCalendarMonthViewData(actor, params.date);
+    return <MonthView data={data} />;
+  }
 
   if (view === "week") {
     const data = await getCalendarWeekViewData(actor, params.date);

@@ -1428,9 +1428,120 @@ legend {
   gap: var(--space-2);
 }
 
+.month-highlights {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.month-grid-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  font-weight: 600;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--space-1);
+}
+
+.month-day-cell {
+  min-height: 5.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.4rem;
+  background: var(--color-surface-elevated);
+}
+
+.month-day-outside {
+  opacity: 0.45;
+}
+
+.month-day-today {
+  border-color: var(--color-primary);
+}
+
+.month-density-light {
+  background: rgba(15, 76, 92, 0.04);
+}
+
+.month-density-moderate {
+  background: rgba(15, 76, 92, 0.1);
+}
+
+.month-density-heavy {
+  background: rgba(15, 76, 92, 0.18);
+}
+
+.month-day-cell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.month-day-number {
+  font-weight: 700;
+  text-decoration: none;
+  color: inherit;
+}
+
+.month-week-link {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.month-day-count {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.month-day-samples {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  font-size: 0.7rem;
+  line-height: 1.25;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.month-day-empty {
+  margin: 0.35rem 0 0;
+}
+
+.month-week-rhythm {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.county-heat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
 @media (max-width: 900px) {
   .week-grid {
     grid-template-columns: 1fr;
+  }
+
+  .month-grid,
+  .month-grid-weekdays {
+    grid-template-columns: 1fr 1fr;
   }
 
   .calendar-date-nav {

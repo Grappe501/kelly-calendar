@@ -1,8 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   displayCampaignWeekIndex,
+  formatMonthLabel,
+  monthDateKeys,
+  monthGridDateKeys,
   resolveCalendarDateKey,
   shiftChicagoDateKey,
+  shiftMonthDateKey,
+  startOfMonthDateKey,
   startOfWeekDateKey,
   weekDateKeys,
 } from "@/lib/calendar/chicago-date";
@@ -38,5 +43,17 @@ describe("chicago-date helpers", () => {
   it("computes display-only campaign week index", () => {
     expect(displayCampaignWeekIndex("2025-11-01", "2025-11-01")).toBe(1);
     expect(displayCampaignWeekIndex("2025-11-08", "2025-11-01")).toBe(2);
+  });
+
+  it("builds month keys and traditional Monday grids", () => {
+    expect(startOfMonthDateKey("2026-08-15")).toBe("2026-08-01");
+    expect(formatMonthLabel("2026-08-01")).toBe("August 2026");
+    expect(monthDateKeys("2026-08-15")).toHaveLength(31);
+    expect(monthDateKeys("2026-08-15")[0]).toBe("2026-08-01");
+    expect(monthDateKeys("2026-08-15").at(-1)).toBe("2026-08-31");
+    const grid = monthGridDateKeys("2026-08-15");
+    expect(grid[0]).toBe(startOfWeekDateKey("2026-08-01"));
+    expect(grid.length % 7).toBe(0);
+    expect(shiftMonthDateKey("2026-08-31", 1)).toBe("2026-09-30");
   });
 });

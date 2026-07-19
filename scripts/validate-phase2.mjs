@@ -369,18 +369,26 @@ if (
   build.engineering_track_a_status === "active" &&
   build.calendar_experience_day_view === true &&
   build.calendar_experience_week_view === true &&
-  build.calendar_experience_pass === "2-week-view" &&
+  build.calendar_experience_month_view === true &&
+  build.calendar_experience_pass === "3-month-view" &&
+  build.calendar_experience_review_status === "ready" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
   constants.includes("ENGINEERING_TRACK_A") &&
   constants.includes("CALENDAR_EXPERIENCE_PASS") &&
+  constants.includes("CALENDAR_EXPERIENCE_REVIEW_STATUS") &&
   exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_2_WEEK_VIEW.md") &&
+  exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_3_MONTH_VIEW.md") &&
+  exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md") &&
   exists("src/components/calendar/WeekView.tsx") &&
+  exists("src/components/calendar/MonthView.tsx") &&
   exists("src/server/services/calendar-week-view-service.ts") &&
-  read("src/app/calendar/page.tsx").includes("WeekView") &&
-  read("src/components/calendar/CalendarViewSwitcher.tsx").includes('id: "timeline"')
+  exists("src/server/services/calendar-month-view-service.ts") &&
+  read("src/app/calendar/page.tsx").includes("MonthView") &&
+  read("src/components/calendar/CalendarViewSwitcher.tsx").includes('id: "month"') &&
+  read("src/components/calendar/CalendarViewSwitcher.tsx").includes("ready: true")
 ) {
-  pass("Engineering Track A Calendar Experience Day+Week Views (Arch 1.0, not Phase 3)");
+  pass("Engineering Track A Calendar Experience Day+Week+Month (Arch 1.0, review ready)");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -390,5 +398,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Eng Track A Day+Week; Phase 3.1 PASS WITH CONDITIONS paused; no Phase 3 impl).",
+  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Eng Track A Day+Week+Month; Review READY; Phase 3.1 PASS WITH CONDITIONS paused; no Phase 3 impl).",
 );

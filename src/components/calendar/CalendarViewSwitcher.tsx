@@ -3,7 +3,7 @@ import Link from "next/link";
 const VIEWS = [
   { id: "day", label: "Day", ready: true },
   { id: "week", label: "Week", ready: true },
-  { id: "month", label: "Month", ready: false },
+  { id: "month", label: "Month", ready: true },
   { id: "agenda", label: "Agenda", ready: false },
   { id: "timeline", label: "Timeline", ready: false },
   { id: "mission", label: "Mission", ready: false },
