@@ -115,7 +115,7 @@ if (
 const phase3 = read("develop_notes/KCCC_PHASE_03_CHARTER.md");
 if (
   phase3.includes("Architecture Review") &&
-  phase3.includes("implementation LOCKED") &&
+  phase3.includes("NOT AUTHORIZED") &&
   phase3.includes("Trusted Connected Platform") &&
   phase3.includes("No external integration may become the canonical owner") &&
   phase3.includes("Phase 3A") &&
@@ -125,7 +125,7 @@ if (
   phase3.includes("Approve → Execute") &&
   phase3.includes("Integration Trust Model")
 ) {
-  pass("Phase 3 Trusted Connected Platform charter (Architecture Review / locked)");
+  pass("Phase 3 charter (Architecture Review / NOT AUTHORIZED)");
 } else {
   fail("Phase 3 charter missing or incomplete");
 }
