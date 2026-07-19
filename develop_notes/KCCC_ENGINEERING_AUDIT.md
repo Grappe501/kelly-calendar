@@ -7,12 +7,13 @@
 **Nature:** Review and evidence only — **no feature adds** · **no redesign implementation**  
 
 ```text
+PROGRAM CHARTER ................ ACTIVE
+
 VERSION 1 FEATURE FREEZE ....... ACTIVE (permanently feature-complete)
-Architecture 1.0 ............... VERIFIED
+Architecture 1.0 ............... LOCKED
 Platform Stabilization ......... ACTIVE
 
-Audit Constitution ............. ACTIVE
-Release Constitution ........... ACTIVE
+Audit / Release Constitutions .. ACTIVE
 Protected Assets Register ...... LIVING
 
 Engineering Audit .............. ACTIVE
@@ -20,8 +21,10 @@ Priority 1: EA-5 … EA-12 (no exceptions)
 Priority 2: Program Readiness Review
 Priority 3: Hardening (execution)
 Priority 4: Experience Redesign
+Then: Foundation → V2 Planning Review → V2 Dev
 
 Prohibited: new views · modules · integrations · dashboards
+No further top-level governance unless concrete gap.
 ```
 
 ## Goal

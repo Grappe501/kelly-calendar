@@ -58,11 +58,15 @@
   "v1_feature_freeze_id": "KCCC-V1-FEATURE-FREEZE",
   "platform_stabilization_status": "active",
   "feature_development_status": "frozen",
+  "program_charter_status": "active",
+  "program_charter_id": "KCCC-PROGRAM-CHARTER",
   "release_constitution_status": "active",
   "release_constitution_id": "KCCC-RELEASE-CONSTITUTION",
+  "v2_planning_review_status": "planned",
   "engineering_audit_status": "active",
   "audit_constitution_status": "active",
   "protected_assets_register_status": "living",
+  "further_top_level_governance": "only_if_concrete_gap",
   "engineering_maturity_architecture": 4,
   "engineering_maturity_operator_experience": 2,
   "engineering_maturity_visual_experience": 2,
@@ -132,7 +136,7 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-V1-FEATURE-FREEZE",
+  "current_step": "KCCC-PROGRAM-CHARTER",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -186,5 +190,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "V1 FEATURE FREEZE ACTIVE — permanently feature-complete; never reopen. Release Constitution ACTIVE. Platform Stabilization ACTIVE. Priority: EA-5…EA-12 → Readiness Review → Hardening → Redesign. Phase 3 paused."
+  "notes": "Program Charter ACTIVE. V1 FEATURE FREEZE. Release+Audit Constitutions ACTIVE. No more top-level governance unless gap. Roadmap: EA-5…12 → Readiness → Hardening → Redesign → Foundation → V2 Planning Review → V2. Phase 3 paused."
 }

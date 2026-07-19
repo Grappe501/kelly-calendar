@@ -161,9 +161,10 @@ Shared infrastructure before feature expansion.
 ## Roadmap (remainder)
 
 ```text
+Program Charter             ← ACTIVE (top-level)
 Version 1 Feature Freeze    ← ACTIVE
 Audit Constitution          ← ACTIVE
-Release Constitution        ← ACTIVE (ships after V1)
+Release Constitution        ← ACTIVE
         ↓
 EA-5 … EA-12                ← Priority 1
         ↓
@@ -175,7 +176,9 @@ Experience Redesign 2.0     ← Priority 4
         ↓
 Calendar Foundation
         ↓
-Version 2
+Version 2 Planning Review
+        ↓
+Version 2 Development
 ```
 
 ## Architecture 1.0 Conformance Statement

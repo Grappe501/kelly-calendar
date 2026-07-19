@@ -9,13 +9,16 @@
 
 ## Gate
 
-Version 2 work begins only after:
+Version 2 **development** begins only after:
 
 1. Engineering Audit complete (EA-5…EA-12)  
 2. Program Readiness Review complete  
 3. Hardening Pass complete  
 4. **Experience Redesign 2.0** complete (or waived) — see `KCCC_EXPERIENCE_REDESIGN_2.md`  
 5. Calendar Foundation complete (shared infrastructure)  
+6. **Version 2 Planning Review** complete — see `KCCC_VERSION_2_PLANNING_REVIEW.md`  
+
+Program Charter: `KCCC_PROGRAM_CHARTER.md`.  
 
 ## V2 capability themes
 

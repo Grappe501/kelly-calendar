@@ -100,6 +100,10 @@ Version 2 ............... Properly blocked
 
 Resist the temptation to keep building features. Finish audits → harden → invest in Experience Redesign.
 
+## Parent
+
+Governed by `KCCC_PROGRAM_CHARTER.md` (Principle 1 — Stabilize Before Expanding).
+
 ## Architecture 1.0 Conformance Statement
 
 This freeze does not amend Architecture 1.0. It constrains **delivery scope**, not ownership doctrine.
