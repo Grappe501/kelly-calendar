@@ -2,28 +2,33 @@
 
 **Script ID:** `KCCC-PHASE-03-EXIT-REVIEW`  
 **Status:** NOT STARTED  
-**Prerequisite:** Architecture 1.0 CLOSED / BASELINE RELEASED  
-**Outcome if approved:** Transition governance from Architecture Review → **Phase 3 Authorized**  
-**Outcome if rejected:** Remain Architecture Review; implementation stays **NOT AUTHORIZED**
+**Nature:** Design-governance document only — answers authorization questions; does **not** implement  
+**Prerequisite:** Architecture 1.0 Program CLOSED (`2dbc1d9`) / Register active  
+**Normative baseline:** Constitution · Architecture Freeze · Governance State (v1.0)
 
 ## Purpose
 
-This is the next **architectural** milestone — not an implementation milestone.
+Authorize (or reject) Phase 3 under Architecture 1.0 governance.
 
-Phase 3 implementation remains prohibited until this review concludes successfully.
+```text
+On approval:
+  Architecture Review  →  Phase 3 AUTHORIZED
+  Then: implementation planning may begin (not implementation itself)
 
-## Required design answers
+On rejection:
+  Remain Architecture Review
+  Phase 3 Implementation remains NOT AUTHORIZED
+```
 
-| # | Model | Question |
-|---|-------|----------|
-| 1 | Trust | Is every external integration subordinate to canonical ownership? |
-| 2 | Identity | How are users, roles, and organizations represented across campaigns? |
-| 3 | Automation governance | Does every automation preserve Approve → Execute where appropriate? |
-| 4 | Multi-campaign boundary | Can multiple campaigns coexist without data leakage or ownership ambiguity? |
-| 5 | Audit & recovery | Can every externally sourced fact be traced/audited, and what happens on conflict/outage? |
-| 6 | AI distinction | Can every AI-generated recommendation be distinguished from canonical operational truth? |
+## Authorization questions (must answer)
 
-(Items 1–5 map to the Constitution exit criteria; identity and AI distinction are explicit review deliverables.)
+1. **Trust Model** — How external information is accepted, reconciled, and prevented from becoming canonical operational truth.  
+2. **Identity & Authorization Model** — Users, roles, organizations, campaigns, and permission boundaries.  
+3. **Automation Governance** — Approval requirements, execution authority, rollback, and accountability.  
+4. **Campaign Boundary Model** — Isolation between campaigns, data ownership, and multi-campaign architecture.  
+5. **Audit & Recovery Model** — Traceability, observability, reconciliation, backup, and disaster recovery.  
+
+Also required (Constitution): every AI-generated recommendation must be distinguishable from canonical operational truth.
 
 ## Checklist
 
@@ -35,16 +40,16 @@ NOT STARTED
 
 Required:
 [ ] Trust model
-[ ] Identity model
+[ ] Identity & authorization model
 [ ] Automation governance
-[ ] Multi-campaign boundary model
+[ ] Campaign boundary model
 [ ] Audit & recovery model
-[ ] AI vs canonical truth distinction
 
 Outcome:
-Approve or reject authorization for Phase 3 implementation.
+Approve → Phase 3 AUTHORIZED (planning may begin)
+Reject  → remain NOT AUTHORIZED
 ```
 
 ## Authority
 
-Answers must align with Constitution v1.0. Constitutional changes discovered during this review require a formal RFC — they do not quietly amend Architecture 1.0.
+Answers must align with Architecture 1.0. Discovering a need to change Constitution or ownership requires a formal RFC — Architecture 1.0 is not quietly amended here.

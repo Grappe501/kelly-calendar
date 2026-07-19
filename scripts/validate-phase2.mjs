@@ -34,6 +34,7 @@ const required = [
   ["rel", "develop_notes/KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md"],
   ["close", "develop_notes/KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md"],
   ["exit", "develop_notes/KCCC_PHASE_03_EXIT_REVIEW.md"],
+  ["reg", "develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
@@ -96,13 +97,27 @@ if (
 const exitReview = read("develop_notes/KCCC_PHASE_03_EXIT_REVIEW.md");
 if (
   exitReview.includes("NOT STARTED") &&
-  exitReview.includes("Phase 3 Authorized") &&
-  exitReview.includes("Trust") &&
-  exitReview.includes("Identity")
+  exitReview.includes("Phase 3 AUTHORIZED") &&
+  exitReview.includes("implementation planning") &&
+  exitReview.includes("Trust Model") &&
+  exitReview.includes("Identity & Authorization")
 ) {
-  pass("Phase 3 Exit Review present (NOT STARTED)");
+  pass("Phase 3 Exit Review present (NOT STARTED, design-governance)");
 } else {
   fail("Phase 3 Exit Review incomplete");
+}
+
+const register = read("develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md");
+if (
+  register.includes("BASELINE RELEASE") &&
+  register.includes("CLOSED") &&
+  register.includes("2dbc1d9") &&
+  register.includes("10d485f") &&
+  register.includes("NOT AUTHORIZED")
+) {
+  pass("Architecture Register v1.0 present");
+} else {
+  fail("Architecture Register incomplete");
 }
 
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
@@ -198,6 +213,8 @@ if (
   build.architecture_lifecycle === "CLOSED" &&
   build.architecture_baseline_released === true &&
   build.architecture_1_0_close_tip === "2dbc1d9" &&
+  build.architecture_register_at_head === "10d485f" &&
+  build.architecture_register === "KCCC_ARCHITECTURE_REGISTER_v1.0" &&
   build.constitutional_layer_sealed === true &&
   build.architecture_immutable_except_rfc === true &&
   build.project_state === "architecture_review" &&

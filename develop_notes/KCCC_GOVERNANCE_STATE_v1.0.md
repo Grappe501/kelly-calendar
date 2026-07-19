@@ -62,8 +62,11 @@ Breaking Changes ............. RFC Required
 
 ## Next major milestone
 
-**Phase 3 Exit Review** — `KCCC_PHASE_03_EXIT_REVIEW.md` — Status: **NOT STARTED**
+**Phase 3 Exit Review** — `KCCC_PHASE_03_EXIT_REVIEW.md` — Status: **NOT STARTED**  
+(Design-governance only — see Architecture Register.)
 
-Required models: trust · identity · automation governance · multi-campaign boundary · audit & recovery · AI vs canonical distinction
+Required models: trust · identity & authorization · automation governance · campaign boundary · audit & recovery
 
-Outcome: approve or reject **Phase 3 Authorized**. Until then, remain in Architecture Review with implementation **NOT AUTHORIZED**.
+Outcome: approve → **Phase 3 AUTHORIZED** (then implementation *planning* may begin; not implementation itself). Reject → remain **NOT AUTHORIZED**.
+
+Official register: `KCCC_ARCHITECTURE_REGISTER_v1.0.md`
