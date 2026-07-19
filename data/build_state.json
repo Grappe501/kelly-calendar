@@ -54,14 +54,15 @@
   "calendar_experience_v1_complete": true,
   "calendar_experience_v1_status": "engineering_complete",
   "engineering_audit_status": "active",
-  "engineering_audit_next_stream": "EA-4",
+  "engineering_audit_next_stream": "EA-1",
+  "ea4_status": "complete",
   "hardening_pass_status": "blocked",
   "experience_redesign_status": "proposed",
   "experience_redesign_implementation": "blocked",
   "calendar_foundation_status": "planned_after_redesign",
   "foundation_implementation_started": false,
   "redesign_implementation_started": false,
-  "next_engineering_deliverable": "KCCC-EA-4-VISUAL-AND-EXPERIENCE-AUDIT",
+  "next_engineering_deliverable": "KCCC-EA-1-ARCHITECTURE-COMPLIANCE",
   "governance_state": "KCCC_GOVERNANCE_STATE_v1.0",
   "constitution": "KCCC_CONSTITUTION_v1.0",
   "architecture_freeze": "KCCC_ARCHITECTURE_FREEZE_v1.0",
@@ -79,7 +80,7 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-EA-4-VISUAL-AND-EXPERIENCE-AUDIT",
+  "current_step": "KCCC-EA-1-ARCHITECTURE-COMPLIANCE",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -133,5 +134,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Architecture 1.0 permanently closed. Calendar V1 ENGINEERING COMPLETE. Audit ACTIVE — next EA-4 Visual and Experience Audit. Experience Redesign 2.0 PROPOSED (blocked until Audit+Hardening). Foundation after Redesign. Phase 3 paused at 3.1 PASS WITH CONDITIONS. Maturity flags remain false."
+  "notes": "Architecture 1.0 permanently closed. Calendar V1 ENGINEERING COMPLETE. EA-4 Visual and Experience Audit COMPLETE (forensic). Next audit stream EA-1. Experience Redesign PROPOSED/blocked. Phase 3 paused at 3.1 PASS WITH CONDITIONS. Maturity flags remain false."
 }

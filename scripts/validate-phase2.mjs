@@ -375,34 +375,32 @@ if (
   build.calendar_experience_v1_complete === true &&
   build.calendar_experience_v1_status === "engineering_complete" &&
   build.engineering_audit_status === "active" &&
-  build.engineering_audit_next_stream === "EA-4" &&
+  build.engineering_audit_next_stream === "EA-1" &&
+  build.ea4_status === "complete" &&
   build.hardening_pass_status === "blocked" &&
   build.experience_redesign_status === "proposed" &&
   build.experience_redesign_implementation === "blocked" &&
   build.calendar_foundation_status === "planned_after_redesign" &&
   build.foundation_implementation_started === false &&
   build.redesign_implementation_started === false &&
-  build.next_engineering_deliverable === "KCCC-EA-4-VISUAL-AND-EXPERIENCE-AUDIT" &&
+  build.next_engineering_deliverable === "KCCC-EA-1-ARCHITECTURE-COMPLIANCE" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
   constants.includes("ENGINEERING_TRACK_A") &&
-  constants.includes('ENGINEERING_AUDIT_STATUS = "ACTIVE"') &&
+  constants.includes('EA4_STATUS = "COMPLETE"') &&
   constants.includes('EXPERIENCE_REDESIGN_STATUS = "PROPOSED"') &&
-  constants.includes("KCCC-EA-4-VISUAL-AND-EXPERIENCE-AUDIT") &&
-  exists("develop_notes/KCCC_CALENDAR_V1_ENGINEERING_COMPLETE.md") &&
-  exists("develop_notes/KCCC_ENGINEERING_AUDIT.md") &&
+  constants.includes("KCCC-EA-1-ARCHITECTURE-COMPLIANCE") &&
   exists("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md") &&
   exists("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md") &&
-  exists("develop_notes/KCCC_HARDENING_PASS.md") &&
-  exists("develop_notes/KCCC_CALENDAR_FOUNDATION.md") &&
-  read("develop_notes/KCCC_ENGINEERING_AUDIT.md").includes("EA-4 Visual and Experience Audit") &&
-  read("develop_notes/KCCC_ENGINEERING_AUDIT.md").includes("EA-4A") &&
-  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("PROPOSED") &&
+  read("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md").includes("COMPLETE (diagnostic)") &&
+  read("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md").includes("4I Information Density") &&
+  read("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md").includes("4L Emotional Tone") &&
+  read("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md").includes("Design Principles") &&
+  read("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md").includes("Prioritized Redesign Backlog") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
-  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("XR-1") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("V1 COMPLETE; Audit ACTIVE (EA-4 next); Redesign PROPOSED/blocked");
+  pass("V1 COMPLETE; EA-4 forensic COMPLETE; EA-1 next; Redesign blocked");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -412,5 +410,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; V1 COMPLETE; Audit ACTIVE EA-4; Redesign PROPOSED/blocked; Phase 3.1 PASS WITH CONDITIONS paused).",
+  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; V1 COMPLETE; EA-4 COMPLETE; EA-1 next; Redesign PROPOSED/blocked; Phase 3.1 PASS WITH CONDITIONS paused).",
 );

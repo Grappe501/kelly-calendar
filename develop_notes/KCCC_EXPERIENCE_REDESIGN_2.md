@@ -47,7 +47,7 @@ EA-4 **diagnoses**. This program **redesigns** (after Hardening).
 
 ```text
 V2.0 Experience Redesign
-  2.0.1 Visual audit findings (from EA-4)
+  2.0.1 Visual audit findings (from EA-4) ..... COMPLETE
   2.0.2 Design direction and mood system
   2.0.3 Design tokens
   2.0.4 Shared component language

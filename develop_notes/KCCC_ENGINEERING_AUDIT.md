@@ -9,10 +9,11 @@
 ```text
 Engineering Audit ........ ACTIVE
 
+EA-4 Visual and Experience Audit ... COMPLETE (diagnostic)
 Next Audit Stream:
-EA-4 Visual and Experience Audit
+EA-1 Architecture Compliance
 
-Experience Redesign 2.0 .. PROPOSED
+Experience Redesign 2.0 .. PROPOSED (blueprint fed by EA-4)
 Implementation ........... BLOCKED until Audit + Hardening
 ```
 
@@ -43,18 +44,18 @@ Architecture compliance still matters; the most urgent user-facing weakness is t
 
 | Priority | ID | Workstream |
 |----------|-----|------------|
-| **1 (NOW)** | EA-4 | Visual and Experience Audit (deep) |
-| 2 | EA-1 | Architecture Compliance |
-| 3 | EA-2 | User Experience Audit |
-| 4 | EA-3 | Information Architecture |
-| 5 | EA-5 | Accessibility |
-| 6 | EA-6 | Performance |
-| 7 | EA-7 | Data Integrity |
-| 8 | EA-8 | Security |
-| 9 | EA-9 | Operator Workflow |
-| 10 | EA-10 | Technical Debt |
-| 11 | EA-11 | Documentation |
-| 12 | EA-12 | Future Expansion Readiness |
+| **Done** | EA-4 | Visual and Experience Audit (4A–4L) — COMPLETE |
+| **1 (NOW)** | EA-1 | Architecture Compliance |
+| 2 | EA-2 | User Experience Audit |
+| 3 | EA-3 | Information Architecture |
+| 4 | EA-5 | Accessibility |
+| 5 | EA-6 | Performance |
+| 6 | EA-7 | Data Integrity |
+| 7 | EA-8 | Security |
+| 8 | EA-9 | Operator Workflow |
+| 9 | EA-10 | Technical Debt |
+| 10 | EA-11 | Documentation |
+| 11 | EA-12 | Future Expansion Readiness |
 
 ---
 
@@ -114,9 +115,10 @@ Document evidence for:
 
 | ID | Status |
 |----|--------|
-| EA-4 | **NEXT** (active stream) |
-| EA-1 … EA-3, EA-5 … EA-12 | NOT STARTED |
-| Experience Redesign 2.0 | PROPOSED — blocked |
+| EA-4 | **COMPLETE** — see `KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md` |
+| EA-1 | **NEXT** |
+| EA-2, EA-3, EA-5 … EA-12 | NOT STARTED |
+| Experience Redesign 2.0 | PROPOSED — blocked; blueprint ready from EA-4 |
 | Foundation implementation | NOT STARTED — after Redesign program gate |
 
 ## Exit

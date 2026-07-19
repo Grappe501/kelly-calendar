@@ -5,18 +5,13 @@ ARCHITECTURE 1.0 — PERMANENTLY CLOSED (6690ce2)
 
 Calendar Experience V1 .................... ENGINEERING COMPLETE
 
-Sequence (binding):
-  1. Engineering Audit .................... ACTIVE
-       Next stream: EA-4 Visual and Experience Audit
-  2. Hardening Pass ....................... BLOCKED until Audit
-  3. Experience Redesign 2.0 .............. PROPOSED (blocked until Audit+Hardening)
-  4. Calendar Foundation .................. AFTER Redesign program gate
-  5. Version 2 feature expansion .......... AFTER Foundation
+Engineering Audit ......................... ACTIVE
+  EA-4 Visual & Experience Audit .......... COMPLETE (forensic)
+  Next stream: EA-1 Architecture Compliance
 
-Do NOT implement Redesign or Foundation yet.
-Audit / Hardening = no feature adds.
-
-Phase 3 Exit Review ....................... PAUSED
-  3.1 Trust Model ......................... PASS WITH CONDITIONS
-  Planning / Implementation ............... NOT AUTHORIZED
+Hardening ................................. BLOCKED until Audit
+Experience Redesign 2.0 ................... PROPOSED (blueprint from EA-4)
+  Implementation .......................... BLOCKED until Audit + Hardening
+Foundation ................................ AFTER Redesign
+Phase 3 ................................... PAUSED (3.1 Pass with Conditions)
 ```
