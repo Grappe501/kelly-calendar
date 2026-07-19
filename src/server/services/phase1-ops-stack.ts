@@ -11,6 +11,7 @@ import { buildFundraisingOperationsHome } from "@/lib/missions/fundraising-opera
 import { buildGotvOperationsHome } from "@/lib/missions/gotv-operations";
 import { buildOperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
+import { buildPetitionBallotOperationsHome } from "@/lib/missions/petition-ballot-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
@@ -191,7 +192,19 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     field,
   });
 
-  const volunteersWithGotv = buildVolunteerOperationsHome({
+  const petition = buildPetitionBallotOperationsHome({
+    brief: briefPayload.brief,
+    missions: briefPayload.allMissionsToday,
+    countiesByMission: briefPayload.countiesByMission,
+    counties,
+    volunteers,
+    communications,
+    logistics,
+    compliance,
+    field,
+  });
+
+  const volunteersWithCaps = buildVolunteerOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
@@ -200,9 +213,10 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     financeConsume: finance.volunteerFeed,
     constituentConsume: constituents.volunteerFeed,
     gotvConsume: gotv.volunteerFeed,
+    petitionConsume: petition.volunteerFeed,
   });
 
-  const countiesWithGotv = buildCountyOperationsHome({
+  const countiesWithCaps = buildCountyOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
@@ -212,13 +226,14 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
       detail: h.detail,
       severity: h.severity,
     })),
-    volunteerFeed: volunteersWithGotv.countyFeed,
+    volunteerFeed: volunteersWithCaps.countyFeed,
     communicationsFeed: communications.countyFeed,
     logisticsFeed: logistics.countyFeed,
     financeFeed: finance.countyFeed,
     complianceFeed: compliance.countyFeed,
     constituentFeed: constituents.countyFeed,
     gotvConsume: gotv.countyFeed,
+    petitionConsume: petition.countyFeed,
   });
 
   const communicationsWithMedia = buildCommunicationsOperationsHome({
@@ -237,6 +252,7 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     debateMediaConsume: debateMedia.communicationsFeed,
     fundraisingConsume: fundraising.communicationsFeed,
     gotvConsume: gotv.communicationsFeed,
+    petitionConsume: petition.communicationsFeed,
   });
 
   const intelligence = buildOperationalIntelligenceHome({
@@ -244,8 +260,8 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     timezone: briefPayload.brief.timezone,
     feeds: {
       fieldFeed: field.executiveFeed,
-      countyFeed: countiesWithGotv.executiveFeed,
-      volunteerFeed: volunteersWithGotv.executiveFeed,
+      countyFeed: countiesWithCaps.executiveFeed,
+      volunteerFeed: volunteersWithCaps.executiveFeed,
       communicationsFeed: communicationsWithMedia.executiveFeed,
       logisticsFeed: logistics.executiveFeed,
       financeFeed: finance.executiveFeed,
@@ -254,6 +270,7 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
       debateMediaFeed: debateMedia.intelligenceFeed,
       fundraisingFeed: fundraising.intelligenceFeed,
       gotvFeed: gotv.intelligenceFeed,
+      petitionFeed: petition.intelligenceFeed,
     },
   });
 
@@ -264,12 +281,13 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     finance,
     compliance,
     communications: communicationsWithMedia,
-    volunteers: volunteersWithGotv,
+    volunteers: volunteersWithCaps,
     field,
-    counties: countiesWithGotv,
+    counties: countiesWithCaps,
     intelligence,
     debateMedia,
     fundraising,
     gotv,
+    petition,
   };
 }

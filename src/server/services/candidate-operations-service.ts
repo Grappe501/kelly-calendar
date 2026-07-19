@@ -35,6 +35,7 @@ export async function getCandidateOperations(
     debateMediaConsume: stack.debateMedia,
     fundraisingConsume: stack.fundraising,
     gotvConsume: stack.gotv,
+    petitionConsume: stack.petition,
   });
 
   return {

@@ -17,6 +17,7 @@ import type { OperationalIntelligenceHome } from "@/lib/missions/intelligence-op
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
+import type { PetitionBallotOperationsHome } from "@/lib/missions/petition-ballot-operations";
 import type { VolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 
 export type ExecutivePriority = {
@@ -130,6 +131,8 @@ export type ExecutiveCommand = {
   fundraisingFeed: FundraisingOperationsHome["executiveFeed"] | null;
   /** Consumed from GOTV Operations (2.4) — turnout conversion workflow. */
   gotvFeed: GotvOperationsHome["executiveFeed"] | null;
+  /** Consumed from Petition & Ballot Operations (2.5) — qualification workflow. */
+  petitionFeed: PetitionBallotOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -159,6 +162,7 @@ export function buildDeterministicExecutiveBriefing(
   debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null,
   fundraisingFeed?: FundraisingOperationsHome["executiveFeed"] | null,
   gotvFeed?: GotvOperationsHome["executiveFeed"] | null,
+  petitionFeed?: PetitionBallotOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -174,6 +178,7 @@ export function buildDeterministicExecutiveBriefing(
       debateMediaFeed?.briefingLine,
       fundraisingFeed?.briefingLine,
       gotvFeed?.briefingLine,
+      petitionFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -197,6 +202,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (gotvFeed?.briefingLine) {
     parts.push(gotvFeed.briefingLine);
+  }
+  if (petitionFeed?.briefingLine) {
+    parts.push(petitionFeed.briefingLine);
   }
   if (constituentFeed?.briefingLine) {
     parts.push(constituentFeed.briefingLine);
@@ -288,6 +296,7 @@ export function buildExecutiveCommand(input: {
   debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null;
   fundraisingFeed?: FundraisingOperationsHome["executiveFeed"] | null;
   gotvFeed?: GotvOperationsHome["executiveFeed"] | null;
+  petitionFeed?: PetitionBallotOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -304,6 +313,7 @@ export function buildExecutiveCommand(input: {
   const debateMediaFeed = input.debateMediaFeed ?? null;
   const fundraisingFeed = input.fundraisingFeed ?? null;
   const gotvFeed = input.gotvFeed ?? null;
+  const petitionFeed = input.petitionFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -480,6 +490,25 @@ export function buildExecutiveCommand(input: {
       href: "/gotv",
       urgency:
         gotvFeed.turnoutRisk === "CRITICAL" || gotvFeed.gotvReadiness === "BLOCKED"
+          ? "NOW"
+          : "SOON",
+    });
+  }
+  if (
+    petitionFeed &&
+    (petitionFeed.activitiesAtRisk > 0 ||
+      petitionFeed.petitionReadiness === "BLOCKED" ||
+      petitionFeed.petitionReadiness === "NEEDS_ATTENTION" ||
+      petitionFeed.validationRisk === "CRITICAL" ||
+      petitionFeed.validationRisk === "HIGH")
+  ) {
+    topPriorities.push({
+      label: "Petition readiness",
+      detail: petitionFeed.briefingLine,
+      href: "/petition",
+      urgency:
+        petitionFeed.validationRisk === "CRITICAL" ||
+        petitionFeed.petitionReadiness === "BLOCKED"
           ? "NOW"
           : "SOON",
     });
@@ -850,6 +879,14 @@ export function buildExecutiveCommand(input: {
   if (gotvFeed?.coverageGapsStatus === "unknown" && gotvFeed.todaysDeployment > 0) {
     alerts.push("GOTV coverage gaps Unknown");
   }
+  if (petitionFeed && petitionFeed.activitiesAtRisk > 0) {
+    alerts.push(
+      `${petitionFeed.activitiesAtRisk} petition/ballot activity(ies) at risk`,
+    );
+  }
+  if (petitionFeed?.collectionProgressStatus === "unknown") {
+    alerts.push("Petition collection progress Unknown");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -907,6 +944,7 @@ export function buildExecutiveCommand(input: {
         debateMediaFeed,
         fundraisingFeed,
         gotvFeed,
+        petitionFeed,
       ),
       source: "deterministic_v1",
     },
@@ -923,6 +961,7 @@ export function buildExecutiveCommand(input: {
     debateMediaFeed,
     fundraisingFeed,
     gotvFeed,
+    petitionFeed,
   };
 }
 
@@ -961,5 +1000,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     debateMediaFeed: command.debateMediaFeed,
     fundraisingFeed: command.fundraisingFeed,
     gotvFeed: command.gotvFeed,
+    petitionFeed: command.petitionFeed,
   };
 }

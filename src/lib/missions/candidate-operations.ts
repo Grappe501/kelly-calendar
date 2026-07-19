@@ -25,6 +25,7 @@ import {
   type DomainReadiness,
   type LogisticsOperationsHome,
 } from "@/lib/missions/logistics-operations";
+import type { PetitionBallotOperationsHome } from "@/lib/missions/petition-ballot-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { VolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { UnknownFact } from "@/lib/missions/volunteer-operations";
@@ -57,7 +58,8 @@ export type CandidateInboxItem = {
     | "DOCUMENT"
     | "SPEECH"
     | "FUNDRAISING"
-    | "GOTV";
+    | "GOTV"
+    | "PETITION";
   title: string;
   detail: string;
   href: string | null;
@@ -385,6 +387,7 @@ export function buildCandidateOperationsHome(input: {
   debateMediaConsume?: DebateMediaOperationsHome | null;
   fundraisingConsume?: FundraisingOperationsHome | null;
   gotvConsume?: GotvOperationsHome | null;
+  petitionConsume?: PetitionBallotOperationsHome | null;
   now?: Date;
 }): CandidateOperationsHome {
   const now = input.now ?? new Date();
@@ -412,6 +415,7 @@ export function buildCandidateOperationsHome(input: {
   const debateMediaFeed = input.debateMediaConsume?.candidateFeed ?? null;
   const fundraisingFeed = input.fundraisingConsume?.candidateFeed ?? null;
   const gotvFeed = input.gotvConsume?.candidateFeed ?? null;
+  const petitionFeed = input.petitionConsume?.candidateFeed ?? null;
 
   const cleanedBriefs: EngagementBrief[] = input.missions.map((mission) => {
     const countyName =
@@ -675,6 +679,22 @@ export function buildCandidateOperationsHome(input: {
         gotvFeed.preparationStatus === "NEEDS_ATTENTION"
           ? "actionable"
           : gotvFeed.preparationStatus === "UNKNOWN"
+            ? "unknown"
+            : "actionable",
+    });
+  }
+  if (petitionFeed) {
+    candidateInbox.push({
+      id: "petition-brief",
+      category: "PETITION",
+      title: "Petition & ballot focus",
+      detail: petitionFeed.briefingLine,
+      href: "/petition",
+      status:
+        petitionFeed.preparationStatus === "BLOCKED" ||
+        petitionFeed.preparationStatus === "NEEDS_ATTENTION"
+          ? "actionable"
+          : petitionFeed.preparationStatus === "UNKNOWN"
             ? "unknown"
             : "actionable",
     });

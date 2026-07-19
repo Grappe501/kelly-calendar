@@ -7,7 +7,7 @@
 ## Kernel vs capability
 
 **Phase 1 owns operational truth.**  
-**Phase 2 owns operational experience.**
+**Phase 2 owns operational experience / campaign strategy orchestration.**
 
 ## Permanent Phase 2 principles
 
@@ -19,13 +19,15 @@
 
 4. **Capabilities coordinate execution across operational domains; they do not replicate those domains.**
 
+5. **Capabilities coordinate campaign strategy; operational systems provide execution truth.**
+
 Corollaries:
 
-1. New capabilities own almost no primary data.  
-2. Unknown remains first-class when a consumed domain cannot supply a fact.  
-3. Readiness / preparedness equals the **minimum** of required domains (not an average).  
-4. AI remains advisory; never overrides assembled operational truth.  
-5. Gate: *What operational decision does this improve?*
+1. Every capability consumes canonical services.  
+2. No capability duplicates ownership.  
+3. Unknown remains explicit until its owning system exists.  
+4. Readiness equals the **minimum** of required domains.  
+5. AI remains advisory; never overrides assembled operational truth.
 
 ## Sequencing
 
@@ -34,8 +36,8 @@ Corollaries:
 | 2.1 Candidate Operations | Is the candidate prepared for today’s engagements? | ACCEPTED / COMPLETE |
 | 2.2 Debate & Media Operations | Are we prepared for every public communication? | ACCEPTED / COMPLETE |
 | 2.3 Fundraising Operations | Can the campaign sustainably generate the resources needed to execute the mission? | ACCEPTED / COMPLETE |
-| 2.4 GOTV Operations | Are we converting support into turnout? | IN PROGRESS |
-| 2.5 Petition & Ballot Operations | Can we execute citizen-driven campaigns on the same OS? | HELD |
+| 2.4 GOTV Operations | Are we converting support into turnout? | ACCEPTED / COMPLETE |
+| 2.5 Petition & Ballot Operations | Can we successfully qualify, defend, and execute a petition or ballot initiative campaign? | IN PROGRESS |
 
 ## Hard constraints (unchanged)
 

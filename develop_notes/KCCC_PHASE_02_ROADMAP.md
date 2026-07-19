@@ -2,17 +2,15 @@
 
 ```text
 Campaign Operating System
-=========================
 
-PHASE 1
-Core Execution .............. COMPLETE ✓
+Layer 1 — Core Execution (Operational Truth) ..... COMPLETE ✓
 
-PHASE 2
-Candidate Operations ........ COMPLETE ✓
-Debate & Media .............. COMPLETE ✓
-Fundraising Operations ...... COMPLETE ✓
-GOTV Operations ............. IN PROGRESS
-Petition & Ballot ........... Planned
+Layer 2 — Campaign Capabilities (Orchestration)
+2.1 Candidate Operations ........................ COMPLETE ✓
+2.2 Debate & Media .............................. COMPLETE ✓
+2.3 Fundraising Operations ...................... COMPLETE ✓
+2.4 GOTV Operations ............................. COMPLETE ✓
+2.5 Petition & Ballot Operations ................ IN PROGRESS
 ```
 
 ## Principles
@@ -20,4 +18,5 @@ Petition & Ballot ........... Planned
 1. Orchestrate Phase 1 — do not replace/duplicate.  
 2. Assemble operational context — do not create parallel systems.  
 3. Capabilities own experiences/workflows; ops systems own facts/state.  
-4. Capabilities coordinate execution across domains; they do not replicate those domains.
+4. Capabilities coordinate execution across domains; they do not replicate those domains.  
+5. Capabilities coordinate campaign strategy; operational systems provide execution truth.

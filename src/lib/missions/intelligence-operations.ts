@@ -19,6 +19,7 @@ import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
 import type { GotvOperationsHome } from "@/lib/missions/gotv-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
+import type { PetitionBallotOperationsHome } from "@/lib/missions/petition-ballot-operations";
 import type { VolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
 
@@ -34,6 +35,7 @@ export type IntelligenceSourceModule =
   | "debate_media"
   | "fundraising"
   | "gotv"
+  | "petition"
   | "calendar";
 
 export type IntelligenceCategory =
@@ -44,6 +46,7 @@ export type IntelligenceCategory =
   | "MEDIA_PREPARATION"
   | "FUNDRAISING_PIPELINE"
   | "GOTV_TURNOUT"
+  | "PETITION_BALLOT"
   | "MISSION_FORECAST"
   | "RESOURCE_PRESSURE"
   | "COMPLIANCE_HOTSPOT"
@@ -126,6 +129,7 @@ export type IntelligenceFeedInput = {
   debateMediaFeed?: DebateMediaOperationsHome["intelligenceFeed"] | null;
   fundraisingFeed?: FundraisingOperationsHome["intelligenceFeed"] | null;
   gotvFeed?: GotvOperationsHome["intelligenceFeed"] | null;
+  petitionFeed?: PetitionBallotOperationsHome["intelligenceFeed"] | null;
 };
 
 const HISTORY_UNKNOWN: UnknownFact = {
@@ -535,6 +539,55 @@ export function buildCommunicationsDriftSignals(
       );
     }
   }
+
+  const petition = feeds.petitionFeed;
+  if (petition) {
+    if (petition.executionBottlenecks > 0) {
+      out.push(
+        insight({
+          id: "petition-bottlenecks",
+          category: "PETITION_BALLOT",
+          title: "Petition execution bottlenecks",
+          detail: petition.briefingLine,
+          severity: petition.validationRisk === "CRITICAL" ? "CRITICAL" : "HIGH",
+          href: "/petition",
+          sourceModule: "petition",
+          canonicalFact: `Petition & Ballot Operations: executionBottlenecks=${petition.executionBottlenecks}, validationRisk=${petition.validationRisk}`,
+        }),
+      );
+    }
+    if (petition.geographicCoverageGapsSignal) {
+      out.push(
+        insight({
+          id: "petition-coverage-gaps",
+          category: "PETITION_BALLOT",
+          title: "Petition geographic coverage gap signal",
+          detail: petition.briefingLine,
+          severity: "WATCH",
+          href: "/petition",
+          sourceModule: "petition",
+          canonicalFact:
+            "Petition & Ballot Operations: geographicCoverageGapsSignal=true",
+        }),
+      );
+    }
+    if (petition.countyCollectionTrendsStatus === "unknown") {
+      out.push(
+        insight({
+          id: "petition-collection-trends-unknown",
+          category: "PETITION_BALLOT",
+          title: "County collection trends Unknown",
+          detail:
+            "Petition county collection trends remain Unknown — Intelligence will not invent signature curves or official validation results.",
+          severity: "UNKNOWN",
+          href: "/petition",
+          sourceModule: "petition",
+          canonicalFact:
+            "Petition & Ballot Operations: countyCollectionTrendsStatus=unknown",
+        }),
+      );
+    }
+  }
   return out;
 }
 
@@ -770,7 +823,7 @@ export function buildOperationalIntelligenceHome(input: {
     );
   }
   briefingParts.push(
-    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, Compliance, Debate & Media, Fundraising, or GOTV.",
+    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, Compliance, Debate & Media, Fundraising, GOTV, or Petition & Ballot.",
   );
 
   return {

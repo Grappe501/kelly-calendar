@@ -33,6 +33,7 @@ export async function getExecutiveCommand(
     debateMediaConsume: stack.debateMedia,
     fundraisingConsume: stack.fundraising,
     gotvConsume: stack.gotv,
+    petitionConsume: stack.petition,
   });
 
   const command = buildExecutiveCommand({
@@ -52,6 +53,7 @@ export async function getExecutiveCommand(
     debateMediaFeed: stack.debateMedia.executiveFeed,
     fundraisingFeed: stack.fundraising.executiveFeed,
     gotvFeed: stack.gotv.executiveFeed,
+    petitionFeed: stack.petition.executiveFeed,
   });
 
   return {

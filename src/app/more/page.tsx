@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>KCCC-PHASE-02.4-GOTV-OPERATIONS</strong>
+            <strong>KCCC-PHASE-02.5-PETITION-BALLOT-OPERATIONS</strong>
           </li>
         </ul>
       </section>
@@ -82,6 +82,9 @@ export default function MorePage() {
           </Link>
           <Link className="button" href="/gotv">
             GOTV Operations
+          </Link>
+          <Link className="button" href="/petition">
+            Petition & Ballot Operations
           </Link>
           <Link className="button secondary" href="/brief">
             Today’s Campaign Brief
