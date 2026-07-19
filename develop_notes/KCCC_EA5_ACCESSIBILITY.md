@@ -1,23 +1,64 @@
-# EA-5 Accessibility Audit
+# EA-5 Inclusive Experience Audit
 
 **Script ID:** `KCCC-EA-5-ACCESSIBILITY`  
 **Parent:** `KCCC_ENGINEERING_AUDIT.md`  
-**Status:** OPENED  
-**Prerequisite:** EA-3 Platform Quality COMPLETE  
-**Nature:** WCAG-oriented findings — audit only  
+**Status:** OPENED / ACTIVE  
+**Assessment:** —  
+**Prerequisite:** EA-3 Platform Quality ACCEPTED  
+**Nature:** Inclusive experience — broader than WCAG checklist · audit only  
+**Aligns with:** Experience Redesign (clarity for all operators)
 
-## Mission
+```text
+Mission:
+Verify the Calendar Experience is usable by operators
+across ability, device, and attention conditions—
+without inventing truth or rewriting Architecture 1.0.
+```
 
-Verify Calendar Experience V1 meets an operator-usable accessibility baseline and identify Hardening additions without inventing visual redesign.
+---
 
-## Scope (draft)
+## Scope (Inclusive Experience)
 
-* Keyboard / focus  
-* Labels / headings / landmarks  
-* Contrast (against current tokens)  
-* Status and Unknown announcements  
-* Disabled controls (Agenda/Timeline/Mission chips)  
+| Area | Evaluate |
+|------|----------|
+| Keyboard-only workflows | Full Day / Week / Month paths without pointer |
+| Screen reader semantics | Landmarks, headings, names, live regions for status |
+| Color independence | Status/density/heat not color-only |
+| Focus visibility | `:focus` / focus-visible on chips, links, actions |
+| Reduced-motion | Respect `prefers-reduced-motion` (hooks for Redesign) |
+| Touch targets | Mobile sizing on nav, chips, day cells |
+| Zoom / readability | Usable at 200% zoom; text not truncated critically |
+| Empty / loading / Unknown | Inclusive presentation (pairs EA-4 / HC-COG) |
+| Cross-device responsiveness | Phone / tablet / desktop calendar surfaces |
+| Disabled controls | Agenda/Timeline/Mission “· next” chips — clarify for AT |
 
-## Exit
+WCAG-style checks remain included; they are not the whole audit.
 
-Findings → ledger (`HL-*`) · assessment.
+---
+
+## Method
+
+1. Keyboard walkthrough Day → Week → Month → Brief/Command links.  
+2. Landmark / heading outline review.  
+3. Color-independence pass on readiness, density, Unknown.  
+4. Touch / zoom / reduced-motion notes.  
+5. Ledger rows (`HL-*`, tag `A11Y` / `INCL`).  
+6. Feed Redesign prerequisites (tokens, focus, motion hooks).  
+
+---
+
+## Deliverables (on close)
+
+```text
+Inclusive Experience Findings
+        ↓
+Hardening additions (esp. Wave 2 verification overlap)
+        ↓
+Redesign a11y prerequisites
+        ↓
+EA-5 Assessment
+```
+
+## Architecture 1.0 Conformance Statement
+
+EA-5 does not amend Architecture 1.0. Inclusive fixes must not invent readiness or hide Unknown.

@@ -13,18 +13,22 @@ Calendar Experience V1 ......... COMPLETE
 
 EA-4 / EA-1 / EA-2 ............. COMPLETE (core quality triad)
 V1 Product Health .............. COMPLETE — PASS WITH FINDINGS
-EA-3 Platform Quality .......... COMPLETE (PASS WITH FINDINGS · ESI 5.7)
+EA-3 Platform Quality .......... COMPLETE · ACCEPTED (ESI 5.7)
 
 Engineering Audit .............. ACTIVE
 Next Audit Stream:
-  EA-5 Accessibility
+  EA-5 Inclusive Experience — OPENED
 
-Hardening Master Ledger ........ HL-001…HL-020 · Waves 1–5
-Engineering Patterns ........... ACTIVE (+ Never Fake)
+After EA-5…EA-12:
+  Program Readiness Review → then Hardening
+
+Hardening Master Ledger ........ HL-001…HL-020 · Waves 1–6
+  Wave 2 = Testability & Verification
+Engineering Patterns ........... ACTIVE (+ Never Fake; state protected)
 Metrics ........................ Arch · Decision · Visual · OCI · ESI
 
 Experience Redesign 2.0 ........ PROPOSED (philosophy locked; XR-01 first)
-Implementation ................. BLOCKED until Audit + Hardening
+Implementation ................. BLOCKED until Readiness Review + Hardening
 ```
 
 ## Goal
@@ -44,7 +48,9 @@ Product Health Report ✓
 EA-3 Platform Quality ✓
 EA-5 – EA-12
         ↓
-Hardening
+Program Readiness Review
+        ↓
+Hardening (Waves 1–6)
         ↓
 Experience Redesign 2.0
         ↓
@@ -55,7 +61,7 @@ Version 2 Features
 
 ## Workstream order
 
-**Immediate next:** **EA-5** Accessibility.
+**Immediate next:** **EA-5** Inclusive Experience.
 
 | Priority | ID | Workstream |
 |----------|-----|------------|
@@ -63,8 +69,8 @@ Version 2 Features
 | **Done** | EA-1 | Architecture Compliance — COMPLETE |
 | **Done** | EA-2 | Decision-Making — COMPLETE |
 | **Done** | — | V1 Product Health — COMPLETE |
-| **Done** | EA-3 | **Platform Quality** (PQ-1…PQ-8) — COMPLETE · ESI 5.7 |
-| **1 (NOW)** | EA-5 | Accessibility |
+| **Done** | EA-3 | **Platform Quality** — COMPLETE · ACCEPTED · ESI 5.7 |
+| **1 (NOW)** | EA-5 | Inclusive Experience (a11y + keyboard, AT, motion, touch, zoom) |
 | 2 | EA-6 | Performance (deepens EA-3 PQ-6 with measurements) |
 | 3 | EA-7 | Data Integrity |
 | 4 | EA-8 | Security |
@@ -83,7 +89,7 @@ Version 2 Features
 | EA-2 | Decision-making · page scorecards · HC-COG |
 | EA-3 | Platform Quality · ESI · Foundation/Redesign/Hardening outputs |
 | EA-4 | Visual & Experience forensic report |
-| EA-5 | WCAG findings |
+| EA-5 | Inclusive Experience (WCAG + keyboard, AT, color-independence, motion, touch, zoom) |
 | EA-6 | Perf measurements + hotspots |
 | EA-7 | Ownership / Unknown / conflict / provenance |
 | EA-8 | RBAC / API / leakage / secrets |
@@ -100,15 +106,16 @@ Version 2 Features
 | EA-1 | **COMPLETE** — ACCEPTED |
 | EA-2 | **COMPLETE** |
 | V1 Product Health | **COMPLETE** |
-| EA-3 | **COMPLETE** — `KCCC_EA3_PLATFORM_QUALITY.md` · ESI 5.7 |
-| EA-5 | **NEXT** |
+| EA-3 | **COMPLETE · ACCEPTED** — `KCCC_EA3_EXECUTIVE_ACCEPTANCE.md` |
+| EA-5 | **OPENED** — Inclusive Experience · `KCCC_EA5_ACCESSIBILITY.md` |
 | EA-6 … EA-12 | NOT STARTED |
+| Program Readiness Review | **PLANNED** — after EA-12 · blocks Hardening |
 | Experience Redesign 2.0 | PROPOSED — blocked |
 | Foundation implementation | NOT STARTED — after Redesign; EA-3 requirements attached |
 
 ## Exit
 
-All twelve workstreams recorded → Hardening Master Ledger → Hardening.  
+All twelve workstreams recorded → **Program Readiness Review** → Hardening Master Ledger execution.  
 **No** Redesign / Foundation implementation until Hardening exits (unless Steve waiver).
 
 ## Architecture 1.0 Conformance Statement

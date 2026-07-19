@@ -386,10 +386,16 @@ if (
   build.ea2_focus === "decision_making" &&
   build.ea3_status === "complete" &&
   build.ea3_assessment === "pass_with_findings" &&
+  build.ea3_executive_acceptance === "accepted" &&
   build.ea3_focus === "platform_quality" &&
   build.platform_quality_score === 5.7 &&
   build.engineering_sustainability_index === 5.7 &&
   build.esi_tracking === true &&
+  build.ea5_status === "opened" &&
+  build.ea5_focus === "inclusive_experience" &&
+  build.program_readiness_review_status === "planned" &&
+  build.hardening_wave_count === 6 &&
+  build.hardening_blocked_until === "program_readiness_review" &&
   build.v1_product_health_status === "complete" &&
   build.v1_product_health_assessment === "pass_with_findings" &&
   build.never_fake_doctrine_status === "active" &&
@@ -399,6 +405,8 @@ if (
   build.engineering_patterns_status === "active" &&
   build.hardening_master_ledger_status === "seeded" &&
   build.hardening_pass_status === "blocked" &&
+  build.esi_hardening_target === "7.5+" &&
+  build.esi_foundation_target === "8.5+" &&
   build.experience_redesign_status === "proposed" &&
   build.experience_redesign_implementation === "blocked" &&
   build.experience_redesign_first_deliverable === "XR-01-EXECUTIVE-HERO-LAYER" &&
@@ -408,31 +416,32 @@ if (
   build.next_engineering_deliverable === "KCCC-EA-5-ACCESSIBILITY" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
-  constants.includes('EA3_STATUS = "COMPLETE"') &&
-  constants.includes('EA3_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
-  constants.includes("PLATFORM_QUALITY") &&
-  constants.includes('ENGINEERING_SUSTAINABILITY_INDEX = "5.7/10"') &&
-  constants.includes("ESI_TRACKING = true") &&
-  constants.includes('NEVER_FAKE_DOCTRINE_STATUS = "ACTIVE"') &&
+  constants.includes('EA3_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
+  constants.includes('EA5_FOCUS = "INCLUSIVE_EXPERIENCE"') &&
+  constants.includes('PROGRAM_READINESS_REVIEW_STATUS = "PLANNED"') &&
+  constants.includes("HARDENING_WAVE_COUNT = 6") &&
+  constants.includes('ESI_HARDENING_TARGET = "7.5+"') &&
+  constants.includes('HARDENING_BLOCKED_UNTIL = "PROGRAM_READINESS_REVIEW"') &&
   constants.includes("KCCC-EA-5-ACCESSIBILITY") &&
   exists("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md") &&
   exists("develop_notes/KCCC_EA3_ASSESSMENT.md") &&
+  exists("develop_notes/KCCC_EA3_EXECUTIVE_ACCEPTANCE.md") &&
   exists("develop_notes/KCCC_EA5_ACCESSIBILITY.md") &&
+  exists("develop_notes/KCCC_PROGRAM_READINESS_REVIEW.md") &&
   exists("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md") &&
-  exists("develop_notes/KCCC_NEVER_FAKE_DOCTRINE.md") &&
   !exists("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md") &&
-  read("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md").includes("Engineering Sustainability Index") &&
-  read("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md").includes("Foundation Requirements") &&
-  read("develop_notes/KCCC_EA3_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
-  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("OPENED") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-020") &&
-  read("develop_notes/KCCC_CALENDAR_FOUNDATION.md").includes("EA-3 requirements") &&
-  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("Engineering Sustainability Index") &&
-  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("operational heartbeat") &&
+  read("develop_notes/KCCC_EA3_EXECUTIVE_ACCEPTANCE.md").includes("ACCEPTED") &&
+  read("develop_notes/KCCC_EA3_EXECUTIVE_ACCEPTANCE.md").includes("long-term velocity") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Inclusive Experience") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("reduced-motion") &&
+  read("develop_notes/KCCC_PROGRAM_READINESS_REVIEW.md").includes("four questions") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("Testability & Verification") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("Wave 6") &&
+  read("develop_notes/KCCC_ENGINEERING_PATTERNS.md").includes("protected engineering asset") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("EA-3 Platform Quality COMPLETE (ESI 5.7); EA-5 OPENED; Ledger HL-020; Redesign blocked");
+  pass("EA-3 ACCEPTED; EA-5 Inclusive OPENED; Waves 1–6; Readiness Review gates Hardening");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -442,5 +451,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (EA-3 Platform Quality COMPLETE; ESI 5.7; EA-5 OPENED; Ledger HL-020; Redesign blocked; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (EA-3 ACCEPTED; ESI trajectory 7.5/8.5; EA-5 Inclusive OPENED; Program Readiness Review PLANNED; Hardening blocked; Phase 3.1 paused).",
 );

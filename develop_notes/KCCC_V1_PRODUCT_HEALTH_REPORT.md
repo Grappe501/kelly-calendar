@@ -194,7 +194,8 @@ Track on **every future release review** alongside engineering scores:
 OCI is qualitative-quantitative: after a timed walkthrough, score confidence increase (0–10) per primary view; release OCI = portfolio mean. **Never** raise OCI by inventing truth (Never Fake).
 
 ESI dimensions (equal weight): Reusability · Simplicity · Maintainability · Extensibility · Documentation.  
-**EA-3 baseline ESI: 5.7/10** — see `KCCC_EA3_PLATFORM_QUALITY.md`.
+**EA-3 baseline ESI: 5.7/10** — see `KCCC_EA3_PLATFORM_QUALITY.md`.  
+Trajectory: Hardening **7.5+** · Foundation **8.5+** · V2 maintain **≥ 8.5**.
 
 ---
 

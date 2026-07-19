@@ -2,9 +2,9 @@
 
 **Script ID:** `KCCC-HARDENING-V1`  
 **Track:** Engineering Track A  
-**Status:** BLOCKED — awaiting Engineering Audit exit  
+**Status:** BLOCKED — awaiting EA-5…EA-12 + **Program Readiness Review**  
 **Nature:** Fix issues only — **no feature adds** · **no Experience Redesign implementation**  
-**Authoritative backlog:** `KCCC_HARDENING_MASTER_LEDGER.md` (consolidates all twelve audit streams)
+**Authoritative backlog:** `KCCC_HARDENING_MASTER_LEDGER.md`  
 
 ## Categories
 
@@ -12,18 +12,21 @@
 Hardening
 ├── Stability
 ├── Performance
-├── Accessibility
+├── Accessibility / Inclusive experience
 ├── Security
 ├── Consistency
+├── Testability & Verification   ← Wave 2 (major objective)
 └── Developer Experience
 ```
 
 ## Rule
 
-Hardening consumes the **Master Ledger**, not scattered stream reports. Stream reports remain evidence. Hardening stabilizes Version 1; it does **not** execute Experience Redesign 2.0 or Foundation.
+Hardening consumes the **Master Ledger**, not scattered stream reports. It is **focused execution** after Program Readiness Review — not discovery.
 
-**Seeded now (EA-1 / EA-2 / EA-4):** HL-001…HL-015 — includes `HC-COG` cognition tags. Critical first: attending false-certainty (HL-001). Highest operator value after trust: XR-01 / HC-COG-001 (HL-004), Week decision remediation (HL-015).
+**Waves (revised):** 1 Safety → 2 Testability → 3 Decision Clarity → 4 Shared Infra → 5 Experience Quality → 6 Foundation Readiness.
+
+**ESI targets:** Hardening ≥ **7.5** · Foundation ≥ **8.5** · V2 maintain ≥ **8.5**.
 
 ## Exit → next program
 
-Hardening complete → **Experience Redesign 2.0** may open for implementation (`KCCC_EXPERIENCE_REDESIGN_2.md`), then Calendar Foundation, then V2 specialized views.
+Hardening complete → **Experience Redesign 2.0** → Calendar Foundation → V2 specialized views.

@@ -202,7 +202,7 @@ Hard-to-test areas ↔ hard-to-maintain. **Hardening / Foundation:** adapter uni
 | Documentation | 20% | 8.0 | 1.60 |
 | **ESI** | 100% | | **5.7/10** |
 
-**Targets:** Hardening exit ≥ **7.0** · After Foundation ≥ **8.0** · V2 maintain ≥ **8.5**
+**Targets (executive-accepted):** Hardening ≥ **7.5** · Foundation ≥ **8.5** · V2 maintain ≥ **8.5**
 
 Permanent release metrics now:
 

@@ -29,6 +29,11 @@ Foundation ........... REQUIRED before Agenda/Timeline/Mission
 | Decision Support (EA-2) | 6.4 |
 | Visual (EA-4) | PASS / below target |
 
+## Executive acceptance
+
+**ACCEPTED** — see `KCCC_EA3_EXECUTIVE_ACCEPTANCE.md`.  
+Architecture healthy · velocity not yet engineered · no Architecture 1.0 change.
+
 ## Next
 
-Resume EA-5+ (or continue audit order). Hardening / Redesign / Foundation remain **BLOCKED**.
+EA-5 Inclusive Experience (broadened). After EA-5…EA-12 → **Program Readiness Review** before Hardening.

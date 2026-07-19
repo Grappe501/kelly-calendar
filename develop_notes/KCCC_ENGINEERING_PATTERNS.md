@@ -80,7 +80,8 @@ not tribal knowledge trapped in an audit report.
 
 **Intent:** UI/session state stays presentation/session — never business/canonical.  
 **Do:** `?view=` / `?date=` for zoom; ephemeral derives per request.  
-**Don't:** localStorage or calendar caches that become systems of record.
+**Don't:** localStorage or calendar caches that become systems of record.  
+**EA-3:** State management **8.0** — **protected engineering asset**; preserve in Foundation.
 
 ---
 

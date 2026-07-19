@@ -73,8 +73,11 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 ```text
 EA-1 Architecture ........... 7.9
 EA-2 Decision portfolio ..... 6.4
+EA-3 ESI baseline ........... 5.7
 Hardening exit (arch) ....... 8.8+
-V2 maintain (arch) .......... ≥ 9.0
+Hardening exit (ESI) ........ 7.5+
+Foundation exit (ESI) ....... 8.5+
+V2 maintain (arch / ESI) .... ≥ 9.0 / ≥ 8.5
 Decision portfolio target ... ≥ 8.0 after Redesign XR-01 stack
 ```
 
@@ -82,23 +85,38 @@ Decision portfolio target ... ≥ 8.0 after Redesign XR-01 stack
 
 When an audit stream closes, add rows here within the same pass. Do **not** leave remediation only inside the stream report.
 
-## Execution waves (Product Health)
+## Execution waves (revised — EA-3 executive)
+
+```text
+Wave 1 — Architectural Safety
+Wave 2 — Testability & Verification
+Wave 3 — Decision Clarity
+Wave 4 — Shared Infrastructure
+Wave 5 — Experience Quality
+Wave 6 — Foundation Readiness
+```
 
 | Wave | Name | Ledger focus |
 |------|------|----------------|
 | **1** | Architectural Safety | HL-001, HL-002, HL-005 |
-| **2** | Decision Clarity | HL-004, HL-010, HL-011, HL-015 (+ HC-COG orientation) |
-| **3** | Shared Infrastructure | HL-006, HL-016 · legend / rendering / filters / nav |
-| **4** | Experience Quality | HL-003, HL-009, HL-012, HL-014 · motion · brand · density |
-| **5** | Foundation Readiness | Agenda / Timeline / Mission — **after** Waves 1–4 |
+| **2** | Testability & Verification | HL-017 · assembly/nav tests · protect state model |
+| **3** | Decision Clarity | HL-004, HL-010, HL-011, HL-015 (+ HC-COG) — mostly Redesign; label hygiene in Hardening |
+| **4** | Shared Infrastructure | HL-006, HL-016 · legend / rendering / filters / nav |
+| **5** | Experience Quality | HL-003, HL-009, HL-012, HL-014 · motion · brand · density |
+| **6** | Foundation Readiness | HL-020 · Agenda / Timeline / Mission — **after** Waves 1–5 |
 
-Hardening implements Wave 1 (and hygiene from Wave 2 labels) first; XR-01+ Wave 2 bulk runs in Redesign after Hardening gate — still planned here so priority is not lost.
+Wave 2 is **before** Decision Clarity so Redesign/Foundation changes are verifiable. XR-01 bulk still runs in Redesign after Hardening gate; Wave 3 keeps priority visible.
 
 ## Streams not yet ingested
 
 EA-5 · EA-6 · EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
-EA-3 Platform Quality: **COMPLETE** (HL-016…HL-020).
+EA-3 Platform Quality: **COMPLETE / ACCEPTED** (HL-016…HL-020).
 
 ## Hardening gate
 
-Hardening implementation remains **BLOCKED** until Engineering Audit exit (or Steve waiver). Ledger may grow while audits run.
+Hardening implementation remains **BLOCKED** until:
+
+1. EA-5…EA-12 complete, **and**  
+2. **Program Readiness Review** COMPLETE (`KCCC_PROGRAM_READINESS_REVIEW.md`),  
+
+or Steve records a waiver. Ledger may grow while audits run.
