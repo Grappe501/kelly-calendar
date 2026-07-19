@@ -1,40 +1,60 @@
-# Operator Week Ingest — 2026-07-19
+# Operator Week Ingest — 2026-07-19 → 2026-07-26
 
 **Status:** ACTIVE  
-**Scope chosen:** **(2) Enable live ingest** — canonical Events via existing mutation path; **no** drill-down UI; **no** AI features  
-**Feature Freeze:** HONORED for new views/AI  
-**Dates:** America/Chicago · **2026-07-19** and **2026-07-20** (not June)
+**Scope:** **(2) Enable live ingest** — canonical Events · **no** drill-down UI · **no** AI  
+**Feature Freeze:** HONORED  
+**Timezone:** America/Chicago  
 
-## Events (titles only — no street addresses in git)
+## Honesty rule
 
-| # | When | Calendar | Title (safe) | Notes |
-|---|------|----------|--------------|-------|
-| 1 | Sun Jul 19 · 17:00–19:00 | Fundraising | Fundraiser for Dr. Chris Jones — US CD-2 | Venue label: private home (Judge Humphries); city disclosure only |
-| 2 | Mon Jul 20 · 08:00–10:00 | Protected Personal Time | Internet service install window | BUSY_ONLY rollup |
-| 3 | Mon Jul 20 · 09:00–11:00 | Protected Personal Time | Property walk / farm clean-up consult (Don Henry) | BUSY_ONLY; AM visit |
+- **CONFIRMED** = operator gave a clock time (or clear overnight lodging).  
+- **TENTATIVE** = planning window only (after-work depart, late return, Saturday morning parade, Sunday night forum, picnic *end*).  
+- No street addresses in git. No invented readiness/attendance/opponent claims.
 
-## Artifacts
+## Schedule (safe titles)
 
-- Drafts: `data/ingest_staging/drafts/draft_op_week_*.json` (gitignored · not live)
-- Live create: `npm run events:ingest:operator-week` → `scripts/ingest-operator-week-events.mjs`
-- Proof: `develop_notes/database_proofs/operator-week-ingest-latest.json`
+| When | Calendar | Title | Status |
+|------|----------|-------|--------|
+| Sun Jul 19 · 17:00–19:00 | Fundraising | Fundraiser for Dr. Chris Jones — US CD-2 | CONFIRMED |
+| Mon Jul 20 · 08:00–10:00 | Protected Personal | Internet service install window | CONFIRMED |
+| Mon Jul 20 · 08:30–11:00 | Protected Personal | Property walk / farm clean-up (Don Henry) | CONFIRMED |
+| Mon Jul 20 · 17:30–19:00 | Public Events | Kelly speaks — England Democrat Meeting | CONFIRMED (end planning) |
+| Mon Jul 20 · 18:00–19:30 | Public Events | Steve speaks — Jonesboro NAACP | CONFIRMED (end planning) |
+| Mon Jul 20 · 20:00–21:00 | Travel | Meet at farm — Carroll prep | CONFIRMED |
+| Tue Jul 21 · 16:30–20:00 | Public Events | Carroll County Democrats Picnic | CONFIRMED start; end placeholder |
+| Tue Jul 21 · 21:00–23:30 | Travel | Return to farm (late) | TENTATIVE |
+| Wed Jul 22 · 17:00–20:00 | Travel | LR → Hot Springs Village after work | TENTATIVE |
+| Wed Jul 22 night | Protected Personal | HSV lodging (Democrats) | CONFIRMED |
+| Thu Jul 23 · day | Staff Work | Kelly work from Hot Springs Village | CONFIRMED (day block) |
+| Thu Jul 23 night | Protected Personal | Farm overnight | CONFIRMED |
+| Thu Jul 23 · 22:00 → Fri | Protected Personal | Steve fasting starts | CONFIRMED |
+| Fri Jul 24 · 07:30 | Protected Personal | Steve procedure + ultrasound | CONFIRMED (end Unknown) |
+| Sat Jul 25 · morning | Public Events (+ Volunteer) | Cave City Watermelon Festival & Parade | TENTATIVE window |
+| Sat Jul 25 night | Protected Personal | Batesville lodging | CONFIRMED |
+| Sun Jul 26 · morning | Public Events | Blytheville church visits | TENTATIVE window |
+| Sun Jul 26 · night | Public Events | Blytheville candidate forum | TENTATIVE window |
 
-## Live result (2026-07-19)
+## Still Unknown (do not invent)
 
-| Event # | Calendar | Key |
-|---------|----------|-----|
-| KCCC-2026-0004 | fundraising | fundraiser-cd2-2026-07-19 |
-| KCCC-2026-0005 | protected-personal | isp-window-2026-07-20 |
-| KCCC-2026-0006 | protected-personal | property-walk-2026-07-20 |
+- Exact picnic end Tuesday  
+- Exact “late” return Tuesday  
+- Exact Wednesday depart after Kelly’s work  
+- Exact Cave City parade start  
+- Exact Blytheville church / forum clock times  
+- Medical facility address  
 
-Auth: `APP_SESSION_SECRET` present · synthetic users seeded · reference calendars seeded.  
-Calendar UI: `/calendar?view=week&date=2026-07-19` (login as synthetic Kelly). Personal rows project BUSY_ONLY to limited viewers.
+## Commands
 
-## Explicitly deferred (Phase C) — Feature Freeze honored
+```bash
+npm run events:ingest:operator-week
+```
 
-| Item | Ledger / vision | Status |
-|------|-----------------|--------|
-| Mission drill-down `/events/[id]` | HL-005 · HL-039 · Foundation | **Not built** |
-| AI pattern recognition | XR-8 · V2 Authorization | **Not built** — premature AI would violate Never Fake |
+Proof: `develop_notes/database_proofs/operator-week-ingest-latest.json`  
+Calendar: `/calendar?view=week&date=2026-07-19` (login required)
 
-**Never Fake:** No readiness, attendance, or opponent claims invented for these events.
+## Deferred under Feature Freeze
+
+| Item | Tracker |
+|------|---------|
+| Mission drill-down | HL-005 · HL-039 |
+| AI pattern recognition | XR-8 · V2 Authorization |

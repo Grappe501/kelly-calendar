@@ -11,10 +11,10 @@ EA-10 Technical Debt ...... OPENED
 
 Experience Redesign 2.0 ... VISION CAPTURED (impl BLOCKED)
 
-Operator week ingest ...... DONE (scope 2 — live Events, no new UI)
-  KCCC-2026-0004 Fundraising fundraiser (Jul 19 5pm)
-  KCCC-2026-0005 Personal ISP window (Jul 20 8–10am)
-  KCCC-2026-0006 Personal property consult (Jul 20 9–11am)
+Operator week ingest ...... DONE (Jul 19–26 · 18 ingest-tagged Events)
+  Don Henry 8:30–11 · Steve NAACP 6pm · Kelly England 5:30pm
+  Carroll picnic 4:30 Tue · HSV Wed/Thu · procedure Fri 7:30am
+  Cave City Sat · Blytheville Sun (TENTATIVE windows where needed)
   Proof: develop_notes/database_proofs/operator-week-ingest-latest.json
   Deferred: HL-039 drill-down · XR-8 AI patterns
 

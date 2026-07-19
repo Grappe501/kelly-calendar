@@ -1,16 +1,17 @@
 {
-  "generatedAt": "2026-07-19T19:40:05.756Z",
+  "generatedAt": "2026-07-19T19:43:39.020Z",
   "scope": "enable_live_ingest_no_new_ui",
   "featureFreeze": "honored",
   "dates": [
     "2026-07-19",
-    "2026-07-20"
+    "2026-07-26"
   ],
   "timezone": "America/Chicago",
+  "honesty": "TENTATIVE marks planning windows where operator did not confirm exact clock times",
   "events": [
     {
       "key": "fundraiser-cd2-2026-07-19",
-      "action": "created",
+      "action": "updated",
       "eventId": "cmrs79y4z00028fvon5ciaea3",
       "eventNumber": "KCCC-2026-0004",
       "calendarSlug": "fundraising",
@@ -18,7 +19,7 @@
     },
     {
       "key": "isp-window-2026-07-20",
-      "action": "created",
+      "action": "updated",
       "eventId": "cmrs79zeo000a8fvofcdkdc4f",
       "eventNumber": "KCCC-2026-0005",
       "calendarSlug": "protected-personal",
@@ -26,44 +27,260 @@
     },
     {
       "key": "property-walk-2026-07-20",
-      "action": "created",
+      "action": "updated",
       "eventId": "cmrs7a00t000i8fvo7vym6ilg",
       "eventNumber": "KCCC-2026-0006",
       "calendarSlug": "protected-personal",
       "status": "CONFIRMED"
+    },
+    {
+      "key": "england-dems-kelly-2026-07-20",
+      "action": "created",
+      "eventId": "cmrs7ejne00025bkvsg9pbiip",
+      "eventNumber": "KCCC-2026-0007",
+      "calendarSlug": "public-events",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "naacp-steve-jonesboro-2026-07-20",
+      "action": "created",
+      "eventId": "cmrs7ekr1000a5bkvhgrfiiea",
+      "eventNumber": "KCCC-2026-0008",
+      "calendarSlug": "public-events",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "farm-depart-carroll-prep-2026-07-20",
+      "action": "created",
+      "eventId": "cmrs7elff000i5bkvtdyxi93v",
+      "eventNumber": "KCCC-2026-0009",
+      "calendarSlug": "travel",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "carroll-dems-picnic-2026-07-21",
+      "action": "created",
+      "eventId": "cmrs7em3w000q5bkv9w3l6hsc",
+      "eventNumber": "KCCC-2026-0010",
+      "calendarSlug": "public-events",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "return-farm-late-2026-07-21",
+      "action": "created",
+      "eventId": "cmrs7emt9000y5bkv22xi4ub1",
+      "eventNumber": "KCCC-2026-0011",
+      "calendarSlug": "travel",
+      "status": "TENTATIVE"
+    },
+    {
+      "key": "depart-hsv-after-work-2026-07-22",
+      "action": "created",
+      "eventId": "cmrs7enif00165bkvqw7owy14",
+      "eventNumber": "KCCC-2026-0012",
+      "calendarSlug": "travel",
+      "status": "TENTATIVE"
+    },
+    {
+      "key": "lodging-hsv-wed-2026-07-22",
+      "action": "created",
+      "eventId": "cmrs7eo71001e5bkvv4r6q0d7",
+      "eventNumber": "KCCC-2026-0013",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "kelly-work-hsv-2026-07-23",
+      "action": "created",
+      "eventId": "cmrs7eoyf001m5bkv9sm3o81y",
+      "eventNumber": "KCCC-2026-0014",
+      "calendarSlug": "staff-work",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "lodging-farm-thu-2026-07-23",
+      "action": "created",
+      "eventId": "cmrs7epsm001u5bkvsdtuchgf",
+      "eventNumber": "KCCC-2026-0015",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "steve-fasting-start-2026-07-23",
+      "action": "created",
+      "eventId": "cmrs7eqh100225bkvod037x0f",
+      "eventNumber": "KCCC-2026-0016",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "steve-procedure-2026-07-24",
+      "action": "created",
+      "eventId": "cmrs7erap002a5bkv26pydlz1",
+      "eventNumber": "KCCC-2026-0017",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "cave-city-watermelon-2026-07-25",
+      "action": "created",
+      "eventId": "cmrs7erzg002i5bkv62bf3jl3",
+      "eventNumber": "KCCC-2026-0018",
+      "calendarSlug": "public-events",
+      "status": "TENTATIVE"
+    },
+    {
+      "key": "lodging-batesville-sat-2026-07-25",
+      "action": "created",
+      "eventId": "cmrs7esrk002s5bkv7jheslxv",
+      "eventNumber": "KCCC-2026-0019",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "blytheville-churches-2026-07-26",
+      "action": "created",
+      "eventId": "cmrs7etf200305bkvbwvbq1du",
+      "eventNumber": "KCCC-2026-0020",
+      "calendarSlug": "public-events",
+      "status": "TENTATIVE"
+    },
+    {
+      "key": "blytheville-forum-2026-07-26",
+      "action": "created",
+      "eventId": "cmrs7eu6100385bkvxv6q5nzq",
+      "eventNumber": "KCCC-2026-0021",
+      "calendarSlug": "public-events",
+      "status": "TENTATIVE"
     }
   ],
-  "weekVerifyCount": 5,
-  "weekVerify": [
+  "ingestVerifyCount": 18,
+  "ingestVerify": [
     {
       "eventNumber": "KCCC-2026-0004",
       "calendarSlug": "fundraising",
+      "status": "CONFIRMED",
       "startsAt": "2026-07-19T22:00:00.000Z",
       "title": "Fundraiser for Dr. Chris Jones — US Congressional District 2"
     },
     {
       "eventNumber": "KCCC-2026-0005",
       "calendarSlug": "protected-personal",
+      "status": "CONFIRMED",
       "startsAt": "2026-07-20T13:00:00.000Z",
       "title": "Internet service install window"
     },
     {
       "eventNumber": "KCCC-2026-0006",
       "calendarSlug": "protected-personal",
-      "startsAt": "2026-07-20T14:00:00.000Z",
-      "title": "Property walk / farm clean-up consult"
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-20T13:30:00.000Z",
+      "title": "Property walk / farm clean-up consult (Don Henry)"
     },
     {
-      "eventNumber": "KCCC-2026-0001",
-      "calendarSlug": "command",
-      "startsAt": "2026-07-25T21:50:19.428Z",
-      "title": "KCCC Step 5.7 Synthetic Mutation Proof"
+      "eventNumber": "KCCC-2026-0007",
+      "calendarSlug": "public-events",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-20T22:30:00.000Z",
+      "title": "Kelly speaks — England Democrat Meeting"
     },
     {
-      "eventNumber": "KCCC-2026-0002",
-      "calendarSlug": "command",
-      "startsAt": "2026-07-25T21:51:11.606Z",
-      "title": "KCCC Step 5.7 Synthetic Mutation Proof"
+      "eventNumber": "KCCC-2026-0008",
+      "calendarSlug": "public-events",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-20T23:00:00.000Z",
+      "title": "Steve speaks — Jonesboro NAACP (Voter Registration & Deployment)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0009",
+      "calendarSlug": "travel",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-21T01:00:00.000Z",
+      "title": "Meet at farm — depart prep for Carroll County"
+    },
+    {
+      "eventNumber": "KCCC-2026-0010",
+      "calendarSlug": "public-events",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-21T21:30:00.000Z",
+      "title": "Carroll County Democrats Picnic"
+    },
+    {
+      "eventNumber": "KCCC-2026-0011",
+      "calendarSlug": "travel",
+      "status": "TENTATIVE",
+      "startsAt": "2026-07-22T02:00:00.000Z",
+      "title": "Return to farm — late Tuesday (approximate)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0012",
+      "calendarSlug": "travel",
+      "status": "TENTATIVE",
+      "startsAt": "2026-07-22T22:00:00.000Z",
+      "title": "Depart Little Rock for Hot Springs Village (after Kelly work)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0013",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-23T01:00:00.000Z",
+      "title": "Lodging — Hot Springs Village (Democrats · Wed night)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0014",
+      "calendarSlug": "staff-work",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-23T14:00:00.000Z",
+      "title": "Kelly work day — Hot Springs Village"
+    },
+    {
+      "eventNumber": "KCCC-2026-0015",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-24T01:00:00.000Z",
+      "title": "Lodging — farm (Thu night before Friday procedure)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0016",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-24T03:00:00.000Z",
+      "title": "Steve medical prep — fasting starts (gastric bypass)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0017",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-24T12:30:00.000Z",
+      "title": "Steve — gastric bypass procedure + ultrasound"
+    },
+    {
+      "eventNumber": "KCCC-2026-0018",
+      "calendarSlug": "public-events",
+      "status": "TENTATIVE",
+      "startsAt": "2026-07-25T13:00:00.000Z",
+      "title": "Cave City Watermelon Festival & Parade — volunteer activation"
+    },
+    {
+      "eventNumber": "KCCC-2026-0019",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-26T01:00:00.000Z",
+      "title": "Lodging — Batesville (Sat night)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0020",
+      "calendarSlug": "public-events",
+      "status": "TENTATIVE",
+      "startsAt": "2026-07-26T14:00:00.000Z",
+      "title": "Blytheville — multiple church visits (Sunday morning)"
+    },
+    {
+      "eventNumber": "KCCC-2026-0021",
+      "calendarSlug": "public-events",
+      "status": "TENTATIVE",
+      "startsAt": "2026-07-26T23:00:00.000Z",
+      "title": "Blytheville candidate forum (Sunday night)"
     }
   ]
 }
