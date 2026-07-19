@@ -28,10 +28,26 @@ const required = [
   ["2.5", "develop_notes/KCCC_PHASE_02_5_PETITION_BALLOT_OPERATIONS.md"],
   ["cert", "develop_notes/KCCC_PHASE_02_CERTIFICATION.md"],
   ["cert", "develop_notes/KCCC_PHASE_03_CHARTER.md"],
+  ["const", "develop_notes/KCCC_CONSTITUTION_v1.0.md"],
+  ["freeze", "develop_notes/KCCC_ARCHITECTURE_FREEZE_v1.0.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
   else fail(`${label} missing ${rel}`);
+}
+
+const constitution = read("develop_notes/KCCC_CONSTITUTION_v1.0.md");
+if (
+  constitution.includes("Architecture Version:** 1.0") &&
+  constitution.includes("No duplicate ownership") &&
+  constitution.includes("No AI writes to canonical state") &&
+  constitution.includes("LEVEL A") &&
+  constitution.includes("LEVEL E") &&
+  constitution.includes("Approve → Execute")
+) {
+  pass("Constitution v1.0 present with prohibitions + certification levels");
+} else {
+  fail("Constitution v1.0 incomplete");
 }
 
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
@@ -69,7 +85,8 @@ if (
 
 const phase3 = read("develop_notes/KCCC_PHASE_03_CHARTER.md");
 if (
-  phase3.includes("DEFINITION ONLY") &&
+  phase3.includes("Architecture Review") &&
+  phase3.includes("implementation LOCKED") &&
   phase3.includes("Trusted Connected Platform") &&
   phase3.includes("No external integration may become the canonical owner") &&
   phase3.includes("Phase 3A") &&
@@ -79,7 +96,7 @@ if (
   phase3.includes("Approve → Execute") &&
   phase3.includes("Integration Trust Model")
 ) {
-  pass("Phase 3 Trusted Connected Platform charter (definition only)");
+  pass("Phase 3 Trusted Connected Platform charter (Architecture Review / locked)");
 } else {
   fail("Phase 3 charter missing or incomplete");
 }
@@ -122,27 +139,33 @@ if (
 }
 
 if (
-  build.phase_3_status === "definition_only" &&
+  build.architecture_version === "1.0" &&
+  build.architecture_status === "frozen_through_phase_2" &&
+  build.project_state === "architecture_review" &&
+  build.implementation_status === "locked" &&
+  build.phase_3_status === "architecture_review" &&
+  build.phase_3_implementation_locked === true &&
   build.phase_3_implementation_started === false &&
   build.phase3_external_not_canonical_principle === true &&
   build.candidate_data_ready === false &&
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Phase 3 definition only; maturity flags false; no implementation");
+  pass("Architecture 1.0 frozen; Architecture Review; implementation locked");
 } else {
-  fail("Phase 3 definition gate / maturity flags incorrect");
+  fail("Architecture freeze / Phase 3 review gate incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
 if (
   constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
-  constants.includes("DEFINITION_ONLY") &&
+  constants.includes("ARCHITECTURE_REVIEW") &&
+  constants.includes("FROZEN_THROUGH_PHASE_2") &&
   constants.includes("Trusted Connected Platform")
 ) {
-  pass("constants reflect Phase 2 CERTIFIED / Phase 3 definition only");
+  pass("constants reflect Architecture Review / freeze");
 } else {
-  fail("constants missing Phase 2 CERTIFIED / Phase 3 definition");
+  fail("constants missing Architecture Review / freeze");
 }
 
 if (failed) {
@@ -150,5 +173,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (PHASE 2 CERTIFIED; Phase 3 Trusted Connected Platform = definition only).",
+  "Phase 2 structural validation passed (Architecture 1.0 FROZEN; Phase 3 Architecture Review; implementation LOCKED).",
 );

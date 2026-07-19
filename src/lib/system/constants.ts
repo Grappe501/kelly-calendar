@@ -1,10 +1,15 @@
-export const CURRENT_STEP_ID = "KCCC-PHASE-02-CERTIFIED";
+export const CURRENT_STEP_ID = "KCCC-ARCHITECTURE-REVIEW-v1.0";
 export const CURRENT_STEP_NUMBER = 8;
+export const ARCHITECTURE_VERSION = "1.0";
+export const ARCHITECTURE_STATUS = "FROZEN_THROUGH_PHASE_2";
+export const PROJECT_STATE = "ARCHITECTURE_REVIEW";
+export const IMPLEMENTATION_STATUS = "LOCKED";
+export const CONSTITUTION_ID = "KCCC_CONSTITUTION_v1.0";
 export const PHASE_1_STATUS = "CERTIFIED";
 export const PHASE_1_VERSION = "0.7.11-ops";
 export const PHASE_2_STATUS = "CERTIFIED";
 export const PHASE_2_VERSION = "0.8.4-petition";
-export const PHASE_3_STATUS = "DEFINITION_ONLY";
+export const PHASE_3_STATUS = "ARCHITECTURE_REVIEW";
 export const PHASE_3_TITLE = "Trusted Connected Platform";
 export const PHASE_3_SCRIPT_ID = "KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM";
 export const TOTAL_STEPS = 25;

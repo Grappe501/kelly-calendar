@@ -51,4 +51,4 @@ The **Campaign Operating System Kernel** — a coherent execution + relationship
 
 Do **not** continue as Step 7.11.  
 **Phase 2 — Campaign Capability Expansion** is now CERTIFIED (see `KCCC_PHASE_02_CERTIFICATION.md`).  
-Next definition work: **Phase 3 — Trusted Connected Platform** (`KCCC_PHASE_03_CHARTER.md`) — definition only.
+Architecture Version **1.0** freezes Layers 1–2. Phase 3 is Architecture Review under `KCCC_CONSTITUTION_v1.0.md` — implementation locked.

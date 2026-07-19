@@ -57,6 +57,6 @@ The first **campaign capability layer** — workflow and experience orchestratio
 
 ## Next
 
+Architecture Version **1.0** freezes Layers 1–2.  
 Do **not** open Phase 2.6.  
-Define **Phase 3 — Trusted Connected Platform** (see `KCCC_PHASE_03_CHARTER.md`).  
-Definition only — no implementation until design review is accepted.
+Phase 3 is in **Architecture Review** under `KCCC_CONSTITUTION_v1.0.md` — implementation locked.

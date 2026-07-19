@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM (definition only)</strong>
+            <strong>Architecture Review · Constitution v1.0 (implementation locked)</strong>
           </li>
         </ul>
       </section>

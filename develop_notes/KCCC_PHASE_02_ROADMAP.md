@@ -26,4 +26,4 @@ Version ......................................... 0.8.4-petition
 
 ## Next
 
-Pause capability expansion. Phase 3 definition — Trusted Connected Platform (`KCCC_PHASE_03_CHARTER.md`). Implementation not started.
+Capability layer FROZEN (Architecture Version 1.0). Phase 3 Architecture Review — Trusted Connected Platform. Implementation locked. See `KCCC_CONSTITUTION_v1.0.md`.

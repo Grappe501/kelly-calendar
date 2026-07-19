@@ -50,4 +50,4 @@ Corollaries:
 
 ## Next
 
-Do **not** open Phase 2.6. Define **Phase 3 — Trusted Connected Platform** (`KCCC_PHASE_03_CHARTER.md`). Definition only — no implementation yet.
+Do **not** open Phase 2.6. Architecture Version 1.0 freezes this layer. Phase 3 is Architecture Review under `KCCC_CONSTITUTION_v1.0.md` — implementation locked.

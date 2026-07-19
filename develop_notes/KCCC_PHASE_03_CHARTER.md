@@ -1,23 +1,26 @@
 # KCCC Phase 3 — Trusted Connected Platform
 
 **Script ID:** `KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM`  
-**Status:** DEFINITION ONLY — implementation not started  
-**Prerequisite:** Phase 1 CERTIFIED + Phase 2 CERTIFIED  
+**Status:** Architecture Review — implementation LOCKED  
+**Prerequisite:** Phase 1 CERTIFIED + Phase 2 CERTIFIED + Constitution v1.0  
+**Governing document:** `KCCC_CONSTITUTION_v1.0.md`  
 **Former working title:** Integration & Scale (superseded)
 
 ## Current platform state
 
 ```text
-KCCC CAMPAIGN OPERATING SYSTEM
+KELLY CAMPAIGN CALENDAR
+CAMPAIGN OPERATING SYSTEM
 
-Phase 1 ............... Certified
-Phase 2 ............... Certified
+Architecture Version ............ 1.0
+Kernel Status ................... Frozen
+Capability Layer ................ Frozen
 
-Operational Kernel .... Stable
-Capability Layer ...... Stable
+Phase 1 ......................... Certified
+Phase 2 ......................... Certified
 
-Phase 3 ............... Definition Only
-Implementation ........ Not Started
+Phase 3 ......................... Architecture Review
+Implementation .................. Locked
 ```
 
 Maturity flags (remain explicitly false until unlocked):
@@ -107,8 +110,8 @@ Do not begin Phase 3 implementation until these are answered and accepted:
 
 | Allowed now | Not allowed yet |
 |-------------|-----------------|
-| Charter refinement | Feature code for 3A–3D |
+| Constitution / charter refinement | Feature code for 3A–3D |
 | Design review answers | Production integrations assuming readiness flags |
-| Architecture sketches | Bypass of Phase 1 ownership |
+| Architecture Review (Level A) | Engineering Complete (Level B) and beyond |
 
-Implementation starts only after Steve accepts a scoped Phase 3 build plan that answers the design-review questions above.
+Implementation remains **locked** until Steve accepts a scoped Phase 3 build plan that answers the design-review questions above and advances past Architecture Review under Constitution certification Levels A→E.
