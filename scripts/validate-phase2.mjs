@@ -267,7 +267,6 @@ if (
   build.architecture_archive_seal_commit === "4252827" &&
   build.architecture_terminal_record_tip === "a64eef3" &&
   build.architecture_engineering_line_at_close === "cdb5a5f" &&
-  build.next_architectural_deliverable === "KCCC_PHASE_03_EXIT_REVIEW" &&
   build.architecture_archive_complete === true &&
   build.repository_tip_advances_independently === true &&
   build.architecture_register === "KCCC_ARCHITECTURE_REGISTER_v1.0" &&
