@@ -30,7 +30,7 @@ KCCC_ARCHITECTURE_REGISTER_v1.0.md
 
 ## Repository Interpretation
 
-- **`6690ce2`** — immutable architectural baseline.  
+- **`6690ce2`** — immutable architectural baseline (Program State CLOSED).  
 - **Repository tip** — engineering state; advances without changing Architecture 1.0 unless RFC → Architecture 2.0.  
 
 ## Authorized transition
