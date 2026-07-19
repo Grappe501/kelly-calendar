@@ -11,9 +11,7 @@ export type ExecutiveCommandPayload = {
   candidateDataReady: false;
 };
 
-/**
- * Authenticated Executive Command — Phase 1 kernel + Phase 2 capabilities.
- */
+/** Authenticated Executive Command — Phase 1 kernel + Phase 2 capabilities. */
 export async function getExecutiveCommand(
   actor: AuthenticatedActor,
 ): Promise<ExecutiveCommandPayload> {
@@ -34,6 +32,7 @@ export async function getExecutiveCommand(
     volunteers: stack.volunteers,
     debateMediaConsume: stack.debateMedia,
     fundraisingConsume: stack.fundraising,
+    gotvConsume: stack.gotv,
   });
 
   const command = buildExecutiveCommand({
@@ -52,6 +51,7 @@ export async function getExecutiveCommand(
     candidateFeed: candidate.executiveFeed,
     debateMediaFeed: stack.debateMedia.executiveFeed,
     fundraisingFeed: stack.fundraising.executiveFeed,
+    gotvFeed: stack.gotv.executiveFeed,
   });
 
   return {

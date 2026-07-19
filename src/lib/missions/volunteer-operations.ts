@@ -9,6 +9,7 @@
 
 import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
+import type { GotvOperationsHome } from "@/lib/missions/gotv-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 
 /** First-class Unknown — not zero, false, empty, or assumed. */
@@ -130,6 +131,8 @@ export type VolunteerOperationsHome = {
   financeConsume: FinanceOperationsHome["volunteerFeed"] | null;
   /** Consumed from Constituent — outreach / callback pressure. */
   constituentConsume: ConstituentOperationsHome["volunteerFeed"] | null;
+  /** Consumed from GOTV — deployment assignment coordination (Phase 2.4). */
+  gotvConsume: GotvOperationsHome["volunteerFeed"] | null;
 };
 
 export type VolunteerMissionInput = {
@@ -334,6 +337,7 @@ export function buildVolunteerOperationsHome(input: {
   logisticsConsume?: VolunteerOperationsHome["logisticsConsume"];
   financeConsume?: VolunteerOperationsHome["financeConsume"];
   constituentConsume?: VolunteerOperationsHome["constituentConsume"];
+  gotvConsume?: VolunteerOperationsHome["gotvConsume"];
 }): VolunteerOperationsHome {
   const now = input.now ?? new Date();
   const missionCapacity = input.missions
@@ -467,6 +471,7 @@ export function buildVolunteerOperationsHome(input: {
     logisticsConsume: input.logisticsConsume ?? null,
     financeConsume: input.financeConsume ?? null,
     constituentConsume: input.constituentConsume ?? null,
+    gotvConsume: input.gotvConsume ?? null,
   };
 }
 

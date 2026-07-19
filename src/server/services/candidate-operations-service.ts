@@ -34,6 +34,7 @@ export async function getCandidateOperations(
     volunteers: stack.volunteers,
     debateMediaConsume: stack.debateMedia,
     fundraisingConsume: stack.fundraising,
+    gotvConsume: stack.gotv,
   });
 
   return {

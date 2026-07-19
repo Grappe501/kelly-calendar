@@ -8,6 +8,7 @@ import { buildDebateMediaOperationsHome } from "@/lib/missions/debate-media-oper
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import { buildFundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
+import { buildGotvOperationsHome } from "@/lib/missions/gotv-operations";
 import { buildOperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
@@ -179,6 +180,47 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     logistics,
   });
 
+  const gotv = buildGotvOperationsHome({
+    brief: briefPayload.brief,
+    missions: briefPayload.allMissionsToday,
+    countiesByMission: briefPayload.countiesByMission,
+    counties,
+    volunteers,
+    communications,
+    logistics,
+    field,
+  });
+
+  const volunteersWithGotv = buildVolunteerOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
+    communicationsConsume: communications.volunteerFeed,
+    logisticsConsume: logistics.volunteerFeed,
+    financeConsume: finance.volunteerFeed,
+    constituentConsume: constituents.volunteerFeed,
+    gotvConsume: gotv.volunteerFeed,
+  });
+
+  const countiesWithGotv = buildCountyOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
+    fieldHeat: field.operationalHeat,
+    fieldHelp: field.helpQueue.map((h) => ({
+      countyLabel: h.countyLabel,
+      detail: h.detail,
+      severity: h.severity,
+    })),
+    volunteerFeed: volunteersWithGotv.countyFeed,
+    communicationsFeed: communications.countyFeed,
+    logisticsFeed: logistics.countyFeed,
+    financeFeed: finance.countyFeed,
+    complianceFeed: compliance.countyFeed,
+    constituentFeed: constituents.countyFeed,
+    gotvConsume: gotv.countyFeed,
+  });
+
   const communicationsWithMedia = buildCommunicationsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
@@ -194,6 +236,7 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     constituentConsume: constituents.communicationsFeed,
     debateMediaConsume: debateMedia.communicationsFeed,
     fundraisingConsume: fundraising.communicationsFeed,
+    gotvConsume: gotv.communicationsFeed,
   });
 
   const intelligence = buildOperationalIntelligenceHome({
@@ -201,8 +244,8 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     timezone: briefPayload.brief.timezone,
     feeds: {
       fieldFeed: field.executiveFeed,
-      countyFeed: counties.executiveFeed,
-      volunteerFeed: volunteers.executiveFeed,
+      countyFeed: countiesWithGotv.executiveFeed,
+      volunteerFeed: volunteersWithGotv.executiveFeed,
       communicationsFeed: communicationsWithMedia.executiveFeed,
       logisticsFeed: logistics.executiveFeed,
       financeFeed: finance.executiveFeed,
@@ -210,6 +253,7 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
       constituentFeed: constituents.executiveFeed,
       debateMediaFeed: debateMedia.intelligenceFeed,
       fundraisingFeed: fundraising.intelligenceFeed,
+      gotvFeed: gotv.intelligenceFeed,
     },
   });
 
@@ -220,11 +264,12 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     finance,
     compliance,
     communications: communicationsWithMedia,
-    volunteers,
+    volunteers: volunteersWithGotv,
     field,
-    counties,
+    counties: countiesWithGotv,
     intelligence,
     debateMedia,
     fundraising,
+    gotv,
   };
 }

@@ -26,6 +26,7 @@ import {
   countyFinanceFact,
   type FinanceCountyRow,
 } from "@/lib/missions/finance-operations";
+import type { GotvOperationsHome } from "@/lib/missions/gotv-operations";
 import {
   countyLogisticsFact,
   type LogisticsCountyRow,
@@ -162,6 +163,8 @@ export type CountyOperationsHome = {
     topWeak: Array<{ countyName: string; healthScore: number; reason: string; href: string }>;
     briefingLine: string;
   };
+  /** Consumed from GOTV — turf/deployment coordination (Phase 2.4). */
+  gotvConsume: GotvOperationsHome["countyFeed"] | null;
 };
 
 export type CountyMissionInput = {
@@ -634,6 +637,7 @@ export function buildCountyOperationsHome(input: {
   financeFeed?: FinanceCountyRow[] | null;
   complianceFeed?: ComplianceCountyRow[] | null;
   constituentFeed?: ConstituentCountyRow[] | null;
+  gotvConsume?: GotvOperationsHome["countyFeed"] | null;
   countyNames?: readonly string[];
   now?: Date;
 }): CountyOperationsHome {
@@ -743,6 +747,7 @@ export function buildCountyOperationsHome(input: {
       topWeak,
       briefingLine: briefingParts.join(" "),
     },
+    gotvConsume: input.gotvConsume ?? null,
   };
 }
 

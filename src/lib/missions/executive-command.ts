@@ -12,6 +12,7 @@ import type { ConstituentOperationsHome } from "@/lib/missions/constituent-opera
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
+import type { GotvOperationsHome } from "@/lib/missions/gotv-operations";
 import type { OperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
@@ -127,6 +128,8 @@ export type ExecutiveCommand = {
   debateMediaFeed: DebateMediaOperationsHome["executiveFeed"] | null;
   /** Consumed from Fundraising Operations (2.3) — resource-generation workflow. */
   fundraisingFeed: FundraisingOperationsHome["executiveFeed"] | null;
+  /** Consumed from GOTV Operations (2.4) — turnout conversion workflow. */
+  gotvFeed: GotvOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -155,6 +158,7 @@ export function buildDeterministicExecutiveBriefing(
   candidateFeed?: CandidateOperationsHome["executiveFeed"] | null,
   debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null,
   fundraisingFeed?: FundraisingOperationsHome["executiveFeed"] | null,
+  gotvFeed?: GotvOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -169,6 +173,7 @@ export function buildDeterministicExecutiveBriefing(
       candidateFeed?.briefingLine,
       debateMediaFeed?.briefingLine,
       fundraisingFeed?.briefingLine,
+      gotvFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -189,6 +194,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (fundraisingFeed?.briefingLine) {
     parts.push(fundraisingFeed.briefingLine);
+  }
+  if (gotvFeed?.briefingLine) {
+    parts.push(gotvFeed.briefingLine);
   }
   if (constituentFeed?.briefingLine) {
     parts.push(constituentFeed.briefingLine);
@@ -279,6 +287,7 @@ export function buildExecutiveCommand(input: {
   candidateFeed?: CandidateOperationsHome["executiveFeed"] | null;
   debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null;
   fundraisingFeed?: FundraisingOperationsHome["executiveFeed"] | null;
+  gotvFeed?: GotvOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -294,6 +303,7 @@ export function buildExecutiveCommand(input: {
   const candidateFeed = input.candidateFeed ?? null;
   const debateMediaFeed = input.debateMediaFeed ?? null;
   const fundraisingFeed = input.fundraisingFeed ?? null;
+  const gotvFeed = input.gotvFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -453,6 +463,25 @@ export function buildExecutiveCommand(input: {
       href: "/fundraising",
       urgency:
         fundraisingFeed.fundraisingReadiness === "BLOCKED" ? "NOW" : "SOON",
+    });
+  }
+  if (
+    gotvFeed &&
+    gotvFeed.todaysDeployment > 0 &&
+    (gotvFeed.activitiesAtRisk > 0 ||
+      gotvFeed.gotvReadiness === "BLOCKED" ||
+      gotvFeed.gotvReadiness === "NEEDS_ATTENTION" ||
+      gotvFeed.turnoutRisk === "CRITICAL" ||
+      gotvFeed.turnoutRisk === "HIGH")
+  ) {
+    topPriorities.push({
+      label: "GOTV readiness",
+      detail: gotvFeed.briefingLine,
+      href: "/gotv",
+      urgency:
+        gotvFeed.turnoutRisk === "CRITICAL" || gotvFeed.gotvReadiness === "BLOCKED"
+          ? "NOW"
+          : "SOON",
     });
   }
   if (brief.topBlocker) {
@@ -815,6 +844,12 @@ export function buildExecutiveCommand(input: {
   if (fundraisingFeed?.pipelineHealthStatus === "unknown") {
     alerts.push("Fundraising pipeline health Unknown");
   }
+  if (gotvFeed && gotvFeed.activitiesAtRisk > 0) {
+    alerts.push(`${gotvFeed.activitiesAtRisk} GOTV activity(ies) at risk`);
+  }
+  if (gotvFeed?.coverageGapsStatus === "unknown" && gotvFeed.todaysDeployment > 0) {
+    alerts.push("GOTV coverage gaps Unknown");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -871,6 +906,7 @@ export function buildExecutiveCommand(input: {
         candidateFeed,
         debateMediaFeed,
         fundraisingFeed,
+        gotvFeed,
       ),
       source: "deterministic_v1",
     },
@@ -886,6 +922,7 @@ export function buildExecutiveCommand(input: {
     candidateFeed,
     debateMediaFeed,
     fundraisingFeed,
+    gotvFeed,
   };
 }
 
@@ -923,5 +960,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     candidateFeed: command.candidateFeed,
     debateMediaFeed: command.debateMediaFeed,
     fundraisingFeed: command.fundraisingFeed,
+    gotvFeed: command.gotvFeed,
   };
 }

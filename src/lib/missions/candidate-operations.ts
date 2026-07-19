@@ -19,6 +19,7 @@ import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-oper
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
+import type { GotvOperationsHome } from "@/lib/missions/gotv-operations";
 import {
   combineOperationalReadiness,
   type DomainReadiness,
@@ -55,7 +56,8 @@ export type CandidateInboxItem = {
     | "DEBATE"
     | "DOCUMENT"
     | "SPEECH"
-    | "FUNDRAISING";
+    | "FUNDRAISING"
+    | "GOTV";
   title: string;
   detail: string;
   href: string | null;
@@ -382,6 +384,7 @@ export function buildCandidateOperationsHome(input: {
   volunteers: VolunteerOperationsHome;
   debateMediaConsume?: DebateMediaOperationsHome | null;
   fundraisingConsume?: FundraisingOperationsHome | null;
+  gotvConsume?: GotvOperationsHome | null;
   now?: Date;
 }): CandidateOperationsHome {
   const now = input.now ?? new Date();
@@ -408,6 +411,7 @@ export function buildCandidateOperationsHome(input: {
   );
   const debateMediaFeed = input.debateMediaConsume?.candidateFeed ?? null;
   const fundraisingFeed = input.fundraisingConsume?.candidateFeed ?? null;
+  const gotvFeed = input.gotvConsume?.candidateFeed ?? null;
 
   const cleanedBriefs: EngagementBrief[] = input.missions.map((mission) => {
     const countyName =
@@ -655,6 +659,22 @@ export function buildCandidateOperationsHome(input: {
         fundraisingFeed.preparationStatus === "NEEDS_ATTENTION"
           ? "actionable"
           : fundraisingFeed.preparationStatus === "UNKNOWN"
+            ? "unknown"
+            : "actionable",
+    });
+  }
+  if (gotvFeed) {
+    candidateInbox.push({
+      id: "gotv-brief",
+      category: "GOTV",
+      title: "GOTV / turnout focus",
+      detail: gotvFeed.briefingLine,
+      href: "/gotv",
+      status:
+        gotvFeed.preparationStatus === "BLOCKED" ||
+        gotvFeed.preparationStatus === "NEEDS_ATTENTION"
+          ? "actionable"
+          : gotvFeed.preparationStatus === "UNKNOWN"
             ? "unknown"
             : "actionable",
     });

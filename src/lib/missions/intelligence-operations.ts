@@ -17,6 +17,7 @@ import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-oper
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
+import type { GotvOperationsHome } from "@/lib/missions/gotv-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { VolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
@@ -32,6 +33,7 @@ export type IntelligenceSourceModule =
   | "constituent"
   | "debate_media"
   | "fundraising"
+  | "gotv"
   | "calendar";
 
 export type IntelligenceCategory =
@@ -41,6 +43,7 @@ export type IntelligenceCategory =
   | "COMMS_DRIFT"
   | "MEDIA_PREPARATION"
   | "FUNDRAISING_PIPELINE"
+  | "GOTV_TURNOUT"
   | "MISSION_FORECAST"
   | "RESOURCE_PRESSURE"
   | "COMPLIANCE_HOTSPOT"
@@ -122,6 +125,7 @@ export type IntelligenceFeedInput = {
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
   debateMediaFeed?: DebateMediaOperationsHome["intelligenceFeed"] | null;
   fundraisingFeed?: FundraisingOperationsHome["intelligenceFeed"] | null;
+  gotvFeed?: GotvOperationsHome["intelligenceFeed"] | null;
 };
 
 const HISTORY_UNKNOWN: UnknownFact = {
@@ -484,6 +488,53 @@ export function buildCommunicationsDriftSignals(
       );
     }
   }
+
+  const gotv = feeds.gotvFeed;
+  if (gotv) {
+    if (gotv.executionBottlenecks > 0) {
+      out.push(
+        insight({
+          id: "gotv-bottlenecks",
+          category: "GOTV_TURNOUT",
+          title: "GOTV execution bottlenecks",
+          detail: gotv.briefingLine,
+          severity: gotv.turnoutRisk === "CRITICAL" ? "CRITICAL" : "HIGH",
+          href: "/gotv",
+          sourceModule: "gotv",
+          canonicalFact: `GOTV Operations: executionBottlenecks=${gotv.executionBottlenecks}, turnoutRisk=${gotv.turnoutRisk}`,
+        }),
+      );
+    }
+    if (gotv.coverageImbalanceSignal) {
+      out.push(
+        insight({
+          id: "gotv-coverage-imbalance",
+          category: "GOTV_TURNOUT",
+          title: "GOTV coverage imbalance signal",
+          detail: gotv.briefingLine,
+          severity: "WATCH",
+          href: "/gotv",
+          sourceModule: "gotv",
+          canonicalFact: "GOTV Operations: coverageImbalanceSignal=true",
+        }),
+      );
+    }
+    if (gotv.deploymentTrendsStatus === "unknown") {
+      out.push(
+        insight({
+          id: "gotv-deployment-trends-unknown",
+          category: "GOTV_TURNOUT",
+          title: "Deployment trends Unknown",
+          detail:
+            "GOTV deployment trends remain Unknown — Intelligence will not invent multi-day turnout curves.",
+          severity: "UNKNOWN",
+          href: "/gotv",
+          sourceModule: "gotv",
+          canonicalFact: "GOTV Operations: deploymentTrendsStatus=unknown",
+        }),
+      );
+    }
+  }
   return out;
 }
 
@@ -719,7 +770,7 @@ export function buildOperationalIntelligenceHome(input: {
     );
   }
   briefingParts.push(
-    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, Compliance, Debate & Media, or Fundraising.",
+    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, Compliance, Debate & Media, Fundraising, or GOTV.",
   );
 
   return {

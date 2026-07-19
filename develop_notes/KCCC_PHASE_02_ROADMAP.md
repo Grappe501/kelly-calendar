@@ -10,8 +10,8 @@ Core Execution .............. COMPLETE ✓
 PHASE 2
 Candidate Operations ........ COMPLETE ✓
 Debate & Media .............. COMPLETE ✓
-Fundraising ................. IN PROGRESS
-GOTV ........................ Planned
+Fundraising Operations ...... COMPLETE ✓
+GOTV Operations ............. IN PROGRESS
 Petition & Ballot ........... Planned
 ```
 
@@ -19,4 +19,5 @@ Petition & Ballot ........... Planned
 
 1. Orchestrate Phase 1 — do not replace/duplicate.  
 2. Assemble operational context — do not create parallel systems.  
-3. Capabilities own experiences and workflows; operational systems own facts and state.
+3. Capabilities own experiences/workflows; ops systems own facts/state.  
+4. Capabilities coordinate execution across domains; they do not replicate those domains.
