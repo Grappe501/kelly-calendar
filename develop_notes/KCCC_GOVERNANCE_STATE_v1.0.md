@@ -16,9 +16,9 @@
 | `KCCC_ARCHITECTURE_REGISTER_v1.0.md` | Official registry / lifecycle |
 
 ```text
-Architecture Track — Frozen under 1.0; Proposal or RFC for change
+Architecture Track — Frozen under 1.0; Future Changes = Proposal Required; Breaking = RFC Required
 Engineering Track — Continues under 1.0; stay within constitutional boundaries
-Phase 3 Track — Architecture Review only; implementation NOT AUTHORIZED
+Phase 3 Track — Architecture Review only; Exit Review NOT STARTED; implementation NOT AUTHORIZED
 ```
 
 ## Change control
