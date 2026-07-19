@@ -24,6 +24,11 @@ Conflict ack ............. Not event-scoped (SEC-005)
 EA-8 found **enforcement gaps and capability-truth gaps**, not Architecture 1.0 trust-model failure.  
 Strategy: **HARDENING** (+ Foundation for permission-aware assembly).
 
+## Executive acceptance
+
+**ACCEPTED** — `KCCC_EA8_EXECUTIVE_ACCEPTANCE.md`  
+Principle: authorization must be preserved through the entire projection pipeline.
+
 ## Next
 
-EA-9 Operator Workflow — OPENED.
+EA-9 Operator Workflow — COMPLETE · EA-10 Technical Debt — OPENED.

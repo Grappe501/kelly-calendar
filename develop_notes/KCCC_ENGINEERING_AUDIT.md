@@ -16,10 +16,10 @@ VERSION 1 FEATURE FREEZE ....... ACTIVE
 Architecture 1.0 ............... LOCKED
 
 Engineering Audit .............. ACTIVE (execution)
-EA-5 · EA-6 · EA-7 ............. COMPLETE · ACCEPTED
-EA-8 Security .................. COMPLETE
-Next: EA-9 Operator Workflow
-Then: EA-10…12 → Readiness Review → Hardening → Redesign → Foundation
+EA-5 · EA-6 · EA-7 · EA-8 ..... COMPLETE · ACCEPTED
+EA-9 Operator Workflow ......... COMPLETE
+Next: EA-10 Technical Debt
+Then: EA-11…12 → Readiness Review → Hardening → Redesign → Foundation
   → V2 Planning Review → V2 Authorization → V2 Dev
 
 Ask: Did we follow the governance?
@@ -54,7 +54,7 @@ Version 2 Features
 
 ## Workstream order
 
-**Immediate next:** **EA-9** Operator Workflow — under `KCCC_AUDIT_CONSTITUTION.md`.
+**Immediate next:** **EA-10** Technical Debt — under `KCCC_AUDIT_CONSTITUTION.md`.
 
 | Priority | ID | Workstream |
 |----------|-----|------------|
@@ -66,11 +66,11 @@ Version 2 Features
 | **Done** | EA-5 | Inclusive Experience — ACCEPTED |
 | **Done** | EA-6 | Performance — ACCEPTED |
 | **Done** | EA-7 | Data Integrity — ACCEPTED |
-| **Done** | EA-8 | Security — PASS WITH FINDINGS |
-| **1 (NOW)** | EA-9 | Operator Workflow |
-| 2 | EA-10 | Technical Debt |
-| 3 | EA-11 | Documentation |
-| 4 | EA-12 | Future Expansion Readiness |
+| **Done** | EA-8 | Security — ACCEPTED |
+| **Done** | EA-9 | Operator Workflow — PASS WITH FINDINGS |
+| **1 (NOW)** | EA-10 | Technical Debt |
+| 2 | EA-11 | Documentation |
+| 3 | EA-12 | Future Expansion Readiness |
 
 > **Note:** EA-3 was reframed from Information Architecture to **Platform Quality** (durable-platform audit). IA concerns are covered by Product Health + EA-2 primary decisions + Foundation API sketch (HL-020).
 
@@ -105,9 +105,10 @@ Version 2 Features
 | EA-5 | **COMPLETE · ACCEPTED** — `KCCC_EA5_EXECUTIVE_ACCEPTANCE.md` |
 | EA-6 | **COMPLETE · ACCEPTED** — `KCCC_EA6_EXECUTIVE_ACCEPTANCE.md` |
 | EA-7 | **COMPLETE · ACCEPTED** — `KCCC_EA7_EXECUTIVE_ACCEPTANCE.md` |
-| EA-8 | **COMPLETE** — `KCCC_EA8_ASSESSMENT.md` · HL-031…038 |
-| EA-9 | **OPENED** — `KCCC_EA9_OPERATOR_WORKFLOW.md` |
-| EA-10 … EA-12 | NOT STARTED |
+| EA-8 | **COMPLETE · ACCEPTED** — `KCCC_EA8_EXECUTIVE_ACCEPTANCE.md` |
+| EA-9 | **COMPLETE** — `KCCC_EA9_ASSESSMENT.md` · HL-039…045 |
+| EA-10 | **OPENED** — `KCCC_EA10_TECHNICAL_DEBT.md` |
+| EA-11 … EA-12 | NOT STARTED |
 | Program Readiness Review | **PLANNED** — after EA-12 · blocks Hardening |
 | Experience Redesign 2.0 | PROPOSED — blocked |
 | Foundation implementation | NOT STARTED — after Redesign; EA-3 requirements attached |

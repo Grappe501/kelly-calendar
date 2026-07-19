@@ -74,6 +74,13 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 | HL-036 | SEC | EA-8 SEC-006 | Actor + RBAC on /api/calendars and system diagnostic APIs | High | Hygiene | High | M | Hardening | Open |
 | HL-037 | SEC | EA-8 SEC-007 | Unify production session-secret policy (edge + Node + status) | High | Hygiene | Medium | M | Foundation | Open |
 | HL-038 | SEC | EA-8 SEC-008 | Explicit per-product env isolation (opt-in RedDirt fallback) | High | Hygiene | Medium | M | Foundation | Open |
+| HL-039 | OW | EA-9 OW-001 | Consume mission deep-link / Mission Workspace entry (`?event=` currently ignored) | **Critical** | Hygiene | **Critical** | L | **Foundation** (reinforces HL-005) | Open |
+| HL-040 | OW | EA-9 OW-002 | Week mission-level progression into authorized context | High | None | High | M | Foundation | Open |
+| HL-041 | OW | EA-9 OW-003 | Month highlight/deadline → Day/Week or owning module | High | None | High | M | Foundation | Open |
+| HL-042 | OW | EA-9 OW-004 | Preserve or declare planning period on domain hops | High | None | High | M | Foundation | Open |
+| HL-043 | OW | EA-9 OW-006 | Explicit reason when day actions absent (permission / date / capability) | Medium | Hygiene | Medium | S | Hardening | Open |
+| HL-044 | OW | EA-9 OW-007 | Empty Day recovery path parity with Brief | Medium | None | Medium | S | Hardening | Open |
+| HL-045 | OW | EA-9 OW-008 | Period-aware Unknown recovery for domain tiles | High | None | High | M | Foundation | Open |
 
 ---
 
@@ -121,18 +128,19 @@ Wave 6 — Foundation Readiness
 | **3** | Decision Clarity | HL-004, HL-010, HL-011, HL-015 (+ HC-COG) — mostly Redesign; label hygiene in Hardening |
 | **4** | Shared Infrastructure | HL-006, HL-016 · legend / rendering / filters / nav |
 | **5** | Experience Quality | HL-003, HL-009, HL-012, HL-014 · motion · brand · density |
-| **6** | Foundation Readiness | HL-020 · Agenda / Timeline / Mission — **after** Waves 1–5 |
+| **6** | Foundation Readiness | HL-020 · **HL-039** mission entry · Agenda / Timeline / Mission — **after** Waves 1–5 |
 
 Wave 2 is **before** Decision Clarity so Redesign/Foundation changes are verifiable. XR-01 bulk still runs in Redesign after Hardening gate; Wave 3 keeps priority visible.
 
 ## Streams not yet ingested
 
-EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
+EA-10 · EA-11 · EA-12 — append on completion.  
 EA-3 Platform Quality: **COMPLETE / ACCEPTED** (HL-016…HL-020).  
 EA-5 Inclusive Experience: **COMPLETE / ACCEPTED** (HL-021…HL-024).  
 EA-6 Performance: **COMPLETE / ACCEPTED** (HL-025…HL-027).  
 EA-7 Data Integrity: **COMPLETE / ACCEPTED** (HL-028…HL-030; DI-001 → HL-001).  
-EA-8 Security: **COMPLETE** (HL-031…HL-038; SEC-002 → HL-031 Wave 1).
+EA-8 Security: **COMPLETE / ACCEPTED** (HL-031…HL-038; SEC-002 → HL-031 Wave 1).  
+EA-9 Operator Workflow: **COMPLETE** (HL-039…HL-045; OW-005 → HL-030 confirmed).
 
 ## Hardening gate
 
