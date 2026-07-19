@@ -1,29 +1,33 @@
-# Kelly Campaign Command Calendar — Netlify
+# Kelly Campaign Command Calendar - Netlify
 # Separate site from RedDirt. Do not place secrets here.
 
 [build]
-  # prisma generate is required on Netlify: dependency cache skips Prisma Client codegen.
-  # See https://pris.ly/d/netlify-build
-  command = "npm ci && npx prisma generate && npm run build"
+  # Netlify already installs deps from package-lock.json — do NOT npm ci here
+  # (double install + broken H: cache path was timing out ~18m builds).
+  command = "node scripts/netlify-build.mjs"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
   NPM_CONFIG_PRODUCTION = "false"
   NPM_FLAGS = "--no-audit --no-fund"
+  # Override project .npmrc cache=H:/... (Linux builders cannot use that path).
+  NPM_CONFIG_CACHE = "/opt/buildhome/.npm"
+  # Skip Playwright browser download during Netlify install.
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "1"
 
 # Unpinned Next.js runtime plugin (same pattern as RedDirt).
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Documented env vars (set in Netlify UI — never commit values):
+# Documented env vars (set in Netlify UI - never commit values):
 # DATABASE_URL, DIRECT_URL
 # NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 # SUPABASE_SERVICE_ROLE_KEY
-# OPENAI_API_KEY (server only — Step 16+)
+# OPENAI_API_KEY (server only - Step 16+)
 # NEXT_PUBLIC_APP_URL, NEXT_PUBLIC_APP_NAME
 # NEXT_PUBLIC_CAMPAIGN_TIMEZONE, NEXT_PUBLIC_ELECTION_DATE
 # APP_SESSION_SECRET, INTERNAL_API_SECRET, LOG_LEVEL
-# ENV_FALLBACK_TO_REDDIRT=false  (required in Netlify — no RedDirt filesystem)
+# ENV_FALLBACK_TO_REDDIRT=false  (required in Netlify - no RedDirt filesystem)
 # KCCC_DEPLOYMENT_PROOF_MODE=true  (optional, temporary Step 5.7 proof window only)
 # Never set KCCC_ALLOW_PRODUCTION_SEED unless explicit proof approval
