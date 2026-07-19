@@ -1,7 +1,7 @@
 # KCCC Step 7 — Campaign Operations Charter
 
 **Script ID:** `KCCC-STEP-07-CAMPAIGN-OPERATIONS`  
-**Status:** OPEN  
+**Status:** PHASE 1 CERTIFIED  
 
 ## Permanent principles
 
@@ -31,11 +31,11 @@
 | Compliance Operations | Can we do this legally, ethically, and according to campaign policy? |
 | Calendar | What must happen and when? |
 
-## Active increments
+## Phase 1 increments (certified)
 
 | Increment | Route | Status |
 |-----------|-------|--------|
-| 7.1 Executive Command | `/command` | SHIPPED |
+| 7.1 Executive Command | `/command` | ACCEPTED |
 | 7.2 Field Operations | `/field` | ACCEPTED |
 | 7.3 County Operations | `/counties` | ACCEPTED |
 | 7.4 Volunteer Operations | `/volunteers` | ACCEPTED |
@@ -43,10 +43,11 @@
 | 7.6 Logistics Operations | `/logistics` | ACCEPTED |
 | 7.7 Finance & Resources Operations | `/finance` | ACCEPTED |
 | 7.8 Compliance Operations | `/compliance` | ACCEPTED |
-| 7.9 Voter & Constituent Operations | `/constituents` | IN PROGRESS |
+| 7.9 Voter & Constituent Operations | `/constituents` | ACCEPTED |
 | 7.10 Operational Intelligence | `/intelligence` | ACCEPTED |
 
 ## Phase note
 
-**Phase 1 (Core Campaign Execution + Intelligence) is COMPLETE.**  
-Step 7.9 expands into campaign-specific relationship capabilities on that foundation.
+**Phase 1 is CERTIFIED — PRODUCTION READY** (`0.7.11-ops`).  
+
+Do **not** continue as Step 7.11. Next work opens under **Phase 2 — Campaign Capability Expansion** (`KCCC_PHASE_02_ROADMAP.md`). Certification record: `KCCC_PHASE_01_CERTIFICATION.md`.

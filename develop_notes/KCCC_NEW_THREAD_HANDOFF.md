@@ -2,48 +2,50 @@
 
 ```text
 Product:
-Kelly Campaign Command Calendar
+Kelly Campaign Command Calendar (Campaign Operating System)
 
 Workspace:
-H:\SOSWebsite\kelly-calendar
+H:\SOSWebsite\Kelly-calendar
+
+GitHub:
+https://github.com/Grappe501/kelly-calendar (main)
+
+Production:
+https://kelly-calendar.netlify.app
 
 Owned schema:
-kelly_calendar
+kelly_calendar only (shared RedDirt Postgres — no RedDirt source imports)
 
-Completed:
-KCCC-STEP-01 … 04
-KCCC-STEP-05.6-AUTHENTICATED-OPERATIONS-UNLOCK (83c2bd4)
+Phase status:
+PHASE 1 CERTIFIED — PRODUCTION READY (0.7.11-ops)
 
-Active / BLOCKED:
-KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF
+Canonical modules (all ACCEPTED):
+Calendar · Executive Command · Field · County · Volunteer · Communications
+Logistics · Finance & Resources · Compliance · Voter & Constituent · Intelligence
 
-Partial:
-KCCC-STEP-05 / 05.5
-
-Held:
-KCCC-STEP-06-MOBILE-COMMAND-SHELL
-
-Blockers (5.7):
-- Canonical Netlify site not verified (CLI session expired)
-- APP_SESSION_SECRET not proven in Netlify
-- Deployed 401/403/409 + synthetic mutation proofs not run
-- Operator acceptance pending
+Step 7 tip (constituents):
+d13e798
 
 Still false:
 - candidate_data_ready
-- production_auth_proven
-- production_mutations_proven
-- operator_acceptance_recorded
+- real_candidate_data_enabled
+- ai_enabled (advisory hooks exist; not autonomously enabled)
+
+Hard rules:
+- No deletes / repo moves / template extraction
+- No AJAX / PhatLip / countyWorkbench / sos-public / RedDirt src imports
+- No real PII in tests; no secrets in docs/chat/commits
+- Intelligence interprets; never overrides canonical facts
+- Not a CRM / voter-file warehouse / reporting engine
+
+Do NOT continue as Step 7.11.
 
 Operator next:
-1. netlify login
-2. Confirm/create kelly-calendar site (not RedDirt)
-3. node scripts/generate-production-session-secret.mjs
-4. Set APP_SESSION_SECRET + DATABASE_URL + DIRECT_URL in Netlify
-5. Fill data/netlify_target.json
-6. Deploy tip containing 83c2bd4
-7. Execute live proof checklist
-8. Sign develop_notes/KCCC_STEP_05_7_OPERATOR_ACCEPTANCE.md
+Pick one Phase 2 workstream from develop_notes/KCCC_PHASE_02_ROADMAP.md
+(Candidate Ops · Fundraising Ops · GOTV · Debate & Media · Petition & Ballot)
 
-Do not start Step 6 until acceptance is recorded.
+Docs:
+- develop_notes/KCCC_PHASE_01_CERTIFICATION.md
+- develop_notes/KCCC_PHASE_02_ROADMAP.md
+- develop_notes/KCCC_STEP_07_CAMPAIGN_OPERATIONS_CHARTER.md
 ```

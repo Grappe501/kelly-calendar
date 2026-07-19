@@ -1,7 +1,7 @@
 # KCCC Step 7.9 — Voter & Constituent Operations
 
 **Script ID:** `KCCC-STEP-07.9-CONSTITUENT-OPERATIONS`  
-**Status:** IN PROGRESS  
+**Status:** ACCEPTED  
 **Parent:** Step 7 Campaign Operations  
 
 ## Doctrine

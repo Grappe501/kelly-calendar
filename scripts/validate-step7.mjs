@@ -122,8 +122,18 @@ if (
   fail("7.9 increment not tracked");
 }
 
+if (
+  build.phase_1_status === "CERTIFIED" &&
+  build.constituent_operations_accepted === true &&
+  build.phase_2_status === "recommended_not_started"
+) {
+  pass("Phase 1 CERTIFIED; Phase 2 not started");
+} else {
+  fail("Phase 1 certification / Phase 2 gate missing from build_state");
+}
+
 if (failed) {
   console.error(`Step 7 validation failed (${failed})`);
   process.exit(1);
 }
-console.log("Step 7.1–7.10 structural validation passed (incl. 7.9).");
+console.log("Phase 1 structural validation passed (Steps 7.1–7.10 CERTIFIED).");
