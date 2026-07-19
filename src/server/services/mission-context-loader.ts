@@ -21,10 +21,19 @@ export type MissionDaySnapshotRow = {
   confirmationStatus: string | null;
 };
 
+export type MissionGeoSnapshot = {
+  countyId: string | null;
+  countyName: string | null;
+  city: string | null;
+  staffAssignedCount: number;
+  staffRequiredCount: number;
+};
+
 export type MissionContextBundle = {
   readiness: Map<string, EventReadinessResult>;
   travel: Map<string, MissionTravelSnapshot>;
   day: Map<string, MissionDaySnapshotRow>;
+  geo: Map<string, MissionGeoSnapshot>;
 };
 
 /**
@@ -37,8 +46,9 @@ export async function loadMissionContextForIds(
   const readiness = new Map<string, EventReadinessResult>();
   const travel = new Map<string, MissionTravelSnapshot>();
   const day = new Map<string, MissionDaySnapshotRow>();
+  const geo = new Map<string, MissionGeoSnapshot>();
   const ids = [...new Set(eventIds)].slice(0, 12);
-  if (ids.length === 0) return { readiness, travel, day };
+  if (ids.length === 0) return { readiness, travel, day, geo };
 
   const rows = await prisma.event.findMany({
     where: { id: { in: ids }, archivedAt: null },
@@ -49,6 +59,7 @@ export async function loadMissionContextForIds(
       staffAssignments: true,
       communicationsItems: true,
       travelPlans: true,
+      county: true,
     },
   });
 
@@ -66,6 +77,14 @@ export async function loadMissionContextForIds(
       status: event.status,
       arrivalAt: event.arrivalAt?.toISOString() ?? null,
       confirmationStatus: event.confirmationStatus,
+    });
+    geo.set(event.id, {
+      countyId: event.countyId,
+      countyName: event.county?.name ?? null,
+      city: event.city,
+      staffAssignedCount: event.staffAssignments.filter((s) => s.assignedUserId)
+        .length,
+      staffRequiredCount: event.staffAssignments.length,
     });
 
     readiness.set(
@@ -104,7 +123,7 @@ export async function loadMissionContextForIds(
     );
   }
 
-  return { readiness, travel, day };
+  return { readiness, travel, day, geo };
 }
 
 /** @deprecated use loadMissionContextForIds */

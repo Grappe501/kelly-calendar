@@ -565,6 +565,71 @@ input {
   color: #166534;
 }
 
+.campaign-brief .brief-refresh {
+  margin-top: var(--space-2);
+  min-height: 44px;
+  width: 100%;
+}
+
+.brief-blocker {
+  border-color: rgba(155, 28, 28, 0.45);
+  background: rgba(155, 28, 28, 0.06);
+}
+
+.brief-blocker[data-priority="HIGH"] {
+  border-color: rgba(154, 52, 18, 0.45);
+  background: rgba(154, 52, 18, 0.06);
+}
+
+.brief-blocker-message {
+  margin: 0 0 var(--space-3);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.brief-next-title {
+  margin: 0 0 var(--space-2);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.brief-kv {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+}
+
+.brief-kv div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.brief-kv dt {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.brief-kv dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.brief-ops-grid {
+  gap: var(--space-3);
+}
+
+.brief-partial {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+.brief-advisory {
+  border-style: dashed;
+}
+
 .mission-day-feedback.err {
   display: grid;
   gap: var(--space-2);

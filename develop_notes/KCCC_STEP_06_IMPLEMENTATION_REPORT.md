@@ -32,7 +32,7 @@
 - Today summary: counts + top issue + one-thumb corrective action
 - Consumes existing OI `EventReadinessResult`; Timeline Engine unchanged
 
-## Increment 5 — One-tap completion (this pass)
+## Increment 5 — One-tap completion
 
 - Actions: Start mission / Mark arrived / Mark complete / Needs attention
 - `POST /api/events/[eventId]/mission-day` via authenticated mutation contract
@@ -40,6 +40,14 @@
 - Optimistic UI avoided — wait for server confirmation; clear retry on failure/409
 - Shared `OPENAI_API_KEY` present for future advisory AI only (no autonomous mutations)
 - Timeline + readiness engines unchanged
+
+## Increment 6 — Campaign Brief (this pass)
+
+- Deterministic `/brief` leadership scan: blocker → next mission → required action → progress → totals
+- `GET /api/command-summary/brief` (+ optional `?advisory=1`)
+- Pure `buildCampaignBrief`; server aggregation separate from UI
+- Optional AI advisory with graceful fallback; audit attrs `application=kelly-calendar`, `feature=campaign-brief`, `operation=advisory-summary`
+- Does not duplicate Today; linked from More + Today quick actions
 
 ## Out of scope
 

@@ -18,6 +18,12 @@ export function resolveActiveNavId(pathname: string): NavItem["id"] {
   if (pathname.startsWith("/calendar")) return "calendar";
   if (pathname.startsWith("/add")) return "add";
   if (pathname.startsWith("/search")) return "search";
-  if (pathname.startsWith("/more") || pathname.startsWith("/system")) return "more";
+  if (
+    pathname.startsWith("/more") ||
+    pathname.startsWith("/system") ||
+    pathname.startsWith("/brief")
+  ) {
+    return "more";
+  }
   return "today";
 }

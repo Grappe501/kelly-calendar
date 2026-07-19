@@ -243,6 +243,77 @@ if (
   pass("6.3/6.4 timeline + readiness engines left intact");
 }
 
+const briefFiles = [
+  "src/lib/missions/campaign-brief.ts",
+  "src/server/services/campaign-brief-service.ts",
+  "src/server/services/campaign-brief-ai.ts",
+  "src/app/api/command-summary/brief/route.ts",
+  "src/app/brief/page.tsx",
+  "src/components/brief/CampaignBriefView.tsx",
+];
+for (const rel of briefFiles) {
+  if (exists(rel)) pass(`6.6 ${rel}`);
+  else fail(`6.6 missing ${rel}`);
+}
+
+const briefLib = read("src/lib/missions/campaign-brief.ts");
+if (
+  briefLib.includes("buildCampaignBrief") &&
+  briefLib.includes("topBlocker") &&
+  briefLib.includes("campaignBriefForAdvisory")
+) {
+  pass("6.6 deterministic Campaign Brief builder present");
+} else {
+  fail("6.6 Campaign Brief builder incomplete");
+}
+
+const briefAi = read("src/server/services/campaign-brief-ai.ts");
+if (
+  briefAi.includes('application: "kelly-calendar"') &&
+  briefAi.includes('feature: "campaign-brief"') &&
+  briefAi.includes('operation: "advisory-summary"') &&
+  briefAi.includes("maybeGenerateCampaignBriefAdvisory")
+) {
+  pass("6.6 AI advisory attribution + graceful helper present");
+} else {
+  fail("6.6 AI advisory attribution incomplete");
+}
+
+const briefPage = read("src/app/brief/page.tsx");
+if (
+  briefPage.includes("getCampaignBrief") &&
+  briefPage.includes("requireActiveAuthenticatedActor")
+) {
+  pass("6.6 /brief uses authenticated deterministic service");
+} else {
+  fail("6.6 /brief wiring incomplete");
+}
+
+const briefView = read("src/components/brief/CampaignBriefView.tsx");
+if (
+  briefView.includes("Immediate attention") &&
+  briefView.includes("Next mission") &&
+  briefView.includes("Required action") &&
+  briefView.includes("Day progress")
+) {
+  pass("6.6 leadership hierarchy present in Brief UI");
+} else {
+  fail("6.6 Brief UI hierarchy incomplete");
+}
+
+if (exists("src/app/brief/loading.tsx") && exists("src/app/brief/error.tsx")) {
+  pass("6.6 Brief loading + error states present");
+} else {
+  fail("6.6 Brief loading/error missing");
+}
+
+const nav = read("src/lib/navigation/nav-items.ts");
+if (nav.includes('pathname.startsWith("/brief")')) {
+  pass("6.6 /brief maps to More nav without new tab");
+} else {
+  fail("6.6 nav mapping for /brief missing");
+}
+
 const todayApi = read("src/app/api/command-summary/today/route.ts");
 if (todayApi.includes("withAuthenticatedQuery") && todayApi.includes("getTodayCommandShellData")) {
   pass("command-summary/today authenticated + live");
