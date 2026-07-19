@@ -24,6 +24,21 @@ Version 2 Feature Expansion
 
 > Transform the calendar from a functional administrative screen into a polished campaign command experience that feels active, strategic, modern, and emotionally engaging.
 
+## Guiding principle
+
+> **Every screen should tell the story of the campaign before it shows the mechanics of the campaign.**
+
+## First deliverable (when implementation opens)
+
+```text
+XR-01
+Executive Hero Layer
+```
+
+Persistent **What Matters Now?** — critical / changed / at risk / next — before all other chrome.
+
+**Comprehension-first sequence:** Hero → Legend → Hierarchy → Remove Unknown Wall → Mission Emphasis → Campaign Identity.
+
 Addresses: visual identity · layout hierarchy · motion · information density · interaction feedback · mobile behavior · narrative flow · executive confidence · campaign energy.
 
 ## Why first-class

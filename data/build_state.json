@@ -56,9 +56,11 @@
   "engineering_audit_status": "active",
   "engineering_audit_next_stream": "EA-1",
   "ea4_status": "complete",
+  "ea4_assessment": "pass",
   "hardening_pass_status": "blocked",
   "experience_redesign_status": "proposed",
   "experience_redesign_implementation": "blocked",
+  "experience_redesign_first_deliverable": "XR-01-EXECUTIVE-HERO-LAYER",
   "calendar_foundation_status": "planned_after_redesign",
   "foundation_implementation_started": false,
   "redesign_implementation_started": false,
@@ -134,5 +136,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Architecture 1.0 permanently closed. Calendar V1 ENGINEERING COMPLETE. EA-4 Visual and Experience Audit COMPLETE (forensic). Next audit stream EA-1. Experience Redesign PROPOSED/blocked. Phase 3 paused at 3.1 PASS WITH CONDITIONS. Maturity flags remain false."
+  "notes": "Architecture 1.0 STABLE. Calendar V1 COMPLETE. EA-4 PASS (experience gaps only). Next: EA-1 Architecture Compliance (implicit ownership check). Redesign PROPOSED — XR-01 Hero first when unblocked. No new calendar features. Phase 3 paused at 3.1 PASS WITH CONDITIONS. Maturity flags remain false."
 }

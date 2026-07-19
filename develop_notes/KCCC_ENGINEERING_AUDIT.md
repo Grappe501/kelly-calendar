@@ -7,14 +7,18 @@
 **Nature:** Review and evidence only — **no feature adds** · **no redesign implementation**  
 
 ```text
-Engineering Audit ........ ACTIVE
+Architecture 1.0 ............... STABLE
 
-EA-4 Visual and Experience Audit ... COMPLETE (diagnostic)
+Calendar Experience V1 ......... COMPLETE
+
+EA-4 Visual Audit .............. COMPLETE (PASS)
+
+Engineering Audit .............. ACTIVE
 Next Audit Stream:
-EA-1 Architecture Compliance
+  EA-1 Architecture Compliance (broadened — implicit ownership check)
 
-Experience Redesign 2.0 .. PROPOSED (blueprint fed by EA-4)
-Implementation ........... BLOCKED until Audit + Hardening
+Experience Redesign 2.0 ........ PROPOSED (XR-01 Hero first when opened)
+Implementation ................. BLOCKED until Audit + Hardening
 ```
 
 ## Goal

@@ -2,7 +2,7 @@
 
 **Script ID:** `KCCC-EA-4-VISUAL-AND-EXPERIENCE-AUDIT`  
 **Parent:** `KCCC_ENGINEERING_AUDIT.md`  
-**Status:** COMPLETE (diagnostic)  
+**Status:** COMPLETE (diagnostic) · **Assessment: PASS** (`KCCC_EA4_ASSESSMENT.md`)  
 **Nature:** Product teardown — **no code · no mockups · no implementation decisions**  
 **Mission question:** How do we make this feel like the best campaign command center in politics?  
 
@@ -263,16 +263,28 @@ Rule: delight reinforces progress — never distracts from risk.
 
 # Prioritized Redesign Backlog (for Experience Redesign 2.0)
 
+**Comprehension-first order (executive binding — see `KCCC_EA4_ASSESSMENT.md`):**
+
+```text
+P0  XR-01 Executive Hero Layer   (“What Matters Now?”)
+ ↓  Calendar Legend
+ ↓  Visual Hierarchy
+ ↓  Remove Unknown Wall
+ ↓  Mission Emphasis
+ ↓  Campaign Identity
+```
+
 | Priority | Item | Impact | Effort | XR |
 |----------|------|--------|--------|-----|
-| P0 | Hero Information Layer (Day/Week/Month) | Critical | L | XR-5 |
-| P0 | Retire Unknown domain tile wall; decision CTAs | Critical | M | XR-3 |
+| P0 | **XR-01 Executive Hero Layer** (persistent What Matters Now) | Critical | L | XR-5 → **XR-01** |
 | P0 | Shared event category legend + color | Critical | M | XR-1 |
-| P1 | Campaign command identity header + countdown pulse | High | L | XR-2 |
-| P1 | Day redesign: next mission / now marker first | High | L | XR-3 |
-| P1 | Week redesign: grid + mission rail primacy | High | L | XR-3 |
+| P0 | Visual hierarchy (hero vs secondary panels) | Critical | M | XR-1, XR-5 |
+| P0 | Remove Unknown wall → compact “awaiting data” + View Details | Critical | M | XR-3 |
+| P0 | Mission emphasis (next mission / priorities above mechanics) | Critical | M | XR-3 |
+| P0 | Campaign identity (momentum/urgency — not flashy SaaS) | High | L | XR-2 |
+| P1 | Day / Week / Month personality redesign passes | High | L | XR-3 |
 | P1 | Wider desktop calendar shell | High | M | XR-1 |
-| P2 | Month heat + milestone visual language | High | L | XR-3, XR-6 |
+| P2 | Month heat + milestone visual language | High | L | XR-6 |
 | P2 | Conflict cards + severity chrome | High | M | XR-6 |
 | P2 | View transitions + skeletons | Medium | M | XR-4 |
 | P2 | Operator copy pass (remove eng meta; action verbs) | High | S | XR-2 |
