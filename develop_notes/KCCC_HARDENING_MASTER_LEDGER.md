@@ -60,6 +60,9 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 | HL-022 | INCL | EA-5 IE-002 | Deferred Agenda/Timeline/Mission chip AT labels (or hide) | Medium | None | Medium | S | Hardening | Open |
 | HL-023 | INCL | EA-5 IE-003 | Date nav landmark + Previous/Next target labels | Medium | None | Medium | S | Hardening | Open |
 | HL-024 | INCL | EA-5 IE-004 | Optional skip-to-schedule within calendar page | Low | None | Medium | S | Hardening | Open |
+| HL-025 | PERF | EA-6 PERF-001 | Batch/cached ACL for event list (preserve projections) | High | Hygiene | High | M | Hardening | Open |
+| HL-026 | PERF | EA-6 PERF-002 | Date-range event list API for calendar adapters | High | Hygiene | High | M | Hardening / Foundation | Open |
+| HL-027 | PERF | EA-6 PERF-004 | Timed assemble smoke (≤50 synthetic events) — measure first | Medium | None | Low | S | Hardening | Open |
 
 ---
 
@@ -113,9 +116,10 @@ Wave 2 is **before** Decision Clarity so Redesign/Foundation changes are verifia
 
 ## Streams not yet ingested
 
-EA-6 · EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
+EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
 EA-3 Platform Quality: **COMPLETE / ACCEPTED** (HL-016…HL-020).  
-EA-5 Inclusive Experience: **COMPLETE** (HL-021…HL-024).
+EA-5 Inclusive Experience: **COMPLETE / ACCEPTED** (HL-021…HL-024).  
+EA-6 Performance: **COMPLETE** (HL-025…HL-027).
 
 ## Hardening gate
 

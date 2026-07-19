@@ -1,23 +1,19 @@
 # KCCC New Thread Handoff
 
 ```text
-Governance Design ........ COMPLETE
-Execution ................ ACTIVE
-Feature Development ...... FROZEN
-Review Model ............. ACTIVE
-Version 2 ............... NOT AUTHORIZED
+Governance execution ...... ACTIVE
+Feature Freeze ............ ACTIVE
+Version 2 ................. NOT AUTHORIZED
 
-Ask: Did we follow the governance?
-
-EA-5 Inclusive Experience . COMPLETE (PASS WITH FINDINGS)
-  First execution audit — Feature Freeze honored
-  HL-021…024 → Hardening (no inline redesign)
+EA-5 Inclusive ............ COMPLETE · ACCEPTED (execution proof)
+EA-6 Performance .......... COMPLETE (measure-only · HL-025…027)
+  Top hotspot: listEventsForActor ACL loop + full catalogue fetch
 
 NOW
-  EA-6 Performance — OPENED
+  EA-7 Data Integrity — OPENED
 
-Then: EA-7…12 → Readiness Review → Hardening → Redesign → Foundation
+Then: EA-8…12 → Readiness Review → Hardening → Redesign → Foundation
   → V2 Planning Review → V2 Authorization → V2 Dev
 
-Phase 3 ................... PAUSED (3.1 Pass with Conditions)
+Phase 3 ................... PAUSED
 ```
