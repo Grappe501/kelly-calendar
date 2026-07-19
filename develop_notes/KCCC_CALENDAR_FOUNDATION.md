@@ -2,9 +2,9 @@
 
 **Script ID:** `KCCC-CAL-EXP-FOUNDATION`  
 **Track:** Engineering Track A · Calendar Experience  
-**Status:** PLANNED — **not started**; after Audit → Hardening  
+**Status:** PLANNED — **not started**; after Audit → Hardening → Experience Redesign 2.0  
 **Architecture:** 1.0  
-**Prerequisite:** V1 ENGINEERING COMPLETE · Engineering Audit exit · Hardening Pass exit  
+**Prerequisite:** V1 ENGINEERING COMPLETE · Audit exit · Hardening exit · Experience Redesign acceptance (or recorded waiver)  
 
 
 ## Purpose

@@ -11,11 +11,17 @@ Version 2 work begins only after:
 
 1. Engineering Audit complete  
 2. Hardening Pass complete  
-3. Calendar Foundation complete (shared infrastructure)  
+3. **Experience Redesign 2.0** complete (or waived) — see `KCCC_EXPERIENCE_REDESIGN_2.md`  
+4. Calendar Foundation complete (shared infrastructure)  
 
 ## V2 capability themes
 
-### Calendar Foundation (first V2 deliverable)
+### Experience Redesign 2.0 (first major V2 program)
+
+Campaign command visual identity · view personalities · hero layer · motion · rich surfaces · storytelling.  
+**Not** a cosmetic EA-4 afterthought — EA-4 diagnoses; this program builds.
+
+### Calendar Foundation (after Redesign)
 
 Common event renderer · shared legend · unified filters · search · date navigation · keyboard shortcuts · print/PDF · responsive framework · accessibility layer.
 

@@ -44,12 +44,13 @@ Views **own nothing**. They consume Phase 1 and Phase 2 surfaces (Executive, Fie
 | 3 | Month View | What are the major commitments / milestones (30–60 days)? | A.3 | COMPLETE |
 | — | Calendar Experience Review | V1 gate | Gate | **PASS** |
 | — | V1 Engineering Complete | Feature freeze for V1 | Gate | **ENGINEERING COMPLETE** |
-| — | Engineering Audit (EA-1…EA-12) | Quality review, no features | A.4 | **OPEN / NEXT** |
+| — | Engineering Audit | Quality review, no features | A.4 | **ACTIVE** — next stream **EA-4** |
 | — | Hardening Pass | Fix audit findings only | A.4 | BLOCKED until Audit |
-| 3.5 | Calendar Foundation | Shared legend, filters, rendering, a11y | A.5 | AFTER Hardening |
-| 4 | Agenda View | What do I need to do next? | A.6 | AFTER Foundation |
-| 5 | Timeline View | How does the campaign unfold over time? | A.6 | AFTER Foundation |
-| 6 | Mission View | What objectives drive these events? | A.6 | AFTER Foundation |
+| — | Experience Redesign 2.0 | Campaign command experience | V2.0 | **PROPOSED** — after Hardening |
+| 3.5 | Calendar Foundation | Shared legend, filters, rendering, a11y | V2.1 | AFTER Redesign |
+| 4 | Agenda View | What do I need to do next? | V2.2 | AFTER Foundation |
+| 5 | Timeline View | How does the campaign unfold over time? | V2.3 | AFTER Foundation |
+| 6 | Mission View | What objectives drive these events? | V2.4 | AFTER Foundation |
 
 ## Later passes (not started)
 

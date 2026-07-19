@@ -3,7 +3,7 @@
 **Script ID:** `KCCC-HARDENING-V1`  
 **Track:** Engineering Track A  
 **Status:** BLOCKED — awaiting Engineering Audit exit  
-**Nature:** Fix issues only — **no feature adds**  
+**Nature:** Fix issues only — **no feature adds** · **no Experience Redesign implementation**  
 
 ## Categories
 
@@ -19,8 +19,8 @@ Hardening
 
 ## Rule
 
-Hardening consumes Audit findings. It does not invent Version 2 capabilities, Foundation features, or Phase 3 work.
+Hardening consumes Audit findings (including EA-4 diagnosis). It stabilizes Version 1; it does **not** execute Experience Redesign 2.0 or Foundation.
 
-## Exit
+## Exit → next program
 
-Hardening is complete when critical/high Audit findings are fixed or explicitly accepted, and the product is ready for **Calendar Foundation** as the first Version 2 infrastructure deliverable.
+Hardening complete → **Experience Redesign 2.0** may open for implementation (`KCCC_EXPERIENCE_REDESIGN_2.md`), then Calendar Foundation, then V2 specialized views.

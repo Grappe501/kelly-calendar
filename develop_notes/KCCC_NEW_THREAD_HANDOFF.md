@@ -3,22 +3,20 @@
 ```text
 ARCHITECTURE 1.0 — PERMANENTLY CLOSED (6690ce2)
 
-Engineering Track A — Calendar Experience
-  Version 1 ....................................... ENGINEERING COMPLETE
-  Calendar Experience Review ...................... PASS
+Calendar Experience V1 .................... ENGINEERING COMPLETE
 
-Next sequence (binding):
-  1. Engineering Audit ............ OPEN (KCCC_ENGINEERING_AUDIT.md)
-  2. Hardening Pass ............... BLOCKED until Audit exits
-  3. Calendar Foundation .......... AFTER Hardening (not yet)
-  4. Version 2 .................... AFTER Foundation
+Sequence (binding):
+  1. Engineering Audit .................... ACTIVE
+       Next stream: EA-4 Visual and Experience Audit
+  2. Hardening Pass ....................... BLOCKED until Audit
+  3. Experience Redesign 2.0 .............. PROPOSED (blocked until Audit+Hardening)
+  4. Calendar Foundation .................. AFTER Redesign program gate
+  5. Version 2 feature expansion .......... AFTER Foundation
 
-Do NOT start Foundation implementation yet.
-Do NOT start Agenda / Timeline / Mission yet.
-Audit and Hardening = no feature adds.
+Do NOT implement Redesign or Foundation yet.
+Audit / Hardening = no feature adds.
 
-Architecture Track — Phase 3 Exit Review .......... PAUSED
-  3.1 Trust Model ................................. PASS WITH CONDITIONS
-  3.2–3.10 ........................................ BLOCKED
-  Planning / Implementation ....................... NOT AUTHORIZED
+Phase 3 Exit Review ....................... PAUSED
+  3.1 Trust Model ......................... PASS WITH CONDITIONS
+  Planning / Implementation ............... NOT AUTHORIZED
 ```

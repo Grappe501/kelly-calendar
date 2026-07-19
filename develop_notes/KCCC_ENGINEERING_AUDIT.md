@@ -2,105 +2,128 @@
 
 **Script ID:** `KCCC-ENG-AUDIT-V1`  
 **Track:** Engineering Track A  
-**Status:** OPEN — next active engineering phase  
+**Status:** ACTIVE  
 **Prerequisite:** Calendar Experience Version 1 ENGINEERING COMPLETE  
-**Nature:** Review and evidence only — **no feature adds**  
+**Nature:** Review and evidence only — **no feature adds** · **no redesign implementation**  
 
 ```text
-Engineering Audit
-↓
-Hardening Pass
-↓
-Foundation
-↓
-Version 2
+Engineering Audit ........ ACTIVE
+
+Next Audit Stream:
+EA-4 Visual and Experience Audit
+
+Experience Redesign 2.0 .. PROPOSED
+Implementation ........... BLOCKED until Audit + Hardening
 ```
 
 ## Goal
 
-Make Version 1 feel like a polished product before Version 2 expands scope. Learn from rigorous review so Foundation is built on evidence, not assumptions.
+Make Version 1 feel like a polished product before Version 2 expands scope. EA-4 produces the design **diagnosis** and formal scope for Experience Redesign 2.0; redesign **implementation** stays blocked until full Audit + Hardening.
 
-## Workstreams
+## Binding sequence
 
-| ID | Workstream | Deliverable |
-|----|------------|-------------|
-| EA-1 | Architecture Compliance | Architecture Compliance Report |
-| EA-2 | User Experience Audit | UX walkthrough findings |
-| EA-3 | Information Architecture | Page purpose / merge / executive-question matrix |
-| EA-4 | Visual Consistency | Visual system gap list |
-| EA-5 | Accessibility | WCAG findings |
-| EA-6 | Performance | Perf measurements + hotspots |
-| EA-7 | Data Integrity | Ownership / Unknown / conflict / provenance check |
-| EA-8 | Security | RBAC / API / leakage / secrets check |
-| EA-9 | Operator Workflow | Click / hesitation / unused surface notes |
-| EA-10 | Technical Debt | Debt inventory |
-| EA-11 | Documentation | Doc gap list |
-| EA-12 | Future Expansion Readiness | V2 / Foundation readiness notes |
+```text
+V1 ENGINEERING COMPLETE
+        ↓
+Engineering Audit
+        ↓
+Hardening
+        ↓
+Experience Redesign Program
+        ↓
+Calendar Foundation
+        ↓
+Version 2 Feature Expansion
+```
 
-### EA-1 Architecture Compliance
+## Workstream order
 
-- Does every screen have one canonical owner?  
-- Has presentation accidentally become ownership?  
-- Are duplicated calculations creeping in?  
-- Are we displaying truth or inventing it?  
+**Immediate next:** **EA-4** (before EA-1).  
+Architecture compliance still matters; the most urgent user-facing weakness is that the product feels dull. EA-4 first.
 
-**Deliverable:** `Architecture Compliance Report` (record under this program or linked note).
+| Priority | ID | Workstream |
+|----------|-----|------------|
+| **1 (NOW)** | EA-4 | Visual and Experience Audit (deep) |
+| 2 | EA-1 | Architecture Compliance |
+| 3 | EA-2 | User Experience Audit |
+| 4 | EA-3 | Information Architecture |
+| 5 | EA-5 | Accessibility |
+| 6 | EA-6 | Performance |
+| 7 | EA-7 | Data Integrity |
+| 8 | EA-8 | Security |
+| 9 | EA-9 | Operator Workflow |
+| 10 | EA-10 | Technical Debt |
+| 11 | EA-11 | Documentation |
+| 12 | EA-12 | Future Expansion Readiness |
 
-### EA-2 User Experience Audit
+---
 
-Walk every screen like a first-time campaign manager: clicks, confusion, navigation, terminology, discoverability.  
-**Question:** Can someone unfamiliar understand it in five minutes?
+## EA-4 Visual and Experience Audit (deep)
 
-### EA-3 Information Architecture
+EA-4 is **not** a shallow polish checklist. It is a full Visual and Experience Audit with substreams:
 
-Per page: Why does it exist? Could it merge? Does it answer one executive question?
+| Sub | Focus |
+|-----|--------|
+| EA-4A | Visual System |
+| EA-4B | Layout and Hierarchy |
+| EA-4C | Interaction Design |
+| EA-4D | Motion and Feedback |
+| EA-4E | Emotional Experience |
+| EA-4F | Mobile and Responsive Experience |
+| EA-4G | Empty, Loading, Error, and Unknown States |
+| EA-4H | Campaign Brand Expression |
 
-### EA-4 Visual Consistency
+### Diagnosis targets (why it may feel boring)
 
-Spacing, typography, cards, buttons, colors, headers, empty/loading/error states, dark mode, responsive layouts.
+Document evidence for:
 
-### EA-5 Accessibility
+* too much visual sameness  
+* weak hierarchy  
+* flat cards  
+* limited contrast  
+* no focal point  
+* insufficient campaign identity  
+* no sense of movement or urgency  
+* equal visual weight for unequal information  
+* passive rather than action-oriented language  
+* weak transitions between Day, Week, and Month  
 
-Keyboard, ARIA, contrast, focus, screen readers, touch targets, reduced motion.
+### EA-4 deliverable
 
-### EA-6 Performance
+`Visual and Experience Audit Report` — feeds **Experience Redesign 2.0** scope (XR-1…XR-7). Does **not** authorize redesign coding.
 
-Page load, calendar rendering, large datasets, virtualization, search latency, memory, cache.
+---
 
-### EA-7 Data Integrity
+## Other workstreams (summary)
 
-Ownership, sync, offline, conflicts, audit trails, idempotency, provenance, Unknown handling.
-
-### EA-8 Security
-
-RBAC, permissions, navigation leakage, API exposure, client assumptions, logging, secrets.
-
-### EA-9 Operator Workflow
-
-Watch use: clicks, hesitation, search behavior, unused surfaces.
-
-### EA-10 Technical Debt
-
-Duplicates, large components, dead code, workarounds, naming, missing tests, doc gaps.
-
-### EA-11 Documentation
-
-README, architecture, engineering, routes, ownership, onboarding, operator docs.
-
-### EA-12 Future Expansion Readiness
-
-Can V2 plug in cleanly? Will Foundation reduce duplication? Are extension points obvious?
+| ID | Deliverable |
+|----|-------------|
+| EA-1 | Architecture Compliance Report — one owner per screen; presentation ≠ ownership; no invented truth |
+| EA-2 | First-time campaign manager walkthrough |
+| EA-3 | Page purpose / merge / one executive question |
+| EA-5 | WCAG findings |
+| EA-6 | Perf measurements + hotspots |
+| EA-7 | Ownership / Unknown / conflict / provenance |
+| EA-8 | RBAC / API / leakage / secrets |
+| EA-9 | Clicks / hesitation / unused surfaces |
+| EA-10 | Debt inventory |
+| EA-11 | Doc gap list |
+| EA-12 | V2 / Redesign / Foundation readiness notes |
 
 ## Workstream status
 
 | ID | Status |
 |----|--------|
-| EA-1 … EA-12 | NOT STARTED |
+| EA-4 | **NEXT** (active stream) |
+| EA-1 … EA-3, EA-5 … EA-12 | NOT STARTED |
+| Experience Redesign 2.0 | PROPOSED — blocked |
+| Foundation implementation | NOT STARTED — after Redesign program gate |
 
 ## Exit
 
-Audit is complete when all twelve workstreams have recorded findings (Pass / Pass with findings / Blockers) and a prioritized input list for the Hardening Pass. **No Foundation implementation** until Hardening exits (unless Steve records an explicit waiver).
+All twelve workstreams recorded (Pass / findings / blockers) → prioritized Hardening input.  
+**No** Experience Redesign implementation and **no** Foundation implementation until Hardening exits (unless Steve records an explicit waiver).
 
 ## Architecture 1.0 Conformance Statement
 
-Audit does not amend Architecture 1.0. Findings that imply ownership change require RFC → Architecture 2.0+.
+Audit does not amend Architecture 1.0. Ownership changes require RFC → Architecture 2.0+.

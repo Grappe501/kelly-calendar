@@ -51,12 +51,14 @@ Engineering Audit ....... find issues (no feature adds)
         ↓
 Hardening Pass .......... fix issues (no feature adds)
         ↓
+Experience Redesign 2.0 . first-class V2 program (after Hardening)
+        ↓
 Calendar Foundation ..... shared infrastructure
         ↓
-Version 2 ............... capabilities, not screen sprawl
+Version 2 Expansion ..... Agenda / Timeline / Mission / …
 ```
 
-**Do not** begin Foundation implementation until Audit and Hardening are complete (or explicitly waived with recorded conditions).
+**Do not** begin Experience Redesign or Foundation implementation until Audit and Hardening are complete (or explicitly waived with recorded conditions).
 
 ## Architecture 1.0 Conformance Statement
 
