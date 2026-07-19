@@ -1,7 +1,7 @@
 # KCCC Phase 3.7 — Readiness Assessment
 
 **Script ID:** `KCCC-PHASE3-READINESS`  
-**Status:** NOT STARTED  
+**Status:** BLOCKED — awaiting 3.1 Trust Model acceptance  
 **Parent:** Phase 3 Build Design · Exit Review  
 **Nature:** Design-governance only · No implementation  
 

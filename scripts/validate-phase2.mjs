@@ -280,7 +280,8 @@ if (
   build.implementation_status === "not_authorized" &&
   build.phase_3_implementation_authorized === false &&
   build.phase_3_planning_authorized === false &&
-  build.phase_3_exit_review_status === "program_structure_open_gates_not_started" &&
+  build.phase_3_exit_review_status === "trust_model_ready_for_review" &&
+  build.phase_3_trust_model_status === "ready_for_review" &&
   build.phase_3_build_design === "KCCC_PHASE_03_BUILD_DESIGN" &&
   build.next_architectural_deliverable === "KCCC_PHASE3_TRUST_MODEL" &&
   Array.isArray(build.phase_3_governance_program) &&
@@ -301,9 +302,25 @@ if (
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Architecture 1.0 closed; Phase 3 governance program open (no impl)");
+  pass("Architecture 1.0 closed; Phase 3.1 Trust Model ready for review (no impl)");
 } else {
   fail("Architecture permanently-closed / Phase 3 program gate incorrect");
+}
+
+const trustModel = read("develop_notes/KCCC_PHASE3_TRUST_MODEL.md");
+if (
+  trustModel.includes("READY FOR REVIEW") &&
+  trustModel.includes("Canonical Truth Hierarchy") &&
+  trustModel.includes("External Information Policy") &&
+  trustModel.includes("Conflict Resolution") &&
+  trustModel.includes("Synchronization Model") &&
+  trustModel.includes("Unknown State") &&
+  trustModel.includes("AI cannot create canonical truth") &&
+  trustModel.includes("Does NOT authorize")
+) {
+  pass("Phase 3.1 Trust Model drafted (READY FOR REVIEW)");
+} else {
+  fail("Phase 3.1 Trust Model incomplete");
 }
 
 const constants = read("src/lib/system/constants.ts");
@@ -314,12 +331,14 @@ if (
   constants.includes("NOT_AUTHORIZED") &&
   constants.includes("KCCC_PHASE_03_BUILD_DESIGN") &&
   constants.includes("KCCC_PHASE3_TRUST_MODEL") &&
+  constants.includes("TRUST_MODEL_READY_FOR_REVIEW") &&
+  constants.includes("READY_FOR_REVIEW") &&
   constants.includes("6690ce2") &&
   constants.includes("0.8.4-petition")
 ) {
-  pass("constants reflect Phase 3 Build Design / Trust Model next");
+  pass("constants reflect Trust Model READY FOR REVIEW");
 } else {
-  fail("constants missing Phase 3 Build Design state");
+  fail("constants missing Trust Model review state");
 }
 
 if (failed) {
@@ -327,5 +346,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Phase 3 Build Design OPEN; gates NOT STARTED; no implementation).",
+  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Phase 3.1 Trust Model READY FOR REVIEW; 3.2+ BLOCKED; no implementation).",
 );

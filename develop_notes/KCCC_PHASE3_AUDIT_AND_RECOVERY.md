@@ -1,7 +1,7 @@
 # KCCC Phase 3.5 — Audit & Recovery
 
 **Script ID:** `KCCC-PHASE3-AUDIT-AND-RECOVERY`  
-**Status:** NOT STARTED  
+**Status:** BLOCKED — awaiting 3.1 Trust Model acceptance  
 **Parent:** Phase 3 Build Design · Exit Review  
 **Nature:** Design-governance only · No implementation  
 

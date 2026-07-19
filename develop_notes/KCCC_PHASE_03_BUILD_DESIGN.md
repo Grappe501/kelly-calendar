@@ -49,15 +49,16 @@ None of these produce code. Every one produces governance.
 
 | Step | Artifact | Status |
 |------|----------|--------|
-| 3.1 | `KCCC_PHASE3_TRUST_MODEL.md` | NOT STARTED |
-| 3.2 | `KCCC_PHASE3_IDENTITY_MODEL.md` | NOT STARTED |
-| 3.3 | `KCCC_PHASE3_AUTOMATION_GOVERNANCE.md` | NOT STARTED |
-| 3.4 | `KCCC_PHASE3_CAMPAIGN_BOUNDARY.md` | NOT STARTED |
-| 3.5 | `KCCC_PHASE3_AUDIT_AND_RECOVERY.md` | NOT STARTED |
-| 3.6 | `KCCC_PHASE3_RISK_ASSESSMENT.md` | NOT STARTED |
-| 3.7 | `KCCC_PHASE3_READINESS.md` | NOT STARTED |
-| 3.8 | `KCCC_PHASE3_EXECUTIVE_RECOMMENDATION.md` | NOT STARTED |
-| 3.9 | `KCCC_PHASE3_AUTHORIZATION_DECISION.md` | NOT STARTED |
+| 3.0 | `KCCC_PHASE_03_BUILD_DESIGN.md` | COMPLETE |
+| 3.1 | `KCCC_PHASE3_TRUST_MODEL.md` | READY FOR REVIEW |
+| 3.2 | `KCCC_PHASE3_IDENTITY_MODEL.md` | BLOCKED (await 3.1 acceptance) |
+| 3.3 | `KCCC_PHASE3_AUTOMATION_GOVERNANCE.md` | BLOCKED (await 3.1 acceptance) |
+| 3.4 | `KCCC_PHASE3_CAMPAIGN_BOUNDARY.md` | BLOCKED (await 3.1 acceptance) |
+| 3.5 | `KCCC_PHASE3_AUDIT_AND_RECOVERY.md` | BLOCKED (await 3.1 acceptance) |
+| 3.6 | `KCCC_PHASE3_RISK_ASSESSMENT.md` | BLOCKED (await 3.1 acceptance) |
+| 3.7 | `KCCC_PHASE3_READINESS.md` | BLOCKED (await 3.1 acceptance) |
+| 3.8 | `KCCC_PHASE3_EXECUTIVE_RECOMMENDATION.md` | BLOCKED (await 3.1 acceptance) |
+| 3.9 | `KCCC_PHASE3_AUTHORIZATION_DECISION.md` | BLOCKED (await 3.1 acceptance) |
 | 3.10 | `KCCC_PHASE3_TRANSITION_PLAN.md` | BLOCKED until AUTHORIZED |
 
 Umbrella: `KCCC_PHASE_03_EXIT_REVIEW.md` (consumes 3.1–3.9; records decision).

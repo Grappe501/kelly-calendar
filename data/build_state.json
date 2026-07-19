@@ -25,7 +25,7 @@
   "implementation_status": "not_authorized",
   "phase_3_implementation_authorized": false,
   "phase_3_planning_authorized": false,
-  "phase_3_exit_review_status": "program_structure_open_gates_not_started",
+  "phase_3_exit_review_status": "trust_model_ready_for_review",
   "phase_3_exit_review": "KCCC_PHASE_03_EXIT_REVIEW",
   "phase_3_build_design": "KCCC_PHASE_03_BUILD_DESIGN",
   "phase_3_governance_program": [
@@ -40,7 +40,8 @@
     "KCCC_PHASE3_AUTHORIZATION_DECISION",
     "KCCC_PHASE3_TRANSITION_PLAN"
   ],
-  "phase_3_next_gate": "3.1-trust-model",
+  "phase_3_next_gate": "3.1-trust-model-acceptance",
+  "phase_3_trust_model_status": "ready_for_review",
   "governance_state": "KCCC_GOVERNANCE_STATE_v1.0",
   "constitution": "KCCC_CONSTITUTION_v1.0",
   "architecture_freeze": "KCCC_ARCHITECTURE_FREEZE_v1.0",
@@ -58,7 +59,7 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-PHASE-03-BUILD-DESIGN",
+  "current_step": "KCCC-PHASE3-TRUST-MODEL",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -112,5 +113,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Architecture 1.0 permanently closed. Phase 3 Build Design OPEN as governance program 3.1–3.10 (no implementation). Next gate: 3.1 Trust Model. AUTHORIZED=planning only. Maturity flags remain false."
+  "notes": "Architecture 1.0 permanently closed. Phase 3.1 Trust Model READY FOR REVIEW. Gates 3.2–3.10 BLOCKED until 3.1 acceptance. No implementation. AUTHORIZED=planning only. Maturity flags remain false."
 }

@@ -1,7 +1,7 @@
 # KCCC Phase 3.9 — Authorization Decision
 
 **Script ID:** `KCCC-PHASE3-AUTHORIZATION-DECISION`  
-**Status:** NOT STARTED  
+**Status:** BLOCKED — awaiting 3.1 Trust Model acceptance  
 **Parent:** Phase 3 Build Design · Exit Review  
 **Nature:** Governance decision only · Produces exactly one state  
 

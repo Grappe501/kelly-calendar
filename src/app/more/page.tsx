@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Phase 3 Build Design · next gate: Trust Model</strong>
+            <strong>Phase 3.1 Trust Model · READY FOR REVIEW (await acceptance)</strong>
           </li>
         </ul>
       </section>

@@ -1,7 +1,8 @@
 # KCCC Phase 3 Exit Review
 
 **Script ID:** `KCCC-PHASE-03-EXIT-REVIEW`  
-**Status:** IN PROGRESS — program structure OPEN; gate answers NOT STARTED  
+**Status:** IN PROGRESS — 3.1 Trust Model READY FOR REVIEW; 3.2–3.10 BLOCKED  
+
 **Nature:** Design-governance umbrella · No implementation  
 **Program design:** `KCCC_PHASE_03_BUILD_DESIGN.md`  
 **Architecture baseline:** Architecture 1.0 (`6690ce2`) — immutable  
@@ -35,15 +36,15 @@ Phase 3 Exit Review (3.1–3.8 gates)
 
 | Step | Artifact | Status |
 |------|----------|--------|
-| 3.1 Trust Model | `KCCC_PHASE3_TRUST_MODEL.md` | NOT STARTED |
-| 3.2 Identity & Authority | `KCCC_PHASE3_IDENTITY_MODEL.md` | NOT STARTED |
-| 3.3 Automation Governance | `KCCC_PHASE3_AUTOMATION_GOVERNANCE.md` | NOT STARTED |
-| 3.4 Campaign Boundary | `KCCC_PHASE3_CAMPAIGN_BOUNDARY.md` | NOT STARTED |
-| 3.5 Audit & Recovery | `KCCC_PHASE3_AUDIT_AND_RECOVERY.md` | NOT STARTED |
-| 3.6 Risk Assessment | `KCCC_PHASE3_RISK_ASSESSMENT.md` | NOT STARTED |
-| 3.7 Readiness | `KCCC_PHASE3_READINESS.md` | NOT STARTED |
-| 3.8 Executive Recommendation | `KCCC_PHASE3_EXECUTIVE_RECOMMENDATION.md` | NOT STARTED |
-| 3.9 Authorization Decision | `KCCC_PHASE3_AUTHORIZATION_DECISION.md` | NOT STARTED |
+| 3.1 Trust Model | `KCCC_PHASE3_TRUST_MODEL.md` | READY FOR REVIEW |
+| 3.2 Identity & Authority | `KCCC_PHASE3_IDENTITY_MODEL.md` | BLOCKED (await 3.1 acceptance) |
+| 3.3 Automation Governance | `KCCC_PHASE3_AUTOMATION_GOVERNANCE.md` | BLOCKED (await 3.1 acceptance) |
+| 3.4 Campaign Boundary | `KCCC_PHASE3_CAMPAIGN_BOUNDARY.md` | BLOCKED (await 3.1 acceptance) |
+| 3.5 Audit & Recovery | `KCCC_PHASE3_AUDIT_AND_RECOVERY.md` | BLOCKED (await 3.1 acceptance) |
+| 3.6 Risk Assessment | `KCCC_PHASE3_RISK_ASSESSMENT.md` | BLOCKED (await 3.1 acceptance) |
+| 3.7 Readiness | `KCCC_PHASE3_READINESS.md` | BLOCKED (await 3.1 acceptance) |
+| 3.8 Executive Recommendation | `KCCC_PHASE3_EXECUTIVE_RECOMMENDATION.md` | BLOCKED (await 3.1 acceptance) |
+| 3.9 Authorization Decision | `KCCC_PHASE3_AUTHORIZATION_DECISION.md` | BLOCKED (await 3.1 acceptance) |
 | 3.10 Transition Plan | `KCCC_PHASE3_TRANSITION_PLAN.md` | BLOCKED until AUTHORIZED |
 
 ## Exit Criteria Matrix

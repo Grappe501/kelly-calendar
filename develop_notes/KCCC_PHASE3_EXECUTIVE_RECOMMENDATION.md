@@ -1,7 +1,7 @@
 # KCCC Phase 3.8 — Executive Recommendation
 
 **Script ID:** `KCCC-PHASE3-EXECUTIVE-RECOMMENDATION`  
-**Status:** NOT STARTED  
+**Status:** BLOCKED — awaiting 3.1 Trust Model acceptance  
 **Parent:** Phase 3 Build Design · Exit Review  
 **Nature:** Design-governance only · No implementation  
 **Depends on:** 3.1–3.7 gates  
