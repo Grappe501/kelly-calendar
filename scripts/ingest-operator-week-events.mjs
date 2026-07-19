@@ -1,11 +1,13 @@
 /**
- * Operator week live ingest (Feature Freeze compliant — no new UI).
- * Idempotent upsert by ingestKey in privateNotes. Never invents confirmed
- * clock times — TENTATIVE marks planning windows where only part of the
- * schedule was stated. Never prints secrets or street addresses.
+ * KCCC LIVE CALENDAR INGEST PASS 2
+ * July 19–24, 2026 · confirmed events only · Feature Freeze honored
  *
- * Usage:
- *   node scripts/run-with-h-drive-env.cjs node scripts/ingest-operator-week-events.mjs
+ * - Idempotent upsert by [ingestKey:…] in privateNotes
+ * - Supersedes earlier Carroll County / later-week plans via CANCELLED + audit
+ * - Time-unknown speaking / return blocks stay staged (drafts), not fabricated live times
+ * - Never prints secrets or farm street addresses to stdout/proof git artifacts
+ *
+ * Usage: npm run events:ingest:operator-week
  */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -13,6 +15,9 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const PASS = "PASS2-2026-07-19";
+const SUPERSESSION_REASON =
+  "Pass 2 operator supersession: Sunday night Blytheville; Monday events; return farm Monday evening; Kelly works Little Rock Tuesday; no Carroll County / no other July stops at this point.";
 
 const isDeployRuntime =
   process.env.NETLIFY === "true" || process.env.CONTEXT === "production";
@@ -50,11 +55,11 @@ if (!process.env.DIRECT_URL && process.env.DATABASE_URL) {
   process.env.DIRECT_URL = process.env.DATABASE_URL;
 }
 if (!process.env.DATABASE_URL) {
-  console.error("FAIL: DATABASE_URL missing — cannot ingest");
+  console.error("FAIL: DATABASE_URL missing");
   process.exit(1);
 }
 if (!process.env.APP_SESSION_SECRET || process.env.APP_SESSION_SECRET.trim().length < 32) {
-  console.error("FAIL: APP_SESSION_SECRET missing or too short — auth not ready");
+  console.error("FAIL: APP_SESSION_SECRET missing or too short");
   process.exit(1);
 }
 
@@ -78,11 +83,11 @@ const { PrismaClient } = await import("@prisma/client");
 const prisma = new PrismaClient();
 
 function chicagoLocalToDate(localIso) {
-  return new Date(`${localIso}-05:00`); // CDT Jul 2026
+  return new Date(`${localIso}-05:00`);
 }
 
 function notes(ingestKey, text) {
-  return `[ingestKey:${ingestKey}]\n${text}`;
+  return `[ingestKey:${ingestKey}]\n[pass:${PASS}]\n${text}`;
 }
 
 async function allocateEventNumber(tx, year) {
@@ -99,14 +104,27 @@ async function allocateEventNumber(tx, year) {
   return `KCCC-${year}-${String(current).padStart(4, "0")}`;
 }
 
-/**
- * Confirmed times from operator. TENTATIVE = planning window / partial evidence only.
- * Don Henry: 8:30–11 (operator). Internet 8–10 overlaps — kept as stated.
- * Picnic end Unknown → TENTATIVE window after 4:30 start.
- * Tue late return / Wed after-work depart / Sat morning parade / Sun night forum:
- *   planning windows only (labeled in notes).
- */
-const EVENTS = [
+/** Earlier Pass-1 plans superseded by Pass 2 authority — cancel, do not delete. */
+const SUPERSEDE_KEYS = [
+  "farm-depart-carroll-prep-2026-07-20",
+  "carroll-dems-picnic-2026-07-21",
+  "return-farm-late-2026-07-21",
+  "depart-hsv-after-work-2026-07-22",
+  "lodging-hsv-wed-2026-07-22",
+  "kelly-work-hsv-2026-07-23",
+  "lodging-farm-thu-2026-07-23",
+  "steve-fasting-start-2026-07-23",
+  "steve-procedure-2026-07-24",
+  "cave-city-watermelon-2026-07-25",
+  "lodging-batesville-sat-2026-07-25",
+  "blytheville-churches-2026-07-26",
+  "blytheville-forum-2026-07-26",
+  /** Fabricated 6:00 PM — Pass 2 requires UNKNOWN time → stage draft instead */
+  "naacp-steve-jonesboro-2026-07-20",
+];
+
+/** Live calendar upserts (confirmed enough to publish without inventing clock times). */
+const LIVE_EVENTS = [
   {
     key: "fundraiser-cd2-2026-07-19",
     calendarSlug: "fundraising",
@@ -123,7 +141,24 @@ const EVENTS = [
     candidateRole: "ATTENDING",
     privateNotes: notes(
       "fundraiser-cd2-2026-07-19",
-      "Host: Judge Humphries home. Street address not stored. US House AR-02 fundraiser.",
+      "Host home (Judge Humphries). Street address not stored in git. Followed by Blytheville overnight.",
+    ),
+  },
+  {
+    key: "overnight-blytheville-2026-07-19",
+    calendarSlug: "travel",
+    internalTitle: "Overnight in Blytheville",
+    campaignDisplayTitle: "Overnight in Blytheville",
+    eventType: "Travel block",
+    status: "CONFIRMED",
+    startsAt: chicagoLocalToDate("2026-07-19T19:00:00"),
+    endsAt: chicagoLocalToDate("2026-07-20T08:00:00"),
+    city: "Blytheville",
+    locationDisclosure: "CITY",
+    defaultVisibility: "TITLE_LOCATION",
+    privateNotes: notes(
+      "overnight-blytheville-2026-07-19",
+      "Campaign overnight in Blytheville following the Dr. Chris Jones fundraiser. Lodging details are not yet recorded.\nLodging venue: UNKNOWN\nHotel/reservation: UNKNOWN\nEnd 8:00 AM = lodging block end, not confirmed checkout clock.",
     ),
   },
   {
@@ -140,7 +175,7 @@ const EVENTS = [
     defaultVisibility: "BUSY_ONLY",
     privateNotes: notes(
       "isp-window-2026-07-20",
-      "New internet box install window 8:00–10:00 AM. Overlaps Don Henry block by operator choice.",
+      "Internet technician appointment at farm 8:00–10:00 AM.\nDATA QUALITY: Overlaps Don Henry consultation 8:30–10:00.\nDATA QUALITY: Blytheville overnight block ends 8:00 AM same morning — travel/availability conflict; do not auto-resolve.",
     ),
   },
   {
@@ -158,492 +193,493 @@ const EVENTS = [
     legacyTitles: ["Property walk / farm clean-up consult"],
     privateNotes: notes(
       "property-walk-2026-07-20",
-      "Don Henry — walk property and set farm clean-up plan. Block 8:30–11:00 AM per operator.",
+      "Don Henry — walk property / farm cleanup plan. Block 8:30–11:00 AM (operator).\nDATA QUALITY: Potential overlap with internet install 8:30–10:00 — surface only; do not move.",
     ),
   },
   {
     key: "england-dems-kelly-2026-07-20",
     calendarSlug: "public-events",
-    internalTitle: "Kelly speaks — England Democrat Meeting",
-    campaignDisplayTitle: "England Democrat Meeting — Kelly speaks",
-    eventType: "Community meeting",
+    internalTitle: "Kelly Speaks — England Democratic Meeting",
+    campaignDisplayTitle: "Kelly Speaks — England Democratic Meeting",
+    eventType: "Speaking Engagement",
     status: "CONFIRMED",
     startsAt: chicagoLocalToDate("2026-07-20T17:30:00"),
-    endsAt: chicagoLocalToDate("2026-07-20T19:00:00"),
+    /**
+     * End time UNKNOWN. Schema requires endsAt > startsAt — use +1 minute
+     * as a non-authoritative placeholder only (documented in privateNotes).
+     */
+    endsAt: chicagoLocalToDate("2026-07-20T17:31:00"),
     city: "England",
     locationDisclosure: "CITY",
     defaultVisibility: "TITLE_LOCATION",
     candidateRole: "SPEAKING",
     privateNotes: notes(
       "england-dems-kelly-2026-07-20",
-      "Kelly speaking. End time not separately confirmed — 7:00 PM planning end for calendar block.",
+      "Kelly Grappe speaks at England Democrats. Start CONFIRMED 5:30 PM CT.\nEnd time: UNKNOWN\nVenue: UNKNOWN\nStreet address: UNKNOWN\nSchema note: endsAt is start+1min placeholder only — NOT a confirmed duration.\nAfter event: return to farm (see staged return draft).\nSpeaker: Kelly Grappe · Organization: England Democrats",
     ),
   },
   {
-    key: "naacp-steve-jonesboro-2026-07-20",
-    calendarSlug: "public-events",
-    internalTitle: "Steve speaks — Jonesboro NAACP (Voter Registration & Deployment)",
-    campaignDisplayTitle: "Jonesboro NAACP — Steve speaks",
-    eventType: "Community meeting",
+    key: "kelly-work-littlerock-2026-07-21",
+    calendarSlug: "protected-personal",
+    internalTitle: "Kelly Working in Little Rock",
+    campaignDisplayTitle: "Personal — working Little Rock",
+    restrictedDisplayTitle: "Unavailable",
+    eventType: "Protected personal block",
     status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-20T18:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-20T19:30:00"),
-    city: "Jonesboro",
-    venueName: "NAACP Jonesboro Branch",
+    isAllDay: true,
+    startsAt: chicagoLocalToDate("2026-07-21T00:00:00"),
+    endsAt: chicagoLocalToDate("2026-07-21T23:59:59"),
+    city: "Little Rock",
     locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
+    defaultVisibility: "BUSY_ONLY",
     privateNotes: notes(
-      "naacp-steve-jonesboro-2026-07-20",
-      "Steve speaking 6:00 PM. Topic: Voter Registration & Deployment. End time not separately confirmed — 7:30 PM planning end.",
+      "kelly-work-littlerock-2026-07-21",
+      "Kelly is working in Little Rock Tuesday. Exact work hours and site not recorded for this Pass 2 live row (all-day busy).\nOperator standing pattern (not asserted as this day's clock): Mon–Fri often 8–12 and 1–5; Tue/Fri often try Little Rock office when scheduled — may override.\nStreet address: not stored in git artifacts.",
     ),
   },
   {
-    key: "farm-depart-carroll-prep-2026-07-20",
-    calendarSlug: "travel",
-    internalTitle: "Meet at farm — depart prep for Carroll County",
-    campaignDisplayTitle: "Travel prep — Carroll County (Tue)",
-    eventType: "Travel block",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-20T20:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-20T21:00:00"),
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    privateNotes: notes(
-      "farm-depart-carroll-prep-2026-07-20",
-      "Meet at the farm 8:00 PM. Travel preparation for Tuesday Carroll County Democrats Picnic.",
-    ),
-  },
-  {
-    key: "carroll-dems-picnic-2026-07-21",
-    calendarSlug: "public-events",
-    internalTitle: "Carroll County Democrats Picnic",
-    campaignDisplayTitle: "Carroll County Democrats Picnic",
-    eventType: "Community meeting",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-21T16:30:00"),
-    endsAt: chicagoLocalToDate("2026-07-21T20:00:00"),
-    city: "Carroll County",
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    candidateRole: "ATTENDING",
-    privateNotes: notes(
-      "carroll-dems-picnic-2026-07-21",
-      "Start confirmed 4:30 PM CT. End time NOT confirmed — 8:00 PM is a planning placeholder only (TENTATIVE end semantics). Return to farm late evening (see travel return).",
-    ),
-  },
-  {
-    key: "return-farm-late-2026-07-21",
-    calendarSlug: "travel",
-    internalTitle: "Return to farm — late Tuesday (approximate)",
-    campaignDisplayTitle: "Travel — return to farm (late)",
-    eventType: "Travel block",
+    key: "cave-city-christy-low-2026-07-24",
+    calendarSlug: "volunteer",
+    internalTitle: "Cave City Watermelon Festival — Christy Low Volunteering",
+    campaignDisplayTitle: "Cave City Watermelon Festival — Christy Low",
+    eventType: "Festival / Volunteer Deployment",
     status: "TENTATIVE",
-    startsAt: chicagoLocalToDate("2026-07-21T21:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-21T23:30:00"),
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    privateNotes: notes(
-      "return-farm-late-2026-07-21",
-      "Operator: return to farm Tuesday night late. Exact clock times Unknown — planning window 9:00–11:30 PM only.",
-    ),
-  },
-  {
-    key: "depart-hsv-after-work-2026-07-22",
-    calendarSlug: "travel",
-    internalTitle: "Depart Little Rock for Hot Springs Village (after Kelly work)",
-    campaignDisplayTitle: "Travel — LR to Hot Springs Village",
-    eventType: "Travel block",
-    status: "TENTATIVE",
-    startsAt: chicagoLocalToDate("2026-07-22T17:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-22T20:00:00"),
-    city: "Hot Springs Village",
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    privateNotes: notes(
-      "depart-hsv-after-work-2026-07-22",
-      "Leave after Kelly gets off work in Little Rock. Exact depart time Unknown — 5:00 PM planning start only. Lodging provided by Democrats Wed night.",
-    ),
-  },
-  {
-    key: "lodging-hsv-wed-2026-07-22",
-    calendarSlug: "protected-personal",
-    internalTitle: "Lodging — Hot Springs Village (Democrats · Wed night)",
-    campaignDisplayTitle: "Personal — HSV lodging (Wed)",
-    restrictedDisplayTitle: "Unavailable",
-    eventType: "Protected personal block",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-22T20:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-23T08:00:00"),
-    city: "Hot Springs Village",
-    locationDisclosure: "CITY",
-    defaultVisibility: "BUSY_ONLY",
-    privateNotes: notes(
-      "lodging-hsv-wed-2026-07-22",
-      "Accommodations provided by Democrats Wednesday night. Address not stored.",
-    ),
-  },
-  {
-    key: "kelly-work-hsv-2026-07-23",
-    calendarSlug: "staff-work",
-    internalTitle: "Kelly work day — Hot Springs Village",
-    campaignDisplayTitle: "Kelly work from Hot Springs Village",
-    eventType: "Other",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-23T09:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-23T17:00:00"),
-    city: "Hot Springs Village",
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    privateNotes: notes(
-      "kelly-work-hsv-2026-07-23",
-      "Kelly works from Hot Springs Village during the day Thursday. Exact hours not separately confirmed — standard day block.",
-    ),
-  },
-  {
-    key: "lodging-farm-thu-2026-07-23",
-    calendarSlug: "protected-personal",
-    internalTitle: "Lodging — farm (Thu night before Friday procedure)",
-    campaignDisplayTitle: "Personal — farm overnight (Thu)",
-    restrictedDisplayTitle: "Unavailable",
-    eventType: "Protected personal block",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-23T20:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-24T07:00:00"),
-    locationDisclosure: "HIDDEN",
-    defaultVisibility: "BUSY_ONLY",
-    privateNotes: notes(
-      "lodging-farm-thu-2026-07-23",
-      "Operator itinerary: spend Thursday night at the farm (supersedes HSV Thu lodging for this night). Democrats also offered Thu night HSV — itinerary uses farm.",
-    ),
-  },
-  {
-    key: "steve-fasting-start-2026-07-23",
-    calendarSlug: "protected-personal",
-    internalTitle: "Steve medical prep — fasting starts (gastric bypass)",
-    campaignDisplayTitle: "Personal — medical fasting starts",
-    restrictedDisplayTitle: "Unavailable",
-    eventType: "Protected personal block",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-23T22:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-24T07:30:00"),
-    locationDisclosure: "HIDDEN",
-    defaultVisibility: "BUSY_ONLY",
-    privateNotes: notes(
-      "steve-fasting-start-2026-07-23",
-      "Steve starts fasting for gastric bypass at 10:00 PM Thursday. Personal/medical — BUSY_ONLY.",
-    ),
-  },
-  {
-    key: "steve-procedure-2026-07-24",
-    calendarSlug: "protected-personal",
-    internalTitle: "Steve — gastric bypass procedure + ultrasound",
-    campaignDisplayTitle: "Personal — medical procedure",
-    restrictedDisplayTitle: "Unavailable",
-    eventType: "Protected personal block",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-24T07:30:00"),
-    endsAt: chicagoLocalToDate("2026-07-24T12:00:00"),
-    locationDisclosure: "HIDDEN",
-    defaultVisibility: "BUSY_ONLY",
-    privateNotes: notes(
-      "steve-procedure-2026-07-24",
-      "Procedure 7:30 AM Friday with ultrasound. End/recovery duration Unknown — noon planning end only. Facility address not stored.",
-    ),
-  },
-  {
-    key: "cave-city-watermelon-2026-07-25",
-    calendarSlug: "public-events",
-    internalTitle: "Cave City Watermelon Festival & Parade — volunteer activation",
-    campaignDisplayTitle: "Cave City Watermelon Festival & Parade",
-    eventType: "Festival",
-    status: "TENTATIVE",
-    startsAt: chicagoLocalToDate("2026-07-25T08:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-25T13:00:00"),
+    /** Date confirmed Friday Jul 24; shift UNKNOWN — all-day availability marker only */
+    isAllDay: true,
+    startsAt: chicagoLocalToDate("2026-07-24T00:00:00"),
+    endsAt: chicagoLocalToDate("2026-07-24T23:59:59"),
     city: "Cave City",
     locationDisclosure: "CITY",
     defaultVisibility: "TITLE_LOCATION",
-    candidateRole: "ATTENDING",
-    relatedCalendarSlugs: ["volunteer"],
+    candidateAttendance: false,
     privateNotes: notes(
-      "cave-city-watermelon-2026-07-25",
-      "Saturday morning festival/parade. Exact parade start Unknown — 8:00 AM–1:00 PM planning window. Ops: volunteers in t-shirts; circle frisbee fans; pepper parade route ahead with round fans/discs.",
-    ),
-  },
-  {
-    key: "lodging-batesville-sat-2026-07-25",
-    calendarSlug: "protected-personal",
-    internalTitle: "Lodging — Batesville (Sat night)",
-    campaignDisplayTitle: "Personal — Batesville lodging",
-    restrictedDisplayTitle: "Unavailable",
-    eventType: "Protected personal block",
-    status: "CONFIRMED",
-    startsAt: chicagoLocalToDate("2026-07-25T20:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-26T08:00:00"),
-    city: "Batesville",
-    locationDisclosure: "CITY",
-    defaultVisibility: "BUSY_ONLY",
-    privateNotes: notes(
-      "lodging-batesville-sat-2026-07-25",
-      "Spend Saturday night in Batesville. Hotel address not stored.",
-    ),
-  },
-  {
-    key: "blytheville-churches-2026-07-26",
-    calendarSlug: "public-events",
-    internalTitle: "Blytheville — multiple church visits (Sunday morning)",
-    campaignDisplayTitle: "Blytheville church visits",
-    eventType: "Community meeting",
-    status: "TENTATIVE",
-    startsAt: chicagoLocalToDate("2026-07-26T09:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-26T12:30:00"),
-    city: "Blytheville",
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    candidateRole: "ATTENDING",
-    privateNotes: notes(
-      "blytheville-churches-2026-07-26",
-      "Multiple churches Sunday morning. Exact service times Unknown — morning planning window only.",
-    ),
-  },
-  {
-    key: "blytheville-forum-2026-07-26",
-    calendarSlug: "public-events",
-    internalTitle: "Blytheville candidate forum (Sunday night)",
-    campaignDisplayTitle: "Blytheville candidate forum",
-    eventType: "Candidate forum",
-    status: "TENTATIVE",
-    startsAt: chicagoLocalToDate("2026-07-26T18:00:00"),
-    endsAt: chicagoLocalToDate("2026-07-26T20:30:00"),
-    city: "Blytheville",
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    candidateRole: "ATTENDING",
-    privateNotes: notes(
-      "blytheville-forum-2026-07-26",
-      "Candidate forum Sunday night. Exact start Unknown — 6:00–8:30 PM planning window only. Confirm with host.",
+      "cave-city-christy-low-2026-07-24",
+      "Christy Low volunteered for campaign activity at Cave City Watermelon Festival (Friday Jul 24).\nVolunteer shift: UNKNOWN\nAssignment: UNKNOWN\nMeeting location: UNKNOWN\nKelly attendance: UNKNOWN\nSteve attendance: UNKNOWN\nAdditional volunteers: UNKNOWN\ncandidateAttending: false (not confirmed)",
     ),
   },
 ];
 
-const CALENDAR_SLUGS = [
-  ...new Set([
-    ...EVENTS.map((e) => e.calendarSlug),
-    ...EVENTS.flatMap((e) => e.relatedCalendarSlugs ?? []),
-  ]),
+/** Staged drafts only — must not publish fabricated clock times. */
+const STAGED_DRAFTS = [
+  {
+    draftId: "draft_pass2_naacp_steve_jonesboro",
+    status: "READY_FOR_REVIEW",
+    basic: {
+      primaryCalendar: "Public Events",
+      additionalCalendars: [],
+      eventType: "Speaking Engagement",
+      internalTitle: "Steve Speaks — Jonesboro NAACP Voter Registration and Deployment",
+      campaignDisplayTitle: "Steve Speaks — Jonesboro NAACP Voter Registration and Deployment",
+      priority: "High",
+      confirmationStatus: "Hold",
+    },
+    timing: {
+      timezone: "America/Chicago",
+      allDay: false,
+      dateKey: "2026-07-20",
+      startsAtLocal: "UNKNOWN",
+      endsAtLocal: "UNKNOWN",
+      startConfidence: "UNKNOWN",
+      endConfidence: "UNKNOWN",
+    },
+    location: {
+      state: "Arkansas",
+      city: "Jonesboro",
+      venueName: "UNKNOWN",
+      locationDisclosure: "CITY",
+    },
+    people: {
+      speaker: "Steve Grappe",
+      organization: "Jonesboro Branch of the NAACP",
+    },
+    objectives: {
+      summary:
+        "Steve Grappe is scheduled to speak to the Jonesboro Branch of the NAACP about voter registration and campaign deployment. Start time, end time, and venue address remain unconfirmed.",
+    },
+    programFlow: [],
+    packingItems: [],
+    staffing: [],
+    preEventActions: [],
+    eventDayActions: [],
+    postEventActions: [],
+    communicationsPlan: [],
+    travelPlan: {},
+    visibility: {
+      locationDisclosure: "CITY",
+      generalVisibility: "Campaign-wide limited",
+      showCalendarName: true,
+      showSafeTitle: true,
+      showGeneralLocation: true,
+      showStartEnd: false,
+      hideProtectedDetails: true,
+    },
+    aiSuggestionsApplied: [],
+    databaseWriteAttempted: false,
+    liveCalendar: false,
+    pass2Note:
+      "STAGED — start/end UNKNOWN. Do not publish fabricated time. Live fabricated 6PM row superseded CANCELLED.",
+  },
+  {
+    draftId: "draft_pass2_return_farm_after_england",
+    status: "READY_FOR_REVIEW",
+    basic: {
+      primaryCalendar: "Travel",
+      additionalCalendars: [],
+      eventType: "Travel block",
+      internalTitle: "Return to the Farm",
+      campaignDisplayTitle: "Return to the Farm",
+      priority: "Normal",
+      confirmationStatus: "Hold",
+    },
+    timing: {
+      timezone: "America/Chicago",
+      allDay: false,
+      dateKey: "2026-07-20",
+      startsAtLocal: "UNKNOWN",
+      endsAtLocal: "UNKNOWN",
+      afterEvent: "england-dems-kelly-2026-07-20",
+      startConfidence: "UNKNOWN",
+    },
+    location: {
+      state: "Arkansas",
+      fromCity: "England",
+      toLabel: "Farm (Rose Bud area)",
+      locationDisclosure: "CITY",
+    },
+    people: {},
+    objectives: {
+      summary:
+        "Return to the farm after Kelly’s England Democratic meeting. Departure and arrival times remain unknown. Farm street address is operator-known but not written into git-tracked files.",
+    },
+    programFlow: [],
+    packingItems: [],
+    staffing: [],
+    preEventActions: [],
+    eventDayActions: [],
+    postEventActions: [],
+    communicationsPlan: [],
+    travelPlan: { mode: "UNKNOWN" },
+    visibility: {
+      locationDisclosure: "CITY",
+      generalVisibility: "Campaign-wide limited",
+      showCalendarName: true,
+      showSafeTitle: true,
+      showGeneralLocation: true,
+      showStartEnd: false,
+      hideProtectedDetails: true,
+    },
+    aiSuggestionsApplied: [],
+    databaseWriteAttempted: false,
+    liveCalendar: false,
+    pass2Note: "STAGED — awaiting England meeting end time. Do not publish false 8:00 PM block.",
+  },
 ];
 
 const proof = {
+  pass: PASS,
   generatedAt: new Date().toISOString(),
-  scope: "enable_live_ingest_no_new_ui",
   featureFreeze: "honored",
-  dates: ["2026-07-19", "2026-07-26"],
+  runtimeFeaturesAdded: "NONE",
   timezone: "America/Chicago",
-  honesty: "TENTATIVE marks planning windows where operator did not confirm exact clock times",
-  events: [],
+  julyBoundaryNote:
+    "Operator-entered July campaign schedule is currently complete through the known events listed in this ingest pass. Absence of records does not prove universal availability.",
+  eventsCreated: [],
+  eventsUpdated: [],
+  eventsSuperseded: [],
+  eventsStaged: [],
+  eventsIntentionallyOmitted: [
+    "Carroll County travel / picnic / Mon 8pm depart — superseded by Pass 2",
+    "Steve NAACP live clock time — staged UNKNOWN instead",
+    "Return-to-farm live clock — staged UNKNOWN instead",
+    "Wed–Sun prior Pass-1 itinerary (HSV, procedure, Sat Cave City, Blytheville churches/forum)",
+  ],
+  conflictsSurfaced: [
+    "Internet install 8:00–10:00 overlaps Don Henry consult 8:30–11:00 (8:30–10:00)",
+    "Blytheville overnight ends 8:00 AM vs internet appointment at farm 8:00 AM — travel/availability conflict; not auto-resolved",
+  ],
+  confirmed: [],
+  unknown: [],
+  idempotency: { runs: [] },
 };
+
+async function findByIngestKey(key) {
+  return prisma.event.findFirst({
+    where: { archivedAt: null, privateNotes: { startsWith: `[ingestKey:${key}]` } },
+  });
+}
+
+async function supersedeKey(actorUser, key) {
+  const existing = await findByIngestKey(key);
+  if (!existing) {
+    proof.eventsSuperseded.push({ key, action: "absent_noop" });
+    console.log(`SUPERSEDE noop: ${key} (not present)`);
+    return;
+  }
+  if (existing.status === "CANCELLED") {
+    proof.eventsSuperseded.push({
+      key,
+      action: "already_cancelled",
+      eventNumber: existing.eventNumber,
+      eventId: existing.id,
+    });
+    console.log(`SUPERSEDE already: ${key} → ${existing.eventNumber}`);
+    return;
+  }
+  const updated = await prisma.$transaction(async (tx) => {
+    const event = await tx.event.update({
+      where: { id: existing.id },
+      data: {
+        status: "CANCELLED",
+        privateNotes: `${existing.privateNotes ?? `[ingestKey:${key}]`}\n[SUPERSEDED:${PASS}]\n${SUPERSESSION_REASON}`,
+        version: { increment: 1 },
+      },
+    });
+    await tx.eventStatusHistory.create({
+      data: {
+        eventId: event.id,
+        fromStatus: existing.status,
+        toStatus: "CANCELLED",
+        changedByUserId: actorUser.id,
+        reason: SUPERSESSION_REASON,
+      },
+    });
+    await tx.auditLog.create({
+      data: {
+        actorUserId: actorUser.id,
+        actorType: "USER",
+        action: "EVENT_SUPERSEDED",
+        entityType: "Event",
+        entityId: event.id,
+        source: "operator-week-ingest-pass2",
+        reason: SUPERSESSION_REASON,
+        previousStateRedacted: { status: existing.status, eventNumber: existing.eventNumber },
+        newStateRedacted: { status: "CANCELLED", ingestKey: key, pass: PASS },
+      },
+    });
+    return event;
+  });
+  proof.eventsSuperseded.push({
+    key,
+    action: "cancelled",
+    eventNumber: updated.eventNumber,
+    eventId: updated.id,
+  });
+  console.log(`SUPERSEDED: ${key} → ${updated.eventNumber} CANCELLED`);
+}
+
+async function upsertLive(actorUser, bySlug, spec) {
+  const calendar = bySlug[spec.calendarSlug];
+  if (!calendar) throw new Error(`Calendar missing: ${spec.calendarSlug}`);
+
+  let existing = await findByIngestKey(spec.key);
+  if (!existing && spec.legacyTitles?.length) {
+    existing = await prisma.event.findFirst({
+      where: {
+        archivedAt: null,
+        primaryCalendarId: calendar.id,
+        internalTitle: { in: spec.legacyTitles },
+        status: { not: "CANCELLED" },
+      },
+    });
+  }
+
+  const data = {
+    internalTitle: spec.internalTitle,
+    campaignDisplayTitle: spec.campaignDisplayTitle,
+    restrictedDisplayTitle: spec.restrictedDisplayTitle ?? null,
+    eventType: spec.eventType,
+    status: spec.status,
+    startsAt: spec.startsAt,
+    endsAt: spec.endsAt,
+    isAllDay: Boolean(spec.isAllDay),
+    timezone: "America/Chicago",
+    city: spec.city ?? null,
+    venueName: spec.venueName ?? null,
+    locationDisclosure: spec.locationDisclosure,
+    defaultVisibility: spec.defaultVisibility,
+    candidateRole: spec.candidateRole ?? null,
+    candidateAttendance:
+      spec.candidateAttendance === undefined ? null : spec.candidateAttendance,
+    privateNotes: spec.privateNotes,
+    primaryCalendarId: calendar.id,
+  };
+
+  if (existing && existing.status !== "CANCELLED") {
+    const updated = await prisma.event.update({
+      where: { id: existing.id },
+      data: { ...data, version: { increment: 1 } },
+    });
+    proof.eventsUpdated.push({
+      key: spec.key,
+      eventNumber: updated.eventNumber,
+      eventId: updated.id,
+      status: updated.status,
+    });
+    console.log(`UPDATED: ${spec.key} → ${updated.eventNumber}`);
+    return { action: "updated", event: updated };
+  }
+
+  const created = await prisma.$transaction(async (tx) => {
+    const year = spec.startsAt.getFullYear();
+    const eventNumber = await allocateEventNumber(tx, year);
+    const event = await tx.event.create({
+      data: {
+        eventNumber,
+        sourceType: "MANUAL",
+        createdByUserId: actorUser.id,
+        ownerUserId: actorUser.id,
+        ...data,
+        version: 1,
+      },
+    });
+    await tx.eventCalendarMembership.create({
+      data: {
+        eventId: event.id,
+        calendarId: calendar.id,
+        membershipType: "PRIMARY",
+        isPrimary: true,
+        createdByUserId: actorUser.id,
+      },
+    });
+    await tx.eventStatusHistory.create({
+      data: {
+        eventId: event.id,
+        fromStatus: null,
+        toStatus: event.status,
+        changedByUserId: actorUser.id,
+        reason: `Operator week ingest ${PASS}`,
+      },
+    });
+    await tx.auditLog.create({
+      data: {
+        actorUserId: actorUser.id,
+        actorType: "USER",
+        action: "EVENT_CREATED",
+        entityType: "Event",
+        entityId: event.id,
+        source: "operator-week-ingest-pass2",
+        reason: `Live ingest ${PASS}`,
+        newStateRedacted: {
+          eventNumber: event.eventNumber,
+          title: event.internalTitle,
+          status: event.status,
+          ingestKey: spec.key,
+        },
+      },
+    });
+    return event;
+  });
+
+  proof.eventsCreated.push({
+    key: spec.key,
+    eventNumber: created.eventNumber,
+    eventId: created.id,
+    status: created.status,
+  });
+  console.log(`CREATED: ${spec.key} → ${created.eventNumber}`);
+  return { action: "created", event: created };
+}
+
+function writeStagedDrafts() {
+  const dir = path.join(root, "data", "ingest_staging", "drafts");
+  fs.mkdirSync(dir, { recursive: true });
+  for (const draft of STAGED_DRAFTS) {
+    const file = path.join(dir, `${draft.draftId}.json`);
+    const payload = {
+      ...draft,
+      draftVersion: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      programFlow: draft.programFlow ?? [],
+      packingItems: draft.packingItems ?? [],
+      staffing: draft.staffing ?? [],
+      preEventActions: draft.preEventActions ?? [],
+      eventDayActions: draft.eventDayActions ?? [],
+      postEventActions: draft.postEventActions ?? [],
+      communicationsPlan: draft.communicationsPlan ?? [],
+      travelPlan: draft.travelPlan ?? {},
+      aiSuggestionsApplied: [],
+      databaseWriteAttempted: false,
+      liveCalendar: false,
+    };
+    fs.writeFileSync(file, JSON.stringify(payload, null, 2));
+    proof.eventsStaged.push({ draftId: draft.draftId, file: path.relative(root, file) });
+    console.log(`STAGED: ${draft.draftId}`);
+  }
+}
 
 try {
   const actorUser = await prisma.user.findFirst({
     where: { email: "kelly.command@example.invalid", isActive: true },
   });
-  if (!actorUser) throw new Error("Kelly synthetic user missing after auth:seed");
+  if (!actorUser) throw new Error("Kelly synthetic user missing");
 
+  const slugs = [...new Set(LIVE_EVENTS.map((e) => e.calendarSlug))];
   const calendars = await prisma.calendar.findMany({
-    where: { slug: { in: CALENDAR_SLUGS }, archivedAt: null },
+    where: { slug: { in: slugs }, archivedAt: null },
   });
   const bySlug = Object.fromEntries(calendars.map((c) => [c.slug, c]));
-  for (const slug of CALENDAR_SLUGS) {
+  for (const slug of slugs) {
     if (!bySlug[slug]) throw new Error(`Calendar missing: ${slug}`);
   }
 
-  for (const spec of EVENTS) {
-    const calendar = bySlug[spec.calendarSlug];
-    const keyTag = `[ingestKey:${spec.key}]`;
-    let existing = await prisma.event.findFirst({
-      where: {
-        archivedAt: null,
-        privateNotes: { startsWith: keyTag },
-      },
-    });
-    if (!existing && spec.legacyTitles?.length) {
-      existing = await prisma.event.findFirst({
-        where: {
-          archivedAt: null,
-          primaryCalendarId: calendar.id,
-          internalTitle: { in: spec.legacyTitles },
-        },
-      });
-    }
-    if (!existing) {
-      existing = await prisma.event.findFirst({
-        where: {
-          archivedAt: null,
-          primaryCalendarId: calendar.id,
-          internalTitle: spec.internalTitle,
-          startsAt: spec.startsAt,
-        },
-      });
-    }
-
-    if (existing) {
-      const updated = await prisma.event.update({
-        where: { id: existing.id },
-        data: {
-          internalTitle: spec.internalTitle,
-          campaignDisplayTitle: spec.campaignDisplayTitle,
-          restrictedDisplayTitle: spec.restrictedDisplayTitle ?? null,
-          eventType: spec.eventType,
-          status: spec.status,
-          startsAt: spec.startsAt,
-          endsAt: spec.endsAt,
-          timezone: "America/Chicago",
-          city: spec.city ?? null,
-          venueName: spec.venueName ?? null,
-          locationDisclosure: spec.locationDisclosure,
-          defaultVisibility: spec.defaultVisibility,
-          candidateRole: spec.candidateRole ?? null,
-          privateNotes: spec.privateNotes,
-          primaryCalendarId: calendar.id,
-          version: { increment: 1 },
-        },
-      });
-      proof.events.push({
-        key: spec.key,
-        action: "updated",
-        eventId: updated.id,
-        eventNumber: updated.eventNumber,
-        calendarSlug: spec.calendarSlug,
-        status: updated.status,
-      });
-      console.log(`UPDATED: ${spec.key} → ${updated.eventNumber}`);
-      continue;
-    }
-
-    const relatedIds = (spec.relatedCalendarSlugs ?? [])
-      .map((s) => bySlug[s]?.id)
-      .filter(Boolean);
-
-    const created = await prisma.$transaction(async (tx) => {
-      const year = spec.startsAt.getFullYear();
-      const eventNumber = await allocateEventNumber(tx, year);
-      const event = await tx.event.create({
-        data: {
-          eventNumber,
-          sourceType: "MANUAL",
-          createdByUserId: actorUser.id,
-          ownerUserId: actorUser.id,
-          primaryCalendarId: calendar.id,
-          internalTitle: spec.internalTitle,
-          campaignDisplayTitle: spec.campaignDisplayTitle,
-          restrictedDisplayTitle: spec.restrictedDisplayTitle ?? null,
-          publicTitle: null,
-          eventType: spec.eventType,
-          status: spec.status,
-          startsAt: spec.startsAt,
-          endsAt: spec.endsAt,
-          timezone: "America/Chicago",
-          city: spec.city ?? null,
-          venueName: spec.venueName ?? null,
-          locationDisclosure: spec.locationDisclosure,
-          defaultVisibility: spec.defaultVisibility,
-          candidateRole: spec.candidateRole ?? null,
-          privateNotes: spec.privateNotes,
-          version: 1,
-        },
-      });
-      await tx.eventCalendarMembership.create({
-        data: {
-          eventId: event.id,
-          calendarId: calendar.id,
-          membershipType: "PRIMARY",
-          isPrimary: true,
-          createdByUserId: actorUser.id,
-        },
-      });
-      for (const calendarId of relatedIds) {
-        if (calendarId === calendar.id) continue;
-        await tx.eventCalendarMembership.create({
-          data: {
-            eventId: event.id,
-            calendarId,
-            membershipType: "RELATED",
-            isPrimary: false,
-            createdByUserId: actorUser.id,
-          },
-        });
-      }
-      await tx.eventStatusHistory.create({
-        data: {
-          eventId: event.id,
-          fromStatus: null,
-          toStatus: event.status,
-          changedByUserId: actorUser.id,
-          reason: "Operator week ingest",
-        },
-      });
-      await tx.auditLog.create({
-        data: {
-          actorUserId: actorUser.id,
-          actorType: "USER",
-          action: "EVENT_CREATED",
-          entityType: "Event",
-          entityId: event.id,
-          source: "operator-week-ingest",
-          reason: "Operator week live ingest (script)",
-          newStateRedacted: {
-            eventNumber: event.eventNumber,
-            title: event.internalTitle,
-            status: event.status,
-            ingestKey: spec.key,
-          },
-        },
-      });
-      return event;
-    });
-
-    proof.events.push({
-      key: spec.key,
-      action: "created",
-      eventId: created.id,
-      eventNumber: created.eventNumber,
-      calendarSlug: spec.calendarSlug,
-      status: created.status,
-    });
-    console.log(`CREATED: ${spec.key} → ${created.eventNumber}`);
+  console.log(`--- ${PASS} supersessions ---`);
+  for (const key of SUPERSEDE_KEYS) {
+    await supersedeKey(actorUser, key);
   }
 
-  const rangeStart = chicagoLocalToDate("2026-07-19T00:00:00");
-  const rangeEnd = chicagoLocalToDate("2026-07-27T00:00:00");
-  const listed = await prisma.event.findMany({
+  console.log(`--- ${PASS} live upserts ---`);
+  for (const spec of LIVE_EVENTS) {
+    await upsertLive(actorUser, bySlug, spec);
+  }
+
+  console.log(`--- ${PASS} staged drafts ---`);
+  writeStagedDrafts();
+
+  proof.confirmed = [
+    "Fundraiser Jul 19 5–7pm",
+    "Blytheville overnight Jul 19 7pm – Jul 20 8am (lodging venue UNKNOWN)",
+    "Internet install Jul 20 8–10am",
+    "Don Henry consult Jul 20 8:30–11am",
+    "Kelly England speaking start Jul 20 5:30pm",
+    "Kelly working Little Rock Jul 21 (all-day busy; hours UNKNOWN for live row)",
+    "Christy Low Cave City volunteer date Fri Jul 24 (shift UNKNOWN)",
+  ];
+  proof.unknown = [
+    "Blytheville lodging venue/hotel",
+    "Steve NAACP start/end/venue (staged)",
+    "England meeting end/venue",
+    "Return-to-farm depart/arrive (staged)",
+    "Kelly LR Tuesday exact hours/site for Pass 2 live row",
+    "Cave City shift/assignment/Kelly|Steve attendance",
+  ];
+
+  const activeLive = await prisma.event.findMany({
     where: {
       archivedAt: null,
-      startsAt: { gte: rangeStart, lt: rangeEnd },
-      privateNotes: { startsWith: "[ingestKey:" },
+      status: { not: "CANCELLED" },
+      privateNotes: { contains: `[pass:${PASS}]` },
     },
-    select: {
-      eventNumber: true,
-      internalTitle: true,
-      status: true,
-      startsAt: true,
-      primaryCalendar: { select: { slug: true } },
-    },
+    select: { eventNumber: true, internalTitle: true, status: true },
     orderBy: { startsAt: "asc" },
   });
-  proof.ingestVerifyCount = listed.length;
-  proof.ingestVerify = listed.map((e) => ({
+  proof.activePass2LiveCount = activeLive.length;
+  proof.activePass2Live = activeLive.map((e) => ({
     eventNumber: e.eventNumber,
-    calendarSlug: e.primaryCalendar.slug,
-    status: e.status,
-    startsAt: e.startsAt.toISOString(),
     title: e.internalTitle,
+    status: e.status,
   }));
 
-  const proofsDir = path.join(root, "develop_notes", "database_proofs");
-  fs.mkdirSync(proofsDir, { recursive: true });
-  const outPath = path.join(proofsDir, "operator-week-ingest-latest.json");
+  const outPath = path.join(
+    root,
+    "develop_notes",
+    "database_proofs",
+    "operator-week-ingest-latest.json",
+  );
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, JSON.stringify(proof, null, 2));
   console.log(`PASS: wrote ${path.relative(root, outPath)}`);
-  console.log(`PASS: ingest-tagged events in range: ${listed.length}`);
+  console.log(`PASS: active Pass-2 live events: ${activeLive.length}`);
 } catch (err) {
   console.error("FAIL:", err instanceof Error ? err.message : String(err));
   process.exit(1);

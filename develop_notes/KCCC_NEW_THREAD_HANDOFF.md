@@ -2,28 +2,21 @@
 
 ```text
 Feature Freeze ............ ACTIVE
-Governance execution ...... ACTIVE
+Live Calendar Ingest ...... PASS 2 COMPLETE (Jul 19–24 confirmed only)
 Version 2 ................. NOT AUTHORIZED
 
-EA-5 … EA-8 ............... ACCEPTED
-EA-9 Operator Workflow .... COMPLETE
-EA-10 Technical Debt ...... OPENED
+Pass 2 live:
+  0004 Fundraiser · 0022 Blytheville overnight · 0005 ISP · 0006 Don Henry
+  0007 Kelly England 5:30 (end UNKNOWN) · 0023 Kelly LR work Tue · 0024 Christy Low Cave City Fri
 
-Experience Redesign 2.0 ... VISION CAPTURED (impl BLOCKED)
+Staged (Unknown times — not live):
+  Steve NAACP Jonesboro · Return to farm after England
 
-Operator week ingest ...... DONE (Jul 19–26 · 18 ingest-tagged Events)
-  Don Henry 8:30–11 · Steve NAACP 6pm · Kelly England 5:30pm
-  Carroll picnic 4:30 Tue · HSV Wed/Thu · procedure Fri 7:30am
-  Cave City Sat · Blytheville Sun (TENTATIVE windows where needed)
-  Proof: develop_notes/database_proofs/operator-week-ingest-latest.json
-  Deferred: HL-039 drill-down · XR-8 AI patterns
+Superseded CANCELLED:
+  Carroll County picnic/travel · prior Wed–Sun Pass-1 itinerary · fabricated NAACP 6pm
 
 NOW
-  EA-10 Technical Debt — OPENED
-  (Re-run: npm run events:ingest:operator-week — idempotent)
+  EA-10 Technical Debt — OPENED (do not mix into ingest passes)
 
-Then: EA-11…12 → Readiness Review → Hardening → Redesign → Foundation
-  → V2 Planning → V2 Authorization → V2 Dev
-
-Phase 3 ................... PAUSED
+View: /calendar?view=week&date=2026-07-19
 ```
