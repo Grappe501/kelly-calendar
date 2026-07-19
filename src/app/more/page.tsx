@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>KCCC-STEP-07-CAMPAIGN-OPERATIONS</strong>
+            <strong>KCCC-PHASE-02.1-CANDIDATE-OPERATIONS</strong>
           </li>
         </ul>
       </section>
@@ -70,6 +70,9 @@ export default function MorePage() {
           </Link>
           <Link className="button" href="/constituents">
             Voter & Constituent Operations
+          </Link>
+          <Link className="button" href="/candidate">
+            Candidate Operations
           </Link>
           <Link className="button secondary" href="/brief">
             Today’s Campaign Brief

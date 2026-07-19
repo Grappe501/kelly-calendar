@@ -16,36 +16,35 @@ https://kelly-calendar.netlify.app
 Owned schema:
 kelly_calendar only (shared RedDirt Postgres — no RedDirt source imports)
 
-Phase status:
-PHASE 1 CERTIFIED — PRODUCTION READY (0.7.11-ops)
+Phase 1:
+CERTIFIED — Campaign Operating System Kernel (0.7.11-ops / tip c36a59e)
 
-Canonical modules (all ACCEPTED):
-Calendar · Executive Command · Field · County · Volunteer · Communications
-Logistics · Finance & Resources · Compliance · Voter & Constituent · Intelligence
+Active:
+Phase 2.1 Candidate Operations (0.8.0-candidate)
+Route: /candidate
+Question: Is the candidate prepared for today's engagements?
 
-Step 7 tip (constituents):
-d13e798
+Doctrine:
+Phase 2 capabilities orchestrate Phase 1 services — they do not replace or duplicate them.
 
 Still false:
 - candidate_data_ready
 - real_candidate_data_enabled
-- ai_enabled (advisory hooks exist; not autonomously enabled)
+- ai_enabled
 
 Hard rules:
 - No deletes / repo moves / template extraction
 - No AJAX / PhatLip / countyWorkbench / sos-public / RedDirt src imports
 - No real PII in tests; no secrets in docs/chat/commits
 - Intelligence interprets; never overrides canonical facts
-- Not a CRM / voter-file warehouse / reporting engine
+- Candidate Ops owns almost no primary data
 
-Do NOT continue as Step 7.11.
-
-Operator next:
-Pick one Phase 2 workstream from develop_notes/KCCC_PHASE_02_ROADMAP.md
-(Candidate Ops · Fundraising Ops · GOTV · Debate & Media · Petition & Ballot)
+Next after 2.1 ACCEPT:
+2.2 Debate & Media → 2.3 Fundraising → 2.4 GOTV → 2.5 Petition & Ballot
 
 Docs:
-- develop_notes/KCCC_PHASE_01_CERTIFICATION.md
+- develop_notes/KCCC_PHASE_02_CHARTER.md
+- develop_notes/KCCC_PHASE_02_1_CANDIDATE_OPERATIONS.md
 - develop_notes/KCCC_PHASE_02_ROADMAP.md
-- develop_notes/KCCC_STEP_07_CAMPAIGN_OPERATIONS_CHARTER.md
+- develop_notes/KCCC_PHASE_01_CERTIFICATION.md
 ```

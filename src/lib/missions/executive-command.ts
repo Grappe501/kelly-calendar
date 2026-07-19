@@ -4,6 +4,7 @@
  */
 
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
+import type { CandidateOperationsHome } from "@/lib/missions/candidate-operations";
 import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
@@ -118,6 +119,8 @@ export type ExecutiveCommand = {
   intelligenceFeed: OperationalIntelligenceHome["executiveFeed"] | null;
   /** Consumed from Voter & Constituent Operations (7.9) — relationships. */
   constituentFeed: ConstituentOperationsHome["executiveFeed"] | null;
+  /** Consumed from Candidate Operations (2.1) — preparedness orchestration. */
+  candidateFeed: CandidateOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -143,6 +146,7 @@ export function buildDeterministicExecutiveBriefing(
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null,
   intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null,
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null,
+  candidateFeed?: CandidateOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -154,6 +158,7 @@ export function buildDeterministicExecutiveBriefing(
       complianceFeed?.briefingLine,
       intelligenceFeed?.briefingLine,
       constituentFeed?.briefingLine,
+      candidateFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -165,6 +170,9 @@ export function buildDeterministicExecutiveBriefing(
     parts.push(
       `Intelligence priority: ${intelligenceFeed.topInsights[0].label}.`,
     );
+  }
+  if (candidateFeed?.briefingLine) {
+    parts.push(candidateFeed.briefingLine);
   }
   if (constituentFeed?.briefingLine) {
     parts.push(constituentFeed.briefingLine);
@@ -252,6 +260,7 @@ export function buildExecutiveCommand(input: {
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null;
   intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null;
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
+  candidateFeed?: CandidateOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -264,6 +273,7 @@ export function buildExecutiveCommand(input: {
   const complianceFeed = input.complianceFeed ?? null;
   const intelligenceFeed = input.intelligenceFeed ?? null;
   const constituentFeed = input.constituentFeed ?? null;
+  const candidateFeed = input.candidateFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -383,6 +393,19 @@ export function buildExecutiveCommand(input: {
       urgency: constituentFeed.overdueFollowups > 0 ? "NOW" : "SOON",
     });
   }
+  if (
+    candidateFeed &&
+    (candidateFeed.preparednessScore === "BLOCKED" ||
+      candidateFeed.preparednessScore === "NEEDS_ATTENTION" ||
+      candidateFeed.blockedDomains > 0)
+  ) {
+    topPriorities.push({
+      label: "Candidate preparedness",
+      detail: candidateFeed.briefingLine,
+      href: "/candidate",
+      urgency: candidateFeed.blockedDomains > 0 ? "NOW" : "SOON",
+    });
+  }
   if (brief.topBlocker) {
     topPriorities.push({
       label: "Resolve top blocker",
@@ -440,6 +463,13 @@ export function buildExecutiveCommand(input: {
   }
   if ((constituentFeed?.overdueFollowups ?? 0) > 0) {
     decisions.push("Close overdue constituent follow-ups");
+  }
+  if (
+    candidateFeed &&
+    (candidateFeed.preparednessScore === "BLOCKED" ||
+      candidateFeed.blockedDomains > 0)
+  ) {
+    decisions.push("Clear candidate preparedness blockers before first stop");
   }
   if (decisions.length === 0 && brief.nextMission) {
     decisions.push("Confirm next mission is ready to execute");
@@ -713,6 +743,16 @@ export function buildExecutiveCommand(input: {
   if (constituentFeed?.targetConstituenciesStatus === "unknown") {
     alerts.push("Target constituencies Unknown");
   }
+  if (candidateFeed && candidateFeed.blockedDomains > 0) {
+    alerts.push(
+      `${candidateFeed.blockedDomains} candidate preparedness domain(s) blocked`,
+    );
+  }
+  if (candidateFeed && candidateFeed.unknownDomains > 0) {
+    alerts.push(
+      `${candidateFeed.unknownDomains} candidate preparedness domain(s) Unknown`,
+    );
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -766,6 +806,7 @@ export function buildExecutiveCommand(input: {
         complianceFeed,
         intelligenceFeed,
         constituentFeed,
+        candidateFeed,
       ),
       source: "deterministic_v1",
     },
@@ -778,6 +819,7 @@ export function buildExecutiveCommand(input: {
     complianceFeed,
     intelligenceFeed,
     constituentFeed,
+    candidateFeed,
   };
 }
 
@@ -812,5 +854,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     complianceFeed: command.complianceFeed,
     intelligenceFeed: command.intelligenceFeed,
     constituentFeed: command.constituentFeed,
+    candidateFeed: command.candidateFeed,
   };
 }

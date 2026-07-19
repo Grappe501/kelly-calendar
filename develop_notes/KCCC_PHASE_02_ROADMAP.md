@@ -1,50 +1,51 @@
 # KCCC Phase 2 — Campaign Capability Expansion
 
-**Status:** RECOMMENDED / NOT STARTED  
-**Prerequisite:** Phase 1 CERTIFIED  
+**Status:** OPEN  
+**Prerequisite:** Phase 1 CERTIFIED — Campaign Operating System Kernel  
 
 ## Objective
 
-Shift from founding operational domains to specialized campaign capabilities that **consume** the Phase 1 platform. Do not recreate Field/County/Volunteer/Comms/Logistics/Finance/Compliance/Constituent/Intelligence engines.
+Add specialized campaign capabilities that **consume** the Phase 1 kernel. Do not recreate kernel engines.
+
+## Permanent principle
+
+> Phase 2 capabilities orchestrate Phase 1 services — they do not replace or duplicate them.
 
 ## Gate for every new capability
 
 > What operational decision does this improve?
 
-If there is no clear answer, it does not belong in the core operating system.
+## Sequencing
 
-## Candidate workstreams
+```text
+2.1 Candidate Operations ........ IN PROGRESS
+"Is the candidate prepared?"
 
-### Candidate Operations
+↓
 
-**Question:** Is the candidate prepared for today’s engagements?  
+2.2 Debate & Media Operations ... HELD
+"Are we prepared to communicate?"
 
-Owns: debate prep, briefing books, speech packets, advance notes, media prep, issue briefings.
+↓
 
-### Fundraising Operations
+2.3 Fundraising Operations ...... HELD
+"Can we sustain campaign growth?"
 
-**Question:** Can the campaign sustain itself financially?  
+↓
 
-Owns: fundraising events, donor pipeline, pledge tracking, finance calendar, campaign goals.  
+2.4 GOTV Operations ............. HELD
+"Are we converting support into turnout?"
 
-Distinct from Finance & Resources (operational resource readiness, not fundraising).
+↓
 
-### Get-Out-The-Vote Operations
+2.5 Petition & Ballot Operations HELD
+"Can we execute citizen-driven campaigns using the same OS?"
+```
 
-**Question:** Are we maximizing turnout where it matters?  
+## Kernel (consume only — do not extend unnecessarily)
 
-Consumes: County, Volunteer, Constituent, Communications, Intelligence. Owns GOTV-specific plans and turnout readiness.
+Calendar · Executive Command · Field · County · Volunteer · Communications · Logistics · Finance & Resources · Compliance · Voter & Constituent · Operational Intelligence
 
-### Debate & Media Operations
+## Active
 
-**Question:** Are we prepared for every public appearance?  
-
-Owns: debate timeline, interview preparation, press logistics, media follow-up.
-
-### Petition & Ballot Operations
-
-Reusable ballot-initiative capability — kept separate from Secretary of State campaign execution domains unless Steve approves an integration packet.
-
-## Sequencing note
-
-Pick one Phase 2 workstream explicitly before implementation. Prefer Candidate Operations or Fundraising Operations first if leadership prep / sustainment is the next executive pain point.
+See `KCCC_PHASE_02_1_CANDIDATE_OPERATIONS.md` and `KCCC_PHASE_02_CHARTER.md`.

@@ -38,7 +38,7 @@
 
 ## What Phase 1 is
 
-A coherent execution + relationship + intelligence foundation for day-to-day campaign operations.
+The **Campaign Operating System Kernel** — a coherent execution + relationship + intelligence foundation. Every future capability should consume this kernel rather than extending or modifying it unnecessarily.
 
 ## What Phase 1 is not
 

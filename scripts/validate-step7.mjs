@@ -62,9 +62,14 @@ if (exec.includes("constituentFeed")) {
 }
 
 const execService = read("src/server/services/executive-command-service.ts");
+const phase1Stack = exists("src/server/services/phase1-ops-stack.ts")
+  ? read("src/server/services/phase1-ops-stack.ts")
+  : "";
 if (
-  execService.includes("buildConstituentOperationsHome") &&
-  execService.includes("constituentFeed")
+  execService.includes("constituentFeed") &&
+  (execService.includes("buildConstituentOperationsHome") ||
+    (phase1Stack.includes("buildConstituentOperationsHome") &&
+      execService.includes("assemblePhase1OpsStack")))
 ) {
   pass("7.9 executive service wires constituents");
 } else {
@@ -125,9 +130,11 @@ if (
 if (
   build.phase_1_status === "CERTIFIED" &&
   build.constituent_operations_accepted === true &&
-  build.phase_2_status === "recommended_not_started"
+  (build.phase_2_status === "recommended_not_started" ||
+    build.phase_2_status === "in_progress" ||
+    build.phase_2_status === "open")
 ) {
-  pass("Phase 1 CERTIFIED; Phase 2 not started");
+  pass("Phase 1 CERTIFIED; Phase 2 gate intact");
 } else {
   fail("Phase 1 certification / Phase 2 gate missing from build_state");
 }

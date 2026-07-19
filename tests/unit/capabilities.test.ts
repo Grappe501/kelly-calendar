@@ -16,7 +16,7 @@ describe("capability honesty", () => {
 
   it("marks auth complete when session secret is configured; candidate data stays gated", () => {
     const security = getSecurityCapabilityStatus();
-    expect(CURRENT_STEP_NUMBER).toBe(7);
+    expect(CURRENT_STEP_NUMBER).toBe(8);
     expect(security.authenticationComplete).toBe(true);
     expect(security.candidateDataReady).toBe(false);
     expect(security.databaseMutationsAuthorized).toBe(true);

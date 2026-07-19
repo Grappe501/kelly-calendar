@@ -1,6 +1,6 @@
 {
   "name": "kelly-campaign-command-calendar",
-  "version": "0.7.11-ops",
+  "version": "0.8.0-candidate",
   "private": true,
   "description": "Kelly Campaign Command Calendar (KCCC) — candidate daily operating system",
   "engines": {
@@ -59,6 +59,8 @@
     "step6:all": "npm run drive:validate && npm run governance:validate && npm run env:validate && npm run auth:validate && npm run step6:validate && npm run lint && npm run typecheck && npm run test",
     "step7:validate": "node scripts/validate-step7.mjs",
     "step7:all": "npm run step6:validate && npm run step7:validate && npm run typecheck && npm run test",
+    "phase2:validate": "node scripts/validate-phase2.mjs",
+    "phase2:all": "npm run step7:validate && npm run phase2:validate && npm run typecheck && npm run test",
     "db:classify": "node scripts/database-classify-target.mjs",
     "db:preflight": "node scripts/database-preflight.mjs",
     "db:snapshot": "node scripts/database-capture-structural-snapshot.mjs",

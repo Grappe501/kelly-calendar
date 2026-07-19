@@ -916,6 +916,42 @@ input {
   border-color: rgba(154, 52, 18, 0.45);
 }
 
+.candidate-morning-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.candidate-morning-list > div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.candidate-morning-list dt {
+  font-weight: 600;
+}
+
+.candidate-morning-list dd {
+  margin: 0;
+}
+
+.candidate-binder-section {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.candidate-binder-body {
+  margin: 0;
+  padding: var(--space-3);
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 0.95rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: transparent;
+}
+
 .mission-day-feedback.err {
   display: grid;
   gap: var(--space-2);
