@@ -18,18 +18,26 @@
 - Owner + immediate action CTA (one-thumb)
 - Mission Status field (Pending / In Progress / Complete / Needs Attention)
 
-## Increment 3 — Mission Timeline Engine (this pass)
+## Increment 3 — Mission Timeline Engine
 
 - Pure `computeMissionTimeline` engine (deterministic_v1)
 - Leave By as first computed capability (no external traffic/maps)
 - Timeline projected into Mission Card `leaveBy` + UI timeline block
 - Engine kept separate from UI; Today consumes via server wiring
 
+## Increment 4 — Today’s Readiness (this pass)
+
+- Actionable readiness categories: Schedule / Travel / People / Materials / Location / Communications / Follow-up
+- Mission states: Ready / Needs Attention / Blocked / Unknown (never silent Ready)
+- Today summary: counts + top issue + one-thumb corrective action
+- Consumes existing OI `EventReadinessResult`; Timeline Engine unchanged
+
 ## Out of scope
 
 - Step 5.7 redesign / DB rewiring
 - Step 7 full event CRUD UI
 - External traffic / mapping integrations
+- Fake assignments / materials / completion
 - Real candidate PII (`candidate_data_ready` remains false)
 
 ## Validation

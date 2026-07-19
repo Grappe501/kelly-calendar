@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MissionCardView } from "@/components/today/MissionCardView";
+import { TodayReadinessPanel } from "@/components/today/TodayReadinessPanel";
 import type { TodayCommandShellData } from "@/server/services/command-summary-today";
 
 type Props = {
@@ -18,7 +19,8 @@ export function TodayCommandPanels({
   appName,
   nested = false,
 }: Props) {
-  const { summary, nextMission, missionsToday, viewerDisplayName } = data;
+  const { summary, todayReadiness, nextMission, missionsToday, viewerDisplayName } =
+    data;
 
   const body = (
     <>
@@ -32,6 +34,8 @@ export function TodayCommandPanels({
         </p>
         <p className="muted">Signed in as {viewerDisplayName}</p>
       </header>
+
+      <TodayReadinessPanel readiness={todayReadiness} />
 
       <section className="panel" aria-labelledby="next-mission-heading">
         <h2 id="next-mission-heading">Next mission</h2>
@@ -60,12 +64,12 @@ export function TodayCommandPanels({
             <span className="muted">Tomorrow</span>
           </li>
           <li>
-            <strong>{summary.counts.criticalConflicts}</strong>
-            <span className="muted">Critical conflicts</span>
+            <strong>{todayReadiness.blockedCount}</strong>
+            <span className="muted">Blocked</span>
           </li>
           <li>
-            <strong>{summary.counts.highRiskEvents}</strong>
-            <span className="muted">At risk</span>
+            <strong>{todayReadiness.needsAttentionCount}</strong>
+            <span className="muted">Needs attention</span>
           </li>
         </ul>
       </section>

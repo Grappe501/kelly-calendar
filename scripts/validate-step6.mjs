@@ -137,6 +137,42 @@ if (
   fail("Today summary missing Timeline Engine wiring");
 }
 
+const todayReadiness = "src/lib/missions/today-readiness.ts";
+if (exists(todayReadiness)) pass(`6.4 ${todayReadiness}`);
+else fail(`6.4 missing ${todayReadiness}`);
+
+const tr = read(todayReadiness);
+if (
+  tr.includes("buildTodayReadinessSummary") &&
+  tr.includes("UNKNOWN") &&
+  tr.includes("BLOCKED") &&
+  tr.includes("Schedule") &&
+  tr.includes("Follow-up")
+) {
+  pass("6.4 Today readiness engine maps categories + honest Unknown");
+} else {
+  fail("6.4 Today readiness engine incomplete");
+}
+
+if (read("src/lib/missions/mission-timeline.ts").includes("computeMissionTimeline")) {
+  pass("6.3 Mission Timeline Engine left intact");
+}
+
+if (panels.includes("TodayReadinessPanel")) {
+  pass("6.4 Today surface includes readiness summary panel");
+} else {
+  fail("6.4 Today readiness panel not wired");
+}
+
+if (
+  todayService.includes("buildTodayReadinessSummary") &&
+  todayService.includes("todayReadiness")
+) {
+  pass("6.4 Today summary includes readiness rollup");
+} else {
+  fail("6.4 Today summary missing readiness rollup");
+}
+
 const todayApi = read("src/app/api/command-summary/today/route.ts");
 if (todayApi.includes("withAuthenticatedQuery") && todayApi.includes("getTodayCommandShellData")) {
   pass("command-summary/today authenticated + live");

@@ -58,7 +58,9 @@ export function MissionCardView({ mission, compact = false }: Props) {
         </div>
         <div>
           <dt>Readiness</dt>
-          <dd>{mission.readinessLabel}</dd>
+          <dd data-readiness-state={mission.todayReadiness.state}>
+            {mission.todayReadiness.state.replace(/_/g, " ")}
+          </dd>
         </div>
         <div>
           <dt>Risk</dt>
@@ -68,7 +70,22 @@ export function MissionCardView({ mission, compact = false }: Props) {
         </div>
       </dl>
 
-      {mission.riskNote ? <p className="mission-risk-note">{mission.riskNote}</p> : null}
+      {!compact ? (
+        <ul className="mission-category-strip" aria-label="Readiness categories">
+          {mission.todayReadiness.categories.map((cat) => (
+            <li key={cat.category} data-state={cat.state}>
+              <span>{cat.category}</span>
+              <strong>{cat.state.replace(/_/g, " ")}</strong>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      {mission.todayReadiness.topIssue ? (
+        <p className="mission-risk-note">{mission.todayReadiness.topIssue}</p>
+      ) : mission.riskNote ? (
+        <p className="mission-risk-note">{mission.riskNote}</p>
+      ) : null}
 
       {!compact && timeline?.status === "computed" ? (
         <div className="mission-timeline" data-timeline-source={timeline.source}>

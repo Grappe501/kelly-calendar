@@ -9,6 +9,8 @@ import {
   type MissionStatus,
   type MissionStatusPresentation,
 } from "@/lib/missions/mission-status";
+import type { MissionTodayReadiness } from "@/lib/missions/today-readiness";
+import { buildMissionTodayReadiness } from "@/lib/missions/today-readiness";
 
 export type MissionRiskLevel = "NONE" | "WATCH" | "HIGH" | "CRITICAL";
 
@@ -40,6 +42,8 @@ export type MissionCard = {
   leaveBy: LeaveByHook;
   /** Full timeline contract (engine output). */
   timeline: MissionTimeline | null;
+  /** Step 6.4 actionable readiness (Ready / Needs Attention / Blocked / Unknown). */
+  todayReadiness: MissionTodayReadiness;
   isNext: boolean;
   status: string;
 };
@@ -207,6 +211,11 @@ export function toMissionCard(input: {
     immediateAction: immediateAction(event, readiness, leaveBy),
     leaveBy,
     timeline,
+    todayReadiness: buildMissionTodayReadiness({
+      missionId: event.eventId,
+      missionTitle: event.title,
+      readiness,
+    }),
     isNext: Boolean(input.isNext),
     status: event.status,
   };

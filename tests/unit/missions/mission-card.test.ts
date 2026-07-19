@@ -59,6 +59,7 @@ describe("Mission Cards (Step 6.2/6.3)", () => {
     expect(card.missionStatusPresentation.symbol).toBe("○");
     expect(card.leaveBy.status).toBe("computed");
     expect(card.timeline?.driveMinutes).toBe(17);
+    expect(card.todayReadiness.state).toBe("UNKNOWN");
     expect(card.immediateAction.label.length).toBeGreaterThan(0);
   });
 
