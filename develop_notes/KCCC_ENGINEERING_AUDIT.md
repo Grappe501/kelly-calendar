@@ -13,13 +13,14 @@ Calendar Experience V1 ......... COMPLETE
 
 EA-4 Visual Audit .............. COMPLETE (PASS)
 EA-1 Architecture Compliance ... COMPLETE (PASS WITH FINDINGS · 7.9/10)
-  Executive acceptance ......... ACCEPTED · EA-2 APPROVED
+EA-2 Decision-Making ........... COMPLETE (PASS WITH FINDINGS · 6.4/10)
 
 Engineering Audit .............. ACTIVE
-Next Audit Stream:
-  EA-2 User Experience (operator cognition) — OPENED
+Next (binding gate):
+  Version 1 Product Health Report — synthesize EA-1 + EA-2 + EA-4
+  EA-3+ BLOCKED until Product Health COMPLETE
 
-Hardening Master Ledger ........ SEEDED (HL-001…)
+Hardening Master Ledger ........ HL-001…HL-015 (HC-COG tagged)
 Engineering Patterns ........... ACTIVE DOCTRINE
 
 Experience Redesign 2.0 ........ PROPOSED (XR-01 Hero first when opened)
@@ -48,15 +49,16 @@ Version 2 Feature Expansion
 
 ## Workstream order
 
-**Immediate next:** **EA-2** User Experience Audit.  
-EA-4 and EA-1 are complete; remaining streams feed Hardening before Redesign.
+**Immediate next:** **Version 1 Product Health Report** (interim synthesis).  
+EA-3+ stays blocked until that synthesis closes.
 
 | Priority | ID | Workstream |
 |----------|-----|------------|
 | **Done** | EA-4 | Visual and Experience Audit (4A–4L) — COMPLETE |
 | **Done** | EA-1 | Architecture Compliance — PASS WITH FINDINGS (7.9/10) |
-| **1 (NOW)** | EA-2 | User Experience Audit (operator cognition) — OPENED |
-| 2 | EA-3 | Information Architecture |
+| **Done** | EA-2 | Decision-Making Audit — PASS WITH FINDINGS (6.4/10) |
+| **1 (NOW)** | — | **V1 Product Health Report** (EA-1 + EA-2 + EA-4) |
+| 2 | EA-3 | Information Architecture *(after Product Health)* |
 | 3 | EA-5 | Accessibility |
 | 4 | EA-6 | Performance |
 | 5 | EA-7 | Data Integrity |
@@ -109,7 +111,7 @@ Document evidence for:
 | ID | Deliverable |
 |----|-------------|
 | EA-1 | Architecture Compliance Report — one owner per screen; presentation ≠ ownership; no invented truth |
-| EA-2 | Operator cognition — 10s priorities, hesitation, unused controls, confidence vs uncertainty |
+| EA-2 | Decision-making — orientation, cognitive load, confidence, primary decision per page (12 questions) |
 | EA-3 | Page purpose / merge / one executive question |
 | EA-5 | WCAG findings |
 | EA-6 | Perf measurements + hotspots |
@@ -126,8 +128,9 @@ Document evidence for:
 |----|--------|
 | EA-4 | **COMPLETE** — see `KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md` |
 | EA-1 | **COMPLETE** — ACCEPTED · `KCCC_EA1_EXECUTIVE_ACCEPTANCE.md` |
-| EA-2 | **ACTIVE / OPENED** — `KCCC_EA2_USER_EXPERIENCE_AUDIT.md` |
-| EA-3, EA-5 … EA-12 | NOT STARTED |
+| EA-2 | **COMPLETE** — PASS WITH FINDINGS · `KCCC_EA2_ASSESSMENT.md` |
+| V1 Product Health | **OPENED** — `KCCC_V1_PRODUCT_HEALTH_REPORT.md` (blocks EA-3+) |
+| EA-3, EA-5 … EA-12 | NOT STARTED — after Product Health |
 | Experience Redesign 2.0 | PROPOSED — blocked; blueprint ready from EA-4 |
 | Foundation implementation | NOT STARTED — after Redesign program gate |
 

@@ -6,21 +6,19 @@ Architecture 1.0 .............. VERIFIED (6690ce2)
 Calendar Experience V1 ........ COMPLETE
 EA-4 Visual Audit ............. PASS
 EA-1 Architecture ............. PASS WITH FINDINGS (7.9) · ACCEPTED
-  Ownership failure ........... NONE
-  Proceed EA-2 ................ APPROVED
+EA-2 Decision-Making .......... PASS WITH FINDINGS (portfolio 6.4)
+  Week weakest ................ 5.8
 
-Engineering Audit ............. ACTIVE
-  Now: EA-2 User Experience (operator cognition) — OPENED
+NOW — Interim synthesis
+  KCCC_V1_PRODUCT_HEALTH_REPORT.md .... OPENED
+  EA-3+ blocked until Product Health COMPLETE
 
-Supporting doctrine
+Supporting
   KCCC_ENGINEERING_PATTERNS.md ........ ACTIVE
-  KCCC_HARDENING_MASTER_LEDGER.md ..... SEEDED (HL-001…)
+  KCCC_HARDENING_MASTER_LEDGER.md ..... HL-001…HL-015 (HC-COG tagged)
 
-Remaining audits
-  EA-3, EA-5 … EA-12
-
-Then: Hardening (ledger) → Experience Redesign 2.0 (XR-01)
-  → Calendar Foundation → Version 2 (fitness ≥ 9.0)
+Then: remaining audits → Hardening → Redesign (XR-01)
+  → Foundation → Version 2
 
 No new calendar features during audit/hardening.
 Phase 3 ....................... PAUSED (3.1 Pass with Conditions)

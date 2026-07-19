@@ -375,14 +375,17 @@ if (
   build.calendar_experience_v1_complete === true &&
   build.calendar_experience_v1_status === "engineering_complete" &&
   build.engineering_audit_status === "active" &&
-  build.engineering_audit_next_stream === "EA-2" &&
+  build.engineering_audit_next_stream === "V1-PRODUCT-HEALTH" &&
   build.ea4_status === "complete" &&
   build.ea4_assessment === "pass" &&
   build.ea1_status === "complete" &&
   build.ea1_assessment === "pass_with_findings" &&
   build.ea1_executive_acceptance === "accepted" &&
-  build.ea2_status === "opened" &&
-  build.ea2_focus === "operator_cognition" &&
+  build.ea2_status === "complete" &&
+  build.ea2_assessment === "pass_with_findings" &&
+  build.ea2_focus === "decision_making" &&
+  build.ea3_status === "blocked_until_product_health" &&
+  build.v1_product_health_status === "opened" &&
   build.engineering_patterns_status === "active" &&
   build.hardening_master_ledger_status === "seeded" &&
   build.hardening_pass_status === "blocked" &&
@@ -392,21 +395,25 @@ if (
   build.calendar_foundation_status === "planned_after_redesign" &&
   build.foundation_implementation_started === false &&
   build.redesign_implementation_started === false &&
-  build.next_engineering_deliverable === "KCCC-EA-2-USER-EXPERIENCE" &&
+  build.next_engineering_deliverable === "KCCC-V1-PRODUCT-HEALTH" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
   constants.includes('EA4_ASSESSMENT = "PASS"') &&
   constants.includes('EA1_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
   constants.includes('EA1_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
-  constants.includes('EA2_STATUS = "OPENED"') &&
-  constants.includes("OPERATOR_COGNITION") &&
+  constants.includes('EA2_STATUS = "COMPLETE"') &&
+  constants.includes('EA2_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
+  constants.includes("DECISION_MAKING") &&
+  constants.includes('V1_PRODUCT_HEALTH_STATUS = "OPENED"') &&
   constants.includes("XR-01-EXECUTIVE-HERO-LAYER") &&
-  constants.includes("KCCC-EA-2-USER-EXPERIENCE") &&
+  constants.includes("KCCC-V1-PRODUCT-HEALTH") &&
   exists("develop_notes/KCCC_EA4_ASSESSMENT.md") &&
   exists("develop_notes/KCCC_EA1_ASSESSMENT.md") &&
   exists("develop_notes/KCCC_EA1_EXECUTIVE_ACCEPTANCE.md") &&
   exists("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md") &&
   exists("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md") &&
+  exists("develop_notes/KCCC_EA2_ASSESSMENT.md") &&
+  exists("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md") &&
   exists("develop_notes/KCCC_ENGINEERING_PATTERNS.md") &&
   exists("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md") &&
   exists("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md") &&
@@ -417,15 +424,19 @@ if (
   read("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md").includes("implicit owner") &&
   read("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md").includes("Protected Patterns") &&
   read("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md").includes("Architecture Fitness") &&
-  read("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md").includes("operator cognition") &&
-  read("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md").includes("10 seconds") &&
+  read("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md").includes("Decision-making audit") &&
+  read("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md").includes("HC-COG") &&
+  read("develop_notes/KCCC_EA2_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
+  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("blocks EA-3") &&
   read("develop_notes/KCCC_ENGINEERING_PATTERNS.md").includes("Owns-No-Facts") &&
   read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-001") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HC-COG") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-015") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("XR-01") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("V1 COMPLETE; EA-1 ACCEPTED; EA-2 OPENED (cognition); Patterns+Ledger; Redesign blocked");
+  pass("EA-1+EA-2+EA-4 done; Product Health OPENED (blocks EA-3); Ledger HC-COG; Redesign blocked");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -435,5 +446,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 VERIFIED; EA-1 ACCEPTED; EA-2 OPENED operator cognition; Patterns ACTIVE; Ledger SEEDED; Redesign blocked; Phase 3.1 PASS WITH CONDITIONS paused).",
+  "Phase 2 structural validation passed (EA-1 ACCEPTED; EA-2 Decision-Making COMPLETE; V1 Product Health OPENED blocks EA-3; Ledger HC-COG; Redesign blocked; Phase 3.1 paused).",
 );

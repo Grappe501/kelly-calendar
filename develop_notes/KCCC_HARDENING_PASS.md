@@ -22,7 +22,7 @@ Hardening
 
 Hardening consumes the **Master Ledger**, not scattered stream reports. Stream reports remain evidence. Hardening stabilizes Version 1; it does **not** execute Experience Redesign 2.0 or Foundation.
 
-**Seeded now (EA-1 / EA-4):** HL-001…HL-009 — Critical first: attending false-certainty (HL-001), derived-label hygiene (HL-002).
+**Seeded now (EA-1 / EA-2 / EA-4):** HL-001…HL-015 — includes `HC-COG` cognition tags. Critical first: attending false-certainty (HL-001). Highest operator value after trust: XR-01 / HC-COG-001 (HL-004), Week decision remediation (HL-015).
 
 ## Exit → next program
 
