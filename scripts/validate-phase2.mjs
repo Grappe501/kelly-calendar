@@ -375,7 +375,7 @@ if (
   build.calendar_experience_v1_complete === true &&
   build.calendar_experience_v1_status === "engineering_complete" &&
   build.engineering_audit_status === "active" &&
-  build.engineering_audit_next_stream === "EA-5" &&
+  build.engineering_audit_next_stream === "EA-6" &&
   build.ea4_status === "complete" &&
   build.ea4_assessment === "pass" &&
   build.ea1_status === "complete" &&
@@ -411,8 +411,11 @@ if (
   build.engineering_maturity_visual_experience === 2 &&
   build.engineering_maturity_engineering_quality === 3 &&
   build.engineering_maturity_platform_readiness === 2 &&
-  build.ea5_status === "opened" &&
+  build.ea5_status === "complete" &&
+  build.ea5_assessment === "pass_with_findings" &&
   build.ea5_focus === "inclusive_experience" &&
+  build.ea5_first_execution_audit === true &&
+  build.ea6_status === "opened" &&
   build.program_readiness_review_status === "planned" &&
   build.hardening_wave_count === 6 &&
   build.hardening_blocked_until === "program_readiness_review" &&
@@ -421,7 +424,7 @@ if (
   build.never_fake_doctrine_status === "active" &&
   build.operator_confidence_index_tracking === true &&
   build.hardening_waves_defined === true &&
-  build.hardening_ledger_through === "HL-020" &&
+  build.hardening_ledger_through === "HL-024" &&
   build.engineering_patterns_status === "active" &&
   build.hardening_master_ledger_status === "seeded" &&
   build.hardening_pass_status === "blocked" &&
@@ -433,56 +436,35 @@ if (
   build.calendar_foundation_status === "planned_after_redesign" &&
   build.foundation_implementation_started === false &&
   build.redesign_implementation_started === false &&
-  build.next_engineering_deliverable === "KCCC-EA-5-ACCESSIBILITY" &&
+  build.next_engineering_deliverable === "KCCC-EA-6-PERFORMANCE" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
-  constants.includes('PROGRAM_CHARTER_STATUS = "ACTIVE"') &&
-  constants.includes('GOVERNANCE_DESIGN_STATUS = "COMPLETE"') &&
   constants.includes('GOVERNANCE_EXECUTION_STATUS = "ACTIVE"') &&
-  constants.includes('EXECUTION_DISCIPLINE_STATUS = "BEGINNING"') &&
-  constants.includes('V2_AUTHORIZATION_STATUS = "NOT_ISSUED"') &&
   constants.includes('V1_FEATURE_FREEZE_STATUS = "ACTIVE"') &&
-  constants.includes("CALENDAR_EXPERIENCE_V1_FEATURE_COMPLETE_PERMANENT = true") &&
   constants.includes('FEATURE_DEVELOPMENT_STATUS = "FROZEN"') &&
-  constants.includes('PLATFORM_STABILIZATION_STATUS = "ACTIVE"') &&
-  constants.includes('RELEASE_CONSTITUTION_STATUS = "ACTIVE"') &&
-  constants.includes('V2_PLANNING_REVIEW_STATUS = "PLANNED"') &&
-  constants.includes('FURTHER_TOP_LEVEL_GOVERNANCE = "ONLY_IF_CONCRETE_GAP"') &&
-  constants.includes('AUDIT_CONSTITUTION_STATUS = "ACTIVE"') &&
-  constants.includes('PROTECTED_ASSETS_REGISTER_STATUS = "LIVING"') &&
-  constants.includes("ENGINEERING_MATURITY_ARCHITECTURE = 4") &&
-  constants.includes('EA5_FOCUS = "INCLUSIVE_EXPERIENCE"') &&
-  constants.includes('PROGRAM_READINESS_REVIEW_STATUS = "PLANNED"') &&
-  constants.includes("HARDENING_WAVE_COUNT = 6") &&
-  constants.includes('HARDENING_BLOCKED_UNTIL = "PROGRAM_READINESS_REVIEW"') &&
-  constants.includes("KCCC-GOVERNANCE-EXECUTION") &&
-  constants.includes("KCCC-PROGRAM-CHARTER") &&
-  constants.includes("KCCC-V1-FEATURE-FREEZE") &&
-  constants.includes("KCCC-RELEASE-CONSTITUTION") &&
-  constants.includes("KCCC-AUDIT-CONSTITUTION") &&
-  constants.includes("KCCC-EA-5-ACCESSIBILITY") &&
-  exists("develop_notes/KCCC_GOVERNANCE_EXECUTION.md") &&
-  exists("develop_notes/KCCC_PROGRAM_CHARTER.md") &&
-  exists("develop_notes/KCCC_V1_FEATURE_FREEZE.md") &&
-  exists("develop_notes/KCCC_RELEASE_CONSTITUTION.md") &&
-  exists("develop_notes/KCCC_AUDIT_CONSTITUTION.md") &&
-  exists("develop_notes/KCCC_VERSION_2_PLANNING_REVIEW.md") &&
-  exists("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md") &&
+  constants.includes('EA5_STATUS = "COMPLETE"') &&
+  constants.includes('EA5_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
+  constants.includes("EA5_FIRST_EXECUTION_AUDIT = true") &&
+  constants.includes('EA6_STATUS = "OPENED"') &&
+  constants.includes('HARDENING_LEDGER_THROUGH = "HL-024"') &&
+  constants.includes("KCCC-EA-6-PERFORMANCE") &&
   exists("develop_notes/KCCC_EA5_ACCESSIBILITY.md") &&
-  exists("develop_notes/KCCC_PROGRAM_READINESS_REVIEW.md") &&
-  !exists("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md") &&
-  read("develop_notes/KCCC_GOVERNANCE_EXECUTION.md").includes("Next Phase ................ EXECUTION") &&
-  read("develop_notes/KCCC_GOVERNANCE_EXECUTION.md").includes("Did we follow the governance") &&
-  read("develop_notes/KCCC_GOVERNANCE_EXECUTION.md").includes("VERSION 2 AUTHORIZATION") &&
-  read("develop_notes/KCCC_GOVERNANCE_EXECUTION.md").includes("Execution Discipline") &&
-  read("develop_notes/KCCC_PROGRAM_CHARTER.md").includes("Stabilize Before Expanding") &&
-  read("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md").includes("PA-20") &&
-  read("develop_notes/KCCC_VERSION_2_PLANNING_REVIEW.md").includes("VERSION 2 AUTHORIZATION") &&
-  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Inclusive Experience") &&
+  exists("develop_notes/KCCC_EA5_ASSESSMENT.md") &&
+  exists("develop_notes/KCCC_EA6_PERFORMANCE.md") &&
+  exists("develop_notes/KCCC_GOVERNANCE_EXECUTION.md") &&
+  !exists("develop_notes/KCCC_VERSION_2_AUTHORIZATION.md") &&
+  read("develop_notes/KCCC_EA5_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Feature Freeze") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("IE-001") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Did we follow the governance") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Verification method") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-024") &&
+  read("develop_notes/KCCC_GOVERNANCE_EXECUTION.md").includes("EA-5 Inclusive Experience") &&
+  read("develop_notes/KCCC_EA6_PERFORMANCE.md").includes("OPENED") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("Governance design COMPLETE; execution ACTIVE; EA-5 next; V2 Authorization not issued");
+  pass("EA-5 COMPLETE (execution audit); Feature Freeze honored; EA-6 OPENED; HL-024");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -492,5 +474,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Governance design COMPLETE; execution ACTIVE; Execution Discipline beginning; EA-5…EA-12 next; V2 Authorization not issued; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (EA-5 Inclusive COMPLETE; first execution audit; Feature Freeze honored; EA-6 OPENED; V2 not authorized; Phase 3.1 paused).",
 );

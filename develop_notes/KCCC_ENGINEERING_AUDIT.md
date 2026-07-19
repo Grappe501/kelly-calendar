@@ -16,14 +16,13 @@ VERSION 1 FEATURE FREEZE ....... ACTIVE
 Architecture 1.0 ............... LOCKED
 
 Engineering Audit .............. ACTIVE (execution)
-Priority 1: EA-5 … EA-12
-Priority 2: Program Readiness Review
-Priority 3: Hardening
-Priority 4: Experience Redesign
-Then: Foundation → V2 Planning Review → V2 Authorization → V2 Dev
+EA-5 Inclusive Experience ...... COMPLETE (first execution audit)
+Next: EA-6 Performance
+Then: EA-7…12 → Readiness Review → Hardening → Redesign → Foundation
+  → V2 Planning Review → V2 Authorization → V2 Dev
 
 Ask: Did we follow the governance?
-No further top-level governance unless concrete gap.
+Evidence standard on findings (EA-5+).
 ```
 
 ## Goal
@@ -64,8 +63,8 @@ Version 2 Features
 | **Done** | EA-2 | Decision-Making — COMPLETE |
 | **Done** | — | V1 Product Health — COMPLETE |
 | **Done** | EA-3 | **Platform Quality** — COMPLETE · ACCEPTED · ESI 5.7 |
-| **1 (NOW)** | EA-5 | Inclusive Experience (a11y + keyboard, AT, motion, touch, zoom) |
-| 2 | EA-6 | Performance (deepens EA-3 PQ-6 with measurements) |
+| **Done** | EA-5 | Inclusive Experience — PASS WITH FINDINGS |
+| **1 (NOW)** | EA-6 | Performance (deepens EA-3 PQ-6 with measurements) |
 | 3 | EA-7 | Data Integrity |
 | 4 | EA-8 | Security |
 | 5 | EA-9 | Operator Workflow |
@@ -103,8 +102,9 @@ Version 2 Features
 | EA-3 | **COMPLETE · ACCEPTED** — `KCCC_EA3_EXECUTIVE_ACCEPTANCE.md` |
 | Audit Constitution | **ACTIVE** — `KCCC_AUDIT_CONSTITUTION.md` |
 | Protected Assets | **LIVING** — `KCCC_PROTECTED_ASSETS_REGISTER.md` |
-| EA-5 | **OPENED** — Inclusive Experience · under Constitution |
-| EA-6 … EA-12 | NOT STARTED |
+| EA-5 | **COMPLETE** — `KCCC_EA5_ASSESSMENT.md` |
+| EA-6 | **OPENED** — `KCCC_EA6_PERFORMANCE.md` |
+| EA-7 … EA-12 | NOT STARTED |
 | Program Readiness Review | **PLANNED** — after EA-12 · blocks Hardening |
 | Experience Redesign 2.0 | PROPOSED — blocked |
 | Foundation implementation | NOT STARTED — after Redesign; EA-3 requirements attached |

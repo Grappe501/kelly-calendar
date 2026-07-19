@@ -56,6 +56,10 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 | HL-018 | PQ | EA-3 PQ-2 | Token inventory + Redesign gap list (status, density, motion) — no page rewrite | Medium | None | Medium | S | Hardening → Redesign | Open |
 | HL-019 | PQ | EA-3 PQ-6 | Document perf hotspots (catalogue cap, month DOM); measure only | Low | None | Low | S | Hardening | Open |
 | HL-020 | PQ | EA-3 PQ-5/8 | Foundation API sketch (event cell, legend, filters) — docs only | Medium | None | Medium | M | Foundation prep | Open |
+| HL-021 | INCL | EA-5 IE-001 | Non-color month density cue (count/pattern/aria) | High | None | High | S | Hardening | Open |
+| HL-022 | INCL | EA-5 IE-002 | Deferred Agenda/Timeline/Mission chip AT labels (or hide) | Medium | None | Medium | S | Hardening | Open |
+| HL-023 | INCL | EA-5 IE-003 | Date nav landmark + Previous/Next target labels | Medium | None | Medium | S | Hardening | Open |
+| HL-024 | INCL | EA-5 IE-004 | Optional skip-to-schedule within calendar page | Low | None | Medium | S | Hardening | Open |
 
 ---
 
@@ -109,8 +113,9 @@ Wave 2 is **before** Decision Clarity so Redesign/Foundation changes are verifia
 
 ## Streams not yet ingested
 
-EA-5 · EA-6 · EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
-EA-3 Platform Quality: **COMPLETE / ACCEPTED** (HL-016…HL-020).
+EA-6 · EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
+EA-3 Platform Quality: **COMPLETE / ACCEPTED** (HL-016…HL-020).  
+EA-5 Inclusive Experience: **COMPLETE** (HL-021…HL-024).
 
 ## Hardening gate
 
