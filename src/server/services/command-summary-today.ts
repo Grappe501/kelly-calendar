@@ -2,8 +2,11 @@ import "server-only";
 
 import { buildTodayCommandSummary } from "@/features/operational-intelligence/services/operational-summary-service";
 import type { TodayCommandSummary } from "@/features/operational-intelligence/types/summary-types";
+import { toMissionCard, type MissionCard } from "@/lib/missions/mission-card";
+import { emptyLeaveByHook } from "@/lib/missions/leave-by-contract";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { listEventsForActor } from "@/server/services/event-service";
+import { loadReadinessForMissionIds } from "@/server/services/mission-readiness-loader";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
 
 const TIMEZONE = "America/Chicago";
@@ -29,14 +32,17 @@ function chicagoNowParts() {
 
 export type TodayCommandShellData = {
   summary: TodayCommandSummary;
+  nextMission: MissionCard | null;
+  missionsToday: MissionCard[];
+  /** @deprecated use nextMission — retained for brief compatibility */
   nextEvent: SafeEventProjection | null;
   upcomingToday: SafeEventProjection[];
   viewerDisplayName: string;
 };
 
 /**
- * Authenticated Today Command summary using safe event projections only.
- * Deep readiness/conflict intelligence remains Step 8; counts start at zero until wired.
+ * Authenticated Today Command summary using safe projections + OI readiness.
+ * Leave By remains a 6.3 contract hook (not_computed).
  */
 export async function getTodayCommandShellData(
   actor: AuthenticatedActor,
@@ -58,12 +64,28 @@ export async function getTodayCommandShellData(
     );
   const nextEvent = upcomingToday[0] ?? null;
 
+  const readinessMap = await loadReadinessForMissionIds(
+    upcomingToday.map((e) => e.eventId),
+  );
+
+  const missionsToday = upcomingToday.map((event, index) =>
+    toMissionCard({
+      event,
+      timezone: TIMEZONE,
+      readiness: readinessMap.get(event.eventId) ?? null,
+      isNext: index === 0,
+      leaveBy: emptyLeaveByHook("not_computed"),
+    }),
+  );
+  const nextMission = missionsToday[0] ?? null;
+
+  const readinessList = [...readinessMap.values()];
   const summary = buildTodayCommandSummary({
     date: todayKey,
     timezone: TIMEZONE,
     eventsToday,
     eventsTomorrowCount,
-    readiness: [],
+    readiness: readinessList,
     conflicts: [],
     authenticationComplete: true,
     liveDataEnabled: true,
@@ -71,6 +93,8 @@ export async function getTodayCommandShellData(
 
   return {
     summary,
+    nextMission,
+    missionsToday,
     nextEvent,
     upcomingToday,
     viewerDisplayName: actor.displayName,

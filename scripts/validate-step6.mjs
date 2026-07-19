@@ -78,6 +78,42 @@ if (
   fail("Today page not wired to command summary");
 }
 
+const missionFiles = [
+  "src/lib/missions/mission-card.ts",
+  "src/lib/missions/leave-by-contract.ts",
+  "src/components/today/MissionCardView.tsx",
+  "src/server/services/mission-readiness-loader.ts",
+];
+for (const rel of missionFiles) {
+  if (exists(rel)) pass(`6.2 ${rel}`);
+  else fail(`6.2 missing ${rel}`);
+}
+
+const missionCard = read("src/lib/missions/mission-card.ts");
+if (
+  missionCard.includes("toMissionCard") &&
+  missionCard.includes("immediateAction") &&
+  missionCard.includes("leaveBy")
+) {
+  pass("6.2 Mission Card mapper exposes readiness/action/leaveBy hook");
+} else {
+  fail("6.2 Mission Card mapper incomplete");
+}
+
+const leaveBy = read("src/lib/missions/leave-by-contract.ts");
+if (leaveBy.includes("not_computed") && leaveBy.includes("emptyLeaveByHook")) {
+  pass("6.2 Leave By contract hook reserved for 6.3");
+} else {
+  fail("6.2 Leave By contract hook missing");
+}
+
+const panels = read("src/components/today/TodayCommandPanels.tsx");
+if (panels.includes("MissionCardView") && panels.includes("Next mission")) {
+  pass("6.2 Today surface renders Mission Cards");
+} else {
+  fail("6.2 Today surface not using Mission Cards");
+}
+
 const todayApi = read("src/app/api/command-summary/today/route.ts");
 if (todayApi.includes("withAuthenticatedQuery") && todayApi.includes("getTodayCommandShellData")) {
   pass("command-summary/today authenticated + live");

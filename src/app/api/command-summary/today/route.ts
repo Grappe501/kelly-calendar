@@ -11,6 +11,8 @@ export async function GET(request: Request) {
       const data = await getTodayCommandShellData(actor);
       return {
         summary: data.summary,
+        nextMission: data.nextMission,
+        missionsToday: data.missionsToday,
         nextEvent: data.nextEvent,
         upcomingToday: data.upcomingToday,
         candidateDataReady: false,
