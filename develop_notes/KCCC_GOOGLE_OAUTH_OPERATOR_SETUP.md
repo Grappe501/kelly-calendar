@@ -3,6 +3,19 @@
 **Initiative:** `KCCC-GOOGLE-CALENDAR-OAUTH-AND-ROUTES-1.0`  
 **Scope:** `calendar.readonly` only · no write-back  
 
+## Current priority (2026-07-19)
+
+```text
+1. Finish Google Calendar OAuth (client + secret + encryption + redirect)
+2. Connect Kelly calendar with calendar.readonly
+3. Historical dry import from 2025-11-01
+4. Review duplicates / cancellations / private / existing KCCC matches
+5. Apply approved import
+6. Geographic + relationship enrichment from event locations
+```
+
+**Routes / mileage:** paused — `KCCC_GOOGLE_ROUTES_ENABLED=false`. Implementation retained. See `KCCC_GOOGLE_ROUTES_MILEAGE_RUNBOOK.md`.
+
 ## Local secrets
 
 ```bash

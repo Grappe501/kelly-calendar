@@ -2,41 +2,19 @@
 
 **Truth type generated:** `GOOGLE_ROUTE_ESTIMATE` only  
 
-## Production state (2026-07-19)
+## Production state (2026-07-19) — PAUSED
 
 ```text
+Routes integration ............ DISABLED (KCCC_GOOGLE_ROUTES_ENABLED=false)
+Routes implementation ......... KEPT (no deletes)
+Routes API key ................ RETAINED securely (local + Netlify; not revoked)
 Doctor request validity ....... PROVEN
-Credential failure ............ CONFIRMED (CREDENTIAL_KEY_EXPLICIT after valid latLng ping)
-Key replacement ............... AUTHORIZED
-Open Mission deploy ........... IN PROGRESS
-Routes production readiness ... BLOCKED UNTIL NEW KEY PASSES
+Credential failure ............ CONFIRMED (repair deferred)
+Mileage reconstruction ........ DEFERRED (alternate provider / manual / repaired Google later)
+Priority ...................... Google Calendar OAuth + historical import
 ```
 
-### Authorized key replacement procedure
-
-1. Google Cloud Console (same project with Routes API enabled) → **APIs & Services → Credentials** → create API key.
-2. Restrict immediately: **Routes API only**; strongest practical **server-side** application restriction for Netlify (not browser referrers).
-3. Keep the old key until the new key passes local doctor.
-4. Local install (hidden prompt — never paste into Cursor):
-
-```powershell
-cd H:\SOSWebsite\Kelly-calendar
-npm run google:secrets:configure -- --routes-only
-$env:KCCC_ROUTES_DOCTOR_PING='true'
-npm run campaign:routes:doctor
-```
-
-Expected:
-
-```text
-Routes API key configured .... YES
-Routes integration enabled ... YES
-Routes API reachable ......... PASS
-Classification ............... SUCCESS
-```
-
-5. Replace Netlify `KCCC_GOOGLE_MAPS_ROUTES_API_KEY` only; keep `KCCC_GOOGLE_ROUTES_ENABLED=true`; redeploy.
-6. Revoke the old key only after local + production validation pass.
+Key replacement remains authorized but **paused** so Calendar history work can proceed without Routes noise.
 
 ### Live doctor classification (local)
 
