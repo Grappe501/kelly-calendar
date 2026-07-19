@@ -375,7 +375,7 @@ if (
   build.calendar_experience_v1_complete === true &&
   build.calendar_experience_v1_status === "engineering_complete" &&
   build.engineering_audit_status === "active" &&
-  build.engineering_audit_next_stream === "EA-7" &&
+  build.engineering_audit_next_stream === "EA-8" &&
   build.ea4_status === "complete" &&
   build.ea4_assessment === "pass" &&
   build.ea1_status === "complete" &&
@@ -411,47 +411,39 @@ if (
   build.engineering_maturity_visual_experience === 2 &&
   build.engineering_maturity_engineering_quality === 3 &&
   build.engineering_maturity_platform_readiness === 2 &&
-  build.ea5_status === "complete" &&
-  build.ea5_assessment === "pass_with_findings" &&
   build.ea5_executive_acceptance === "accepted" &&
-  build.ea5_first_execution_audit === true &&
   build.ea6_status === "complete" &&
-  build.ea6_assessment === "pass_with_findings" &&
+  build.ea6_executive_acceptance === "accepted" &&
   build.ea6_measure_only === true &&
-  build.ea7_status === "opened" &&
-  build.program_readiness_review_status === "planned" &&
-  build.hardening_wave_count === 6 &&
-  build.hardening_blocked_until === "program_readiness_review" &&
-  build.hardening_ledger_through === "HL-027" &&
+  build.ea7_status === "complete" &&
+  build.ea7_assessment === "pass_with_findings" &&
+  build.ea8_status === "opened" &&
+  build.hardening_ledger_through === "HL-030" &&
   build.hardening_pass_status === "blocked" &&
-  build.experience_redesign_implementation === "blocked" &&
-  build.foundation_implementation_started === false &&
-  build.redesign_implementation_started === false &&
-  build.next_engineering_deliverable === "KCCC-EA-7-DATA-INTEGRITY" &&
+  build.next_engineering_deliverable === "KCCC-EA-8-SECURITY" &&
   build.phase_3_implementation_authorized === false &&
-  constants.includes('EA5_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
-  constants.includes('EA6_STATUS = "COMPLETE"') &&
-  constants.includes('EA6_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
-  constants.includes("EA6_MEASURE_ONLY = true") &&
-  constants.includes('EA7_STATUS = "OPENED"') &&
-  constants.includes('HARDENING_LEDGER_THROUGH = "HL-027"') &&
-  constants.includes("KCCC-EA-7-DATA-INTEGRITY") &&
-  exists("develop_notes/KCCC_EA5_EXECUTIVE_ACCEPTANCE.md") &&
-  exists("develop_notes/KCCC_EA6_ASSESSMENT.md") &&
-  exists("develop_notes/KCCC_EA6_PERFORMANCE.md") &&
+  constants.includes('EA6_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
+  constants.includes('EA7_STATUS = "COMPLETE"') &&
+  constants.includes('EA7_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
+  constants.includes('EA8_STATUS = "OPENED"') &&
+  constants.includes('HARDENING_LEDGER_THROUGH = "HL-030"') &&
+  constants.includes("KCCC-EA-8-SECURITY") &&
+  exists("develop_notes/KCCC_EA6_EXECUTIVE_ACCEPTANCE.md") &&
+  exists("develop_notes/KCCC_EA7_ASSESSMENT.md") &&
   exists("develop_notes/KCCC_EA7_DATA_INTEGRITY.md") &&
+  exists("develop_notes/KCCC_EA8_SECURITY.md") &&
   !exists("develop_notes/KCCC_VERSION_2_AUTHORIZATION.md") &&
-  read("develop_notes/KCCC_EA5_EXECUTIVE_ACCEPTANCE.md").includes("ACCEPTED") &&
-  read("develop_notes/KCCC_EA6_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
-  read("develop_notes/KCCC_EA6_PERFORMANCE.md").includes("PERF-001") &&
-  read("develop_notes/KCCC_EA6_PERFORMANCE.md").includes("No Code Behavior Changes") &&
-  read("develop_notes/KCCC_EA6_PERFORMANCE.md").includes("listEventsForActor") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-027") &&
-  read("develop_notes/KCCC_EA7_DATA_INTEGRITY.md").includes("OPENED") &&
+  read("develop_notes/KCCC_EA6_EXECUTIVE_ACCEPTANCE.md").includes("ACCEPTED") &&
+  read("develop_notes/KCCC_EA7_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
+  read("develop_notes/KCCC_EA7_DATA_INTEGRITY.md").includes("DI-001") &&
+  read("develop_notes/KCCC_EA7_DATA_INTEGRITY.md").includes("candidateAttending") &&
+  read("develop_notes/KCCC_EA7_DATA_INTEGRITY.md").includes("No Behavior Changes") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-030") &&
+  read("develop_notes/KCCC_EA8_SECURITY.md").includes("OPENED") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("EA-5 ACCEPTED; EA-6 COMPLETE (measure-only); EA-7 OPENED; HL-027");
+  pass("EA-6 ACCEPTED; EA-7 Data Integrity COMPLETE; EA-8 OPENED; HL-030");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -461,5 +453,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (EA-5 ACCEPTED; EA-6 Performance COMPLETE measure-only; EA-7 OPENED; V2 not authorized; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (EA-6 ACCEPTED; EA-7 Data Integrity COMPLETE; EA-8 Security OPENED; V2 not authorized; Phase 3.1 paused).",
 );

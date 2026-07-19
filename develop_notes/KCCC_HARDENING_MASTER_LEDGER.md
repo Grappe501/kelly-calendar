@@ -63,6 +63,9 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 | HL-025 | PERF | EA-6 PERF-001 | Batch/cached ACL for event list (preserve projections) | High | Hygiene | High | M | Hardening | Open |
 | HL-026 | PERF | EA-6 PERF-002 | Date-range event list API for calendar adapters | High | Hygiene | High | M | Hardening / Foundation | Open |
 | HL-027 | PERF | EA-6 PERF-004 | Timed assemble smoke (≤50 synthetic events) — measure first | Medium | None | Low | S | Hardening | Open |
+| HL-028 | DI | EA-7 DI-002 | Label candidate-kind schedule as heuristic / non-authoritative | High | Hygiene | Medium | S | Hardening | Open |
+| HL-029 | DI | EA-7 DI-003 | Relabel month brief echoes as schedule-derived (Brief link remains owner) | High | Hygiene | Medium | S | Hardening | Open |
+| HL-030 | DI | EA-7 DI-004 | Day View cataloguePartial disclosure parity | Medium | Hygiene | Medium | S | Hardening | Open |
 
 ---
 
@@ -116,10 +119,11 @@ Wave 2 is **before** Decision Clarity so Redesign/Foundation changes are verifia
 
 ## Streams not yet ingested
 
-EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
+EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
 EA-3 Platform Quality: **COMPLETE / ACCEPTED** (HL-016…HL-020).  
 EA-5 Inclusive Experience: **COMPLETE / ACCEPTED** (HL-021…HL-024).  
-EA-6 Performance: **COMPLETE** (HL-025…HL-027).
+EA-6 Performance: **COMPLETE / ACCEPTED** (HL-025…HL-027).  
+EA-7 Data Integrity: **COMPLETE** (HL-028…HL-030; DI-001 → HL-001).
 
 ## Hardening gate
 
