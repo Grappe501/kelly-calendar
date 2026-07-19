@@ -1,0 +1,133 @@
+{
+  "pass": "PASS3-2026-07-19",
+  "generatedAt": "2026-07-19T20:17:16.392Z",
+  "featureFreeze": "honored",
+  "aiBehaviorAdded": "NONE",
+  "drillDownPagesAdded": "NONE",
+  "eventsCreated": [],
+  "eventsUpdated": [
+    {
+      "key": "travel-hsv-2026-07-22",
+      "eventNumber": "KCCC-2026-0025",
+      "status": "TENTATIVE"
+    },
+    {
+      "key": "lodging-hsv-deb-bryan-2026-07-22",
+      "eventNumber": "KCCC-2026-0026",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "kelly-work-hsv-remote-2026-07-23",
+      "eventNumber": "KCCC-2026-0027",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "hsv-democrats-kelly-2026-07-23",
+      "eventNumber": "KCCC-2026-0028",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "fundraiser-bramlett-2026-08-02",
+      "eventNumber": "KCCC-2026-0029",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "faulkner-dem-fundraiser-2026-08-02",
+      "eventNumber": "KCCC-2026-0030",
+      "status": "HOLD"
+    },
+    {
+      "key": "kelly-erin-2026-08-04",
+      "eventNumber": "KCCC-2026-0031",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "travel-eldorado-2026-08-04",
+      "eventNumber": "KCCC-2026-0032",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "wf-eldorado-immersion-2026-08-05",
+      "eventNumber": "KCCC-2026-0033",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "retired-ministers-eldorado-2026-08-05",
+      "eventNumber": "KCCC-2026-0034",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "travel-russellville-2026-08-05",
+      "eventNumber": "KCCC-2026-0035",
+      "status": "TENTATIVE"
+    },
+    {
+      "key": "travel-hope-2026-08-07",
+      "eventNumber": "KCCC-2026-0036",
+      "status": "TENTATIVE"
+    },
+    {
+      "key": "black-caucus-gbm-2026-08-08",
+      "eventNumber": "KCCC-2026-0037",
+      "status": "HOLD"
+    },
+    {
+      "key": "river-valley-choice-rally-2026-09-13",
+      "eventNumber": "KCCC-2026-0038",
+      "status": "CONFIRMED"
+    }
+  ],
+  "eventsRestored": [
+    {
+      "supersededKey": "depart-hsv-after-work-2026-07-22",
+      "supersededEventNumber": "KCCC-2026-0012",
+      "restoredViaKeys": [
+        "travel-hsv-2026-07-22",
+        "lodging-hsv-deb-bryan-2026-07-22",
+        "kelly-work-hsv-remote-2026-07-23",
+        "hsv-democrats-kelly-2026-07-23"
+      ],
+      "note": "Newer email evidence restored HSV itinerary as distinct Pass-3 keys; Pass-1 rows remain CANCELLED"
+    },
+    {
+      "supersededKey": "lodging-hsv-wed-2026-07-22",
+      "supersededEventNumber": "KCCC-2026-0013",
+      "restoredViaKeys": [
+        "travel-hsv-2026-07-22",
+        "lodging-hsv-deb-bryan-2026-07-22",
+        "kelly-work-hsv-remote-2026-07-23",
+        "hsv-democrats-kelly-2026-07-23"
+      ],
+      "note": "Newer email evidence restored HSV itinerary as distinct Pass-3 keys; Pass-1 rows remain CANCELLED"
+    },
+    {
+      "supersededKey": "kelly-work-hsv-2026-07-23",
+      "supersededEventNumber": "KCCC-2026-0014",
+      "restoredViaKeys": [
+        "travel-hsv-2026-07-22",
+        "lodging-hsv-deb-bryan-2026-07-22",
+        "kelly-work-hsv-remote-2026-07-23",
+        "hsv-democrats-kelly-2026-07-23"
+      ],
+      "note": "Newer email evidence restored HSV itinerary as distinct Pass-3 keys; Pass-1 rows remain CANCELLED"
+    }
+  ],
+  "eventsStaged": [
+    {
+      "draftId": "draft_pass3_gcal_unresolved_2026-08-08"
+    }
+  ],
+  "conflicts": [
+    {
+      "a": "fundraiser-bramlett-2026-08-02",
+      "b": "faulkner-dem-fundraiser-2026-08-02",
+      "overlap": "2026-08-02 17:00–19:00 America/Chicago",
+      "note": "Confirmed vs HOLD/tentative — do not auto-resolve"
+    }
+  ],
+  "opaqueGoogleLinks": {
+    "url1": "OPAQUE_GOOGLE_CALENDAR_TEMPLATE_URL_1_PENDING_OPERATOR_PASTE",
+    "url2": "OPAQUE_GOOGLE_CALENDAR_TEMPLATE_URL_2_PENDING_OPERATOR_PASTE",
+    "inventedFields": false
+  }
+}

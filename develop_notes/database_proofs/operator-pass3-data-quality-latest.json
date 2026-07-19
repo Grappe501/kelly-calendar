@@ -1,0 +1,278 @@
+{
+  "pass": "PASS3-DATA-QUALITY-2026-07-19",
+  "generatedAt": "2026-07-19T20:17:25.360Z",
+  "featureFreeze": "honored",
+  "aiBehaviorAdded": "NONE",
+  "drillDownPagesAdded": "NONE",
+  "verdict": "PASS",
+  "checks": [
+    {
+      "id": "present:travel-hsv-2026-07-22",
+      "ok": true,
+      "detail": "KCCC-2026-0025 TENTATIVE"
+    },
+    {
+      "id": "present:lodging-hsv-deb-bryan-2026-07-22",
+      "ok": true,
+      "detail": "KCCC-2026-0026 CONFIRMED"
+    },
+    {
+      "id": "present:kelly-work-hsv-remote-2026-07-23",
+      "ok": true,
+      "detail": "KCCC-2026-0027 CONFIRMED"
+    },
+    {
+      "id": "present:hsv-democrats-kelly-2026-07-23",
+      "ok": true,
+      "detail": "KCCC-2026-0028 CONFIRMED"
+    },
+    {
+      "id": "present:fundraiser-bramlett-2026-08-02",
+      "ok": true,
+      "detail": "KCCC-2026-0029 CONFIRMED"
+    },
+    {
+      "id": "present:faulkner-dem-fundraiser-2026-08-02",
+      "ok": true,
+      "detail": "KCCC-2026-0030 HOLD"
+    },
+    {
+      "id": "present:kelly-erin-2026-08-04",
+      "ok": true,
+      "detail": "KCCC-2026-0031 CONFIRMED"
+    },
+    {
+      "id": "present:travel-eldorado-2026-08-04",
+      "ok": true,
+      "detail": "KCCC-2026-0032 CONFIRMED"
+    },
+    {
+      "id": "present:wf-eldorado-immersion-2026-08-05",
+      "ok": true,
+      "detail": "KCCC-2026-0033 CONFIRMED"
+    },
+    {
+      "id": "present:retired-ministers-eldorado-2026-08-05",
+      "ok": true,
+      "detail": "KCCC-2026-0034 CONFIRMED"
+    },
+    {
+      "id": "present:travel-russellville-2026-08-05",
+      "ok": true,
+      "detail": "KCCC-2026-0035 TENTATIVE"
+    },
+    {
+      "id": "present:travel-hope-2026-08-07",
+      "ok": true,
+      "detail": "KCCC-2026-0036 TENTATIVE"
+    },
+    {
+      "id": "present:black-caucus-gbm-2026-08-08",
+      "ok": true,
+      "detail": "KCCC-2026-0037 HOLD"
+    },
+    {
+      "id": "present:river-valley-choice-rally-2026-09-13",
+      "ok": true,
+      "detail": "KCCC-2026-0038 CONFIRMED"
+    },
+    {
+      "id": "aug2-conflict-visible",
+      "ok": true,
+      "detail": "Bramlett CONFIRMED ∩ Faulkner HOLD 5–7pm"
+    },
+    {
+      "id": "black-caucus-informational-hold",
+      "ok": true,
+      "detail": "HOLD attendance=false"
+    },
+    {
+      "id": "hsv-restored",
+      "ok": true,
+      "detail": "Pass-3 HSV live; Pass-1 CANCELLED"
+    },
+    {
+      "id": "hsv-work-busy-only",
+      "ok": true,
+      "detail": "BUSY_ONLY"
+    },
+    {
+      "id": "travel-times-tentative",
+      "ok": true,
+      "detail": "russellville=TENTATIVE hope=TENTATIVE"
+    },
+    {
+      "id": "river-valley-speaker",
+      "ok": true,
+      "detail": "SPEAKING CONFIRMED"
+    },
+    {
+      "id": "river-valley-estimate-not-actual",
+      "ok": true,
+      "detail": "expectedAttendance=null"
+    },
+    {
+      "id": "wf-immersion-one-hour",
+      "ok": true,
+      "detail": "2026-08-05 07:00–08:00"
+    },
+    {
+      "id": "opaque-gcal-staged-only",
+      "ok": true,
+      "detail": "H:\\SOSWebsite\\Kelly-calendar\\data\\ingest_staging\\drafts\\draft_pass3_gcal_unresolved_2026-08-08.json"
+    },
+    {
+      "id": "press-release-indexed",
+      "ok": true,
+      "detail": "H:\\SOSWebsite\\Kelly-calendar\\develop_notes\\source_references\\river-valley-has-a-choice-press-release.md"
+    },
+    {
+      "id": "no-duplicate-ingest-keys",
+      "ok": true,
+      "detail": []
+    }
+  ],
+  "findings": [],
+  "inventory": [
+    {
+      "key": "travel-hsv-2026-07-22",
+      "eventNumber": "KCCC-2026-0025",
+      "status": "TENTATIVE",
+      "calendar": "travel",
+      "chicago": "2026-07-22 00:00–23:59",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": "ATTENDING",
+      "candidateAttendance": null
+    },
+    {
+      "key": "lodging-hsv-deb-bryan-2026-07-22",
+      "eventNumber": "KCCC-2026-0026",
+      "status": "CONFIRMED",
+      "calendar": "travel",
+      "chicago": "2026-07-22 20:00–08:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "kelly-work-hsv-remote-2026-07-23",
+      "eventNumber": "KCCC-2026-0027",
+      "status": "CONFIRMED",
+      "calendar": "protected-personal",
+      "chicago": "2026-07-23 00:00–23:59",
+      "visibility": "BUSY_ONLY",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "hsv-democrats-kelly-2026-07-23",
+      "eventNumber": "KCCC-2026-0028",
+      "status": "CONFIRMED",
+      "calendar": "public-events",
+      "chicago": "2026-07-23 15:00–19:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": "SPEAKING",
+      "candidateAttendance": true
+    },
+    {
+      "key": "fundraiser-bramlett-2026-08-02",
+      "eventNumber": "KCCC-2026-0029",
+      "status": "CONFIRMED",
+      "calendar": "fundraising",
+      "chicago": "2026-08-02 16:00–19:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": "ATTENDING",
+      "candidateAttendance": null
+    },
+    {
+      "key": "faulkner-dem-fundraiser-2026-08-02",
+      "eventNumber": "KCCC-2026-0030",
+      "status": "HOLD",
+      "calendar": "public-events",
+      "chicago": "2026-08-02 17:00–19:30",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": false
+    },
+    {
+      "key": "kelly-erin-2026-08-04",
+      "eventNumber": "KCCC-2026-0031",
+      "status": "CONFIRMED",
+      "calendar": "internal-meetings",
+      "chicago": "2026-08-04 07:30–08:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "travel-eldorado-2026-08-04",
+      "eventNumber": "KCCC-2026-0032",
+      "status": "CONFIRMED",
+      "calendar": "travel",
+      "chicago": "2026-08-04 17:30–19:30",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "wf-eldorado-immersion-2026-08-05",
+      "eventNumber": "KCCC-2026-0033",
+      "status": "CONFIRMED",
+      "calendar": "public-events",
+      "chicago": "2026-08-05 07:00–08:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "retired-ministers-eldorado-2026-08-05",
+      "eventNumber": "KCCC-2026-0034",
+      "status": "CONFIRMED",
+      "calendar": "public-events",
+      "chicago": "2026-08-05 10:30–13:30",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "travel-russellville-2026-08-05",
+      "eventNumber": "KCCC-2026-0035",
+      "status": "TENTATIVE",
+      "calendar": "travel",
+      "chicago": "2026-08-05 00:00–23:59",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "travel-hope-2026-08-07",
+      "eventNumber": "KCCC-2026-0036",
+      "status": "TENTATIVE",
+      "calendar": "travel",
+      "chicago": "2026-08-07 00:00–23:59",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": null
+    },
+    {
+      "key": "black-caucus-gbm-2026-08-08",
+      "eventNumber": "KCCC-2026-0037",
+      "status": "HOLD",
+      "calendar": "public-events",
+      "chicago": "2026-08-08 13:00–15:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": null,
+      "candidateAttendance": false
+    },
+    {
+      "key": "river-valley-choice-rally-2026-09-13",
+      "eventNumber": "KCCC-2026-0038",
+      "status": "CONFIRMED",
+      "calendar": "public-events",
+      "chicago": "2026-09-13 13:00–16:00",
+      "visibility": "TITLE_LOCATION",
+      "candidateRole": "SPEAKING",
+      "candidateAttendance": true
+    }
+  ]
+}
