@@ -26,6 +26,7 @@ Operator confidence must rise from **clarity and honesty**, not from fabricated 
 | Hardening | Prefer Unknown / N/A / partial over defaults that look factual (see HL-001) |
 | Redesign | Compact Unknown presentation — do not fill with estimates-as-fact |
 | Foundation / V2 | New views inherit Never Fake; no “helpful” invented rollups |
+| Redesign AI (when authorized) | Contextual insights must be labeled non-authoritative; never fill Unknown as fact; no unsourced opponent claims |
 | Release review | If OCI rose via invented truth → **fail** release hygiene |
 
 ## Related patterns

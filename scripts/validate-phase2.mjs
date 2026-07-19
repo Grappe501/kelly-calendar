@@ -447,10 +447,21 @@ if (
   read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-045") &&
   read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-039") &&
   read("develop_notes/KCCC_EA10_TECHNICAL_DEBT.md").includes("OPENED") &&
+  build.experience_redesign_vision_status === "captured" &&
+  build.experience_redesign_implementation === "blocked" &&
+  build.experience_redesign_ai_mode === "contextual_not_conversational" &&
+  constants.includes('EXPERIENCE_REDESIGN_VISION_STATUS = "CAPTURED"') &&
+  constants.includes('EXPERIENCE_REDESIGN_AI_MODE = "CONTEXTUAL_NOT_CONVERSATIONAL"') &&
+  exists("develop_notes/KCCC_EXPERIENCE_REDESIGN_2_VISION.md") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
+  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("VISION CAPTURED") &&
+  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2_VISION.md").includes("campaign is already awake") &&
+  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2_VISION.md").includes("contextual, not conversational") &&
+  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2_VISION.md").includes("FORBIDDEN") &&
+  !exists("develop_notes/KCCC_VERSION_2_AUTHORIZATION.md") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("EA-8 ACCEPTED; EA-9 Operator Workflow COMPLETE; EA-10 OPENED; HL-045");
+  pass("EA-9 COMPLETE; EA-10 OPENED; Redesign vision CAPTURED (impl BLOCKED); HL-045");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -460,5 +471,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (EA-8 ACCEPTED; EA-9 Operator Workflow COMPLETE; EA-10 Technical Debt OPENED; V2 not authorized; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (EA-9 COMPLETE; EA-10 OPENED; Experience Redesign 2.0 vision CAPTURED; impl BLOCKED; V2 not authorized; Phase 3.1 paused).",
 );

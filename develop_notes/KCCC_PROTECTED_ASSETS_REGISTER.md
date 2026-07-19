@@ -36,6 +36,8 @@ Do not dilute these in Hardening, Redesign, or Foundation.
 | PA-18 | Release Constitution | `KCCC_RELEASE_CONSTITUTION.md` | Pre-ship questions for every release |
 | PA-19 | Program Charter | `KCCC_PROGRAM_CHARTER.md` | Why phases exist; four immutable principles |
 | PA-20 | Governance Execution mode | `KCCC_GOVERNANCE_EXECUTION.md` | Design complete; execute under existing stack |
+| PA-21 | Experience shift (Mission→Campaign→Decisions→Calendar) | Redesign vision | Command-center feel; not SaaS calendar |
+| PA-22 | Contextual AI labeling | Redesign vision · Never Fake | AI observations ≠ authoritative; evidence-linked when possible |
 
 ---
 
