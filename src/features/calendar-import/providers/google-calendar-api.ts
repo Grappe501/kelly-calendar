@@ -46,7 +46,9 @@ export const googleCalendarApiProvider: GoogleCalendarApiProvider = {
       "orderBy=startTime",
       "pageToken pagination",
       "timeZone=America/Chicago",
-      "OAuth read-only scope (Step 4+)",
+      "OAuth read-only scope (future)",
+      "OAuth write / push scopes (future — required for KCCC → Google create/update)",
+      "Not implemented: secret iCal remains IMPORT_ONLY until OAuth is authorized",
     ];
   },
 };

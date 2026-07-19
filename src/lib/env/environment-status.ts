@@ -15,6 +15,8 @@ export type EnvironmentCapabilityStatus = {
   supabaseServer: "configured" | "missing";
   openAi: "configured" | "missing";
   sessionSecret: "configured" | "missing";
+  /** Presence only — never includes the secret iCal URL value. */
+  googlePrivateIcalFeed: "configured" | "missing";
   redDirtFallback: {
     enabled: boolean;
     used: boolean;
@@ -40,6 +42,28 @@ export function getEnvironmentCapabilityStatus(): EnvironmentCapabilityStatus {
     loaded.sources.DATABASE_URL.classification = dbClass;
   }
 
+  const privateIcalConfigured = Boolean(
+    loaded.env.KCCC_GOOGLE_CALENDAR_ICAL_URL?.trim() ||
+      process.env.KCCC_GOOGLE_CALENDAR_ICAL_URL?.trim(),
+  );
+
+  // Never attach secret values to the status payload — strip accidental value fields.
+  const safeSources: EnvironmentSourceReport = {};
+  for (const [key, meta] of Object.entries(loaded.sources)) {
+    safeSources[key] = {
+      configured: meta.configured,
+      source: meta.source,
+      classification: meta.classification,
+    };
+  }
+  if (privateIcalConfigured || safeSources.KCCC_GOOGLE_CALENDAR_ICAL_URL) {
+    safeSources.KCCC_GOOGLE_CALENDAR_ICAL_URL = {
+      configured: privateIcalConfigured,
+      source: safeSources.KCCC_GOOGLE_CALENDAR_ICAL_URL?.source ?? "process_environment",
+      classification: "secret_ical_presence_only",
+    };
+  }
+
   return {
     publicConfigurationValid: publicResult.ok,
     publicError: publicResult.ok ? undefined : publicResult.error,
@@ -59,11 +83,12 @@ export function getEnvironmentCapabilityStatus(): EnvironmentCapabilityStatus {
     supabaseServer: server.supabaseServiceRoleKey ? "configured" : "missing",
     openAi: server.openAiApiKey ? "configured" : "missing",
     sessionSecret: server.appSessionSecret ? "configured" : "missing",
+    googlePrivateIcalFeed: privateIcalConfigured ? "configured" : "missing",
     redDirtFallback: {
       enabled: loaded.redDirtFallbackEnabled,
       used: loaded.redDirtFallbackUsed,
     },
-    sources: loaded.sources,
+    sources: safeSources,
     publicSafe: {
       appName: publicResult.ok
         ? publicResult.value.appName

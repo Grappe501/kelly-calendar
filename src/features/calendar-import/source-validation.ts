@@ -14,6 +14,15 @@ export type ValidatedPublicIcalSource = {
   redactedLabel: string;
 };
 
+export type ValidatedPrivateIcalSource = {
+  ok: true;
+  sourceType: "PRIVATE_ICAL_ENV";
+  hostname: string;
+  sourceFingerprint: string;
+  /** Safe display label — never includes private path tokens or query secrets. */
+  redactedLabel: string;
+};
+
 function isPrivateOrLocalHostname(hostname: string): boolean {
   const host = hostname.toLowerCase();
   if (
@@ -42,6 +51,12 @@ export function fingerprintSourceUrl(url: string): string {
 export function redactSourceUrl(url: string): string {
   try {
     const parsed = new URL(url);
+    const path = parsed.pathname.toLowerCase();
+    // Secret Google iCal addresses put a bearer token in the path (/private-…/).
+    // Never echo path segments or query strings for those feeds.
+    if (path.includes("/private") || path.includes("/private-")) {
+      return `https://${parsed.hostname}/calendar/ical/[redacted]/private/[redacted]`;
+    }
     const pathHint =
       parsed.pathname.length > 24
         ? `${parsed.pathname.slice(0, 12)}…${parsed.pathname.slice(-8)}`
@@ -50,6 +65,10 @@ export function redactSourceUrl(url: string): string {
   } catch {
     return "[invalid-source]";
   }
+}
+
+export function redactPrivateIcalLabel(fingerprint: string): string {
+  return `google-private-ical#fp:${fingerprint}`;
 }
 
 /**
@@ -158,4 +177,78 @@ export function assertResponseSize(byteLength: number): void {
       publicMessage: "Calendar feed exceeds the maximum allowed size.",
     });
   }
+}
+
+/**
+ * Validate a Google private/secret iCal URL (server-side env only).
+ * Never returns path tokens suitable for reconstruction of the secret address.
+ */
+export function validatePrivateGoogleIcalSource(rawUrl: string): ValidatedPrivateIcalSource {
+  const trimmed = rawUrl.trim();
+  if (!trimmed) {
+    throw new AppError({
+      code: "CONFIGURATION_ERROR",
+      status: 503,
+      publicMessage: "KCCC Google Calendar iCal URL is not configured.",
+    });
+  }
+
+  let parsed: URL;
+  try {
+    parsed = new URL(trimmed);
+  } catch {
+    throw new AppError({
+      code: "CONFIGURATION_ERROR",
+      status: 503,
+      publicMessage: "Configured Google Calendar iCal URL is invalid.",
+    });
+  }
+
+  if (parsed.protocol !== "https:") {
+    throw new AppError({
+      code: "CONFIGURATION_ERROR",
+      status: 503,
+      publicMessage: "Configured Google Calendar iCal URL must use HTTPS.",
+    });
+  }
+
+  if (isPrivateOrLocalHostname(parsed.hostname)) {
+    throw new AppError({
+      code: "CONFIGURATION_ERROR",
+      status: 503,
+      publicMessage: "Configured Google Calendar iCal URL host is not permitted.",
+    });
+  }
+
+  const host = parsed.hostname.toLowerCase();
+  if (!(GOOGLE_ICAL_HOST_ALLOWLIST as readonly string[]).includes(host)) {
+    throw new AppError({
+      code: "CONFIGURATION_ERROR",
+      status: 503,
+      publicMessage: "Configured Google Calendar iCal host is not on the approved allowlist.",
+    });
+  }
+
+  const path = parsed.pathname.toLowerCase();
+  const looksLikePrivateIcal =
+    (path.includes("/ical/") || path.endsWith(".ics") || path.includes("/feeds/")) &&
+    (path.includes("/private") || path.includes("/private-"));
+
+  if (!looksLikePrivateIcal) {
+    throw new AppError({
+      code: "CONFIGURATION_ERROR",
+      status: 503,
+      publicMessage:
+        "Configured URL does not look like a Google private iCal address. Use the secret iCal address, not an embed URL.",
+    });
+  }
+
+  const fingerprint = fingerprintSourceUrl(trimmed);
+  return {
+    ok: true,
+    sourceType: "PRIVATE_ICAL_ENV",
+    hostname: host,
+    sourceFingerprint: fingerprint,
+    redactedLabel: redactPrivateIcalLabel(fingerprint),
+  };
 }

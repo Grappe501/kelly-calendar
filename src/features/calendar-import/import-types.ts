@@ -1,4 +1,4 @@
-export type GoogleImportSourceType = "PUBLIC_ICAL" | "GOOGLE_API";
+export type GoogleImportSourceType = "PUBLIC_ICAL" | "PRIVATE_ICAL_ENV" | "GOOGLE_API";
 
 export type GoogleCalendarImportManifest = {
   importId: string;

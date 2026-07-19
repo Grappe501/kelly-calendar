@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 
+type SourceType = "PUBLIC_ICAL" | "PRIVATE_ICAL_ENV" | "GOOGLE_API";
+
 function chicagoToday(): string {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Chicago",
@@ -12,9 +14,9 @@ function chicagoToday(): string {
 }
 
 export function GoogleImportPanel() {
-  const [sourceType, setSourceType] = useState<"PUBLIC_ICAL" | "GOOGLE_API">("PUBLIC_ICAL");
+  const [sourceType, setSourceType] = useState<SourceType>("PRIVATE_ICAL_ENV");
   const [sourceUrl, setSourceUrl] = useState("");
-  const [sourceLabel, setSourceLabel] = useState("Kelly public Google Calendar");
+  const [sourceLabel, setSourceLabel] = useState("Kelly private Google Calendar (env)");
   const [startsAt, setStartsAt] = useState("2025-11-01");
   const [endsAt, setEndsAt] = useState(chicagoToday());
   const [includeCancelled, setIncludeCancelled] = useState(false);
@@ -32,9 +34,9 @@ export function GoogleImportPanel() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  const rangePayload = useMemo(
-    () => ({
-      sourceUrl,
+  const rangePayload = useMemo(() => {
+    const base = {
+      sourceType,
       sourceLabel,
       startsAt: `${startsAt}T00:00:00-05:00`,
       endsAt: `${endsAt}T23:59:59-05:00`,
@@ -44,20 +46,38 @@ export function GoogleImportPanel() {
       importDescriptions,
       importLocations,
       importLinks,
-    }),
-    [
-      sourceUrl,
-      sourceLabel,
-      startsAt,
-      endsAt,
-      includeCancelled,
-      includeAllDay,
-      expandRecurring,
-      importDescriptions,
-      importLocations,
-      importLinks,
-    ],
-  );
+    };
+    if (sourceType === "PRIVATE_ICAL_ENV") {
+      // Never send the secret URL from the browser — server reads env.
+      return base;
+    }
+    return { ...base, sourceUrl };
+  }, [
+    sourceType,
+    sourceUrl,
+    sourceLabel,
+    startsAt,
+    endsAt,
+    includeCancelled,
+    includeAllDay,
+    expandRecurring,
+    importDescriptions,
+    importLocations,
+    importLinks,
+  ]);
+
+  function selectSourceType(next: SourceType) {
+    setSourceType(next);
+    setConfigured(null);
+    setResult(null);
+    setError(null);
+    if (next === "PRIVATE_ICAL_ENV") {
+      setSourceLabel("Kelly private Google Calendar (env)");
+      setSourceUrl("");
+    } else if (next === "PUBLIC_ICAL") {
+      setSourceLabel("Kelly public Google Calendar");
+    }
+  }
 
   async function validateSource() {
     setBusy(true);
@@ -66,7 +86,11 @@ export function GoogleImportPanel() {
       const res = await fetch("/api/import/google-calendar/validate-source", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sourceUrl, sourceType }),
+        body: JSON.stringify(
+          sourceType === "PRIVATE_ICAL_ENV" || sourceType === "GOOGLE_API"
+            ? { sourceType }
+            : { sourceUrl, sourceType },
+        ),
       });
       const json = await res.json();
       if (!res.ok) {
@@ -76,17 +100,21 @@ export function GoogleImportPanel() {
       }
       if (sourceType === "GOOGLE_API") {
         setConfigured({
-          identifier: "Google Calendar API (OAuth pending Step 4)",
+          identifier: "Google Calendar API (OAuth pending)",
           fingerprint: "api-pending",
         });
         setSourceUrl("");
         return;
       }
+      if (sourceType === "PRIVATE_ICAL_ENV" && json.calendarFeedConfigured === false) {
+        setError(json.message ?? "Private iCal feed is not configured on the server.");
+        setConfigured(null);
+        return;
+      }
       setConfigured({
-        identifier: json.identifier,
-        fingerprint: json.sourceFingerprint,
+        identifier: String(json.identifier ?? "configured"),
+        fingerprint: String(json.sourceFingerprint ?? ""),
       });
-      // Keep URL in memory for the subsequent fetch; UI shows redacted identifier only.
     } catch {
       setError("Network error");
     } finally {
@@ -96,16 +124,21 @@ export function GoogleImportPanel() {
 
   async function runImport() {
     if (sourceType === "GOOGLE_API") {
-      setError("Google Calendar API OAuth is not active in Step 3. Use public iCal.");
+      setError("Google Calendar API OAuth is not active. Use private env iCal or public iCal.");
       return;
     }
-    // Need URL in memory for fetch — re-prompt if cleared
-    if (!sourceUrl.trim() && !configured) {
-      setError("Enter and validate a public iCal source first.");
-      return;
+    if (sourceType === "PUBLIC_ICAL") {
+      if (!sourceUrl.trim() && !configured) {
+        setError("Enter and validate a public iCal source first.");
+        return;
+      }
+      if (!sourceUrl.trim()) {
+        setError("Re-enter the public iCal URL to run import (it is not stored after validation).");
+        return;
+      }
     }
-    if (!sourceUrl.trim()) {
-      setError("Re-enter the public iCal URL to run import (it is not stored after validation).");
+    if (sourceType === "PRIVATE_ICAL_ENV" && !configured) {
+      setError("Validate the private env feed first (server reads KCCC_GOOGLE_CALENDAR_ICAL_URL).");
       return;
     }
     setBusy(true);
@@ -127,7 +160,7 @@ export function GoogleImportPanel() {
         return;
       }
       setResult(json);
-      setSourceUrl("");
+      if (sourceType === "PUBLIC_ICAL") setSourceUrl("");
       if (json.redactedSource) {
         setConfigured({
           identifier: String(json.redactedSource),
@@ -145,7 +178,8 @@ export function GoogleImportPanel() {
     <div className="page-stack">
       <section className="dev-banner" role="note">
         Historical import floor: <strong>November 1, 2025</strong>. Database writes are disabled.
-        Events are staged on H-drive for operator review only.
+        Events are staged on H-drive for operator review only. Secret iCal addresses are
+        read-only and must never be pasted into this form.
       </section>
 
       <section className="panel">
@@ -155,8 +189,16 @@ export function GoogleImportPanel() {
           <label className="check-inline">
             <input
               type="radio"
+              checked={sourceType === "PRIVATE_ICAL_ENV"}
+              onChange={() => selectSourceType("PRIVATE_ICAL_ENV")}
+            />{" "}
+            Private Google Calendar iCal (server env)
+          </label>
+          <label className="check-inline">
+            <input
+              type="radio"
               checked={sourceType === "PUBLIC_ICAL"}
-              onChange={() => setSourceType("PUBLIC_ICAL")}
+              onChange={() => selectSourceType("PUBLIC_ICAL")}
             />{" "}
             Public Google Calendar iCal link
           </label>
@@ -164,7 +206,7 @@ export function GoogleImportPanel() {
             <input
               type="radio"
               checked={sourceType === "GOOGLE_API"}
-              onChange={() => setSourceType("GOOGLE_API")}
+              onChange={() => selectSourceType("GOOGLE_API")}
             />{" "}
             Google Calendar API connection
           </label>
@@ -173,6 +215,13 @@ export function GoogleImportPanel() {
           Calendar source label
           <input value={sourceLabel} onChange={(e) => setSourceLabel(e.target.value)} />
         </label>
+        {sourceType === "PRIVATE_ICAL_ENV" ? (
+          <p className="muted">
+            Uses server environment variable <code>KCCC_GOOGLE_CALENDAR_ICAL_URL</code> only.
+            Do not paste the secret address here. Sync direction: <strong>import only</strong> —
+            push back to Google is not available over iCal.
+          </p>
+        ) : null}
         {sourceType === "PUBLIC_ICAL" ? (
           configured ? (
             <p className="muted">
@@ -191,9 +240,13 @@ export function GoogleImportPanel() {
               />
             </label>
           )
-        ) : (
-          <p className="muted">API mode requires OAuth in Step 4. Contract is prepared only.</p>
-        )}
+        ) : null}
+        {sourceType === "GOOGLE_API" ? (
+          <p className="muted">
+            API mode requires OAuth. Contract only for now. This is the path for future
+            two-way sync / push.
+          </p>
+        ) : null}
         <div className="button-row">
           <button type="button" className="button secondary" disabled={busy} onClick={validateSource}>
             Validate source
@@ -203,11 +256,17 @@ export function GoogleImportPanel() {
           <div className="dev-banner" style={{ marginTop: "1rem" }}>
             <strong>Source configured</strong>
             <p style={{ margin: "0.35rem 0 0" }}>
-              Google Calendar public iCal source
+              {sourceType === "PRIVATE_ICAL_ENV"
+                ? "Google Calendar private iCal (env)"
+                : sourceType === "PUBLIC_ICAL"
+                  ? "Google Calendar public iCal source"
+                  : "Google Calendar API"}
               <br />
               Identifier: {configured.identifier}
               <br />
               Fingerprint: {configured.fingerprint}
+              <br />
+              Push supported: no
             </p>
           </div>
         ) : null}
@@ -324,6 +383,10 @@ export function GoogleImportPanel() {
             <strong>disabled</strong>
           </li>
           <li>
+            <span>Push to Google</span>
+            <strong>not supported (iCal is read-only)</strong>
+          </li>
+          <li>
             <span>Staging destination</span>
             <strong>H-drive</strong>
           </li>
@@ -360,6 +423,10 @@ export function GoogleImportPanel() {
               </li>
               <li>
                 <span>DB writes</span>
+                <strong>no</strong>
+              </li>
+              <li>
+                <span>Push supported</span>
                 <strong>no</strong>
               </li>
               {"importId" in result && result.importId ? (

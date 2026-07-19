@@ -127,7 +127,7 @@ function proposeGeography(location?: string): StagedCalendarEvent["geographicPro
 
 export function normalizeParsedEvent(options: {
   event: ParsedIcalEvent;
-  sourceType: "PUBLIC_ICAL" | "GOOGLE_API";
+  sourceType: "PUBLIC_ICAL" | "PRIVATE_ICAL_ENV" | "GOOGLE_API";
   sourceLabel: string;
   sourceFingerprint: string;
   range: ImportRangeOptions;

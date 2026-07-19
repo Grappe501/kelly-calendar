@@ -13,6 +13,11 @@ function looksLikeSecretValue(value: string): boolean {
   if (/^Bearer\s+\S+/i.test(value)) return true;
   if (/postgres(ql)?:\/\//i.test(value)) return true;
   if (/eyJ[a-zA-Z0-9_-]{10,}\.[a-zA-Z0-9_-]{10,}/.test(value)) return true;
+  // Google private/secret iCal addresses are bearer secrets in the path.
+  if (/calendar\.google\.com\/calendar\/ical\//i.test(value) && /\/private/i.test(value)) {
+    return true;
+  }
+  if (/KCCC_GOOGLE_CALENDAR_ICAL_URL/i.test(value)) return true;
   return false;
 }
 

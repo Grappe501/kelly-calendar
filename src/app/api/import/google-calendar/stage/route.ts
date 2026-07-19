@@ -1,6 +1,9 @@
 import { HISTORICAL_IMPORT_FLOOR } from "@/features/calendar-import/import-limits";
 import { defaultImportEndIso } from "@/features/calendar-import/normalize-google-event";
-import { runGooglePublicIcalImport } from "@/features/calendar-import/run-import";
+import {
+  runGooglePrivateIcalEnvImport,
+  runGooglePublicIcalImport,
+} from "@/features/calendar-import/run-import";
 import { withAuthenticatedMutation } from "@/server/auth/api-mutation";
 import { requireAuthorized } from "@/server/auth/authorization";
 import { enforceScaffoldRateLimit } from "@/server/middleware/with-rate-limit";
@@ -18,22 +21,34 @@ export async function POST(request: Request) {
       });
       enforceScaffoldRateLimit("/api/import/google-calendar/stage", requestId);
       const body = (await request.json()) as Record<string, unknown>;
-      const result = await runGooglePublicIcalImport({
-        sourceUrl: String(body.sourceUrl ?? ""),
-        sourceLabel: String(body.sourceLabel ?? "Google Calendar"),
-        mode: "stage",
-        requestId,
-        range: {
-          startsAt: String(body.startsAt ?? HISTORICAL_IMPORT_FLOOR),
-          endsAt: String(body.endsAt ?? defaultImportEndIso()),
-          includeCancelled: Boolean(body.includeCancelled),
-          includeAllDay: body.includeAllDay !== false,
-          expandRecurring: body.expandRecurring !== false,
-          importDescriptions: body.importDescriptions !== false,
-          importLocations: body.importLocations !== false,
-          importLinks: body.importLinks !== false,
-        },
-      });
+      const sourceType = String(body.sourceType ?? "PUBLIC_ICAL");
+      const range = {
+        startsAt: String(body.startsAt ?? HISTORICAL_IMPORT_FLOOR),
+        endsAt: String(body.endsAt ?? defaultImportEndIso()),
+        includeCancelled: Boolean(body.includeCancelled),
+        includeAllDay: body.includeAllDay !== false,
+        expandRecurring: body.expandRecurring !== false,
+        importDescriptions: body.importDescriptions !== false,
+        importLocations: body.importLocations !== false,
+        importLinks: body.importLinks !== false,
+      };
+
+      const result =
+        sourceType === "PRIVATE_ICAL_ENV"
+          ? await runGooglePrivateIcalEnvImport({
+              sourceLabel: String(body.sourceLabel ?? "Kelly private Google Calendar (env)"),
+              mode: "stage",
+              requestId,
+              range,
+            })
+          : await runGooglePublicIcalImport({
+              sourceUrl: String(body.sourceUrl ?? ""),
+              sourceLabel: String(body.sourceLabel ?? "Google Calendar"),
+              mode: "stage",
+              requestId,
+              range,
+            });
+
       return {
         ...result,
         operatorReviewRequired: true,

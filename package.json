@@ -95,6 +95,7 @@
     "visibility:test": "node scripts/run-with-h-drive-env.cjs vitest run tests/unit/calendar-security",
     "import:validate": "node scripts/validate-google-import-foundation.mjs",
     "import:preview": "node scripts/preview-google-calendar-import.mjs",
+    "import:preview:private-ical": "node scripts/run-with-h-drive-env.cjs node scripts/preview-private-ical-import.mjs",
     "import:staging:validate": "node scripts/validate-import-staging.mjs",
     "drafts:validate": "node scripts/validate-event-draft-foundation.mjs",
     "templates:validate": "node scripts/validate-event-templates.mjs",

@@ -30,6 +30,8 @@ export const SERVER_ONLY_ENV_KEYS = [
   "INTERNAL_API_SECRET",
   "LOG_LEVEL",
   "ENV_FALLBACK_TO_REDDIRT",
+  /** Secret Google private iCal address — never expose value; presence only in diagnostics. */
+  "KCCC_GOOGLE_CALENDAR_ICAL_URL",
 ] as const;
 
 export const FORBIDDEN_PUBLIC_PREFIX_KEYS = [
@@ -39,4 +41,5 @@ export const FORBIDDEN_PUBLIC_PREFIX_KEYS = [
   "NEXT_PUBLIC_DIRECT_URL",
   "NEXT_PUBLIC_APP_SESSION_SECRET",
   "NEXT_PUBLIC_INTERNAL_API_SECRET",
+  "NEXT_PUBLIC_KCCC_GOOGLE_CALENDAR_ICAL_URL",
 ] as const;

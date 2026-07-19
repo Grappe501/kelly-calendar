@@ -28,6 +28,8 @@ export function GET(request: Request) {
           supabaseServer: env.supabaseServer,
           openAi: env.openAi,
           sessionSecret: env.sessionSecret,
+          /** yes/no only — never the secret URL value */
+          googlePrivateIcalFeed: env.googlePrivateIcalFeed,
         },
         redDirtFallback: env.redDirtFallback,
         sources: isProd
