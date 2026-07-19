@@ -10,6 +10,7 @@ import {
   type TodayReadinessSummary,
 } from "@/lib/missions/today-readiness";
 import type { AuthenticatedActor } from "@/server/auth/actor";
+import { roleMayMutate } from "@/lib/auth/system-roles";
 import { listEventsForActor } from "@/server/services/event-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
@@ -76,8 +77,11 @@ export async function getTodayCommandShellData(
     eventsToday.map((e) => e.eventId),
   );
 
+  const canMutateDayActions = roleMayMutate(actor.primarySystemRole);
+
   const missionsToday = upcomingToday.map((event, index) => {
     const travel = context.travel.get(event.eventId);
+    const day = context.day.get(event.eventId);
     const timeline = computeMissionTimeline({
       missionId: event.eventId,
       startsAt: event.startsAt,
@@ -97,6 +101,10 @@ export async function getTodayCommandShellData(
       timeline,
       isNext: index === 0,
       now,
+      eventVersion: day?.version,
+      arrivalAt: day?.arrivalAt ?? null,
+      confirmationStatus: day?.confirmationStatus ?? null,
+      canMutateDayActions,
     });
   });
   const nextMission = missionsToday[0] ?? null;

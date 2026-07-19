@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { MissionCard } from "@/lib/missions/mission-card";
+import { MissionDayActions } from "@/components/today/MissionDayActions";
 
 type Props = {
   mission: MissionCard;
@@ -137,6 +138,13 @@ export function MissionCardView({ mission, compact = false }: Props) {
           </p>
         </div>
       )}
+
+      <MissionDayActions
+        missionId={mission.missionId}
+        eventVersion={mission.eventVersion}
+        actions={mission.availableDayActions}
+        canMutate={mission.canMutateDayActions}
+      />
 
       <Link
         className="button mission-action"

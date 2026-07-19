@@ -14,9 +14,17 @@ export type MissionTravelSnapshot = Pick<
   | "bufferMinutes"
 >;
 
+export type MissionDaySnapshotRow = {
+  version: number;
+  status: string;
+  arrivalAt: string | null;
+  confirmationStatus: string | null;
+};
+
 export type MissionContextBundle = {
   readiness: Map<string, EventReadinessResult>;
   travel: Map<string, MissionTravelSnapshot>;
+  day: Map<string, MissionDaySnapshotRow>;
 };
 
 /**
@@ -28,8 +36,9 @@ export async function loadMissionContextForIds(
 ): Promise<MissionContextBundle> {
   const readiness = new Map<string, EventReadinessResult>();
   const travel = new Map<string, MissionTravelSnapshot>();
+  const day = new Map<string, MissionDaySnapshotRow>();
   const ids = [...new Set(eventIds)].slice(0, 12);
-  if (ids.length === 0) return { readiness, travel };
+  if (ids.length === 0) return { readiness, travel, day };
 
   const rows = await prisma.event.findMany({
     where: { id: { in: ids }, archivedAt: null },
@@ -51,6 +60,12 @@ export async function loadMissionContextForIds(
       bufferMinutes: plan?.bufferMinutes ?? null,
       departureAt: plan?.departureAt?.toISOString() ?? null,
       targetArrivalAt: plan?.targetArrivalAt?.toISOString() ?? null,
+    });
+    day.set(event.id, {
+      version: event.version,
+      status: event.status,
+      arrivalAt: event.arrivalAt?.toISOString() ?? null,
+      confirmationStatus: event.confirmationStatus,
     });
 
     readiness.set(
@@ -89,7 +104,7 @@ export async function loadMissionContextForIds(
     );
   }
 
-  return { readiness, travel };
+  return { readiness, travel, day };
 }
 
 /** @deprecated use loadMissionContextForIds */

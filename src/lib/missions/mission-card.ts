@@ -11,6 +11,10 @@ import {
 } from "@/lib/missions/mission-status";
 import type { MissionTodayReadiness } from "@/lib/missions/today-readiness";
 import { buildMissionTodayReadiness } from "@/lib/missions/today-readiness";
+import {
+  availableMissionDayActions,
+  type MissionDayAction,
+} from "@/lib/missions/mission-day-actions";
 
 export type MissionRiskLevel = "NONE" | "WATCH" | "HIGH" | "CRITICAL";
 
@@ -44,6 +48,12 @@ export type MissionCard = {
   timeline: MissionTimeline | null;
   /** Step 6.4 actionable readiness (Ready / Needs Attention / Blocked / Unknown). */
   todayReadiness: MissionTodayReadiness;
+  /** Step 6.5 one-tap day actions (RBAC-gated in UI; enforced server-side). */
+  eventVersion: number;
+  arrivalAt: string | null;
+  confirmationStatus: string | null;
+  availableDayActions: MissionDayAction[];
+  canMutateDayActions: boolean;
   isNext: boolean;
   status: string;
 };
@@ -173,6 +183,10 @@ export function toMissionCard(input: {
   ownerLabel?: string;
   leaveBy?: LeaveByHook;
   now?: Date;
+  eventVersion?: number;
+  arrivalAt?: string | null;
+  confirmationStatus?: string | null;
+  canMutateDayActions?: boolean;
 }): MissionCard {
   const { event, timezone } = input;
   const readiness = input.readiness ?? null;
@@ -191,6 +205,17 @@ export function toMissionCard(input: {
     riskLevel: risk.level,
     now: input.now,
   });
+  const arrivalAt = input.arrivalAt ?? null;
+  const confirmationStatus = input.confirmationStatus ?? null;
+  const canMutateDayActions =
+    Boolean(input.canMutateDayActions) && Boolean(event.capabilities.canEdit);
+  const availableDayActions = canMutateDayActions
+    ? availableMissionDayActions({
+        status: event.status,
+        arrivalAt,
+        confirmationStatus,
+      })
+    : [];
 
   return {
     missionId: event.eventId,
@@ -216,6 +241,11 @@ export function toMissionCard(input: {
       missionTitle: event.title,
       readiness,
     }),
+    eventVersion: input.eventVersion ?? 1,
+    arrivalAt,
+    confirmationStatus,
+    availableDayActions,
+    canMutateDayActions,
     isNext: Boolean(input.isNext),
     status: event.status,
   };

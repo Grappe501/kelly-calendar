@@ -173,6 +173,76 @@ if (
   fail("6.4 Today summary missing readiness rollup");
 }
 
+const dayActionFiles = [
+  "src/lib/missions/mission-day-actions.ts",
+  "src/server/services/mission-day-action-service.ts",
+  "src/app/api/events/[eventId]/mission-day/route.ts",
+  "src/components/today/MissionDayActions.tsx",
+];
+for (const rel of dayActionFiles) {
+  if (exists(rel)) pass(`6.5 ${rel}`);
+  else fail(`6.5 missing ${rel}`);
+}
+
+const dayActions = read("src/lib/missions/mission-day-actions.ts");
+if (
+  dayActions.includes("START_MISSION") &&
+  dayActions.includes("MARK_ARRIVED") &&
+  dayActions.includes("MARK_COMPLETE") &&
+  dayActions.includes("NEEDS_ATTENTION") &&
+  dayActions.includes("availableMissionDayActions")
+) {
+  pass("6.5 one-tap action set present");
+} else {
+  fail("6.5 one-tap action set incomplete");
+}
+
+const dayService = read("src/server/services/mission-day-action-service.ts");
+if (
+  dayService.includes('action: "EVENT_EDIT"') &&
+  dayService.includes("expectedVersion") &&
+  dayService.includes("MISSION_DAY_ACTION") &&
+  dayService.includes("ConflictError")
+) {
+  pass("6.5 RBAC + version + audit contracts present");
+} else {
+  fail("6.5 mutation contracts incomplete");
+}
+
+const dayRoute = read("src/app/api/events/[eventId]/mission-day/route.ts");
+if (
+  dayRoute.includes("withAuthenticatedMutation") &&
+  dayRoute.includes("applyMissionDayAction")
+) {
+  pass("6.5 authenticated mission-day mutation route");
+} else {
+  fail("6.5 mission-day route incomplete");
+}
+
+const cardView = read("src/components/today/MissionCardView.tsx");
+if (cardView.includes("MissionDayActions")) {
+  pass("6.5 Mission Cards expose one-tap actions");
+} else {
+  fail("6.5 Mission Cards missing day actions UI");
+}
+
+if (
+  todayService.includes("canMutateDayActions") &&
+  todayService.includes("eventVersion") &&
+  todayService.includes("context.day")
+) {
+  pass("6.5 Today summary wires day snapshots + RBAC gate");
+} else {
+  fail("6.5 Today summary missing day-action wiring");
+}
+
+if (
+  read("src/lib/missions/mission-timeline.ts").includes("computeMissionTimeline") &&
+  read("src/lib/missions/today-readiness.ts").includes("buildTodayReadinessSummary")
+) {
+  pass("6.3/6.4 timeline + readiness engines left intact");
+}
+
 const todayApi = read("src/app/api/command-summary/today/route.ts");
 if (todayApi.includes("withAuthenticatedQuery") && todayApi.includes("getTodayCommandShellData")) {
   pass("command-summary/today authenticated + live");

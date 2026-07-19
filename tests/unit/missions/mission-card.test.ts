@@ -61,6 +61,22 @@ describe("Mission Cards (Step 6.2/6.3)", () => {
     expect(card.timeline?.driveMinutes).toBe(17);
     expect(card.todayReadiness.state).toBe("UNKNOWN");
     expect(card.immediateAction.label.length).toBeGreaterThan(0);
+    expect(card.availableDayActions).toEqual([]);
+    expect(card.canMutateDayActions).toBe(false);
+  });
+
+  it("exposes one-tap day actions when mutation is authorized", () => {
+    const card = toMissionCard({
+      event: baseEvent({ status: "CONFIRMED" }),
+      timezone: "America/Chicago",
+      eventVersion: 3,
+      canMutateDayActions: true,
+    });
+    expect(card.eventVersion).toBe(3);
+    expect(card.canMutateDayActions).toBe(true);
+    expect(card.availableDayActions).toContain("START_MISSION");
+    expect(card.availableDayActions).toContain("MARK_COMPLETE");
+    expect(card.availableDayActions).toContain("NEEDS_ATTENTION");
   });
 
   it("marks needs attention from critical readiness blockers", () => {

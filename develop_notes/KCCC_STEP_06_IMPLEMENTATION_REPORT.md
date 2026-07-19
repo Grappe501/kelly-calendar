@@ -25,12 +25,21 @@
 - Timeline projected into Mission Card `leaveBy` + UI timeline block
 - Engine kept separate from UI; Today consumes via server wiring
 
-## Increment 4 — Today’s Readiness (this pass)
+## Increment 4 — Today’s Readiness
 
 - Actionable readiness categories: Schedule / Travel / People / Materials / Location / Communications / Follow-up
 - Mission states: Ready / Needs Attention / Blocked / Unknown (never silent Ready)
 - Today summary: counts + top issue + one-thumb corrective action
 - Consumes existing OI `EventReadinessResult`; Timeline Engine unchanged
+
+## Increment 5 — One-tap completion (this pass)
+
+- Actions: Start mission / Mark arrived / Mark complete / Needs attention
+- `POST /api/events/[eventId]/mission-day` via authenticated mutation contract
+- RBAC (`EVENT_EDIT`), version/409 conflict protection, idempotent accepts, audit per transition
+- Optimistic UI avoided — wait for server confirmation; clear retry on failure/409
+- Shared `OPENAI_API_KEY` present for future advisory AI only (no autonomous mutations)
+- Timeline + readiness engines unchanged
 
 ## Out of scope
 
