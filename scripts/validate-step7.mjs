@@ -132,7 +132,8 @@ if (
   build.constituent_operations_accepted === true &&
   (build.phase_2_status === "recommended_not_started" ||
     build.phase_2_status === "in_progress" ||
-    build.phase_2_status === "open")
+    build.phase_2_status === "open" ||
+    build.phase_2_status === "CERTIFIED")
 ) {
   pass("Phase 1 CERTIFIED; Phase 2 gate intact");
 } else {

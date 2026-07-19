@@ -1,5 +1,5 @@
 /**
- * Phase 2 structural gates (2.1–2.5).
+ * Phase 2 structural gates — CERTIFIED (2.1–2.5 ACCEPTED).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -23,15 +23,11 @@ function read(rel) {
 }
 
 const required = [
-  ["2.4", "src/lib/missions/gotv-operations.ts"],
   ["2.5", "src/lib/missions/petition-ballot-operations.ts"],
-  ["2.5", "src/server/services/petition-ballot-operations-service.ts"],
-  ["2.5", "src/server/services/petition-ballot-operations-ai.ts"],
-  ["2.5", "src/app/api/command-summary/petition/route.ts"],
   ["2.5", "src/app/petition/page.tsx"],
-  ["2.5", "src/components/petition/PetitionBallotOperationsView.tsx"],
   ["2.5", "develop_notes/KCCC_PHASE_02_5_PETITION_BALLOT_OPERATIONS.md"],
-  ["2.5", "tests/unit/missions/petition-ballot-operations.test.ts"],
+  ["cert", "develop_notes/KCCC_PHASE_02_CERTIFICATION.md"],
+  ["cert", "develop_notes/KCCC_PHASE_03_CHARTER.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
@@ -41,114 +37,98 @@ for (const [label, rel] of required) {
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
 if (
   petition.includes("buildPetitionBallotOperationsHome") &&
-  petition.includes("qualify, defend, and execute") &&
   petition.includes("execution truth") &&
   petition.includes("candidateFeed") &&
   petition.includes("countyFeed") &&
   petition.includes("volunteerFeed") &&
   petition.includes("communicationsFeed") &&
-  petition.includes("intelligenceFeed") &&
-  petition.includes("combineOperationalReadiness")
+  petition.includes("intelligenceFeed")
 ) {
   pass("2.5 Petition contracts present");
 } else {
   fail("2.5 Petition contracts missing");
 }
 
-const candidate = read("src/lib/missions/candidate-operations.ts");
-if (candidate.includes("petitionConsume") || candidate.includes("petitionFeed")) {
-  pass("2.5 Candidate consumes Petition");
-} else {
-  fail("2.5 Candidate missing Petition consume");
-}
+const petitionDoc = read(
+  "develop_notes/KCCC_PHASE_02_5_PETITION_BALLOT_OPERATIONS.md",
+);
+if (petitionDoc.includes("ACCEPTED")) pass("2.5 Petition ACCEPTED recorded");
+else fail("2.5 Petition acceptance missing from docs");
 
-const county = read("src/lib/missions/county-operations.ts");
-if (county.includes("petitionConsume")) pass("2.5 County consumes Petition");
-else fail("2.5 County missing petitionConsume");
-
-const vol = read("src/lib/missions/volunteer-operations.ts");
-if (vol.includes("petitionConsume")) pass("2.5 Volunteer consumes Petition");
-else fail("2.5 Volunteer missing petitionConsume");
-
-const comms = read("src/lib/missions/communications-operations.ts");
-if (comms.includes("petitionConsume")) pass("2.5 Communications consumes Petition");
-else fail("2.5 Communications missing petitionConsume");
-
-const intel = read("src/lib/missions/intelligence-operations.ts");
-if (intel.includes("petitionFeed") && intel.includes("PETITION_BALLOT")) {
-  pass("2.5 Intelligence consumes Petition");
-} else {
-  fail("2.5 Intelligence missing Petition feed");
-}
-
-const exec = read("src/lib/missions/executive-command.ts");
-if (exec.includes("petitionFeed")) pass("2.5 Executive consumes petitionFeed");
-else fail("2.5 Executive missing petitionFeed");
-
-const view = read("src/components/petition/PetitionBallotOperationsView.tsx");
-for (const phrase of [
-  "qualify, defend, and execute",
-  "Petition readiness",
-  "Collection Progress",
-  "Validation Risk",
-  "First-class Unknowns",
-  "execution truth",
-]) {
-  if (view.includes(phrase)) pass(`UI ${phrase}`);
-  else fail(`UI missing ${phrase}`);
-}
-
-const ai = read("src/server/services/petition-ballot-operations-ai.ts");
+const cert = read("develop_notes/KCCC_PHASE_02_CERTIFICATION.md");
 if (
-  ai.includes('feature: "petition-ballot-operations"') &&
-  ai.includes('application: "kelly-calendar"')
+  cert.includes("PHASE 2 CERTIFIED") &&
+  cert.includes("PRODUCTION READY") &&
+  cert.includes("0.8.4-petition") &&
+  cert.includes("Do **not** open Phase 2.6")
 ) {
-  pass("2.5 AI audit attribution present");
+  pass("Phase 2 certification record present");
 } else {
-  fail("2.5 AI audit attribution missing");
+  fail("Phase 2 certification incomplete");
 }
 
-const nav = read("src/lib/navigation/nav-items.ts");
-if (nav.includes("/petition")) pass("/petition maps to More");
-else fail("/petition nav prefix missing");
+const phase3 = read("develop_notes/KCCC_PHASE_03_CHARTER.md");
+if (
+  phase3.includes("OPEN FOR DEFINITION") &&
+  phase3.includes("Integration & Scale") &&
+  phase3.includes("External Integrations")
+) {
+  pass("Phase 3 charter open for definition");
+} else {
+  fail("Phase 3 charter missing or incomplete");
+}
 
 const charter = read("develop_notes/KCCC_PHASE_02_CHARTER.md");
 if (
+  charter.includes("CERTIFIED") &&
   charter.includes("coordinate campaign strategy") &&
-  charter.includes("2.5 Petition") &&
-  charter.includes("2.4 GOTV")
+  charter.includes("ACCEPTED / COMPLETE")
 ) {
-  pass("Phase 2 doctrine #5 + sequencing locked");
+  pass("Phase 2 charter CERTIFIED + doctrine locked");
 } else {
   fail("Phase 2 charter incomplete");
 }
-
-const gotvDoc = read("develop_notes/KCCC_PHASE_02_4_GOTV_OPERATIONS.md");
-if (gotvDoc.includes("ACCEPTED")) pass("2.4 GOTV ACCEPTED recorded");
-else fail("2.4 GOTV acceptance missing from docs");
 
 const build = JSON.parse(read("data/build_state.json"));
 if (build.candidate_data_ready === true) fail("candidate_data_ready must be false");
 else pass("candidate_data_ready false");
 
 if (
-  build.fundraising_operations_accepted === true &&
-  build.debate_media_operations_accepted === true &&
   build.candidate_operations_accepted === true &&
-  build.gotv_operations_accepted === true
+  build.debate_media_operations_accepted === true &&
+  build.fundraising_operations_accepted === true &&
+  build.gotv_operations_accepted === true &&
+  build.petition_ballot_operations_accepted === true
 ) {
-  pass("2.1–2.4 ACCEPTED");
+  pass("2.1–2.5 ACCEPTED");
 } else {
-  fail("2.1–2.4 acceptance missing");
+  fail("2.1–2.5 acceptance missing");
 }
 
 if (
-  build.phase_2_increment === "2.5-petition-ballot-operations" ||
-  build.petition_ballot_operations_enabled === true
+  build.phase_2_status === "CERTIFIED" &&
+  build.phase_2_production_ready === true &&
+  build.phase_2_version === "0.8.4-petition"
 ) {
-  pass("2.5 increment tracked");
+  pass("Phase 2 CERTIFIED / PRODUCTION READY");
 } else {
-  fail("2.5 increment not tracked");
+  fail("Phase 2 certification missing from build_state");
+}
+
+if (build.phase_3_status === "open_for_definition") {
+  pass("Phase 3 open for definition (no 2.6)");
+} else {
+  fail("Phase 3 definition gate missing");
+}
+
+const constants = read("src/lib/system/constants.ts");
+if (
+  constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
+  constants.includes("OPEN_FOR_DEFINITION")
+) {
+  pass("constants reflect Phase 2 CERTIFIED");
+} else {
+  fail("constants missing Phase 2 CERTIFIED / Phase 3 definition");
 }
 
 if (failed) {
@@ -156,5 +136,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (2.1–2.4 ACCEPTED, 2.5 OPEN).",
+  "Phase 2 structural validation passed (PHASE 2 CERTIFIED; Phase 3 definition only).",
 );

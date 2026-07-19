@@ -50,4 +50,5 @@ The **Campaign Operating System Kernel** — a coherent execution + relationship
 ## Next
 
 Do **not** continue as Step 7.11.  
-Open **Phase 2 — Campaign Capability Expansion** (see `KCCC_PHASE_02_ROADMAP.md`).
+**Phase 2 — Campaign Capability Expansion** is now CERTIFIED (see `KCCC_PHASE_02_CERTIFICATION.md`).  
+Next definition work: **Phase 3 — Integration & Scale** (`KCCC_PHASE_03_CHARTER.md`).

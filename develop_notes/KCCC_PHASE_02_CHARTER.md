@@ -1,8 +1,10 @@
 # KCCC Phase 2 — Campaign Capability Expansion Charter
 
 **Script ID:** `KCCC-PHASE-02-CAPABILITY-EXPANSION`  
-**Status:** OPEN  
-**Prerequisite:** Phase 1 CERTIFIED (Campaign Operating System Kernel)
+**Status:** CERTIFIED  
+**Prerequisite:** Phase 1 CERTIFIED (Campaign Operating System Kernel)  
+**Certification:** see `KCCC_PHASE_02_CERTIFICATION.md`  
+**Version:** `0.8.4-petition`
 
 ## Kernel vs capability
 
@@ -37,7 +39,7 @@ Corollaries:
 | 2.2 Debate & Media Operations | Are we prepared for every public communication? | ACCEPTED / COMPLETE |
 | 2.3 Fundraising Operations | Can the campaign sustainably generate the resources needed to execute the mission? | ACCEPTED / COMPLETE |
 | 2.4 GOTV Operations | Are we converting support into turnout? | ACCEPTED / COMPLETE |
-| 2.5 Petition & Ballot Operations | Can we successfully qualify, defend, and execute a petition or ballot initiative campaign? | IN PROGRESS |
+| 2.5 Petition & Ballot Operations | Can we successfully qualify, defend, and execute a petition or ballot initiative campaign? | ACCEPTED / COMPLETE |
 
 ## Hard constraints (unchanged)
 
@@ -45,3 +47,7 @@ Corollaries:
 - No RedDirt / AJAX / PhatLip / countyWorkbench / sos-public source imports  
 - No real PII in tests; no secrets in docs/chat/commits  
 - `candidate_data_ready` remains false until Steve unlocks real schedule data  
+
+## Next
+
+Do **not** open Phase 2.6. Define **Phase 3 — Integration & Scale** (`KCCC_PHASE_03_CHARTER.md`).

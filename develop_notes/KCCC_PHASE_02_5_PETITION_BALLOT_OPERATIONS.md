@@ -1,10 +1,11 @@
 # KCCC Phase 2.5 — Petition & Ballot Operations
 
 **Script ID:** `KCCC-PHASE-02.5-PETITION-BALLOT-OPERATIONS`  
-**Status:** IN PROGRESS  
-**Parent:** Phase 2 Capability Expansion  
+**Status:** ACCEPTED / COMPLETE  
+**Parent:** Phase 2 Capability Expansion (CERTIFIED)  
 **Route:** `/petition`  
-**Version target:** `0.8.4-petition`
+**Version at acceptance:** `0.8.4-petition`  
+**Tip at acceptance:** `fb69bad`
 
 ## Doctrine
 
