@@ -189,8 +189,12 @@ Track on **every future release review** alongside engineering scores:
 | Decision Support | Primary decision + orientation |
 | Visual Experience | Hierarchy, identity, polish |
 | **Operator Confidence Index (OCI)** | Does the product help people make better decisions? |
+| **Engineering Sustainability Index (ESI)** | Can we build for two years without major rewrites? |
 
 OCI is qualitative-quantitative: after a timed walkthrough, score confidence increase (0–10) per primary view; release OCI = portfolio mean. **Never** raise OCI by inventing truth (Never Fake).
+
+ESI dimensions (equal weight): Reusability · Simplicity · Maintainability · Extensibility · Documentation.  
+**EA-3 baseline ESI: 5.7/10** — see `KCCC_EA3_PLATFORM_QUALITY.md`.
 
 ---
 
@@ -217,8 +221,9 @@ Product .............. PASS WITH FINDINGS
 
 Audit Synthesis ...... COMPLETE
 
-Next:
-Resume Engineering Audit (EA-3+)
+Next (post-close):
+EA-3 Platform Quality completed separately (ESI 5.7)
+Resume EA-5+
 
 Hardening ............ BLOCKED
 

@@ -13,14 +13,15 @@ Calendar Experience V1 ......... COMPLETE
 
 EA-4 / EA-1 / EA-2 ............. COMPLETE (core quality triad)
 V1 Product Health .............. COMPLETE — PASS WITH FINDINGS
-  Never Fake · OCI · five Hardening waves
+EA-3 Platform Quality .......... COMPLETE (PASS WITH FINDINGS · ESI 5.7)
 
 Engineering Audit .............. ACTIVE
 Next Audit Stream:
-  EA-3 Information Architecture — OPENED
+  EA-5 Accessibility
 
-Hardening Master Ledger ........ HL-001…HL-015 · Waves 1–5
-Engineering Patterns ........... ACTIVE (+ EP-11 Never Fake)
+Hardening Master Ledger ........ HL-001…HL-020 · Waves 1–5
+Engineering Patterns ........... ACTIVE (+ Never Fake)
+Metrics ........................ Arch · Decision · Visual · OCI · ESI
 
 Experience Redesign 2.0 ........ PROPOSED (philosophy locked; XR-01 first)
 Implementation ................. BLOCKED until Audit + Hardening
@@ -28,90 +29,60 @@ Implementation ................. BLOCKED until Audit + Hardening
 
 ## Goal
 
-Make Version 1 feel like a polished product before Version 2 expands scope. EA-4 produces the design **diagnosis** and formal scope for Experience Redesign 2.0; redesign **implementation** stays blocked until full Audit + Hardening.
+Make Version 1 durable and product-ready before Version 2 expands scope. Core-quality audits validated direction; remaining audits validate **platform readiness**.
 
 ## Binding sequence
 
 ```text
-V1 ENGINEERING COMPLETE
+Version 1 Engineering Complete
         ↓
-Engineering Audit
+EA-1 Architecture ✓
+EA-2 Decision-Making ✓
+EA-4 Visual Experience ✓
+Product Health Report ✓
+        ↓
+EA-3 Platform Quality ✓
+EA-5 – EA-12
         ↓
 Hardening
         ↓
-Experience Redesign Program
+Experience Redesign 2.0
         ↓
 Calendar Foundation
         ↓
-Version 2 Feature Expansion
+Version 2 Features
 ```
 
 ## Workstream order
 
-**Immediate next:** **EA-3** Information Architecture.  
-Product Health synthesis is complete — remaining streams resume.
+**Immediate next:** **EA-5** Accessibility.
 
 | Priority | ID | Workstream |
 |----------|-----|------------|
-| **Done** | EA-4 | Visual and Experience Audit (4A–4L) — COMPLETE |
-| **Done** | EA-1 | Architecture Compliance — PASS WITH FINDINGS (7.9/10) |
-| **Done** | EA-2 | Decision-Making Audit — PASS WITH FINDINGS (6.4/10) |
-| **Done** | — | **V1 Product Health Report** — PASS WITH FINDINGS |
-| **1 (NOW)** | EA-3 | Information Architecture — OPENED |
-| 2 | EA-5 | Accessibility |
-| 3 | EA-6 | Performance |
-| 4 | EA-7 | Data Integrity |
-| 5 | EA-8 | Security |
-| 6 | EA-9 | Operator Workflow |
-| 7 | EA-10 | Technical Debt |
-| 8 | EA-11 | Documentation |
-| 9 | EA-12 | Future Expansion Readiness |
+| **Done** | EA-4 | Visual and Experience Audit — COMPLETE |
+| **Done** | EA-1 | Architecture Compliance — COMPLETE |
+| **Done** | EA-2 | Decision-Making — COMPLETE |
+| **Done** | — | V1 Product Health — COMPLETE |
+| **Done** | EA-3 | **Platform Quality** (PQ-1…PQ-8) — COMPLETE · ESI 5.7 |
+| **1 (NOW)** | EA-5 | Accessibility |
+| 2 | EA-6 | Performance (deepens EA-3 PQ-6 with measurements) |
+| 3 | EA-7 | Data Integrity |
+| 4 | EA-8 | Security |
+| 5 | EA-9 | Operator Workflow |
+| 6 | EA-10 | Technical Debt |
+| 7 | EA-11 | Documentation |
+| 8 | EA-12 | Future Expansion Readiness |
 
----
+> **Note:** EA-3 was reframed from Information Architecture to **Platform Quality** (durable-platform audit). IA concerns are covered by Product Health + EA-2 primary decisions + Foundation API sketch (HL-020).
 
-## EA-4 Visual and Experience Audit (deep)
-
-EA-4 is **not** a shallow polish checklist. It is a full Visual and Experience Audit with substreams:
-
-| Sub | Focus |
-|-----|--------|
-| EA-4A | Visual System |
-| EA-4B | Layout and Hierarchy |
-| EA-4C | Interaction Design |
-| EA-4D | Motion and Feedback |
-| EA-4E | Emotional Experience |
-| EA-4F | Mobile and Responsive Experience |
-| EA-4G | Empty, Loading, Error, and Unknown States |
-| EA-4H | Campaign Brand Expression |
-
-### Diagnosis targets (why it may feel boring)
-
-Document evidence for:
-
-* too much visual sameness  
-* weak hierarchy  
-* flat cards  
-* limited contrast  
-* no focal point  
-* insufficient campaign identity  
-* no sense of movement or urgency  
-* equal visual weight for unequal information  
-* passive rather than action-oriented language  
-* weak transitions between Day, Week, and Month  
-
-### EA-4 deliverable
-
-`Visual and Experience Audit Report` — feeds **Experience Redesign 2.0** scope (XR-1…XR-7). Does **not** authorize redesign coding.
-
----
-
-## Other workstreams (summary)
+## Workstream deliverables (summary)
 
 | ID | Deliverable |
 |----|-------------|
-| EA-1 | Architecture Compliance Report — one owner per screen; presentation ≠ ownership; no invented truth |
-| EA-2 | Decision-making — orientation, cognitive load, confidence, primary decision per page (12 questions) |
-| EA-3 | Page purpose / merge / one executive question |
+| EA-1 | Architecture Compliance · fitness score |
+| EA-2 | Decision-making · page scorecards · HC-COG |
+| EA-3 | Platform Quality · ESI · Foundation/Redesign/Hardening outputs |
+| EA-4 | Visual & Experience forensic report |
 | EA-5 | WCAG findings |
 | EA-6 | Perf measurements + hotspots |
 | EA-7 | Ownership / Unknown / conflict / provenance |
@@ -125,19 +96,20 @@ Document evidence for:
 
 | ID | Status |
 |----|--------|
-| EA-4 | **COMPLETE** — see `KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md` |
-| EA-1 | **COMPLETE** — ACCEPTED · `KCCC_EA1_EXECUTIVE_ACCEPTANCE.md` |
-| EA-2 | **COMPLETE** — PASS WITH FINDINGS · `KCCC_EA2_ASSESSMENT.md` |
-| V1 Product Health | **COMPLETE** — `KCCC_V1_PRODUCT_HEALTH_REPORT.md` |
-| EA-3 | **OPENED** — `KCCC_EA3_INFORMATION_ARCHITECTURE.md` |
-| EA-5 … EA-12 | NOT STARTED |
-| Experience Redesign 2.0 | PROPOSED — blocked; blueprint ready from EA-4 |
-| Foundation implementation | NOT STARTED — after Redesign program gate |
+| EA-4 | **COMPLETE** |
+| EA-1 | **COMPLETE** — ACCEPTED |
+| EA-2 | **COMPLETE** |
+| V1 Product Health | **COMPLETE** |
+| EA-3 | **COMPLETE** — `KCCC_EA3_PLATFORM_QUALITY.md` · ESI 5.7 |
+| EA-5 | **NEXT** |
+| EA-6 … EA-12 | NOT STARTED |
+| Experience Redesign 2.0 | PROPOSED — blocked |
+| Foundation implementation | NOT STARTED — after Redesign; EA-3 requirements attached |
 
 ## Exit
 
-All twelve workstreams recorded (Pass / findings / blockers) → prioritized Hardening input.  
-**No** Experience Redesign implementation and **no** Foundation implementation until Hardening exits (unless Steve records an explicit waiver).
+All twelve workstreams recorded → Hardening Master Ledger → Hardening.  
+**No** Redesign / Foundation implementation until Hardening exits (unless Steve waiver).
 
 ## Architecture 1.0 Conformance Statement
 

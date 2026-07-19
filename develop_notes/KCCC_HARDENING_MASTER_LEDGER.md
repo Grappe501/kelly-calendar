@@ -51,6 +51,11 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 | HL-013 | HC-COG | EA-2 HC-COG-004 | Hide or clearly defer Agenda/Timeline/Mission chips until ready | Medium | None | Medium | S | Foundation / V2 | Open |
 | HL-014 | HC-COG | EA-2 HC-COG-008 | Demote standing reminders / weather from primary scan path | Low | None | Low | S | Redesign | Open |
 | HL-015 | HC-COG | EA-2 Week 5.8 | Week View decision remediation first among calendar views | High | None | High | L | Redesign | Open |
+| HL-016 | PQ | EA-3 RC-01 | Extract shared calendar assembly / mission-context batch (kill Week/Month dupe) | Medium | Hygiene | Low | M | Foundation / Wave 3 | Open |
+| HL-017 | PQ | EA-3 PQ-7 | Smoke/unit tests for view assembly + `view`/`date` navigation | Medium | None | Medium | M | Hardening | Open |
+| HL-018 | PQ | EA-3 PQ-2 | Token inventory + Redesign gap list (status, density, motion) — no page rewrite | Medium | None | Medium | S | Hardening → Redesign | Open |
+| HL-019 | PQ | EA-3 PQ-6 | Document perf hotspots (catalogue cap, month DOM); measure only | Low | None | Low | S | Hardening | Open |
+| HL-020 | PQ | EA-3 PQ-5/8 | Foundation API sketch (event cell, legend, filters) — docs only | Medium | None | Medium | M | Foundation prep | Open |
 
 ---
 
@@ -83,7 +88,7 @@ When an audit stream closes, add rows here within the same pass. Do **not** leav
 |------|------|----------------|
 | **1** | Architectural Safety | HL-001, HL-002, HL-005 |
 | **2** | Decision Clarity | HL-004, HL-010, HL-011, HL-015 (+ HC-COG orientation) |
-| **3** | Shared Infrastructure | HL-006 · legend / rendering / filters / nav |
+| **3** | Shared Infrastructure | HL-006, HL-016 · legend / rendering / filters / nav |
 | **4** | Experience Quality | HL-003, HL-009, HL-012, HL-014 · motion · brand · density |
 | **5** | Foundation Readiness | Agenda / Timeline / Mission — **after** Waves 1–4 |
 
@@ -91,8 +96,8 @@ Hardening implements Wave 1 (and hygiene from Wave 2 labels) first; XR-01+ Wave 
 
 ## Streams not yet ingested
 
-EA-3 · EA-5 · EA-6 · EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
-**Product Health:** COMPLETE — EA-3+ unblocked.
+EA-5 · EA-6 · EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
+EA-3 Platform Quality: **COMPLETE** (HL-016…HL-020).
 
 ## Hardening gate
 

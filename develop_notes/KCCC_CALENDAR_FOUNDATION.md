@@ -27,6 +27,17 @@ Shared presentation layer reused by Day, Week, Month, and all future specialized
 | Responsive behavior | Mobile + desktop density rules |
 | Accessibility | Legend, contrast, focus, labels |
 
+## EA-3 requirements (Platform Quality)
+
+Must absorb before Agenda / Timeline / Mission (see `KCCC_EA3_PLATFORM_QUALITY.md`):
+
+1. Shared catalogue load + `cataloguePartial` helper  
+2. Shared mission-context batching (kill Week/Month dupe — HL-016)  
+3. Adopt one event presentation path (`SafeEventBlock` or successor)  
+4. Shared travel / county / volunteer summary presenters (consume-only)  
+5. `CalendarPageChrome` + hero slot for XR-01  
+6. Documented Foundation API contracts (HL-020) so V2 views implement against the platform, not clones
+
 ## Out of scope
 
 - Agenda / Timeline / Mission view builds (follow Foundation)  

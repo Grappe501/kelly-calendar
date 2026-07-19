@@ -375,7 +375,7 @@ if (
   build.calendar_experience_v1_complete === true &&
   build.calendar_experience_v1_status === "engineering_complete" &&
   build.engineering_audit_status === "active" &&
-  build.engineering_audit_next_stream === "EA-3" &&
+  build.engineering_audit_next_stream === "EA-5" &&
   build.ea4_status === "complete" &&
   build.ea4_assessment === "pass" &&
   build.ea1_status === "complete" &&
@@ -384,12 +384,18 @@ if (
   build.ea2_status === "complete" &&
   build.ea2_assessment === "pass_with_findings" &&
   build.ea2_focus === "decision_making" &&
-  build.ea3_status === "opened" &&
+  build.ea3_status === "complete" &&
+  build.ea3_assessment === "pass_with_findings" &&
+  build.ea3_focus === "platform_quality" &&
+  build.platform_quality_score === 5.7 &&
+  build.engineering_sustainability_index === 5.7 &&
+  build.esi_tracking === true &&
   build.v1_product_health_status === "complete" &&
   build.v1_product_health_assessment === "pass_with_findings" &&
   build.never_fake_doctrine_status === "active" &&
   build.operator_confidence_index_tracking === true &&
   build.hardening_waves_defined === true &&
+  build.hardening_ledger_through === "HL-020" &&
   build.engineering_patterns_status === "active" &&
   build.hardening_master_ledger_status === "seeded" &&
   build.hardening_pass_status === "blocked" &&
@@ -399,40 +405,34 @@ if (
   build.calendar_foundation_status === "planned_after_redesign" &&
   build.foundation_implementation_started === false &&
   build.redesign_implementation_started === false &&
-  build.next_engineering_deliverable === "KCCC-EA-3-INFORMATION-ARCHITECTURE" &&
+  build.next_engineering_deliverable === "KCCC-EA-5-ACCESSIBILITY" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
-  constants.includes('EA4_ASSESSMENT = "PASS"') &&
-  constants.includes('EA1_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
-  constants.includes('EA2_STATUS = "COMPLETE"') &&
-  constants.includes('EA3_STATUS = "OPENED"') &&
-  constants.includes('V1_PRODUCT_HEALTH_STATUS = "COMPLETE"') &&
-  constants.includes('V1_PRODUCT_HEALTH_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
+  constants.includes('EA3_STATUS = "COMPLETE"') &&
+  constants.includes('EA3_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
+  constants.includes("PLATFORM_QUALITY") &&
+  constants.includes('ENGINEERING_SUSTAINABILITY_INDEX = "5.7/10"') &&
+  constants.includes("ESI_TRACKING = true") &&
   constants.includes('NEVER_FAKE_DOCTRINE_STATUS = "ACTIVE"') &&
-  constants.includes("OPERATOR_CONFIDENCE_INDEX_TRACKING = true") &&
-  constants.includes("XR-01-EXECUTIVE-HERO-LAYER") &&
-  constants.includes("KCCC-EA-3-INFORMATION-ARCHITECTURE") &&
-  exists("develop_notes/KCCC_EA4_ASSESSMENT.md") &&
-  exists("develop_notes/KCCC_EA1_ASSESSMENT.md") &&
-  exists("develop_notes/KCCC_EA2_ASSESSMENT.md") &&
+  constants.includes("KCCC-EA-5-ACCESSIBILITY") &&
+  exists("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md") &&
+  exists("develop_notes/KCCC_EA3_ASSESSMENT.md") &&
+  exists("develop_notes/KCCC_EA5_ACCESSIBILITY.md") &&
   exists("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md") &&
   exists("develop_notes/KCCC_NEVER_FAKE_DOCTRINE.md") &&
-  exists("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md") &&
-  exists("develop_notes/KCCC_ENGINEERING_PATTERNS.md") &&
-  exists("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md") &&
-  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("PASS WITH FINDINGS") &&
-  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("Operator Confidence Index") &&
-  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("Never invent readiness") &&
-  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("STATUS ............... COMPLETE") &&
-  read("develop_notes/KCCC_NEVER_FAKE_DOCTRINE.md").includes("Never invent readiness") &&
-  read("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md").includes("OPENED") &&
-  read("develop_notes/KCCC_ENGINEERING_PATTERNS.md").includes("Never Fake") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("Wave 1") &&
+  !exists("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md") &&
+  read("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md").includes("Engineering Sustainability Index") &&
+  read("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md").includes("Foundation Requirements") &&
+  read("develop_notes/KCCC_EA3_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("OPENED") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-020") &&
+  read("develop_notes/KCCC_CALENDAR_FOUNDATION.md").includes("EA-3 requirements") &&
+  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("Engineering Sustainability Index") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("operational heartbeat") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("Product Health COMPLETE; Never Fake+OCI; EA-3 OPENED; Waves 1–5; Redesign blocked");
+  pass("EA-3 Platform Quality COMPLETE (ESI 5.7); EA-5 OPENED; Ledger HL-020; Redesign blocked");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -442,5 +442,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (V1 Product Health COMPLETE; Never Fake ACTIVE; OCI tracking; EA-3 OPENED; Hardening Waves defined; Redesign blocked; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (EA-3 Platform Quality COMPLETE; ESI 5.7; EA-5 OPENED; Ledger HL-020; Redesign blocked; Phase 3.1 paused).",
 );
