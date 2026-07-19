@@ -85,6 +85,8 @@ If a phase cannot demonstrate measurable improvement, its scope should be recons
 
 **Rule:** Do not add further top-level governance artifacts unless a **concrete gap** is identified. Priority is completing audits → Hardening → Redesign → Foundation.
 
+**Execution mode:** See `KCCC_GOVERNANCE_EXECUTION.md` — governance design COMPLETE; next phase EXECUTION. Review board checklist applies to significant deliverables.
+
 ---
 
 ## Remaining program

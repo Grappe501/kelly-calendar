@@ -35,6 +35,7 @@ Do not dilute these in Hardening, Redesign, or Foundation.
 | PA-17 | Version 1 Feature Freeze | `KCCC_V1_FEATURE_FREEZE.md` | V1 never reopened; V2 backlog only |
 | PA-18 | Release Constitution | `KCCC_RELEASE_CONSTITUTION.md` | Pre-ship questions for every release |
 | PA-19 | Program Charter | `KCCC_PROGRAM_CHARTER.md` | Why phases exist; four immutable principles |
+| PA-20 | Governance Execution mode | `KCCC_GOVERNANCE_EXECUTION.md` | Design complete; execute under existing stack |
 
 ---
 

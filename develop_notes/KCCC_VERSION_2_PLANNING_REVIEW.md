@@ -30,3 +30,5 @@ Confirm the platform is ready to expand capabilities under the Release Constitut
 ## Exit
 
 Go / Go with conditions / No-go for Version 2 development.
+
+On **Go**, issue the **VERSION 2 AUTHORIZATION** lifecycle event (template in `KCCC_GOVERNANCE_EXECUTION.md`). Do not create `KCCC_VERSION_2_AUTHORIZATION.md` until that event.

@@ -60,9 +60,14 @@
   "feature_development_status": "frozen",
   "program_charter_status": "active",
   "program_charter_id": "KCCC-PROGRAM-CHARTER",
+  "governance_design_status": "complete",
+  "governance_execution_status": "active",
+  "governance_execution_id": "KCCC-GOVERNANCE-EXECUTION",
+  "execution_discipline_status": "beginning",
   "release_constitution_status": "active",
   "release_constitution_id": "KCCC-RELEASE-CONSTITUTION",
   "v2_planning_review_status": "planned",
+  "v2_authorization_status": "not_issued",
   "engineering_audit_status": "active",
   "audit_constitution_status": "active",
   "protected_assets_register_status": "living",
@@ -136,7 +141,7 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-PROGRAM-CHARTER",
+  "current_step": "KCCC-GOVERNANCE-EXECUTION",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -190,5 +195,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Program Charter ACTIVE. V1 FEATURE FREEZE. Release+Audit Constitutions ACTIVE. No more top-level governance unless gap. Roadmap: EA-5…12 → Readiness → Hardening → Redesign → Foundation → V2 Planning Review → V2. Phase 3 paused."
+  "notes": "Governance design COMPLETE. Governance execution ACTIVE. Execution discipline beginning. Next: EA-5…12 under existing stack. V2 Authorization not issued. No more top-level governance unless concrete gap. Phase 3 paused."
 }

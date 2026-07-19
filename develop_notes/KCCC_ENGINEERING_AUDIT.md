@@ -7,23 +7,22 @@
 **Nature:** Review and evidence only — **no feature adds** · **no redesign implementation**  
 
 ```text
+GOVERNANCE DESIGN .............. COMPLETE
+GOVERNANCE EXECUTION ........... ACTIVE
+Execution Discipline ........... BEGINNING
+
 PROGRAM CHARTER ................ ACTIVE
-
-VERSION 1 FEATURE FREEZE ....... ACTIVE (permanently feature-complete)
+VERSION 1 FEATURE FREEZE ....... ACTIVE
 Architecture 1.0 ............... LOCKED
-Platform Stabilization ......... ACTIVE
 
-Audit / Release Constitutions .. ACTIVE
-Protected Assets Register ...... LIVING
-
-Engineering Audit .............. ACTIVE
-Priority 1: EA-5 … EA-12 (no exceptions)
+Engineering Audit .............. ACTIVE (execution)
+Priority 1: EA-5 … EA-12
 Priority 2: Program Readiness Review
-Priority 3: Hardening (execution)
+Priority 3: Hardening
 Priority 4: Experience Redesign
-Then: Foundation → V2 Planning Review → V2 Dev
+Then: Foundation → V2 Planning Review → V2 Authorization → V2 Dev
 
-Prohibited: new views · modules · integrations · dashboards
+Ask: Did we follow the governance?
 No further top-level governance unless concrete gap.
 ```
 
