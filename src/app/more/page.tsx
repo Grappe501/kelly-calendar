@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Calendar Experience V1 COMPLETE · Foundation next · Phase 3 paused</strong>
+            <strong>Calendar V1 ENGINEERING COMPLETE · Audit next · Phase 3 paused</strong>
           </li>
         </ul>
       </section>

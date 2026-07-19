@@ -2,9 +2,10 @@
 
 **Script ID:** `KCCC-CAL-EXP-FOUNDATION`  
 **Track:** Engineering Track A · Calendar Experience  
-**Status:** NEXT — authorized after Calendar Experience Review PASS  
+**Status:** PLANNED — **not started**; after Audit → Hardening  
 **Architecture:** 1.0  
-**Prerequisite:** Calendar Experience VERSION 1 COMPLETE  
+**Prerequisite:** V1 ENGINEERING COMPLETE · Engineering Audit exit · Hardening Pass exit  
+
 
 ## Purpose
 
