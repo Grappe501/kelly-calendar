@@ -27,5 +27,6 @@ describe("Step 6 bottom nav contract", () => {
     expect(resolveActiveNavId("/system/status")).toBe("more");
     expect(resolveActiveNavId("/brief")).toBe("more");
     expect(resolveActiveNavId("/command")).toBe("more");
+    expect(resolveActiveNavId("/field")).toBe("more");
   });
 });

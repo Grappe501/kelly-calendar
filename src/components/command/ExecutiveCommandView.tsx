@@ -116,6 +116,14 @@ export function ExecutiveCommandView({
         ) : (
           <p className="muted">No operational alerts.</p>
         )}
+        {command.fieldFeed ? (
+          <p>
+            <strong>Field:</strong> {command.fieldFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/field">
+              Open Field Ops
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">

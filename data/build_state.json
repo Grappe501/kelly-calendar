@@ -47,7 +47,8 @@
   "step6_accepted_at": "2026-07-19T03:45:00.000Z",
   "step7_charter": "campaign_operations_not_crud",
   "step7_status": "in_progress",
-  "step7_increment": "7.1-executive-command",
+  "step7_increment": "7.2-field-operations",
+  "field_operations_enabled": true,
   "step7_purpose": "Coordinate, direct, and execute campaign activities",
   "step7_explicitly_not": [
     "crud",
@@ -103,5 +104,5 @@
   "step_6_engineering_tip": "08ada56",
   "step_6_closure_commit": "99f603b",
   "governance_baseline_at_start": "d6d0096",
-  "notes": "Step 6 COMPLETE. Step 7.1 Executive Command in progress (/command morning briefing). Doctrine: every module answers an executive question. candidate_data_ready false."
+  "notes": "Step 7.2 Field Operations (/field) feeds Executive Command. Doctrine: Who needs help right now? Modules consume+produce across the ops graph. candidate_data_ready false."
 }

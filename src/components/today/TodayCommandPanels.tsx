@@ -97,6 +97,9 @@ export function TodayCommandPanels({
           <Link className="button" href="/command">
             Executive Command
           </Link>
+          <Link className="button secondary" href="/field">
+            Field Ops
+          </Link>
           <Link className="button secondary" href="/brief">
             Campaign Brief
           </Link>

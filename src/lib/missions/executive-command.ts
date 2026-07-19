@@ -5,6 +5,7 @@
 
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
 import type { MissionCard } from "@/lib/missions/mission-card";
+import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 
 export type ExecutivePriority = {
   label: string;
@@ -91,6 +92,8 @@ export type ExecutiveCommand = {
     text: string;
     source: "deterministic_v1";
   };
+  /** Consumed from Field Operations (7.2) — no duplicate engines. */
+  fieldFeed: FieldOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -105,15 +108,21 @@ function readinessLabel(brief: CampaignBrief): string {
 /**
  * Deterministic one-minute executive briefing (no AI).
  */
-export function buildDeterministicExecutiveBriefing(brief: CampaignBrief): string {
+export function buildDeterministicExecutiveBriefing(
+  brief: CampaignBrief,
+  fieldFeed?: FieldOperationsHome["executiveFeed"] | null,
+): string {
   if (brief.completeness === "empty_day") {
     return "No missions on today’s permissioned schedule. Use Add Mission or Calendar if activity is expected. No critical conflicts detected in this view.";
   }
 
   const parts: string[] = [];
+  if (fieldFeed?.briefingLine) {
+    parts.push(fieldFeed.briefingLine);
+  }
   if (brief.topBlocker) {
     parts.push(`Priority risk: ${brief.topBlocker.message}.`);
-  } else {
+  } else if (!fieldFeed?.teamsNeedingAttention) {
     parts.push("No critical blocker is flagged right now.");
   }
 
@@ -164,9 +173,11 @@ export function buildExecutiveCommand(input: {
   brief: CampaignBrief;
   missions: MissionCard[];
   countiesByMission?: Array<{ missionId: string; countyName: string | null }>;
+  fieldFeed?: FieldOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
+  const fieldFeed = input.fieldFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -175,6 +186,17 @@ export function buildExecutiveCommand(input: {
     );
 
   const topPriorities: ExecutivePriority[] = [];
+  if (fieldFeed && fieldFeed.teamsNeedingAttention > 0) {
+    const top = fieldFeed.topHelpItems[0];
+    topPriorities.push({
+      label: "Field teams need attention",
+      detail: top
+        ? `${top.countyLabel}: ${top.detail}`
+        : fieldFeed.briefingLine,
+      href: "/field",
+      urgency: "NOW",
+    });
+  }
   if (brief.topBlocker) {
     topPriorities.push({
       label: "Resolve top blocker",
@@ -212,11 +234,14 @@ export function buildExecutiveCommand(input: {
   if (brief.conflicts.unresolvedCount > 0) {
     decisions.push("Resolve or acknowledge schedule conflicts");
   }
-  if (brief.people.staffingGapMissions > 0) {
+  if (brief.people.staffingGapMissions > 0 || (fieldFeed?.understaffedMissions ?? 0) > 0) {
     decisions.push("Fill staffing gaps before mission start");
   }
-  if (brief.readiness.blocked > 0) {
+  if (brief.readiness.blocked > 0 || (fieldFeed?.blockedMissions ?? 0) > 0) {
     decisions.push("Clear blocked readiness items");
+  }
+  if ((fieldFeed?.countiesWithoutLeader ?? 0) > 0) {
+    decisions.push("Assign leaders to orphan field missions");
   }
   if (decisions.length === 0 && brief.nextMission) {
     decisions.push("Confirm next mission is ready to execute");
@@ -245,13 +270,25 @@ export function buildExecutiveCommand(input: {
       status: "actionable",
     });
   }
-  if (brief.people.detail) {
+  if (brief.people.detail || (fieldFeed?.understaffedMissions ?? 0) > 0) {
     inbox.push({
       id: "inbox-staffing",
       category: "STAFFING",
       title: "Staffing gap",
-      detail: brief.people.detail,
-      href: brief.nextMission?.href ?? "/",
+      detail:
+        brief.people.detail ||
+        `${fieldFeed?.understaffedMissions ?? 0} field mission(s) understaffed`,
+      href: "/field",
+      status: "actionable",
+    });
+  }
+  if (fieldFeed && fieldFeed.teamsNeedingAttention > 0) {
+    inbox.push({
+      id: "inbox-field",
+      category: "READINESS",
+      title: "Field help queue",
+      detail: fieldFeed.briefingLine,
+      href: "/field",
       status: "actionable",
     });
   }
@@ -378,14 +415,21 @@ export function buildExecutiveCommand(input: {
   }
 
   const alerts: string[] = [];
-  if (brief.readiness.blocked > 0) {
-    alerts.push(`${brief.readiness.blocked} blocked mission(s)`);
+  if (brief.readiness.blocked > 0 || (fieldFeed?.blockedMissions ?? 0) > 0) {
+    alerts.push(
+      `${Math.max(brief.readiness.blocked, fieldFeed?.blockedMissions ?? 0)} blocked mission(s)`,
+    );
   }
   if (brief.conflicts.unresolvedCount > 0) {
     alerts.push(`${brief.conflicts.unresolvedCount} conflict(s)`);
   }
-  if (brief.people.staffingGapMissions > 0) {
-    alerts.push(`${brief.people.staffingGapMissions} staffing gap(s)`);
+  if (brief.people.staffingGapMissions > 0 || (fieldFeed?.understaffedMissions ?? 0) > 0) {
+    alerts.push(
+      `${Math.max(brief.people.staffingGapMissions, fieldFeed?.understaffedMissions ?? 0)} staffing gap(s)`,
+    );
+  }
+  if (fieldFeed && fieldFeed.teamsNeedingAttention > 0) {
+    alerts.push(`${fieldFeed.teamsNeedingAttention} field team(s) need attention`);
   }
 
   return {
@@ -423,13 +467,14 @@ export function buildExecutiveCommand(input: {
     geographic: {
       counties,
       unknownCountyMissions: brief.counties.unknownCountyMissions,
-      note: "County map shows permissioned missions today. Statewide volunteer heatmaps arrive with County / Field Operations workstreams.",
+      note: "County status from missions today. Field heat lives on /field; County Operations will deepen statewide views.",
     },
     rhythm,
     executiveBriefing: {
-      text: buildDeterministicExecutiveBriefing(brief),
+      text: buildDeterministicExecutiveBriefing(brief, fieldFeed),
       source: "deterministic_v1",
     },
+    fieldFeed,
   };
 }
 
@@ -455,5 +500,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
       .map((i) => i.title),
     counties: command.geographic.counties.map((c) => c.countyName),
     briefing: command.executiveBriefing.text,
+    fieldFeed: command.fieldFeed,
   };
 }

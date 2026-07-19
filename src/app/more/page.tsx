@@ -44,6 +44,9 @@ export default function MorePage() {
           <Link className="button" href="/command">
             Executive Command
           </Link>
+          <Link className="button" href="/field">
+            Field Operations
+          </Link>
           <Link className="button secondary" href="/brief">
             Today’s Campaign Brief
           </Link>

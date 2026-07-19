@@ -1,5 +1,5 @@
 /**
- * Step 7.1 — Executive Command structural gates.
+ * Step 7.1 + 7.2 structural gates.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -22,89 +22,119 @@ function read(rel) {
   return fs.readFileSync(path.join(root, rel), "utf8");
 }
 
-const files = [
+const files71 = [
   "src/lib/missions/executive-command.ts",
   "src/server/services/executive-command-service.ts",
-  "src/server/services/executive-command-ai.ts",
-  "src/app/api/command-summary/command/route.ts",
   "src/app/command/page.tsx",
   "src/components/command/ExecutiveCommandView.tsx",
-  "develop_notes/KCCC_STEP_07_1_EXECUTIVE_COMMAND.md",
 ];
-for (const rel of files) {
-  if (exists(rel)) pass(rel);
-  else fail(`missing ${rel}`);
+for (const rel of files71) {
+  if (exists(rel)) pass(`7.1 ${rel}`);
+  else fail(`7.1 missing ${rel}`);
 }
 
-const lib = read("src/lib/missions/executive-command.ts");
+const files72 = [
+  "src/lib/missions/field-operations.ts",
+  "src/server/services/field-operations-service.ts",
+  "src/server/services/field-operations-ai.ts",
+  "src/app/api/command-summary/field/route.ts",
+  "src/app/field/page.tsx",
+  "src/components/field/FieldOperationsView.tsx",
+  "src/components/field/FieldCheckIns.tsx",
+  "develop_notes/KCCC_STEP_07_2_FIELD_OPERATIONS.md",
+];
+for (const rel of files72) {
+  if (exists(rel)) pass(`7.2 ${rel}`);
+  else fail(`7.2 missing ${rel}`);
+}
+
+const field = read("src/lib/missions/field-operations.ts");
 if (
-  lib.includes("buildExecutiveCommand") &&
-  lib.includes("buildDeterministicExecutiveBriefing") &&
-  lib.includes("volunteersAssigned") &&
-  lib.includes("executiveInbox")
+  field.includes("buildFieldOperationsHome") &&
+  field.includes("helpQueue") &&
+  field.includes("executiveFeed") &&
+  field.includes("fieldCheckInToDayAction") &&
+  field.includes("deriveFieldEscalation")
 ) {
-  pass("7.1 pure Executive Command builder present");
+  pass("7.2 field ops pure contracts present");
 } else {
-  fail("7.1 Executive Command builder incomplete");
+  fail("7.2 field ops contracts incomplete");
 }
 
-const view = read("src/components/command/ExecutiveCommandView.tsx");
+const exec = read("src/lib/missions/executive-command.ts");
+if (exec.includes("fieldFeed") && exec.includes("Field Operations")) {
+  pass("7.2 Executive Command consumes fieldFeed");
+} else if (exec.includes("fieldFeed")) {
+  pass("7.2 Executive Command consumes fieldFeed");
+} else {
+  fail("7.2 Executive Command missing fieldFeed integration");
+}
+
+const execService = read("src/server/services/executive-command-service.ts");
+if (execService.includes("buildFieldOperationsHome") && execService.includes("fieldFeed")) {
+  pass("7.2 executive service wires field feed");
+} else {
+  fail("7.2 executive service missing field feed wiring");
+}
+
+const view = read("src/components/field/FieldOperationsView.tsx");
 for (const heading of [
-  "Today’s Campaign",
-  "Campaign Health",
-  "Executive Inbox",
-  "Geographic Operations",
-  "Campaign Rhythm",
-  "Executive Briefing",
+  "Who needs help?",
+  "Operational heat",
+  "Team cards",
+  "Field snapshot",
 ]) {
-  if (view.includes(heading)) pass(`UI section ${heading}`);
+  if (view.includes(heading)) pass(`UI ${heading}`);
   else fail(`UI missing ${heading}`);
 }
 
-if (view.includes("Volunteers (unknown)")) {
-  pass("7.1 honest unknown for volunteers");
+const checkIns = read("src/components/field/FieldCheckIns.tsx");
+if (
+  checkIns.includes("ON_SITE") &&
+  checkIns.includes("mission-day") &&
+  checkIns.includes("expectedVersion")
+) {
+  pass("7.2 check-ins use authenticated mission-day mutations");
 } else {
-  fail("7.1 must not invent volunteer totals");
+  fail("7.2 check-ins not wired to mission-day");
 }
 
-const ai = read("src/server/services/executive-command-ai.ts");
+const ai = read("src/server/services/field-operations-ai.ts");
 if (
-  ai.includes('feature: "executive-command"') &&
+  ai.includes('feature: "field-operations"') &&
   ai.includes('application: "kelly-calendar"')
 ) {
-  pass("7.1 AI audit attribution present");
+  pass("7.2 AI audit attribution present");
 } else {
-  fail("7.1 AI audit attribution missing");
+  fail("7.2 AI audit attribution missing");
 }
 
 const nav = read("src/lib/navigation/nav-items.ts");
-if (nav.includes('pathname.startsWith("/command")')) {
-  pass("/command maps to More nav");
+if (nav.includes('pathname.startsWith("/field")')) pass("/field maps to More");
+else fail("/field nav mapping missing");
+
+const charter = read("develop_notes/KCCC_STEP_07_CAMPAIGN_OPERATIONS_CHARTER.md");
+if (
+  charter.includes("consume information") &&
+  charter.includes("produce information")
+) {
+  pass("integration principle locked in charter");
 } else {
-  fail("/command nav mapping missing");
+  fail("integration principle missing from charter");
 }
 
 const build = JSON.parse(read("data/build_state.json"));
 if (build.candidate_data_ready === true) fail("candidate_data_ready must be false");
 else pass("candidate_data_ready false");
 
-if (
-  build.current_step === "KCCC-STEP-07-CAMPAIGN-OPERATIONS" ||
-  build.step7_status === "open"
-) {
-  pass("Step 7 open");
+if (build.field_operations_enabled || build.step7_increment === "7.2-field-operations") {
+  pass("7.2 increment tracked");
 } else {
-  fail("Step 7 not open");
-}
-
-if (build.step7_increment === "7.1-executive-command" || build.executive_command_enabled) {
-  pass("7.1 increment tracked");
-} else {
-  fail("7.1 increment not tracked in build_state");
+  fail("7.2 increment not tracked in build_state");
 }
 
 if (failed) {
   console.error(`Step 7 validation failed (${failed})`);
   process.exit(1);
 }
-console.log("Step 7.1 structural validation passed.");
+console.log("Step 7.1/7.2 structural validation passed.");

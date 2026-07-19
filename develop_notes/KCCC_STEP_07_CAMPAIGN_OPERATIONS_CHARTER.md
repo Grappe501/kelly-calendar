@@ -41,10 +41,25 @@ Never:
 - No cross-lane imports from RedDirt/AJAX/PhatLip/countyWorkbench/sos-public without an approved integration packet.  
 - Shared `OPENAI_API_KEY` usage must attribute `application=kelly-calendar` in AI audit metadata.
 
-## Active increment
+## Integration principle (permanent)
 
-**Step 7.1 — Executive Command Center** (`/command`)
+> Every module must both consume information from another module and produce information for another module.
 
-See `develop_notes/KCCC_STEP_07_1_EXECUTIVE_COMMAND.md`.
+```text
+Calendar → Mission → Field Operations → Executive Command → Campaign Brief
+→ County Operations → Operational Intelligence → Calendar
+```
 
-Doctrine: every module must answer an executive question. Executive Command answers *What do I do today?*
+Doctrine pair:
+
+- Executive Command: What does leadership need to know?  
+- Field Operations: Who needs help right now?
+
+## Active increments
+
+| Increment | Route | Question |
+|-----------|-------|----------|
+| 7.1 Executive Command | `/command` | What does leadership need to know? |
+| 7.2 Field Operations | `/field` | Who needs help right now? |
+
+See `develop_notes/KCCC_STEP_07_1_EXECUTIVE_COMMAND.md` and `KCCC_STEP_07_2_FIELD_OPERATIONS.md`.

@@ -1,23 +1,26 @@
 import "server-only";
 
-import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
-import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
+import {
+  buildFieldOperationsHome,
+  type FieldOperationsHome,
+} from "@/lib/missions/field-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 
-export type ExecutiveCommandPayload = {
-  command: ExecutiveCommand;
+export type FieldOperationsPayload = {
+  field: FieldOperationsHome;
   viewerDisplayName: string;
   candidateDataReady: false;
 };
 
 /**
- * Authenticated Executive Command Center — consumes Field Operations feed.
+ * Authenticated Field Operations — mission execution help queue.
+ * Consumes brief/mission/readiness contracts; produces executiveFeed.
  */
-export async function getExecutiveCommand(
+export async function getFieldOperations(
   actor: AuthenticatedActor,
-): Promise<ExecutiveCommandPayload> {
+): Promise<FieldOperationsPayload> {
   const briefPayload = await getCampaignBrief(actor);
   const ids = briefPayload.allMissionsToday.map((m) => m.missionId);
   const context = await loadMissionContextForIds(ids);
@@ -41,15 +44,8 @@ export async function getExecutiveCommand(
     }),
   });
 
-  const command = buildExecutiveCommand({
-    brief: briefPayload.brief,
-    missions: briefPayload.allMissionsToday,
-    countiesByMission: briefPayload.countiesByMission,
-    fieldFeed: field.executiveFeed,
-  });
-
   return {
-    command,
+    field,
     viewerDisplayName: briefPayload.viewerDisplayName,
     candidateDataReady: false,
   };
