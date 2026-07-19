@@ -207,7 +207,8 @@ Boundary pressures:
 | Architectural Drift | 7/10 |
 | **Overall Fitness** | **7.9/10** |
 
-**Baseline for V2+ comparison.** Target after Hardening: ≥ 8.5/10 without changing Architecture 1.0.
+**Baseline for V2+ comparison.** Executive trajectory: Hardening → **8.8+** · V2 maintain **≥ 9.0** (without changing Architecture 1.0).  
+Protected Patterns elevated to `KCCC_ENGINEERING_PATTERNS.md`. Corrections seeded in `KCCC_HARDENING_MASTER_LEDGER.md`.
 
 ---
 

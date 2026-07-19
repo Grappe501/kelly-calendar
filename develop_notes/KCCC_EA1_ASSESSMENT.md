@@ -21,6 +21,14 @@ Architecture 1.0 remains intact. Calendar Experience V1 did not establish the ca
 
 All constitutional exit statements met, with Hardening items for labeling, conflict attending assumption, shared assembly helper, and Day View mutation hosting.
 
+## Executive acceptance
+
+**ACCEPTED** — see `KCCC_EA1_EXECUTIVE_ACCEPTANCE.md`.  
+Proceed to EA-2 **APPROVED**. Ownership failure: **NONE**. Architecture 1.0: **VERIFIED**.
+
 ## Next
 
-Engineering Audit continues with **EA-2 User Experience Audit**. No redesign/foundation implementation. No Architecture 1.0 amendments.
+Engineering Audit continues with **EA-2 User Experience Audit** (operator cognition).  
+Patterns doctrine: `KCCC_ENGINEERING_PATTERNS.md`.  
+Remediation planning: `KCCC_HARDENING_MASTER_LEDGER.md`.  
+No redesign/foundation implementation. No Architecture 1.0 amendments.

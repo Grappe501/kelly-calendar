@@ -7,16 +7,20 @@
 **Nature:** Review and evidence only — **no feature adds** · **no redesign implementation**  
 
 ```text
-Architecture 1.0 ............... STABLE
+Architecture 1.0 ............... VERIFIED (EA-1)
 
 Calendar Experience V1 ......... COMPLETE
 
 EA-4 Visual Audit .............. COMPLETE (PASS)
 EA-1 Architecture Compliance ... COMPLETE (PASS WITH FINDINGS · 7.9/10)
+  Executive acceptance ......... ACCEPTED · EA-2 APPROVED
 
 Engineering Audit .............. ACTIVE
 Next Audit Stream:
-  EA-2 User Experience Audit
+  EA-2 User Experience (operator cognition) — OPENED
+
+Hardening Master Ledger ........ SEEDED (HL-001…)
+Engineering Patterns ........... ACTIVE DOCTRINE
 
 Experience Redesign 2.0 ........ PROPOSED (XR-01 Hero first when opened)
 Implementation ................. BLOCKED until Audit + Hardening
@@ -51,7 +55,7 @@ EA-4 and EA-1 are complete; remaining streams feed Hardening before Redesign.
 |----------|-----|------------|
 | **Done** | EA-4 | Visual and Experience Audit (4A–4L) — COMPLETE |
 | **Done** | EA-1 | Architecture Compliance — PASS WITH FINDINGS (7.9/10) |
-| **1 (NOW)** | EA-2 | User Experience Audit |
+| **1 (NOW)** | EA-2 | User Experience Audit (operator cognition) — OPENED |
 | 2 | EA-3 | Information Architecture |
 | 3 | EA-5 | Accessibility |
 | 4 | EA-6 | Performance |
@@ -105,7 +109,7 @@ Document evidence for:
 | ID | Deliverable |
 |----|-------------|
 | EA-1 | Architecture Compliance Report — one owner per screen; presentation ≠ ownership; no invented truth |
-| EA-2 | First-time campaign manager walkthrough |
+| EA-2 | Operator cognition — 10s priorities, hesitation, unused controls, confidence vs uncertainty |
 | EA-3 | Page purpose / merge / one executive question |
 | EA-5 | WCAG findings |
 | EA-6 | Perf measurements + hotspots |
@@ -121,8 +125,8 @@ Document evidence for:
 | ID | Status |
 |----|--------|
 | EA-4 | **COMPLETE** — see `KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md` |
-| EA-1 | **COMPLETE** — PASS WITH FINDINGS · `KCCC_EA1_ARCHITECTURE_COMPLIANCE.md` |
-| EA-2 | **NEXT** |
+| EA-1 | **COMPLETE** — ACCEPTED · `KCCC_EA1_EXECUTIVE_ACCEPTANCE.md` |
+| EA-2 | **ACTIVE / OPENED** — `KCCC_EA2_USER_EXPERIENCE_AUDIT.md` |
 | EA-3, EA-5 … EA-12 | NOT STARTED |
 | Experience Redesign 2.0 | PROPOSED — blocked; blueprint ready from EA-4 |
 | Foundation implementation | NOT STARTED — after Redesign program gate |

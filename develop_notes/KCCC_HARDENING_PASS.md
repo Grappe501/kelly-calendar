@@ -4,6 +4,7 @@
 **Track:** Engineering Track A  
 **Status:** BLOCKED — awaiting Engineering Audit exit  
 **Nature:** Fix issues only — **no feature adds** · **no Experience Redesign implementation**  
+**Authoritative backlog:** `KCCC_HARDENING_MASTER_LEDGER.md` (consolidates all twelve audit streams)
 
 ## Categories
 
@@ -19,9 +20,9 @@ Hardening
 
 ## Rule
 
-Hardening consumes Audit findings (including EA-4 diagnosis and EA-1 Required Corrections H-AC-01…H-AC-06). It stabilizes Version 1; it does **not** execute Experience Redesign 2.0 or Foundation.
+Hardening consumes the **Master Ledger**, not scattered stream reports. Stream reports remain evidence. Hardening stabilizes Version 1; it does **not** execute Experience Redesign 2.0 or Foundation.
 
-**EA-1 seed backlog (when unblocked):** label derived %/heat; fix forced `candidateAttending`; shared calendar assembly helper; demote Day View MissionDayActions hosting; deepen owner links when IDs exist.
+**Seeded now (EA-1 / EA-4):** HL-001…HL-009 — Critical first: attending false-certainty (HL-001), derived-label hygiene (HL-002).
 
 ## Exit → next program
 
