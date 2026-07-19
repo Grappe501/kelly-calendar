@@ -18,6 +18,7 @@ import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
+import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
 import {
   combineOperationalReadiness,
   type DomainReadiness,
@@ -53,7 +54,8 @@ export type CandidateInboxItem = {
     | "TRAVEL"
     | "DEBATE"
     | "DOCUMENT"
-    | "SPEECH";
+    | "SPEECH"
+    | "FUNDRAISING";
   title: string;
   detail: string;
   href: string | null;
@@ -379,6 +381,7 @@ export function buildCandidateOperationsHome(input: {
   finance: FinanceOperationsHome;
   volunteers: VolunteerOperationsHome;
   debateMediaConsume?: DebateMediaOperationsHome | null;
+  fundraisingConsume?: FundraisingOperationsHome | null;
   now?: Date;
 }): CandidateOperationsHome {
   const now = input.now ?? new Date();
@@ -404,6 +407,7 @@ export function buildCandidateOperationsHome(input: {
     (input.debateMediaConsume?.mediaCalendar ?? []).map((a) => [a.missionId, a]),
   );
   const debateMediaFeed = input.debateMediaConsume?.candidateFeed ?? null;
+  const fundraisingFeed = input.fundraisingConsume?.candidateFeed ?? null;
 
   const cleanedBriefs: EngagementBrief[] = input.missions.map((mission) => {
     const countyName =
@@ -637,6 +641,22 @@ export function buildCandidateOperationsHome(input: {
         "Debate packets Unknown — owned by Debate & Media Operations (Phase 2.2).",
       href: "/debate-media",
       status: "unknown",
+    });
+  }
+  if (fundraisingFeed) {
+    candidateInbox.push({
+      id: "fundraising-brief",
+      category: "FUNDRAISING",
+      title: "Today's fundraising brief",
+      detail: fundraisingFeed.todaysFundraisingBrief,
+      href: "/fundraising",
+      status:
+        fundraisingFeed.preparationStatus === "BLOCKED" ||
+        fundraisingFeed.preparationStatus === "NEEDS_ATTENTION"
+          ? "actionable"
+          : fundraisingFeed.preparationStatus === "UNKNOWN"
+            ? "unknown"
+            : "actionable",
     });
   }
   candidateInbox.push({

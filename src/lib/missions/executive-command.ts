@@ -11,6 +11,7 @@ import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operati
 import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
+import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
 import type { OperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
@@ -124,6 +125,8 @@ export type ExecutiveCommand = {
   candidateFeed: CandidateOperationsHome["executiveFeed"] | null;
   /** Consumed from Debate & Media Operations (2.2) — public communication prep. */
   debateMediaFeed: DebateMediaOperationsHome["executiveFeed"] | null;
+  /** Consumed from Fundraising Operations (2.3) — resource-generation workflow. */
+  fundraisingFeed: FundraisingOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -151,6 +154,7 @@ export function buildDeterministicExecutiveBriefing(
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null,
   candidateFeed?: CandidateOperationsHome["executiveFeed"] | null,
   debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null,
+  fundraisingFeed?: FundraisingOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -164,6 +168,7 @@ export function buildDeterministicExecutiveBriefing(
       constituentFeed?.briefingLine,
       candidateFeed?.briefingLine,
       debateMediaFeed?.briefingLine,
+      fundraisingFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -181,6 +186,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (debateMediaFeed?.briefingLine) {
     parts.push(debateMediaFeed.briefingLine);
+  }
+  if (fundraisingFeed?.briefingLine) {
+    parts.push(fundraisingFeed.briefingLine);
   }
   if (constituentFeed?.briefingLine) {
     parts.push(constituentFeed.briefingLine);
@@ -270,6 +278,7 @@ export function buildExecutiveCommand(input: {
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
   candidateFeed?: CandidateOperationsHome["executiveFeed"] | null;
   debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null;
+  fundraisingFeed?: FundraisingOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -284,6 +293,7 @@ export function buildExecutiveCommand(input: {
   const constituentFeed = input.constituentFeed ?? null;
   const candidateFeed = input.candidateFeed ?? null;
   const debateMediaFeed = input.debateMediaFeed ?? null;
+  const fundraisingFeed = input.fundraisingFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -428,6 +438,21 @@ export function buildExecutiveCommand(input: {
       detail: debateMediaFeed.briefingLine,
       href: "/debate-media",
       urgency: debateMediaFeed.mediaConfidence === "BLOCKED" ? "NOW" : "SOON",
+    });
+  }
+  if (
+    fundraisingFeed &&
+    fundraisingFeed.upcomingEvents > 0 &&
+    (fundraisingFeed.eventsAtRisk > 0 ||
+      fundraisingFeed.fundraisingReadiness === "BLOCKED" ||
+      fundraisingFeed.fundraisingReadiness === "NEEDS_ATTENTION")
+  ) {
+    topPriorities.push({
+      label: "Fundraising readiness",
+      detail: fundraisingFeed.briefingLine,
+      href: "/fundraising",
+      urgency:
+        fundraisingFeed.fundraisingReadiness === "BLOCKED" ? "NOW" : "SOON",
     });
   }
   if (brief.topBlocker) {
@@ -782,6 +807,14 @@ export function buildExecutiveCommand(input: {
       `${debateMediaFeed.appearancesAtRisk} public appearance(s) need media prep`,
     );
   }
+  if (fundraisingFeed && fundraisingFeed.eventsAtRisk > 0) {
+    alerts.push(
+      `${fundraisingFeed.eventsAtRisk} fundraising event(s) need prep`,
+    );
+  }
+  if (fundraisingFeed?.pipelineHealthStatus === "unknown") {
+    alerts.push("Fundraising pipeline health Unknown");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -837,6 +870,7 @@ export function buildExecutiveCommand(input: {
         constituentFeed,
         candidateFeed,
         debateMediaFeed,
+        fundraisingFeed,
       ),
       source: "deterministic_v1",
     },
@@ -851,6 +885,7 @@ export function buildExecutiveCommand(input: {
     constituentFeed,
     candidateFeed,
     debateMediaFeed,
+    fundraisingFeed,
   };
 }
 
@@ -887,5 +922,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     constituentFeed: command.constituentFeed,
     candidateFeed: command.candidateFeed,
     debateMediaFeed: command.debateMediaFeed,
+    fundraisingFeed: command.fundraisingFeed,
   };
 }

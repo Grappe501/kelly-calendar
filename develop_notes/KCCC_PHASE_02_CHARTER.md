@@ -19,6 +19,10 @@ Phase 2 delivers **capabilities that orchestrate the kernel**. They do not recre
 
 2. **Capabilities assemble operational context — they do not create parallel operational systems.**
 
+3. **Capabilities own experiences and workflows, while operational systems own facts and state.**
+
+   Example: Finance owns **resource state**. Fundraising owns the **workflow of building future resources**.
+
 Corollaries:
 
 1. New capabilities own almost no primary data.  
@@ -27,15 +31,15 @@ Corollaries:
 4. Readiness / preparedness equals the **minimum** of required domains (not an average).  
 5. AI remains advisory and explainable; never overrides assembled operational truth.  
 6. Gate for every capability: *What operational decision does this improve?*  
-7. Assembled views (briefs, binders, media calendars) improve automatically when kernel owners improve — no duplicate storage.
+7. Assembled views improve automatically when kernel owners improve — no duplicate storage.
 
 ## Sequencing
 
 | Increment | Question | Status |
 |-----------|----------|--------|
 | 2.1 Candidate Operations | Is the candidate prepared for today’s engagements? | ACCEPTED / COMPLETE |
-| 2.2 Debate & Media Operations | Are we prepared for every public communication? | IN PROGRESS |
-| 2.3 Fundraising Operations | Can we sustain campaign growth? | HELD |
+| 2.2 Debate & Media Operations | Are we prepared for every public communication? | ACCEPTED / COMPLETE |
+| 2.3 Fundraising Operations | Can the campaign sustainably generate the resources needed to execute the mission? | IN PROGRESS |
 | 2.4 GOTV Operations | Are we converting support into turnout? | HELD |
 | 2.5 Petition & Ballot Operations | Can we execute citizen-driven campaigns on the same OS? | HELD |
 

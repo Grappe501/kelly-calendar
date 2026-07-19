@@ -13,7 +13,7 @@ export type CandidateOperationsPayload = {
   candidateDataReady: false;
 };
 
-/** Authenticated Candidate Operations — orchestrates Phase 1 + Debate & Media. */
+/** Authenticated Candidate Operations — orchestrates Phase 1 + Phase 2 feeds. */
 export async function getCandidateOperations(
   actor: AuthenticatedActor,
 ): Promise<CandidateOperationsPayload> {
@@ -33,6 +33,7 @@ export async function getCandidateOperations(
     finance: stack.finance,
     volunteers: stack.volunteers,
     debateMediaConsume: stack.debateMedia,
+    fundraisingConsume: stack.fundraising,
   });
 
   return {

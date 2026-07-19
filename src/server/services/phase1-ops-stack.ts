@@ -7,6 +7,7 @@ import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
 import { buildDebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
+import { buildFundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
 import { buildOperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
@@ -168,6 +169,16 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     logistics,
   });
 
+  const fundraising = buildFundraisingOperationsHome({
+    brief: briefPayload.brief,
+    missions: briefPayload.allMissionsToday,
+    countiesByMission: briefPayload.countiesByMission,
+    finance,
+    communications,
+    compliance,
+    logistics,
+  });
+
   const communicationsWithMedia = buildCommunicationsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
@@ -182,6 +193,7 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     complianceConsume: compliance.communicationsFeed,
     constituentConsume: constituents.communicationsFeed,
     debateMediaConsume: debateMedia.communicationsFeed,
+    fundraisingConsume: fundraising.communicationsFeed,
   });
 
   const intelligence = buildOperationalIntelligenceHome({
@@ -197,6 +209,7 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
       complianceFeed: compliance.executiveFeed,
       constituentFeed: constituents.executiveFeed,
       debateMediaFeed: debateMedia.intelligenceFeed,
+      fundraisingFeed: fundraising.intelligenceFeed,
     },
   });
 
@@ -212,5 +225,6 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     counties,
     intelligence,
     debateMedia,
+    fundraising,
   };
 }

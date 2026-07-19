@@ -1,5 +1,5 @@
 /**
- * Phase 2 structural gates (2.1 Candidate + 2.2 Debate & Media).
+ * Phase 2 structural gates (2.1–2.3).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -24,101 +24,102 @@ function read(rel) {
 
 const required = [
   ["2.1", "src/lib/missions/candidate-operations.ts"],
-  ["2.1", "src/app/candidate/page.tsx"],
   ["2.2", "src/lib/missions/debate-media-operations.ts"],
-  ["2.2", "src/server/services/debate-media-operations-service.ts"],
-  ["2.2", "src/server/services/debate-media-operations-ai.ts"],
-  ["2.2", "src/app/api/command-summary/debate-media/route.ts"],
   ["2.2", "src/app/debate-media/page.tsx"],
-  ["2.2", "src/components/debate-media/DebateMediaOperationsView.tsx"],
-  ["2.2", "develop_notes/KCCC_PHASE_02_2_DEBATE_MEDIA_OPERATIONS.md"],
-  ["2.2", "tests/unit/missions/debate-media-operations.test.ts"],
+  ["2.3", "src/lib/missions/fundraising-operations.ts"],
+  ["2.3", "src/server/services/fundraising-operations-service.ts"],
+  ["2.3", "src/server/services/fundraising-operations-ai.ts"],
+  ["2.3", "src/app/api/command-summary/fundraising/route.ts"],
+  ["2.3", "src/app/fundraising/page.tsx"],
+  ["2.3", "src/components/fundraising/FundraisingOperationsView.tsx"],
+  ["2.3", "develop_notes/KCCC_PHASE_02_3_FUNDRAISING_OPERATIONS.md"],
+  ["2.3", "tests/unit/missions/fundraising-operations.test.ts"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
   else fail(`${label} missing ${rel}`);
 }
 
-const debate = read("src/lib/missions/debate-media-operations.ts");
+const fr = read("src/lib/missions/fundraising-operations.ts");
 if (
-  debate.includes("buildDebateMediaOperationsHome") &&
-  debate.includes("Are we prepared for every public communication") &&
-  debate.includes("not a parallel communications system") &&
-  debate.includes("candidateFeed") &&
-  debate.includes("communicationsFeed") &&
-  debate.includes("intelligenceFeed") &&
-  debate.includes("combineOperationalReadiness")
+  fr.includes("buildFundraisingOperationsHome") &&
+  fr.includes("sustainably generate the resources") &&
+  fr.includes("Finance owns resource state") &&
+  fr.includes("candidateFeed") &&
+  fr.includes("communicationsFeed") &&
+  fr.includes("intelligenceFeed") &&
+  fr.includes("combineOperationalReadiness")
 ) {
-  pass("2.2 debate-media contracts present");
+  pass("2.3 fundraising contracts present");
 } else {
-  fail("2.2 debate-media contracts missing");
+  fail("2.3 fundraising contracts missing");
 }
 
 const candidate = read("src/lib/missions/candidate-operations.ts");
-if (candidate.includes("debateMediaConsume") || candidate.includes("debateMediaFeed")) {
-  pass("2.2 Candidate consumes Debate & Media");
+if (candidate.includes("fundraisingConsume") || candidate.includes("fundraisingFeed")) {
+  pass("2.3 Candidate consumes Fundraising");
 } else {
-  fail("2.2 Candidate missing debate/media consume");
+  fail("2.3 Candidate missing fundraising consume");
 }
 
 const comms = read("src/lib/missions/communications-operations.ts");
-if (comms.includes("debateMediaConsume")) {
-  pass("2.2 Communications consumes Debate & Media");
+if (comms.includes("fundraisingConsume")) {
+  pass("2.3 Communications consumes Fundraising");
 } else {
-  fail("2.2 Communications missing debateMediaConsume");
+  fail("2.3 Communications missing fundraisingConsume");
 }
 
 const intel = read("src/lib/missions/intelligence-operations.ts");
 if (
-  intel.includes("debateMediaFeed") &&
-  intel.includes("MEDIA_PREPARATION") &&
-  intel.includes("debate_media")
+  intel.includes("fundraisingFeed") &&
+  intel.includes("FUNDRAISING_PIPELINE") &&
+  intel.includes('"fundraising"')
 ) {
-  pass("2.2 Intelligence consumes Debate & Media");
+  pass("2.3 Intelligence consumes Fundraising");
 } else {
-  fail("2.2 Intelligence missing debate/media feed");
+  fail("2.3 Intelligence missing fundraising feed");
 }
 
 const exec = read("src/lib/missions/executive-command.ts");
-if (exec.includes("debateMediaFeed")) {
-  pass("2.2 Executive consumes debateMediaFeed");
+if (exec.includes("fundraisingFeed")) {
+  pass("2.3 Executive consumes fundraisingFeed");
 } else {
-  fail("2.2 Executive missing debateMediaFeed");
+  fail("2.3 Executive missing fundraisingFeed");
 }
 
-const view = read("src/components/debate-media/DebateMediaOperationsView.tsx");
+const view = read("src/components/fundraising/FundraisingOperationsView.tsx");
 for (const phrase of [
-  "Are we prepared for every public communication",
-  "Media preparedness",
-  "Media calendar",
+  "sustainably generate the resources",
+  "Fundraising readiness",
+  "Pipeline Health",
   "First-class Unknowns",
-  "not a parallel communications system",
+  "Finance owns resource state",
 ]) {
   if (view.includes(phrase)) pass(`UI ${phrase}`);
   else fail(`UI missing ${phrase}`);
 }
 
-const ai = read("src/server/services/debate-media-operations-ai.ts");
+const ai = read("src/server/services/fundraising-operations-ai.ts");
 if (
-  ai.includes('feature: "debate-media-operations"') &&
+  ai.includes('feature: "fundraising-operations"') &&
   ai.includes('application: "kelly-calendar"')
 ) {
-  pass("2.2 AI audit attribution present");
+  pass("2.3 AI audit attribution present");
 } else {
-  fail("2.2 AI audit attribution missing");
+  fail("2.3 AI audit attribution missing");
 }
 
 const nav = read("src/lib/navigation/nav-items.ts");
-if (nav.includes("/debate-media")) pass("/debate-media maps to More");
-else fail("/debate-media nav prefix missing");
+if (nav.includes("/fundraising")) pass("/fundraising maps to More");
+else fail("/fundraising nav prefix missing");
 
 const charter = read("develop_notes/KCCC_PHASE_02_CHARTER.md");
 if (
-  charter.includes("orchestrate Phase 1") &&
-  charter.includes("assemble operational context") &&
-  charter.includes("ACCEPTED / COMPLETE")
+  charter.includes("experiences and workflows") &&
+  charter.includes("ACCEPTED / COMPLETE") &&
+  charter.includes("2.3 Fundraising")
 ) {
-  pass("Phase 2 doctrine + 2.1 ACCEPT locked");
+  pass("Phase 2 doctrine #3 + sequencing locked");
 } else {
   fail("Phase 2 charter incomplete");
 }
@@ -127,23 +128,26 @@ const build = JSON.parse(read("data/build_state.json"));
 if (build.candidate_data_ready === true) fail("candidate_data_ready must be false");
 else pass("candidate_data_ready false");
 
-if (build.candidate_operations_accepted === true) {
-  pass("2.1 ACCEPTED");
+if (
+  build.candidate_operations_accepted === true &&
+  build.debate_media_operations_accepted === true
+) {
+  pass("2.1 + 2.2 ACCEPTED");
 } else {
-  fail("2.1 not marked accepted");
+  fail("2.1/2.2 acceptance missing");
 }
 
 if (
-  build.phase_2_increment === "2.2-debate-media-operations" ||
-  build.debate_media_operations_enabled === true
+  build.phase_2_increment === "2.3-fundraising-operations" ||
+  build.fundraising_operations_enabled === true
 ) {
-  pass("2.2 increment tracked");
+  pass("2.3 increment tracked");
 } else {
-  fail("2.2 increment not tracked");
+  fail("2.3 increment not tracked");
 }
 
 if (failed) {
   console.error(`Phase 2 validation failed (${failed})`);
   process.exit(1);
 }
-console.log("Phase 2 structural validation passed (2.1 ACCEPTED, 2.2 OPEN).");
+console.log("Phase 2 structural validation passed (2.1–2.2 ACCEPTED, 2.3 OPEN).");

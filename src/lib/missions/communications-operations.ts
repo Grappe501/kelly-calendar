@@ -11,6 +11,7 @@ import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operati
 import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
+import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
 
@@ -132,6 +133,8 @@ export type CommunicationsOperationsHome = {
   constituentConsume: ConstituentOperationsHome["communicationsFeed"] | null;
   /** Consumed from Debate & Media — appearance press coordination (Phase 2.2). */
   debateMediaConsume: DebateMediaOperationsHome["communicationsFeed"] | null;
+  /** Consumed from Fundraising — invitation / collateral workflow (Phase 2.3). */
+  fundraisingConsume: FundraisingOperationsHome["communicationsFeed"] | null;
 };
 
 export type CommunicationsMissionInput = {
@@ -354,6 +357,7 @@ export function buildCommunicationsOperationsHome(input: {
   complianceConsume?: CommunicationsOperationsHome["complianceConsume"];
   constituentConsume?: CommunicationsOperationsHome["constituentConsume"];
   debateMediaConsume?: CommunicationsOperationsHome["debateMediaConsume"];
+  fundraisingConsume?: CommunicationsOperationsHome["fundraisingConsume"];
 }): CommunicationsOperationsHome {
   const now = input.now ?? new Date();
   const missionRows = input.missions
@@ -541,6 +545,7 @@ export function buildCommunicationsOperationsHome(input: {
     complianceConsume: input.complianceConsume ?? null,
     constituentConsume: input.constituentConsume ?? null,
     debateMediaConsume: input.debateMediaConsume ?? null,
+    fundraisingConsume: input.fundraisingConsume ?? null,
   };
 }
 

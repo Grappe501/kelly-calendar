@@ -1,9 +1,9 @@
-export const CURRENT_STEP_ID = "KCCC-PHASE-02.2-DEBATE-MEDIA-OPERATIONS";
+export const CURRENT_STEP_ID = "KCCC-PHASE-02.3-FUNDRAISING-OPERATIONS";
 export const CURRENT_STEP_NUMBER = 8;
 export const PHASE_1_STATUS = "CERTIFIED";
 export const PHASE_1_VERSION = "0.7.11-ops";
 export const PHASE_2_STATUS = "IN_PROGRESS";
-export const PHASE_2_VERSION = "0.8.1-media";
+export const PHASE_2_VERSION = "0.8.2-fundraising";
 export const TOTAL_STEPS = 25;
 export const PRODUCT_CODE = "KCCC";
 export const SERVICE_NAME = "kelly-campaign-command-calendar";

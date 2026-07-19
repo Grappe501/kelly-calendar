@@ -16,6 +16,7 @@ import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
+import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { VolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
@@ -30,6 +31,7 @@ export type IntelligenceSourceModule =
   | "compliance"
   | "constituent"
   | "debate_media"
+  | "fundraising"
   | "calendar";
 
 export type IntelligenceCategory =
@@ -38,6 +40,7 @@ export type IntelligenceCategory =
   | "VOLUNTEER_PRESSURE"
   | "COMMS_DRIFT"
   | "MEDIA_PREPARATION"
+  | "FUNDRAISING_PIPELINE"
   | "MISSION_FORECAST"
   | "RESOURCE_PRESSURE"
   | "COMPLIANCE_HOTSPOT"
@@ -118,6 +121,7 @@ export type IntelligenceFeedInput = {
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null;
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
   debateMediaFeed?: DebateMediaOperationsHome["intelligenceFeed"] | null;
+  fundraisingFeed?: FundraisingOperationsHome["intelligenceFeed"] | null;
 };
 
 const HISTORY_UNKNOWN: UnknownFact = {
@@ -430,6 +434,56 @@ export function buildCommunicationsDriftSignals(
       );
     }
   }
+
+  const fundraising = feeds.fundraisingFeed;
+  if (fundraising) {
+    if (fundraising.eventsAtRisk > 0) {
+      out.push(
+        insight({
+          id: "fundraising-events-risk",
+          category: "FUNDRAISING_PIPELINE",
+          title: "Fundraising event preparation gaps",
+          detail: fundraising.briefingLine,
+          severity: fundraising.eventsAtRisk > 2 ? "HIGH" : "WATCH",
+          href: "/fundraising",
+          sourceModule: "fundraising",
+          canonicalFact: `Fundraising Operations: eventsAtRisk=${fundraising.eventsAtRisk}`,
+        }),
+      );
+    }
+    if (fundraising.pipelineTrendsStatus === "unknown") {
+      out.push(
+        insight({
+          id: "fundraising-pipeline-unknown",
+          category: "FUNDRAISING_PIPELINE",
+          title: "Pipeline trends Unknown",
+          detail:
+            "Pipeline trends remain Unknown — Intelligence will not invent prospect stages.",
+          severity: "UNKNOWN",
+          href: "/fundraising",
+          sourceModule: "fundraising",
+          canonicalFact:
+            "Fundraising Operations: pipelineTrendsStatus=unknown",
+        }),
+      );
+    }
+    if (fundraising.eventEffectivenessStatus === "unknown") {
+      out.push(
+        insight({
+          id: "fundraising-effectiveness-unknown",
+          category: "FUNDRAISING_PIPELINE",
+          title: "Event effectiveness Unknown",
+          detail:
+            "Fundraising event effectiveness remains Unknown — no outcome ledger yet.",
+          severity: "UNKNOWN",
+          href: "/fundraising",
+          sourceModule: "fundraising",
+          canonicalFact:
+            "Fundraising Operations: eventEffectivenessStatus=unknown",
+        }),
+      );
+    }
+  }
   return out;
 }
 
@@ -665,7 +719,7 @@ export function buildOperationalIntelligenceHome(input: {
     );
   }
   briefingParts.push(
-    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, Compliance, or Debate & Media.",
+    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, Compliance, Debate & Media, or Fundraising.",
   );
 
   return {
