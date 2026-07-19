@@ -760,6 +760,85 @@ input {
   width: 100%;
 }
 
+.county-weak-list,
+.county-node-list,
+.county-mission-list,
+.county-factor-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.county-weak-list li,
+.county-node-list li,
+.county-mission-list li,
+.county-factor-list li {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.county-weak-list li[data-risk="CRITICAL"],
+.county-node-list li[data-group="NEEDS_IMMEDIATE_ATTENTION"] {
+  border-color: rgba(155, 28, 28, 0.45);
+}
+
+.county-node-list li[data-group="READY_FOR_EXPANSION"] {
+  border-color: rgba(22, 101, 52, 0.35);
+}
+
+.county-node-head {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.county-node-meta,
+.county-node-meta-wide {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.county-node-meta div,
+.county-node-meta-wide div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.county-node-meta dt,
+.county-node-meta-wide dt {
+  font-size: 0.75rem;
+  color: var(--color-muted, #5c6b73);
+}
+
+.county-node-meta dd,
+.county-node-meta-wide dd {
+  margin: 0;
+}
+
+.county-chip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.county-chip-list a {
+  display: inline-block;
+  min-height: 44px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+}
+
 .mission-day-feedback.err {
   display: grid;
   gap: var(--space-2);

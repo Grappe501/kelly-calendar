@@ -124,6 +124,14 @@ export function ExecutiveCommandView({
             </Link>
           </p>
         ) : null}
+        {command.countyFeed ? (
+          <p>
+            <strong>Counties:</strong> {command.countyFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/counties">
+              Open County Ops
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">
@@ -177,6 +185,9 @@ export function ExecutiveCommandView({
           </p>
         ) : null}
         <p className="muted">{command.geographic.note}</p>
+        <Link className="button secondary" href="/counties">
+          Statewide County Operations
+        </Link>
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-rhythm">

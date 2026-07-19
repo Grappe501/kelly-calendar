@@ -1,24 +1,27 @@
 import "server-only";
 
-import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
-import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
+import {
+  buildCountyOperationsHome,
+  type CountyOperationsHome,
+} from "@/lib/missions/county-operations";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 
-export type ExecutiveCommandPayload = {
-  command: ExecutiveCommand;
+export type CountyOperationsPayload = {
+  counties: CountyOperationsHome;
   viewerDisplayName: string;
   candidateDataReady: false;
 };
 
 /**
- * Authenticated Executive Command Center — consumes Field Operations feed.
+ * Authenticated County Operations — statewide weakness / health.
+ * Consumes Calendar missions + Field Operations heat; produces executiveFeed.
  */
-export async function getExecutiveCommand(
+export async function getCountyOperations(
   actor: AuthenticatedActor,
-): Promise<ExecutiveCommandPayload> {
+): Promise<CountyOperationsPayload> {
   const briefPayload = await getCampaignBrief(actor);
   const ids = briefPayload.allMissionsToday.map((m) => m.missionId);
   const context = await loadMissionContextForIds(ids);
@@ -56,16 +59,8 @@ export async function getExecutiveCommand(
     })),
   });
 
-  const command = buildExecutiveCommand({
-    brief: briefPayload.brief,
-    missions: briefPayload.allMissionsToday,
-    countiesByMission: briefPayload.countiesByMission,
-    fieldFeed: field.executiveFeed,
-    countyFeed: counties.executiveFeed,
-  });
-
   return {
-    command,
+    counties,
     viewerDisplayName: briefPayload.viewerDisplayName,
     candidateDataReady: false,
   };

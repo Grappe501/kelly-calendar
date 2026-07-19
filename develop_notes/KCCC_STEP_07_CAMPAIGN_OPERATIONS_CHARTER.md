@@ -26,10 +26,10 @@ Never:
 ## Recommended workstreams
 
 1. **Executive Command** — Daily command center, campaign health, priorities, operational summaries.  
-2. **Field Operations** — Volunteer assignments, county coordination, canvassing, check-ins, mission tracking.  
+2. **Field Operations** — Mission execution, help queue, check-ins, escalation.  
 3. **Travel & Logistics** — Routes, lodging, vehicles, event preparation, travel timing, resources.  
 4. **Communications Operations** — Debate prep, media schedule, speaking engagements, briefing packets, follow-up.  
-5. **County Operations** — County readiness, leadership assignments, regional coordination, activity dashboards.  
+5. **County Operations** — County readiness, leadership, statewide weakness, command nodes.  
 6. **Operational Intelligence** — Staffing gaps, conflicts, workload balancing, advisory insights (AI advisory only).  
 7. **After-Action & Accountability** — Mission completion, lessons learned, follow-up commitments, performance tracking.
 
@@ -50,16 +50,30 @@ Calendar → Mission → Field Operations → Executive Command → Campaign Bri
 → County Operations → Operational Intelligence → Calendar
 ```
 
-Doctrine pair:
+## Canonical source principle (permanent)
+
+> Every operational fact should have exactly one canonical source and may be consumed by many modules.
+
+Examples:
+
+- Mission status / field help → owned by Field Operations  
+- County readiness / weakness grouping → owned by County Operations  
+- Executive summary → owned by Executive Command  
+- Volunteer availability → owned by Volunteer Operations (future)  
+- Calendar timing → owned by the Calendar  
+
+## Doctrine questions
 
 - Executive Command: What does leadership need to know?  
-- Field Operations: Who needs help right now?
+- Field Operations: Who needs help right now?  
+- County Operations: Where are we weak?
 
 ## Active increments
 
-| Increment | Route | Question |
-|-----------|-------|----------|
-| 7.1 Executive Command | `/command` | What does leadership need to know? |
-| 7.2 Field Operations | `/field` | Who needs help right now? |
+| Increment | Route | Question | Status |
+|-----------|-------|----------|--------|
+| 7.1 Executive Command | `/command` | What does leadership need to know? | SHIPPED |
+| 7.2 Field Operations | `/field` | Who needs help right now? | ACCEPTED |
+| 7.3 County Operations | `/counties` | Where are we weak? | IN PROGRESS |
 
-See `develop_notes/KCCC_STEP_07_1_EXECUTIVE_COMMAND.md` and `KCCC_STEP_07_2_FIELD_OPERATIONS.md`.
+See `develop_notes/KCCC_STEP_07_1_EXECUTIVE_COMMAND.md`, `KCCC_STEP_07_2_FIELD_OPERATIONS.md`, and `KCCC_STEP_07_3_COUNTY_OPERATIONS.md`.

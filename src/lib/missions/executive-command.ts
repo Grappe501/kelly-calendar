@@ -4,6 +4,7 @@
  */
 
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
+import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 
@@ -94,6 +95,8 @@ export type ExecutiveCommand = {
   };
   /** Consumed from Field Operations (7.2) — no duplicate engines. */
   fieldFeed: FieldOperationsHome["executiveFeed"] | null;
+  /** Consumed from County Operations (7.3) — canonical county weakness. */
+  countyFeed: CountyOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -111,14 +114,21 @@ function readinessLabel(brief: CampaignBrief): string {
 export function buildDeterministicExecutiveBriefing(
   brief: CampaignBrief,
   fieldFeed?: FieldOperationsHome["executiveFeed"] | null,
+  countyFeed?: CountyOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
-    return "No missions on today’s permissioned schedule. Use Add Mission or Calendar if activity is expected. No critical conflicts detected in this view.";
+    const countyLine = countyFeed?.briefingLine
+      ? ` ${countyFeed.briefingLine}`
+      : "";
+    return `No missions on today’s permissioned schedule. Use Add Mission or Calendar if activity is expected. No critical conflicts detected in this view.${countyLine}`;
   }
 
   const parts: string[] = [];
   if (fieldFeed?.briefingLine) {
     parts.push(fieldFeed.briefingLine);
+  }
+  if (countyFeed?.briefingLine) {
+    parts.push(countyFeed.briefingLine);
   }
   if (brief.topBlocker) {
     parts.push(`Priority risk: ${brief.topBlocker.message}.`);
@@ -174,10 +184,12 @@ export function buildExecutiveCommand(input: {
   missions: MissionCard[];
   countiesByMission?: Array<{ missionId: string; countyName: string | null }>;
   fieldFeed?: FieldOperationsHome["executiveFeed"] | null;
+  countyFeed?: CountyOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
   const fieldFeed = input.fieldFeed ?? null;
+  const countyFeed = input.countyFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -195,6 +207,17 @@ export function buildExecutiveCommand(input: {
         : fieldFeed.briefingLine,
       href: "/field",
       urgency: "NOW",
+    });
+  }
+  if (countyFeed && countyFeed.needsImmediate > 0) {
+    const top = countyFeed.topWeak[0];
+    topPriorities.push({
+      label: "County weakness",
+      detail: top
+        ? `${top.countyName}: ${top.reason}`
+        : countyFeed.briefingLine,
+      href: top?.href ?? "/counties",
+      urgency: "SOON",
     });
   }
   if (brief.topBlocker) {
@@ -242,6 +265,9 @@ export function buildExecutiveCommand(input: {
   }
   if ((fieldFeed?.countiesWithoutLeader ?? 0) > 0) {
     decisions.push("Assign leaders to orphan field missions");
+  }
+  if ((countyFeed?.needsImmediate ?? 0) > 0) {
+    decisions.push("Stabilize counties needing immediate attention");
   }
   if (decisions.length === 0 && brief.nextMission) {
     decisions.push("Confirm next mission is ready to execute");
@@ -431,6 +457,9 @@ export function buildExecutiveCommand(input: {
   if (fieldFeed && fieldFeed.teamsNeedingAttention > 0) {
     alerts.push(`${fieldFeed.teamsNeedingAttention} field team(s) need attention`);
   }
+  if (countyFeed && countyFeed.needsImmediate > 0) {
+    alerts.push(`${countyFeed.needsImmediate} count${countyFeed.needsImmediate === 1 ? "y" : "ies"} need immediate attention`);
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -467,14 +496,15 @@ export function buildExecutiveCommand(input: {
     geographic: {
       counties,
       unknownCountyMissions: brief.counties.unknownCountyMissions,
-      note: "County status from missions today. Field heat lives on /field; County Operations will deepen statewide views.",
+      note: "Today’s counties from Calendar. Statewide weakness/health owned by County Operations (/counties); field heat owned by Field Ops (/field).",
     },
     rhythm,
     executiveBriefing: {
-      text: buildDeterministicExecutiveBriefing(brief, fieldFeed),
+      text: buildDeterministicExecutiveBriefing(brief, fieldFeed, countyFeed),
       source: "deterministic_v1",
     },
     fieldFeed,
+    countyFeed,
   };
 }
 
@@ -501,5 +531,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     counties: command.geographic.counties.map((c) => c.countyName),
     briefing: command.executiveBriefing.text,
     fieldFeed: command.fieldFeed,
+    countyFeed: command.countyFeed,
   };
 }

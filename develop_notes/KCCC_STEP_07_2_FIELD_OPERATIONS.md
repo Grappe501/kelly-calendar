@@ -1,8 +1,9 @@
 # KCCC Step 7.2 — Field Operations
 
 **Script ID:** `KCCC-STEP-07.2-FIELD-OPERATIONS`  
-**Status:** IN PROGRESS  
+**Status:** ACCEPTED (2026-07-19)  
 **Parent:** Step 7 Campaign Operations  
+**Tip:** `c8bf099`
 
 ## Doctrine
 
@@ -24,6 +25,8 @@ Mission execution — not volunteer CRM.
 Field Operations **produces** a feed consumed by Executive Command.  
 No duplicate readiness/timeline engines.
 
-## Standing principle (Campaign Operations)
+## Standing principles (Campaign Operations)
 
 > Every module must both consume information from another module and produce information for another module.
+
+> Every operational fact should have exactly one canonical source and may be consumed by many modules.

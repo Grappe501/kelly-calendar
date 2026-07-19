@@ -1,5 +1,5 @@
 /**
- * Step 7.1 + 7.2 structural gates.
+ * Step 7.1 + 7.2 + 7.3 structural gates.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -48,6 +48,22 @@ for (const rel of files72) {
   else fail(`7.2 missing ${rel}`);
 }
 
+const files73 = [
+  "src/lib/missions/county-operations.ts",
+  "src/server/services/county-operations-service.ts",
+  "src/server/services/county-operations-ai.ts",
+  "src/app/api/command-summary/counties/route.ts",
+  "src/app/counties/page.tsx",
+  "src/app/counties/[slug]/page.tsx",
+  "src/components/counties/CountyOperationsView.tsx",
+  "src/components/counties/CountyCommandNodeView.tsx",
+  "develop_notes/KCCC_STEP_07_3_COUNTY_OPERATIONS.md",
+];
+for (const rel of files73) {
+  if (exists(rel)) pass(`7.3 ${rel}`);
+  else fail(`7.3 missing ${rel}`);
+}
+
 const field = read("src/lib/missions/field-operations.ts");
 if (
   field.includes("buildFieldOperationsHome") &&
@@ -61,31 +77,60 @@ if (
   fail("7.2 field ops contracts incomplete");
 }
 
-const exec = read("src/lib/missions/executive-command.ts");
-if (exec.includes("fieldFeed") && exec.includes("Field Operations")) {
-  pass("7.2 Executive Command consumes fieldFeed");
-} else if (exec.includes("fieldFeed")) {
-  pass("7.2 Executive Command consumes fieldFeed");
+const county = read("src/lib/missions/county-operations.ts");
+if (
+  county.includes("buildCountyOperationsHome") &&
+  county.includes("scoreCountyHealth") &&
+  county.includes("executiveFeed") &&
+  county.includes("NEEDS_IMMEDIATE_ATTENTION") &&
+  county.includes("Where are we weak")
+) {
+  pass("7.3 county ops pure contracts present");
 } else {
-  fail("7.2 Executive Command missing fieldFeed integration");
+  fail("7.3 county ops contracts incomplete");
+}
+
+const exec = read("src/lib/missions/executive-command.ts");
+if (exec.includes("fieldFeed") && exec.includes("countyFeed")) {
+  pass("7.3 Executive Command consumes fieldFeed + countyFeed");
+} else {
+  fail("7.3 Executive Command missing countyFeed integration");
 }
 
 const execService = read("src/server/services/executive-command-service.ts");
-if (execService.includes("buildFieldOperationsHome") && execService.includes("fieldFeed")) {
-  pass("7.2 executive service wires field feed");
+if (
+  execService.includes("buildFieldOperationsHome") &&
+  execService.includes("buildCountyOperationsHome") &&
+  execService.includes("countyFeed")
+) {
+  pass("7.3 executive service wires field + county feeds");
 } else {
-  fail("7.2 executive service missing field feed wiring");
+  fail("7.3 executive service missing county feed wiring");
 }
 
-const view = read("src/components/field/FieldOperationsView.tsx");
+const fieldView = read("src/components/field/FieldOperationsView.tsx");
 for (const heading of [
   "Who needs help?",
   "Operational heat",
   "Team cards",
   "Field snapshot",
 ]) {
-  if (view.includes(heading)) pass(`UI ${heading}`);
+  if (fieldView.includes(heading)) pass(`UI ${heading}`);
   else fail(`UI missing ${heading}`);
+}
+
+const countyView = read("src/components/counties/CountyOperationsView.tsx");
+for (const heading of [
+  "Where are we weak?",
+  "Statewide snapshot",
+  "Weakest counties",
+  "Needs Immediate Attention",
+]) {
+  if (countyView.includes(heading) || countyView.includes("NEEDS_IMMEDIATE_ATTENTION")) {
+    pass(`UI county ${heading}`);
+  } else {
+    fail(`UI county missing ${heading}`);
+  }
 }
 
 const checkIns = read("src/components/field/FieldCheckIns.tsx");
@@ -99,42 +144,58 @@ if (
   fail("7.2 check-ins not wired to mission-day");
 }
 
-const ai = read("src/server/services/field-operations-ai.ts");
+const fieldAi = read("src/server/services/field-operations-ai.ts");
 if (
-  ai.includes('feature: "field-operations"') &&
-  ai.includes('application: "kelly-calendar"')
+  fieldAi.includes('feature: "field-operations"') &&
+  fieldAi.includes('application: "kelly-calendar"')
 ) {
   pass("7.2 AI audit attribution present");
 } else {
   fail("7.2 AI audit attribution missing");
 }
 
+const countyAi = read("src/server/services/county-operations-ai.ts");
+if (
+  countyAi.includes('feature: "county-operations"') &&
+  countyAi.includes('application: "kelly-calendar"')
+) {
+  pass("7.3 AI audit attribution present");
+} else {
+  fail("7.3 AI audit attribution missing");
+}
+
 const nav = read("src/lib/navigation/nav-items.ts");
 if (nav.includes('pathname.startsWith("/field")')) pass("/field maps to More");
 else fail("/field nav mapping missing");
+if (nav.includes('pathname.startsWith("/counties")')) pass("/counties maps to More");
+else fail("/counties nav mapping missing");
 
 const charter = read("develop_notes/KCCC_STEP_07_CAMPAIGN_OPERATIONS_CHARTER.md");
 if (
   charter.includes("consume information") &&
-  charter.includes("produce information")
+  charter.includes("produce information") &&
+  charter.includes("exactly one canonical source")
 ) {
-  pass("integration principle locked in charter");
+  pass("integration + canonical-source principles locked in charter");
 } else {
-  fail("integration principle missing from charter");
+  fail("charter principles incomplete");
 }
 
 const build = JSON.parse(read("data/build_state.json"));
 if (build.candidate_data_ready === true) fail("candidate_data_ready must be false");
 else pass("candidate_data_ready false");
 
-if (build.field_operations_enabled || build.step7_increment === "7.2-field-operations") {
-  pass("7.2 increment tracked");
+if (
+  build.county_operations_enabled ||
+  build.step7_increment === "7.3-county-operations"
+) {
+  pass("7.3 increment tracked");
 } else {
-  fail("7.2 increment not tracked in build_state");
+  fail("7.3 increment not tracked in build_state");
 }
 
 if (failed) {
   console.error(`Step 7 validation failed (${failed})`);
   process.exit(1);
 }
-console.log("Step 7.1/7.2 structural validation passed.");
+console.log("Step 7.1/7.2/7.3 structural validation passed.");
