@@ -173,6 +173,14 @@ export function ExecutiveCommandView({
             </Link>
           </p>
         ) : null}
+        {command.complianceFeed ? (
+          <p>
+            <strong>Compliance:</strong> {command.complianceFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/compliance">
+              Open Compliance Ops
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">

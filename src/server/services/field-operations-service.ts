@@ -1,10 +1,12 @@
 import "server-only";
 
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
+import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import {
   buildFieldOperationsHome,
   type FieldOperationsHome,
 } from "@/lib/missions/field-operations";
+import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
@@ -39,6 +41,8 @@ export async function getFieldOperations(
       volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
       comms: context.comms.get(mission.missionId) ?? null,
       logistics: context.logistics.get(mission.missionId) ?? null,
+      finance: context.finance.get(mission.missionId) ?? null,
+      compliance: context.compliance.get(mission.missionId) ?? null,
     };
   });
 
@@ -46,6 +50,37 @@ export async function getFieldOperations(
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+  });
+
+  const opsByMission = new Map(
+    logistics.missionRows.map((m) => [m.missionId, m.missionReadiness]),
+  );
+
+  const finance = buildFinanceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      finance: row.finance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
+  });
+
+  const resourceByMission = new Map(
+    finance.missionRows.map((m) => [m.missionId, m.dual.resourceState]),
+  );
+
+  const compliance = buildComplianceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      compliance: row.compliance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+      resourceState: resourceByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
   });
 
   const communications = buildCommunicationsOperationsHome({
@@ -58,6 +93,8 @@ export async function getFieldOperations(
       mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
       pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
     },
+    financeConsume: finance.communicationsFeed,
+    complianceConsume: compliance.communicationsFeed,
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -66,6 +103,7 @@ export async function getFieldOperations(
     missions: missionInputs,
     communicationsConsume: communications.volunteerFeed,
     logisticsConsume: logistics.volunteerFeed,
+    financeConsume: finance.volunteerFeed,
   });
 
   const field = buildFieldOperationsHome({
@@ -75,6 +113,7 @@ export async function getFieldOperations(
     volunteerFieldFeed: volunteers.fieldFeed.missions,
     communicationsFieldFeed: communications.fieldFeed.missions,
     logisticsFieldFeed: logistics.fieldFeed.missions,
+    complianceFieldFeed: compliance.fieldFeed.missions,
   });
 
   return {

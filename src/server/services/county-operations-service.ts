@@ -1,6 +1,7 @@
 import "server-only";
 
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
+import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import {
   buildCountyOperationsHome,
   type CountyOperationsHome,
@@ -42,6 +43,7 @@ export async function getCountyOperations(
       comms: context.comms.get(mission.missionId) ?? null,
       logistics: context.logistics.get(mission.missionId) ?? null,
       finance: context.finance.get(mission.missionId) ?? null,
+      compliance: context.compliance.get(mission.missionId) ?? null,
     };
   });
 
@@ -66,6 +68,22 @@ export async function getCountyOperations(
     })),
   });
 
+  const resourceByMission = new Map(
+    finance.missionRows.map((m) => [m.missionId, m.dual.resourceState]),
+  );
+
+  const compliance = buildComplianceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      compliance: row.compliance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+      resourceState: resourceByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
+  });
+
   const communications = buildCommunicationsOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
@@ -77,6 +95,7 @@ export async function getCountyOperations(
       pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
     },
     financeConsume: finance.communicationsFeed,
+    complianceConsume: compliance.communicationsFeed,
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -95,6 +114,7 @@ export async function getCountyOperations(
     volunteerFieldFeed: volunteers.fieldFeed.missions,
     communicationsFieldFeed: communications.fieldFeed.missions,
     logisticsFieldFeed: logistics.fieldFeed.missions,
+    complianceFieldFeed: compliance.fieldFeed.missions,
   });
 
   const counties = buildCountyOperationsHome({
@@ -111,6 +131,7 @@ export async function getCountyOperations(
     communicationsFeed: communications.countyFeed,
     logisticsFeed: logistics.countyFeed,
     financeFeed: finance.countyFeed,
+    complianceFeed: compliance.countyFeed,
   });
 
   return {

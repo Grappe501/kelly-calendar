@@ -1,6 +1,7 @@
 import "server-only";
 
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
+import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
 import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
@@ -19,7 +20,7 @@ export type ExecutiveCommandPayload = {
 
 /**
  * Authenticated Executive Command — consumes Field, County, Volunteer,
- * Communications, Logistics, and Finance feeds (no duplicate engines).
+ * Communications, Logistics, Finance, and Compliance feeds (no duplicate engines).
  */
 export async function getExecutiveCommand(
   actor: AuthenticatedActor,
@@ -44,6 +45,7 @@ export async function getExecutiveCommand(
       comms: context.comms.get(mission.missionId) ?? null,
       logistics: context.logistics.get(mission.missionId) ?? null,
       finance: context.finance.get(mission.missionId) ?? null,
+      compliance: context.compliance.get(mission.missionId) ?? null,
     };
   });
 
@@ -57,6 +59,33 @@ export async function getExecutiveCommand(
     logistics.missionRows.map((m) => [m.missionId, m.missionReadiness]),
   );
 
+  const financeBase = buildFinanceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      finance: row.finance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
+  });
+
+  const resourceByMission = new Map(
+    financeBase.missionRows.map((m) => [m.missionId, m.dual.resourceState]),
+  );
+
+  const compliance = buildComplianceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      compliance: row.compliance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+      resourceState: resourceByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
+  });
+
   const finance = buildFinanceOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
@@ -66,6 +95,7 @@ export async function getExecutiveCommand(
       finance: row.finance,
       operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
     })),
+    complianceConsume: compliance.financeFeed,
   });
 
   const communications = buildCommunicationsOperationsHome({
@@ -79,6 +109,7 @@ export async function getExecutiveCommand(
       pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
     },
     financeConsume: finance.communicationsFeed,
+    complianceConsume: compliance.communicationsFeed,
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -97,6 +128,7 @@ export async function getExecutiveCommand(
     volunteerFieldFeed: volunteers.fieldFeed.missions,
     communicationsFieldFeed: communications.fieldFeed.missions,
     logisticsFieldFeed: logistics.fieldFeed.missions,
+    complianceFieldFeed: compliance.fieldFeed.missions,
   });
 
   const counties = buildCountyOperationsHome({
@@ -113,6 +145,7 @@ export async function getExecutiveCommand(
     communicationsFeed: communications.countyFeed,
     logisticsFeed: logistics.countyFeed,
     financeFeed: finance.countyFeed,
+    complianceFeed: compliance.countyFeed,
   });
 
   const command = buildExecutiveCommand({
@@ -125,6 +158,7 @@ export async function getExecutiveCommand(
     communicationsFeed: communications.executiveFeed,
     logisticsFeed: logistics.executiveFeed,
     financeFeed: finance.executiveFeed,
+    complianceFeed: compliance.executiveFeed,
   });
 
   return {

@@ -3,6 +3,7 @@ import "server-only";
 import { calculateEventReadiness } from "@/features/operational-intelligence/services/readiness-service";
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 import type { CommunicationsPlanSnapshot } from "@/lib/missions/communications-operations";
+import type { CompliancePlanSnapshot } from "@/lib/missions/compliance-operations";
 import type { FinancePlanSnapshot } from "@/lib/missions/finance-operations";
 import type { LogisticsPlanSnapshot } from "@/lib/missions/logistics-operations";
 import type { MissionTimelineInput } from "@/lib/missions/mission-timeline";
@@ -37,6 +38,7 @@ export type MissionGeoSnapshot = {
 export type MissionCommsSnapshot = CommunicationsPlanSnapshot;
 export type MissionLogisticsSnapshot = LogisticsPlanSnapshot;
 export type MissionFinanceSnapshot = FinancePlanSnapshot;
+export type MissionComplianceSnapshot = CompliancePlanSnapshot;
 
 export type MissionContextBundle = {
   readiness: Map<string, EventReadinessResult>;
@@ -46,6 +48,7 @@ export type MissionContextBundle = {
   comms: Map<string, MissionCommsSnapshot>;
   logistics: Map<string, MissionLogisticsSnapshot>;
   finance: Map<string, MissionFinanceSnapshot>;
+  compliance: Map<string, MissionComplianceSnapshot>;
 };
 
 /**
@@ -62,9 +65,19 @@ export async function loadMissionContextForIds(
   const comms = new Map<string, MissionCommsSnapshot>();
   const logistics = new Map<string, MissionLogisticsSnapshot>();
   const finance = new Map<string, MissionFinanceSnapshot>();
+  const compliance = new Map<string, MissionComplianceSnapshot>();
   const ids = [...new Set(eventIds)].slice(0, 12);
   if (ids.length === 0) {
-    return { readiness, travel, day, geo, comms, logistics, finance };
+    return {
+      readiness,
+      travel,
+      day,
+      geo,
+      comms,
+      logistics,
+      finance,
+      compliance,
+    };
   }
   const nowMs = Date.now();
 
@@ -79,6 +92,8 @@ export async function loadMissionContextForIds(
       travelPlans: true,
       county: true,
       primaryCalendar: true,
+      template: true,
+      actionItems: true,
     },
   });
 
@@ -143,6 +158,34 @@ export async function loadMissionContextForIds(
       overnightStay: plan?.overnightStay ?? false,
       estimatedDistanceMiles: plan?.estimatedDistanceMiles ?? null,
       packingCount: packing.length,
+    });
+
+    const complianceActions = event.actionItems.filter(
+      (a) => a.phase === "COMPLIANCE",
+    );
+    const isActionOpen = (a: (typeof complianceActions)[number]) =>
+      a.status !== "COMPLETE" && a.status !== "CANCELLED" && !a.completedAt;
+    compliance.set(event.id, {
+      isComplianceCalendar: event.primaryCalendar?.calendarType === "COMPLIANCE",
+      isFundraisingCalendar:
+        event.primaryCalendar?.calendarType === "FUNDRAISING",
+      complianceLeadAssigned: event.staffAssignments.some(
+        (s) => s.roleType === "COMPLIANCE_LEAD" && Boolean(s.assignedUserId),
+      ),
+      requiresComplianceReview: Boolean(event.template?.requiresComplianceReview),
+      complianceActionCount: complianceActions.length,
+      complianceActionOpenCount: complianceActions.filter(isActionOpen).length,
+      complianceActionOverdueCount: complianceActions.filter(
+        (a) =>
+          isActionOpen(a) && a.dueAt != null && a.dueAt.getTime() < nowMs,
+      ).length,
+      hasPressOrSpeechComms: event.communicationsItems.some(
+        (c) =>
+          c.channel === "PRESS" ||
+          c.communicationType === "PRESS_ADVISORY" ||
+          c.communicationType === "PRESS_RELEASE" ||
+          c.communicationType === "SPEECH",
+      ),
     });
 
     day.set(event.id, {
@@ -240,7 +283,16 @@ export async function loadMissionContextForIds(
     );
   }
 
-  return { readiness, travel, day, geo, comms, logistics, finance };
+  return {
+    readiness,
+    travel,
+    day,
+    geo,
+    comms,
+    logistics,
+    finance,
+    compliance,
+  };
 }
 
 /** @deprecated use loadMissionContextForIds */

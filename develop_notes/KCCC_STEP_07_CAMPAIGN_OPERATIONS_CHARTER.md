@@ -10,7 +10,8 @@
 3. Unknown is a first-class operational state (not zero).  
 4. Every operational artifact has one owner and many consumers.  
 5. **Operational readiness equals the minimum readiness of all required operational domains** (not an average).  
-6. **Every operational commitment has both an operational state and a resource state.**
+6. **Every operational commitment has both an operational state and a resource state.**  
+7. **Compliance is a readiness domain, not an after-the-fact audit.**
 
 ## Doctrine questions
 
@@ -23,6 +24,7 @@
 | Volunteer Operations | Do we have enough people? |
 | Logistics Operations | Can we actually execute today’s plan? |
 | Finance & Resources Operations | Do we have the resources to sustain the campaign? |
+| Compliance Operations | Can we do this legally, ethically, and according to campaign policy? |
 | Calendar | What must happen and when? |
 
 ## Active increments
@@ -35,4 +37,5 @@
 | 7.4 Volunteer Operations | `/volunteers` | ACCEPTED |
 | 7.5 Communications Operations | `/communications` | ACCEPTED |
 | 7.6 Logistics Operations | `/logistics` | ACCEPTED |
-| 7.7 Finance & Resources Operations | `/finance` | IN PROGRESS |
+| 7.7 Finance & Resources Operations | `/finance` | ACCEPTED |
+| 7.8 Compliance Operations | `/compliance` | IN PROGRESS |

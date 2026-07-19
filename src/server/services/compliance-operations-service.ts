@@ -1,25 +1,25 @@
 import "server-only";
 
 import {
-  buildCommunicationsOperationsHome,
-  type CommunicationsOperationsHome,
-} from "@/lib/missions/communications-operations";
-import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
+  buildComplianceOperationsHome,
+  type ComplianceOperationsHome,
+} from "@/lib/missions/compliance-operations";
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 
-export type CommunicationsOperationsPayload = {
-  communications: CommunicationsOperationsHome;
+export type ComplianceOperationsPayload = {
+  compliance: ComplianceOperationsHome;
   viewerDisplayName: string;
   candidateDataReady: false;
 };
 
-export async function getCommunicationsOperations(
+/** Authenticated Compliance Operations — can we execute lawfully / on-policy? */
+export async function getComplianceOperations(
   actor: AuthenticatedActor,
-): Promise<CommunicationsOperationsPayload> {
+): Promise<ComplianceOperationsPayload> {
   const briefPayload = await getCampaignBrief(actor);
   const ids = briefPayload.allMissionsToday.map((m) => m.missionId);
   const context = await loadMissionContextForIds(ids);
@@ -33,7 +33,6 @@ export async function getCommunicationsOperations(
           ?.countyName ??
         geo?.countyName ??
         null,
-      comms: context.comms.get(mission.missionId) ?? null,
       logistics: context.logistics.get(mission.missionId) ?? null,
       finance: context.finance.get(mission.missionId) ?? null,
       compliance: context.compliance.get(mission.missionId) ?? null,
@@ -77,22 +76,8 @@ export async function getCommunicationsOperations(
     })),
   });
 
-  const communications = buildCommunicationsOperationsHome({
-    date: briefPayload.brief.date,
-    timezone: briefPayload.brief.timezone,
-    missions: missionInputs,
-    logisticsConsume: {
-      literatureAvailable: String(logistics.communicationsFeed.literatureAvailable),
-      signageStatus: String(logistics.communicationsFeed.signageStatus),
-      mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
-      pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
-    },
-    financeConsume: finance.communicationsFeed,
-    complianceConsume: compliance.communicationsFeed,
-  });
-
   return {
-    communications,
+    compliance,
     viewerDisplayName: briefPayload.viewerDisplayName,
     candidateDataReady: false,
   };

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import {
   buildFinanceOperationsHome,
   type FinanceOperationsHome,
@@ -34,6 +35,7 @@ export async function getFinanceOperations(
         null,
       logistics: context.logistics.get(mission.missionId) ?? null,
       finance: context.finance.get(mission.missionId) ?? null,
+      compliance: context.compliance.get(mission.missionId) ?? null,
     };
   });
 
@@ -47,6 +49,33 @@ export async function getFinanceOperations(
     logistics.missionRows.map((m) => [m.missionId, m.missionReadiness]),
   );
 
+  const financeBase = buildFinanceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      finance: row.finance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
+  });
+
+  const resourceByMission = new Map(
+    financeBase.missionRows.map((m) => [m.missionId, m.dual.resourceState]),
+  );
+
+  const compliance = buildComplianceOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs.map((row) => ({
+      mission: row.mission,
+      countyName: row.countyName,
+      compliance: row.compliance,
+      operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
+      resourceState: resourceByMission.get(row.mission.missionId) ?? "UNKNOWN",
+    })),
+  });
+
   const finance = buildFinanceOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
@@ -56,6 +85,7 @@ export async function getFinanceOperations(
       finance: row.finance,
       operationalState: opsByMission.get(row.mission.missionId) ?? "UNKNOWN",
     })),
+    complianceConsume: compliance.financeFeed,
   });
 
   return {

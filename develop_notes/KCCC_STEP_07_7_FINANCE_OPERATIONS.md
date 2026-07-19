@@ -1,7 +1,7 @@
 # KCCC Step 7.7 — Finance & Resources Operations
 
 **Script ID:** `KCCC-STEP-07.7-FINANCE-OPERATIONS`  
-**Status:** IN PROGRESS  
+**Status:** ACCEPTED  
 **Parent:** Step 7 Campaign Operations  
 
 ## Doctrine

@@ -28,7 +28,8 @@ export function resolveActiveNavId(pathname: string): NavItem["id"] {
     pathname.startsWith("/volunteers") ||
     pathname.startsWith("/communications") ||
     pathname.startsWith("/logistics") ||
-    pathname.startsWith("/finance")
+    pathname.startsWith("/finance") ||
+    pathname.startsWith("/compliance")
   ) {
     return "more";
   }

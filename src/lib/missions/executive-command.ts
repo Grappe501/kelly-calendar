@@ -5,6 +5,7 @@
 
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
 import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
+import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
@@ -109,6 +110,8 @@ export type ExecutiveCommand = {
   logisticsFeed: LogisticsOperationsHome["executiveFeed"] | null;
   /** Consumed from Finance & Resources Operations (7.7) — sustain-ability. */
   financeFeed: FinanceOperationsHome["executiveFeed"] | null;
+  /** Consumed from Compliance Operations (7.8) — lawful / on-policy readiness. */
+  complianceFeed: ComplianceOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -131,6 +134,7 @@ export function buildDeterministicExecutiveBriefing(
   communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null,
   logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null,
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null,
+  complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -139,6 +143,7 @@ export function buildDeterministicExecutiveBriefing(
       communicationsFeed?.briefingLine,
       logisticsFeed?.briefingLine,
       financeFeed?.briefingLine,
+      complianceFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -160,6 +165,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (financeFeed?.briefingLine) {
     parts.push(financeFeed.briefingLine);
+  }
+  if (complianceFeed?.briefingLine) {
+    parts.push(complianceFeed.briefingLine);
   }
   if (countyFeed?.briefingLine) {
     parts.push(countyFeed.briefingLine);
@@ -223,6 +231,7 @@ export function buildExecutiveCommand(input: {
   communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null;
   logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null;
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null;
+  complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -232,6 +241,7 @@ export function buildExecutiveCommand(input: {
   const communicationsFeed = input.communicationsFeed ?? null;
   const logisticsFeed = input.logisticsFeed ?? null;
   const financeFeed = input.financeFeed ?? null;
+  const complianceFeed = input.complianceFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -312,6 +322,21 @@ export function buildExecutiveCommand(input: {
       urgency: "NOW",
     });
   }
+  if (
+    complianceFeed &&
+    (complianceFeed.overdueItems > 0 ||
+      complianceFeed.highRiskCommitments > 0 ||
+      complianceFeed.complianceRisk === "CRITICAL" ||
+      complianceFeed.complianceRisk === "HIGH")
+  ) {
+    const top = complianceFeed.topItems[0];
+    topPriorities.push({
+      label: "Compliance risk",
+      detail: top ? top.detail : complianceFeed.briefingLine,
+      href: "/compliance",
+      urgency: "NOW",
+    });
+  }
   if (brief.topBlocker) {
     topPriorities.push({
       label: "Resolve top blocker",
@@ -363,6 +388,9 @@ export function buildExecutiveCommand(input: {
   }
   if ((financeFeed?.financialBlockers ?? 0) > 0) {
     decisions.push("Clear resource blockers (finance lead / dual-state gaps)");
+  }
+  if ((complianceFeed?.highRiskCommitments ?? 0) > 0) {
+    decisions.push("Clear compliance blockers before execution");
   }
   if (decisions.length === 0 && brief.nextMission) {
     decisions.push("Confirm next mission is ready to execute");
@@ -462,12 +490,25 @@ export function buildExecutiveCommand(input: {
     href: null,
     status: "unknown",
   });
+  if (complianceFeed && complianceFeed.overdueItems > 0) {
+    inbox.push({
+      id: "inbox-compliance-overdue",
+      category: "DEADLINE",
+      title: "Compliance overdue",
+      detail: complianceFeed.briefingLine,
+      href: "/compliance",
+      status: "actionable",
+    });
+  }
   inbox.push({
     id: "inbox-filing",
     category: "DEADLINE",
     title: "Filing deadlines",
-    detail: "Filing/compliance deadline feed not available in this increment.",
-    href: null,
+    detail:
+      complianceFeed?.upcomingFilingDeadlinesStatus === "unknown"
+        ? "Upcoming filing deadlines Unknown — filing ledger not implemented."
+        : "Filing/compliance deadline feed not available in this increment.",
+    href: "/compliance",
     status: "unknown",
   });
 
@@ -599,6 +640,17 @@ export function buildExecutiveCommand(input: {
   if (financeFeed?.cashPositionStatus === "unknown") {
     alerts.push("Cash position Unknown");
   }
+  if (complianceFeed && complianceFeed.overdueItems > 0) {
+    alerts.push(`${complianceFeed.overdueItems} overdue compliance item(s)`);
+  }
+  if (complianceFeed && complianceFeed.highRiskCommitments > 0) {
+    alerts.push(
+      `${complianceFeed.highRiskCommitments} compliance high-risk commitment(s)`,
+    );
+  }
+  if (complianceFeed?.upcomingFilingDeadlinesStatus === "unknown") {
+    alerts.push("Filing deadlines Unknown");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -649,6 +701,7 @@ export function buildExecutiveCommand(input: {
         communicationsFeed,
         logisticsFeed,
         financeFeed,
+        complianceFeed,
       ),
       source: "deterministic_v1",
     },
@@ -658,6 +711,7 @@ export function buildExecutiveCommand(input: {
     communicationsFeed,
     logisticsFeed,
     financeFeed,
+    complianceFeed,
   };
 }
 
@@ -689,5 +743,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     communicationsFeed: command.communicationsFeed,
     logisticsFeed: command.logisticsFeed,
     financeFeed: command.financeFeed,
+    complianceFeed: command.complianceFeed,
   };
 }

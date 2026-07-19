@@ -10,6 +10,7 @@
  * (consumed from Logistics) and a resource state (owned here).
  */
 
+import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { DomainReadiness } from "@/lib/missions/logistics-operations";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
@@ -109,6 +110,8 @@ export type FinanceOperationsHome = {
       resourceState: DomainReadiness;
     }>;
   };
+  /** Consumed from Compliance — policy/authorization/reporting readiness. */
+  complianceConsume: ComplianceOperationsHome["financeFeed"] | null;
 };
 
 export type FinanceMissionInput = {
@@ -302,6 +305,7 @@ export function buildFinanceOperationsHome(input: {
   timezone: string;
   missions: FinanceMissionInput[];
   now?: Date;
+  complianceConsume?: FinanceOperationsHome["complianceConsume"];
 }): FinanceOperationsHome {
   const now = input.now ?? new Date();
   const missionRows = input.missions
@@ -489,6 +493,7 @@ export function buildFinanceOperationsHome(input: {
         resourceState: m.dual.resourceState,
       })),
     },
+    complianceConsume: input.complianceConsume ?? null,
   };
 }
 
