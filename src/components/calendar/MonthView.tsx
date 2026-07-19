@@ -7,9 +7,10 @@ const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
 type Props = {
   data: CalendarMonthViewData;
+  focusEventId?: string | null;
 };
 
-export function MonthView({ data }: Props) {
+export function MonthView({ data, focusEventId = null }: Props) {
   return (
     <div className="page-stack calendar-month-view">
       <header className="page-header">
@@ -62,7 +63,17 @@ export function MonthView({ data }: Props) {
         ) : (
           <ul className="month-highlights">
             {data.highlights.map((h) => (
-              <li key={h.missionId}>
+              <li
+                key={h.missionId}
+                className={
+                  focusEventId && h.missionId === focusEventId
+                    ? "calendar-event-focused"
+                    : undefined
+                }
+                data-event-focused={
+                  focusEventId && h.missionId === focusEventId ? "true" : undefined
+                }
+              >
                 <strong>{h.kind}</strong> — {h.title}
                 <span className="muted"> · {h.whenLabel}</span>
               </li>

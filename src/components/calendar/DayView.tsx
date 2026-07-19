@@ -4,7 +4,7 @@ import type { CalendarDayViewData } from "@/server/services/calendar-day-view-se
 import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
 
-function formatDayLabel(dateKey: string, timeZone: string): string {
+function formatDayLabel(dateKey: string): string {
   const [y, m, d] = dateKey.split("-").map(Number);
   const utc = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
   return new Intl.DateTimeFormat("en-US", {
@@ -26,10 +26,11 @@ function formatClock(iso: string, timeZone: string): string {
 
 type Props = {
   data: CalendarDayViewData;
+  focusEventId?: string | null;
 };
 
-export function DayView({ data }: Props) {
-  const label = formatDayLabel(data.dateKey, data.timezone);
+export function DayView({ data, focusEventId = null }: Props) {
+  const label = formatDayLabel(data.dateKey);
   const { readiness } = data;
 
   return (
@@ -86,7 +87,17 @@ export function DayView({ data }: Props) {
         ) : (
           <ol className="calendar-day-schedule">
             {data.schedule.map((event) => (
-              <li key={event.eventId}>
+              <li
+                key={event.eventId}
+                className={
+                  focusEventId && event.eventId === focusEventId
+                    ? "calendar-event-focused"
+                    : undefined
+                }
+                data-event-focused={
+                  focusEventId && event.eventId === focusEventId ? "true" : undefined
+                }
+              >
                 <time dateTime={event.startsAt}>
                   {event.allDay
                     ? "All day"
@@ -112,7 +123,12 @@ export function DayView({ data }: Props) {
         ) : (
           <div className="mission-stack">
             {data.missions.map((mission) => (
-              <MissionCardView key={mission.missionId} mission={mission} compact />
+              <MissionCardView
+                key={mission.missionId}
+                mission={mission}
+                compact
+                focused={Boolean(focusEventId && mission.missionId === focusEventId)}
+              />
             ))}
           </div>
         )}

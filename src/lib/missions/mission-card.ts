@@ -1,5 +1,6 @@
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
+import { buildMissionCalendarHref } from "@/lib/calendar/mission-deep-link";
 import { emptyLeaveByHook, type LeaveByHook } from "@/lib/missions/leave-by-contract";
 import type { MissionTimeline } from "@/lib/missions/mission-timeline";
 import { leaveByFromTimeline } from "@/lib/missions/mission-timeline";
@@ -23,6 +24,9 @@ export type MissionImmediateAction = {
   explanation: string;
   priority: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
   href: string;
+  /** When false, UI must not look navigable (HL-039 honest fallback). */
+  available: boolean;
+  unavailableReason?: string;
 };
 
 export type MissionCard = {
@@ -119,56 +123,103 @@ function riskFromReadiness(
   return { level: "NONE", note: null };
 }
 
+function withAvailability(
+  action: Omit<MissionImmediateAction, "available" | "unavailableReason">,
+  event: SafeEventProjection,
+): MissionImmediateAction {
+  if (!event.canOpen) {
+    return {
+      ...action,
+      href: "",
+      available: false,
+      unavailableReason:
+        "Mission details are unavailable for this event with your current access.",
+    };
+  }
+  if (event.status === "CANCELLED" || event.status === "SUPERSEDED") {
+    return {
+      ...action,
+      href: "",
+      available: false,
+      unavailableReason:
+        event.status === "CANCELLED"
+          ? "This event is cancelled — no mission to open."
+          : "This event was superseded — no mission to open.",
+    };
+  }
+  return { ...action, available: true };
+}
+
 function immediateAction(
   event: SafeEventProjection,
   readiness: EventReadinessResult | null,
   leaveBy: LeaveByHook,
 ): MissionImmediateAction {
-  const href = `/calendar?event=${event.eventId}`;
+  // Canonical V1 deep link — Calendar must consume `event` (HL-039).
+  const href = buildMissionCalendarHref({
+    eventId: event.eventId,
+    startsAt: event.startsAt,
+    view: "day",
+  });
   const nba = readiness?.nextBestActions?.[0];
   if (nba) {
-    return {
-      label: nba.title,
-      explanation: nba.explanation,
-      priority: nba.priority,
-      href: nba.targetRoute || href,
-    };
+    return withAvailability(
+      {
+        label: nba.title,
+        explanation: nba.explanation,
+        priority: nba.priority,
+        href: nba.targetRoute || href,
+      },
+      event,
+    );
   }
   if (readiness?.readinessLevel === "AT_RISK") {
-    return {
-      label: "Resolve blockers",
-      explanation: "Clear readiness blockers before this mission starts.",
-      priority: "HIGH",
-      href,
-    };
+    return withAvailability(
+      {
+        label: "Resolve blockers",
+        explanation: "Clear readiness blockers before this mission starts.",
+        priority: "HIGH",
+        href,
+      },
+      event,
+    );
   }
   if (leaveBy.status === "computed" && leaveBy.leaveByAt) {
     const mins = Math.round(
       (new Date(leaveBy.leaveByAt).getTime() - Date.now()) / 60000,
     );
     if (mins <= 20) {
-      return {
-        label: mins <= 0 ? "Leave now" : `Leave in ${mins} min`,
-        explanation: "Mission Timeline Engine leave window.",
-        priority: mins <= 5 ? "CRITICAL" : "HIGH",
-        href,
-      };
+      return withAvailability(
+        {
+          label: mins <= 0 ? "Leave now" : `Leave in ${mins} min`,
+          explanation: "Mission Timeline Engine leave window.",
+          priority: mins <= 5 ? "CRITICAL" : "HIGH",
+          href,
+        },
+        event,
+      );
     }
   }
   if (event.status === "DRAFT" || event.status === "REQUESTED") {
-    return {
-      label: "Advance planning",
-      explanation: "Move this mission toward confirmation.",
-      priority: "MEDIUM",
-      href,
-    };
+    return withAvailability(
+      {
+        label: "Advance planning",
+        explanation: "Move this mission toward confirmation.",
+        priority: "MEDIUM",
+        href,
+      },
+      event,
+    );
   }
-  return {
-    label: "Open mission",
-    explanation: "Review details and stay ready for the next move.",
-    priority: "LOW",
-    href,
-  };
+  return withAvailability(
+    {
+      label: "Open mission",
+      explanation: "Review details and stay ready for the next move.",
+      priority: "LOW",
+      href,
+    },
+    event,
+  );
 }
 
 /**

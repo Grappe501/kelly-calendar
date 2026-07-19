@@ -5,6 +5,8 @@ import { MissionDayActions } from "@/components/today/MissionDayActions";
 type Props = {
   mission: MissionCard;
   compact?: boolean;
+  /** Set when `/calendar?event=` focuses this mission (HL-039). */
+  focused?: boolean;
 };
 
 function riskClass(level: MissionCard["riskLevel"]): string {
@@ -29,15 +31,18 @@ function formatClock(iso: string | null | undefined, timeZone = "America/Chicago
   }).format(new Date(iso));
 }
 
-export function MissionCardView({ mission, compact = false }: Props) {
+export function MissionCardView({ mission, compact = false, focused = false }: Props) {
   const status = mission.missionStatusPresentation;
   const timeline = mission.timeline;
+  const action = mission.immediateAction;
 
   return (
     <article
-      className={`mission-card${mission.isNext ? " mission-card-next" : ""}${compact ? " mission-card-compact" : ""}`}
+      className={`mission-card${mission.isNext ? " mission-card-next" : ""}${compact ? " mission-card-compact" : ""}${focused ? " mission-card-focused" : ""}`}
       aria-label={`Mission: ${mission.title}`}
       data-mission-status={mission.missionStatus}
+      data-mission-focused={focused ? "true" : undefined}
+      id={focused ? `mission-${mission.missionId}` : undefined}
     >
       <header className="mission-card-header">
         <p className="mission-when">{mission.whenLabel}</p>
@@ -146,15 +151,32 @@ export function MissionCardView({ mission, compact = false }: Props) {
         canMutate={mission.canMutateDayActions}
       />
 
-      <Link
-        className="button mission-action"
-        href={mission.immediateAction.href}
-        aria-label={mission.immediateAction.label}
-      >
-        {mission.immediateAction.label}
-      </Link>
-      {!compact ? (
-        <p className="muted mission-action-explain">{mission.immediateAction.explanation}</p>
+      {action.available ? (
+        <Link
+          className="button mission-action"
+          href={action.href}
+          aria-label={action.label}
+        >
+          {action.label}
+        </Link>
+      ) : (
+        <button
+          type="button"
+          className="button mission-action mission-action-unavailable"
+          disabled
+          aria-disabled="true"
+          aria-label={`${action.label} unavailable`}
+          title={action.unavailableReason}
+        >
+          {action.label}
+        </button>
+      )}
+      {!compact || !action.available ? (
+        <p className="muted mission-action-explain">
+          {action.available
+            ? action.explanation
+            : action.unavailableReason ?? action.explanation}
+        </p>
       ) : null}
     </article>
   );

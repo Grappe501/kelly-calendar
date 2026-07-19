@@ -13,9 +13,10 @@ function formatClock(iso: string, timeZone: string): string {
 
 type Props = {
   data: CalendarWeekViewData;
+  focusEventId?: string | null;
 };
 
-export function WeekView({ data }: Props) {
+export function WeekView({ data, focusEventId = null }: Props) {
   const readiness = data.scheduleReadiness;
   const readyPct =
     readiness.missionCount === 0
@@ -114,7 +115,19 @@ export function WeekView({ data }: Props) {
               ) : (
                 <ul className="week-day-events">
                   {day.events.map((event) => (
-                    <li key={event.eventId}>
+                    <li
+                      key={event.eventId}
+                      className={
+                        focusEventId && event.eventId === focusEventId
+                          ? "calendar-event-focused"
+                          : undefined
+                      }
+                      data-event-focused={
+                        focusEventId && event.eventId === focusEventId
+                          ? "true"
+                          : undefined
+                      }
+                    >
                       <span className="week-event-time">
                         {event.allDay ? "All day" : formatClock(event.startsAt, data.timezone)}
                       </span>

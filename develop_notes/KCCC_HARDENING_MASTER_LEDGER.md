@@ -74,7 +74,7 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 | HL-036 | SEC | EA-8 SEC-006 | Actor + RBAC on /api/calendars and system diagnostic APIs | High | Hygiene | High | M | Hardening | Open |
 | HL-037 | SEC | EA-8 SEC-007 | Unify production session-secret policy (edge + Node + status) | High | Hygiene | Medium | M | Foundation | Open |
 | HL-038 | SEC | EA-8 SEC-008 | Explicit per-product env isolation (opt-in RedDirt fallback) | High | Hygiene | Medium | M | Foundation | Open |
-| HL-039 | OW | EA-9 OW-001 | Consume mission deep-link / Mission Workspace entry (`?event=` currently ignored) | **Critical** | Hygiene | **Critical** | L | **Foundation** (reinforces HL-005) | Open |
+| HL-039 | OW | EA-9 OW-001 | Consume mission deep-link / Mission Workspace entry (`?event=` currently ignored) | **Critical** | Hygiene | **Critical** | L | **Foundation** (reinforces HL-005) | **PARTIALLY REMEDIATED** (2026-07-19: Calendar consumes `?event=` + Open Mission honest fallback; week/month/domain hops still open — see `KCCC_OPEN_MISSION_HOTFIX.md`) |
 | HL-040 | OW | EA-9 OW-002 | Week mission-level progression into authorized context | High | None | High | M | Foundation | Open |
 | HL-041 | OW | EA-9 OW-003 | Month highlight/deadline → Day/Week or owning module | High | None | High | M | Foundation | Open |
 | HL-042 | OW | EA-9 OW-004 | Preserve or declare planning period on domain hops | High | None | High | M | Foundation | Open |
@@ -142,7 +142,7 @@ EA-7 Data Integrity: **COMPLETE / ACCEPTED** (HL-028…HL-030; DI-001 → HL-001
 EA-8 Security: **COMPLETE / ACCEPTED** (HL-031…HL-038; SEC-002 → HL-031 Wave 1).  
 EA-9 Operator Workflow: **COMPLETE** (HL-039…HL-045; OW-005 → HL-030 confirmed).  
 
-Operator note (2026-07-19): live week Events ingested without new UI — **HL-039 drill-down** and **XR-8 AI** remain deferred (Feature Freeze). See `KCCC_OPERATOR_WEEK_INGEST_2026-07-19.md`.
+Operator note (2026-07-19): live week Events ingested without new UI — **XR-8 AI** remains deferred (Feature Freeze). **HL-039** Open Mission → Calendar `?event=` is **PARTIALLY REMEDIATED** (`KCCC_OPEN_MISSION_HOTFIX.md`); HL-040…HL-042 still open. See `KCCC_OPERATOR_WEEK_INGEST_2026-07-19.md`.
 
 ## Hardening gate
 

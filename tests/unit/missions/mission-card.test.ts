@@ -61,8 +61,32 @@ describe("Mission Cards (Step 6.2/6.3)", () => {
     expect(card.timeline?.driveMinutes).toBe(17);
     expect(card.todayReadiness.state).toBe("UNKNOWN");
     expect(card.immediateAction.label.length).toBeGreaterThan(0);
+    expect(card.immediateAction.available).toBe(true);
+    expect(card.immediateAction.href).toContain("/calendar?");
+    expect(card.immediateAction.href).toContain("event=evt_1");
+    expect(card.immediateAction.href).toContain("view=day");
+    expect(card.immediateAction.href).toMatch(/date=\d{4}-\d{2}-\d{2}/);
     expect(card.availableDayActions).toEqual([]);
     expect(card.canMutateDayActions).toBe(false);
+  });
+
+  it("disables Open mission when viewer cannot open the event", () => {
+    const card = toMissionCard({
+      event: baseEvent({ canOpen: false, visibilityLevel: "BUSY_ONLY", title: "Unavailable" }),
+      timezone: "America/Chicago",
+    });
+    expect(card.immediateAction.available).toBe(false);
+    expect(card.immediateAction.href).toBe("");
+    expect(card.immediateAction.unavailableReason).toMatch(/unavailable/i);
+  });
+
+  it("disables Open mission for cancelled events", () => {
+    const card = toMissionCard({
+      event: baseEvent({ status: "CANCELLED" }),
+      timezone: "America/Chicago",
+    });
+    expect(card.immediateAction.available).toBe(false);
+    expect(card.immediateAction.unavailableReason).toMatch(/cancelled/i);
   });
 
   it("exposes one-tap day actions when mutation is authorized", () => {

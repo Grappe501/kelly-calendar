@@ -107,7 +107,8 @@ export function buildMissionTodayReadiness(input: {
   readiness: EventReadinessResult | null | undefined;
 }): MissionTodayReadiness {
   const { missionId, missionTitle, readiness } = input;
-  const href = `/calendar?event=${missionId}`;
+  // Calendar consumes `event` (HL-039). Date resolved server-side when omitted.
+  const href = `/calendar?view=day&event=${encodeURIComponent(missionId)}`;
 
   if (!readiness) {
     const categories = READINESS_CATEGORIES.map((category) => ({
