@@ -1,24 +1,26 @@
 # KCCC New Thread Handoff
 
 ```text
-ARCHITECTURE 1.0 — PERMANENTLY CLOSED
+ARCHITECTURE 1.0 — PERMANENTLY CLOSED (6690ce2)
 
-Status ....................... HISTORICAL BASELINE
-Governance ................... LOCKED
+PHASE 3 — Architecture Review
+Build Design: KCCC_PHASE_03_BUILD_DESIGN.md
+Exit Review:  KCCC_PHASE_03_EXIT_REVIEW.md
 
-Canonical Baseline ........... 6690ce2
-Archive Seal ................. 4252827
-Terminal Record .............. a64eef3
-Engineering Line ............. cdb5a5f+ (does not amend Architecture 1.0)
+Governance program (no code):
+3.1 Trust Model ............... NOT STARTED
+3.2 Identity & Authority ...... NOT STARTED
+3.3 Automation Governance ..... NOT STARTED
+3.4 Campaign Boundary ......... NOT STARTED
+3.5 Audit & Recovery .......... NOT STARTED
+3.6 Risk Assessment ........... NOT STARTED
+3.7 Readiness ................. NOT STARTED
+3.8 Executive Recommendation .. NOT STARTED
+3.9 Authorization Decision .... NOT STARTED
+3.10 Transition Plan .......... BLOCKED until AUTHORIZED
 
-Do NOT amend Architecture 1.0 docs for baseline changes.
-Reference them. Evolve via RFC → Architecture 2.0+.
+AUTHORIZED = planning only
+Implementation = separate authorization
 
-Next architectural deliverable (only):
-KCCC_PHASE_03_EXIT_REVIEW.md
-  → design-governance answers
-  → Phase 3 AUTHORIZED = planning only
-  → Implementation Authorization = separate decision
-
-Phase 3 Implementation ....... NOT AUTHORIZED
+Next work: fill 3.1 Trust Model (design-governance)
 ```

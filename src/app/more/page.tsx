@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Arch 1.0 permanently closed · next: Phase 3 Exit Review</strong>
+            <strong>Phase 3 Build Design · next gate: Trust Model</strong>
           </li>
         </ul>
       </section>

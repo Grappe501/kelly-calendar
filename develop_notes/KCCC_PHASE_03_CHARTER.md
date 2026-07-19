@@ -2,9 +2,10 @@
 
 **Script ID:** `KCCC-PHASE-03-TRUSTED-CONNECTED-PLATFORM`  
 **Status:** Architecture Review (Active) — implementation **NOT AUTHORIZED**  
-**Exit Review:** `KCCC_PHASE_03_EXIT_REVIEW.md` — **NOT STARTED**  
-**Prerequisite:** Architecture 1.0 program CLOSED / baseline RELEASED  
-**Governing documents:** Constitution · Freeze · Governance State · Program Close  
+**Build Design:** `KCCC_PHASE_03_BUILD_DESIGN.md` — phased governance program (3.1–3.10)  
+**Exit Review:** `KCCC_PHASE_03_EXIT_REVIEW.md` — umbrella; gate answers NOT STARTED  
+**Prerequisite:** Architecture 1.0 permanently closed historical baseline (`6690ce2`)  
+**Governing baseline:** Architecture 1.0 corpus (immutable)  
 **Former working title:** Integration & Scale (superseded)
 
 ## Current platform state

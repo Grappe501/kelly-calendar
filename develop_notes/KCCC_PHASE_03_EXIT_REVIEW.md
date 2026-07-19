@@ -1,10 +1,10 @@
 # KCCC Phase 3 Exit Review
 
 **Script ID:** `KCCC-PHASE-03-EXIT-REVIEW`  
-**Status:** NOT STARTED  
-**Nature:** Design-governance only — answers authorization questions; does **not** implement  
-**Normative corpus:** Constitution · Freeze · Governance State · Architecture Register (v1.0)  
-**Register archival marker:** `6690ce2`
+**Status:** IN PROGRESS — program structure OPEN; gate answers NOT STARTED  
+**Nature:** Design-governance umbrella · No implementation  
+**Program design:** `KCCC_PHASE_03_BUILD_DESIGN.md`  
+**Architecture baseline:** Architecture 1.0 (`6690ce2`) — immutable  
 
 ## Authorization sequence
 
@@ -12,51 +12,56 @@
 Architecture Review
         │
         ▼
-Phase 3 Exit Review  (this document — design answers only)
+Phase 3 Exit Review (3.1–3.8 gates)
         │
         ▼
-Governance Decision
+3.9 Authorization Decision
         │
-        ├── Reject → Remain in Architecture Review (NOT AUTHORIZED)
+        ├── NOT AUTHORIZED → remain in Architecture Review
         │
-        └── Approve
+        └── AUTHORIZED → Planning only
                 │
                 ▼
-Phase 3 AUTHORIZED  (planning only)
+        3.10 Transition Plan (Planning Charter — NOT code)
                 │
                 ▼
-Implementation Authorization  (separate governance decision)
+        Implementation Authorization (separate)
+                │
+                ▼
+        Engineering
 ```
 
-Design approval does not authorize planning alone beyond the Approve gate; planning begins only at **Phase 3 AUTHORIZED**. Code begins only after a **separate Implementation Authorization** decision.
+## Program Steps (governance only)
 
-## Authorization questions
+| Step | Artifact | Status |
+|------|----------|--------|
+| 3.1 Trust Model | `KCCC_PHASE3_TRUST_MODEL.md` | NOT STARTED |
+| 3.2 Identity & Authority | `KCCC_PHASE3_IDENTITY_MODEL.md` | NOT STARTED |
+| 3.3 Automation Governance | `KCCC_PHASE3_AUTOMATION_GOVERNANCE.md` | NOT STARTED |
+| 3.4 Campaign Boundary | `KCCC_PHASE3_CAMPAIGN_BOUNDARY.md` | NOT STARTED |
+| 3.5 Audit & Recovery | `KCCC_PHASE3_AUDIT_AND_RECOVERY.md` | NOT STARTED |
+| 3.6 Risk Assessment | `KCCC_PHASE3_RISK_ASSESSMENT.md` | NOT STARTED |
+| 3.7 Readiness | `KCCC_PHASE3_READINESS.md` | NOT STARTED |
+| 3.8 Executive Recommendation | `KCCC_PHASE3_EXECUTIVE_RECOMMENDATION.md` | NOT STARTED |
+| 3.9 Authorization Decision | `KCCC_PHASE3_AUTHORIZATION_DECISION.md` | NOT STARTED |
+| 3.10 Transition Plan | `KCCC_PHASE3_TRANSITION_PLAN.md` | BLOCKED until AUTHORIZED |
 
-1. **Trust Model** — How external information is accepted, reconciled, and prevented from becoming canonical operational truth.  
-2. **Identity & Authorization Model** — Users, roles, organizations, campaigns, and permission boundaries.  
-3. **Automation Governance** — Approval requirements, execution authority, rollback, and accountability.  
-4. **Campaign Boundary Model** — Isolation between campaigns, data ownership, and multi-campaign architecture.  
-5. **Audit & Recovery Model** — Traceability, observability, reconciliation, backup, and disaster recovery.  
+## Exit Criteria Matrix
 
-Also required: AI recommendations distinguishable from canonical operational truth.
+| Area | Pass Condition | Result |
+|------|----------------|--------|
+| Trust Model | Canonical ownership intact for every integration | ☐ |
+| Identity | Roles, delegation, revocation defined | ☐ |
+| Automation | Every automation classified with human approval | ☐ |
+| Campaign Boundaries | Multi-campaign isolation and ownership complete | ☐ |
+| Audit & Recovery | Traceability and recovery documented | ☐ |
+| Governance | RFC impacts identified and resolved | ☐ |
+| Risk | High-risk items mitigated or accepted | ☐ |
 
-## Checklist
+Each result: **Pass** · **Pass with Conditions** · **Fail**
 
-```text
-PHASE 3 EXIT REVIEW
+## Hard Rules
 
-Status:
-NOT STARTED
-
-Required:
-[ ] Trust model
-[ ] Identity & authorization model
-[ ] Automation governance
-[ ] Campaign boundary model
-[ ] Audit & recovery model
-
-Outcome:
-Approve → Phase 3 AUTHORIZED (planning only)
-         → Implementation Authorization still required before code
-Reject  → remain NOT AUTHORIZED
-```
+- No implementation in Exit Review.  
+- Do not amend Architecture 1.0.  
+- AUTHORIZED means planning only.  

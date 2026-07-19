@@ -100,15 +100,39 @@ if (
 
 const exitReview = read("develop_notes/KCCC_PHASE_03_EXIT_REVIEW.md");
 if (
-  exitReview.includes("NOT STARTED") &&
-  exitReview.includes("Phase 3 AUTHORIZED") &&
+  exitReview.includes("KCCC_PHASE_03_BUILD_DESIGN") &&
+  exitReview.includes("AUTHORIZED") &&
   exitReview.includes("Implementation Authorization") &&
   exitReview.includes("Trust Model") &&
-  exitReview.includes("Identity & Authorization")
+  exitReview.includes("3.9 Authorization Decision") &&
+  exitReview.includes("No implementation")
 ) {
-  pass("Phase 3 Exit Review present (NOT STARTED, sequenced authorization)");
+  pass("Phase 3 Exit Review umbrella present (governance program)");
 } else {
   fail("Phase 3 Exit Review incomplete");
+}
+
+const buildDesign = "develop_notes/KCCC_PHASE_03_BUILD_DESIGN.md";
+const phase3Gates = [
+  "develop_notes/KCCC_PHASE3_TRUST_MODEL.md",
+  "develop_notes/KCCC_PHASE3_IDENTITY_MODEL.md",
+  "develop_notes/KCCC_PHASE3_AUTOMATION_GOVERNANCE.md",
+  "develop_notes/KCCC_PHASE3_CAMPAIGN_BOUNDARY.md",
+  "develop_notes/KCCC_PHASE3_AUDIT_AND_RECOVERY.md",
+  "develop_notes/KCCC_PHASE3_RISK_ASSESSMENT.md",
+  "develop_notes/KCCC_PHASE3_READINESS.md",
+  "develop_notes/KCCC_PHASE3_EXECUTIVE_RECOMMENDATION.md",
+  "develop_notes/KCCC_PHASE3_AUTHORIZATION_DECISION.md",
+  "develop_notes/KCCC_PHASE3_TRANSITION_PLAN.md",
+];
+if (exists(buildDesign) && read(buildDesign).includes("No implementation permitted")) {
+  pass("Phase 3 Build Design present (governance only)");
+} else {
+  fail("Phase 3 Build Design missing");
+}
+for (const rel of phase3Gates) {
+  if (exists(rel)) pass(`gate ${rel}`);
+  else fail(`missing ${rel}`);
 }
 
 const register = read("develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md");
@@ -257,7 +281,11 @@ if (
   build.implementation_status === "not_authorized" &&
   build.phase_3_implementation_authorized === false &&
   build.phase_3_planning_authorized === false &&
-  build.phase_3_exit_review_status === "not_started" &&
+  build.phase_3_exit_review_status === "program_structure_open_gates_not_started" &&
+  build.phase_3_build_design === "KCCC_PHASE_03_BUILD_DESIGN" &&
+  build.next_architectural_deliverable === "KCCC_PHASE3_TRUST_MODEL" &&
+  Array.isArray(build.phase_3_governance_program) &&
+  build.phase_3_governance_program.length === 10 &&
   build.constitution_canonical === true &&
   build.architecture_freeze_canonical === true &&
   build.governance_state_canonical === true &&
@@ -267,14 +295,16 @@ if (
   build.phase_3_status === "architecture_review" &&
   build.phase_3_implementation_locked === true &&
   build.phase_3_implementation_started === false &&
+  build.phase_3_implementation_authorized === false &&
+  build.phase_3_planning_authorized === false &&
   build.phase3_external_not_canonical_principle === true &&
   build.candidate_data_ready === false &&
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Architecture 1.0 permanently closed; next = Phase 3 Exit Review");
+  pass("Architecture 1.0 closed; Phase 3 governance program open (no impl)");
 } else {
-  fail("Architecture permanently-closed / Phase 3 gate incorrect");
+  fail("Architecture permanently-closed / Phase 3 program gate incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
@@ -283,15 +313,14 @@ if (
   constants.includes("ARCHITECTURE_REVIEW") &&
   constants.includes("PERMANENTLY_CLOSED") &&
   constants.includes("NOT_AUTHORIZED") &&
-  constants.includes("NOT_STARTED") &&
-  constants.includes("KCCC_PHASE_03_EXIT_REVIEW") &&
+  constants.includes("KCCC_PHASE_03_BUILD_DESIGN") &&
+  constants.includes("KCCC_PHASE3_TRUST_MODEL") &&
   constants.includes("6690ce2") &&
-  constants.includes("cdb5a5f") &&
   constants.includes("0.8.4-petition")
 ) {
-  pass("constants reflect Architecture 1.0 permanently closed");
+  pass("constants reflect Phase 3 Build Design / Trust Model next");
 } else {
-  fail("constants missing permanently-closed state");
+  fail("constants missing Phase 3 Build Design state");
 }
 
 if (failed) {
@@ -299,5 +328,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 PERMANENTLY CLOSED; next deliverable Phase 3 Exit Review).",
+  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Phase 3 Build Design OPEN; gates NOT STARTED; no implementation).",
 );
