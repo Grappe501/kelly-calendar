@@ -1,7 +1,9 @@
-# KCCC Architecture 1.0 — Terminal Archival Record
+# KCCC Architecture 1.0 — Final Immutable Archival State
 
-**Status:** TERMINAL · BASELINE RELEASE · Lifecycle COMPLETE · Governance LOCKED  
-**Nature:** Historical baseline — not an active work product  
+**Status:** HISTORICAL BASELINE  
+**Lifecycle:** COMPLETE  
+**Governance:** LOCKED  
+**Nature:** Permanent constitutional baseline — not an active design program  
 **Recorded:** 2026-07-19 (America/Chicago)
 
 ```text
@@ -10,23 +12,21 @@ CAMPAIGN OPERATING SYSTEM
 
 ARCHITECTURE 1.0
 
-Status ....................... BASELINE RELEASE
+Status ....................... HISTORICAL BASELINE
 Lifecycle .................... COMPLETE
 Governance ................... LOCKED
 
 Canonical Register Commit .... 6690ce2
 Archive Seal Commit .......... 4252827
-Repository Tip ............... a64eef3
-                             (and successors — tip advances)
+Terminal Record .............. a64eef3
+Repository Tip ............... 3646397 (advancing)
 
 Architecture Review .......... ACTIVE
 Phase 3 Exit Review .......... NOT STARTED
 Phase 3 Implementation ....... NOT AUTHORIZED
 ```
 
-## Immutable Constitutional Corpus
-
-Architecture 1.0 is defined exclusively by:
+## Constitutional Corpus
 
 1. `KCCC_CONSTITUTION_v1.0.md`  
 2. `KCCC_ARCHITECTURE_FREEZE_v1.0.md`  
@@ -34,19 +34,18 @@ Architecture 1.0 is defined exclusively by:
 4. `KCCC_ARCHITECTURE_REGISTER_v1.0.md`  
 5. `KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md` (this document)  
 
-## Reference Hierarchy
+## Repository Governance
 
-1. **Canonical Register Commit (`6690ce2`)** — immutable architectural baseline.  
-2. **Final Archival State document** (this file) — official statement of the completed program.  
-3. **Archive Seal Commit (`4252827`)** — confirms the archive was sealed.  
-4. **Repository Tip (`a64eef3` and successors)** — current engineering state; may evolve without changing Architecture 1.0 unless RFC → Architecture 2.0.  
+| Reference | Meaning |
+|-----------|---------|
+| **6690ce2** | Immutable Architecture 1.0 baseline |
+| **4252827** | Archive seal confirming the baseline was frozen |
+| **a64eef3** | Terminal archival record of the Architecture 1.0 program |
+| **3646397** (and successors) | Continuing engineering history — does not alter Architecture 1.0 |
 
-## Governance Status
+## Next Architectural Milestone
 
 ```text
-Architecture 1.0
-        │
-        ▼
 Architecture Review
         │
         ▼
@@ -56,7 +55,7 @@ Phase 3 Exit Review
         ▼
 Governance Decision
         │
-        ├── Remain in Review
+        ├── Continue Architecture Review
         │
         └── Phase 3 AUTHORIZED
                 │
@@ -70,10 +69,10 @@ Implementation Authorization
 Engineering
 ```
 
-No Phase 3 implementation begins until this sequence completes.
+Until Exit Review concludes affirmatively: **no Phase 3 implementation**.
 
-## Closing Assessment
+## Architecture 1.0 Legacy
 
-Architecture 1.0 is a **historical baseline**. Future development references it, preserves its constitutional principles, and evolves only through proposal and RFC.
+Single canonical ownership · Executive-question design · Explicit Unknown · Minimum-of-required readiness · Capability orchestration without duplicate ownership · Human-gated execution · Externals subordinate to canonical truth · AI advisory only · Formal governance for evolution  
 
-This concludes the Architecture 1.0 record. Future architectural work begins with the **Phase 3 Exit Review**, not with code.
+**Architecture 1.0 has transitioned from an active design program to the permanent constitutional baseline.** Future architectural work begins with the Phase 3 Exit Review.

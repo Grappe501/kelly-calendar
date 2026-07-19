@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Arch 1.0 TERMINAL · baseline 6690ce2</strong>
+            <strong>Arch 1.0 HISTORICAL BASELINE · 6690ce2</strong>
           </li>
         </ul>
       </section>

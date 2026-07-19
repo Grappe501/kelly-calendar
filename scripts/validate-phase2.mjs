@@ -60,7 +60,7 @@ if (
 
 const governance = read("develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md");
 if (
-  governance.includes("TERMINAL") &&
+  governance.includes("HISTORICAL BASELINE") &&
   governance.includes("NOT AUTHORIZED") &&
   governance.includes("NOT STARTED") &&
   governance.includes("Proposal Required") &&
@@ -68,9 +68,10 @@ if (
   governance.includes("0.8.4-petition") &&
   governance.includes("6690ce2") &&
   governance.includes("4252827") &&
-  governance.includes("a64eef3")
+  governance.includes("a64eef3") &&
+  governance.includes("3646397")
 ) {
-  pass("Governance State v1.0 present (terminal archival)");
+  pass("Governance State v1.0 present (historical baseline)");
 } else {
   fail("Governance State v1.0 incomplete");
 }
@@ -113,16 +114,15 @@ if (
 
 const register = read("develop_notes/KCCC_ARCHITECTURE_REGISTER_v1.0.md");
 if (
-  register.includes("BASELINE RELEASE") &&
+  register.includes("HISTORICAL BASELINE") &&
   register.includes("COMPLETE") &&
   register.includes("6690ce2") &&
   register.includes("4252827") &&
   register.includes("a64eef3") &&
-  register.includes("immutable") &&
-  register.includes("Implementation Authorization") &&
+  register.includes("3646397") &&
   register.includes("NOT AUTHORIZED")
 ) {
-  pass("Architecture Register v1.0 terminal; baseline 6690ce2");
+  pass("Architecture Register v1.0 historical baseline 6690ce2");
 } else {
   fail("Architecture Register incomplete");
 }
@@ -131,16 +131,16 @@ const finalArchival = read(
   "develop_notes/KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md",
 );
 if (
-  finalArchival.includes("TERMINAL") &&
+  finalArchival.includes("HISTORICAL BASELINE") &&
   finalArchival.includes("6690ce2") &&
   finalArchival.includes("4252827") &&
   finalArchival.includes("a64eef3") &&
-  finalArchival.includes("Reference Hierarchy") &&
-  finalArchival.includes("historical baseline")
+  finalArchival.includes("3646397") &&
+  finalArchival.includes("permanent constitutional baseline")
 ) {
-  pass("Terminal Archival Record recorded");
+  pass("Final immutable archival state recorded");
 } else {
-  fail("Terminal Archival Record incomplete");
+  fail("Final immutable archival state incomplete");
 }
 
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
@@ -233,15 +233,18 @@ if (
 
 if (
   build.architecture_version === "1.0" &&
+  build.architecture_status === "historical_baseline" &&
   build.architecture_lifecycle === "COMPLETE" &&
   build.architecture_program_state === "CLOSED" &&
   build.architecture_historical_baseline === true &&
+  build.architecture_active_design_program === false &&
   build.architecture_baseline_released === true &&
   build.architecture_1_0_close_tip === "2dbc1d9" &&
   build.architecture_register_commit === "6690ce2" &&
   build.architecture_baseline_immutable_at === "6690ce2" &&
   build.architecture_archive_seal_commit === "4252827" &&
   build.architecture_terminal_record_tip === "a64eef3" &&
+  build.architecture_historical_lock_tip === "3646397" &&
   build.architecture_archive_complete === true &&
   build.repository_tip_advances_independently === true &&
   build.architecture_register === "KCCC_ARCHITECTURE_REGISTER_v1.0" &&
@@ -270,26 +273,27 @@ if (
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Architecture 1.0 TERMINAL; baseline 6690ce2; Phase 3 not authorized");
+  pass("Architecture 1.0 HISTORICAL BASELINE; Phase 3 not authorized");
 } else {
-  fail("Architecture terminal / Phase 3 authorization gate incorrect");
+  fail("Architecture historical baseline / Phase 3 gate incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
 if (
   constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
   constants.includes("ARCHITECTURE_REVIEW") &&
-  constants.includes("TERMINAL") &&
+  constants.includes("HISTORICAL_BASELINE") &&
   constants.includes("NOT_AUTHORIZED") &&
   constants.includes("NOT_STARTED") &&
   constants.includes("6690ce2") &&
   constants.includes("4252827") &&
   constants.includes("a64eef3") &&
+  constants.includes("3646397") &&
   constants.includes("0.8.4-petition")
 ) {
-  pass("constants reflect Architecture 1.0 TERMINAL");
+  pass("constants reflect Architecture 1.0 HISTORICAL BASELINE");
 } else {
-  fail("constants missing Architecture 1.0 TERMINAL state");
+  fail("constants missing Architecture 1.0 HISTORICAL BASELINE");
 }
 
 if (failed) {
@@ -297,5 +301,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 TERMINAL; Register 6690ce2; Seal 4252827; Phase 3 Exit Review NOT STARTED).",
+  "Phase 2 structural validation passed (Architecture 1.0 HISTORICAL BASELINE; 6690ce2; Phase 3 Exit Review NOT STARTED).",
 );

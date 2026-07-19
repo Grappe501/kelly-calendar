@@ -3,10 +3,11 @@
   "product_code": "KCCC",
   "architecture": "Campaign Operating System",
   "architecture_version": "1.0",
-  "architecture_status": "terminal_archival_baseline_release",
+  "architecture_status": "historical_baseline",
   "architecture_lifecycle": "COMPLETE",
   "architecture_program_state": "CLOSED",
   "architecture_historical_baseline": true,
+  "architecture_active_design_program": false,
   "architecture_register": "KCCC_ARCHITECTURE_REGISTER_v1.0",
   "architecture_baseline_released": true,
   "architecture_immutable_except_rfc": true,
@@ -48,6 +49,7 @@
   "architecture_baseline_immutable_at": "6690ce2",
   "architecture_archive_seal_commit": "4252827",
   "architecture_terminal_record_tip": "a64eef3",
+  "architecture_historical_lock_tip": "3646397",
   "architecture_archive_complete": true,
   "repository_tip_advances_independently": true,
   "step7_status": "phase_1_certified",
@@ -87,10 +89,10 @@
   "ai_enabled": false,
   "production_deployment_ready": true,
   "deployment_status": "production_live",
-  "updated_at": "2026-07-19T13:30:00.000Z",
+  "updated_at": "2026-07-19T13:35:00.000Z",
   "timezone": "America/Chicago",
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "TERMINAL archival record for Architecture 1.0. Immutable baseline 6690ce2; archive seal 4252827; terminal tip a64eef3. Five-doc constitutional corpus. Historical baseline — next architectural work is Phase 3 Exit Review. Maturity flags remain false."
+  "notes": "Architecture 1.0 FINAL IMMUTABLE ARCHIVE — HISTORICAL BASELINE. 6690ce2 baseline; 4252827 seal; a64eef3 terminal record; 3646397+ engineering tip. Not an active design program. Next: Phase 3 Exit Review. Maturity flags remain false."
 }
