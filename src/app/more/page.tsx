@@ -113,6 +113,9 @@ export default function MorePage() {
           <Link className="button secondary" href="/system/imports">
             Imports status
           </Link>
+          <Link className="button secondary" href="/system/google-integration">
+            Google OAuth &amp; Routes
+          </Link>
           <Link className="button secondary" href="/import/google-calendar">
             Google Calendar import
           </Link>

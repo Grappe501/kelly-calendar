@@ -22,6 +22,11 @@ export type GoogleCalendarApiProvider = {
   describeCapabilities(): string[];
 };
 
+/**
+ * Legacy Step-3 contract stub (type locks implemented:false).
+ * Live OAuth + Calendar API: `src/features/google-integration/` and
+ * `/api/integrations/google/calendar/*`.
+ */
 export const googleCalendarApiProvider: GoogleCalendarApiProvider = {
   mode: "GOOGLE_API",
   oauthRequired: true,

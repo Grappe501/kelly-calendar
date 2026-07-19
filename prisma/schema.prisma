@@ -743,6 +743,8 @@ model Event {
   workflowApplications EventWorkflowApplication[]
   readinessSnapshots   EventReadinessSnapshot[]
   operationalRecommendations OperationalRecommendationRecord[]
+  travelLegsFrom       CampaignTravelLeg[] @relation("TravelLegFrom")
+  travelLegsTo         CampaignTravelLeg[] @relation("TravelLegTo")
 
   @@index([startsAt, endsAt])
   @@index([status])
@@ -1328,6 +1330,7 @@ model ExternalCalendarSource {
 
   importRuns         CalendarImportRun[]
   externalIdentities ExternalEventIdentity[]
+  googleConnection   GoogleCalendarConnection?
 
   @@schema("kelly_calendar")
 }
@@ -1369,6 +1372,7 @@ model CalendarImportRecord {
   proposedEventPayload    Json?
   reviewStatus            HistoricalReviewStatus @default(UNREVIEWED)
   duplicateStatus         DuplicateStatus        @default(NEW)
+  googleReconcileStatus   GoogleReconcileStatus?
   canonicalEventId        String?
   reviewedByUserId        String?
   reviewedAt              DateTime?
@@ -1384,6 +1388,7 @@ model CalendarImportRecord {
 
   @@index([reviewStatus])
   @@index([duplicateStatus])
+  @@index([googleReconcileStatus])
   @@schema("kelly_calendar")
 }
 
@@ -1908,5 +1913,125 @@ model AuthSession {
 
   @@index([userId])
   @@index([expiresAt])
+  @@schema("kelly_calendar")
+}
+
+// ─── Google Calendar OAuth + Routes (read-only import / estimated mileage) ─
+
+enum GoogleConnectionStatus {
+  NOT_CONNECTED
+  CONNECTED
+  REAUTH_REQUIRED
+  REVOKED
+  ERROR
+
+  @@schema("kelly_calendar")
+}
+
+enum GoogleReconcileStatus {
+  AUTO_MATCH_HIGH_CONFIDENCE
+  REVIEW_POSSIBLE_MATCH
+  NO_MATCH
+  SOURCE_CONFLICT
+
+  @@schema("kelly_calendar")
+}
+
+enum RouteTruthType {
+  ACTUAL_ODOMETER
+  ACTUAL_TIMELINE
+  GOOGLE_ROUTE_ESTIMATE
+  MANUAL_ESTIMATE
+  UNKNOWN
+
+  @@schema("kelly_calendar")
+}
+
+enum TravelLegReviewStatus {
+  UNREVIEWED
+  ACCEPTED
+  REJECTED
+  AMBIGUOUS
+  EXCLUDED
+
+  @@schema("kelly_calendar")
+}
+
+/// Server-side OAuth state (short-lived). Never store authorization codes.
+model GoogleOAuthPendingState {
+  id              String   @id @default(cuid())
+  state           String   @unique
+  codeVerifier    String
+  createdByUserId String
+  expiresAt       DateTime
+  createdAt       DateTime @default(now())
+
+  @@index([expiresAt])
+  @@schema("kelly_calendar")
+}
+
+model GoogleCalendarConnection {
+  id                          String                 @id @default(cuid())
+  googleAccountEmail          String?
+  googleAccountSubject        String?
+  googleCalendarId            String                 @default("primary")
+  refreshTokenCiphertext      String
+  refreshTokenIv              String
+  refreshTokenAuthTag         String
+  encryptionVersion           String                 @default("v1")
+  grantedScopes               String[]
+  connectionStatus            GoogleConnectionStatus @default(NOT_CONNECTED)
+  connectedByUserId           String?
+  connectedAt                 DateTime?
+  lastTokenRefreshAt          DateTime?
+  lastTokenRefreshFailureAt   DateTime?
+  lastSyncStartedAt           DateTime?
+  lastSyncCompletedAt         DateTime?
+  lastSyncStatus              SyncStatus             @default(NOT_CONFIGURED)
+  lastSyncErrorCode           String?
+  /// Opaque Google sync token for incremental sync (not a secret credential).
+  syncCursor                  String?
+  historicalImportedThrough   DateTime?
+  pendingReconcileCount       Int                    @default(0)
+  revokedAt                   DateTime?
+  createdAt                   DateTime               @default(now())
+  updatedAt                   DateTime               @updatedAt
+  externalSourceId            String?                @unique
+
+  externalSource ExternalCalendarSource? @relation(fields: [externalSourceId], references: [id])
+
+  @@index([connectionStatus])
+  @@schema("kelly_calendar")
+}
+
+model CampaignTravelLeg {
+  id                     String                @id @default(cuid())
+  fromEventId            String?
+  toEventId              String?
+  originLabel            String?
+  destinationLabel       String?
+  originPlaceId          String?
+  destinationPlaceId     String?
+  departureWindowStart   DateTime?
+  arrivalWindowEnd       DateTime?
+  distanceMeters         Int?
+  durationSeconds        Int?
+  routeProvider          String                @default("GOOGLE_ROUTES")
+  routeTruthType         RouteTruthType        @default(GOOGLE_ROUTE_ESTIMATE)
+  providerRequestVersion String?
+  computedAt             DateTime              @default(now())
+  confidence             String                @default("MEDIUM")
+  reviewStatus           TravelLegReviewStatus @default(UNREVIEWED)
+  ambiguityReason        String?
+  excludedReason         String?
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  fromEvent Event? @relation("TravelLegFrom", fields: [fromEventId], references: [id])
+  toEvent   Event? @relation("TravelLegTo", fields: [toEventId], references: [id])
+
+  @@index([fromEventId, toEventId])
+  @@index([routeTruthType])
+  @@index([reviewStatus])
   @@schema("kelly_calendar")
 }

@@ -14,6 +14,14 @@ out/
 .env.production.secret
 .local/operator-secrets/
 
+# Google / OAuth private artifacts
+data/private/
+data/oauth/
+data/google/
+*.secret
+*.credentials.json
+client_secret*.json
+
 # Debug / logs
 npm-debug.log*
 yarn-debug.log*
