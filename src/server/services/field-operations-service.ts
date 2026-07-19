@@ -1,5 +1,6 @@
 import "server-only";
 
+import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import {
   buildFieldOperationsHome,
   type FieldOperationsHome,
@@ -15,10 +16,6 @@ export type FieldOperationsPayload = {
   candidateDataReady: false;
 };
 
-/**
- * Authenticated Field Operations — mission execution help queue.
- * Consumes Volunteer Operations confidence signals; produces executiveFeed.
- */
 export async function getFieldOperations(
   actor: AuthenticatedActor,
 ): Promise<FieldOperationsPayload> {
@@ -39,13 +36,21 @@ export async function getFieldOperations(
       staffRequiredCount: geo?.staffRequiredCount ?? 0,
       readiness: mission.todayReadiness,
       volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
+      comms: context.comms.get(mission.missionId) ?? null,
     };
+  });
+
+  const communications = buildCommunicationsOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const volunteers = buildVolunteerOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+    communicationsConsume: communications.volunteerFeed,
   });
 
   const field = buildFieldOperationsHome({
@@ -53,6 +58,7 @@ export async function getFieldOperations(
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
     volunteerFieldFeed: volunteers.fieldFeed.missions,
+    communicationsFieldFeed: communications.fieldFeed.missions,
   });
 
   return {

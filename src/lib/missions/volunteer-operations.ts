@@ -108,6 +108,14 @@ export type VolunteerOperationsHome = {
       replacementOptions: UnknownFact;
     }>;
   };
+  /** Consumed from Communications Operations — never owned here. */
+  communicationsConsume: {
+    currentCampaignMessage: UnknownFact;
+    approvedLiterature: UnknownFact;
+    canvassingScriptVersion: UnknownFact;
+    trainingReminders: UnknownFact;
+    talkingPointsPlanReadyMissions: number;
+  } | null;
 };
 
 export type VolunteerMissionInput = {
@@ -308,6 +316,7 @@ export function buildVolunteerOperationsHome(input: {
   timezone: string;
   missions: VolunteerMissionInput[];
   now?: Date;
+  communicationsConsume?: VolunteerOperationsHome["communicationsConsume"];
 }): VolunteerOperationsHome {
   const now = input.now ?? new Date();
   const missionCapacity = input.missions
@@ -437,6 +446,7 @@ export function buildVolunteerOperationsHome(input: {
         replacementOptions: m.replacementOptions,
       })),
     },
+    communicationsConsume: input.communicationsConsume ?? null,
   };
 }
 

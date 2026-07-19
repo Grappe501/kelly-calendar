@@ -121,6 +121,41 @@ export function VolunteerOperationsView({
         )}
       </section>
 
+      <section className="panel" aria-labelledby="vol-comms">
+        <h2 id="vol-comms">Messaging (consumed)</h2>
+        <p className="muted">
+          Owned by Communications Operations — Volunteer Ops only consumes.
+        </p>
+        {volunteers.communicationsConsume ? (
+          <ul className="volunteer-unknown-list">
+            <li>
+              <strong>Current campaign message</strong>
+              <p>{volunteers.communicationsConsume.currentCampaignMessage.reason}</p>
+            </li>
+            <li>
+              <strong>Approved literature</strong>
+              <p>{volunteers.communicationsConsume.approvedLiterature.reason}</p>
+            </li>
+            <li>
+              <strong>Canvassing script version</strong>
+              <p>{volunteers.communicationsConsume.canvassingScriptVersion.reason}</p>
+            </li>
+            <li>
+              <strong>Talking-points plans ready</strong>
+              <p>
+                {volunteers.communicationsConsume.talkingPointsPlanReadyMissions}{" "}
+                mission(s) — content package still Unknown
+              </p>
+            </li>
+          </ul>
+        ) : (
+          <p className="muted">Communications feed not attached.</p>
+        )}
+        <Link className="button secondary" href="/communications">
+          Open Communications Ops
+        </Link>
+      </section>
+
       <section className="panel" aria-labelledby="vol-unknown">
         <h2 id="vol-unknown">First-class Unknowns</h2>
         <p className="muted">

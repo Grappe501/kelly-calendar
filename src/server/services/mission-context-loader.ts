@@ -2,6 +2,7 @@ import "server-only";
 
 import { calculateEventReadiness } from "@/features/operational-intelligence/services/readiness-service";
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
+import type { CommunicationsPlanSnapshot } from "@/lib/missions/communications-operations";
 import type { MissionTimelineInput } from "@/lib/missions/mission-timeline";
 import { prisma } from "@/server/db/prisma";
 
@@ -31,11 +32,14 @@ export type MissionGeoSnapshot = {
   volunteerLeadAssigned: boolean;
 };
 
+export type MissionCommsSnapshot = CommunicationsPlanSnapshot;
+
 export type MissionContextBundle = {
   readiness: Map<string, EventReadinessResult>;
   travel: Map<string, MissionTravelSnapshot>;
   day: Map<string, MissionDaySnapshotRow>;
   geo: Map<string, MissionGeoSnapshot>;
+  comms: Map<string, MissionCommsSnapshot>;
 };
 
 /**
@@ -49,8 +53,10 @@ export async function loadMissionContextForIds(
   const travel = new Map<string, MissionTravelSnapshot>();
   const day = new Map<string, MissionDaySnapshotRow>();
   const geo = new Map<string, MissionGeoSnapshot>();
+  const comms = new Map<string, MissionCommsSnapshot>();
   const ids = [...new Set(eventIds)].slice(0, 12);
-  if (ids.length === 0) return { readiness, travel, day, geo };
+  if (ids.length === 0) return { readiness, travel, day, geo, comms };
+  const nowMs = Date.now();
 
   const rows = await prisma.event.findMany({
     where: { id: { in: ids }, archivedAt: null },
@@ -92,6 +98,47 @@ export async function loadMissionContextForIds(
       ),
     });
 
+    const items = event.communicationsItems;
+    const isReady = (c: (typeof items)[number]) =>
+      c.status === "COMPLETE" || Boolean(c.publishedAt);
+    const talking = items.filter((c) => c.communicationType === "TALKING_POINTS");
+    const rapid = items.filter((c) => c.communicationType === "RAPID_RESPONSE");
+    const publishDates = items
+      .map((c) => c.publishAt)
+      .filter((d): d is Date => Boolean(d))
+      .sort((a, b) => a.getTime() - b.getTime());
+    const draftDates = items
+      .map((c) => c.draftDueAt)
+      .filter((d): d is Date => Boolean(d))
+      .sort((a, b) => a.getTime() - b.getTime());
+    comms.set(event.id, {
+      itemCount: items.length,
+      readyCount: items.filter(isReady).length,
+      openCount: items.filter((c) => !isReady(c)).length,
+      overdueCount: items.filter(
+        (c) =>
+          !isReady(c) &&
+          ((c.publishAt != null && c.publishAt.getTime() < nowMs) ||
+            (c.draftDueAt != null && c.draftDueAt.getTime() < nowMs) ||
+            (c.approvalDueAt != null && c.approvalDueAt.getTime() < nowMs)),
+      ).length,
+      missingOwnerCount: items.filter((c) => !c.ownerUserId && !c.ownerTeamId)
+        .length,
+      hasTalkingPoints: talking.length > 0,
+      talkingPointsReady: talking.length > 0 && talking.every(isReady),
+      hasPressItem: items.some(
+        (c) =>
+          c.channel === "PRESS" ||
+          c.communicationType === "PRESS_ADVISORY" ||
+          c.communicationType === "PRESS_RELEASE",
+      ),
+      hasSpeech: items.some((c) => c.communicationType === "SPEECH"),
+      hasRapidResponse: rapid.length > 0,
+      rapidResponseOpen: rapid.some((c) => !isReady(c)),
+      nextPublishAt: publishDates[0]?.toISOString() ?? null,
+      nextDraftDueAt: draftDates[0]?.toISOString() ?? null,
+    });
+
     readiness.set(
       event.id,
       calculateEventReadiness({
@@ -128,7 +175,7 @@ export async function loadMissionContextForIds(
     );
   }
 
-  return { readiness, travel, day, geo };
+  return { readiness, travel, day, geo, comms };
 }
 
 /** @deprecated use loadMissionContextForIds */

@@ -188,6 +188,36 @@ export function FieldOperationsView({
                       </div>
                     </>
                   ) : null}
+                  {team.communicationsSignals ? (
+                    <>
+                      <div>
+                        <dt>Talking points</dt>
+                        <dd>
+                          {team.communicationsSignals.talkingPointsStatus.replace(
+                            /_/g,
+                            " ",
+                          )}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Event messaging</dt>
+                        <dd>
+                          {team.communicationsSignals.eventMessagingStatus.replace(
+                            /_/g,
+                            " ",
+                          )}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Messaging risk</dt>
+                        <dd>{team.communicationsSignals.messagingRisk}</dd>
+                      </div>
+                      <div>
+                        <dt>Handouts / press / briefs</dt>
+                        <dd>Unknown</dd>
+                      </div>
+                    </>
+                  ) : null}
                 </dl>
                 <ul className="field-resource-strip" aria-label="Resource status">
                   {(

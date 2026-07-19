@@ -89,6 +89,15 @@ export type FieldTeamCard = {
     backupLeaderAvailable: "UNKNOWN";
     replacementOptions: "UNKNOWN";
   } | null;
+  /** Consumed from Communications Operations — not owned here. */
+  communicationsSignals: {
+    talkingPointsStatus: string;
+    eventMessagingStatus: string;
+    messagingRisk: string;
+    handoutStatus: "UNKNOWN";
+    pressContactStatus: "UNKNOWN";
+    localIssueBriefStatus: "UNKNOWN";
+  } | null;
 };
 
 export type HelpQueueItem = {
@@ -142,6 +151,13 @@ export type FieldVolunteerMissionSignal = {
   assignmentConfidence: "HIGH" | "MEDIUM" | "LOW" | "UNKNOWN";
   staffingConfidence: "HIGH" | "MEDIUM" | "LOW" | "UNKNOWN";
   openRoles: number;
+};
+
+export type FieldCommunicationsMissionSignal = {
+  missionId: string;
+  talkingPointsStatus: string;
+  eventMessagingStatus: string;
+  messagingRisk: string;
 };
 
 export type FieldMissionInput = {
@@ -216,6 +232,7 @@ function needsFromMission(input: FieldMissionInput): string[] {
 export function buildFieldTeamCard(
   input: FieldMissionInput,
   volunteerSignal?: FieldVolunteerMissionSignal | null,
+  communicationsSignal?: FieldCommunicationsMissionSignal | null,
 ): FieldTeamCard {
   const { mission } = input;
   const county = input.countyName?.trim() || null;
@@ -295,6 +312,16 @@ export function buildFieldTeamCard(
           replacementOptions: "UNKNOWN",
         }
       : null,
+    communicationsSignals: communicationsSignal
+      ? {
+          talkingPointsStatus: communicationsSignal.talkingPointsStatus,
+          eventMessagingStatus: communicationsSignal.eventMessagingStatus,
+          messagingRisk: communicationsSignal.messagingRisk,
+          handoutStatus: "UNKNOWN",
+          pressContactStatus: "UNKNOWN",
+          localIssueBriefStatus: "UNKNOWN",
+        }
+      : null,
   };
 }
 
@@ -304,13 +331,23 @@ export function buildFieldOperationsHome(input: {
   now?: Date;
   missions: FieldMissionInput[];
   volunteerFieldFeed?: FieldVolunteerMissionSignal[] | null;
+  communicationsFieldFeed?: FieldCommunicationsMissionSignal[] | null;
 }): FieldOperationsHome {
   const now = input.now ?? new Date();
   const volByMission = new Map(
     (input.volunteerFieldFeed ?? []).map((v) => [v.missionId, v]),
   );
+  const commsByMission = new Map(
+    (input.communicationsFieldFeed ?? []).map((c) => [c.missionId, c]),
+  );
   const cards = input.missions
-    .map((m) => buildFieldTeamCard(m, volByMission.get(m.mission.missionId) ?? null))
+    .map((m) =>
+      buildFieldTeamCard(
+        m,
+        volByMission.get(m.mission.missionId) ?? null,
+        commsByMission.get(m.mission.missionId) ?? null,
+      ),
+    )
     .filter((c) => c.missionStatus !== "COMPLETE")
     .sort((a, b) => {
       const rank = (h: FieldHeat) =>
@@ -319,7 +356,11 @@ export function buildFieldOperationsHome(input: {
     });
 
   const allCards = input.missions.map((m) =>
-    buildFieldTeamCard(m, volByMission.get(m.mission.missionId) ?? null),
+    buildFieldTeamCard(
+      m,
+      volByMission.get(m.mission.missionId) ?? null,
+      commsByMission.get(m.mission.missionId) ?? null,
+    ),
   );
   const activeMissions = allCards.filter((c) => c.missionStatus !== "COMPLETE").length;
   const needAttention = allCards.filter(

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
 import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
@@ -15,7 +16,7 @@ export type ExecutiveCommandPayload = {
 };
 
 /**
- * Authenticated Executive Command Center — consumes Field, County, Volunteer feeds.
+ * Authenticated Executive Command — consumes Field, County, Volunteer, Communications feeds.
  */
 export async function getExecutiveCommand(
   actor: AuthenticatedActor,
@@ -37,13 +38,21 @@ export async function getExecutiveCommand(
       staffRequiredCount: geo?.staffRequiredCount ?? 0,
       readiness: mission.todayReadiness,
       volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
+      comms: context.comms.get(mission.missionId) ?? null,
     };
+  });
+
+  const communications = buildCommunicationsOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const volunteers = buildVolunteerOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+    communicationsConsume: communications.volunteerFeed,
   });
 
   const field = buildFieldOperationsHome({
@@ -51,6 +60,7 @@ export async function getExecutiveCommand(
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
     volunteerFieldFeed: volunteers.fieldFeed.missions,
+    communicationsFieldFeed: communications.fieldFeed.missions,
   });
 
   const counties = buildCountyOperationsHome({
@@ -64,6 +74,7 @@ export async function getExecutiveCommand(
       severity: h.severity,
     })),
     volunteerFeed: volunteers.countyFeed,
+    communicationsFeed: communications.countyFeed,
   });
 
   const command = buildExecutiveCommand({
@@ -73,6 +84,7 @@ export async function getExecutiveCommand(
     fieldFeed: field.executiveFeed,
     countyFeed: counties.executiveFeed,
     volunteerFeed: volunteers.executiveFeed,
+    communicationsFeed: communications.executiveFeed,
   });
 
   return {

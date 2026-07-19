@@ -4,6 +4,7 @@
  */
 
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
+import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
@@ -100,6 +101,8 @@ export type ExecutiveCommand = {
   countyFeed: CountyOperationsHome["executiveFeed"] | null;
   /** Consumed from Volunteer Operations (7.4) — canonical capacity. */
   volunteerFeed: VolunteerOperationsHome["executiveFeed"] | null;
+  /** Consumed from Communications Operations (7.5) — plan readiness. */
+  communicationsFeed: CommunicationsOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -119,11 +122,13 @@ export function buildDeterministicExecutiveBriefing(
   fieldFeed?: FieldOperationsHome["executiveFeed"] | null,
   countyFeed?: CountyOperationsHome["executiveFeed"] | null,
   volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null,
+  communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
       countyFeed?.briefingLine,
       volunteerFeed?.briefingLine,
+      communicationsFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -136,6 +141,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (volunteerFeed?.briefingLine) {
     parts.push(volunteerFeed.briefingLine);
+  }
+  if (communicationsFeed?.briefingLine) {
+    parts.push(communicationsFeed.briefingLine);
   }
   if (countyFeed?.briefingLine) {
     parts.push(countyFeed.briefingLine);
@@ -196,12 +204,14 @@ export function buildExecutiveCommand(input: {
   fieldFeed?: FieldOperationsHome["executiveFeed"] | null;
   countyFeed?: CountyOperationsHome["executiveFeed"] | null;
   volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null;
+  communicationsFeed?: CommunicationsOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
   const fieldFeed = input.fieldFeed ?? null;
   const countyFeed = input.countyFeed ?? null;
   const volunteerFeed = input.volunteerFeed ?? null;
+  const communicationsFeed = input.communicationsFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -238,6 +248,21 @@ export function buildExecutiveCommand(input: {
       label: "Volunteer capacity gap",
       detail: top ? top.detail : volunteerFeed.briefingLine,
       href: "/volunteers",
+      urgency: "NOW",
+    });
+  }
+  if (
+    communicationsFeed &&
+    (communicationsFeed.rapidResponseNeeded > 0 ||
+      communicationsFeed.pressDeadlinesAtRisk > 0 ||
+      communicationsFeed.messagingRisk === "CRITICAL" ||
+      communicationsFeed.messagingRisk === "HIGH")
+  ) {
+    const top = communicationsFeed.topItems[0];
+    topPriorities.push({
+      label: "Communications risk",
+      detail: top ? top.detail : communicationsFeed.briefingLine,
+      href: "/communications",
       urgency: "NOW",
     });
   }
@@ -525,7 +550,7 @@ export function buildExecutiveCommand(input: {
     geographic: {
       counties,
       unknownCountyMissions: brief.counties.unknownCountyMissions,
-      note: "Today’s counties from Calendar. Weakness owned by County Ops; field heat by Field Ops; capacity by Volunteer Ops.",
+      note: "Today’s counties from Calendar. Weakness / field heat / capacity / communications readiness owned by their modules.",
     },
     rhythm,
     executiveBriefing: {
@@ -534,12 +559,14 @@ export function buildExecutiveCommand(input: {
         fieldFeed,
         countyFeed,
         volunteerFeed,
+        communicationsFeed,
       ),
       source: "deterministic_v1",
     },
     fieldFeed,
     countyFeed,
     volunteerFeed,
+    communicationsFeed,
   };
 }
 
@@ -568,5 +595,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     fieldFeed: command.fieldFeed,
     countyFeed: command.countyFeed,
     volunteerFeed: command.volunteerFeed,
+    communicationsFeed: command.communicationsFeed,
   };
 }

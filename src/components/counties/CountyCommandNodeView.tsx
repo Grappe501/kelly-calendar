@@ -99,6 +99,15 @@ export function CountyCommandNodeView({ county, date, timezone }: Props) {
             </dd>
           </div>
           <div>
+            <dt>Communications support</dt>
+            <dd>
+              {county.communications
+                ? `${county.communications.supportNeeds ?? 0} support need(s) · ${county.communications.pendingAnnouncements ?? 0} pending · risk ${county.communications.messagingRisk}`
+                : "Unknown"}
+              <span className="muted"> — packages Unknown</span>
+            </dd>
+          </div>
+          <div>
             <dt>Open needs</dt>
             <dd>
               {county.openNeeds.length > 0 ? county.openNeeds.join(", ") : "None flagged"}

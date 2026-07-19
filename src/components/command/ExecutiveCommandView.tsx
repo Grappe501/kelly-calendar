@@ -148,6 +148,15 @@ export function ExecutiveCommandView({
             </Link>
           </p>
         ) : null}
+        {command.communicationsFeed ? (
+          <p>
+            <strong>Communications:</strong>{" "}
+            {command.communicationsFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/communications">
+              Open Comms Ops
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">
