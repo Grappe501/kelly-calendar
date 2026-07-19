@@ -4,15 +4,18 @@
 **Status:** PLANNED — after Audit → Hardening → Foundation  
 **Architecture:** 1.0  
 **Nature:** Capability backlog — not an implementation authorization  
+**V1 rule:** Version 1 is **feature-complete permanently** (`KCCC_V1_FEATURE_FREEZE.md`). New ideas land here — never reopen V1.  
+**Ship rule:** `KCCC_RELEASE_CONSTITUTION.md`  
 
 ## Gate
 
 Version 2 work begins only after:
 
-1. Engineering Audit complete  
-2. Hardening Pass complete  
-3. **Experience Redesign 2.0** complete (or waived) — see `KCCC_EXPERIENCE_REDESIGN_2.md`  
-4. Calendar Foundation complete (shared infrastructure)  
+1. Engineering Audit complete (EA-5…EA-12)  
+2. Program Readiness Review complete  
+3. Hardening Pass complete  
+4. **Experience Redesign 2.0** complete (or waived) — see `KCCC_EXPERIENCE_REDESIGN_2.md`  
+5. Calendar Foundation complete (shared infrastructure)  
 
 ## V2 capability themes
 

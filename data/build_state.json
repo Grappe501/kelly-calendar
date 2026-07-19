@@ -53,6 +53,13 @@
   "calendar_experience_review_status": "pass",
   "calendar_experience_v1_complete": true,
   "calendar_experience_v1_status": "engineering_complete",
+  "calendar_experience_v1_feature_complete_permanent": true,
+  "v1_feature_freeze_status": "active",
+  "v1_feature_freeze_id": "KCCC-V1-FEATURE-FREEZE",
+  "platform_stabilization_status": "active",
+  "feature_development_status": "frozen",
+  "release_constitution_status": "active",
+  "release_constitution_id": "KCCC-RELEASE-CONSTITUTION",
   "engineering_audit_status": "active",
   "audit_constitution_status": "active",
   "protected_assets_register_status": "living",
@@ -125,7 +132,7 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-AUDIT-CONSTITUTION",
+  "current_step": "KCCC-V1-FEATURE-FREEZE",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -179,5 +186,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Audit Constitution ACTIVE. Protected Assets LIVING. Maturity Arch4/Ops2/Visual2/Eng3/Platform2. EA-5 under Constitution next. No new user-facing features. Hardening blocked until Program Readiness Review. Phase 3 paused."
+  "notes": "V1 FEATURE FREEZE ACTIVE — permanently feature-complete; never reopen. Release Constitution ACTIVE. Platform Stabilization ACTIVE. Priority: EA-5…EA-12 → Readiness Review → Hardening → Redesign. Phase 3 paused."
 }

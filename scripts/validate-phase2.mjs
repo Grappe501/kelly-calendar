@@ -391,6 +391,11 @@ if (
   build.platform_quality_score === 5.7 &&
   build.engineering_sustainability_index === 5.7 &&
   build.esi_tracking === true &&
+  build.v1_feature_freeze_status === "active" &&
+  build.calendar_experience_v1_feature_complete_permanent === true &&
+  build.platform_stabilization_status === "active" &&
+  build.feature_development_status === "frozen" &&
+  build.release_constitution_status === "active" &&
   build.audit_constitution_status === "active" &&
   build.protected_assets_register_status === "living" &&
   build.engineering_maturity_architecture === 4 &&
@@ -423,6 +428,11 @@ if (
   build.next_engineering_deliverable === "KCCC-EA-5-ACCESSIBILITY" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
+  constants.includes('V1_FEATURE_FREEZE_STATUS = "ACTIVE"') &&
+  constants.includes("CALENDAR_EXPERIENCE_V1_FEATURE_COMPLETE_PERMANENT = true") &&
+  constants.includes('FEATURE_DEVELOPMENT_STATUS = "FROZEN"') &&
+  constants.includes('PLATFORM_STABILIZATION_STATUS = "ACTIVE"') &&
+  constants.includes('RELEASE_CONSTITUTION_STATUS = "ACTIVE"') &&
   constants.includes('AUDIT_CONSTITUTION_STATUS = "ACTIVE"') &&
   constants.includes('PROTECTED_ASSETS_REGISTER_STATUS = "LIVING"') &&
   constants.includes("ENGINEERING_MATURITY_ARCHITECTURE = 4") &&
@@ -430,30 +440,32 @@ if (
   constants.includes('EA5_FOCUS = "INCLUSIVE_EXPERIENCE"') &&
   constants.includes('PROGRAM_READINESS_REVIEW_STATUS = "PLANNED"') &&
   constants.includes("HARDENING_WAVE_COUNT = 6") &&
-  constants.includes('ESI_HARDENING_TARGET = "7.5+"') &&
   constants.includes('HARDENING_BLOCKED_UNTIL = "PROGRAM_READINESS_REVIEW"') &&
+  constants.includes("KCCC-V1-FEATURE-FREEZE") &&
+  constants.includes("KCCC-RELEASE-CONSTITUTION") &&
   constants.includes("KCCC-AUDIT-CONSTITUTION") &&
   constants.includes("KCCC-EA-5-ACCESSIBILITY") &&
+  exists("develop_notes/KCCC_V1_FEATURE_FREEZE.md") &&
+  exists("develop_notes/KCCC_RELEASE_CONSTITUTION.md") &&
   exists("develop_notes/KCCC_AUDIT_CONSTITUTION.md") &&
   exists("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md") &&
-  exists("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md") &&
-  exists("develop_notes/KCCC_EA3_EXECUTIVE_ACCEPTANCE.md") &&
   exists("develop_notes/KCCC_EA5_ACCESSIBILITY.md") &&
   exists("develop_notes/KCCC_PROGRAM_READINESS_REVIEW.md") &&
   !exists("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md") &&
-  read("develop_notes/KCCC_AUDIT_CONSTITUTION.md").includes("Six Engineering Laws") &&
-  read("develop_notes/KCCC_AUDIT_CONSTITUTION.md").includes("without weakening Architecture 1.0") &&
-  read("develop_notes/KCCC_AUDIT_CONSTITUTION.md").includes("Level 4") &&
-  read("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md").includes("PA-01") &&
-  read("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md").includes("Never Fake") &&
-  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Audit Constitution") &&
+  read("develop_notes/KCCC_V1_FEATURE_FREEZE.md").includes("FROZEN") &&
+  read("develop_notes/KCCC_V1_FEATURE_FREEZE.md").includes("never reopened") &&
+  read("develop_notes/KCCC_V1_FEATURE_FREEZE.md").includes("Version 2 backlog") &&
+  read("develop_notes/KCCC_RELEASE_CONSTITUTION.md").includes("Never Fake") &&
+  read("develop_notes/KCCC_RELEASE_CONSTITUTION.md").includes("Protected Assets") &&
+  read("develop_notes/KCCC_AUDIT_CONSTITUTION.md").includes("FEATURE FREEZE") &&
+  read("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md").includes("PA-17") &&
+  read("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md").includes("PA-18") &&
+  read("develop_notes/KCCC_VERSION_2_BACKLOG.md").includes("never reopen V1") &&
   read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Inclusive Experience") &&
-  read("develop_notes/KCCC_PROGRAM_READINESS_REVIEW.md").includes("four questions") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("Testability & Verification") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("Audit Constitution ACTIVE; Protected Assets LIVING; EA-5 under Constitution; Hardening gated");
+  pass("V1 Feature Freeze ACTIVE; Release Constitution ACTIVE; audits under Constitution; Hardening gated");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -463,5 +475,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Audit Constitution ACTIVE; Protected Assets LIVING; maturity baseline set; EA-5 next under Constitution; Hardening gated by Program Readiness Review; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (V1 Feature Freeze ACTIVE; Release Constitution ACTIVE; Platform Stabilization ACTIVE; EA-5…EA-12 next; Hardening gated; Phase 3.1 paused).",
 );

@@ -144,7 +144,11 @@ Platform Readiness ...... Level 2 (Stable)
 ## Binding program rule
 
 ```text
-Avoid new user-facing functionality during remaining audits.
+VERSION 1 FEATURE FREEZE ACTIVE
+(see KCCC_V1_FEATURE_FREEZE.md)
+
+No new calendar views, modules, integrations, or dashboards.
+V1 is never reopened — new ideas → Version 2 backlog.
 
 Architecture is solid.
 Operator experience needs refinement.
@@ -157,16 +161,17 @@ Shared infrastructure before feature expansion.
 ## Roadmap (remainder)
 
 ```text
+Version 1 Feature Freeze    ← ACTIVE
 Audit Constitution          ← ACTIVE
+Release Constitution        ← ACTIVE (ships after V1)
         ↓
-EA-5 Inclusive Experience
-EA-6 … EA-12
+EA-5 … EA-12                ← Priority 1
         ↓
-Program Readiness Review
+Program Readiness Review    ← Priority 2
         ↓
-Hardening (Waves 1–6)
+Hardening                   ← Priority 3 (execution)
         ↓
-Experience Redesign 2.0
+Experience Redesign 2.0     ← Priority 4
         ↓
 Calendar Foundation
         ↓

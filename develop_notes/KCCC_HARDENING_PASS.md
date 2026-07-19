@@ -3,7 +3,8 @@
 **Script ID:** `KCCC-HARDENING-V1`  
 **Track:** Engineering Track A  
 **Status:** BLOCKED — awaiting EA-5…EA-12 + **Program Readiness Review**  
-**Nature:** Fix issues only — **no feature adds** · **no Experience Redesign implementation**  
+**Nature:** Fix issues only — **execution, not discovery** · **no feature adds** · **no Experience Redesign**  
+**Feature freeze:** `KCCC_V1_FEATURE_FREEZE.md` — V1 never reopened  
 **Authoritative backlog:** `KCCC_HARDENING_MASTER_LEDGER.md`  
 
 ## Categories

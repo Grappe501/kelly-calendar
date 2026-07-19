@@ -7,30 +7,21 @@
 **Nature:** Review and evidence only — **no feature adds** · **no redesign implementation**  
 
 ```text
-Architecture 1.0 ............... VERIFIED (EA-1)
+VERSION 1 FEATURE FREEZE ....... ACTIVE (permanently feature-complete)
+Architecture 1.0 ............... VERIFIED
+Platform Stabilization ......... ACTIVE
 
-Calendar Experience V1 ......... COMPLETE
-
-EA-4 / EA-1 / EA-2 ............. COMPLETE (core quality triad)
-V1 Product Health .............. COMPLETE — PASS WITH FINDINGS
-EA-3 Platform Quality .......... COMPLETE · ACCEPTED (ESI 5.7)
-
-Audit Constitution ............. ACTIVE (governs EA-5…EA-12)
+Audit Constitution ............. ACTIVE
+Release Constitution ........... ACTIVE
 Protected Assets Register ...... LIVING
 
 Engineering Audit .............. ACTIVE
-Next Audit Stream:
-  EA-5 Inclusive Experience — under Audit Constitution
+Priority 1: EA-5 … EA-12 (no exceptions)
+Priority 2: Program Readiness Review
+Priority 3: Hardening (execution)
+Priority 4: Experience Redesign
 
-After EA-5…EA-12:
-  Program Readiness Review → then Hardening
-
-Hardening Master Ledger ........ HL-001…HL-020 · Waves 1–6
-Metrics ........................ Arch · Decision · Visual · OCI · ESI
-Maturity ....................... Arch 4 · Ops/Visual/Platform 2 · Eng 3
-
-No new user-facing features during remaining audits.
-Experience Redesign / Foundation ........ BLOCKED until Readiness Review + Hardening
+Prohibited: new views · modules · integrations · dashboards
 ```
 
 ## Goal
