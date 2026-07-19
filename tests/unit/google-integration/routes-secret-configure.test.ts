@@ -31,7 +31,7 @@ describe("Google Routes secret installer", () => {
     expect(src).toMatch(/process arguments/i);
   });
 
-  it("Routes doctor reports presence-only fields", () => {
+  it("Routes doctor reports presence-only fields and uses latLng ping body", () => {
     const src = readFileSync(
       path.join(root, "scripts/campaign-routes-doctor.mjs"),
       "utf8",
@@ -41,5 +41,9 @@ describe("Google Routes secret installer", () => {
     expect(src).toContain("Routes API reachable");
     expect(src).toContain("Browser exposure");
     expect(src).toContain("X-Goog-Api-Key");
+    expect(src).toContain("latLng");
+    expect(src).toContain("Failure class");
+    expect(src).toContain("CREDENTIAL_KEY_EXPLICIT");
+    expect(src).not.toContain('address: "Little Rock, AR"');
   });
 });

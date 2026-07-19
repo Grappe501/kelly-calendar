@@ -42,9 +42,17 @@ Do **not** paste the key into Cursor chat, Git, or markdown.
 Optional live reachability (still never prints the key):
 
 ```bash
-set KCCC_ROUTES_DOCTOR_PING=true
+# PowerShell
+$env:KCCC_ROUTES_DOCTOR_PING='true'
 npm run campaign:routes:doctor
 ```
+
+Doctor ping uses a fixed latLng Little Rock → Conway `DRIVE` body. Classify failures before rotating keys:
+
+- `REQUEST_OR_ARGUMENT` → fix request (not the key)
+- `CREDENTIAL_OR_PERMISSION` / `CREDENTIAL_KEY_EXPLICIT` → then consider key/ACL repair
+
+See `KCCC_GOOGLE_ROUTES_MILEAGE_RUNBOOK.md` for current production state.
 
 ## Production (preferred)
 

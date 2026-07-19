@@ -59,6 +59,15 @@ Missions are not auto-created.
 - Open Mission → Calendar `?event=` consumption works for Day/Week/Month focus + honest failures.
 - Broader workflow continuity (HL-040 week rail drill-down, HL-041 month hops, HL-042 domain period hops) remains open.
 
+### Production (2026-07-19)
+
+```text
+Open Mission hotfix ............. DEPLOYMENT PENDING
+Netlify Routes variables ........ SET
+Production redeploy ............. TRIGGERED (build 6a5d4dcade48f1eab003ae6c)
+Routes credential validity ...... NOT YET PROVEN
+```
+
 ## Manual verify
 
 ```text
