@@ -1,29 +1,20 @@
 # KCCC Governance State v1.0
 
-**Architecture 1.0 Status:** HISTORICAL BASELINE · Lifecycle COMPLETE · Governance LOCKED  
-**Immutable baseline:** `6690ce2`  
-**Archive seal:** `4252827` · **Terminal record:** `a64eef3` · **Historical lock tip:** `3646397`  
-**Statement:** `KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md`
+**Architecture 1.0:** HISTORICAL BASELINE · PERMANENTLY CLOSED · Governance LOCKED  
+**Canonical Baseline:** `6690ce2` · **Seal:** `4252827` · **Terminal:** `a64eef3` · **Engineering:** `cdb5a5f+`
 
-## Corpus
+## Baseline Policy
 
-Constitution · Freeze · Governance State · Register · Final Archival State  
-
-## References
-
-| Ref | Meaning |
-|-----|---------|
-| 6690ce2 | Immutable baseline |
-| 4252827 | Archive seal |
-| a64eef3 | Terminal archival record |
-| 3646397+ | Engineering tip only |
+Architecture 1.0 is historical. Do not amend the 1.0 corpus for baseline changes. Reference it. New architectural versions require RFC.
 
 ```text
-Architecture Track — Frozen; Proposal Required / RFC Required
-Engineering Track — Within Architecture 1.0
-Phase 3 Track — Exit Review NOT STARTED; implementation NOT AUTHORIZED
+Future Changes ............... Proposal Required
+Breaking Changes ............. RFC Required
+Phase 3 Exit Review .......... NOT STARTED
+Phase 3 Implementation ....... NOT AUTHORIZED
+Application .................. 0.8.4-petition (independent)
 ```
 
-Application version **0.8.4-petition** (independent track).
+## Next Architectural Deliverable
 
-Phase 3: Exit Review → Decision → AUTHORIZED (planning) → Implementation Authorization → Engineering.
+**Only:** `KCCC_PHASE_03_EXIT_REVIEW.md` — design-governance; success → Phase 3 AUTHORIZED (planning only).

@@ -1,10 +1,8 @@
-# KCCC Architecture 1.0 — Final Immutable Archival State
+# KCCC Architecture 1.0 — Permanently Closed Historical Baseline
 
-**Status:** HISTORICAL BASELINE  
-**Lifecycle:** COMPLETE  
+**Status:** HISTORICAL BASELINE · **PERMANENTLY CLOSED**  
 **Governance:** LOCKED  
-**Nature:** Permanent constitutional baseline — not an active design program  
-**Recorded:** 2026-07-19 (America/Chicago)
+**Policy:** No additional architectural statements for the 1.0 baseline. Future activity **references** Architecture 1.0; it does not amend it (except via RFC establishing Architecture 2.0+).
 
 ```text
 KELLY CAMPAIGN CALENDAR
@@ -13,66 +11,47 @@ CAMPAIGN OPERATING SYSTEM
 ARCHITECTURE 1.0
 
 Status ....................... HISTORICAL BASELINE
-Lifecycle .................... COMPLETE
 Governance ................... LOCKED
 
-Canonical Register Commit .... 6690ce2
-Archive Seal Commit .......... 4252827
+Canonical Baseline ........... 6690ce2
+Archive Seal ................. 4252827
 Terminal Record .............. a64eef3
-Repository Tip ............... 3646397 (advancing)
+Engineering Line ............. cdb5a5f (advancing)
 
 Architecture Review .......... ACTIVE
 Phase 3 Exit Review .......... NOT STARTED
 Phase 3 Implementation ....... NOT AUTHORIZED
 ```
 
-## Constitutional Corpus
+## Baseline Policy
+
+- Architecture 1.0 is a **historical reference**, not an active design artifact.  
+- Engineering may continue under Architecture 1.0 without changing the constitutional baseline.  
+- The sealed corpus remains normative for ownership, governance, readiness, orchestration, and doctrine.  
+- **No commit after `6690ce2`** creates or modifies the Architecture 1.0 baseline unless an RFC establishes a new architectural version.  
+
+## Constitutional Corpus (sealed — do not amend for 1.0)
 
 1. `KCCC_CONSTITUTION_v1.0.md`  
 2. `KCCC_ARCHITECTURE_FREEZE_v1.0.md`  
 3. `KCCC_GOVERNANCE_STATE_v1.0.md`  
 4. `KCCC_ARCHITECTURE_REGISTER_v1.0.md`  
-5. `KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md` (this document)  
+5. This document  
 
-## Repository Governance
-
-| Reference | Meaning |
-|-----------|---------|
-| **6690ce2** | Immutable Architecture 1.0 baseline |
-| **4252827** | Archive seal confirming the baseline was frozen |
-| **a64eef3** | Terminal archival record of the Architecture 1.0 program |
-| **3646397** (and successors) | Continuing engineering history — does not alter Architecture 1.0 |
-
-## Next Architectural Milestone
+## Next Architectural Deliverable (singular)
 
 ```text
-Architecture Review
-        │
-        ▼
-Phase 3 Exit Review
-(design-governance only)
-        │
-        ▼
-Governance Decision
-        │
-        ├── Continue Architecture Review
-        │
-        └── Phase 3 AUTHORIZED
-                │
-                ▼
-Planning
-                │
-                ▼
-Implementation Authorization
-                │
-                ▼
-Engineering
+KCCC_PHASE_03_EXIT_REVIEW.md
 ```
 
-Until Exit Review concludes affirmatively: **no Phase 3 implementation**.
+Scope: design-governance only. Answers Phase 3 authorization questions. No implementation details or code. Success → **Phase 3 AUTHORIZED** (planning only). Implementation remains a separate governance decision.
 
-## Architecture 1.0 Legacy
+## Lifecycle
 
-Single canonical ownership · Executive-question design · Explicit Unknown · Minimum-of-required readiness · Capability orchestration without duplicate ownership · Human-gated execution · Externals subordinate to canonical truth · AI advisory only · Formal governance for evolution  
-
-**Architecture 1.0 has transitioned from an active design program to the permanent constitutional baseline.** Future architectural work begins with the Phase 3 Exit Review.
+```text
+Architecture 1.0 → Historical Baseline → Architecture Review
+        → Phase 3 Exit Review (design only)
+        → Phase 3 AUTHORIZED (planning)
+        → Implementation Authorization
+        → Phase 3 Engineering
+```

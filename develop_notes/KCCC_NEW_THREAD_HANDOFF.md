@@ -1,22 +1,24 @@
 # KCCC New Thread Handoff
 
 ```text
-ARCHITECTURE 1.0 — HISTORICAL BASELINE (FINAL IMMUTABLE ARCHIVE)
+ARCHITECTURE 1.0 — PERMANENTLY CLOSED
 
 Status ....................... HISTORICAL BASELINE
-Lifecycle .................... COMPLETE
 Governance ................... LOCKED
 
-6690ce2 — immutable baseline
-4252827 — archive seal
-a64eef3 — terminal archival record
-3646397+ — engineering tip (does not alter Architecture 1.0)
+Canonical Baseline ........... 6690ce2
+Archive Seal ................. 4252827
+Terminal Record .............. a64eef3
+Engineering Line ............. cdb5a5f+ (does not amend Architecture 1.0)
 
-Corpus: Constitution · Freeze · Governance · Register · Final Archival State
+Do NOT amend Architecture 1.0 docs for baseline changes.
+Reference them. Evolve via RFC → Architecture 2.0+.
 
-Architecture Review .......... ACTIVE
-Phase 3 Exit Review .......... NOT STARTED
+Next architectural deliverable (only):
+KCCC_PHASE_03_EXIT_REVIEW.md
+  → design-governance answers
+  → Phase 3 AUTHORIZED = planning only
+  → Implementation Authorization = separate decision
+
 Phase 3 Implementation ....... NOT AUTHORIZED
-
-Next architectural work: Phase 3 Exit Review (not code).
 ```

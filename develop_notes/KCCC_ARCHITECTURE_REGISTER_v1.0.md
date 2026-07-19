@@ -1,28 +1,16 @@
 # KCCC Architecture Register v1.0
 
-**Status:** HISTORICAL BASELINE  
-**Canonical Register Commit:** `6690ce2`  
-**Archive Seal:** `4252827` · **Terminal Record:** `a64eef3` · **Tip at historical lock:** `3646397`  
+**Status:** HISTORICAL BASELINE · **PERMANENTLY CLOSED**  
+**Canonical Baseline:** `6690ce2` · **Seal:** `4252827` · **Terminal:** `a64eef3` · **Engineering lock tip:** `cdb5a5f`
+
+No further Architecture 1.0 architectural statements. See `KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md`.
 
 ```text
-ARCHITECTURE 1.0
+ARCHITECTURE 1.0 — HISTORICAL BASELINE (LOCKED)
 
-Status ....................... HISTORICAL BASELINE
-Lifecycle .................... COMPLETE
-Governance ................... LOCKED
-
-Canonical Register Commit .... 6690ce2
-Archive Seal Commit .......... 4252827
-Terminal Record .............. a64eef3
-Repository Tip ............... advancing (lock tip 3646397)
-
-Architecture Review .......... ACTIVE
+Canonical Baseline ........... 6690ce2
 Phase 3 Exit Review .......... NOT STARTED
 Phase 3 Implementation ....... NOT AUTHORIZED
 ```
 
-See `KCCC_ARCHITECTURE_1.0_FINAL_ARCHIVAL_STATE.md` for the full immutable archival statement.
-
-Corpus: Constitution · Freeze · Governance State · Register · Final Archival State  
-
-Path: Review → Exit Review → Decision → AUTHORIZED (planning) → Implementation Authorization → Engineering.
+**Next deliverable:** `KCCC_PHASE_03_EXIT_REVIEW.md` only.
