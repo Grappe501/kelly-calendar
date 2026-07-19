@@ -10,6 +10,11 @@ import { ARKANSAS_COUNTIES } from "@/features/event-drafts/arkansas-counties";
 import type { FieldHeat, OperationalHeatRow } from "@/lib/missions/field-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { MissionTodayReadiness } from "@/lib/missions/today-readiness";
+import {
+  countyVolunteerFact,
+  type OperationalNumber,
+  type VolunteerCountyCapacity,
+} from "@/lib/missions/volunteer-operations";
 
 export type CountyOperationalGroup =
   | "NEEDS_IMMEDIATE_ATTENTION"
@@ -56,10 +61,12 @@ export type CountyCommandNode = {
   readinessPercent: number | null;
   upcomingMissions: CountyMissionRef[];
   upcomingCount: number;
-  volunteerCapacity: {
-    value: number | null;
-    status: "unknown";
-    note: string;
+  volunteerCapacity: OperationalNumber & {
+    note?: string;
+    openRoles?: number;
+    coveragePercent?: number | null;
+    leadershipDepth?: OperationalNumber;
+    benchStrengthReason?: string;
   };
   openNeeds: string[];
   recentActivity: string;
@@ -356,11 +363,39 @@ function missionRef(m: CountyMissionInput): CountyMissionRef {
   };
 }
 
+function volunteerCapacityForCounty(
+  countyName: string,
+  volunteerFeed: VolunteerCountyCapacity[] | null | undefined,
+): CountyCommandNode["volunteerCapacity"] {
+  const fact = countyVolunteerFact(volunteerFeed, countyName);
+  if (!fact) {
+    return {
+      status: "unknown",
+      value: null,
+      reason:
+        "Volunteer capacity is Unknown because Volunteer Operations has not provided a county feed for this node.",
+      note: "Unknown — not zero.",
+    };
+  }
+  return {
+    ...fact.volunteerCapacity,
+    note:
+      fact.volunteerCapacity.status === "known"
+        ? fact.volunteerCapacity.note
+        : fact.volunteerCapacity.reason,
+    openRoles: fact.openRoles.value,
+    coveragePercent: fact.coverage.percent,
+    leadershipDepth: fact.leadershipDepth,
+    benchStrengthReason: fact.benchStrength.reason,
+  };
+}
+
 export function buildCountyCommandNode(input: {
   countyName: string;
   missions: CountyMissionInput[];
   fieldHeat: FieldHeat | null;
   fieldHelp: Array<{ detail: string; severity: string }>;
+  volunteerFeed?: VolunteerCountyCapacity[] | null;
   now: Date;
 }): CountyCommandNode {
   const { countyName, missions, fieldHeat, fieldHelp, now } = input;
@@ -420,11 +455,7 @@ export function buildCountyCommandNode(input: {
     readinessPercent,
     upcomingMissions: upcoming.map(missionRef),
     upcomingCount: upcoming.length,
-    volunteerCapacity: {
-      value: null,
-      status: "unknown",
-      note: "Canonical volunteer availability owned by Volunteer Operations (not yet wired).",
-    },
+    volunteerCapacity: volunteerCapacityForCounty(countyName, input.volunteerFeed),
     openNeeds,
     recentActivity,
     operationalRisk,
@@ -450,6 +481,7 @@ export function buildCountyOperationsHome(input: {
   missions: CountyMissionInput[];
   fieldHeat: OperationalHeatRow[];
   fieldHelp?: Array<{ countyLabel: string; detail: string; severity: string }>;
+  volunteerFeed?: VolunteerCountyCapacity[] | null;
   countyNames?: readonly string[];
   now?: Date;
 }): CountyOperationsHome {
@@ -482,6 +514,7 @@ export function buildCountyOperationsHome(input: {
       missions: byCounty.get(countyName) ?? [],
       fieldHeat: heatByCounty.get(countyName) ?? null,
       fieldHelp: helpByCounty.get(countyName) ?? [],
+      volunteerFeed: input.volunteerFeed,
       now,
     }),
   );

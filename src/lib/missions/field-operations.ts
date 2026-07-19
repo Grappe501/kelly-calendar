@@ -81,6 +81,14 @@ export type FieldTeamCard = {
   href: string;
   eventVersion: number;
   canCheckIn: boolean;
+  /** Consumed from Volunteer Operations — not re-derived here. */
+  volunteerSignals: {
+    assignmentConfidence: "HIGH" | "MEDIUM" | "LOW" | "UNKNOWN";
+    staffingConfidence: "HIGH" | "MEDIUM" | "LOW" | "UNKNOWN";
+    openRoles: number;
+    backupLeaderAvailable: "UNKNOWN";
+    replacementOptions: "UNKNOWN";
+  } | null;
 };
 
 export type HelpQueueItem = {
@@ -127,6 +135,13 @@ export type FieldOperationsHome = {
     topHelpItems: Array<{ countyLabel: string; detail: string }>;
     briefingLine: string;
   };
+};
+
+export type FieldVolunteerMissionSignal = {
+  missionId: string;
+  assignmentConfidence: "HIGH" | "MEDIUM" | "LOW" | "UNKNOWN";
+  staffingConfidence: "HIGH" | "MEDIUM" | "LOW" | "UNKNOWN";
+  openRoles: number;
 };
 
 export type FieldMissionInput = {
@@ -198,7 +213,10 @@ function needsFromMission(input: FieldMissionInput): string[] {
   return needs;
 }
 
-export function buildFieldTeamCard(input: FieldMissionInput): FieldTeamCard {
+export function buildFieldTeamCard(
+  input: FieldMissionInput,
+  volunteerSignal?: FieldVolunteerMissionSignal | null,
+): FieldTeamCard {
   const { mission } = input;
   const county = input.countyName?.trim() || null;
   const teamLabel = county ? `${county} County` : mission.ownerLabel || "Field team";
@@ -268,6 +286,15 @@ export function buildFieldTeamCard(input: FieldMissionInput): FieldTeamCard {
     href: `/calendar?event=${mission.missionId}`,
     eventVersion: mission.eventVersion,
     canCheckIn: mission.canMutateDayActions,
+    volunteerSignals: volunteerSignal
+      ? {
+          assignmentConfidence: volunteerSignal.assignmentConfidence,
+          staffingConfidence: volunteerSignal.staffingConfidence,
+          openRoles: volunteerSignal.openRoles,
+          backupLeaderAvailable: "UNKNOWN",
+          replacementOptions: "UNKNOWN",
+        }
+      : null,
   };
 }
 
@@ -276,10 +303,14 @@ export function buildFieldOperationsHome(input: {
   timezone: string;
   now?: Date;
   missions: FieldMissionInput[];
+  volunteerFieldFeed?: FieldVolunteerMissionSignal[] | null;
 }): FieldOperationsHome {
   const now = input.now ?? new Date();
+  const volByMission = new Map(
+    (input.volunteerFieldFeed ?? []).map((v) => [v.missionId, v]),
+  );
   const cards = input.missions
-    .map(buildFieldTeamCard)
+    .map((m) => buildFieldTeamCard(m, volByMission.get(m.mission.missionId) ?? null))
     .filter((c) => c.missionStatus !== "COMPLETE")
     .sort((a, b) => {
       const rank = (h: FieldHeat) =>
@@ -287,7 +318,9 @@ export function buildFieldOperationsHome(input: {
       return rank(a.heat) - rank(b.heat);
     });
 
-  const allCards = input.missions.map(buildFieldTeamCard);
+  const allCards = input.missions.map((m) =>
+    buildFieldTeamCard(m, volByMission.get(m.mission.missionId) ?? null),
+  );
   const activeMissions = allCards.filter((c) => c.missionStatus !== "COMPLETE").length;
   const needAttention = allCards.filter(
     (c) => c.heat === "BUSY" || c.heat === "OVERLOADED" || c.heat === "UNKNOWN",

@@ -168,6 +168,26 @@ export function FieldOperationsView({
                     <dt>Ownership confidence</dt>
                     <dd>{team.ownership.confidence}</dd>
                   </div>
+                  {team.volunteerSignals ? (
+                    <>
+                      <div>
+                        <dt>Staffing confidence</dt>
+                        <dd>{team.volunteerSignals.staffingConfidence}</dd>
+                      </div>
+                      <div>
+                        <dt>Assignment confidence</dt>
+                        <dd>{team.volunteerSignals.assignmentConfidence}</dd>
+                      </div>
+                      <div>
+                        <dt>Open roles</dt>
+                        <dd>{team.volunteerSignals.openRoles}</dd>
+                      </div>
+                      <div>
+                        <dt>Backup / replacements</dt>
+                        <dd>Unknown</dd>
+                      </div>
+                    </>
+                  ) : null}
                 </dl>
                 <ul className="field-resource-strip" aria-label="Resource status">
                   {(

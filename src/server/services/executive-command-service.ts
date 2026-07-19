@@ -3,6 +3,7 @@ import "server-only";
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
 import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
+import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
@@ -14,7 +15,7 @@ export type ExecutiveCommandPayload = {
 };
 
 /**
- * Authenticated Executive Command Center — consumes Field Operations feed.
+ * Authenticated Executive Command Center — consumes Field, County, Volunteer feeds.
  */
 export async function getExecutiveCommand(
   actor: AuthenticatedActor,
@@ -35,13 +36,21 @@ export async function getExecutiveCommand(
       staffAssignedCount: geo?.staffAssignedCount ?? 0,
       staffRequiredCount: geo?.staffRequiredCount ?? 0,
       readiness: mission.todayReadiness,
+      volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
     };
+  });
+
+  const volunteers = buildVolunteerOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const field = buildFieldOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+    volunteerFieldFeed: volunteers.fieldFeed.missions,
   });
 
   const counties = buildCountyOperationsHome({
@@ -54,6 +63,7 @@ export async function getExecutiveCommand(
       detail: h.detail,
       severity: h.severity,
     })),
+    volunteerFeed: volunteers.countyFeed,
   });
 
   const command = buildExecutiveCommand({
@@ -62,6 +72,7 @@ export async function getExecutiveCommand(
     countiesByMission: briefPayload.countiesByMission,
     fieldFeed: field.executiveFeed,
     countyFeed: counties.executiveFeed,
+    volunteerFeed: volunteers.executiveFeed,
   });
 
   return {

@@ -93,8 +93,16 @@ export function ExecutiveCommandView({
             <span className="muted">Events today</span>
           </li>
           <li>
-            <strong>—</strong>
-            <span className="muted">Volunteers (unknown)</span>
+            <strong>
+              {health.volunteersAssigned.status === "known"
+                ? health.volunteersAssigned.value
+                : "—"}
+            </strong>
+            <span className="muted">
+              {health.volunteersAssigned.status === "known"
+                ? "Assigned today"
+                : "Volunteers (unknown)"}
+            </span>
           </li>
           <li>
             <strong>{health.readinessScore.blocked}</strong>
@@ -129,6 +137,14 @@ export function ExecutiveCommandView({
             <strong>Counties:</strong> {command.countyFeed.briefingLine}{" "}
             <Link className="button secondary" href="/counties">
               Open County Ops
+            </Link>
+          </p>
+        ) : null}
+        {command.volunteerFeed ? (
+          <p>
+            <strong>Volunteers:</strong> {command.volunteerFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/volunteers">
+              Open Volunteer Ops
             </Link>
           </p>
         ) : null}

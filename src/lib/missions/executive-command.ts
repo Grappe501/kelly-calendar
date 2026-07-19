@@ -7,6 +7,7 @@ import type { CampaignBrief } from "@/lib/missions/campaign-brief";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
+import type { VolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 
 export type ExecutivePriority = {
   label: string;
@@ -97,6 +98,8 @@ export type ExecutiveCommand = {
   fieldFeed: FieldOperationsHome["executiveFeed"] | null;
   /** Consumed from County Operations (7.3) — canonical county weakness. */
   countyFeed: CountyOperationsHome["executiveFeed"] | null;
+  /** Consumed from Volunteer Operations (7.4) — canonical capacity. */
+  volunteerFeed: VolunteerOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -115,17 +118,24 @@ export function buildDeterministicExecutiveBriefing(
   brief: CampaignBrief,
   fieldFeed?: FieldOperationsHome["executiveFeed"] | null,
   countyFeed?: CountyOperationsHome["executiveFeed"] | null,
+  volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
-    const countyLine = countyFeed?.briefingLine
-      ? ` ${countyFeed.briefingLine}`
-      : "";
-    return `No missions on today’s permissioned schedule. Use Add Mission or Calendar if activity is expected. No critical conflicts detected in this view.${countyLine}`;
+    const extra = [
+      countyFeed?.briefingLine,
+      volunteerFeed?.briefingLine,
+    ]
+      .filter(Boolean)
+      .join(" ");
+    return `No missions on today’s permissioned schedule. Use Add Mission or Calendar if activity is expected. No critical conflicts detected in this view.${extra ? ` ${extra}` : ""}`;
   }
 
   const parts: string[] = [];
   if (fieldFeed?.briefingLine) {
     parts.push(fieldFeed.briefingLine);
+  }
+  if (volunteerFeed?.briefingLine) {
+    parts.push(volunteerFeed.briefingLine);
   }
   if (countyFeed?.briefingLine) {
     parts.push(countyFeed.briefingLine);
@@ -185,11 +195,13 @@ export function buildExecutiveCommand(input: {
   countiesByMission?: Array<{ missionId: string; countyName: string | null }>;
   fieldFeed?: FieldOperationsHome["executiveFeed"] | null;
   countyFeed?: CountyOperationsHome["executiveFeed"] | null;
+  volunteerFeed?: VolunteerOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
   const fieldFeed = input.fieldFeed ?? null;
   const countyFeed = input.countyFeed ?? null;
+  const volunteerFeed = input.volunteerFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -218,6 +230,15 @@ export function buildExecutiveCommand(input: {
         : countyFeed.briefingLine,
       href: top?.href ?? "/counties",
       urgency: "SOON",
+    });
+  }
+  if (volunteerFeed && volunteerFeed.criticalVacancies > 0) {
+    const top = volunteerFeed.topVacancies[0];
+    topPriorities.push({
+      label: "Volunteer capacity gap",
+      detail: top ? top.detail : volunteerFeed.briefingLine,
+      href: "/volunteers",
+      urgency: "NOW",
     });
   }
   if (brief.topBlocker) {
@@ -460,6 +481,12 @@ export function buildExecutiveCommand(input: {
   if (countyFeed && countyFeed.needsImmediate > 0) {
     alerts.push(`${countyFeed.needsImmediate} count${countyFeed.needsImmediate === 1 ? "y" : "ies"} need immediate attention`);
   }
+  if (volunteerFeed && volunteerFeed.criticalVacancies > 0) {
+    alerts.push(`${volunteerFeed.criticalVacancies} understaffed event(s)`);
+  }
+  if (volunteerFeed?.unassignedTrainedCanvassersStatus === "unknown") {
+    alerts.push("Trained canvasser pool Unknown (not zero)");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -480,7 +507,9 @@ export function buildExecutiveCommand(input: {
       missionsCompleted: brief.missions.completed,
       missionsInProgress: brief.missions.inProgress,
       missionsUpcoming: upcoming.length,
-      volunteersAssigned: { value: null, status: "unknown" },
+      volunteersAssigned: volunteerFeed
+        ? { value: volunteerFeed.assignedToday, status: "known" }
+        : { value: null, status: "unknown" },
       countiesActive: brief.counties.names.length,
       eventsToday: brief.missions.total,
       readinessScore: {
@@ -496,15 +525,21 @@ export function buildExecutiveCommand(input: {
     geographic: {
       counties,
       unknownCountyMissions: brief.counties.unknownCountyMissions,
-      note: "Today’s counties from Calendar. Statewide weakness/health owned by County Operations (/counties); field heat owned by Field Ops (/field).",
+      note: "Today’s counties from Calendar. Weakness owned by County Ops; field heat by Field Ops; capacity by Volunteer Ops.",
     },
     rhythm,
     executiveBriefing: {
-      text: buildDeterministicExecutiveBriefing(brief, fieldFeed, countyFeed),
+      text: buildDeterministicExecutiveBriefing(
+        brief,
+        fieldFeed,
+        countyFeed,
+        volunteerFeed,
+      ),
       source: "deterministic_v1",
     },
     fieldFeed,
     countyFeed,
+    volunteerFeed,
   };
 }
 
@@ -523,7 +558,7 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
       countiesActive: command.campaignHealth.countiesActive,
       readiness: command.campaignHealth.readinessScore.label,
       alerts: command.campaignHealth.operationalAlerts,
-      volunteersAssigned: "unknown",
+      volunteersAssigned: command.campaignHealth.volunteersAssigned,
     },
     inboxActionable: command.executiveInbox
       .filter((i) => i.status === "actionable")
@@ -532,5 +567,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     briefing: command.executiveBriefing.text,
     fieldFeed: command.fieldFeed,
     countyFeed: command.countyFeed,
+    volunteerFeed: command.volunteerFeed,
   };
 }

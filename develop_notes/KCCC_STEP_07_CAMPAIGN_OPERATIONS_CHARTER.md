@@ -27,11 +27,12 @@ Never:
 
 1. **Executive Command** — Daily command center, campaign health, priorities, operational summaries.  
 2. **Field Operations** — Mission execution, help queue, check-ins, escalation.  
-3. **Travel & Logistics** — Routes, lodging, vehicles, event preparation, travel timing, resources.  
-4. **Communications Operations** — Debate prep, media schedule, speaking engagements, briefing packets, follow-up.  
-5. **County Operations** — County readiness, leadership, statewide weakness, command nodes.  
-6. **Operational Intelligence** — Staffing gaps, conflicts, workload balancing, advisory insights (AI advisory only).  
-7. **After-Action & Accountability** — Mission completion, lessons learned, follow-up commitments, performance tracking.
+3. **Volunteer Operations** — Capacity, assignments, open roles, recruitment priority.  
+4. **Travel & Logistics** — Routes, lodging, vehicles, event preparation, travel timing, resources.  
+5. **Communications Operations** — Debate prep, media schedule, speaking engagements, briefing packets, follow-up.  
+6. **County Operations** — County readiness, leadership, statewide weakness, command nodes.  
+7. **Operational Intelligence** — Staffing gaps, conflicts, workload balancing, advisory insights (AI advisory only).  
+8. **After-Action & Accountability** — Mission completion, lessons learned, follow-up commitments, performance tracking.
 
 ## Standing constraints
 
@@ -46,8 +47,9 @@ Never:
 > Every module must both consume information from another module and produce information for another module.
 
 ```text
-Calendar → Mission → Field Operations → Executive Command → Campaign Brief
-→ County Operations → Operational Intelligence → Calendar
+Calendar → Mission → Field Operations → Volunteer Operations
+→ County Operations → Executive Command → Campaign Brief
+→ Operational Intelligence → Calendar
 ```
 
 ## Canonical source principle (permanent)
@@ -58,15 +60,47 @@ Examples:
 
 - Mission status / field help → owned by Field Operations  
 - County readiness / weakness grouping → owned by County Operations  
+- Volunteer capacity / open roles → owned by Volunteer Operations  
 - Executive summary → owned by Executive Command  
-- Volunteer availability → owned by Volunteer Operations (future)  
 - Calendar timing → owned by the Calendar  
+
+## Unknown principle (permanent)
+
+> **Unknown is a first-class operational state.**
+
+It is not zero, false, empty, or assumed.
+
+It means:
+
+> “This information is not yet available because its owning module has not been implemented.”
+
+Leadership must be able to distinguish “we have no volunteers” from “we don’t yet have volunteer data.”
 
 ## Doctrine questions
 
 - Executive Command: What does leadership need to know?  
 - Field Operations: Who needs help right now?  
-- County Operations: Where are we weak?
+- County Operations: Where are we weak?  
+- Volunteer Operations: Do we have enough people to execute the plan?
+
+## Campaign Operations Pyramid
+
+```text
+                    EXECUTIVE COMMAND
+             "What does leadership need to know?"
+                         ▲
+                COUNTY OPERATIONS
+              "Where are we weak?"
+                         ▲
+                FIELD OPERATIONS
+             "Who needs help right now?"
+                         ▲
+                VOLUNTEER OPERATIONS
+        "Do we have enough people to execute?"
+                         ▲
+                     CALENDAR
+           "What must happen, and when?"
+```
 
 ## Active increments
 
@@ -74,6 +108,7 @@ Examples:
 |-----------|-------|----------|--------|
 | 7.1 Executive Command | `/command` | What does leadership need to know? | SHIPPED |
 | 7.2 Field Operations | `/field` | Who needs help right now? | ACCEPTED |
-| 7.3 County Operations | `/counties` | Where are we weak? | IN PROGRESS |
+| 7.3 County Operations | `/counties` | Where are we weak? | ACCEPTED |
+| 7.4 Volunteer Operations | `/volunteers` | Do we have enough people to execute the plan? | IN PROGRESS |
 
-See `develop_notes/KCCC_STEP_07_1_EXECUTIVE_COMMAND.md`, `KCCC_STEP_07_2_FIELD_OPERATIONS.md`, and `KCCC_STEP_07_3_COUNTY_OPERATIONS.md`.
+See step docs under `develop_notes/KCCC_STEP_07_*.md`.

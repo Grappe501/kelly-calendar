@@ -30,5 +30,6 @@ describe("Step 6 bottom nav contract", () => {
     expect(resolveActiveNavId("/field")).toBe("more");
     expect(resolveActiveNavId("/counties")).toBe("more");
     expect(resolveActiveNavId("/counties/benton")).toBe("more");
+    expect(resolveActiveNavId("/volunteers")).toBe("more");
   });
 });

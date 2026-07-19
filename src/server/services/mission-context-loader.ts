@@ -27,6 +27,8 @@ export type MissionGeoSnapshot = {
   city: string | null;
   staffAssignedCount: number;
   staffRequiredCount: number;
+  /** True when a VOLUNTEER_LEAD role has an assigned user. */
+  volunteerLeadAssigned: boolean;
 };
 
 export type MissionContextBundle = {
@@ -85,6 +87,9 @@ export async function loadMissionContextForIds(
       staffAssignedCount: event.staffAssignments.filter((s) => s.assignedUserId)
         .length,
       staffRequiredCount: event.staffAssignments.length,
+      volunteerLeadAssigned: event.staffAssignments.some(
+        (s) => s.roleType === "VOLUNTEER_LEAD" && Boolean(s.assignedUserId),
+      ),
     });
 
     readiness.set(

@@ -5,6 +5,7 @@ import {
   type CountyOperationsHome,
 } from "@/lib/missions/county-operations";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
+import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
@@ -17,7 +18,7 @@ export type CountyOperationsPayload = {
 
 /**
  * Authenticated County Operations — statewide weakness / health.
- * Consumes Calendar missions + Field Operations heat; produces executiveFeed.
+ * Consumes Field heat + Volunteer capacity feed; produces executiveFeed.
  */
 export async function getCountyOperations(
   actor: AuthenticatedActor,
@@ -38,13 +39,21 @@ export async function getCountyOperations(
       staffAssignedCount: geo?.staffAssignedCount ?? 0,
       staffRequiredCount: geo?.staffRequiredCount ?? 0,
       readiness: mission.todayReadiness,
+      volunteerLeadAssigned: geo?.volunteerLeadAssigned ?? false,
     };
+  });
+
+  const volunteers = buildVolunteerOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const field = buildFieldOperationsHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
     missions: missionInputs,
+    volunteerFieldFeed: volunteers.fieldFeed.missions,
   });
 
   const counties = buildCountyOperationsHome({
@@ -57,6 +66,7 @@ export async function getCountyOperations(
       detail: h.detail,
       severity: h.severity,
     })),
+    volunteerFeed: volunteers.countyFeed,
   });
 
   return {

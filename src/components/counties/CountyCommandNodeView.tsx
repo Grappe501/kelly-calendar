@@ -67,7 +67,36 @@ export function CountyCommandNodeView({ county, date, timezone }: Props) {
           </div>
           <div>
             <dt>Volunteer capacity</dt>
-            <dd className="muted">{county.volunteerCapacity.note}</dd>
+            <dd>
+              {county.volunteerCapacity.status === "known"
+                ? `${county.volunteerCapacity.value}% fill` +
+                  (county.volunteerCapacity.openRoles != null
+                    ? ` · ${county.volunteerCapacity.openRoles} open`
+                    : "")
+                : "Unknown"}
+              <span className="muted">
+                {" "}
+                —{" "}
+                {county.volunteerCapacity.status === "known"
+                  ? county.volunteerCapacity.note
+                  : county.volunteerCapacity.reason}
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Leadership depth</dt>
+            <dd className="muted">
+              {county.volunteerCapacity.leadershipDepth?.status === "known"
+                ? county.volunteerCapacity.leadershipDepth.note
+                : (county.volunteerCapacity.leadershipDepth?.reason ??
+                  "Unknown — coordinator registry not implemented")}
+            </dd>
+          </div>
+          <div>
+            <dt>Bench strength</dt>
+            <dd className="muted">
+              {county.volunteerCapacity.benchStrengthReason ?? "Unknown"}
+            </dd>
           </div>
           <div>
             <dt>Open needs</dt>

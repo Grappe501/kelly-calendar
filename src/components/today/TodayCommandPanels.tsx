@@ -103,6 +103,9 @@ export function TodayCommandPanels({
           <Link className="button secondary" href="/counties">
             Counties
           </Link>
+          <Link className="button secondary" href="/volunteers">
+            Volunteers
+          </Link>
           <Link className="button secondary" href="/brief">
             Campaign Brief
           </Link>
