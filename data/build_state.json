@@ -28,9 +28,11 @@
   "step6_architecture": "pass",
   "step6_operational_model": "pass",
   "step6_operator_acceptance": "pending",
-  "step6_acceptance_mode": "pilot_not_dev_demo",
+  "step6_acceptance_mode": "pilot_operator_first",
+  "step6_development_status": "frozen_except_critical_fixes",
   "step6_increment": "6.6-campaign-brief",
   "step6_closure_blocked_on": "production_pilot_walkthrough",
+  "step6_hold_only_blocks_closure": true,
   "step7_charter": "campaign_operations_not_crud",
   "step7_status": "blocked_until_step6_accept",
   "live_command_summary_enabled": true,
@@ -61,8 +63,8 @@
   "netlify_app_session_secret_configured": true,
   "production_deployment_ready": true,
   "deployment_status": "production_live",
-  "updated_at": "2026-07-19T03:20:00.000Z",
-  "last_updated": "2026-07-19T03:20:00.000Z",
+  "updated_at": "2026-07-19T03:25:00.000Z",
+  "last_updated": "2026-07-19T03:25:00.000Z",
   "timezone": "America/Chicago",
   "commit_hash": "08ada56",
   "step_5_6_unlock_commit": "83c2bd4",
@@ -70,5 +72,5 @@
   "step_5_7_closure_commit": "fc13413",
   "step_6_engineering_tip": "08ada56",
   "governance_baseline_at_start": "d6d0096",
-  "notes": "Step 6 pilot ACCEPT pending on production (feature tip 08ada56). Not a developer demo. Step 7 charter locked: Campaign Operations, not CRUD. candidate_data_ready false."
+  "notes": "Step 6 FROZEN for pilot ACCEPT on production (feature tip 08ada56). HOLD-only blocks closure; polish/AI/traffic/Google are enhancements. Step 7 blocked: Campaign Operations, not CRUD. candidate_data_ready false."
 }
