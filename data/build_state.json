@@ -45,9 +45,10 @@
   "phase_3_drafting_paused": true,
   "engineering_track_a": "KCCC-ENG-TRACK-A-CALENDAR-EXPERIENCE",
   "engineering_track_a_status": "active",
-  "calendar_experience_pass": "1-day-view",
+  "calendar_experience_pass": "2-week-view",
   "calendar_experience_day_view": true,
-  "next_engineering_deliverable": "KCCC-CAL-EXP-2-WEEK-VIEW",
+  "calendar_experience_week_view": true,
+  "next_engineering_deliverable": "KCCC-CAL-EXP-3-MONTH-VIEW",
   "governance_state": "KCCC_GOVERNANCE_STATE_v1.0",
   "constitution": "KCCC_CONSTITUTION_v1.0",
   "architecture_freeze": "KCCC_ARCHITECTURE_FREEZE_v1.0",
@@ -119,5 +120,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Architecture 1.0 permanently closed. Eng Track A Calendar Experience ACTIVE (Day View shipped). Phase 3 drafting paused at 3.1 PASS WITH CONDITIONS. No Phase 3 planning/implementation. Maturity flags remain false."
+  "notes": "Architecture 1.0 permanently closed. Eng Track A Calendar Experience ACTIVE (Day+Week Views shipped; Month next). Phase 3 drafting paused at 3.1 PASS WITH CONDITIONS. No Phase 3 planning/implementation. Maturity flags remain false."
 }

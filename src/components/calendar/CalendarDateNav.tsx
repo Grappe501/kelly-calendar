@@ -6,11 +6,19 @@ type Props = {
   view?: string;
   label: string;
   isToday: boolean;
+  /** Day = 1, Week = 7 */
+  stepDays?: number;
 };
 
-export function CalendarDateNav({ dateKey, view = "day", label, isToday }: Props) {
-  const prev = shiftChicagoDateKey(dateKey, -1);
-  const next = shiftChicagoDateKey(dateKey, 1);
+export function CalendarDateNav({
+  dateKey,
+  view = "day",
+  label,
+  isToday,
+  stepDays = 1,
+}: Props) {
+  const prev = shiftChicagoDateKey(dateKey, -stepDays);
+  const next = shiftChicagoDateKey(dateKey, stepDays);
 
   return (
     <div className="calendar-date-nav">
@@ -19,10 +27,10 @@ export function CalendarDateNav({ dateKey, view = "day", label, isToday }: Props
       </Link>
       <div className="calendar-date-nav-center">
         <p className="calendar-date-label">{label}</p>
-        {isToday ? <p className="muted">Today</p> : null}
+        {isToday ? <p className="muted">{stepDays === 7 ? "This week" : "Today"}</p> : null}
         {!isToday ? (
           <Link className="text-link" href={`/calendar?view=${view}`}>
-            Jump to today
+            Jump to {stepDays === 7 ? "this week" : "today"}
           </Link>
         ) : null}
       </div>

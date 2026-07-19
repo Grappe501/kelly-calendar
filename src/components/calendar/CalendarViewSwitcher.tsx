@@ -2,13 +2,17 @@ import Link from "next/link";
 
 const VIEWS = [
   { id: "day", label: "Day", ready: true },
-  { id: "week", label: "Week", ready: false },
+  { id: "week", label: "Week", ready: true },
   { id: "month", label: "Month", ready: false },
   { id: "agenda", label: "Agenda", ready: false },
+  { id: "timeline", label: "Timeline", ready: false },
+  { id: "mission", label: "Mission", ready: false },
 ] as const;
 
+export type CalendarViewId = (typeof VIEWS)[number]["id"];
+
 type Props = {
-  active: "day" | "week" | "month" | "agenda";
+  active: CalendarViewId;
   dateKey: string;
 };
 

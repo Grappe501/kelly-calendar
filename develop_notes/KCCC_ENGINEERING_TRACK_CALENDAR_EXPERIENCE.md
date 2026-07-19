@@ -37,14 +37,14 @@ Views **own nothing**. They consume Phase 1 and Phase 2 surfaces (Executive, Fie
 
 ## Calendar Experience 1.0 — view sequence
 
-| # | View | Executive question | Pass |
-|---|------|--------------------|------|
-| 1 | Day View | What am I doing today? | Engineering Pass 1 |
-| 2 | Week View | How does this week flow? | Engineering Pass 1 |
-| 3 | Month View | Where are the big campaign moments? | Engineering Pass 1 |
-| 4 | Agenda View | What is next, in order? | Engineering Pass 2 |
-| 5 | Timeline View | How does time pressure unfold? | Engineering Pass 2 |
-| 6 | Mission View | What does this mission require? | Engineering Pass 2 |
+| # | View | Executive question | Pass | Status |
+|---|------|--------------------|------|--------|
+| 1 | Day View | What am I doing today? | A.1 | COMPLETE |
+| 2 | Week View | What does the campaign need to accomplish this week? | A.2 | COMPLETE |
+| 3 | Month View | Where are the big campaign moments? | A.3 | NEXT |
+| 4 | Agenda View | What is next, in order? | A.4 | Planned |
+| 5 | Timeline View | How does time pressure unfold? | A.4 | Planned |
+| 6 | Mission View | What does this mission require? | A.4 | Planned |
 
 ## Later passes (not started)
 

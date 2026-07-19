@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Eng Track A · Day View shipped · Phase 3 paused (3.1 PwC)</strong>
+            <strong>Eng Track A · Week View shipped · Month next · Phase 3 paused</strong>
           </li>
         </ul>
       </section>

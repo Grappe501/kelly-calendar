@@ -1311,6 +1311,133 @@ legend {
   font-size: 0.9rem;
 }
 
+.week-header-stats {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.week-header-stats dt {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.week-header-stats dd {
+  margin: 0.15rem 0 0;
+}
+
+.domain-strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: var(--space-2);
+}
+
+.domain-tile {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  background: var(--color-surface-elevated);
+}
+
+.domain-tile-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.domain-tile-state {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.week-day-column {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem;
+  min-height: 8rem;
+  background: var(--color-surface-elevated);
+}
+
+.week-day-today {
+  border-color: var(--color-primary);
+}
+
+.week-day-column header a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.week-day-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.week-day-events li {
+  display: grid;
+  gap: 0.1rem;
+  font-size: 0.8rem;
+}
+
+.week-event-time {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.week-event-title {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.week-day-empty {
+  margin: 0;
+}
+
+.mission-rail {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.county-activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .week-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-date-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

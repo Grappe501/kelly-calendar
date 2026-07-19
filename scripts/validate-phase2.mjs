@@ -368,12 +368,19 @@ if (
   exists("src/server/services/calendar-day-view-service.ts") &&
   build.engineering_track_a_status === "active" &&
   build.calendar_experience_day_view === true &&
+  build.calendar_experience_week_view === true &&
+  build.calendar_experience_pass === "2-week-view" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
   constants.includes("ENGINEERING_TRACK_A") &&
-  constants.includes("CALENDAR_EXPERIENCE_PASS")
+  constants.includes("CALENDAR_EXPERIENCE_PASS") &&
+  exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_2_WEEK_VIEW.md") &&
+  exists("src/components/calendar/WeekView.tsx") &&
+  exists("src/server/services/calendar-week-view-service.ts") &&
+  read("src/app/calendar/page.tsx").includes("WeekView") &&
+  read("src/components/calendar/CalendarViewSwitcher.tsx").includes('id: "timeline"')
 ) {
-  pass("Engineering Track A Calendar Experience Day View (Arch 1.0, not Phase 3)");
+  pass("Engineering Track A Calendar Experience Day+Week Views (Arch 1.0, not Phase 3)");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -383,5 +390,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Eng Track A Day View; Phase 3.1 PASS WITH CONDITIONS paused; no Phase 3 impl).",
+  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Eng Track A Day+Week; Phase 3.1 PASS WITH CONDITIONS paused; no Phase 3 impl).",
 );
