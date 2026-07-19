@@ -12,10 +12,11 @@ Architecture 1.0 ............... STABLE
 Calendar Experience V1 ......... COMPLETE
 
 EA-4 Visual Audit .............. COMPLETE (PASS)
+EA-1 Architecture Compliance ... COMPLETE (PASS WITH FINDINGS · 7.9/10)
 
 Engineering Audit .............. ACTIVE
 Next Audit Stream:
-  EA-1 Architecture Compliance (broadened — implicit ownership check)
+  EA-2 User Experience Audit
 
 Experience Redesign 2.0 ........ PROPOSED (XR-01 Hero first when opened)
 Implementation ................. BLOCKED until Audit + Hardening
@@ -43,23 +44,23 @@ Version 2 Feature Expansion
 
 ## Workstream order
 
-**Immediate next:** **EA-4** (before EA-1).  
-Architecture compliance still matters; the most urgent user-facing weakness is that the product feels dull. EA-4 first.
+**Immediate next:** **EA-2** User Experience Audit.  
+EA-4 and EA-1 are complete; remaining streams feed Hardening before Redesign.
 
 | Priority | ID | Workstream |
 |----------|-----|------------|
 | **Done** | EA-4 | Visual and Experience Audit (4A–4L) — COMPLETE |
-| **1 (NOW)** | EA-1 | Architecture Compliance |
-| 2 | EA-2 | User Experience Audit |
-| 3 | EA-3 | Information Architecture |
-| 4 | EA-5 | Accessibility |
-| 5 | EA-6 | Performance |
-| 6 | EA-7 | Data Integrity |
-| 7 | EA-8 | Security |
-| 8 | EA-9 | Operator Workflow |
-| 9 | EA-10 | Technical Debt |
-| 10 | EA-11 | Documentation |
-| 11 | EA-12 | Future Expansion Readiness |
+| **Done** | EA-1 | Architecture Compliance — PASS WITH FINDINGS (7.9/10) |
+| **1 (NOW)** | EA-2 | User Experience Audit |
+| 2 | EA-3 | Information Architecture |
+| 3 | EA-5 | Accessibility |
+| 4 | EA-6 | Performance |
+| 5 | EA-7 | Data Integrity |
+| 6 | EA-8 | Security |
+| 7 | EA-9 | Operator Workflow |
+| 8 | EA-10 | Technical Debt |
+| 9 | EA-11 | Documentation |
+| 10 | EA-12 | Future Expansion Readiness |
 
 ---
 
@@ -120,8 +121,9 @@ Document evidence for:
 | ID | Status |
 |----|--------|
 | EA-4 | **COMPLETE** — see `KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md` |
-| EA-1 | **NEXT** |
-| EA-2, EA-3, EA-5 … EA-12 | NOT STARTED |
+| EA-1 | **COMPLETE** — PASS WITH FINDINGS · `KCCC_EA1_ARCHITECTURE_COMPLIANCE.md` |
+| EA-2 | **NEXT** |
+| EA-3, EA-5 … EA-12 | NOT STARTED |
 | Experience Redesign 2.0 | PROPOSED — blocked; blueprint ready from EA-4 |
 | Foundation implementation | NOT STARTED — after Redesign program gate |
 

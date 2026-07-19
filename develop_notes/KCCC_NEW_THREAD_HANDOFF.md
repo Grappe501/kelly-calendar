@@ -5,11 +5,12 @@ Architecture 1.0 ............... STABLE (6690ce2)
 
 Calendar Experience V1 ......... COMPLETE
 EA-4 Visual Audit .............. COMPLETE (PASS)
-  Assessment: experience gaps only — architecture sound
+EA-1 Architecture Compliance ... COMPLETE (PASS WITH FINDINGS)
+  Fitness: 7.9/10 · Architecture 1.0 intact
+  Corrections → Hardening (H-AC-01…06); Unknown UX → Redesign
 
 Engineering Audit .............. ACTIVE
-  Next: EA-1 Architecture Compliance
-  (consume vs own · derived traceability · no UI-as-business-state)
+  Next: EA-2 User Experience Audit
 
 Then: remaining audit streams → Hardening
   → Experience Redesign 2.0 (XR-01 Hero first)

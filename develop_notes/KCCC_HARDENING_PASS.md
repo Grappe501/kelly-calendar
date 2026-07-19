@@ -19,7 +19,9 @@ Hardening
 
 ## Rule
 
-Hardening consumes Audit findings (including EA-4 diagnosis). It stabilizes Version 1; it does **not** execute Experience Redesign 2.0 or Foundation.
+Hardening consumes Audit findings (including EA-4 diagnosis and EA-1 Required Corrections H-AC-01…H-AC-06). It stabilizes Version 1; it does **not** execute Experience Redesign 2.0 or Foundation.
+
+**EA-1 seed backlog (when unblocked):** label derived %/heat; fix forced `candidateAttending`; shared calendar assembly helper; demote Day View MissionDayActions hosting; deepen owner links when IDs exist.
 
 ## Exit → next program
 
