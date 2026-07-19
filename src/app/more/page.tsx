@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Architecture Review · Constitution v1.0 (implementation locked)</strong>
+            <strong>Architecture 1.0 BASELINE LOCKED · Review (impl locked)</strong>
           </li>
         </ul>
       </section>

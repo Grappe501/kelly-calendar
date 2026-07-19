@@ -2,11 +2,12 @@
 
 **Product:** Kelly Campaign Command Calendar (KCCC)  
 **Architecture:** Campaign Operating System  
-**Architecture Version:** 1.0  
-**Status:** FROZEN through Phase 2  
+**Architecture Version:** 1.0 (**BASELINE LOCKED**)  
+**Status:** FROZEN through Phase 2 — immutable except via formal RFC  
 **Project State:** Architecture Review (implementation locked)  
+**Application Version (separate track):** `0.8.4-petition`  
 **Effective:** 2026-07-19 (America/Chicago)  
-**Authority:** Highest-level architectural document in this repository. All future features, integrations, and automations must obey this Constitution.
+**Authority:** Highest-level architectural document in this repository. Canonical with the Architecture Freeze. All future features, integrations, and automations must obey this Constitution.
 
 ---
 
@@ -202,8 +203,31 @@ LEVEL E — Certified
 ```
 
 Phase 1 and Phase 2 have reached **Level E (Certified)**.  
-Architecture Version 1.0 freezes Layers 1–2.  
+Architecture Version 1.0 freezes Layers 1–2 and is **BASELINE LOCKED**.  
 Phase 3 is at **Level A (Architecture Review)**; implementation is **locked**.
+
+### Change control
+
+| Type | Requires |
+|------|----------|
+| Bug fix | Normal engineering review |
+| Feature within existing doctrine | Design review |
+| New capability | Architecture proposal |
+| Change to Constitution or ownership model | Formal RFC and Architecture Board approval |
+
+### Architecture vs application versioning
+
+Architecture versions and application versions are **separate tracks**. Application releases (e.g. `0.9.x`, `1.0`) may proceed under Architecture **1.0** without implying a constitutional change. Architecture **2.0** requires RFC approval for Constitution or ownership-model changes.
+
+### Exit criteria for Architecture Review (Phase 3 unlock)
+
+Before unlocking Phase 3 implementation, design review must answer conclusively:
+
+1. Is every external integration subordinate to canonical ownership?  
+2. Does every automation preserve **Approve → Execute** where appropriate?  
+3. Can every externally sourced fact be traced and audited?  
+4. Can multiple campaigns coexist without data leakage or ownership ambiguity?  
+5. Can every AI-generated recommendation be distinguished from canonical operational truth?  
 
 ---
 
@@ -211,12 +235,15 @@ Phase 3 is at **Level A (Architecture Review)**; implementation is **locked**.
 
 | Version | Date | Notes |
 |---------|------|-------|
-| 1.0 | 2026-07-19 | Constitution established. Architecture frozen through Phase 2. Project placed in Architecture Review. Phase 3 Trusted Connected Platform definition only; implementation locked. |
+| 1.0 | 2026-07-19 | Constitution established. Architecture frozen through Phase 2. Architecture Review. |
+| 1.0 | 2026-07-19 | **BASELINE LOCKED.** Governance state recorded. Change control + dual versioning + Phase 3 exit criteria. |
 
 ---
 
 ## Related documents
 
+- Governance state: `KCCC_GOVERNANCE_STATE_v1.0.md`  
+- Architecture freeze: `KCCC_ARCHITECTURE_FREEZE_v1.0.md`  
 - Phase 1 certification: `KCCC_PHASE_01_CERTIFICATION.md`  
 - Phase 2 certification: `KCCC_PHASE_02_CERTIFICATION.md`  
 - Phase 3 charter: `KCCC_PHASE_03_CHARTER.md`  

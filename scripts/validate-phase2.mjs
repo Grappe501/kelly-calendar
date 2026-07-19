@@ -30,6 +30,7 @@ const required = [
   ["cert", "develop_notes/KCCC_PHASE_03_CHARTER.md"],
   ["const", "develop_notes/KCCC_CONSTITUTION_v1.0.md"],
   ["freeze", "develop_notes/KCCC_ARCHITECTURE_FREEZE_v1.0.md"],
+  ["gov", "develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
@@ -38,16 +39,31 @@ for (const [label, rel] of required) {
 
 const constitution = read("develop_notes/KCCC_CONSTITUTION_v1.0.md");
 if (
-  constitution.includes("Architecture Version:** 1.0") &&
+  constitution.includes("BASELINE LOCKED") &&
   constitution.includes("No duplicate ownership") &&
   constitution.includes("No AI writes to canonical state") &&
   constitution.includes("LEVEL A") &&
   constitution.includes("LEVEL E") &&
-  constitution.includes("Approve → Execute")
+  constitution.includes("Approve → Execute") &&
+  constitution.includes("Formal RFC") &&
+  constitution.includes("Architecture vs application versioning")
 ) {
-  pass("Constitution v1.0 present with prohibitions + certification levels");
+  pass("Constitution v1.0 baseline locked + change control");
 } else {
   fail("Constitution v1.0 incomplete");
+}
+
+const governance = read("develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md");
+if (
+  governance.includes("BASELINE LOCKED") &&
+  governance.includes("Proposal Required") &&
+  governance.includes("RFC Required") &&
+  governance.includes("0.8.4-petition") &&
+  governance.includes("subordinate to canonical ownership")
+) {
+  pass("Governance State v1.0 present");
+} else {
+  fail("Governance State v1.0 incomplete");
 }
 
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
@@ -140,9 +156,15 @@ if (
 
 if (
   build.architecture_version === "1.0" &&
-  build.architecture_status === "frozen_through_phase_2" &&
+  build.architecture_status === "baseline_locked" &&
+  build.architecture_immutable_except_rfc === true &&
   build.project_state === "architecture_review" &&
   build.implementation_status === "locked" &&
+  build.constitution_canonical === true &&
+  build.architecture_freeze_canonical === true &&
+  build.breaking_changes === "rfc_required" &&
+  build.versioning_tracks_separated === true &&
+  build.application_version === "0.8.4-petition" &&
   build.phase_3_status === "architecture_review" &&
   build.phase_3_implementation_locked === true &&
   build.phase_3_implementation_started === false &&
@@ -151,21 +173,22 @@ if (
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Architecture 1.0 frozen; Architecture Review; implementation locked");
+  pass("Architecture 1.0 BASELINE LOCKED; dual versioning; review locked");
 } else {
-  fail("Architecture freeze / Phase 3 review gate incorrect");
+  fail("Baseline governance / Phase 3 review gate incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
 if (
   constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
   constants.includes("ARCHITECTURE_REVIEW") &&
-  constants.includes("FROZEN_THROUGH_PHASE_2") &&
-  constants.includes("Trusted Connected Platform")
+  constants.includes("BASELINE_LOCKED") &&
+  constants.includes("Trusted Connected Platform") &&
+  constants.includes("0.8.4-petition")
 ) {
-  pass("constants reflect Architecture Review / freeze");
+  pass("constants reflect BASELINE LOCKED / dual versioning");
 } else {
-  fail("constants missing Architecture Review / freeze");
+  fail("constants missing BASELINE LOCKED / dual versioning");
 }
 
 if (failed) {
@@ -173,5 +196,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 FROZEN; Phase 3 Architecture Review; implementation LOCKED).",
+  "Phase 2 structural validation passed (Architecture 1.0 BASELINE LOCKED; Phase 3 Architecture Review; implementation LOCKED).",
 );

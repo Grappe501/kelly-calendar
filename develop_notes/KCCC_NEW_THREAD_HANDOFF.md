@@ -4,21 +4,26 @@
 Product:
 Kelly Campaign Command Calendar (Campaign Operating System)
 
-Architecture Version: 1.0
+GOVERNANCE
+Architecture ................. BASELINE LOCKED
+Version ...................... 1.0
+Application .................. 0.8.4-petition (separate track)
+Constitution ................. Canonical (v1.0)
+Architecture Freeze .......... Canonical
+Future Changes ............... Proposal Required
+Breaking Changes ............. RFC Required
+
 Project State: Architecture Review
 Implementation: Locked
 
-Governing document:
-develop_notes/KCCC_CONSTITUTION_v1.0.md
+Canonical docs:
+- develop_notes/KCCC_CONSTITUTION_v1.0.md
+- develop_notes/KCCC_ARCHITECTURE_FREEZE_v1.0.md
+- develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md
 
 Phase 1: CERTIFIED · Kernel FROZEN
 Phase 2: CERTIFIED · Capability Layer FROZEN
 Phase 3: Trusted Connected Platform · Architecture Review · Implementation LOCKED
-
-Layers:
-1 Operational Kernel (truth)
-2 Campaign Capabilities (orchestration)
-3 Trusted Connected Platform (definition / review only)
 
 Still false:
 - candidate_data_ready
@@ -26,11 +31,16 @@ Still false:
 - ai_enabled
 
 Do NOT:
-- Start Phase 3 implementation
-- Open Phase 2.6
-- Add a new architectural layer
-- Unlock maturity flags without acceptance
+- Start Phase 3 implementation without exit-criteria answers
+- Quietly edit Constitution / ownership baseline
+- Imply Architecture 2.0 via application bumps alone
 
-Next:
-Architecture Review → answer Phase 3 design-review questions under Constitution v1.0
+Change control:
+Bug fix → engineering review
+Feature in doctrine → design review
+New capability → architecture proposal
+Constitution / ownership → RFC + Architecture Board
+
+Exit Architecture Review only when Phase 3 success criteria are conclusive
+(see Governance State / Constitution §13).
 ```
