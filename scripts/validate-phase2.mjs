@@ -31,6 +31,7 @@ const required = [
   ["const", "develop_notes/KCCC_CONSTITUTION_v1.0.md"],
   ["freeze", "develop_notes/KCCC_ARCHITECTURE_FREEZE_v1.0.md"],
   ["gov", "develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md"],
+  ["rel", "develop_notes/KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
@@ -39,7 +40,7 @@ for (const [label, rel] of required) {
 
 const constitution = read("develop_notes/KCCC_CONSTITUTION_v1.0.md");
 if (
-  constitution.includes("BASELINE LOCKED") &&
+  constitution.includes("BASELINE RELEASE") &&
   constitution.includes("No duplicate ownership") &&
   constitution.includes("No AI writes to canonical state") &&
   constitution.includes("LEVEL A") &&
@@ -48,22 +49,34 @@ if (
   constitution.includes("Formal RFC") &&
   constitution.includes("Architecture vs application versioning")
 ) {
-  pass("Constitution v1.0 baseline locked + change control");
+  pass("Constitution v1.0 baseline release + change control");
 } else {
   fail("Constitution v1.0 incomplete");
 }
 
 const governance = read("develop_notes/KCCC_GOVERNANCE_STATE_v1.0.md");
 if (
-  governance.includes("BASELINE LOCKED") &&
+  governance.includes("BASELINE RELEASE") &&
+  governance.includes("NOT AUTHORIZED") &&
   governance.includes("Proposal Required") &&
   governance.includes("RFC Required") &&
   governance.includes("0.8.4-petition") &&
   governance.includes("subordinate to canonical ownership")
 ) {
-  pass("Governance State v1.0 present");
+  pass("Governance State v1.0 present (baseline closed)");
 } else {
   fail("Governance State v1.0 incomplete");
+}
+
+const release = read("develop_notes/KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md");
+if (
+  release.includes("BASELINE RELEASE") &&
+  release.includes("NOT AUTHORIZED") &&
+  release.includes("Architecture 1.0 ........... RELEASED")
+) {
+  pass("Architecture 1.0 Baseline Release declaration present");
+} else {
+  fail("Baseline Release declaration incomplete");
 }
 
 const petition = read("src/lib/missions/petition-ballot-operations.ts");
@@ -156,12 +169,16 @@ if (
 
 if (
   build.architecture_version === "1.0" &&
-  build.architecture_status === "baseline_locked" &&
+  build.architecture_status === "baseline_release_closed" &&
+  build.architecture_baseline_released === true &&
+  build.constitutional_layer_sealed === true &&
   build.architecture_immutable_except_rfc === true &&
   build.project_state === "architecture_review" &&
-  build.implementation_status === "locked" &&
+  build.implementation_status === "not_authorized" &&
+  build.phase_3_implementation_authorized === false &&
   build.constitution_canonical === true &&
   build.architecture_freeze_canonical === true &&
+  build.governance_state_canonical === true &&
   build.breaking_changes === "rfc_required" &&
   build.versioning_tracks_separated === true &&
   build.application_version === "0.8.4-petition" &&
@@ -173,22 +190,23 @@ if (
   build.real_candidate_data_enabled === false &&
   build.ai_enabled === false
 ) {
-  pass("Architecture 1.0 BASELINE LOCKED; dual versioning; review locked");
+  pass("Architecture 1.0 BASELINE RELEASE CLOSED; Phase 3 not authorized");
 } else {
-  fail("Baseline governance / Phase 3 review gate incorrect");
+  fail("Baseline release / Phase 3 authorization gate incorrect");
 }
 
 const constants = read("src/lib/system/constants.ts");
 if (
   constants.includes('PHASE_2_STATUS = "CERTIFIED"') &&
   constants.includes("ARCHITECTURE_REVIEW") &&
-  constants.includes("BASELINE_LOCKED") &&
+  constants.includes("BASELINE_RELEASE_CLOSED") &&
+  constants.includes("NOT_AUTHORIZED") &&
   constants.includes("Trusted Connected Platform") &&
   constants.includes("0.8.4-petition")
 ) {
-  pass("constants reflect BASELINE LOCKED / dual versioning");
+  pass("constants reflect BASELINE RELEASE CLOSED / not authorized");
 } else {
-  fail("constants missing BASELINE LOCKED / dual versioning");
+  fail("constants missing BASELINE RELEASE CLOSED");
 }
 
 if (failed) {
@@ -196,5 +214,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 BASELINE LOCKED; Phase 3 Architecture Review; implementation LOCKED).",
+  "Phase 2 structural validation passed (Architecture 1.0 BASELINE RELEASE CLOSED; Phase 3 Architecture Review; implementation NOT AUTHORIZED).",
 );

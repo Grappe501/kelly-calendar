@@ -2,12 +2,12 @@
 
 **Product:** Kelly Campaign Command Calendar (KCCC)  
 **Architecture:** Campaign Operating System  
-**Architecture Version:** 1.0 (**BASELINE LOCKED**)  
-**Status:** FROZEN through Phase 2 — immutable except via formal RFC  
-**Project State:** Architecture Review (implementation locked)  
+**Architecture Version:** 1.0 (**BASELINE RELEASE · CLOSED · GOVERNANCE LOCKED**)  
+**Status:** FROZEN through Phase 2 — no constitutional additions until formal RFC  
+**Project State:** Architecture Review open; Phase 3 implementation **NOT AUTHORIZED**  
 **Application Version (separate track):** `0.8.4-petition`  
 **Effective:** 2026-07-19 (America/Chicago)  
-**Authority:** Highest-level architectural document in this repository. Canonical with the Architecture Freeze. All future features, integrations, and automations must obey this Constitution.
+**Authority:** Highest-level architectural document. Permanent reference baseline for all future proposals. Canonical with Architecture Freeze and Governance State.
 
 ---
 
@@ -237,6 +237,7 @@ Before unlocking Phase 3 implementation, design review must answer conclusively:
 |---------|------|-------|
 | 1.0 | 2026-07-19 | Constitution established. Architecture frozen through Phase 2. Architecture Review. |
 | 1.0 | 2026-07-19 | **BASELINE LOCKED.** Governance state recorded. Change control + dual versioning + Phase 3 exit criteria. |
+| 1.0 | 2026-07-19 | **BASELINE RELEASE CLOSED.** Constitutional layer sealed until RFC. Permanent reference baseline declared. |
 
 ---
 

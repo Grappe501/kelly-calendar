@@ -1,24 +1,25 @@
 # KCCC Architecture Freeze v1.0
 
-**Architecture Version:** 1.0 (**BASELINE LOCKED**)  
-**Project State:** Architecture Review  
-**Implementation:** Locked  
-**Canonical with:** Constitution v1.0 · Governance State v1.0  
+**Architecture Version:** 1.0 (**BASELINE RELEASE · CLOSED**)  
+**Project State:** Architecture Review (Open)  
+**Implementation:** NOT AUTHORIZED (Phase 3)  
+**Canonical with:** Constitution v1.0 · Governance State v1.0 · Baseline Release  
 **Recorded:** 2026-07-19 (America/Chicago)
 
 ```text
 KELLY CAMPAIGN CALENDAR
 CAMPAIGN OPERATING SYSTEM
 
-Architecture Version ............ 1.0 (BASELINE LOCKED)
-Kernel Status ................... Frozen
-Capability Layer ................ Frozen
+ARCHITECTURE 1.0
 
-Phase 1 ......................... Certified
-Phase 2 ......................... Certified
+Status ....................... BASELINE RELEASE
+Governance ................... LOCKED
 
-Phase 3 ......................... Architecture Review
-Implementation .................. Locked
+Kernel ........................ Certified
+Capability Layer .............. Certified
+
+Architecture Review ........... Open
+Implementation ................ Locked / NOT AUTHORIZED
 
 Application Version ............. 0.8.4-petition (separate track)
 ```
@@ -28,7 +29,7 @@ Application Version ............. 0.8.4-petition (separate track)
 ```text
 Campaign Operating System
 
-Architecture ................. BASELINE LOCKED
+Architecture ................. BASELINE RELEASE (CLOSED)
 Kernel ........................ Certified
 Capabilities ................. Certified
 Operational Doctrine ......... Stable
@@ -37,14 +38,15 @@ Unknown Model ................ Stable
 Ownership Model .............. Stable
 Integration Model ............ Defined
 Automation Model ............. Defined
-Implementation ............... Paused / Locked
+Implementation ............... NOT AUTHORIZED (Phase 3)
 ```
 
 ## Governing documents (canonical)
 
-1. `KCCC_CONSTITUTION_v1.0.md`  
-2. This freeze (`KCCC_ARCHITECTURE_FREEZE_v1.0.md`)  
-3. `KCCC_GOVERNANCE_STATE_v1.0.md`  
+1. `KCCC_CONSTITUTION_v1.0.md` — enduring principles  
+2. This freeze — what 1.0 includes  
+3. `KCCC_GOVERNANCE_STATE_v1.0.md` — RFCs / change control  
+4. `KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md` — release declaration  
 
 ## What is allowed under Architecture 1.0
 

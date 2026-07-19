@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Architecture 1.0 BASELINE LOCKED · Review (impl locked)</strong>
+            <strong>Architecture 1.0 BASELINE RELEASE · Phase 3 not authorized</strong>
           </li>
         </ul>
       </section>
