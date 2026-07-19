@@ -370,25 +370,29 @@ if (
   build.calendar_experience_day_view === true &&
   build.calendar_experience_week_view === true &&
   build.calendar_experience_month_view === true &&
-  build.calendar_experience_pass === "3-month-view" &&
-  build.calendar_experience_review_status === "ready" &&
+  build.calendar_experience_pass === "version-1-complete" &&
+  build.calendar_experience_review_status === "pass" &&
+  build.calendar_experience_v1_complete === true &&
+  build.next_engineering_deliverable === "KCCC-CAL-EXP-FOUNDATION" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
   constants.includes("ENGINEERING_TRACK_A") &&
-  constants.includes("CALENDAR_EXPERIENCE_PASS") &&
-  constants.includes("CALENDAR_EXPERIENCE_REVIEW_STATUS") &&
+  constants.includes('CALENDAR_EXPERIENCE_REVIEW_STATUS = "PASS"') &&
+  constants.includes("KCCC-CAL-EXP-FOUNDATION") &&
   exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_2_WEEK_VIEW.md") &&
   exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_3_MONTH_VIEW.md") &&
   exists("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md") &&
+  exists("develop_notes/KCCC_CALENDAR_FOUNDATION.md") &&
+  read("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md").includes("VERSION 1 COMPLETE") &&
+  read("develop_notes/KCCC_CALENDAR_EXPERIENCE_REVIEW.md").includes("**PASS**") &&
   exists("src/components/calendar/WeekView.tsx") &&
   exists("src/components/calendar/MonthView.tsx") &&
   exists("src/server/services/calendar-week-view-service.ts") &&
   exists("src/server/services/calendar-month-view-service.ts") &&
   read("src/app/calendar/page.tsx").includes("MonthView") &&
-  read("src/components/calendar/CalendarViewSwitcher.tsx").includes('id: "month"') &&
-  read("src/components/calendar/CalendarViewSwitcher.tsx").includes("ready: true")
+  read("src/components/calendar/CalendarViewSwitcher.tsx").includes('id: "month"')
 ) {
-  pass("Engineering Track A Calendar Experience Day+Week+Month (Arch 1.0, review ready)");
+  pass("Calendar Experience V1 COMPLETE (Review PASS); Foundation next");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -398,5 +402,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Eng Track A Day+Week+Month; Review READY; Phase 3.1 PASS WITH CONDITIONS paused; no Phase 3 impl).",
+  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Calendar Experience V1 COMPLETE; Foundation next; Phase 3.1 PASS WITH CONDITIONS paused; no Phase 3 impl).",
 );

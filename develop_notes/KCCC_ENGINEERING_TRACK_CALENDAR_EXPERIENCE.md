@@ -42,10 +42,11 @@ Views **own nothing**. They consume Phase 1 and Phase 2 surfaces (Executive, Fie
 | 1 | Day View | What am I doing today? | A.1 | COMPLETE |
 | 2 | Week View | What does the campaign need to accomplish this week? | A.2 | COMPLETE |
 | 3 | Month View | What are the major commitments / milestones (30–60 days)? | A.3 | COMPLETE |
-| — | Calendar Experience Review | Validate Day/Week/Month before specialized views | Gate | READY |
-| 4 | Agenda View | What is next, in order? | A.4 | HOLD until review |
-| 5 | Timeline View | How does time pressure unfold? | A.4 | HOLD until review |
-| 6 | Mission View | What does this mission require? | A.4 | HOLD until review |
+| — | Calendar Experience Review | V1 gate | Gate | **PASS** · VERSION 1 COMPLETE |
+| 3.5 | Calendar Foundation | Shared legend, filters, rendering, a11y | A.4 | **NEXT** |
+| 4 | Agenda View | What do I need to do next? | A.5 | HOLD until Foundation |
+| 5 | Timeline View | How does the campaign unfold over time? | A.5 | HOLD until Foundation |
+| 6 | Mission View | What objectives drive these events? | A.5 | HOLD until Foundation |
 
 ## Later passes (not started)
 
