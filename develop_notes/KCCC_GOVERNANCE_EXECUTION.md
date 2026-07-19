@@ -137,4 +137,5 @@ Governance serves engineering. Apply it consistently. Complete remaining audits.
 |-------|--------|
 | EA-5 Inclusive Experience | COMPLETE · ACCEPTED — Feature Freeze honored · HL-021…024 |
 | EA-6 Performance | COMPLETE · ACCEPTED — measure-only · HL-025…027 |
-| EA-7 Data Integrity | COMPLETE — DI-001→HL-001 · HL-028…030 |
+| EA-7 Data Integrity | COMPLETE · ACCEPTED — DI-001→HL-001 · HL-028…030 |
+| EA-8 Security | COMPLETE — SEC-002→HL-031 Wave 1 · HL-031…038 |

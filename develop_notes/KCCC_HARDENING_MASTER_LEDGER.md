@@ -66,6 +66,14 @@ Examples: `HC-COG-001` Priority not obvious · `HC-COG-002` Equal-weight panels 
 | HL-028 | DI | EA-7 DI-002 | Label candidate-kind schedule as heuristic / non-authoritative | High | Hygiene | Medium | S | Hardening | Open |
 | HL-029 | DI | EA-7 DI-003 | Relabel month brief echoes as schedule-derived (Brief link remains owner) | High | Hygiene | Medium | S | Hardening | Open |
 | HL-030 | DI | EA-7 DI-004 | Day View cataloguePartial disclosure parity | Medium | Hygiene | Medium | S | Hardening | Open |
+| HL-031 | SEC | EA-8 SEC-002 | Permission-aware mission context — do not enrich limited projections | **Critical** | **Dangerous** | High | L | Hardening (guard) / **Foundation** (contract) | Open |
+| HL-032 | SEC | EA-8 SEC-001 | Map AVAILABILITY_ONLY to busy/time-only (not TITLE_LOCATION) | High | Hygiene | High | M | Hardening | Open |
+| HL-033 | SEC | EA-8 SEC-003 | Minimize primary-calendar metadata for related-only grants | High | Hygiene | Medium | M | Hardening | Open |
+| HL-034 | SEC | EA-8 SEC-004 | Align capability / mission-day affordances with authorize() | Medium | Hygiene | Medium | S | Hardening | Open |
+| HL-035 | SEC | EA-8 SEC-005 | Scope CONFLICT_ACKNOWLEDGE to authorized event/calendar | High | Dangerous | High | M | Foundation | Open |
+| HL-036 | SEC | EA-8 SEC-006 | Actor + RBAC on /api/calendars and system diagnostic APIs | High | Hygiene | High | M | Hardening | Open |
+| HL-037 | SEC | EA-8 SEC-007 | Unify production session-secret policy (edge + Node + status) | High | Hygiene | Medium | M | Foundation | Open |
+| HL-038 | SEC | EA-8 SEC-008 | Explicit per-product env isolation (opt-in RedDirt fallback) | High | Hygiene | Medium | M | Foundation | Open |
 
 ---
 
@@ -108,7 +116,7 @@ Wave 6 — Foundation Readiness
 
 | Wave | Name | Ledger focus |
 |------|------|----------------|
-| **1** | Architectural Safety | HL-001, HL-002, HL-005 |
+| **1** | Architectural Safety | HL-001, HL-002, HL-005, **HL-031** |
 | **2** | Testability & Verification | HL-017 · assembly/nav tests · protect state model |
 | **3** | Decision Clarity | HL-004, HL-010, HL-011, HL-015 (+ HC-COG) — mostly Redesign; label hygiene in Hardening |
 | **4** | Shared Infrastructure | HL-006, HL-016 · legend / rendering / filters / nav |
@@ -119,11 +127,12 @@ Wave 2 is **before** Decision Clarity so Redesign/Foundation changes are verifia
 
 ## Streams not yet ingested
 
-EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
+EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
 EA-3 Platform Quality: **COMPLETE / ACCEPTED** (HL-016…HL-020).  
 EA-5 Inclusive Experience: **COMPLETE / ACCEPTED** (HL-021…HL-024).  
 EA-6 Performance: **COMPLETE / ACCEPTED** (HL-025…HL-027).  
-EA-7 Data Integrity: **COMPLETE** (HL-028…HL-030; DI-001 → HL-001).
+EA-7 Data Integrity: **COMPLETE / ACCEPTED** (HL-028…HL-030; DI-001 → HL-001).  
+EA-8 Security: **COMPLETE** (HL-031…HL-038; SEC-002 → HL-031 Wave 1).
 
 ## Hardening gate
 

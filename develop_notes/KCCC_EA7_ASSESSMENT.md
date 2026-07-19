@@ -17,6 +17,10 @@ Ambiguity gaps ........... Heuristic candidate kinds · month brief echoes
 Catalogue honesty ........ Strong on Week/Month; Day partial gap (HL-030)
 ```
 
+## Executive acceptance
+
+**ACCEPTED** — `KCCC_EA7_EXECUTIVE_ACCEPTANCE.md` (trust presentation ≠ trust model failure).
+
 ## Next
 
-EA-8 Security — OPENED.
+EA-8 Security — COMPLETE · EA-9 Operator Workflow — OPENED.

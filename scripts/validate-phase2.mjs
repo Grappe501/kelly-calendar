@@ -375,7 +375,7 @@ if (
   build.calendar_experience_v1_complete === true &&
   build.calendar_experience_v1_status === "engineering_complete" &&
   build.engineering_audit_status === "active" &&
-  build.engineering_audit_next_stream === "EA-8" &&
+  build.engineering_audit_next_stream === "EA-9" &&
   build.ea4_status === "complete" &&
   build.ea4_assessment === "pass" &&
   build.ea1_status === "complete" &&
@@ -417,33 +417,37 @@ if (
   build.ea6_measure_only === true &&
   build.ea7_status === "complete" &&
   build.ea7_assessment === "pass_with_findings" &&
-  build.ea8_status === "opened" &&
-  build.hardening_ledger_through === "HL-030" &&
+  build.ea7_executive_acceptance === "accepted" &&
+  build.ea8_status === "complete" &&
+  build.ea8_assessment === "pass_with_findings" &&
+  build.ea9_status === "opened" &&
+  build.hardening_ledger_through === "HL-038" &&
   build.hardening_pass_status === "blocked" &&
-  build.next_engineering_deliverable === "KCCC-EA-8-SECURITY" &&
+  build.next_engineering_deliverable === "KCCC-EA-9-OPERATOR-WORKFLOW" &&
   build.phase_3_implementation_authorized === false &&
-  constants.includes('EA6_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
-  constants.includes('EA7_STATUS = "COMPLETE"') &&
-  constants.includes('EA7_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
-  constants.includes('EA8_STATUS = "OPENED"') &&
-  constants.includes('HARDENING_LEDGER_THROUGH = "HL-030"') &&
-  constants.includes("KCCC-EA-8-SECURITY") &&
-  exists("develop_notes/KCCC_EA6_EXECUTIVE_ACCEPTANCE.md") &&
-  exists("develop_notes/KCCC_EA7_ASSESSMENT.md") &&
-  exists("develop_notes/KCCC_EA7_DATA_INTEGRITY.md") &&
+  constants.includes('EA7_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
+  constants.includes('EA8_STATUS = "COMPLETE"') &&
+  constants.includes('EA8_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
+  constants.includes('EA9_STATUS = "OPENED"') &&
+  constants.includes('HARDENING_LEDGER_THROUGH = "HL-038"') &&
+  constants.includes("KCCC-EA-9-OPERATOR-WORKFLOW") &&
+  exists("develop_notes/KCCC_EA7_EXECUTIVE_ACCEPTANCE.md") &&
+  exists("develop_notes/KCCC_EA8_ASSESSMENT.md") &&
   exists("develop_notes/KCCC_EA8_SECURITY.md") &&
+  exists("develop_notes/KCCC_EA9_OPERATOR_WORKFLOW.md") &&
   !exists("develop_notes/KCCC_VERSION_2_AUTHORIZATION.md") &&
-  read("develop_notes/KCCC_EA6_EXECUTIVE_ACCEPTANCE.md").includes("ACCEPTED") &&
-  read("develop_notes/KCCC_EA7_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
-  read("develop_notes/KCCC_EA7_DATA_INTEGRITY.md").includes("DI-001") &&
-  read("develop_notes/KCCC_EA7_DATA_INTEGRITY.md").includes("candidateAttending") &&
-  read("develop_notes/KCCC_EA7_DATA_INTEGRITY.md").includes("No Behavior Changes") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-030") &&
-  read("develop_notes/KCCC_EA8_SECURITY.md").includes("OPENED") &&
+  read("develop_notes/KCCC_EA7_EXECUTIVE_ACCEPTANCE.md").includes("ACCEPTED") &&
+  read("develop_notes/KCCC_EA8_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
+  read("develop_notes/KCCC_EA8_SECURITY.md").includes("SEC-002") &&
+  read("develop_notes/KCCC_EA8_SECURITY.md").includes("loadMissionContextForIds") &&
+  read("develop_notes/KCCC_EA8_SECURITY.md").includes("No Behavior Changes") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-038") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-031") &&
+  read("develop_notes/KCCC_EA9_OPERATOR_WORKFLOW.md").includes("OPENED") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("EA-6 ACCEPTED; EA-7 Data Integrity COMPLETE; EA-8 OPENED; HL-030");
+  pass("EA-7 ACCEPTED; EA-8 Security COMPLETE; EA-9 OPENED; HL-038");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -453,5 +457,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (EA-6 ACCEPTED; EA-7 Data Integrity COMPLETE; EA-8 Security OPENED; V2 not authorized; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (EA-7 ACCEPTED; EA-8 Security COMPLETE; EA-9 Operator Workflow OPENED; V2 not authorized; Phase 3.1 paused).",
 );
