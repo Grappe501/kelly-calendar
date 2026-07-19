@@ -209,6 +209,12 @@ Maps to proposed track **XR-8 Ambient / Contextual Intelligence** (vision).
 
 ---
 
+## Related blocked initiative
+
+**Historical Campaign Memory 1.0** (`KCCC-HISTORICAL-CAMPAIGN-MEMORY-1.0`) — campaign movement history from 2025-11-01 with geographic, CRM, outcome, and memory layers. Vision captured in `KCCC_HISTORICAL_CAMPAIGN_MEMORY_1_0.md`. Feeds future XR-8 contextual intelligence; does not authorize AI or history-graph build under Feature Freeze.
+
+---
+
 ## Architecture 1.0 Conformance Statement
 
 Vision only. Affirms baseline `6690ce2`. Redesign remains experience and presentation; ownership and Unknown doctrine unchanged. AI observations are never authoritative sources.

@@ -55,6 +55,14 @@ Weekly/monthly summaries · velocity · density · county coverage · travel · 
 
 Google Calendar · Outlook · Apple/ICS · CSV · public calendar · secure sharing  
 
+### Historical Campaign Memory 1.0 (blocked — vision captured)
+
+**Script:** `KCCC-HISTORICAL-CAMPAIGN-MEMORY-1.0` · `KCCC_HISTORICAL_CAMPAIGN_MEMORY_1_0.md`  
+
+Campaign movement history from **2025-11-01**: event truth · geographic enrichment · CRM relationship links · outcome capture · advisory coverage/route/memory AI.  
+
+**Not** a V1 reopen. Implementation blocked until Audit → Hardening → Readiness → V2 Planning Review → explicit IMPLEMENT authorization. Prefer Google Calendar API + OAuth for the archive; secret iCal (`KCCC_GOOGLE_CALENDAR_ICAL_URL`) remains bootstrap/fallback only.  
+
 ### Mobile Experience
 
 Native-feeling interactions · offline cache · quick-add · notifications · location-aware travel  
