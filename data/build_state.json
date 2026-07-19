@@ -93,12 +93,12 @@
   "updated_at": "2026-07-19T03:45:00.000Z",
   "last_updated": "2026-07-19T03:45:00.000Z",
   "timezone": "America/Chicago",
-  "commit_hash": "pending-step6-close",
+  "commit_hash": "99f603b",
   "step_5_6_unlock_commit": "83c2bd4",
   "step_5_7_deploy_commit": "239f697",
   "step_5_7_closure_commit": "fc13413",
   "step_6_engineering_tip": "08ada56",
-  "step_6_closure_commit": "pending",
+  "step_6_closure_commit": "99f603b",
   "governance_baseline_at_start": "d6d0096",
   "notes": "Step 6 COMPLETE after human operator pilot ACCEPT (no HOLDs). Freeze lifted. Step 7 OPEN under Campaign Operations charter (not CRUD). candidate_data_ready false."
 }
