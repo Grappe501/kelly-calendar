@@ -6,13 +6,18 @@
 
 ## Kernel vs capability
 
+**Phase 1 owns operational truth.**  
+**Phase 2 owns operational experience.**
+
 Phase 1 delivered the **Campaign Operating System Kernel** — operational truth domains every future capability consumes.
 
 Phase 2 delivers **capabilities that orchestrate the kernel**. They do not recreate Field, County, Volunteer, Communications, Logistics, Finance, Compliance, Constituent, or Intelligence engines.
 
-## Permanent Phase 2 principle
+## Permanent Phase 2 principles
 
-> **Phase 2 capabilities orchestrate Phase 1 services — they do not replace or duplicate them.**
+1. **Phase 2 capabilities orchestrate Phase 1 services — they do not replace or duplicate them.**
+
+2. **Capabilities assemble operational context — they do not create parallel operational systems.**
 
 Corollaries:
 
@@ -21,14 +26,15 @@ Corollaries:
 3. Unknown remains first-class when a consumed domain cannot supply a fact.  
 4. Readiness / preparedness equals the **minimum** of required domains (not an average).  
 5. AI remains advisory and explainable; never overrides assembled operational truth.  
-6. Gate for every capability: *What operational decision does this improve?*
+6. Gate for every capability: *What operational decision does this improve?*  
+7. Assembled views (briefs, binders, media calendars) improve automatically when kernel owners improve — no duplicate storage.
 
 ## Sequencing
 
 | Increment | Question | Status |
 |-----------|----------|--------|
-| 2.1 Candidate Operations | Is the candidate prepared for today’s engagements? | IN PROGRESS |
-| 2.2 Debate & Media Operations | Are we prepared to communicate? | HELD |
+| 2.1 Candidate Operations | Is the candidate prepared for today’s engagements? | ACCEPTED / COMPLETE |
+| 2.2 Debate & Media Operations | Are we prepared for every public communication? | IN PROGRESS |
 | 2.3 Fundraising Operations | Can we sustain campaign growth? | HELD |
 | 2.4 GOTV Operations | Are we converting support into turnout? | HELD |
 | 2.5 Petition & Ballot Operations | Can we execute citizen-driven campaigns on the same OS? | HELD |

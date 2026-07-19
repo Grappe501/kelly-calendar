@@ -13,7 +13,7 @@ export type CandidateOperationsPayload = {
   candidateDataReady: false;
 };
 
-/** Authenticated Candidate Operations — orchestrates Phase 1 kernel feeds. */
+/** Authenticated Candidate Operations — orchestrates Phase 1 + Debate & Media. */
 export async function getCandidateOperations(
   actor: AuthenticatedActor,
 ): Promise<CandidateOperationsPayload> {
@@ -32,6 +32,7 @@ export async function getCandidateOperations(
     field: stack.field,
     finance: stack.finance,
     volunteers: stack.volunteers,
+    debateMediaConsume: stack.debateMedia,
   });
 
   return {

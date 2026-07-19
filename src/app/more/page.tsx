@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>KCCC-PHASE-02.1-CANDIDATE-OPERATIONS</strong>
+            <strong>KCCC-PHASE-02.2-DEBATE-MEDIA-OPERATIONS</strong>
           </li>
         </ul>
       </section>
@@ -73,6 +73,9 @@ export default function MorePage() {
           </Link>
           <Link className="button" href="/candidate">
             Candidate Operations
+          </Link>
+          <Link className="button" href="/debate-media">
+            Debate & Media Operations
           </Link>
           <Link className="button secondary" href="/brief">
             Today’s Campaign Brief

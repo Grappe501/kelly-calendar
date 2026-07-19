@@ -1,5 +1,5 @@
 /**
- * Phase 2.1 Candidate Operations structural gates.
+ * Phase 2 structural gates (2.1 Candidate + 2.2 Debate & Media).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -24,120 +24,126 @@ function read(rel) {
 
 const required = [
   ["2.1", "src/lib/missions/candidate-operations.ts"],
-  ["2.1", "src/server/services/candidate-operations-service.ts"],
-  ["2.1", "src/server/services/candidate-operations-ai.ts"],
-  ["2.1", "src/server/services/phase1-ops-stack.ts"],
-  ["2.1", "src/app/api/command-summary/candidate/route.ts"],
   ["2.1", "src/app/candidate/page.tsx"],
-  ["2.1", "src/components/candidate/CandidateOperationsView.tsx"],
-  ["2.1", "develop_notes/KCCC_PHASE_02_CHARTER.md"],
-  ["2.1", "develop_notes/KCCC_PHASE_02_1_CANDIDATE_OPERATIONS.md"],
-  ["2.1", "tests/unit/missions/candidate-operations.test.ts"],
+  ["2.2", "src/lib/missions/debate-media-operations.ts"],
+  ["2.2", "src/server/services/debate-media-operations-service.ts"],
+  ["2.2", "src/server/services/debate-media-operations-ai.ts"],
+  ["2.2", "src/app/api/command-summary/debate-media/route.ts"],
+  ["2.2", "src/app/debate-media/page.tsx"],
+  ["2.2", "src/components/debate-media/DebateMediaOperationsView.tsx"],
+  ["2.2", "develop_notes/KCCC_PHASE_02_2_DEBATE_MEDIA_OPERATIONS.md"],
+  ["2.2", "tests/unit/missions/debate-media-operations.test.ts"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
   else fail(`${label} missing ${rel}`);
 }
 
-const candidate = read("src/lib/missions/candidate-operations.ts");
+const debate = read("src/lib/missions/debate-media-operations.ts");
 if (
-  candidate.includes("buildCandidateOperationsHome") &&
-  candidate.includes("orchestrates Phase 1") &&
-  candidate.includes("Good Morning Kelly") &&
-  candidate.includes("executiveFeed") &&
-  candidate.includes("Security") &&
-  candidate.includes("Personal") &&
-  candidate.includes("combineOperationalReadiness")
+  debate.includes("buildDebateMediaOperationsHome") &&
+  debate.includes("Are we prepared for every public communication") &&
+  debate.includes("not a parallel communications system") &&
+  debate.includes("candidateFeed") &&
+  debate.includes("communicationsFeed") &&
+  debate.includes("intelligenceFeed") &&
+  debate.includes("combineOperationalReadiness")
 ) {
-  pass("2.1 candidate contracts present");
+  pass("2.2 debate-media contracts present");
 } else {
-  fail("2.1 candidate contracts missing");
+  fail("2.2 debate-media contracts missing");
+}
+
+const candidate = read("src/lib/missions/candidate-operations.ts");
+if (candidate.includes("debateMediaConsume") || candidate.includes("debateMediaFeed")) {
+  pass("2.2 Candidate consumes Debate & Media");
+} else {
+  fail("2.2 Candidate missing debate/media consume");
+}
+
+const comms = read("src/lib/missions/communications-operations.ts");
+if (comms.includes("debateMediaConsume")) {
+  pass("2.2 Communications consumes Debate & Media");
+} else {
+  fail("2.2 Communications missing debateMediaConsume");
+}
+
+const intel = read("src/lib/missions/intelligence-operations.ts");
+if (
+  intel.includes("debateMediaFeed") &&
+  intel.includes("MEDIA_PREPARATION") &&
+  intel.includes("debate_media")
+) {
+  pass("2.2 Intelligence consumes Debate & Media");
+} else {
+  fail("2.2 Intelligence missing debate/media feed");
 }
 
 const exec = read("src/lib/missions/executive-command.ts");
-if (exec.includes("candidateFeed") && exec.includes("Candidate Operations")) {
-  pass("2.1 Executive consumes candidateFeed");
+if (exec.includes("debateMediaFeed")) {
+  pass("2.2 Executive consumes debateMediaFeed");
 } else {
-  fail("2.1 Executive missing candidateFeed");
+  fail("2.2 Executive missing debateMediaFeed");
 }
 
-const execSvc = read("src/server/services/executive-command-service.ts");
-if (
-  execSvc.includes("buildCandidateOperationsHome") &&
-  execSvc.includes("assemblePhase1OpsStack") &&
-  execSvc.includes("candidateFeed")
-) {
-  pass("2.1 executive service wires candidate");
-} else {
-  fail("2.1 executive service missing candidate wiring");
-}
-
-const view = read("src/components/candidate/CandidateOperationsView.tsx");
+const view = read("src/components/debate-media/DebateMediaOperationsView.tsx");
 for (const phrase of [
-  "Is the candidate prepared",
-  "Candidate Brief",
-  "Good Morning Kelly",
-  "Candidate Readiness",
-  "Candidate Inbox",
-  "Candidate Binder",
+  "Are we prepared for every public communication",
+  "Media preparedness",
+  "Media calendar",
   "First-class Unknowns",
-  "Orchestrates Phase 1",
+  "not a parallel communications system",
 ]) {
   if (view.includes(phrase)) pass(`UI ${phrase}`);
   else fail(`UI missing ${phrase}`);
 }
 
-const ai = read("src/server/services/candidate-operations-ai.ts");
+const ai = read("src/server/services/debate-media-operations-ai.ts");
 if (
-  ai.includes('feature: "candidate-operations"') &&
+  ai.includes('feature: "debate-media-operations"') &&
   ai.includes('application: "kelly-calendar"')
 ) {
-  pass("2.1 AI audit attribution present");
+  pass("2.2 AI audit attribution present");
 } else {
-  fail("2.1 AI audit attribution missing");
+  fail("2.2 AI audit attribution missing");
 }
 
 const nav = read("src/lib/navigation/nav-items.ts");
-if (nav.includes("/candidate")) {
-  pass("/candidate maps to More");
-} else {
-  fail("/candidate nav prefix missing");
-}
+if (nav.includes("/debate-media")) pass("/debate-media maps to More");
+else fail("/debate-media nav prefix missing");
 
 const charter = read("develop_notes/KCCC_PHASE_02_CHARTER.md");
 if (
   charter.includes("orchestrate Phase 1") &&
-  charter.includes("Is the candidate prepared")
+  charter.includes("assemble operational context") &&
+  charter.includes("ACCEPTED / COMPLETE")
 ) {
-  pass("Phase 2 doctrine locked");
+  pass("Phase 2 doctrine + 2.1 ACCEPT locked");
 } else {
-  fail("Phase 2 doctrine missing from charter");
+  fail("Phase 2 charter incomplete");
 }
 
 const build = JSON.parse(read("data/build_state.json"));
 if (build.candidate_data_ready === true) fail("candidate_data_ready must be false");
 else pass("candidate_data_ready false");
 
-if (
-  build.phase_2_status === "in_progress" ||
-  build.phase_2_status === "open"
-) {
-  pass("Phase 2 open");
+if (build.candidate_operations_accepted === true) {
+  pass("2.1 ACCEPTED");
 } else {
-  fail("Phase 2 not marked open/in_progress");
+  fail("2.1 not marked accepted");
 }
 
 if (
-  build.candidate_operations_enabled === true ||
-  build.phase_2_increment === "2.1-candidate-operations"
+  build.phase_2_increment === "2.2-debate-media-operations" ||
+  build.debate_media_operations_enabled === true
 ) {
-  pass("2.1 increment tracked");
+  pass("2.2 increment tracked");
 } else {
-  fail("2.1 increment not tracked");
+  fail("2.2 increment not tracked");
 }
 
 if (failed) {
   console.error(`Phase 2 validation failed (${failed})`);
   process.exit(1);
 }
-console.log("Phase 2.1 structural validation passed.");
+console.log("Phase 2 structural validation passed (2.1 ACCEPTED, 2.2 OPEN).");

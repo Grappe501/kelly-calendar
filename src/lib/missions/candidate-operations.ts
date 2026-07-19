@@ -15,6 +15,7 @@ import type { CommunicationsOperationsHome } from "@/lib/missions/communications
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
+import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import {
@@ -198,7 +199,15 @@ function mapCommsSpeech(
 function mapCommsMedia(
   row: CommunicationsOperationsHome["missionRows"][number] | undefined,
   home: CommunicationsOperationsHome,
+  debateMedia?: DebateMediaOperationsHome["candidateFeed"] | null,
+  appearanceConfidence?: DomainReadiness | null,
 ): DomainReadiness {
+  if (appearanceConfidence && appearanceConfidence !== "NOT_REQUIRED") {
+    return appearanceConfidence;
+  }
+  if (debateMedia && debateMedia.mediaConfidence !== "NOT_REQUIRED") {
+    return debateMedia.mediaConfidence;
+  }
   if (home.interviews.status === "unknown" && home.todaysMessage.status === "unknown") {
     if (!row?.hasPressItem) return "UNKNOWN";
   }
@@ -224,17 +233,28 @@ function buildMissionDomains(input: {
   communications?: CommunicationsOperationsHome["missionRows"][number];
   compliance?: ComplianceOperationsHome["missionRows"][number];
   communicationsHome: CommunicationsOperationsHome;
+  debateMediaFeed?: DebateMediaOperationsHome["candidateFeed"] | null;
+  appearanceConfidence?: DomainReadiness | null;
+  briefingFromMedia?: DomainReadiness | null;
 }): CandidateDomainCell[] {
   const travel = input.logistics?.domains.travel ?? "UNKNOWN";
   const materials = input.logistics?.domains.materials ?? "UNKNOWN";
   const speech = mapCommsSpeech(input.communications);
-  const media = mapCommsMedia(input.communications, input.communicationsHome);
+  const media = mapCommsMedia(
+    input.communications,
+    input.communicationsHome,
+    input.debateMediaFeed,
+    input.appearanceConfidence,
+  );
   const schedule = mapScheduleReadiness(input.mission);
-  const briefing: DomainReadiness = input.countyName
-    ? "READY"
-    : input.mission
-      ? "NEEDS_ATTENTION"
-      : "UNKNOWN";
+  const briefing: DomainReadiness =
+    input.briefingFromMedia && input.briefingFromMedia !== "NOT_REQUIRED"
+      ? input.briefingFromMedia
+      : input.countyName
+        ? "READY"
+        : input.mission
+          ? "NEEDS_ATTENTION"
+          : "UNKNOWN";
 
   return [
     {
@@ -257,7 +277,9 @@ function buildMissionDomains(input: {
     {
       domain: "Briefing",
       state: briefing,
-      source: "Candidate Ops assembly + County",
+      source: input.briefingFromMedia
+        ? "Debate & Media Operations"
+        : "Candidate Ops assembly + County",
       detail: input.countyName
         ? `County context: ${input.countyName}`
         : "County Unknown — briefing incomplete.",
@@ -265,7 +287,9 @@ function buildMissionDomains(input: {
     {
       domain: "Media",
       state: media,
-      source: "Communications Operations",
+      source: input.debateMediaFeed
+        ? "Debate & Media Operations"
+        : "Communications Operations",
       detail:
         media === "UNKNOWN"
           ? "Media prep Unknown — interviews/message content not wired."
@@ -354,6 +378,7 @@ export function buildCandidateOperationsHome(input: {
   field: FieldOperationsHome;
   finance: FinanceOperationsHome;
   volunteers: VolunteerOperationsHome;
+  debateMediaConsume?: DebateMediaOperationsHome | null;
   now?: Date;
 }): CandidateOperationsHome {
   const now = input.now ?? new Date();
@@ -375,6 +400,10 @@ export function buildCandidateOperationsHome(input: {
       m.volunteerLeadAssigned,
     ]),
   );
+  const appearanceById = new Map(
+    (input.debateMediaConsume?.mediaCalendar ?? []).map((a) => [a.missionId, a]),
+  );
+  const debateMediaFeed = input.debateMediaConsume?.candidateFeed ?? null;
 
   const cleanedBriefs: EngagementBrief[] = input.missions.map((mission) => {
     const countyName =
@@ -383,6 +412,7 @@ export function buildCandidateOperationsHome(input: {
     const logistics = logisticsById.get(mission.missionId);
     const communications = commsById.get(mission.missionId);
     const compliance = complianceById.get(mission.missionId);
+    const appearance = appearanceById.get(mission.missionId);
     const domains = buildMissionDomains({
       mission,
       countyName,
@@ -390,6 +420,9 @@ export function buildCandidateOperationsHome(input: {
       communications,
       compliance,
       communicationsHome: input.communications,
+      debateMediaFeed,
+      appearanceConfidence: appearance?.mediaConfidence ?? null,
+      briefingFromMedia: appearance?.briefingCompleteness ?? null,
     });
     const preparedness = combineOperationalReadiness(domains.map((d) => d.state));
     const talking =
@@ -495,9 +528,10 @@ export function buildCandidateOperationsHome(input: {
       ? `Next travel about ${input.brief.travel.nextMissionDriveMinutes} minutes. ${input.logistics.executiveFeed.briefingLine}`
       : input.logistics.executiveFeed.briefingLine;
 
-  const mediaLine =
-    input.communications.executiveFeed.messagingRisk === "UNKNOWN" &&
-    input.communications.executiveFeed.mediaCommitments === 0
+  const mediaLine = debateMediaFeed
+    ? debateMediaFeed.briefingLine
+    : input.communications.executiveFeed.messagingRisk === "UNKNOWN" &&
+        input.communications.executiveFeed.mediaCommitments === 0
       ? "Media Unknown — interviews and daily message not confirmed."
       : input.communications.executiveFeed.briefingLine;
 
@@ -578,14 +612,33 @@ export function buildCandidateOperationsHome(input: {
         ? "unknown"
         : "actionable",
   });
-  candidateInbox.push({
-    id: "debate-notes",
-    category: "DEBATE",
-    title: "Debate notes",
-    detail: "Debate packets Unknown — owned by Debate & Media Operations (Phase 2.2).",
-    href: null,
-    status: "unknown",
-  });
+  if (debateMediaFeed) {
+    candidateInbox.push({
+      id: "debate-media",
+      category: "DEBATE",
+      title: "Debate & media readiness",
+      detail: debateMediaFeed.briefingLine,
+      href: "/debate-media",
+      status:
+        debateMediaFeed.appearancesAtRisk > 0 ||
+        debateMediaFeed.mediaConfidence === "BLOCKED" ||
+        debateMediaFeed.mediaConfidence === "NEEDS_ATTENTION"
+          ? "actionable"
+          : debateMediaFeed.mediaConfidence === "UNKNOWN"
+            ? "unknown"
+            : "actionable",
+    });
+  } else {
+    candidateInbox.push({
+      id: "debate-notes",
+      category: "DEBATE",
+      title: "Debate notes",
+      detail:
+        "Debate packets Unknown — owned by Debate & Media Operations (Phase 2.2).",
+      href: "/debate-media",
+      status: "unknown",
+    });
+  }
   candidateInbox.push({
     id: "doc-review",
     category: "DOCUMENT",

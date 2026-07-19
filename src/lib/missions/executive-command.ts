@@ -6,6 +6,7 @@
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
 import type { CandidateOperationsHome } from "@/lib/missions/candidate-operations";
 import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
+import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
@@ -121,6 +122,8 @@ export type ExecutiveCommand = {
   constituentFeed: ConstituentOperationsHome["executiveFeed"] | null;
   /** Consumed from Candidate Operations (2.1) — preparedness orchestration. */
   candidateFeed: CandidateOperationsHome["executiveFeed"] | null;
+  /** Consumed from Debate & Media Operations (2.2) — public communication prep. */
+  debateMediaFeed: DebateMediaOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -147,6 +150,7 @@ export function buildDeterministicExecutiveBriefing(
   intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null,
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null,
   candidateFeed?: CandidateOperationsHome["executiveFeed"] | null,
+  debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -159,6 +163,7 @@ export function buildDeterministicExecutiveBriefing(
       intelligenceFeed?.briefingLine,
       constituentFeed?.briefingLine,
       candidateFeed?.briefingLine,
+      debateMediaFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -173,6 +178,9 @@ export function buildDeterministicExecutiveBriefing(
   }
   if (candidateFeed?.briefingLine) {
     parts.push(candidateFeed.briefingLine);
+  }
+  if (debateMediaFeed?.briefingLine) {
+    parts.push(debateMediaFeed.briefingLine);
   }
   if (constituentFeed?.briefingLine) {
     parts.push(constituentFeed.briefingLine);
@@ -261,6 +269,7 @@ export function buildExecutiveCommand(input: {
   intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null;
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
   candidateFeed?: CandidateOperationsHome["executiveFeed"] | null;
+  debateMediaFeed?: DebateMediaOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -274,6 +283,7 @@ export function buildExecutiveCommand(input: {
   const intelligenceFeed = input.intelligenceFeed ?? null;
   const constituentFeed = input.constituentFeed ?? null;
   const candidateFeed = input.candidateFeed ?? null;
+  const debateMediaFeed = input.debateMediaFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -404,6 +414,20 @@ export function buildExecutiveCommand(input: {
       detail: candidateFeed.briefingLine,
       href: "/candidate",
       urgency: candidateFeed.blockedDomains > 0 ? "NOW" : "SOON",
+    });
+  }
+  if (
+    debateMediaFeed &&
+    debateMediaFeed.publicAppearancesToday > 0 &&
+    (debateMediaFeed.appearancesAtRisk > 0 ||
+      debateMediaFeed.mediaConfidence === "BLOCKED" ||
+      debateMediaFeed.mediaConfidence === "NEEDS_ATTENTION")
+  ) {
+    topPriorities.push({
+      label: "Public communication prep",
+      detail: debateMediaFeed.briefingLine,
+      href: "/debate-media",
+      urgency: debateMediaFeed.mediaConfidence === "BLOCKED" ? "NOW" : "SOON",
     });
   }
   if (brief.topBlocker) {
@@ -753,6 +777,11 @@ export function buildExecutiveCommand(input: {
       `${candidateFeed.unknownDomains} candidate preparedness domain(s) Unknown`,
     );
   }
+  if (debateMediaFeed && debateMediaFeed.appearancesAtRisk > 0) {
+    alerts.push(
+      `${debateMediaFeed.appearancesAtRisk} public appearance(s) need media prep`,
+    );
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -807,6 +836,7 @@ export function buildExecutiveCommand(input: {
         intelligenceFeed,
         constituentFeed,
         candidateFeed,
+        debateMediaFeed,
       ),
       source: "deterministic_v1",
     },
@@ -820,6 +850,7 @@ export function buildExecutiveCommand(input: {
     intelligenceFeed,
     constituentFeed,
     candidateFeed,
+    debateMediaFeed,
   };
 }
 
@@ -855,5 +886,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     intelligenceFeed: command.intelligenceFeed,
     constituentFeed: command.constituentFeed,
     candidateFeed: command.candidateFeed,
+    debateMediaFeed: command.debateMediaFeed,
   };
 }

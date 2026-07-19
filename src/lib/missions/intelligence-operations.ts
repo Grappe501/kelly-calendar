@@ -13,6 +13,7 @@ import type { CommunicationsOperationsHome } from "@/lib/missions/communications
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
+import type { DebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
@@ -28,6 +29,7 @@ export type IntelligenceSourceModule =
   | "finance"
   | "compliance"
   | "constituent"
+  | "debate_media"
   | "calendar";
 
 export type IntelligenceCategory =
@@ -35,6 +37,7 @@ export type IntelligenceCategory =
   | "COUNTY_TREND"
   | "VOLUNTEER_PRESSURE"
   | "COMMS_DRIFT"
+  | "MEDIA_PREPARATION"
   | "MISSION_FORECAST"
   | "RESOURCE_PRESSURE"
   | "COMPLIANCE_HOTSPOT"
@@ -114,6 +117,7 @@ export type IntelligenceFeedInput = {
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null;
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null;
   constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
+  debateMediaFeed?: DebateMediaOperationsHome["intelligenceFeed"] | null;
 };
 
 const HISTORY_UNKNOWN: UnknownFact = {
@@ -362,6 +366,70 @@ export function buildCommunicationsDriftSignals(
       }),
     );
   }
+
+  const media = feeds.debateMediaFeed;
+  if (media) {
+    if (media.messagingDriftSignal) {
+      out.push(
+        insight({
+          id: "media-messaging-drift",
+          category: "COMMS_DRIFT",
+          title: "Media messaging drift pressure",
+          detail: media.briefingLine,
+          severity: "HIGH",
+          href: "/debate-media",
+          sourceModule: "debate_media",
+          canonicalFact:
+            "Debate & Media Operations: messagingDriftSignal=true (interpreted from Communications risk)",
+        }),
+      );
+    }
+    if (media.recurringQuestionsStatus === "unknown") {
+      out.push(
+        insight({
+          id: "media-questions-unknown",
+          category: "MEDIA_PREPARATION",
+          title: "Recurring media questions Unknown",
+          detail:
+            "Recurring media questions remain Unknown — Debate & Media owns the question library surface.",
+          severity: "UNKNOWN",
+          href: "/debate-media",
+          sourceModule: "debate_media",
+          canonicalFact:
+            "Debate & Media Operations: recurringQuestionsStatus=unknown",
+        }),
+      );
+    }
+    if (media.issueTrendsStatus === "unknown") {
+      out.push(
+        insight({
+          id: "media-issue-trends-unknown",
+          category: "MEDIA_PREPARATION",
+          title: "Issue trends Unknown",
+          detail:
+            "Issue trends remain Unknown — Intelligence will not invent issue resonance.",
+          severity: "UNKNOWN",
+          href: "/debate-media",
+          sourceModule: "debate_media",
+          canonicalFact: "Debate & Media Operations: issueTrendsStatus=unknown",
+        }),
+      );
+    }
+    if (media.preparationGaps > 0) {
+      out.push(
+        insight({
+          id: "media-prep-gaps",
+          category: "MEDIA_PREPARATION",
+          title: "Public appearance preparation gaps",
+          detail: media.briefingLine,
+          severity: media.preparationGaps > 2 ? "HIGH" : "WATCH",
+          href: "/debate-media",
+          sourceModule: "debate_media",
+          canonicalFact: `Debate & Media Operations: preparationGaps=${media.preparationGaps}`,
+        }),
+      );
+    }
+  }
   return out;
 }
 
@@ -597,7 +665,7 @@ export function buildOperationalIntelligenceHome(input: {
     );
   }
   briefingParts.push(
-    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, or Compliance.",
+    "Intelligence interprets only — it does not override Field, County, Volunteer, Communications, Logistics, Finance, Compliance, or Debate & Media.",
   );
 
   return {

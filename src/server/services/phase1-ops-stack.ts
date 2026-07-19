@@ -4,6 +4,7 @@ import { buildCommunicationsOperationsHome } from "@/lib/missions/communications
 import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import { buildConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
+import { buildDebateMediaOperationsHome } from "@/lib/missions/debate-media-operations";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import { buildOperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
@@ -14,8 +15,9 @@ import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 
 /**
- * Assembles Phase 1 kernel homes for today's permissioned missions.
- * Phase 2 capabilities consume this stack — they do not rebuild engines.
+ * Assembles Phase 1 kernel homes plus Phase 2 capability orchestration
+ * for today's permissioned missions. Capabilities consume — they do not
+ * rebuild kernel engines.
  */
 export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
   const briefPayload = await getCampaignBrief(actor);
@@ -157,6 +159,31 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     constituentFeed: constituents.countyFeed,
   });
 
+  const debateMedia = buildDebateMediaOperationsHome({
+    brief: briefPayload.brief,
+    missions: briefPayload.allMissionsToday,
+    countiesByMission: briefPayload.countiesByMission,
+    communications,
+    compliance,
+    logistics,
+  });
+
+  const communicationsWithMedia = buildCommunicationsOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
+    logisticsConsume: {
+      literatureAvailable: String(logistics.communicationsFeed.literatureAvailable),
+      signageStatus: String(logistics.communicationsFeed.signageStatus),
+      mediaKitDelivered: logistics.communicationsFeed.mediaKitDelivered,
+      pressBackdropAvailable: logistics.communicationsFeed.pressBackdropAvailable,
+    },
+    financeConsume: finance.communicationsFeed,
+    complianceConsume: compliance.communicationsFeed,
+    constituentConsume: constituents.communicationsFeed,
+    debateMediaConsume: debateMedia.communicationsFeed,
+  });
+
   const intelligence = buildOperationalIntelligenceHome({
     date: briefPayload.brief.date,
     timezone: briefPayload.brief.timezone,
@@ -164,11 +191,12 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
       fieldFeed: field.executiveFeed,
       countyFeed: counties.executiveFeed,
       volunteerFeed: volunteers.executiveFeed,
-      communicationsFeed: communications.executiveFeed,
+      communicationsFeed: communicationsWithMedia.executiveFeed,
       logisticsFeed: logistics.executiveFeed,
       financeFeed: finance.executiveFeed,
       complianceFeed: compliance.executiveFeed,
       constituentFeed: constituents.executiveFeed,
+      debateMediaFeed: debateMedia.intelligenceFeed,
     },
   });
 
@@ -178,10 +206,11 @@ export async function assemblePhase1OpsStack(actor: AuthenticatedActor) {
     logistics,
     finance,
     compliance,
-    communications,
+    communications: communicationsWithMedia,
     volunteers,
     field,
     counties,
     intelligence,
+    debateMedia,
   };
 }

@@ -3,28 +3,36 @@
 **Status:** OPEN  
 **Prerequisite:** Phase 1 CERTIFIED — Campaign Operating System Kernel  
 
-## Objective
+```text
+Campaign Operating System
+=========================
 
-Add specialized campaign capabilities that **consume** the Phase 1 kernel. Do not recreate kernel engines.
+Phase 1
+Core Execution ............. COMPLETE
 
-## Permanent principle
+Phase 2
+Candidate Operations ....... COMPLETE
+Debate & Media ............. IN PROGRESS
+Fundraising ................ Planned
+GOTV ........................ Planned
+Petition & Ballot .......... Planned
+```
 
-> Phase 2 capabilities orchestrate Phase 1 services — they do not replace or duplicate them.
+## Principles
 
-## Gate for every new capability
-
-> What operational decision does this improve?
+1. Phase 2 capabilities orchestrate Phase 1 services — they do not replace or duplicate them.  
+2. Capabilities assemble operational context — they do not create parallel operational systems.
 
 ## Sequencing
 
 ```text
-2.1 Candidate Operations ........ IN PROGRESS
+2.1 Candidate Operations ........ COMPLETE
 "Is the candidate prepared?"
 
 ↓
 
-2.2 Debate & Media Operations ... HELD
-"Are we prepared to communicate?"
+2.2 Debate & Media Operations ... IN PROGRESS
+"Are we prepared for every public communication?"
 
 ↓
 
@@ -41,11 +49,3 @@ Add specialized campaign capabilities that **consume** the Phase 1 kernel. Do no
 2.5 Petition & Ballot Operations HELD
 "Can we execute citizen-driven campaigns using the same OS?"
 ```
-
-## Kernel (consume only — do not extend unnecessarily)
-
-Calendar · Executive Command · Field · County · Volunteer · Communications · Logistics · Finance & Resources · Compliance · Voter & Constituent · Operational Intelligence
-
-## Active
-
-See `KCCC_PHASE_02_1_CANDIDATE_OPERATIONS.md` and `KCCC_PHASE_02_CHARTER.md`.
