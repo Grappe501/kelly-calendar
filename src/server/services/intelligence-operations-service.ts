@@ -3,30 +3,31 @@ import "server-only";
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
-import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
-import { buildOperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
+import {
+  buildOperationalIntelligenceHome,
+  type OperationalIntelligenceHome,
+} from "@/lib/missions/intelligence-operations";
 import { buildLogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import { buildVolunteerOperationsHome } from "@/lib/missions/volunteer-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 
-export type ExecutiveCommandPayload = {
-  command: ExecutiveCommand;
+export type IntelligenceOperationsPayload = {
+  intelligence: OperationalIntelligenceHome;
   viewerDisplayName: string;
   candidateDataReady: false;
 };
 
 /**
- * Authenticated Executive Command — consumes Field, County, Volunteer,
- * Communications, Logistics, Finance, Compliance, and Intelligence feeds
- * (no duplicate engines; intelligence interprets only).
+ * Authenticated Operational Intelligence — interprets domain feeds only.
+ * Does not own or override canonical operational facts.
  */
-export async function getExecutiveCommand(
+export async function getOperationalIntelligence(
   actor: AuthenticatedActor,
-): Promise<ExecutiveCommandPayload> {
+): Promise<IntelligenceOperationsPayload> {
   const briefPayload = await getCampaignBrief(actor);
   const ids = briefPayload.allMissionsToday.map((m) => m.missionId);
   const context = await loadMissionContextForIds(ids);
@@ -164,22 +165,8 @@ export async function getExecutiveCommand(
     },
   });
 
-  const command = buildExecutiveCommand({
-    brief: briefPayload.brief,
-    missions: briefPayload.allMissionsToday,
-    countiesByMission: briefPayload.countiesByMission,
-    fieldFeed: field.executiveFeed,
-    countyFeed: counties.executiveFeed,
-    volunteerFeed: volunteers.executiveFeed,
-    communicationsFeed: communications.executiveFeed,
-    logisticsFeed: logistics.executiveFeed,
-    financeFeed: finance.executiveFeed,
-    complianceFeed: compliance.executiveFeed,
-    intelligenceFeed: intelligence.executiveFeed,
-  });
-
   return {
-    command,
+    intelligence,
     viewerDisplayName: briefPayload.viewerDisplayName,
     candidateDataReady: false,
   };

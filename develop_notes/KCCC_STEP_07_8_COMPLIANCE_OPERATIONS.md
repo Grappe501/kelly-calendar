@@ -1,7 +1,7 @@
 # KCCC Step 7.8 — Compliance Operations
 
 **Script ID:** `KCCC-STEP-07.8-COMPLIANCE-OPERATIONS`  
-**Status:** IN PROGRESS  
+**Status:** ACCEPTED  
 **Parent:** Step 7 Campaign Operations  
 
 ## Doctrine

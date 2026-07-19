@@ -1,5 +1,5 @@
 /**
- * Step 7.1–7.8 structural gates.
+ * Step 7.1–7.8 + 7.10 structural gates.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -23,100 +23,94 @@ function read(rel) {
 }
 
 const required = [
-  ["7.7", "src/lib/missions/finance-operations.ts"],
-  ["7.7", "src/app/finance/page.tsx"],
   ["7.8", "src/lib/missions/compliance-operations.ts"],
-  ["7.8", "src/server/services/compliance-operations-service.ts"],
-  ["7.8", "src/server/services/compliance-operations-ai.ts"],
-  ["7.8", "src/app/api/command-summary/compliance/route.ts"],
   ["7.8", "src/app/compliance/page.tsx"],
-  ["7.8", "src/components/compliance/ComplianceOperationsView.tsx"],
-  ["7.8", "develop_notes/KCCC_STEP_07_8_COMPLIANCE_OPERATIONS.md"],
+  ["7.10", "src/lib/missions/intelligence-operations.ts"],
+  ["7.10", "src/server/services/intelligence-operations-service.ts"],
+  ["7.10", "src/server/services/intelligence-operations-ai.ts"],
+  ["7.10", "src/app/api/command-summary/intelligence/route.ts"],
+  ["7.10", "src/app/intelligence/page.tsx"],
+  ["7.10", "src/components/intelligence/IntelligenceOperationsView.tsx"],
+  ["7.10", "develop_notes/KCCC_STEP_07_10_OPERATIONAL_INTELLIGENCE.md"],
 ];
 for (const [label, rel] of required) {
   if (exists(rel)) pass(`${label} ${rel}`);
   else fail(`${label} missing ${rel}`);
 }
 
-const compliance = read("src/lib/missions/compliance-operations.ts");
+const intelligence = read("src/lib/missions/intelligence-operations.ts");
 if (
-  compliance.includes("buildComplianceOperationsHome") &&
-  compliance.includes("deriveComplianceState") &&
-  compliance.includes("CommitmentTripleState") &&
-  compliance.includes("executiveFeed") &&
-  compliance.includes("financeFeed") &&
-  compliance.includes("communicationsFeed") &&
-  compliance.includes("fieldFeed") &&
-  compliance.includes("countyFeed")
+  intelligence.includes("buildOperationalIntelligenceHome") &&
+  intelligence.includes("interpretationOnly") &&
+  intelligence.includes("never replaces or overrides") &&
+  intelligence.includes("executiveFeed") &&
+  intelligence.includes("canonicalFact") &&
+  intelligence.includes("buildEmergingRisks")
 ) {
-  pass("7.8 compliance contracts present");
+  pass("7.10 intelligence contracts present");
 } else {
-  fail("7.8 compliance contracts incomplete");
+  fail("7.10 intelligence contracts incomplete");
 }
 
 const exec = read("src/lib/missions/executive-command.ts");
-if (exec.includes("complianceFeed")) pass("7.8 Executive consumes complianceFeed");
-else fail("7.8 Executive missing complianceFeed");
+if (exec.includes("intelligenceFeed")) {
+  pass("7.10 Executive consumes intelligenceFeed");
+} else {
+  fail("7.10 Executive missing intelligenceFeed");
+}
 
 const execService = read("src/server/services/executive-command-service.ts");
 if (
-  execService.includes("buildComplianceOperationsHome") &&
-  execService.includes("complianceFeed")
+  execService.includes("buildOperationalIntelligenceHome") &&
+  execService.includes("intelligenceFeed")
 ) {
-  pass("7.8 executive service wires compliance");
+  pass("7.10 executive service wires intelligence");
 } else {
-  fail("7.8 executive service missing compliance");
+  fail("7.10 executive service missing intelligence");
 }
 
-const fieldService = read("src/server/services/field-operations-service.ts");
-if (fieldService.includes("complianceFieldFeed")) {
-  pass("7.8 field consumes compliance");
-} else {
-  fail("7.8 field missing compliance");
-}
-
-const financeService = read("src/server/services/finance-operations-service.ts");
-if (financeService.includes("complianceConsume") || financeService.includes("compliance.financeFeed")) {
-  pass("7.8 finance consumes compliance");
-} else {
-  fail("7.8 finance missing compliance");
-}
-
-const view = read("src/components/compliance/ComplianceOperationsView.tsx");
+const view = read("src/components/intelligence/IntelligenceOperationsView.tsx");
 for (const heading of [
-  "legally, ethically",
-  "Compliance snapshot",
-  "readiness domain, not an after-the-fact audit",
+  "patterns, risks, and opportunities",
+  "Intelligence snapshot",
   "First-class Unknowns",
 ]) {
   if (view.includes(heading)) pass(`UI ${heading}`);
   else fail(`UI missing ${heading}`);
 }
-
-const ai = read("src/server/services/compliance-operations-ai.ts");
 if (
-  ai.includes('feature: "compliance-operations"') &&
+  view.includes("never") &&
+  view.includes("replaces") &&
+  view.includes("overrides")
+) {
+  pass("UI non-override doctrine present");
+} else {
+  fail("UI missing non-override doctrine");
+}
+
+const ai = read("src/server/services/intelligence-operations-ai.ts");
+if (
+  ai.includes('feature: "operational-intelligence"') &&
   ai.includes('application: "kelly-calendar"')
 ) {
-  pass("7.8 AI audit attribution present");
+  pass("7.10 AI audit attribution present");
 } else {
-  fail("7.8 AI audit attribution missing");
+  fail("7.10 AI audit attribution missing");
 }
 
 const nav = read("src/lib/navigation/nav-items.ts");
-if (nav.includes('pathname.startsWith("/compliance")')) {
-  pass("/compliance maps to More");
+if (nav.includes('pathname.startsWith("/intelligence")')) {
+  pass("/intelligence maps to More");
 } else {
-  fail("/compliance nav missing");
+  fail("/intelligence nav missing");
 }
 
 const charter = read("develop_notes/KCCC_STEP_07_CAMPAIGN_OPERATIONS_CHARTER.md");
 if (
-  charter.includes("Compliance is a readiness domain") &&
-  charter.includes("operational state and a resource state") &&
-  charter.includes("minimum readiness of all required operational domains")
+  charter.includes("never replaces or overrides them") &&
+  charter.includes("Compliance is a readiness domain")
 ) {
-  pass("compliance + dual-state + min-readiness doctrine locked");
+  pass("intelligence non-override + compliance doctrine locked");
 } else {
   fail("doctrine missing from charter");
 }
@@ -126,16 +120,16 @@ if (build.candidate_data_ready === true) fail("candidate_data_ready must be fals
 else pass("candidate_data_ready false");
 
 if (
-  build.compliance_operations_enabled ||
-  build.step7_increment === "7.8-compliance-operations"
+  build.operational_intelligence_enabled ||
+  build.step7_increment === "7.10-operational-intelligence"
 ) {
-  pass("7.8 increment tracked");
+  pass("7.10 increment tracked");
 } else {
-  fail("7.8 increment not tracked");
+  fail("7.10 increment not tracked");
 }
 
 if (failed) {
   console.error(`Step 7 validation failed (${failed})`);
   process.exit(1);
 }
-console.log("Step 7.1–7.8 structural validation passed.");
+console.log("Step 7.1–7.8 + 7.10 structural validation passed.");

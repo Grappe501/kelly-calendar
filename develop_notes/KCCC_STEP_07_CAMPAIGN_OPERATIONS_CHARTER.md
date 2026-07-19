@@ -11,13 +11,15 @@
 4. Every operational artifact has one owner and many consumers.  
 5. **Operational readiness equals the minimum readiness of all required operational domains** (not an average).  
 6. **Every operational commitment has both an operational state and a resource state.**  
-7. **Compliance is a readiness domain, not an after-the-fact audit.**
+7. **Compliance is a readiness domain, not an after-the-fact audit.**  
+8. **Operational Intelligence may interpret canonical facts, but it never replaces or overrides them.**
 
 ## Doctrine questions
 
 | Module | Question |
 |--------|----------|
 | Executive Command | What does leadership need to know? |
+| Operational Intelligence | What patterns, risks, and opportunities are emerging across the campaign? |
 | Communications Operations | Is everyone communicating the same campaign? |
 | County Operations | Where are we weak? |
 | Field Operations | Who needs help right now? |
@@ -38,4 +40,9 @@
 | 7.5 Communications Operations | `/communications` | ACCEPTED |
 | 7.6 Logistics Operations | `/logistics` | ACCEPTED |
 | 7.7 Finance & Resources Operations | `/finance` | ACCEPTED |
-| 7.8 Compliance Operations | `/compliance` | IN PROGRESS |
+| 7.8 Compliance Operations | `/compliance` | ACCEPTED |
+| 7.10 Operational Intelligence | `/intelligence` | IN PROGRESS |
+
+## Phase note
+
+Core Campaign Execution Layer (7.1–7.8) is complete. Step 7.10 sits above the stack as interpret-only. Step 7.9 (Voter & Constituent) deferred until after intelligence.

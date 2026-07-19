@@ -1,6 +1,6 @@
 {
   "name": "kelly-campaign-command-calendar",
-  "version": "0.7.8-ops",
+  "version": "0.7.10-ops",
   "private": true,
   "description": "Kelly Campaign Command Calendar (KCCC) — candidate daily operating system",
   "engines": {

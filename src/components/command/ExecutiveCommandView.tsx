@@ -181,6 +181,15 @@ export function ExecutiveCommandView({
             </Link>
           </p>
         ) : null}
+        {command.intelligenceFeed ? (
+          <p>
+            <strong>Intelligence:</strong>{" "}
+            {command.intelligenceFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/intelligence">
+              Open Operational Intelligence
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">

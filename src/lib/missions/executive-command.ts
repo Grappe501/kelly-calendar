@@ -8,6 +8,7 @@ import type { CommunicationsOperationsHome } from "@/lib/missions/communications
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
+import type { OperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
 import type { LogisticsOperationsHome } from "@/lib/missions/logistics-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
@@ -112,6 +113,8 @@ export type ExecutiveCommand = {
   financeFeed: FinanceOperationsHome["executiveFeed"] | null;
   /** Consumed from Compliance Operations (7.8) — lawful / on-policy readiness. */
   complianceFeed: ComplianceOperationsHome["executiveFeed"] | null;
+  /** Consumed from Operational Intelligence (7.10) — interpret-only insights. */
+  intelligenceFeed: OperationalIntelligenceHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -135,6 +138,7 @@ export function buildDeterministicExecutiveBriefing(
   logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null,
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null,
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null,
+  intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -144,6 +148,7 @@ export function buildDeterministicExecutiveBriefing(
       logisticsFeed?.briefingLine,
       financeFeed?.briefingLine,
       complianceFeed?.briefingLine,
+      intelligenceFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -151,6 +156,11 @@ export function buildDeterministicExecutiveBriefing(
   }
 
   const parts: string[] = [];
+  if (intelligenceFeed?.topInsights[0]) {
+    parts.push(
+      `Intelligence priority: ${intelligenceFeed.topInsights[0].label}.`,
+    );
+  }
   if (fieldFeed?.briefingLine) {
     parts.push(fieldFeed.briefingLine);
   }
@@ -232,6 +242,7 @@ export function buildExecutiveCommand(input: {
   logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null;
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null;
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null;
+  intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -242,6 +253,7 @@ export function buildExecutiveCommand(input: {
   const logisticsFeed = input.logisticsFeed ?? null;
   const financeFeed = input.financeFeed ?? null;
   const complianceFeed = input.complianceFeed ?? null;
+  const intelligenceFeed = input.intelligenceFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -335,6 +347,15 @@ export function buildExecutiveCommand(input: {
       detail: top ? top.detail : complianceFeed.briefingLine,
       href: "/compliance",
       urgency: "NOW",
+    });
+  }
+  if (intelligenceFeed && intelligenceFeed.topInsights.length > 0) {
+    const top = intelligenceFeed.topInsights[0];
+    topPriorities.push({
+      label: "Intelligence priority",
+      detail: `${top.label}: ${top.detail}`,
+      href: top.href ?? "/intelligence",
+      urgency: intelligenceFeed.emergingRiskCount > 0 ? "NOW" : "SOON",
     });
   }
   if (brief.topBlocker) {
@@ -651,6 +672,11 @@ export function buildExecutiveCommand(input: {
   if (complianceFeed?.upcomingFilingDeadlinesStatus === "unknown") {
     alerts.push("Filing deadlines Unknown");
   }
+  if (intelligenceFeed && intelligenceFeed.emergingRiskCount > 0) {
+    alerts.push(
+      `${intelligenceFeed.emergingRiskCount} emerging intelligence risk(s)`,
+    );
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -702,6 +728,7 @@ export function buildExecutiveCommand(input: {
         logisticsFeed,
         financeFeed,
         complianceFeed,
+        intelligenceFeed,
       ),
       source: "deterministic_v1",
     },
@@ -712,6 +739,7 @@ export function buildExecutiveCommand(input: {
     logisticsFeed,
     financeFeed,
     complianceFeed,
+    intelligenceFeed,
   };
 }
 
@@ -744,5 +772,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     logisticsFeed: command.logisticsFeed,
     financeFeed: command.financeFeed,
     complianceFeed: command.complianceFeed,
+    intelligenceFeed: command.intelligenceFeed,
   };
 }
