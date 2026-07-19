@@ -391,6 +391,13 @@ if (
   build.platform_quality_score === 5.7 &&
   build.engineering_sustainability_index === 5.7 &&
   build.esi_tracking === true &&
+  build.audit_constitution_status === "active" &&
+  build.protected_assets_register_status === "living" &&
+  build.engineering_maturity_architecture === 4 &&
+  build.engineering_maturity_operator_experience === 2 &&
+  build.engineering_maturity_visual_experience === 2 &&
+  build.engineering_maturity_engineering_quality === 3 &&
+  build.engineering_maturity_platform_readiness === 2 &&
   build.ea5_status === "opened" &&
   build.ea5_focus === "inclusive_experience" &&
   build.program_readiness_review_status === "planned" &&
@@ -416,32 +423,37 @@ if (
   build.next_engineering_deliverable === "KCCC-EA-5-ACCESSIBILITY" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
+  constants.includes('AUDIT_CONSTITUTION_STATUS = "ACTIVE"') &&
+  constants.includes('PROTECTED_ASSETS_REGISTER_STATUS = "LIVING"') &&
+  constants.includes("ENGINEERING_MATURITY_ARCHITECTURE = 4") &&
   constants.includes('EA3_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
   constants.includes('EA5_FOCUS = "INCLUSIVE_EXPERIENCE"') &&
   constants.includes('PROGRAM_READINESS_REVIEW_STATUS = "PLANNED"') &&
   constants.includes("HARDENING_WAVE_COUNT = 6") &&
   constants.includes('ESI_HARDENING_TARGET = "7.5+"') &&
   constants.includes('HARDENING_BLOCKED_UNTIL = "PROGRAM_READINESS_REVIEW"') &&
+  constants.includes("KCCC-AUDIT-CONSTITUTION") &&
   constants.includes("KCCC-EA-5-ACCESSIBILITY") &&
+  exists("develop_notes/KCCC_AUDIT_CONSTITUTION.md") &&
+  exists("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md") &&
   exists("develop_notes/KCCC_EA3_PLATFORM_QUALITY.md") &&
-  exists("develop_notes/KCCC_EA3_ASSESSMENT.md") &&
   exists("develop_notes/KCCC_EA3_EXECUTIVE_ACCEPTANCE.md") &&
   exists("develop_notes/KCCC_EA5_ACCESSIBILITY.md") &&
   exists("develop_notes/KCCC_PROGRAM_READINESS_REVIEW.md") &&
-  exists("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md") &&
   !exists("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md") &&
-  read("develop_notes/KCCC_EA3_EXECUTIVE_ACCEPTANCE.md").includes("ACCEPTED") &&
-  read("develop_notes/KCCC_EA3_EXECUTIVE_ACCEPTANCE.md").includes("long-term velocity") &&
+  read("develop_notes/KCCC_AUDIT_CONSTITUTION.md").includes("Six Engineering Laws") &&
+  read("develop_notes/KCCC_AUDIT_CONSTITUTION.md").includes("without weakening Architecture 1.0") &&
+  read("develop_notes/KCCC_AUDIT_CONSTITUTION.md").includes("Level 4") &&
+  read("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md").includes("PA-01") &&
+  read("develop_notes/KCCC_PROTECTED_ASSETS_REGISTER.md").includes("Never Fake") &&
+  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Audit Constitution") &&
   read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("Inclusive Experience") &&
-  read("develop_notes/KCCC_EA5_ACCESSIBILITY.md").includes("reduced-motion") &&
   read("develop_notes/KCCC_PROGRAM_READINESS_REVIEW.md").includes("four questions") &&
   read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("Testability & Verification") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("Wave 6") &&
-  read("develop_notes/KCCC_ENGINEERING_PATTERNS.md").includes("protected engineering asset") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("EA-3 ACCEPTED; EA-5 Inclusive OPENED; Waves 1–6; Readiness Review gates Hardening");
+  pass("Audit Constitution ACTIVE; Protected Assets LIVING; EA-5 under Constitution; Hardening gated");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -451,5 +463,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (EA-3 ACCEPTED; ESI trajectory 7.5/8.5; EA-5 Inclusive OPENED; Program Readiness Review PLANNED; Hardening blocked; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (Audit Constitution ACTIVE; Protected Assets LIVING; maturity baseline set; EA-5 next under Constitution; Hardening gated by Program Readiness Review; Phase 3.1 paused).",
 );

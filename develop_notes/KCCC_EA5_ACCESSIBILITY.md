@@ -2,13 +2,17 @@
 
 **Script ID:** `KCCC-EA-5-ACCESSIBILITY`  
 **Parent:** `KCCC_ENGINEERING_AUDIT.md`  
-**Status:** OPENED / ACTIVE  
+**Status:** OPENED — **proceeds after Audit Constitution ACTIVE**  
 **Assessment:** —  
-**Prerequisite:** EA-3 Platform Quality ACCEPTED  
+**Prerequisite:** EA-3 ACCEPTED · `KCCC_AUDIT_CONSTITUTION.md` ACTIVE  
 **Nature:** Inclusive experience — broader than WCAG checklist · audit only  
-**Aligns with:** Experience Redesign (clarity for all operators)
+**Governed by:** Audit Constitution (Six Laws · standard report structure)  
+**Aligns with:** Experience Redesign (clarity for all operators) · Law 5 Accessibility  
 
 ```text
+One question (Audit Constitution):
+Does this increase operator confidence without weakening Architecture 1.0?
+
 Mission:
 Verify the Calendar Experience is usable by operators
 across ability, device, and attention conditions—
@@ -49,14 +53,18 @@ WCAG-style checks remain included; they are not the whole audit.
 
 ## Deliverables (on close)
 
+Standard Audit Constitution structure:
+
 ```text
-Inclusive Experience Findings
-        ↓
-Hardening additions (esp. Wave 2 verification overlap)
-        ↓
-Redesign a11y prerequisites
-        ↓
-EA-5 Assessment
+Executive Verdict
+Findings
+Protected Assets          ← reference register; add PA-* if new
+Corrections
+Hardening Items
+Foundation Items
+Redesign Items
+Metrics
+Recommendation
 ```
 
 ## Architecture 1.0 Conformance Statement

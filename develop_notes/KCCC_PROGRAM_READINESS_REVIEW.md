@@ -38,10 +38,13 @@ If all four are **yes** → authorize Hardening Wave 1+.
 
 | Cluster | Streams |
 |---------|---------|
+| Doctrine | Audit Constitution · Protected Assets · Maturity model |
 | Core quality | EA-1 · EA-2 · EA-4 · Product Health |
 | Platform | EA-3 (+ ESI) |
 | Inclusive / ops | EA-5 … EA-9 |
 | Debt / readiness | EA-10 · EA-11 · EA-12 |
+
+EA-5…EA-12 reports use the **standard Audit Constitution structure** for synthesis.
 
 ## Deliverables on close
 

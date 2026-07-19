@@ -54,6 +54,13 @@
   "calendar_experience_v1_complete": true,
   "calendar_experience_v1_status": "engineering_complete",
   "engineering_audit_status": "active",
+  "audit_constitution_status": "active",
+  "protected_assets_register_status": "living",
+  "engineering_maturity_architecture": 4,
+  "engineering_maturity_operator_experience": 2,
+  "engineering_maturity_visual_experience": 2,
+  "engineering_maturity_engineering_quality": 3,
+  "engineering_maturity_platform_readiness": 2,
   "engineering_audit_next_stream": "EA-5",
   "ea4_status": "complete",
   "ea4_assessment": "pass",
@@ -100,6 +107,7 @@
   "foundation_implementation_started": false,
   "redesign_implementation_started": false,
   "next_engineering_deliverable": "KCCC-EA-5-ACCESSIBILITY",
+  "audit_constitution_id": "KCCC-AUDIT-CONSTITUTION",
   "governance_state": "KCCC_GOVERNANCE_STATE_v1.0",
   "constitution": "KCCC_CONSTITUTION_v1.0",
   "architecture_freeze": "KCCC_ARCHITECTURE_FREEZE_v1.0",
@@ -117,7 +125,7 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-EA-5-ACCESSIBILITY",
+  "current_step": "KCCC-AUDIT-CONSTITUTION",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -171,5 +179,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "EA-3 ACCEPTED (healthy arch; velocity not yet). ESI 5.7→7.5→8.5. Waves 1–6 (Wave 2 testability). EA-5 Inclusive Experience OPENED. Hardening blocked until Program Readiness Review after EA-12. Phase 3 paused."
+  "notes": "Audit Constitution ACTIVE. Protected Assets LIVING. Maturity Arch4/Ops2/Visual2/Eng3/Platform2. EA-5 under Constitution next. No new user-facing features. Hardening blocked until Program Readiness Review. Phase 3 paused."
 }
