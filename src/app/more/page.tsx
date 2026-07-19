@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Architecture 1.0 COMPLETE · archived at 6690ce2</strong>
+            <strong>Arch 1.0 baseline 6690ce2 · tip advances separately</strong>
           </li>
         </ul>
       </section>

@@ -1,10 +1,11 @@
 # KCCC Governance State v1.0
 
-**Architecture 1.0 lifecycle:** COMPLETE / CLOSED  
+**Architecture 1.0 lifecycle:** COMPLETE / CLOSED · **Archive complete**  
 **Baseline:** RELEASED  
 **Governance:** LOCKED  
 **Close Commit:** `2dbc1d9`  
-**Register Commit (final archival marker):** `6690ce2`
+**Canonical Register Commit (immutable architecture baseline):** `6690ce2`  
+**Repository tip:** advances over time — post-archive maintenance does not redefine the baseline
 
 ## Canonical Governance Set
 

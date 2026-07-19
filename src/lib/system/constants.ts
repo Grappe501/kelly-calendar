@@ -12,7 +12,9 @@ export const ARCHITECTURE_FREEZE_ID = "KCCC_ARCHITECTURE_FREEZE_v1.0";
 export const ARCHITECTURE_REGISTER_ID = "KCCC_ARCHITECTURE_REGISTER_v1.0";
 export const APPLICATION_VERSION = "0.8.4-petition";
 export const ARCHITECTURE_1_0_CLOSE_TIP = "2dbc1d9";
+/** Immutable Architecture 1.0 baseline — not the advancing repo tip. */
 export const ARCHITECTURE_REGISTER_COMMIT = "6690ce2";
+export const ARCHITECTURE_ARCHIVE_COMPLETE = true;
 export const PHASE_1_STATUS = "CERTIFIED";
 export const PHASE_1_VERSION = "0.7.11-ops";
 export const PHASE_2_STATUS = "CERTIFIED";

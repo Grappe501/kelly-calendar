@@ -1,29 +1,26 @@
 # KCCC New Thread Handoff
 
 ```text
-ARCHITECTURE REGISTER v1.0 — FINAL ARCHIVAL MARKER
+ARCHITECTURE 1.0 ARCHIVE COMPLETE
 
-Architecture ................. 1.0 BASELINE RELEASE
-Lifecycle .................... COMPLETE
-Program State ................ CLOSED
+Architecture baseline (immutable) .... 6690ce2
+Repository tip ....................... advances (maintenance ≠ new baseline)
 
-Close Commit ................. 2dbc1d9
-Register Commit .............. 6690ce2
+Lifecycle ............................ COMPLETE
+Program State ........................ CLOSED
 
-Architecture Review .......... ACTIVE
-Phase 3 Exit Review .......... NOT STARTED
-Phase 3 Implementation ....... NOT AUTHORIZED
-
-Canonical Governance Set:
+Corpus (normative):
 - KCCC_CONSTITUTION_v1.0.md
 - KCCC_ARCHITECTURE_FREEZE_v1.0.md
 - KCCC_GOVERNANCE_STATE_v1.0.md
 - KCCC_ARCHITECTURE_REGISTER_v1.0.md
 
-Tracks: Architecture (frozen) · Engineering (under 1.0) · Phase 3 (review only)
+Architecture Review .................. ACTIVE
+Phase 3 Exit Review .................. NOT STARTED
+Phase 3 Implementation ............... NOT AUTHORIZED
 
-Phase 3 path:
-Exit Review → Decision → AUTHORIZED (planning) → Implementation Authorization → code
+Path: Exit Review → Decision → AUTHORIZED (planning)
+      → Implementation Authorization → Phase 3 Engineering
 
-Application track: 0.8.4-petition
+Application track: 0.8.4-petition (independent)
 ```

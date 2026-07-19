@@ -112,12 +112,13 @@ if (
   register.includes("BASELINE RELEASE") &&
   register.includes("COMPLETE") &&
   register.includes("CLOSED") &&
-  register.includes("2dbc1d9") &&
   register.includes("6690ce2") &&
+  register.includes("immutable") &&
+  register.includes("advances over time") &&
   register.includes("Implementation Authorization") &&
   register.includes("NOT AUTHORIZED")
 ) {
-  pass("Architecture Register v1.0 archived at 6690ce2");
+  pass("Architecture Register v1.0 archive complete; baseline 6690ce2 immutable");
 } else {
   fail("Architecture Register incomplete");
 }
@@ -217,6 +218,9 @@ if (
   build.architecture_baseline_released === true &&
   build.architecture_1_0_close_tip === "2dbc1d9" &&
   build.architecture_register_commit === "6690ce2" &&
+  build.architecture_baseline_immutable_at === "6690ce2" &&
+  build.architecture_archive_complete === true &&
+  build.repository_tip_advances_independently === true &&
   build.architecture_register === "KCCC_ARCHITECTURE_REGISTER_v1.0" &&
   build.architecture_register_canonical === true &&
   Array.isArray(build.canonical_governance_set) &&

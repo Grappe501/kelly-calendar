@@ -1,9 +1,10 @@
 # KCCC Architecture Register v1.0
 
-**Final archival marker:** Git commit `6690ce2`  
-**Lifecycle:** COMPLETE  
-**Program State:** CLOSED  
-**Role:** Official registry for Architecture 1.0 baseline — no longer an active design effort; constitutional reference for future work.
+**Archive status:** COMPLETE  
+**Canonical Register Commit (immutable baseline):** `6690ce2`  
+**Lifecycle:** COMPLETE · Program CLOSED  
+
+Architecture 1.0 is no longer an active design effort. It is the permanent constitutional baseline.
 
 ```text
 KELLY CAMPAIGN CALENDAR
@@ -15,85 +16,74 @@ Architecture ................. 1.0 BASELINE RELEASE
 Lifecycle .................... COMPLETE
 Program State ................ CLOSED
 
-Close Commit ................. 2dbc1d9
-Register Commit .............. 6690ce2
+Canonical Register Commit .... 6690ce2
+Repository Tip ............... advances over time
+                             (archival maintenance may land after 6690ce2
+                              without changing the architectural baseline)
 
 Architecture Review .......... ACTIVE
 Phase 3 Exit Review .......... NOT STARTED
 Phase 3 Implementation ....... NOT AUTHORIZED
 ```
 
-## Canonical Governance Set (Architecture 1.0 corpus)
+## Immutable vs advancing references
 
-| Artifact | Role |
-|----------|------|
-| `KCCC_CONSTITUTION_v1.0.md` | Constitutional principles governing the platform |
-| `KCCC_ARCHITECTURE_FREEZE_v1.0.md` | Immutable scope of the 1.0 baseline |
-| `KCCC_GOVERNANCE_STATE_v1.0.md` | Governance, change control, certification, RFC policy |
-| `KCCC_ARCHITECTURE_REGISTER_v1.0.md` | This registry — baseline and lifecycle state |
+| Purpose | Reference |
+|---------|-----------|
+| **Architecture baseline** | Register commit `6690ce2` (immutable) |
+| **Current repository state** | Repository tip (advances; e.g. `a2e4ba8` was post-archive maintenance) |
 
-Together these form the **authoritative architectural corpus** for Version 1.0.
+Post-archive commits (seal language, validate fixes, engineering under 1.0) must **not** be treated as a new architectural baseline.
+
+## Canonical Architecture Corpus
+
+```text
+KCCC_CONSTITUTION_v1.0.md
+KCCC_ARCHITECTURE_FREEZE_v1.0.md
+KCCC_GOVERNANCE_STATE_v1.0.md
+KCCC_ARCHITECTURE_REGISTER_v1.0.md
+```
+
+These four documents define the authoritative Architecture 1.0 baseline (as of Register Commit `6690ce2`).
 
 ## Governance tracks
 
 ```text
-Architecture Track
-------------------
-Frozen under Architecture 1.0
-Changes require Proposal or RFC.
-
-Engineering Track
------------------
-Continues under Architecture 1.0.
-Implementation must remain within constitutional boundaries.
-
-Phase 3 Track
--------------
-Architecture Review only.
-No implementation authorized.
+Architecture Track — Frozen under 1.0; Proposal or RFC for change
+Engineering Track — Continues under 1.0; within constitutional boundaries
+Phase 3 Track — Architecture Review only; implementation NOT AUTHORIZED
 ```
 
-## Phase 3 authorization sequence
+## Authorized transition (Phase 3)
 
 ```text
 Architecture Review
         │
         ▼
 Phase 3 Exit Review
-(design answers only)
+(design-governance only)
         │
         ▼
 Governance Decision
         │
-        ├── Reject → Remain in Architecture Review
+        ├── Not Approved → Remain in Architecture Review
         │
-        └── Approve
-                │
-                ▼
+        └── Approved
+               │
+               ▼
 Phase 3 AUTHORIZED
 (planning only)
-                │
-                ▼
+               │
+               ▼
 Implementation Authorization
-(separate governance decision)
+(separate governance approval)
+               │
+               ▼
+Phase 3 Engineering
 ```
 
-Design approval ≠ planning authority ≠ implementation authorization.
+Design ≠ planning ≠ implementation.
 
-## Architecture 1.0 legacy (founding baseline)
+## Legacy characteristics
 
-- Single canonical ownership for every operational fact  
-- Executive-question-driven architecture  
-- Explicit Unknown  
-- Minimum-of-required readiness  
-- Capability orchestration without duplication  
-- Human-gated execution  
-- External integrations subordinate to canonical operational truth  
-- AI advisory / non-authoritative  
-- Formal governance for architectural evolution  
-
-## Supporting records
-
-- Program close: `KCCC_ARCHITECTURE_1.0_PROGRAM_CLOSE.md`  
-- Baseline release: `KCCC_ARCHITECTURE_1.0_BASELINE_RELEASE.md`  
-- Phase 3 Exit Review: `KCCC_PHASE_03_EXIT_REVIEW.md`  
+Single canonical ownership · Executive-question architecture · First-class Unknown · Minimum-of-required readiness · Capability orchestration without duplication · Human-gated execution · Externals subordinate to canonical truth · AI advisory only · Formal governance for evolution
