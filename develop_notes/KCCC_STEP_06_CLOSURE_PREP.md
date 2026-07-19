@@ -1,136 +1,96 @@
 # KCCC Step 6 — Pilot Acceptance Gate
 
-**Status:** PENDING PRODUCTION OPERATOR ACCEPTANCE  
+**Status:** ENGINEERING READY FOR PILOT — OPERATOR PILOT NOT YET RUN  
 **Mode:** Pilot Acceptance — operator-first  
 **Development status:** FROZEN except critical fixes  
-**Engineering quality:** PASS  
-**Architecture:** PASS  
-**Operational model:** PASS  
 **Step 6 complete:** NO  
-**Step 7:** BLOCKED until ACCEPT  
+**Step 7:** BLOCKED until human operator ACCEPT  
 **Step 7 charter:** Campaign Operations (not CRUD)  
 **Production feature tip:** `08ada56`  
 **Production URL:** https://kelly-calendar.netlify.app  
 **Date recorded:** 2026-07-19  
 
-## Standing freeze
+## Integrity rule
 
-From this point forward until ACCEPT or a critical fix:
+Do **not** mark Step 6 complete from engineering artifacts alone.
 
-- No feature work on Step 6 increments  
-- No Step 7 implementation  
-- Only critical production fixes that restore operator workflow  
+- Engineering evidence proves the build is **ready for pilot**.  
+- Only a human operator on the live site proves the product is **ready for operators**.  
+- AI / remote agents cannot browse, authenticate, or issue operational ACCEPT/HOLD on the ten pilot lines.
 
-## Acceptance philosophy
+## Certified from engineering evidence (not live pilot)
 
-Stop thinking like an engineer. Think like the person responsible for getting a candidate across Arkansas on time.
+| Area | Status |
+|------|--------|
+| Engineering readiness | ACCEPT |
+| Deployment readiness | ACCEPT |
+| Production deployment | ACCEPT |
+| Test progression (118 tests) | ACCEPT |
+| Architecture consistency | ACCEPT |
 
-**Single objective:**
+## Pilot Acceptance Matrix (requires live human walkthrough)
 
-> Does the application reduce the cognitive load of running a campaign?
+```text
+Today Command Surface ........ PENDING LIVE PILOT
+Mission Cards ................ PENDING LIVE PILOT
+Mission Timeline ............. PENDING LIVE PILOT
+Today's Readiness ............ PENDING LIVE PILOT
+One-Tap Completion ........... PENDING LIVE PILOT
+Campaign Brief ............... PENDING LIVE PILOT
+Operator Workflow ............ PENDING LIVE PILOT
+Mobile Experience ............ PENDING LIVE PILOT
+Production Reliability ....... PENDING LIVE PILOT
+Failure Recovery ............. PENDING LIVE PILOT
+```
 
-## Observation buckets
+## HOLDs
 
-Every finding falls into exactly one bucket:
+- From engineering evidence: **none identified**.  
+- Until the live pilot runs: **cannot honestly claim zero operational HOLDs**.
+
+## Observation buckets (during live pilot)
 
 ```text
 ACCEPT
 HOLD
-ENHANCEMENT (post-Step 6)
+ENHANCEMENT
 ```
 
-Only **HOLD** items prevent Step 6 closure.
+Only **HOLD** prevents Step 6 closure.
 
-## HOLD criteria
+## HOLD criteria (live pilot)
 
-A HOLD is warranted if any of these occur:
+- Cannot determine next action immediately.  
+- Uncertain how to complete a mission.  
+- Contradictory operational information.  
+- Failed action leaves success unclear.  
+- Loss of trust in current operational state.
 
-- I cannot determine my next action immediately.
-- I become uncertain how to complete a mission.
-- The system presents contradictory operational information.
-- A failed action leaves me unsure whether it succeeded.
-- I lose trust in the current operational state.
+Deliberately **not** HOLD: polish, analytics, traffic, Google sync, AI enhancements, reporting, out-of-scope feature requests — unless they block today’s workflow.
 
-## Deliberately not HOLD (post-Step 6 / later)
+## Live pilot protocol (human operator)
 
-Do **not** hold Step 6 for:
+1. Sign in.  
+2. Land on Today.  
+3. Identify the next mission within 10 seconds.  
+4. Open a Mission Card.  
+5. Verify Timeline and Readiness.  
+6. Execute Start → Arrived → Complete.  
+7. Return to Today.  
+8. Open Campaign Brief.  
+9. Test a failure path (offline, 409, unauthorized, or empty state).  
+10. Log every observation into ACCEPT / HOLD / ENHANCEMENT.
 
-- visual polish  
-- future analytics  
-- traffic integration  
-- Google Calendar synchronization  
-- AI enhancements  
-- reporting improvements  
-- feature requests beyond approved Step 6 scope  
-
-Those belong to later increments unless they directly prevent today’s operator workflow.
-
-## Pilot personas
-
-Use production only, as:
-
-1. Kelly preparing for today’s schedule  
-2. A field director coordinating multiple events  
-3. A volunteer lead checking the next assignment  
-
-If you ever think *"How do I do this?"*, that is a usability HOLD when it blocks the workflow above.
-
-## Walkthrough focus
-
-### Orientation (first 10 seconds)
-
-Where next? What’s most important? What needs attention? — without exploration.
-
-### Mission lifecycle
-
-```text
-Sign in → Today → Next Mission → Timeline → Readiness
-→ Start → Arrived → Complete → Return to Today
-```
-
-### Campaign Brief (~30 seconds)
-
-What’s going well? What’s at risk? What’s the next decision?
-
-### Failure handling
-
-Empty day · blocked mission · missing owner · conflict · retry · loading · error messaging.
-
-## Sign-off matrix (all required)
-
-```text
-Today Command Surface ........ ACCEPT / HOLD
-Mission Cards ................ ACCEPT / HOLD
-Mission Timeline ............. ACCEPT / HOLD
-Today's Readiness ............ ACCEPT / HOLD
-One-Tap Completion ........... ACCEPT / HOLD
-Campaign Brief ............... ACCEPT / HOLD
-Operator Workflow ............ ACCEPT / HOLD
-Mobile Experience ............ ACCEPT / HOLD
-Production Reliability ....... ACCEPT / HOLD
-Failure Recovery ............. ACCEPT / HOLD
-```
-
-If all ten clear with no genuine operational HOLD:
+## After human ACCEPT (all ten pilot lines, no genuine HOLD)
 
 ```text
 KCCC STEP 6 ........ ACCEPTED
 KCCC STEP 6 ........ COMPLETE
 KCCC STEP 7 ........ OPEN
+
+Charter:
+Campaign Operations
+(not CRUD)
 ```
 
-## Step 7 charter (locked)
-
-Step 7 answers:
-
-> How do we coordinate and execute the campaign?
-
-not:
-
-> How do we edit calendar records?
-
-## After ACCEPT
-
-1. Record ACCEPT matrix in this file.  
-2. Update `build_state.json`: `step6_status=complete`, `step6_operator_acceptance=accepted`, unlock Step 7.  
-3. Begin Step 7 only under Campaign Operations charter.
+Then update `build_state.json` and commit the filled matrix.
