@@ -1,6 +1,14 @@
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
 import { emptyLeaveByHook, type LeaveByHook } from "@/lib/missions/leave-by-contract";
+import type { MissionTimeline } from "@/lib/missions/mission-timeline";
+import { leaveByFromTimeline } from "@/lib/missions/mission-timeline";
+import {
+  deriveMissionStatus,
+  presentMissionStatus,
+  type MissionStatus,
+  type MissionStatusPresentation,
+} from "@/lib/missions/mission-status";
 
 export type MissionRiskLevel = "NONE" | "WATCH" | "HIGH" | "CRITICAL";
 
@@ -20,13 +28,18 @@ export type MissionCard = {
   whereLabel: string;
   whyItMatters: string;
   ownerLabel: string;
+  missionStatus: MissionStatus;
+  missionStatusPresentation: MissionStatusPresentation;
   readinessLevel: string;
   readinessScore: number | null;
   readinessLabel: string;
   riskLevel: MissionRiskLevel;
   riskNote: string | null;
   immediateAction: MissionImmediateAction;
+  /** Leave By projection from Mission Timeline Engine. */
   leaveBy: LeaveByHook;
+  /** Full timeline contract (engine output). */
+  timeline: MissionTimeline | null;
   isNext: boolean;
   status: string;
 };
@@ -95,6 +108,7 @@ function riskFromReadiness(
 function immediateAction(
   event: SafeEventProjection,
   readiness: EventReadinessResult | null,
+  leaveBy: LeaveByHook,
 ): MissionImmediateAction {
   const href = `/calendar?event=${event.eventId}`;
   const nba = readiness?.nextBestActions?.[0];
@@ -114,6 +128,19 @@ function immediateAction(
       href,
     };
   }
+  if (leaveBy.status === "computed" && leaveBy.leaveByAt) {
+    const mins = Math.round(
+      (new Date(leaveBy.leaveByAt).getTime() - Date.now()) / 60000,
+    );
+    if (mins <= 20) {
+      return {
+        label: mins <= 0 ? "Leave now" : `Leave in ${mins} min`,
+        explanation: "Mission Timeline Engine leave window.",
+        priority: mins <= 5 ? "CRITICAL" : "HIGH",
+        href,
+      };
+    }
+  }
   if (event.status === "DRAFT" || event.status === "REQUESTED") {
     return {
       label: "Advance planning",
@@ -131,22 +158,35 @@ function immediateAction(
 }
 
 /**
- * Pure mapper: safe event projection (+ optional OI readiness) → Mission Card.
- * Leave By remains a contract hook for Step 6.3.
+ * Pure mapper: safe event projection (+ OI readiness + timeline) → Mission Card.
  */
 export function toMissionCard(input: {
   event: SafeEventProjection;
   timezone: string;
   readiness?: EventReadinessResult | null;
+  timeline?: MissionTimeline | null;
   isNext?: boolean;
   ownerLabel?: string;
   leaveBy?: LeaveByHook;
+  now?: Date;
 }): MissionCard {
   const { event, timezone } = input;
   const readiness = input.readiness ?? null;
+  const timeline = input.timeline ?? null;
+  const leaveBy =
+    input.leaveBy ??
+    (timeline ? leaveByFromTimeline(timeline) : emptyLeaveByHook("not_computed"));
   const risk = riskFromReadiness(readiness, event.status);
   const score = readiness ? readiness.overallScore : null;
   const level = readiness?.readinessLevel ?? "NOT_STARTED";
+  const missionStatus = deriveMissionStatus({
+    startsAt: event.startsAt,
+    endsAt: event.endsAt,
+    eventStatus: event.status,
+    readiness,
+    riskLevel: risk.level,
+    now: input.now,
+  });
 
   return {
     missionId: event.eventId,
@@ -157,13 +197,16 @@ export function toMissionCard(input: {
     whereLabel: event.location?.label || "Location TBD",
     whyItMatters: whyItMatters(event),
     ownerLabel: input.ownerLabel ?? event.primaryCalendar.name,
+    missionStatus,
+    missionStatusPresentation: presentMissionStatus(missionStatus),
     readinessLevel: level,
     readinessScore: score,
     readinessLabel: readinessLabel(level, score),
     riskLevel: risk.level,
     riskNote: risk.note,
-    immediateAction: immediateAction(event, readiness),
-    leaveBy: input.leaveBy ?? emptyLeaveByHook("not_computed"),
+    immediateAction: immediateAction(event, readiness, leaveBy),
+    leaveBy,
+    timeline,
     isNext: Boolean(input.isNext),
     status: event.status,
   };

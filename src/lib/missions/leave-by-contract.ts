@@ -1,12 +1,11 @@
 /**
- * Step 6.3 Leave By Engine contract hook.
- * Step 6.2 surfaces the slot only — no travel computation yet.
+ * Leave By slot on Mission Cards.
+ * Computed by Mission Timeline Engine (6.3); not a standalone fake.
  */
 export type LeaveByComputationStatus = "not_computed" | "computed" | "unavailable";
 
 export type LeaveByHook = {
   status: LeaveByComputationStatus;
-  /** ISO timestamp when the operator should leave. Null until 6.3. */
   leaveByAt: string | null;
   driveMinutes: number | null;
   arrivalAt: string | null;

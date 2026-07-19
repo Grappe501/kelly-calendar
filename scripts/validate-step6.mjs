@@ -81,37 +81,60 @@ if (
 const missionFiles = [
   "src/lib/missions/mission-card.ts",
   "src/lib/missions/leave-by-contract.ts",
+  "src/lib/missions/mission-status.ts",
+  "src/lib/missions/mission-timeline.ts",
   "src/components/today/MissionCardView.tsx",
-  "src/server/services/mission-readiness-loader.ts",
+  "src/server/services/mission-context-loader.ts",
 ];
 for (const rel of missionFiles) {
-  if (exists(rel)) pass(`6.2 ${rel}`);
-  else fail(`6.2 missing ${rel}`);
+  if (exists(rel)) pass(`mission ${rel}`);
+  else fail(`mission missing ${rel}`);
 }
 
 const missionCard = read("src/lib/missions/mission-card.ts");
 if (
   missionCard.includes("toMissionCard") &&
   missionCard.includes("immediateAction") &&
-  missionCard.includes("leaveBy")
+  missionCard.includes("missionStatus") &&
+  missionCard.includes("timeline")
 ) {
-  pass("6.2 Mission Card mapper exposes readiness/action/leaveBy hook");
+  pass("6.2/6.3 Mission Card contract includes status + timeline");
 } else {
-  fail("6.2 Mission Card mapper incomplete");
+  fail("Mission Card contract incomplete");
 }
 
-const leaveBy = read("src/lib/missions/leave-by-contract.ts");
-if (leaveBy.includes("not_computed") && leaveBy.includes("emptyLeaveByHook")) {
-  pass("6.2 Leave By contract hook reserved for 6.3");
+const timeline = read("src/lib/missions/mission-timeline.ts");
+if (
+  timeline.includes("computeMissionTimeline") &&
+  timeline.includes("leaveByFromTimeline") &&
+  timeline.includes("deterministic_v1")
+) {
+  pass("6.3 Mission Timeline Engine present (deterministic Leave By)");
 } else {
-  fail("6.2 Leave By contract hook missing");
+  fail("6.3 Mission Timeline Engine incomplete");
+}
+
+if (timeline.includes("fetch(") || timeline.includes("maps.google") || timeline.includes("mapbox")) {
+  fail("6.3 Timeline Engine must not call external traffic/maps");
+} else {
+  pass("6.3 Timeline Engine has no external traffic/maps integration");
 }
 
 const panels = read("src/components/today/TodayCommandPanels.tsx");
 if (panels.includes("MissionCardView") && panels.includes("Next mission")) {
-  pass("6.2 Today surface renders Mission Cards");
+  pass("Today surface renders Mission Cards");
 } else {
-  fail("6.2 Today surface not using Mission Cards");
+  fail("Today surface not using Mission Cards");
+}
+
+const todayService = read("src/server/services/command-summary-today.ts");
+if (
+  todayService.includes("computeMissionTimeline") &&
+  todayService.includes("loadMissionContextForIds")
+) {
+  pass("Today summary wires Timeline Engine separately from UI");
+} else {
+  fail("Today summary missing Timeline Engine wiring");
 }
 
 const todayApi = read("src/app/api/command-summary/today/route.ts");

@@ -3,10 +3,10 @@ import "server-only";
 import { buildTodayCommandSummary } from "@/features/operational-intelligence/services/operational-summary-service";
 import type { TodayCommandSummary } from "@/features/operational-intelligence/types/summary-types";
 import { toMissionCard, type MissionCard } from "@/lib/missions/mission-card";
-import { emptyLeaveByHook } from "@/lib/missions/leave-by-contract";
+import { computeMissionTimeline } from "@/lib/missions/mission-timeline";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { listEventsForActor } from "@/server/services/event-service";
-import { loadReadinessForMissionIds } from "@/server/services/mission-readiness-loader";
+import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
 
 const TIMEZONE = "America/Chicago";
@@ -34,15 +34,14 @@ export type TodayCommandShellData = {
   summary: TodayCommandSummary;
   nextMission: MissionCard | null;
   missionsToday: MissionCard[];
-  /** @deprecated use nextMission — retained for brief compatibility */
   nextEvent: SafeEventProjection | null;
   upcomingToday: SafeEventProjection[];
   viewerDisplayName: string;
 };
 
 /**
- * Authenticated Today Command summary using safe projections + OI readiness.
- * Leave By remains a 6.3 contract hook (not_computed).
+ * Authenticated Today Command summary:
+ * safe projections + OI readiness + Mission Timeline Engine (Leave By first).
  */
 export async function getTodayCommandShellData(
   actor: AuthenticatedActor,
@@ -64,22 +63,36 @@ export async function getTodayCommandShellData(
     );
   const nextEvent = upcomingToday[0] ?? null;
 
-  const readinessMap = await loadReadinessForMissionIds(
+  const context = await loadMissionContextForIds(
     upcomingToday.map((e) => e.eventId),
   );
 
-  const missionsToday = upcomingToday.map((event, index) =>
-    toMissionCard({
+  const missionsToday = upcomingToday.map((event, index) => {
+    const travel = context.travel.get(event.eventId);
+    const timeline = computeMissionTimeline({
+      missionId: event.eventId,
+      startsAt: event.startsAt,
+      endsAt: event.endsAt,
+      now,
+      travelRequired: travel?.travelRequired,
+      estimatedDurationMinutes: travel?.estimatedDurationMinutes,
+      bufferMinutes: travel?.bufferMinutes,
+      departureAt: travel?.departureAt,
+      targetArrivalAt: travel?.targetArrivalAt,
+    });
+
+    return toMissionCard({
       event,
       timezone: TIMEZONE,
-      readiness: readinessMap.get(event.eventId) ?? null,
+      readiness: context.readiness.get(event.eventId) ?? null,
+      timeline,
       isNext: index === 0,
-      leaveBy: emptyLeaveByHook("not_computed"),
-    }),
-  );
+      now,
+    });
+  });
   const nextMission = missionsToday[0] ?? null;
 
-  const readinessList = [...readinessMap.values()];
+  const readinessList = [...context.readiness.values()];
   const summary = buildTodayCommandSummary({
     date: todayKey,
     timezone: TIMEZONE,

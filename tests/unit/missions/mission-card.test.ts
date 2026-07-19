@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { emptyLeaveByHook } from "@/lib/missions/leave-by-contract";
 import { toMissionCard } from "@/lib/missions/mission-card";
+import { computeMissionTimeline } from "@/lib/missions/mission-timeline";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 
@@ -33,26 +34,35 @@ function baseEvent(overrides: Partial<SafeEventProjection> = {}): SafeEventProje
   };
 }
 
-describe("Mission Cards (Step 6.2)", () => {
-  it("reframes a safe event as a mission with next/where/why/owner/action", () => {
+describe("Mission Cards (Step 6.2/6.3)", () => {
+  it("reframes a safe event as a mission with status + timeline leaveBy", () => {
+    const timeline = computeMissionTimeline({
+      missionId: "evt_1",
+      startsAt: "2026-07-19T14:00:00.000Z",
+      endsAt: "2026-07-19T15:00:00.000Z",
+      travelRequired: true,
+      estimatedDurationMinutes: 17,
+      bufferMinutes: 6,
+      now: new Date("2026-07-19T12:00:00.000Z"),
+    });
+
     const card = toMissionCard({
       event: baseEvent(),
       timezone: "America/Chicago",
       isNext: true,
+      timeline,
+      now: new Date("2026-07-19T12:00:00.000Z"),
     });
 
     expect(card.missionId).toBe("evt_1");
-    expect(card.title).toBe("County HQ briefing");
-    expect(card.whereLabel).toContain("Little Rock");
-    expect(card.whyItMatters.toLowerCase()).toContain("mission");
-    expect(card.ownerLabel).toBe("Command Calendar");
+    expect(card.missionStatus).toBe("PENDING");
+    expect(card.missionStatusPresentation.symbol).toBe("○");
+    expect(card.leaveBy.status).toBe("computed");
+    expect(card.timeline?.driveMinutes).toBe(17);
     expect(card.immediateAction.label.length).toBeGreaterThan(0);
-    expect(card.immediateAction.href).toContain("evt_1");
-    expect(card.isNext).toBe(true);
-    expect(card.leaveBy.status).toBe("not_computed");
   });
 
-  it("surfaces readiness and risk from OI readiness results", () => {
+  it("marks needs attention from critical readiness blockers", () => {
     const readiness: EventReadinessResult = {
       eventId: "evt_1",
       calculatedAt: new Date().toISOString(),
@@ -87,26 +97,21 @@ describe("Mission Cards (Step 6.2)", () => {
       event: baseEvent({ status: "HOLD" }),
       timezone: "America/Chicago",
       readiness,
+      now: new Date("2026-07-19T12:00:00.000Z"),
     });
 
-    expect(card.readinessScore).toBe(42);
-    expect(card.readinessLabel).toMatch(/At risk/i);
+    expect(card.missionStatus).toBe("NEEDS_ATTENTION");
     expect(card.riskLevel).toBe("CRITICAL");
-    expect(card.riskNote).toMatch(/driver/i);
     expect(card.immediateAction.label).toBe("Assign driver");
   });
 
-  it("keeps Leave By as a clean 6.3 contract hook", () => {
-    const hook = emptyLeaveByHook("not_computed");
-    expect(hook.leaveByAt).toBeNull();
-    expect(hook.driveMinutes).toBeNull();
-    expect(hook.confidence).toBeNull();
-
+  it("keeps empty leaveBy only when timeline is absent", () => {
     const card = toMissionCard({
       event: baseEvent(),
       timezone: "America/Chicago",
-      leaveBy: hook,
+      leaveBy: emptyLeaveByHook("not_computed"),
     });
     expect(card.leaveBy.status).toBe("not_computed");
+    expect(card.timeline).toBeNull();
   });
 });

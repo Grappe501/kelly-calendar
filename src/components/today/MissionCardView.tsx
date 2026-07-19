@@ -19,16 +19,33 @@ function riskClass(level: MissionCard["riskLevel"]): string {
   }
 }
 
+function formatClock(iso: string | null | undefined, timeZone = "America/Chicago"): string {
+  if (!iso) return "—";
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(iso));
+}
+
 export function MissionCardView({ mission, compact = false }: Props) {
+  const status = mission.missionStatusPresentation;
+  const timeline = mission.timeline;
+
   return (
     <article
       className={`mission-card${mission.isNext ? " mission-card-next" : ""}${compact ? " mission-card-compact" : ""}`}
       aria-label={`Mission: ${mission.title}`}
+      data-mission-status={mission.missionStatus}
     >
       <header className="mission-card-header">
         <p className="mission-when">{mission.whenLabel}</p>
-        {mission.isNext ? <span className="mission-badge">Next mission</span> : null}
+        <span className={`mission-status-badge status-${mission.missionStatus.toLowerCase()}`}>
+          <span aria-hidden="true">{status.symbol}</span> {status.label}
+        </span>
       </header>
+
+      {mission.isNext ? <p className="mission-badge">Next mission</p> : null}
 
       <h3 className="mission-title">{mission.title}</h3>
       <p className="mission-where">{mission.whereLabel}</p>
@@ -53,17 +70,56 @@ export function MissionCardView({ mission, compact = false }: Props) {
 
       {mission.riskNote ? <p className="mission-risk-note">{mission.riskNote}</p> : null}
 
-      <div className="mission-leaveby" data-leave-by-status={mission.leaveBy.status}>
-        <p className="muted">
-          Leave by:{" "}
-          {mission.leaveBy.status === "computed" && mission.leaveBy.leaveByAt
-            ? new Date(mission.leaveBy.leaveByAt).toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "2-digit",
-              })
-            : "Coming in 6.3"}
-        </p>
-      </div>
+      {!compact && timeline?.status === "computed" ? (
+        <div className="mission-timeline" data-timeline-source={timeline.source}>
+          <h4 className="mission-timeline-heading">Mission timeline</h4>
+          <dl className="mission-timeline-grid">
+            <div>
+              <dt>Leave</dt>
+              <dd>{formatClock(timeline.leaveByAt)}</dd>
+            </div>
+            <div>
+              <dt>Drive</dt>
+              <dd>
+                {timeline.driveMinutes == null ? "—" : `${timeline.driveMinutes} min`}
+              </dd>
+            </div>
+            <div>
+              <dt>Arrive</dt>
+              <dd>{formatClock(timeline.arrivalAt)}</dd>
+            </div>
+            <div>
+              <dt>Buffer</dt>
+              <dd>
+                {timeline.bufferMinutes == null ? "—" : `${timeline.bufferMinutes} min`}
+              </dd>
+            </div>
+            <div>
+              <dt>Starts</dt>
+              <dd>{formatClock(timeline.startsAt)}</dd>
+            </div>
+            <div>
+              <dt>Confidence</dt>
+              <dd>{timeline.confidence == null ? "—" : `${timeline.confidence}%`}</dd>
+            </div>
+          </dl>
+          {timeline.recommendation ? (
+            <p className="mission-timeline-reco">{timeline.recommendation}</p>
+          ) : null}
+          {timeline.travelRisk ? (
+            <p className="mission-risk-note">{timeline.travelRisk}</p>
+          ) : null}
+        </div>
+      ) : (
+        <div className="mission-leaveby" data-leave-by-status={mission.leaveBy.status}>
+          <p className="muted">
+            Leave by:{" "}
+            {mission.leaveBy.status === "computed" && mission.leaveBy.leaveByAt
+              ? formatClock(mission.leaveBy.leaveByAt)
+              : "Unavailable"}
+          </p>
+        </div>
+      )}
 
       <Link
         className="button mission-action"
