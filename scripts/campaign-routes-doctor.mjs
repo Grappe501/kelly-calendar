@@ -110,17 +110,21 @@ if (configured && enabled) {
 console.log(`Routes API key configured .... ${configured ? "YES" : "NO"}`);
 console.log(`Routes integration enabled ... ${enabled ? "YES" : "NO"}`);
 console.log(`Routes API reachable ......... ${reachable}`);
-if (reachable === "FAIL") {
+if (reachable === "PASS") {
+  console.log("Classification ............... SUCCESS");
+} else if (reachable === "FAIL") {
   console.log(`HTTP status .................. ${httpStatus ?? "unknown"}`);
   console.log(`Google status ................ ${googleStatus ?? "unknown"}`);
-  console.log(`Failure class ................ ${failureClass ?? "unknown"}`);
+  console.log(`Classification ............... ${failureClass ?? "unknown"}`);
   console.log(
     "Note ......................... REQUEST_OR_ARGUMENT first; replace key only on CREDENTIAL_OR_PERMISSION / CREDENTIAL_KEY_EXPLICIT.",
   );
+} else {
+  console.log("Classification ............... SKIPPED");
 }
 console.log("Browser exposure ............. NOT DETECTED");
 console.log("Truth type ................... GOOGLE_ROUTE_ESTIMATE only");
 console.log(
   "Note ......................... Set KCCC_ROUTES_DOCTOR_PING=true for a live reachability check (never prints the key).",
 );
-process.exit(0);
+process.exit(reachable === "FAIL" ? 1 : 0);

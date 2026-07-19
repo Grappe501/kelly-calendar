@@ -5,12 +5,38 @@
 ## Production state (2026-07-19)
 
 ```text
-Netlify Routes variables ........ SET
-Production redeploy ............. TRIGGERED (build 6a5d4dcade48f1eab003ae6c)
-Routes credential validity ...... NOT YET PROVEN
-Doctor request validity ......... REMEDIATED (latLng ping body)
-Open Mission hotfix ............. DEPLOYMENT PENDING (same redeploy)
+Doctor request validity ....... PROVEN
+Credential failure ............ CONFIRMED (CREDENTIAL_KEY_EXPLICIT after valid latLng ping)
+Key replacement ............... AUTHORIZED
+Open Mission deploy ........... IN PROGRESS
+Routes production readiness ... BLOCKED UNTIL NEW KEY PASSES
 ```
+
+### Authorized key replacement procedure
+
+1. Google Cloud Console (same project with Routes API enabled) → **APIs & Services → Credentials** → create API key.
+2. Restrict immediately: **Routes API only**; strongest practical **server-side** application restriction for Netlify (not browser referrers).
+3. Keep the old key until the new key passes local doctor.
+4. Local install (hidden prompt — never paste into Cursor):
+
+```powershell
+cd H:\SOSWebsite\Kelly-calendar
+npm run google:secrets:configure -- --routes-only
+$env:KCCC_ROUTES_DOCTOR_PING='true'
+npm run campaign:routes:doctor
+```
+
+Expected:
+
+```text
+Routes API key configured .... YES
+Routes integration enabled ... YES
+Routes API reachable ......... PASS
+Classification ............... SUCCESS
+```
+
+5. Replace Netlify `KCCC_GOOGLE_MAPS_ROUTES_API_KEY` only; keep `KCCC_GOOGLE_ROUTES_ENABLED=true`; redeploy.
+6. Revoke the old key only after local + production validation pass.
 
 ### Live doctor classification (local)
 
@@ -22,7 +48,7 @@ Do **not** treat bare `HTTP 400` / `INVALID_ARGUMENT` as proof the key is bad. P
    - `CREDENTIAL_OR_PERMISSION` (`403` / `PERMISSION_DENIED`) — credential/ACL path
    - `CREDENTIAL_KEY_EXPLICIT` — only when sanitized Google message explicitly says the API key is not valid
 
-After the latLng doctor hotfix (2026-07-19), the live ping still failed with `HTTP 400` / `INVALID_ARGUMENT` and failure class `CREDENTIAL_KEY_EXPLICIT` (sanitized message explicitly indicated an invalid API key). Key rotation was **not** performed in that pass — operator hold.
+Evidence trail: latLng doctor ping proven; subsequent failure class `CREDENTIAL_KEY_EXPLICIT` → key replacement authorized.
 
 ## Language
 

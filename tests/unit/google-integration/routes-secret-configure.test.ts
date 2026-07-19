@@ -42,8 +42,9 @@ describe("Google Routes secret installer", () => {
     expect(src).toContain("Browser exposure");
     expect(src).toContain("X-Goog-Api-Key");
     expect(src).toContain("latLng");
-    expect(src).toContain("Failure class");
+    expect(src).toContain("Classification");
     expect(src).toContain("CREDENTIAL_KEY_EXPLICIT");
+    expect(src).toContain("SUCCESS");
     expect(src).not.toContain('address: "Little Rock, AR"');
   });
 });
