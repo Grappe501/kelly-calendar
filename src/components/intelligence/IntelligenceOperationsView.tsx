@@ -154,6 +154,11 @@ export function IntelligenceOperationsView({
         items={intelligence.complianceHotspots}
       />
       <InsightList
+        id="oi-relationship"
+        title="Relationship pressure"
+        items={intelligence.relationshipPressure}
+      />
+      <InsightList
         id="oi-opportunity"
         title="Opportunities"
         items={intelligence.opportunities}

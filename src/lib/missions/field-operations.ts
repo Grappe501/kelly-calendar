@@ -116,6 +116,12 @@ export type FieldTeamCard = {
     requiredDocumentation: "UNKNOWN";
     volunteerCertificationStatus: "UNKNOWN";
   } | null;
+  /** Consumed from Voter & Constituent Operations — not owned here. */
+  constituentSignals: {
+    neighborhoodEngagementNeeds: string;
+    constituentFollowups: number;
+    assignedOutreachTargetsStatus: "known" | "unknown";
+  } | null;
 };
 
 export type HelpQueueItem = {
@@ -195,6 +201,13 @@ export type FieldComplianceMissionSignal = {
   eventAuthorization: string;
 };
 
+export type FieldConstituentMissionSignal = {
+  missionId: string;
+  neighborhoodEngagementNeeds: string;
+  constituentFollowups: number;
+  assignedOutreachTargetsStatus: "known" | "unknown";
+};
+
 export type FieldMissionInput = {
   mission: MissionCard;
   countyName: string | null;
@@ -270,6 +283,7 @@ export function buildFieldTeamCard(
   communicationsSignal?: FieldCommunicationsMissionSignal | null,
   logisticsSignal?: FieldLogisticsMissionSignal | null,
   complianceSignal?: FieldComplianceMissionSignal | null,
+  constituentSignal?: FieldConstituentMissionSignal | null,
 ): FieldTeamCard {
   const { mission } = input;
   const county = input.countyName?.trim() || null;
@@ -379,6 +393,15 @@ export function buildFieldTeamCard(
           volunteerCertificationStatus: "UNKNOWN",
         }
       : null,
+    constituentSignals: constituentSignal
+      ? {
+          neighborhoodEngagementNeeds:
+            constituentSignal.neighborhoodEngagementNeeds,
+          constituentFollowups: constituentSignal.constituentFollowups,
+          assignedOutreachTargetsStatus:
+            constituentSignal.assignedOutreachTargetsStatus,
+        }
+      : null,
   };
 }
 
@@ -391,6 +414,7 @@ export function buildFieldOperationsHome(input: {
   communicationsFieldFeed?: FieldCommunicationsMissionSignal[] | null;
   logisticsFieldFeed?: FieldLogisticsMissionSignal[] | null;
   complianceFieldFeed?: FieldComplianceMissionSignal[] | null;
+  constituentFieldFeed?: FieldConstituentMissionSignal[] | null;
 }): FieldOperationsHome {
   const now = input.now ?? new Date();
   const volByMission = new Map(
@@ -405,6 +429,9 @@ export function buildFieldOperationsHome(input: {
   const complianceByMission = new Map(
     (input.complianceFieldFeed ?? []).map((c) => [c.missionId, c]),
   );
+  const constituentByMission = new Map(
+    (input.constituentFieldFeed ?? []).map((c) => [c.missionId, c]),
+  );
   const cards = input.missions
     .map((m) =>
       buildFieldTeamCard(
@@ -413,6 +440,7 @@ export function buildFieldOperationsHome(input: {
         commsByMission.get(m.mission.missionId) ?? null,
         logisticsByMission.get(m.mission.missionId) ?? null,
         complianceByMission.get(m.mission.missionId) ?? null,
+        constituentByMission.get(m.mission.missionId) ?? null,
       ),
     )
     .filter((c) => c.missionStatus !== "COMPLETE")
@@ -429,6 +457,7 @@ export function buildFieldOperationsHome(input: {
       commsByMission.get(m.mission.missionId) ?? null,
       logisticsByMission.get(m.mission.missionId) ?? null,
       complianceByMission.get(m.mission.missionId) ?? null,
+      constituentByMission.get(m.mission.missionId) ?? null,
     ),
   );
   const activeMissions = allCards.filter((c) => c.missionStatus !== "COMPLETE").length;

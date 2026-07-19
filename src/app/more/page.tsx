@@ -68,6 +68,9 @@ export default function MorePage() {
           <Link className="button" href="/intelligence">
             Operational Intelligence
           </Link>
+          <Link className="button" href="/constituents">
+            Voter & Constituent Operations
+          </Link>
           <Link className="button secondary" href="/brief">
             Today’s Campaign Brief
           </Link>

@@ -19,6 +19,10 @@ import {
   type ComplianceCountyRow,
 } from "@/lib/missions/compliance-operations";
 import {
+  countyConstituentFact,
+  type ConstituentCountyRow,
+} from "@/lib/missions/constituent-operations";
+import {
   countyFinanceFact,
   type FinanceCountyRow,
 } from "@/lib/missions/finance-operations";
@@ -125,6 +129,14 @@ export type CountyCommandNode = {
     unresolvedIssues: OperationalNumber;
     trainingCompletion: OperationalNumber;
     complianceRisk: string;
+  } | null;
+  /** Consumed from Voter & Constituent Operations. */
+  constituents: {
+    engagementCoverage: OperationalNumber;
+    organizationalRelationships: OperationalNumber;
+    communityPartnerActivity: OperationalNumber;
+    outreachGaps: OperationalNumber;
+    engagementRisk: string;
   } | null;
 };
 
@@ -500,6 +512,21 @@ function complianceForCounty(
   };
 }
 
+function constituentsForCounty(
+  countyName: string,
+  feed: ConstituentCountyRow[] | null | undefined,
+): CountyCommandNode["constituents"] {
+  const fact = countyConstituentFact(feed, countyName);
+  if (!fact) return null;
+  return {
+    engagementCoverage: fact.engagementCoverage,
+    organizationalRelationships: fact.organizationalRelationships,
+    communityPartnerActivity: fact.communityPartnerActivity,
+    outreachGaps: fact.outreachGaps,
+    engagementRisk: fact.engagementRisk,
+  };
+}
+
 export function buildCountyCommandNode(input: {
   countyName: string;
   missions: CountyMissionInput[];
@@ -510,6 +537,7 @@ export function buildCountyCommandNode(input: {
   logisticsFeed?: LogisticsCountyRow[] | null;
   financeFeed?: FinanceCountyRow[] | null;
   complianceFeed?: ComplianceCountyRow[] | null;
+  constituentFeed?: ConstituentCountyRow[] | null;
   now: Date;
 }): CountyCommandNode {
   const { countyName, missions, fieldHeat, fieldHelp, now } = input;
@@ -583,6 +611,7 @@ export function buildCountyCommandNode(input: {
     logistics: logisticsForCounty(countyName, input.logisticsFeed),
     finance: financeForCounty(countyName, input.financeFeed),
     compliance: complianceForCounty(countyName, input.complianceFeed),
+    constituents: constituentsForCounty(countyName, input.constituentFeed),
   };
 }
 
@@ -604,6 +633,7 @@ export function buildCountyOperationsHome(input: {
   logisticsFeed?: LogisticsCountyRow[] | null;
   financeFeed?: FinanceCountyRow[] | null;
   complianceFeed?: ComplianceCountyRow[] | null;
+  constituentFeed?: ConstituentCountyRow[] | null;
   countyNames?: readonly string[];
   now?: Date;
 }): CountyOperationsHome {
@@ -641,6 +671,7 @@ export function buildCountyOperationsHome(input: {
       logisticsFeed: input.logisticsFeed,
       financeFeed: input.financeFeed,
       complianceFeed: input.complianceFeed,
+      constituentFeed: input.constituentFeed,
       now,
     }),
   );

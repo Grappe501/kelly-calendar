@@ -1,7 +1,7 @@
 # KCCC Step 7.10 — Operational Intelligence
 
 **Script ID:** `KCCC-STEP-07.10-OPERATIONAL-INTELLIGENCE`  
-**Status:** IN PROGRESS  
+**Status:** ACCEPTED  
 **Parent:** Step 7 Campaign Operations  
 
 ## Doctrine

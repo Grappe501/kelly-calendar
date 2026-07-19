@@ -11,6 +11,7 @@
 
 import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
+import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { FieldOperationsHome } from "@/lib/missions/field-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
@@ -26,6 +27,7 @@ export type IntelligenceSourceModule =
   | "logistics"
   | "finance"
   | "compliance"
+  | "constituent"
   | "calendar";
 
 export type IntelligenceCategory =
@@ -36,6 +38,7 @@ export type IntelligenceCategory =
   | "MISSION_FORECAST"
   | "RESOURCE_PRESSURE"
   | "COMPLIANCE_HOTSPOT"
+  | "RELATIONSHIP_PRESSURE"
   | "OPPORTUNITY";
 
 export type IntelligenceSeverity =
@@ -71,6 +74,7 @@ export type OperationalIntelligenceHome = {
   missionFailureForecasts: IntelligenceInsight[];
   resourcePressure: IntelligenceInsight[];
   complianceHotspots: IntelligenceInsight[];
+  relationshipPressure: IntelligenceInsight[];
   opportunities: IntelligenceInsight[];
   /** Multi-day / longitudinal analytics not yet available. */
   historicalTrendDepth: UnknownFact;
@@ -89,6 +93,7 @@ export type OperationalIntelligenceHome = {
     missionFailureForecastCount: number;
     resourcePressureCount: number;
     complianceHotspotCount: number;
+    relationshipPressureCount: number;
     opportunityCount: number;
     topInsights: Array<{
       label: string;
@@ -108,6 +113,7 @@ export type IntelligenceFeedInput = {
   logisticsFeed?: LogisticsOperationsHome["executiveFeed"] | null;
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null;
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null;
+  constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
 };
 
 const HISTORY_UNKNOWN: UnknownFact = {
@@ -441,6 +447,49 @@ export function buildResourcePressureSignals(
   return out;
 }
 
+export function buildRelationshipPressureSignals(
+  feeds: IntelligenceFeedInput,
+): IntelligenceInsight[] {
+  const cst = feeds.constituentFeed;
+  if (!cst) return [];
+  const out: IntelligenceInsight[] = [];
+  if (cst.overdueFollowups > 0 || cst.highPriorityFollowups > 0) {
+    const top = cst.topFollowups[0];
+    out.push(
+      insight({
+        id: "relationship-followups",
+        category: "RELATIONSHIP_PRESSURE",
+        title: "Relationship follow-up pressure",
+        detail: top ? top.detail : cst.briefingLine,
+        severity:
+          cst.relationshipRisk === "CRITICAL" || cst.overdueFollowups > 0
+            ? "CRITICAL"
+            : "HIGH",
+        href: top?.href ?? "/constituents",
+        sourceModule: "constituent",
+        canonicalFact: `Voter & Constituent Operations: overdueFollowups=${cst.overdueFollowups}, highPriorityFollowups=${cst.highPriorityFollowups}, relationshipRisk=${cst.relationshipRisk}`,
+      }),
+    );
+  }
+  if (cst.targetConstituenciesStatus === "unknown") {
+    out.push(
+      insight({
+        id: "relationship-targets-unknown",
+        category: "RELATIONSHIP_PRESSURE",
+        title: "Target constituencies Unknown",
+        detail:
+          "Target constituencies remain Unknown — Intelligence will not invent audience segments.",
+        severity: "UNKNOWN",
+        href: "/constituents",
+        sourceModule: "constituent",
+        canonicalFact:
+          "Voter & Constituent Operations: targetConstituenciesStatus=unknown",
+      }),
+    );
+  }
+  return out;
+}
+
 export function buildComplianceHotspots(
   feeds: IntelligenceFeedInput,
 ): IntelligenceInsight[] {
@@ -502,6 +551,7 @@ export function buildOperationalIntelligenceHome(input: {
   const missionFailureForecasts = buildMissionFailureForecasts(input.feeds);
   const resourcePressure = buildResourcePressureSignals(input.feeds);
   const complianceHotspots = buildComplianceHotspots(input.feeds);
+  const relationshipPressure = buildRelationshipPressureSignals(input.feeds);
 
   const all = [
     ...emergingRisks,
@@ -511,6 +561,7 @@ export function buildOperationalIntelligenceHome(input: {
     ...missionFailureForecasts,
     ...resourcePressure,
     ...complianceHotspots,
+    ...relationshipPressure,
     ...opportunities,
   ].sort((a, b) => severityRank(a.severity) - severityRank(b.severity));
 
@@ -561,6 +612,7 @@ export function buildOperationalIntelligenceHome(input: {
     missionFailureForecasts,
     resourcePressure,
     complianceHotspots,
+    relationshipPressure,
     opportunities,
     historicalTrendDepth: HISTORY_UNKNOWN,
     insightCounts: {
@@ -610,6 +662,7 @@ export function buildOperationalIntelligenceHome(input: {
       missionFailureForecastCount: missionFailureForecasts.length,
       resourcePressureCount: resourcePressure.length,
       complianceHotspotCount: complianceHotspots.length,
+      relationshipPressureCount: relationshipPressure.length,
       opportunityCount: opportunities.length,
       topInsights,
       briefingLine: briefingParts.join(" "),

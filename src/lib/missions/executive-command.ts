@@ -6,6 +6,7 @@
 import type { CampaignBrief } from "@/lib/missions/campaign-brief";
 import type { CommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
+import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { CountyOperationsHome } from "@/lib/missions/county-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { OperationalIntelligenceHome } from "@/lib/missions/intelligence-operations";
@@ -115,6 +116,8 @@ export type ExecutiveCommand = {
   complianceFeed: ComplianceOperationsHome["executiveFeed"] | null;
   /** Consumed from Operational Intelligence (7.10) — interpret-only insights. */
   intelligenceFeed: OperationalIntelligenceHome["executiveFeed"] | null;
+  /** Consumed from Voter & Constituent Operations (7.9) — relationships. */
+  constituentFeed: ConstituentOperationsHome["executiveFeed"] | null;
 };
 
 function readinessLabel(brief: CampaignBrief): string {
@@ -139,6 +142,7 @@ export function buildDeterministicExecutiveBriefing(
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null,
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null,
   intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null,
+  constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null,
 ): string {
   if (brief.completeness === "empty_day") {
     const extra = [
@@ -149,6 +153,7 @@ export function buildDeterministicExecutiveBriefing(
       financeFeed?.briefingLine,
       complianceFeed?.briefingLine,
       intelligenceFeed?.briefingLine,
+      constituentFeed?.briefingLine,
     ]
       .filter(Boolean)
       .join(" ");
@@ -160,6 +165,9 @@ export function buildDeterministicExecutiveBriefing(
     parts.push(
       `Intelligence priority: ${intelligenceFeed.topInsights[0].label}.`,
     );
+  }
+  if (constituentFeed?.briefingLine) {
+    parts.push(constituentFeed.briefingLine);
   }
   if (fieldFeed?.briefingLine) {
     parts.push(fieldFeed.briefingLine);
@@ -243,6 +251,7 @@ export function buildExecutiveCommand(input: {
   financeFeed?: FinanceOperationsHome["executiveFeed"] | null;
   complianceFeed?: ComplianceOperationsHome["executiveFeed"] | null;
   intelligenceFeed?: OperationalIntelligenceHome["executiveFeed"] | null;
+  constituentFeed?: ConstituentOperationsHome["executiveFeed"] | null;
   now?: Date;
 }): ExecutiveCommand {
   const brief = input.brief;
@@ -254,6 +263,7 @@ export function buildExecutiveCommand(input: {
   const financeFeed = input.financeFeed ?? null;
   const complianceFeed = input.complianceFeed ?? null;
   const intelligenceFeed = input.intelligenceFeed ?? null;
+  const constituentFeed = input.constituentFeed ?? null;
   const now = input.now ?? new Date();
   const upcoming = input.missions
     .filter((m) => new Date(m.endsAt).getTime() >= now.getTime())
@@ -358,6 +368,21 @@ export function buildExecutiveCommand(input: {
       urgency: intelligenceFeed.emergingRiskCount > 0 ? "NOW" : "SOON",
     });
   }
+  if (
+    constituentFeed &&
+    (constituentFeed.overdueFollowups > 0 ||
+      constituentFeed.highPriorityFollowups > 0 ||
+      constituentFeed.relationshipRisk === "CRITICAL" ||
+      constituentFeed.relationshipRisk === "HIGH")
+  ) {
+    const top = constituentFeed.topFollowups[0];
+    topPriorities.push({
+      label: "Relationship follow-ups",
+      detail: top ? top.detail : constituentFeed.briefingLine,
+      href: "/constituents",
+      urgency: constituentFeed.overdueFollowups > 0 ? "NOW" : "SOON",
+    });
+  }
   if (brief.topBlocker) {
     topPriorities.push({
       label: "Resolve top blocker",
@@ -412,6 +437,9 @@ export function buildExecutiveCommand(input: {
   }
   if ((complianceFeed?.highRiskCommitments ?? 0) > 0) {
     decisions.push("Clear compliance blockers before execution");
+  }
+  if ((constituentFeed?.overdueFollowups ?? 0) > 0) {
+    decisions.push("Close overdue constituent follow-ups");
   }
   if (decisions.length === 0 && brief.nextMission) {
     decisions.push("Confirm next mission is ready to execute");
@@ -677,6 +705,14 @@ export function buildExecutiveCommand(input: {
       `${intelligenceFeed.emergingRiskCount} emerging intelligence risk(s)`,
     );
   }
+  if (constituentFeed && constituentFeed.overdueFollowups > 0) {
+    alerts.push(
+      `${constituentFeed.overdueFollowups} overdue constituent follow-up(s)`,
+    );
+  }
+  if (constituentFeed?.targetConstituenciesStatus === "unknown") {
+    alerts.push("Target constituencies Unknown");
+  }
 
   return {
     title: "EXECUTIVE COMMAND",
@@ -729,6 +765,7 @@ export function buildExecutiveCommand(input: {
         financeFeed,
         complianceFeed,
         intelligenceFeed,
+        constituentFeed,
       ),
       source: "deterministic_v1",
     },
@@ -740,6 +777,7 @@ export function buildExecutiveCommand(input: {
     financeFeed,
     complianceFeed,
     intelligenceFeed,
+    constituentFeed,
   };
 }
 
@@ -773,5 +811,6 @@ export function executiveCommandForAdvisory(command: ExecutiveCommand) {
     financeFeed: command.financeFeed,
     complianceFeed: command.complianceFeed,
     intelligenceFeed: command.intelligenceFeed,
+    constituentFeed: command.constituentFeed,
   };
 }

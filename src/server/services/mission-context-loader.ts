@@ -4,6 +4,7 @@ import { calculateEventReadiness } from "@/features/operational-intelligence/ser
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 import type { CommunicationsPlanSnapshot } from "@/lib/missions/communications-operations";
 import type { CompliancePlanSnapshot } from "@/lib/missions/compliance-operations";
+import type { ConstituentPlanSnapshot } from "@/lib/missions/constituent-operations";
 import type { FinancePlanSnapshot } from "@/lib/missions/finance-operations";
 import type { LogisticsPlanSnapshot } from "@/lib/missions/logistics-operations";
 import type { MissionTimelineInput } from "@/lib/missions/mission-timeline";
@@ -39,6 +40,7 @@ export type MissionCommsSnapshot = CommunicationsPlanSnapshot;
 export type MissionLogisticsSnapshot = LogisticsPlanSnapshot;
 export type MissionFinanceSnapshot = FinancePlanSnapshot;
 export type MissionComplianceSnapshot = CompliancePlanSnapshot;
+export type MissionConstituentSnapshot = ConstituentPlanSnapshot;
 
 export type MissionContextBundle = {
   readiness: Map<string, EventReadinessResult>;
@@ -49,6 +51,7 @@ export type MissionContextBundle = {
   logistics: Map<string, MissionLogisticsSnapshot>;
   finance: Map<string, MissionFinanceSnapshot>;
   compliance: Map<string, MissionComplianceSnapshot>;
+  constituent: Map<string, MissionConstituentSnapshot>;
 };
 
 /**
@@ -66,6 +69,7 @@ export async function loadMissionContextForIds(
   const logistics = new Map<string, MissionLogisticsSnapshot>();
   const finance = new Map<string, MissionFinanceSnapshot>();
   const compliance = new Map<string, MissionComplianceSnapshot>();
+  const constituent = new Map<string, MissionConstituentSnapshot>();
   const ids = [...new Set(eventIds)].slice(0, 12);
   if (ids.length === 0) {
     return {
@@ -77,6 +81,7 @@ export async function loadMissionContextForIds(
       logistics,
       finance,
       compliance,
+      constituent,
     };
   }
   const nowMs = Date.now();
@@ -94,6 +99,9 @@ export async function loadMissionContextForIds(
       primaryCalendar: true,
       template: true,
       actionItems: true,
+      followups: true,
+      eventPeople: true,
+      eventOrganizations: true,
     },
   });
 
@@ -186,6 +194,28 @@ export async function loadMissionContextForIds(
           c.communicationType === "PRESS_RELEASE" ||
           c.communicationType === "SPEECH",
       ),
+    });
+
+    const followups = event.followups;
+    const isFollowupOpen = (f: (typeof followups)[number]) =>
+      f.status !== "COMPLETE" && f.status !== "CANCELLED";
+    const objectiveTypes = new Set(event.objectives.map((o) => o.objectiveType));
+    constituent.set(event.id, {
+      followupCount: followups.length,
+      followupOpenCount: followups.filter(isFollowupOpen).length,
+      followupOverdueCount: followups.filter(
+        (f) =>
+          isFollowupOpen(f) && f.dueAt != null && f.dueAt.getTime() < nowMs,
+      ).length,
+      followupOwnerAssigned: event.staffAssignments.some(
+        (s) => s.roleType === "FOLLOWUP_OWNER" && Boolean(s.assignedUserId),
+      ),
+      meetVotersObjective: objectiveTypes.has("MEET_VOTERS"),
+      buildRelationshipsObjective: objectiveTypes.has("BUILD_RELATIONSHIPS"),
+      supportOrganizationObjective: objectiveTypes.has("SUPPORT_ORGANIZATION"),
+      reachTargetAudienceObjective: objectiveTypes.has("REACH_TARGET_AUDIENCE"),
+      eventPeopleCount: event.eventPeople.length,
+      eventOrganizationCount: event.eventOrganizations.length,
     });
 
     day.set(event.id, {
@@ -292,6 +322,7 @@ export async function loadMissionContextForIds(
     logistics,
     finance,
     compliance,
+    constituent,
   };
 }
 

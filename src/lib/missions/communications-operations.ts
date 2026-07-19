@@ -8,6 +8,7 @@
  */
 
 import type { ComplianceOperationsHome } from "@/lib/missions/compliance-operations";
+import type { ConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import type { FinanceOperationsHome } from "@/lib/missions/finance-operations";
 import type { MissionCard } from "@/lib/missions/mission-card";
 import type { UnknownFact, KnownNumber } from "@/lib/missions/volunteer-operations";
@@ -126,6 +127,8 @@ export type CommunicationsOperationsHome = {
   financeConsume: FinanceOperationsHome["communicationsFeed"] | null;
   /** Consumed from Compliance — disclaimer / publication restrictions. */
   complianceConsume: ComplianceOperationsHome["communicationsFeed"] | null;
+  /** Consumed from Constituent — issue resonance / feedback themes. */
+  constituentConsume: ConstituentOperationsHome["communicationsFeed"] | null;
 };
 
 export type CommunicationsMissionInput = {
@@ -346,6 +349,7 @@ export function buildCommunicationsOperationsHome(input: {
   logisticsConsume?: CommunicationsOperationsHome["logisticsConsume"];
   financeConsume?: CommunicationsOperationsHome["financeConsume"];
   complianceConsume?: CommunicationsOperationsHome["complianceConsume"];
+  constituentConsume?: CommunicationsOperationsHome["constituentConsume"];
 }): CommunicationsOperationsHome {
   const now = input.now ?? new Date();
   const missionRows = input.missions
@@ -531,6 +535,7 @@ export function buildCommunicationsOperationsHome(input: {
     logisticsConsume: input.logisticsConsume ?? null,
     financeConsume: input.financeConsume ?? null,
     complianceConsume: input.complianceConsume ?? null,
+    constituentConsume: input.constituentConsume ?? null,
   };
 }
 

@@ -2,6 +2,7 @@ import "server-only";
 
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
+import { buildConstituentOperationsHome } from "@/lib/missions/constituent-operations";
 import { buildCountyOperationsHome } from "@/lib/missions/county-operations";
 import { buildFieldOperationsHome } from "@/lib/missions/field-operations";
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
@@ -49,7 +50,14 @@ export async function getOperationalIntelligence(
       logistics: context.logistics.get(mission.missionId) ?? null,
       finance: context.finance.get(mission.missionId) ?? null,
       compliance: context.compliance.get(mission.missionId) ?? null,
+      constituent: context.constituent.get(mission.missionId) ?? null,
     };
+  });
+
+  const constituents = buildConstituentOperationsHome({
+    date: briefPayload.brief.date,
+    timezone: briefPayload.brief.timezone,
+    missions: missionInputs,
   });
 
   const logistics = buildLogisticsOperationsHome({
@@ -113,6 +121,7 @@ export async function getOperationalIntelligence(
     },
     financeConsume: finance.communicationsFeed,
     complianceConsume: compliance.communicationsFeed,
+    constituentConsume: constituents.communicationsFeed,
   });
 
   const volunteers = buildVolunteerOperationsHome({
@@ -122,6 +131,7 @@ export async function getOperationalIntelligence(
     communicationsConsume: communications.volunteerFeed,
     logisticsConsume: logistics.volunteerFeed,
     financeConsume: finance.volunteerFeed,
+    constituentConsume: constituents.volunteerFeed,
   });
 
   const field = buildFieldOperationsHome({
@@ -132,6 +142,12 @@ export async function getOperationalIntelligence(
     communicationsFieldFeed: communications.fieldFeed.missions,
     logisticsFieldFeed: logistics.fieldFeed.missions,
     complianceFieldFeed: compliance.fieldFeed.missions,
+    constituentFieldFeed: constituents.fieldFeed.missions.map((m) => ({
+      missionId: m.missionId,
+      neighborhoodEngagementNeeds: m.neighborhoodEngagementNeeds,
+      constituentFollowups: m.constituentFollowups.value,
+      assignedOutreachTargetsStatus: m.assignedOutreachTargets.status,
+    })),
   });
 
   const counties = buildCountyOperationsHome({
@@ -149,6 +165,7 @@ export async function getOperationalIntelligence(
     logisticsFeed: logistics.countyFeed,
     financeFeed: finance.countyFeed,
     complianceFeed: compliance.countyFeed,
+    constituentFeed: constituents.countyFeed,
   });
 
   const intelligence = buildOperationalIntelligenceHome({
@@ -162,6 +179,7 @@ export async function getOperationalIntelligence(
       logisticsFeed: logistics.executiveFeed,
       financeFeed: finance.executiveFeed,
       complianceFeed: compliance.executiveFeed,
+      constituentFeed: constituents.executiveFeed,
     },
   });
 

@@ -190,6 +190,15 @@ export function ExecutiveCommandView({
             </Link>
           </p>
         ) : null}
+        {command.constituentFeed ? (
+          <p>
+            <strong>Constituents:</strong>{" "}
+            {command.constituentFeed.briefingLine}{" "}
+            <Link className="button secondary" href="/constituents">
+              Open Constituent Ops
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section className="panel exec-section" aria-labelledby="exec-inbox">
