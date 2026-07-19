@@ -50,8 +50,8 @@ None of these produce code. Every one produces governance.
 | Step | Artifact | Status |
 |------|----------|--------|
 | 3.0 | `KCCC_PHASE_03_BUILD_DESIGN.md` | COMPLETE |
-| 3.1 | `KCCC_PHASE3_TRUST_MODEL.md` | READY FOR REVIEW |
-| 3.2 | `KCCC_PHASE3_IDENTITY_MODEL.md` | BLOCKED (await 3.1 acceptance) |
+| 3.1 | `KCCC_PHASE3_TRUST_MODEL.md` | PASS WITH CONDITIONS |
+| 3.2 | `KCCC_PHASE3_IDENTITY_MODEL.md` | BLOCKED (await 3.1 ACCEPTED) |
 | 3.3 | `KCCC_PHASE3_AUTOMATION_GOVERNANCE.md` | BLOCKED (await 3.1 acceptance) |
 | 3.4 | `KCCC_PHASE3_CAMPAIGN_BOUNDARY.md` | BLOCKED (await 3.1 acceptance) |
 | 3.5 | `KCCC_PHASE3_AUDIT_AND_RECOVERY.md` | BLOCKED (await 3.1 acceptance) |
@@ -108,3 +108,9 @@ Phase 3 Exit Review (3.1–3.8)
 2. Do not amend Architecture 1.0 corpus.  
 3. AI remains advisory; never canonical.  
 4. Externals never become owners of campaign operational truth.  
+5. Every Phase 3 artifact ends with an **Architecture 1.0 Conformance Statement** (no baseline amendments).  
+
+## 3.1 Status
+
+**PASS WITH CONDITIONS** — 3.2 remains BLOCKED until Trust Model is **ACCEPTED**.  
+Planning and implementation remain NOT AUTHORIZED.  

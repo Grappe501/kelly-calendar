@@ -25,7 +25,7 @@
   "implementation_status": "not_authorized",
   "phase_3_implementation_authorized": false,
   "phase_3_planning_authorized": false,
-  "phase_3_exit_review_status": "trust_model_ready_for_review",
+  "phase_3_exit_review_status": "trust_model_pass_with_conditions",
   "phase_3_exit_review": "KCCC_PHASE_03_EXIT_REVIEW",
   "phase_3_build_design": "KCCC_PHASE_03_BUILD_DESIGN",
   "phase_3_governance_program": [
@@ -40,8 +40,8 @@
     "KCCC_PHASE3_AUTHORIZATION_DECISION",
     "KCCC_PHASE3_TRANSITION_PLAN"
   ],
-  "phase_3_next_gate": "3.1-trust-model-acceptance",
-  "phase_3_trust_model_status": "ready_for_review",
+  "phase_3_next_gate": "3.1-trust-model-conditions-verification",
+  "phase_3_trust_model_status": "pass_with_conditions",
   "governance_state": "KCCC_GOVERNANCE_STATE_v1.0",
   "constitution": "KCCC_CONSTITUTION_v1.0",
   "architecture_freeze": "KCCC_ARCHITECTURE_FREEZE_v1.0",
@@ -113,5 +113,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Architecture 1.0 permanently closed. Phase 3.1 Trust Model READY FOR REVIEW. Gates 3.2–3.10 BLOCKED until 3.1 acceptance. No implementation. AUTHORIZED=planning only. Maturity flags remain false."
+  "notes": "Architecture 1.0 permanently closed. Phase 3.1 Trust Model PASS WITH CONDITIONS. Gates 3.2–3.10 BLOCKED until 3.1 ACCEPTED. No planning/implementation. Maturity flags remain false."
 }
