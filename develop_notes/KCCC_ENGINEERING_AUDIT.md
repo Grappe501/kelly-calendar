@@ -11,19 +11,18 @@ Architecture 1.0 ............... VERIFIED (EA-1)
 
 Calendar Experience V1 ......... COMPLETE
 
-EA-4 Visual Audit .............. COMPLETE (PASS)
-EA-1 Architecture Compliance ... COMPLETE (PASS WITH FINDINGS · 7.9/10)
-EA-2 Decision-Making ........... COMPLETE (PASS WITH FINDINGS · 6.4/10)
+EA-4 / EA-1 / EA-2 ............. COMPLETE (core quality triad)
+V1 Product Health .............. COMPLETE — PASS WITH FINDINGS
+  Never Fake · OCI · five Hardening waves
 
 Engineering Audit .............. ACTIVE
-Next (binding gate):
-  Version 1 Product Health Report — synthesize EA-1 + EA-2 + EA-4
-  EA-3+ BLOCKED until Product Health COMPLETE
+Next Audit Stream:
+  EA-3 Information Architecture — OPENED
 
-Hardening Master Ledger ........ HL-001…HL-015 (HC-COG tagged)
-Engineering Patterns ........... ACTIVE DOCTRINE
+Hardening Master Ledger ........ HL-001…HL-015 · Waves 1–5
+Engineering Patterns ........... ACTIVE (+ EP-11 Never Fake)
 
-Experience Redesign 2.0 ........ PROPOSED (XR-01 Hero first when opened)
+Experience Redesign 2.0 ........ PROPOSED (philosophy locked; XR-01 first)
 Implementation ................. BLOCKED until Audit + Hardening
 ```
 
@@ -49,24 +48,24 @@ Version 2 Feature Expansion
 
 ## Workstream order
 
-**Immediate next:** **Version 1 Product Health Report** (interim synthesis).  
-EA-3+ stays blocked until that synthesis closes.
+**Immediate next:** **EA-3** Information Architecture.  
+Product Health synthesis is complete — remaining streams resume.
 
 | Priority | ID | Workstream |
 |----------|-----|------------|
 | **Done** | EA-4 | Visual and Experience Audit (4A–4L) — COMPLETE |
 | **Done** | EA-1 | Architecture Compliance — PASS WITH FINDINGS (7.9/10) |
 | **Done** | EA-2 | Decision-Making Audit — PASS WITH FINDINGS (6.4/10) |
-| **1 (NOW)** | — | **V1 Product Health Report** (EA-1 + EA-2 + EA-4) |
-| 2 | EA-3 | Information Architecture *(after Product Health)* |
-| 3 | EA-5 | Accessibility |
-| 4 | EA-6 | Performance |
-| 5 | EA-7 | Data Integrity |
-| 6 | EA-8 | Security |
-| 7 | EA-9 | Operator Workflow |
-| 8 | EA-10 | Technical Debt |
-| 9 | EA-11 | Documentation |
-| 10 | EA-12 | Future Expansion Readiness |
+| **Done** | — | **V1 Product Health Report** — PASS WITH FINDINGS |
+| **1 (NOW)** | EA-3 | Information Architecture — OPENED |
+| 2 | EA-5 | Accessibility |
+| 3 | EA-6 | Performance |
+| 4 | EA-7 | Data Integrity |
+| 5 | EA-8 | Security |
+| 6 | EA-9 | Operator Workflow |
+| 7 | EA-10 | Technical Debt |
+| 8 | EA-11 | Documentation |
+| 9 | EA-12 | Future Expansion Readiness |
 
 ---
 
@@ -129,8 +128,9 @@ Document evidence for:
 | EA-4 | **COMPLETE** — see `KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md` |
 | EA-1 | **COMPLETE** — ACCEPTED · `KCCC_EA1_EXECUTIVE_ACCEPTANCE.md` |
 | EA-2 | **COMPLETE** — PASS WITH FINDINGS · `KCCC_EA2_ASSESSMENT.md` |
-| V1 Product Health | **OPENED** — `KCCC_V1_PRODUCT_HEALTH_REPORT.md` (blocks EA-3+) |
-| EA-3, EA-5 … EA-12 | NOT STARTED — after Product Health |
+| V1 Product Health | **COMPLETE** — `KCCC_V1_PRODUCT_HEALTH_REPORT.md` |
+| EA-3 | **OPENED** — `KCCC_EA3_INFORMATION_ARCHITECTURE.md` |
+| EA-5 … EA-12 | NOT STARTED |
 | Experience Redesign 2.0 | PROPOSED — blocked; blueprint ready from EA-4 |
 | Foundation implementation | NOT STARTED — after Redesign program gate |
 

@@ -5,11 +5,18 @@
 **Status:** PROPOSED  
 **Implementation:** **BLOCKED** until Engineering Audit + Hardening complete  
 **Architecture:** 1.0  
+**Product Health:** PASS WITH FINDINGS (`KCCC_V1_PRODUCT_HEALTH_REPORT.md`)  
+
+## Product philosophy (charter lead)
+
+> **The Calendar Experience is not a calendar application. It is the operational heartbeat of the campaign. Every view should immediately orient the operator, communicate what matters now, explain why it matters, and guide the next decision—while faithfully presenting authoritative information without inventing certainty or assuming ownership of operational truth.**
+
+This aligns Architecture 1.0, the Trust Model, Engineering Patterns, Never Fake, and Experience Redesign into one vision.
 
 ```text
 V1 ENGINEERING COMPLETE
         ↓
-Engineering Audit
+Engineering Audit (+ Product Health synthesis)
         ↓
 Hardening
         ↓
@@ -27,6 +34,8 @@ Version 2 Feature Expansion
 ## Guiding principle
 
 > **Every screen should tell the story of the campaign before it shows the mechanics of the campaign.**
+
+**Never Fake** remains binding during redesign (`KCCC_NEVER_FAKE_DOCTRINE.md`).
 
 ## First deliverable (when implementation opens)
 

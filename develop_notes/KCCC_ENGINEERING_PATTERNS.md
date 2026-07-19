@@ -28,6 +28,7 @@ not tribal knowledge trapped in an audit report.
 | EP-08 | Canonical Owner Pattern |
 | EP-09 | Orchestrate-Don't-Mutate Pattern |
 | EP-10 | Catalogue Honesty Pattern |
+| EP-11 | Never Fake Pattern |
 
 ---
 
@@ -114,6 +115,15 @@ not tribal knowledge trapped in an audit report.
 **Intent:** Loader bounds and empty states do not prove absence of activity.  
 **Do:** `cataloguePartial` disclosure; treat empty days as Unknown under caps.  
 **Don't:** “No events” as proven global truth when the catalogue is truncated.
+
+---
+
+## EP-11 Never Fake Pattern
+
+**Intent:** Confidence never comes from invented certainty.  
+**Do:** Unknown, partial, N/A, link-to-owner, labeled derives.  
+**Don't:** Invent readiness, attendance, confidence, or authority.  
+**Canon:** `KCCC_NEVER_FAKE_DOCTRINE.md` · Product Health Principle 3.
 
 ---
 

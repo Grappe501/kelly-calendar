@@ -4,22 +4,20 @@
 Architecture 1.0 .............. VERIFIED (6690ce2)
 
 Calendar Experience V1 ........ COMPLETE
-EA-4 Visual Audit ............. PASS
-EA-1 Architecture ............. PASS WITH FINDINGS (7.9) · ACCEPTED
-EA-2 Decision-Making .......... PASS WITH FINDINGS (portfolio 6.4)
-  Week weakest ................ 5.8
+EA-4 / EA-1 / EA-2 ............ COMPLETE (core quality triad)
+V1 Product Health ............. COMPLETE — PASS WITH FINDINGS
+  Strong engineering · underdeveloped operator experience
+  Never Fake doctrine ......... ACTIVE
+  OCI ......................... permanent release metric
 
-NOW — Interim synthesis
-  KCCC_V1_PRODUCT_HEALTH_REPORT.md .... OPENED
-  EA-3+ blocked until Product Health COMPLETE
+NOW
+  EA-3 Information Architecture — OPENED
 
-Supporting
-  KCCC_ENGINEERING_PATTERNS.md ........ ACTIVE
-  KCCC_HARDENING_MASTER_LEDGER.md ..... HL-001…HL-015 (HC-COG tagged)
+Hardening waves ............... PLANNED (Wave 1 trust first)
+Hardening / Redesign / Foundation ...... still BLOCKED
 
-Then: remaining audits → Hardening → Redesign (XR-01)
-  → Foundation → Version 2
+Then: EA-5…EA-12 → Hardening → Redesign (XR-01) → Foundation → V2
+  V2 success: Arch / Decision / Visual / OCI ≥ 9.0
 
-No new calendar features during audit/hardening.
 Phase 3 ....................... PAUSED (3.1 Pass with Conditions)
 ```

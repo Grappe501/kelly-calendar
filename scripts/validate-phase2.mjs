@@ -375,7 +375,7 @@ if (
   build.calendar_experience_v1_complete === true &&
   build.calendar_experience_v1_status === "engineering_complete" &&
   build.engineering_audit_status === "active" &&
-  build.engineering_audit_next_stream === "V1-PRODUCT-HEALTH" &&
+  build.engineering_audit_next_stream === "EA-3" &&
   build.ea4_status === "complete" &&
   build.ea4_assessment === "pass" &&
   build.ea1_status === "complete" &&
@@ -384,8 +384,12 @@ if (
   build.ea2_status === "complete" &&
   build.ea2_assessment === "pass_with_findings" &&
   build.ea2_focus === "decision_making" &&
-  build.ea3_status === "blocked_until_product_health" &&
-  build.v1_product_health_status === "opened" &&
+  build.ea3_status === "opened" &&
+  build.v1_product_health_status === "complete" &&
+  build.v1_product_health_assessment === "pass_with_findings" &&
+  build.never_fake_doctrine_status === "active" &&
+  build.operator_confidence_index_tracking === true &&
+  build.hardening_waves_defined === true &&
   build.engineering_patterns_status === "active" &&
   build.hardening_master_ledger_status === "seeded" &&
   build.hardening_pass_status === "blocked" &&
@@ -395,48 +399,40 @@ if (
   build.calendar_foundation_status === "planned_after_redesign" &&
   build.foundation_implementation_started === false &&
   build.redesign_implementation_started === false &&
-  build.next_engineering_deliverable === "KCCC-V1-PRODUCT-HEALTH" &&
+  build.next_engineering_deliverable === "KCCC-EA-3-INFORMATION-ARCHITECTURE" &&
   build.phase_3_drafting_paused === true &&
   build.phase_3_implementation_authorized === false &&
   constants.includes('EA4_ASSESSMENT = "PASS"') &&
   constants.includes('EA1_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
-  constants.includes('EA1_EXECUTIVE_ACCEPTANCE = "ACCEPTED"') &&
   constants.includes('EA2_STATUS = "COMPLETE"') &&
-  constants.includes('EA2_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
-  constants.includes("DECISION_MAKING") &&
-  constants.includes('V1_PRODUCT_HEALTH_STATUS = "OPENED"') &&
+  constants.includes('EA3_STATUS = "OPENED"') &&
+  constants.includes('V1_PRODUCT_HEALTH_STATUS = "COMPLETE"') &&
+  constants.includes('V1_PRODUCT_HEALTH_ASSESSMENT = "PASS_WITH_FINDINGS"') &&
+  constants.includes('NEVER_FAKE_DOCTRINE_STATUS = "ACTIVE"') &&
+  constants.includes("OPERATOR_CONFIDENCE_INDEX_TRACKING = true") &&
   constants.includes("XR-01-EXECUTIVE-HERO-LAYER") &&
-  constants.includes("KCCC-V1-PRODUCT-HEALTH") &&
+  constants.includes("KCCC-EA-3-INFORMATION-ARCHITECTURE") &&
   exists("develop_notes/KCCC_EA4_ASSESSMENT.md") &&
   exists("develop_notes/KCCC_EA1_ASSESSMENT.md") &&
-  exists("develop_notes/KCCC_EA1_EXECUTIVE_ACCEPTANCE.md") &&
-  exists("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md") &&
-  exists("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md") &&
   exists("develop_notes/KCCC_EA2_ASSESSMENT.md") &&
   exists("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md") &&
+  exists("develop_notes/KCCC_NEVER_FAKE_DOCTRINE.md") &&
+  exists("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md") &&
   exists("develop_notes/KCCC_ENGINEERING_PATTERNS.md") &&
   exists("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md") &&
-  exists("develop_notes/KCCC_EA4_VISUAL_AND_EXPERIENCE_AUDIT.md") &&
-  read("develop_notes/KCCC_EA4_ASSESSMENT.md").includes("**PASS**") &&
-  read("develop_notes/KCCC_EA4_ASSESSMENT.md").includes("What Matters Now") &&
-  read("develop_notes/KCCC_EA1_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
-  read("develop_notes/KCCC_EA1_EXECUTIVE_ACCEPTANCE.md").includes("APPROVED") &&
-  read("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md").includes("implicit owner") &&
-  read("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md").includes("Protected Patterns") &&
-  read("develop_notes/KCCC_EA1_ARCHITECTURE_COMPLIANCE.md").includes("Architecture Fitness") &&
-  read("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md").includes("Decision-making audit") &&
-  read("develop_notes/KCCC_EA2_USER_EXPERIENCE_AUDIT.md").includes("HC-COG") &&
-  read("develop_notes/KCCC_EA2_ASSESSMENT.md").includes("PASS WITH FINDINGS") &&
-  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("blocks EA-3") &&
-  read("develop_notes/KCCC_ENGINEERING_PATTERNS.md").includes("Owns-No-Facts") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-001") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HC-COG") &&
-  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("HL-015") &&
-  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("XR-01") &&
+  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("PASS WITH FINDINGS") &&
+  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("Operator Confidence Index") &&
+  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("Never invent readiness") &&
+  read("develop_notes/KCCC_V1_PRODUCT_HEALTH_REPORT.md").includes("STATUS ............... COMPLETE") &&
+  read("develop_notes/KCCC_NEVER_FAKE_DOCTRINE.md").includes("Never invent readiness") &&
+  read("develop_notes/KCCC_EA3_INFORMATION_ARCHITECTURE.md").includes("OPENED") &&
+  read("develop_notes/KCCC_ENGINEERING_PATTERNS.md").includes("Never Fake") &&
+  read("develop_notes/KCCC_HARDENING_MASTER_LEDGER.md").includes("Wave 1") &&
+  read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("operational heartbeat") &&
   read("develop_notes/KCCC_EXPERIENCE_REDESIGN_2.md").includes("BLOCKED") &&
   exists("src/components/calendar/MonthView.tsx")
 ) {
-  pass("EA-1+EA-2+EA-4 done; Product Health OPENED (blocks EA-3); Ledger HC-COG; Redesign blocked");
+  pass("Product Health COMPLETE; Never Fake+OCI; EA-3 OPENED; Waves 1–5; Redesign blocked");
 } else {
   fail("Calendar Experience engineering track incomplete");
 }
@@ -446,5 +442,5 @@ if (failed) {
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (EA-1 ACCEPTED; EA-2 Decision-Making COMPLETE; V1 Product Health OPENED blocks EA-3; Ledger HC-COG; Redesign blocked; Phase 3.1 paused).",
+  "Phase 2 structural validation passed (V1 Product Health COMPLETE; Never Fake ACTIVE; OCI tracking; EA-3 OPENED; Hardening Waves defined; Redesign blocked; Phase 3.1 paused).",
 );

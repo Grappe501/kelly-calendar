@@ -77,10 +77,22 @@ Decision portfolio target ... ≥ 8.0 after Redesign XR-01 stack
 
 When an audit stream closes, add rows here within the same pass. Do **not** leave remediation only inside the stream report.
 
+## Execution waves (Product Health)
+
+| Wave | Name | Ledger focus |
+|------|------|----------------|
+| **1** | Architectural Safety | HL-001, HL-002, HL-005 |
+| **2** | Decision Clarity | HL-004, HL-010, HL-011, HL-015 (+ HC-COG orientation) |
+| **3** | Shared Infrastructure | HL-006 · legend / rendering / filters / nav |
+| **4** | Experience Quality | HL-003, HL-009, HL-012, HL-014 · motion · brand · density |
+| **5** | Foundation Readiness | Agenda / Timeline / Mission — **after** Waves 1–4 |
+
+Hardening implements Wave 1 (and hygiene from Wave 2 labels) first; XR-01+ Wave 2 bulk runs in Redesign after Hardening gate — still planned here so priority is not lost.
+
 ## Streams not yet ingested
 
 EA-3 · EA-5 · EA-6 · EA-7 · EA-8 · EA-9 · EA-10 · EA-11 · EA-12 — append on completion.  
-**Gate:** Complete `KCCC_V1_PRODUCT_HEALTH_REPORT.md` before starting EA-3.
+**Product Health:** COMPLETE — EA-3+ unblocked.
 
 ## Hardening gate
 
