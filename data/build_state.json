@@ -42,6 +42,12 @@
   ],
   "phase_3_next_gate": "3.1-trust-model-conditions-verification",
   "phase_3_trust_model_status": "pass_with_conditions",
+  "phase_3_drafting_paused": true,
+  "engineering_track_a": "KCCC-ENG-TRACK-A-CALENDAR-EXPERIENCE",
+  "engineering_track_a_status": "active",
+  "calendar_experience_pass": "1-day-view",
+  "calendar_experience_day_view": true,
+  "next_engineering_deliverable": "KCCC-CAL-EXP-2-WEEK-VIEW",
   "governance_state": "KCCC_GOVERNANCE_STATE_v1.0",
   "constitution": "KCCC_CONSTITUTION_v1.0",
   "architecture_freeze": "KCCC_ARCHITECTURE_FREEZE_v1.0",
@@ -59,7 +65,7 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-PHASE3-TRUST-MODEL",
+  "current_step": "KCCC-ENG-TRACK-A-CALENDAR-EXPERIENCE",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -113,5 +119,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "Architecture 1.0 permanently closed. Phase 3.1 Trust Model PASS WITH CONDITIONS. Gates 3.2–3.10 BLOCKED until 3.1 ACCEPTED. No planning/implementation. Maturity flags remain false."
+  "notes": "Architecture 1.0 permanently closed. Eng Track A Calendar Experience ACTIVE (Day View shipped). Phase 3 drafting paused at 3.1 PASS WITH CONDITIONS. No Phase 3 planning/implementation. Maturity flags remain false."
 }

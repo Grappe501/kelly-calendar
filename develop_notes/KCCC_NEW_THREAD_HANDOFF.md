@@ -3,19 +3,20 @@
 ```text
 ARCHITECTURE 1.0 — PERMANENTLY CLOSED (6690ce2)
 
-PHASE 3 — Architecture Review
-Build Design: COMPLETE
-Exit Review:  IN PROGRESS
+PARALLEL TRACKS
 
-3.1 Trust Model ............... PASS WITH CONDITIONS
-3.2 Identity & Authority ...... BLOCKED (await 3.1 ACCEPTED)
-3.3–3.9 ....................... BLOCKED
-3.10 Transition Plan .......... BLOCKED until AUTHORIZED
+Engineering Track A — Calendar Experience .......... ACTIVE
+  Pass 1 Day View .................................. SHIPPED (/calendar)
+  Week / Month ..................................... NEXT
+  Agenda / Timeline / Mission View ................. Pass 2
 
-Planning ...................... NOT AUTHORIZED
-Implementation ................ NOT AUTHORIZED
+Architecture Track — Phase 3 Exit Review ........... PAUSED (state retained)
+  3.1 Trust Model .................................. PASS WITH CONDITIONS
+  3.2–3.10 ......................................... BLOCKED
+  Planning / Implementation ........................ NOT AUTHORIZED
 
-Next work: operator verifies Trust Model conditions C1–C8
-           then record ACCEPTED — only then open 3.2 draft
-Do NOT draft 3.2 until 3.1 is ACCEPTED
+Calendar views are NOT Phase 3. No RFC. Within Architecture 1.0.
+
+Next engineering: Week View
+Next architecture (when resumed): verify Trust Model C1–C8 → ACCEPTED → 3.2 draft
 ```

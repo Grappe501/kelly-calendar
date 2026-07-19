@@ -1239,6 +1239,78 @@ legend {
   font-weight: 700;
 }
 
+/* Calendar Experience Track A — Day View (presentation) */
+.executive-question {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0.25rem 0 0;
+}
+
+.calendar-date-nav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.calendar-date-nav-center {
+  text-align: center;
+}
+
+.calendar-date-label {
+  margin: 0;
+  font-weight: 700;
+}
+
+.chip-link {
+  text-decoration: none;
+  border-style: solid;
+  color: var(--color-text);
+}
+
+.chip-link-active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(15, 76, 92, 0.08);
+}
+
+.calendar-day-schedule {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.calendar-day-schedule li {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.calendar-day-schedule time {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.mission-stack {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.button-secondary {
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.text-link {
+  color: var(--color-primary);
+  font-size: 0.9rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

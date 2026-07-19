@@ -33,7 +33,7 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>Phase 3.1 Trust Model · PASS WITH CONDITIONS (3.2 blocked)</strong>
+            <strong>Eng Track A · Day View shipped · Phase 3 paused (3.1 PwC)</strong>
           </li>
         </ul>
       </section>

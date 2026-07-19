@@ -354,10 +354,34 @@ if (
   fail("constants missing Trust Model Pass with Conditions state");
 }
 
+const engTrack = "develop_notes/KCCC_ENGINEERING_TRACK_CALENDAR_EXPERIENCE.md";
+const dayViewDoc = "develop_notes/KCCC_CALENDAR_EXPERIENCE_1_DAY_VIEW.md";
+if (
+  exists(engTrack) &&
+  read(engTrack).includes("Within Architecture 1.0") &&
+  read(engTrack).includes("Phase 3 artifact?") &&
+  read(engTrack).includes("RFC required?") &&
+  exists(dayViewDoc) &&
+  exists("src/app/calendar/page.tsx") &&
+  read("src/app/calendar/page.tsx").includes("DayView") &&
+  exists("src/components/calendar/DayView.tsx") &&
+  exists("src/server/services/calendar-day-view-service.ts") &&
+  build.engineering_track_a_status === "active" &&
+  build.calendar_experience_day_view === true &&
+  build.phase_3_drafting_paused === true &&
+  build.phase_3_implementation_authorized === false &&
+  constants.includes("ENGINEERING_TRACK_A") &&
+  constants.includes("CALENDAR_EXPERIENCE_PASS")
+) {
+  pass("Engineering Track A Calendar Experience Day View (Arch 1.0, not Phase 3)");
+} else {
+  fail("Calendar Experience engineering track incomplete");
+}
+
 if (failed) {
   console.error(`Phase 2 validation failed (${failed})`);
   process.exit(1);
 }
 console.log(
-  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Phase 3.1 PASS WITH CONDITIONS; 3.2+ BLOCKED; no implementation).",
+  "Phase 2 structural validation passed (Architecture 1.0 CLOSED; Eng Track A Day View; Phase 3.1 PASS WITH CONDITIONS paused; no Phase 3 impl).",
 );
