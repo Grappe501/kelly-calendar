@@ -141,3 +141,4 @@ Governance serves engineering. Apply it consistently. Complete remaining audits.
 | EA-8 Security | COMPLETE · ACCEPTED — authorization continuity · HL-031…038 |
 | EA-9 Operator Workflow | COMPLETE — OW-001→HL-039 · HL-039…045 |
 | Experience Redesign 2.0 Vision | CAPTURED — command-center feel · contextual AI · Feature Freeze honored |
+| Operator week live ingest | DONE — 3 Events via existing mutation shape · no drill-down/AI · HL-039/XR-8 deferred |

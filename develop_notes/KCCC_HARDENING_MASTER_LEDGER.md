@@ -140,7 +140,9 @@ EA-5 Inclusive Experience: **COMPLETE / ACCEPTED** (HL-021…HL-024).
 EA-6 Performance: **COMPLETE / ACCEPTED** (HL-025…HL-027).  
 EA-7 Data Integrity: **COMPLETE / ACCEPTED** (HL-028…HL-030; DI-001 → HL-001).  
 EA-8 Security: **COMPLETE / ACCEPTED** (HL-031…HL-038; SEC-002 → HL-031 Wave 1).  
-EA-9 Operator Workflow: **COMPLETE** (HL-039…HL-045; OW-005 → HL-030 confirmed).
+EA-9 Operator Workflow: **COMPLETE** (HL-039…HL-045; OW-005 → HL-030 confirmed).  
+
+Operator note (2026-07-19): live week Events ingested without new UI — **HL-039 drill-down** and **XR-8 AI** remain deferred (Feature Freeze). See `KCCC_OPERATOR_WEEK_INGEST_2026-07-19.md`.
 
 ## Hardening gate
 

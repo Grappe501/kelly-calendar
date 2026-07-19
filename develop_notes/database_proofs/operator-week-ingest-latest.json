@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-07-19T19:40:05.756Z",
+  "scope": "enable_live_ingest_no_new_ui",
+  "featureFreeze": "honored",
+  "dates": [
+    "2026-07-19",
+    "2026-07-20"
+  ],
+  "timezone": "America/Chicago",
+  "events": [
+    {
+      "key": "fundraiser-cd2-2026-07-19",
+      "action": "created",
+      "eventId": "cmrs79y4z00028fvon5ciaea3",
+      "eventNumber": "KCCC-2026-0004",
+      "calendarSlug": "fundraising",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "isp-window-2026-07-20",
+      "action": "created",
+      "eventId": "cmrs79zeo000a8fvofcdkdc4f",
+      "eventNumber": "KCCC-2026-0005",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "property-walk-2026-07-20",
+      "action": "created",
+      "eventId": "cmrs7a00t000i8fvo7vym6ilg",
+      "eventNumber": "KCCC-2026-0006",
+      "calendarSlug": "protected-personal",
+      "status": "CONFIRMED"
+    }
+  ],
+  "weekVerifyCount": 5,
+  "weekVerify": [
+    {
+      "eventNumber": "KCCC-2026-0004",
+      "calendarSlug": "fundraising",
+      "startsAt": "2026-07-19T22:00:00.000Z",
+      "title": "Fundraiser for Dr. Chris Jones — US Congressional District 2"
+    },
+    {
+      "eventNumber": "KCCC-2026-0005",
+      "calendarSlug": "protected-personal",
+      "startsAt": "2026-07-20T13:00:00.000Z",
+      "title": "Internet service install window"
+    },
+    {
+      "eventNumber": "KCCC-2026-0006",
+      "calendarSlug": "protected-personal",
+      "startsAt": "2026-07-20T14:00:00.000Z",
+      "title": "Property walk / farm clean-up consult"
+    },
+    {
+      "eventNumber": "KCCC-2026-0001",
+      "calendarSlug": "command",
+      "startsAt": "2026-07-25T21:50:19.428Z",
+      "title": "KCCC Step 5.7 Synthetic Mutation Proof"
+    },
+    {
+      "eventNumber": "KCCC-2026-0002",
+      "calendarSlug": "command",
+      "startsAt": "2026-07-25T21:51:11.606Z",
+      "title": "KCCC Step 5.7 Synthetic Mutation Proof"
+    }
+  ]
+}
