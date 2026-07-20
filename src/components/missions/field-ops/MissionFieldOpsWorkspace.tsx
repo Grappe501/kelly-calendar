@@ -134,8 +134,14 @@ export function MissionFieldOpsWorkspace({ initial }: Props) {
           <Link href={model.mission.executeHref}>Execute</Link>
           <Link href={model.mission.logisticsHref}>Logistics</Link>
           <Link href={model.mission.travelHref}>Travel</Link>
+          <Link href={`/system/missions/${model.mission.missionId}/incidents`}>
+            Incidents
+          </Link>
           <Link href={`/system/briefing/${dateKey}/field-ops`}>
             Day Field Ops
+          </Link>
+          <Link href={`/system/briefing/${dateKey}/incidents`}>
+            Day Incidents
           </Link>
           <Link href={`/system/briefing/${dateKey}/launch`}>Launch</Link>
         </nav>

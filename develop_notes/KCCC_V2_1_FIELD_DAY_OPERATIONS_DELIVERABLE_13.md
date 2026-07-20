@@ -114,6 +114,12 @@ After migration apply (2026-07-20):
 
 **Mission Exception / Incident Log during Field Ops & Execute** — structured live incident capture (safety, access, press, medical) with carry-forward into Closeout without becoming a ticketing system.
 
+**Status:** Delivered as D14 — see `KCCC_V2_1_MISSION_INCIDENT_LOG_DELIVERABLE_14.md`.
+
+## Recommended Deliverable 15
+
+**Campaign Day Exception Rollup / After-Action Exception Digest** — consolidate overnight open incidents into Closeout and next-day Launch without becoming a ticketing system.
+
 ## Rollback
 
 See `KCCC_V2_1_FIELD_DAY_OPERATIONS_DELIVERABLE_13_ROLLBACK.md`.

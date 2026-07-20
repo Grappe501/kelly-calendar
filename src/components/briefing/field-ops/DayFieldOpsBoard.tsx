@@ -28,6 +28,9 @@ export function DayFieldOpsBoard({ model }: Props) {
           <Link href={model.navigation.briefingHref}>Briefing</Link>
           <Link href={model.navigation.movementHref}>Day Movement</Link>
           <Link href={model.navigation.logisticsHref}>Day Logistics</Link>
+          <Link href={`/system/briefing/${model.campaignDate}/incidents`}>
+            Day Incidents
+          </Link>
           <Link href={model.navigation.launchHref}>Launch Review</Link>
           <Link href={model.navigation.closeoutHref}>Closeout</Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>

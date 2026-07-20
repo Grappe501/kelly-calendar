@@ -86,6 +86,9 @@ export function MissionTravelWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${model.mission.missionId}/field-ops`}>
             Field Ops
           </Link>
+          <Link href={`/system/missions/${model.mission.missionId}/incidents`}>
+            Incidents
+          </Link>
           <Link href={`/system/briefing/${model.mission.campaignDateKey}/movement`}>
             Day Movement
           </Link>
@@ -94,6 +97,9 @@ export function MissionTravelWorkspace({ initial }: Props) {
           </Link>
           <Link href={`/system/briefing/${model.mission.campaignDateKey}/field-ops`}>
             Day Field Ops
+          </Link>
+          <Link href={`/system/briefing/${model.mission.campaignDateKey}/incidents`}>
+            Day Incidents
           </Link>
           <Link href={`/system/briefing/${model.mission.campaignDateKey}/launch`}>
             Morning Launch

@@ -207,11 +207,17 @@ export function MissionLogisticsWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${model.mission.missionId}/field-ops`}>
             Field Ops
           </Link>
+          <Link href={`/system/missions/${model.mission.missionId}/incidents`}>
+            Incidents
+          </Link>
           <Link href={`/system/briefing/${dateKey}/logistics`}>
             Day Logistics
           </Link>
           <Link href={`/system/briefing/${dateKey}/field-ops`}>
             Day Field Ops
+          </Link>
+          <Link href={`/system/briefing/${dateKey}/incidents`}>
+            Day Incidents
           </Link>
           <Link href={`/system/briefing/${dateKey}/launch`}>
             Morning Launch

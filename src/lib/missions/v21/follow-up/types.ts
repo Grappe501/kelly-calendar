@@ -40,6 +40,7 @@ export const FOLLOW_UP_SOURCE_TYPES = [
   "LESSON_ACTION",
   "DEBRIEF_RECOMMENDED_ACTION",
   "OPERATOR_ADDED",
+  "MISSION_INCIDENT",
 ] as const;
 export type MissionFollowUpSourceType = (typeof FOLLOW_UP_SOURCE_TYPES)[number];
 

@@ -128,6 +128,9 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${mission.missionId}/field-ops`}>
             Field Ops
           </Link>
+          <Link href={`/system/missions/${mission.missionId}/incidents`}>
+            Incidents
+          </Link>
           <Link href={mission.detailHref}>Mission record</Link>
         </nav>
         <div className="prepare-save-status" role="status" aria-live="polite">
@@ -166,6 +169,19 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           href={`/system/missions/${mission.missionId}/field-ops`}
         >
           Open Field Ops
+        </Link>
+      </section>
+
+      <section className="panel" aria-labelledby="execute-incidents-h">
+        <h2 id="execute-incidents-h">Mission Incidents</h2>
+        <p className="muted" role="note">
+          Structured exception capture during Execute — not emergency dispatch.
+        </p>
+        <Link
+          className="button secondary"
+          href={`/system/missions/${mission.missionId}/incidents`}
+        >
+          Open Incidents
         </Link>
       </section>
 

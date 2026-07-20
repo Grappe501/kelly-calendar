@@ -76,6 +76,8 @@ export function labelFollowUpSource(source: MissionFollowUpSourceType): string {
       return "From approved Debrief action";
     case "OPERATOR_ADDED":
       return "Operator-added closeout work";
+    case "MISSION_INCIDENT":
+      return "From Mission Incident Log";
     default:
       return source;
   }

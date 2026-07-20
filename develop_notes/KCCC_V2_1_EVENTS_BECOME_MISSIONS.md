@@ -1,6 +1,6 @@
 # KCCC V2.1 — Events Become Missions
 
-**Status:** DELIVERABLE 13 LANDED — Field Day Operations / Live Kit Confirmation  
+**Status:** DELIVERABLE 14 READY — Mission Exception / Incident Log (APIs, UI, navigation, docs; migration not applied this pass)  
 **Date:** 2026-07-19 (updated 2026-07-20)  
 **Parent:** `KCCC_CAMPAIGN_OPERATING_SYSTEM_V2.md`  
 **Google:** PAUSED — no dependency for V2.1  
@@ -16,7 +16,8 @@
 **Deliverable 10 notes:** `KCCC_V2_1_MORNING_LAUNCH_REVIEW_DELIVERABLE_10.md` · rollback `KCCC_V2_1_MORNING_LAUNCH_REVIEW_ROLLBACK.md`  
 **Deliverable 11 notes:** `KCCC_V2_1_TRAVEL_MOVEMENT_OPERATIONS_DELIVERABLE_11.md` · rollback `KCCC_V2_1_TRAVEL_MOVEMENT_OPERATIONS_ROLLBACK.md`  
 **Deliverable 12 notes:** `KCCC_V2_1_MISSION_LOGISTICS_PACK_DELIVERABLE_12.md` · rollback `KCCC_V2_1_MISSION_LOGISTICS_PACK_DELIVERABLE_12_ROLLBACK.md`  
-**Deliverable 13 notes:** `KCCC_V2_1_FIELD_DAY_OPERATIONS_DELIVERABLE_13.md` · rollback `KCCC_V2_1_FIELD_DAY_OPERATIONS_DELIVERABLE_13_ROLLBACK.md`
+**Deliverable 13 notes:** `KCCC_V2_1_FIELD_DAY_OPERATIONS_DELIVERABLE_13.md` · rollback `KCCC_V2_1_FIELD_DAY_OPERATIONS_DELIVERABLE_13_ROLLBACK.md`  
+**Deliverable 14 notes:** `KCCC_V2_1_MISSION_INCIDENT_LOG_DELIVERABLE_14.md` · rollback `KCCC_V2_1_MISSION_INCIDENT_LOG_DELIVERABLE_14_ROLLBACK.md`
 
 ## Product shift
 
@@ -81,7 +82,8 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 7. **Morning Launch Review** — DONE: `/system/briefing/launch` and `/system/briefing/[date]/launch` start-of-day confirmation + launch authorization (does not start Mission execution).  
 8. **Travel and Movement Operations** — DONE: Mission travel plans/legs + day movement board (manual data only; no external routing).  
 9. **Mission Logistics Pack / Field Kit** — DONE: Mission logistics packs/items/handoffs + day logistics board (manual data only; no inventory system).
-10. **Field Day Operations / Live Kit Confirmation** — DONE: on-site confirmation against D12 items during Execute context (independent state machines). NEXT recommended: **Mission Exception / Incident Log**.
+10. **Field Day Operations / Live Kit Confirmation** — DONE: on-site confirmation against D12 items during Execute context (independent state machines).
+11. **Mission Exception / Incident Log** — READY: structured live incident capture with carry-forward and soft Follow-up link (not emergency dispatch). NEXT recommended: **Campaign Day Exception Rollup / After-Action Exception Digest**.
 
 Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform.
 

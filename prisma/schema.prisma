@@ -2025,6 +2025,7 @@ enum MissionFollowUpSourceType {
   LESSON_ACTION
   DEBRIEF_RECOMMENDED_ACTION
   OPERATOR_ADDED
+  MISSION_INCIDENT
 
   @@schema("kelly_calendar")
 }
@@ -2188,6 +2189,7 @@ model CampaignMission {
   travelPlan   MissionTravelPlan?
   logisticsPack MissionLogisticsPack?
   fieldOpsSession MissionFieldOpsSession?
+  incidents    MissionIncident[]
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
@@ -3179,6 +3181,191 @@ model MissionFieldOpsAcknowledgement {
 
   @@unique([fieldOpsSessionId, issueKey])
   @@index([fieldOpsSessionId, disposition])
+  @@index([issueType])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Mission Exception / Incident Log — operational exceptions during Field Ops & Execute.
+/// Not emergency dispatch, ticketing, legal, or medical records. Manual campaign data only.
+enum MissionIncidentCategory {
+  SAFETY
+  ACCESS
+  SECURITY
+  PRESS
+  TRAVEL
+  LOGISTICS
+  TECHNOLOGY
+  STAFFING
+  SCHEDULE
+  VENUE
+  PUBLIC_INTERACTION
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionIncidentSeverity {
+  INFO
+  LOW
+  MODERATE
+  HIGH
+  CRITICAL
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionIncidentStatus {
+  OPEN
+  MONITORING
+  STABILIZED
+  RESOLVED
+  CLOSED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionIncidentSensitivity {
+  STANDARD
+  RESTRICTED
+  CONFIDENTIAL
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionIncidentUpdateType {
+  OBSERVATION
+  ACTION_TAKEN
+  STATUS_CHANGE
+  SEVERITY_CHANGE
+  HANDOFF
+  RESOLUTION
+  FOLLOW_UP_NOTE
+  CORRECTION
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionIncidentIssueType {
+  OPEN_HIGH_CRITICAL
+  EXECUTE_COMPLETED_OPEN
+  STABILIZED_UNRESOLVED
+  CARRY_FORWARD_REQUIRED
+  FOLLOW_UP_REQUIRED_UNLINKED
+  CANCELLED_MISSION_ACTIVE
+  UPDATED_AFTER_CLOSEOUT
+  OVERNIGHT_ACTIVE
+  MISSING_OWNER
+  RESOLUTION_NOTE_MISSING
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionIncidentAcknowledgementDisposition {
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+model MissionIncident {
+  id                      String                     @id @default(cuid())
+  missionId               String
+  campaignDateKey         String
+  /// Stable non-sensitive reference, unique within campaignDateKey.
+  incidentRef             String
+  category                MissionIncidentCategory    @default(OTHER)
+  severity                MissionIncidentSeverity    @default(MODERATE)
+  status                  MissionIncidentStatus      @default(OPEN)
+  summary                 String
+  description             String?
+  observedAt              DateTime
+  reportedAt              DateTime                   @default(now())
+  reportedByUserId        String?
+  locationLabel           String?
+  sensitivity             MissionIncidentSensitivity @default(STANDARD)
+  immediateActionSummary  String?
+  ownerName               String?
+  ownerUserId             String?
+  carryForwardRequired    Boolean                    @default(false)
+  carriedForwardAt        DateTime?
+  carriedForwardByUserId  String?
+  followUpRequired        Boolean                    @default(false)
+  /// Soft durable link to MissionFollowUpAction (not FK — avoids cross-layer cascade risk).
+  linkedFollowUpActionId  String?
+  linkedFollowUpImportKey String?
+  stabilizedAt            DateTime?
+  stabilizedByUserId      String?
+  resolvedAt              DateTime?
+  resolvedByUserId        String?
+  closedAt                DateTime?
+  closedByUserId          String?
+  archivedAt              DateTime?
+  archivedByUserId        String?
+  isArchived              Boolean                    @default(false)
+  createdByUserId         String?
+  updatedByUserId         String?
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
+
+  mission          CampaignMission                   @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  updates          MissionIncidentUpdate[]
+  acknowledgements MissionIncidentAcknowledgement[]
+
+  @@unique([campaignDateKey, incidentRef])
+  @@index([missionId])
+  @@index([campaignDateKey])
+  @@index([status])
+  @@index([severity])
+  @@index([sensitivity])
+  @@index([isArchived])
+  @@schema("kelly_calendar")
+}
+
+model MissionIncidentUpdate {
+  id                String                   @id @default(cuid())
+  incidentId        String
+  updateType        MissionIncidentUpdateType
+  note              String?
+  actionTaken       String?
+  occurredAt        DateTime
+  recordedAt        DateTime                 @default(now())
+  recordedByUserId  String?
+  previousStatus    MissionIncidentStatus?
+  newStatus         MissionIncidentStatus?
+  previousSeverity  MissionIncidentSeverity?
+  newSeverity       MissionIncidentSeverity?
+  sensitivity       MissionIncidentSensitivity @default(STANDARD)
+  createdAt         DateTime                 @default(now())
+
+  incident MissionIncident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+
+  @@index([incidentId])
+  @@index([occurredAt, recordedAt, id])
+  @@index([updateType])
+  @@schema("kelly_calendar")
+}
+
+model MissionIncidentAcknowledgement {
+  id                   String                                     @id @default(cuid())
+  incidentId           String
+  issueKey             String
+  issueType            MissionIncidentIssueType
+  title                String
+  disposition          MissionIncidentAcknowledgementDisposition
+  note                 String?
+  acceptedRiskReason   String?
+  acknowledgedAt       DateTime                                   @default(now())
+  acknowledgedByUserId String?
+  createdAt            DateTime                                   @default(now())
+  updatedAt            DateTime                                   @updatedAt
+
+  incident MissionIncident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+
+  @@unique([incidentId, issueKey])
+  @@index([incidentId, disposition])
   @@index([issueType])
   @@schema("kelly_calendar")
 }
