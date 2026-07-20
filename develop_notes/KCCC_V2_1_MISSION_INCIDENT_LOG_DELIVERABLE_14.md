@@ -1,7 +1,9 @@
 # KCCC V2.1 — Deliverable 14: Mission Exception / Incident Log
 
-**Status:** LIVE (pending Netlify verification after ship)  
+**Status:** LIVE  
 **Date:** 2026-07-20  
+**Git:** `main` @ `ae30be6`  
+**Netlify:** https://kelly-calendar.netlify.app · deploy `6a5e5c90e39af32be8f7393f`  
 **Baseline:** Field Day Operations (Deliverable 13) · `378e599`  
 **Routes:** `/system/missions/[missionId]/incidents` · `/system/missions/[missionId]/incidents/[incidentId]` · `/system/briefing/incidents` · `/system/briefing/[date]/incidents` · `.../report`
 
