@@ -15,6 +15,16 @@ Sync apply gate ............... OFF
 CLI dry-run ................... wired (tsx → runGoogleCalendarImport, no DB writes)
 ```
 
+## Production deploy path (2026-07-19)
+
+Netlify git-clone continuous deploy was failing (`exit 128` / host key) at prepare-repo. Fixed by:
+
+1. Stopping Netlify git auto-builds (`stop_builds=true`)
+2. Deploying via GitHub Actions: `.github/workflows/netlify-deploy.yml`
+3. Secrets: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`
+
+Every push to `main` (and manual `workflow_dispatch`) builds on GitHub and uploads with `netlify deploy --build --prod`.
+
 ## Operator sequence
 
 ### 1. Configure OAuth secrets (terminal only)

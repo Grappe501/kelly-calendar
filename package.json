@@ -105,6 +105,7 @@
     "google:calendar:sync": "node scripts/run-with-h-drive-env.cjs node scripts/google-calendar-sync.mjs",
     "google:calendar:reconcile": "node scripts/run-with-h-drive-env.cjs node scripts/google-calendar-reconcile.mjs",
     "google:calendar:status": "node scripts/run-with-h-drive-env.cjs node scripts/google-calendar-status.mjs",
+    "deploy:netlify:prod": "node scripts/run-with-h-drive-env.cjs npx --yes netlify-cli@23 deploy --build --prod",
     "campaign:routes:doctor": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-doctor.mjs",
     "campaign:routes:reconstruct": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-reconstruct.mjs",
     "campaign:routes:report": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-report.mjs",
