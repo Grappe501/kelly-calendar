@@ -39,7 +39,12 @@ export default async function SystemMissionsPage() {
         <h1>Mission index</h1>
         <p>
           Persisted V2.1 missions ({MISSION_PROJECTION_VERSION}). Home surface is
-          Today’s Mission at <Link href="/">/</Link>.
+          Today’s Mission at <Link href="/">/</Link>. Cross-Mission operating
+          view:{" "}
+          <Link href="/system/missions/command-center">
+            Mission Command Center
+          </Link>
+          .
         </p>
       </header>
 

@@ -119,6 +119,9 @@ export function DebriefModeWorkspace({ initial }: Props) {
         </p>
         <nav className="debrief-mode-nav" aria-label="Debrief navigation">
           <Link href="/">Today’s Mission</Link>
+          <Link href="/system/missions/command-center">
+            Mission Command Center
+          </Link>
           <Link href={`/system/missions/${mission.missionId}/prepare`}>
             Prepare
           </Link>

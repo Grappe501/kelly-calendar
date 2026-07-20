@@ -115,6 +115,12 @@ export function MissionDetailView({ mission, mode }: Props) {
         <Link className="button secondary" href="/">
           Back to Today’s Mission
         </Link>
+        <Link
+          className="button secondary"
+          href="/system/missions/command-center"
+        >
+          Mission Command Center
+        </Link>
         <Link className="button secondary" href="/calendar">
           Calendar
         </Link>

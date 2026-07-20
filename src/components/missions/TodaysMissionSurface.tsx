@@ -51,9 +51,16 @@ export function TodaysMissionSurface({ result }: Props) {
         <p className="muted todays-mission-selection-hint">
           {selectionHint(result.selectionReason)}
         </p>
-        <p>
+        <p className="todays-mission-header-links">
           <Link className="todays-mission-calendar-link" href="/calendar">
             Open calendar
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <Link
+            className="todays-mission-calendar-link"
+            href="/system/missions/command-center"
+          >
+            Mission Command Center
           </Link>
         </p>
       </header>

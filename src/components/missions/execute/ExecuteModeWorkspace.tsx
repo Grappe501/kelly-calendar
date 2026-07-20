@@ -119,6 +119,9 @@ export function ExecuteModeWorkspace({ initial }: Props) {
         </p>
         <nav className="prepare-mode-nav" aria-label="Execute Mode navigation">
           <Link href="/">Today’s Mission</Link>
+          <Link href="/system/missions/command-center">
+            Mission Command Center
+          </Link>
           <Link href={`/system/missions/${mission.missionId}/prepare`}>
             Open Mission Brief
           </Link>

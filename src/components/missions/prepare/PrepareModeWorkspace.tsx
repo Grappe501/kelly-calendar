@@ -101,6 +101,9 @@ export function PrepareModeWorkspace({ initial }: Props) {
         </p>
         <nav className="prepare-mode-nav" aria-label="Prepare Mode navigation">
           <Link href="/">Today’s Mission</Link>
+          <Link href="/system/missions/command-center">
+            Mission Command Center
+          </Link>
           <Link href={mission.detailHref}>Mission record</Link>
           <Link href="/calendar">Calendar</Link>
         </nav>

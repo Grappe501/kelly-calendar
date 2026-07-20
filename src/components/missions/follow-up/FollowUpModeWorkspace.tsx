@@ -166,6 +166,9 @@ export function FollowUpModeWorkspace({ initial }: Props) {
         </p>
         <nav className="follow-up-nav" aria-label="Follow-up navigation">
           <Link href="/">Today’s Mission</Link>
+          <Link href="/system/missions/command-center">
+            Mission Command Center
+          </Link>
           <Link href={`/system/missions/${mission.missionId}/prepare`}>
             Prepare
           </Link>
