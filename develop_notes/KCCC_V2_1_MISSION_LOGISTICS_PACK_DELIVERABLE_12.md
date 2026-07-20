@@ -1,9 +1,10 @@
 # KCCC V2.1 — Deliverable 12: Mission Logistics Pack / Field Kit
 
-**Status:** LIVE (pending Netlify verification after ship)  
+**Status:** LIVE  
 **Date:** 2026-07-20  
+**Git:** `main` @ `5e46de9` (completes domain/server from `275f8ba`)  
+**Netlify:** https://kelly-calendar.netlify.app · deploy `6a5e4ea68353c97a56f46a9a`  
 **Baseline:** Travel and Movement Operations (Deliverable 11) · `274bc99`  
-**Partial domain commit:** `275f8ba`  
 **Routes:** `/system/missions/[missionId]/logistics` · `/system/briefing/logistics` · `/system/briefing/[date]/logistics` · `.../report`
 
 ## Product purpose
