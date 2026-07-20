@@ -50,6 +50,13 @@ export function DayView({ data, focusEventId = null }: Props) {
         label={label}
         isToday={data.isToday}
       />
+      <p className="muted calendar-briefing-link">
+        <Link href={`/system/briefing/${data.dateKey}`}>
+          {data.isToday ? "Today’s Briefing" : "Campaign Day Briefing"}
+        </Link>
+        {" · "}
+        <Link href="/system/missions/command-center">Mission Command Center</Link>
+      </p>
 
       <section className="panel" aria-labelledby="day-readiness-heading">
         <h2 id="day-readiness-heading">Readiness</h2>
