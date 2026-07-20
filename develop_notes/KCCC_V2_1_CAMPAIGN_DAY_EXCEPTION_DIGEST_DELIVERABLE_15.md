@@ -3,6 +3,8 @@
 **Status:** LIVE  
 **Date:** 2026-07-20  
 **Branch:** `main`  
+**Feature commit:** `6183482`  
+**Netlify:** https://kelly-calendar.netlify.app · deploy `6a5e628df2e66c539897667d`  
 **Migration:** `20260720150000_v21_campaign_day_exception_digest`  
 **Validate:** `npm run missions:v21:exception-digest:validate`  
 **Rollback:** `KCCC_V2_1_CAMPAIGN_DAY_EXCEPTION_DIGEST_DELIVERABLE_15_ROLLBACK.md`  
@@ -47,7 +49,10 @@ Linked from Day Incident Board, Incident detail/workspace, Closeout (+ tomorrow 
 
 ## Ship identifiers
 
-Recorded after deploy in this note’s footer / follow-up docs commit.
+| | |
+|--|--|
+| **Git** | `main` · feature `6183482` · deploy-docs (follow-up) · pushed |
+| **Netlify** | https://kelly-calendar.netlify.app · `6a5e628df2e66c539897667d` |
 
 ## Recommended Deliverable 16
 
