@@ -1986,6 +1986,58 @@ enum MissionOutcomeAssessment {
   @@schema("kelly_calendar")
 }
 
+/// V2.1 Follow-up Mode workspace status — distinct from lifecycle, ops, prep, execution, debrief.
+enum MissionFollowUpStatus {
+  NOT_STARTED
+  ACTIVE
+  READY_TO_CLOSE
+  CLOSED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFollowUpActionStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING
+  BLOCKED
+  COMPLETED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFollowUpPriority {
+  NORMAL
+  IMPORTANT
+  URGENT
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFollowUpSourceType {
+  EXECUTE_COMMITMENT
+  EXECUTE_IMMEDIATE_FOLLOW_UP
+  PERSON_RELATIONSHIP_NEXT_STEP
+  ORGANIZATION_RELATIONSHIP_NEXT_STEP
+  UNRESOLVED_QUESTION
+  SUCCESS_CRITERION_RECOVERY
+  LESSON_ACTION
+  DEBRIEF_RECOMMENDED_ACTION
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFollowUpOwnerType {
+  USER
+  ROLE
+  EXTERNAL
+  UNASSIGNED
+
+  @@schema("kelly_calendar")
+}
+
 enum GoogleConnectionStatus {
   NOT_CONNECTED
   CONNECTED
@@ -2132,6 +2184,7 @@ model CampaignMission {
   preparation  MissionPreparation?
   execution    MissionExecution?
   debrief      MissionDebrief?
+  followUp     MissionFollowUp?
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
@@ -2251,5 +2304,76 @@ model MissionDebrief {
 
   @@index([debriefStatus])
   @@index([outcomeAssessment])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Follow-up Mode — Mission-scoped accountability queue (1:1 with CampaignMission).
+/// Additive. Consumes only human-approved Debrief decisions. Survives Mission reprojection.
+model MissionFollowUp {
+  id                String               @id @default(cuid())
+  missionId         String               @unique
+  followUpStatus    MissionFollowUpStatus @default(NOT_STARTED)
+  startedAt         DateTime?
+  completedAt       DateTime?
+  closedAt          DateTime?
+  closeoutSummary   String?
+  unresolvedSummary String?
+  internalNotes     String?
+  startedByUserId   String?
+  closedByUserId    String?
+  createdByUserId   String?
+  updatedByUserId   String?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  mission CampaignMission        @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  actions MissionFollowUpAction[]
+
+  @@index([followUpStatus])
+  @@schema("kelly_calendar")
+}
+
+/// Normalized Follow-up action — provenance + accountability state.
+model MissionFollowUpAction {
+  id                      String                      @id @default(cuid())
+  followUpId              String
+  sourceType              MissionFollowUpSourceType
+  sourceRecordId          String?
+  /// Deterministic import key: missionId + sourceType + sourceRecordId
+  importKey               String?
+  sourceSnapshot          Json?
+  title                   String
+  description             String?
+  status                  MissionFollowUpActionStatus @default(OPEN)
+  priority                MissionFollowUpPriority     @default(NORMAL)
+  ownerType               MissionFollowUpOwnerType    @default(UNASSIGNED)
+  ownerUserId             String?
+  ownerName               String?
+  ownerRole               String?
+  relatedPersonName       String?
+  relatedOrganizationName String?
+  dueAt                   DateTime?
+  nextCheckAt             DateTime?
+  waitingReason           String?
+  blockedReason           String?
+  completionSummary       String?
+  completionEvidence      Json                        @default("[]")
+  completedAt             DateTime?
+  cancelledAt             DateTime?
+  cancellationReason      String?
+  createdByUserId         String?
+  updatedByUserId         String?
+  completedByUserId       String?
+  cancelledByUserId       String?
+  sortOrder               Int                         @default(0)
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+
+  followUp MissionFollowUp @relation(fields: [followUpId], references: [id], onDelete: Cascade)
+
+  @@unique([followUpId, importKey])
+  @@index([followUpId, status])
+  @@index([status, dueAt])
+  @@index([sourceType])
   @@schema("kelly_calendar")
 }

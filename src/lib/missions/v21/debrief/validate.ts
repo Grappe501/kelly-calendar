@@ -454,6 +454,7 @@ function asLessons(
           issues,
         ) ?? ("NORMAL" as LessonImportance),
       recommendForCampaignKnowledge: Boolean(row.recommendForCampaignKnowledge),
+      approvedForFollowUp: Boolean(row.approvedForFollowUp),
       createdAt:
         typeof row.createdAt === "string" ? row.createdAt : new Date().toISOString(),
       createdByUserId:
@@ -541,6 +542,7 @@ function asQuestions(
           issues,
         ) ?? ("OPEN" as UnresolvedQuestionStatus),
       notes: cleanNullable(row.notes, `${path}[${i}].notes`, issues) ?? null,
+      approvedForFollowUp: Boolean(row.approvedForFollowUp),
       createdAt:
         typeof row.createdAt === "string" ? row.createdAt : new Date().toISOString(),
       updatedAt:

@@ -185,6 +185,8 @@ export type MissionLesson = {
   category: LessonCategory | null;
   importance: LessonImportance;
   recommendForCampaignKnowledge: boolean;
+  /** Human gate for Follow-up Mode operational-change import — never auto-set. */
+  approvedForFollowUp: boolean;
   createdAt: string;
   createdByUserId: string | null;
 };
@@ -205,6 +207,8 @@ export type MissionUnresolvedQuestion = {
   relatedTo: string | null;
   status: UnresolvedQuestionStatus;
   notes: string | null;
+  /** Human gate for Follow-up Mode import — never auto-set. */
+  approvedForFollowUp: boolean;
   createdAt: string;
   updatedAt: string;
   createdByUserId: string | null;

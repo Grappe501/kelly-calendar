@@ -435,6 +435,7 @@ export function DebriefModeWorkspace({ initial }: Props) {
             category: null,
             importance: "NORMAL",
             recommendForCampaignKnowledge: false,
+            approvedForFollowUp: false,
             createdAt: new Date().toISOString(),
             createdByUserId: null,
           };
@@ -452,6 +453,18 @@ export function DebriefModeWorkspace({ initial }: Props) {
                   ...l,
                   recommendForCampaignKnowledge: !l.recommendForCampaignKnowledge,
                 }
+              : l,
+          );
+          setView((v) => ({
+            ...v,
+            debrief: { ...v.debrief, lessonsLearned },
+          }));
+          void patch("lessons", { lessonsLearned });
+        }}
+        onToggleFollowUp={(id) => {
+          const lessonsLearned = debrief.lessonsLearned.map((l) =>
+            l.id === id
+              ? { ...l, approvedForFollowUp: !l.approvedForFollowUp }
               : l,
           );
           setView((v) => ({
@@ -494,11 +507,24 @@ export function DebriefModeWorkspace({ initial }: Props) {
             relatedTo: null,
             status: "OPEN",
             notes: null,
+            approvedForFollowUp: false,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             createdByUserId: null,
           };
           const unresolvedQuestions = [...debrief.unresolvedQuestions, item];
+          setView((v) => ({
+            ...v,
+            debrief: { ...v.debrief, unresolvedQuestions },
+          }));
+          void patch("questions", { unresolvedQuestions });
+        }}
+        onToggleFollowUp={(id) => {
+          const unresolvedQuestions = debrief.unresolvedQuestions.map((q) =>
+            q.id === id
+              ? { ...q, approvedForFollowUp: !q.approvedForFollowUp }
+              : q,
+          );
           setView((v) => ({
             ...v,
             debrief: { ...v.debrief, unresolvedQuestions },
@@ -628,8 +654,13 @@ export function DebriefModeWorkspace({ initial }: Props) {
         {debrief.debriefStatus === "APPROVED" ? (
           <p role="status">
             Debrief approved
-            {debrief.approvedAt ? ` at ${debrief.approvedAt}` : ""}. Follow-up Mode
-            will consume items marked approved for follow-up.
+            {debrief.approvedAt ? ` at ${debrief.approvedAt}` : ""}.{" "}
+            <Link
+              className="button"
+              href={`/system/missions/${mission.missionId}/follow-up`}
+            >
+              Open Follow-up
+            </Link>
           </p>
         ) : null}
         {error ? (
@@ -1243,11 +1274,13 @@ function LessonsSection({
   pending,
   onAdd,
   onToggleKnowledge,
+  onToggleFollowUp,
 }: {
   items: MissionLesson[];
   pending: boolean;
   onAdd: (statement: string) => void;
   onToggleKnowledge: (id: string) => void;
+  onToggleFollowUp: (id: string) => void;
 }) {
   const [draft, setDraft] = useState("");
   return (
@@ -1268,6 +1301,15 @@ function LessonsSection({
                 onChange={() => onToggleKnowledge(l.id)}
               />
               Recommend for campaign knowledge review
+            </label>
+            <label className="debrief-check">
+              <input
+                type="checkbox"
+                checked={l.approvedForFollowUp}
+                disabled={pending}
+                onChange={() => onToggleFollowUp(l.id)}
+              />
+              Approve for Follow-up Mode
             </label>
           </li>
         ))}
@@ -1350,10 +1392,12 @@ function QuestionsSection({
   items,
   pending,
   onAdd,
+  onToggleFollowUp,
 }: {
   items: MissionUnresolvedQuestion[];
   pending: boolean;
   onAdd: (question: string) => void;
+  onToggleFollowUp: (id: string) => void;
 }) {
   const [draft, setDraft] = useState("");
   return (
@@ -1362,9 +1406,20 @@ function QuestionsSection({
       <p className="muted">Do not invent answers. Research is deferred.</p>
       <ul className="debrief-card-list">
         {items.map((q) => (
-          <li key={q.id}>
-            {q.question}{" "}
-            <span className="muted">({q.status})</span>
+          <li key={q.id} className="debrief-card">
+            <p>
+              {q.question}{" "}
+              <span className="muted">({q.status})</span>
+            </p>
+            <label className="debrief-check">
+              <input
+                type="checkbox"
+                checked={q.approvedForFollowUp}
+                disabled={pending}
+                onChange={() => onToggleFollowUp(q.id)}
+              />
+              Approve for Follow-up Mode
+            </label>
           </li>
         ))}
       </ul>

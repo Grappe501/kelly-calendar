@@ -160,6 +160,7 @@ describe("V2.1 Debrief Mode transitions & validation", () => {
           category: null,
           importance: "NORMAL",
           recommendForCampaignKnowledge: false,
+          approvedForFollowUp: false,
           createdAt: "2026-07-20T12:00:00.000Z",
           createdByUserId: null,
         },

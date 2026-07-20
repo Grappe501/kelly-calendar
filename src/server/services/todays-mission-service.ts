@@ -10,6 +10,7 @@ import {
 } from "@/lib/missions/v21/mission-home-view-model";
 import { selectTodaysMission } from "@/lib/missions/v21/select-todays-mission";
 import { getDebriefStatusByMissionId } from "@/server/repositories/mission-debrief-repository";
+import { getFollowUpStatusByMissionId } from "@/server/repositories/mission-follow-up-repository";
 import {
   campaignMissionFromRow,
   getCampaignMissionById,
@@ -45,6 +46,10 @@ async function buildViewModelForRow(
     lifecyclePhase === "DEBRIEF" && mission.id
       ? await getDebriefStatusByMissionId(mission.id)
       : null;
+  const followUpStatus =
+    lifecyclePhase === "FOLLOW_UP" && mission.id
+      ? await getFollowUpStatusByMissionId(mission.id)
+      : null;
 
   return toMissionHomeViewModel({
     mission,
@@ -52,6 +57,7 @@ async function buildViewModelForRow(
     travelRequired,
     campaignTimezone,
     debriefStatus,
+    followUpStatus,
   });
 }
 
@@ -159,11 +165,16 @@ export async function getMissionHomeViewModelById(
     lifecyclePhase === "DEBRIEF" && mission.id
       ? await getDebriefStatusByMissionId(mission.id)
       : null;
+  const followUpStatus =
+    lifecyclePhase === "FOLLOW_UP" && mission.id
+      ? await getFollowUpStatusByMissionId(mission.id)
+      : null;
   return toMissionHomeViewModel({
     mission,
     lifecyclePhase,
     travelRequired,
     campaignTimezone: timezone,
     debriefStatus,
+    followUpStatus,
   });
 }

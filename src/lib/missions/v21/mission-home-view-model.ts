@@ -3,6 +3,7 @@ import {
   labelMissionOperationalStatus,
 } from "@/lib/missions/v21/labels";
 import type { MissionDebriefStatus } from "@/lib/missions/v21/debrief/types";
+import type { MissionFollowUpStatus } from "@/lib/missions/v21/follow-up/types";
 import type {
   CampaignMission,
   MissionLifecyclePhase,
@@ -262,7 +263,10 @@ function intelligenceSections(
 export function primaryActionForPhase(
   missionId: string,
   phase: MissionLifecyclePhase,
-  options?: { debriefStatus?: MissionDebriefStatus | null },
+  options?: {
+    debriefStatus?: MissionDebriefStatus | null;
+    followUpStatus?: MissionFollowUpStatus | null;
+  },
 ): MissionHomePrimaryAction {
   const detail = `/system/missions/${missionId}`;
   switch (phase) {
@@ -303,14 +307,21 @@ export function primaryActionForPhase(
         forthcomingNote: null,
       };
     }
-    case "FOLLOW_UP":
+    case "FOLLOW_UP": {
+      const fu = options?.followUpStatus ?? null;
+      const label =
+        fu === "READY_TO_CLOSE" || fu === "CLOSED"
+          ? "Close Mission"
+          : fu === "ACTIVE"
+            ? "Continue Follow-up"
+            : "Review Follow-ups";
       return {
-        label: "Review Follow-ups",
-        href: `${detail}?mode=follow-up`,
+        label,
+        href: `${detail}/follow-up`,
         available: true,
-        forthcomingNote:
-          "Follow-up task generation ships later — this opens the mission record.",
+        forthcomingNote: null,
       };
+    }
     case "COMPLETE":
     default:
       return {
@@ -329,6 +340,7 @@ export function toMissionHomeViewModel(input: {
   travelRequired: boolean;
   campaignTimezone?: string;
   debriefStatus?: MissionDebriefStatus | null;
+  followUpStatus?: MissionFollowUpStatus | null;
 }): MissionHomeViewModel {
   const { mission, lifecyclePhase, travelRequired } = input;
   if (!mission.id) {
@@ -360,6 +372,7 @@ export function toMissionHomeViewModel(input: {
     intelligence: { hasAny, sections },
     primaryAction: primaryActionForPhase(mission.id, lifecyclePhase, {
       debriefStatus: input.debriefStatus ?? null,
+      followUpStatus: input.followUpStatus ?? null,
     }),
     detailHref: `/system/missions/${mission.id}`,
     projectionVersion: mission.projectionVersion,
