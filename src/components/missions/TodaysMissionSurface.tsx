@@ -62,6 +62,13 @@ export function TodaysMissionSurface({ result }: Props) {
           >
             Mission Command Center
           </Link>
+          <span aria-hidden="true"> · </span>
+          <Link
+            className="todays-mission-calendar-link"
+            href="/system/briefing/today"
+          >
+            Today’s Briefing
+          </Link>
         </p>
       </header>
 

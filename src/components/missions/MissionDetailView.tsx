@@ -121,6 +121,9 @@ export function MissionDetailView({ mission, mode }: Props) {
         >
           Mission Command Center
         </Link>
+        <Link className="button secondary" href="/system/briefing/today">
+          Today’s Briefing
+        </Link>
         <Link className="button secondary" href="/calendar">
           Calendar
         </Link>

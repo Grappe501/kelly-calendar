@@ -36,6 +36,7 @@ export * from "@/lib/missions/v21/execution";
 export * from "@/lib/missions/v21/debrief";
 export * from "@/lib/missions/v21/follow-up";
 export * from "@/lib/missions/v21/command-center";
+export * from "@/lib/missions/v21/day-briefing";
 export type {
   CampaignMission,
   EventMissionSource,
