@@ -32,4 +32,22 @@ npm run deploy:netlify:prod
 
 If GitHub Actions shows `startup_failure`, that is a GitHub runner/platform fault. Retry `workflow_dispatch` or use `npm run deploy:netlify:prod` after stopping `next dev`.
 
-To restore Netlify-native git CD later: relink the repo in Netlify UI, then set `stop_builds=false`.
+Empty Netlify logs with Framework Unknown = prepare-repo/clone failure, **not** an app build failure. Do not chase Next.js / `netlify.toml` for that class of error.
+
+### Production OAuth redirect (must match exactly)
+
+```text
+https://kelly-calendar.netlify.app/api/integrations/google/calendar/callback
+```
+
+Set in Google Cloud Authorized redirect URIs **and** Netlify `KCCC_GOOGLE_OAUTH_REDIRECT_URI`.
+
+### Later repair for Netlify Git CD only
+
+1. Disconnect the GitHub repo from the Netlify site.
+2. Reauthorize/reinstall the Netlify GitHub App for `Grappe501/kelly-calendar`.
+3. Reconnect repo, branch `main`.
+4. Confirm HTTPS/GitHub App auth (not stale SSH).
+5. One clean deploy with `preparing repo` success, then re-enable automatic builds (`stop_builds=false`).
+
+Until then: **GitHub Actions / CLI is the authoritative production path.**
