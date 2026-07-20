@@ -2497,3 +2497,120 @@ model CampaignDayCarryForwardItem {
   @@index([sourceType])
   @@schema("kelly_calendar")
 }
+
+/// V2.1 Morning Launch Review — day-level start-of-day confirmation (not Mission state).
+enum CampaignDayLaunchStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  REVIEWED
+  LAUNCHED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignDayLaunchReadiness {
+  NOT_ASSESSED
+  READY
+  READY_WITH_ACCEPTED_RISK
+  NOT_READY
+  NO_MISSIONS_SCHEDULED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignDayLaunchAcknowledgementType {
+  OVERNIGHT_CHANGE
+  CARRY_FORWARD
+  FIRST_MISSION_PREPARATION
+  TRAVEL
+  SCHEDULE_CONFLICT
+  DUE_COMMITMENT
+  LEADERSHIP_DECISION
+  MATERIALS
+  PEOPLE_BRIEF
+  ORGANIZATION_BRIEF
+  DATA_INTEGRITY
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignDayLaunchSourceType {
+  PRIOR_DAY_CLOSEOUT
+  CARRY_FORWARD_ITEM
+  CAMPAIGN_MISSION
+  MISSION_PREPARATION
+  MISSION_EXECUTION
+  MISSION_DEBRIEF
+  MISSION_FOLLOW_UP
+  EVENT
+  COMMAND_CENTER_RULE
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignDayLaunchAcknowledgementStatus {
+  OPEN
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Morning Launch Review — confirm readiness to begin the campaign day.
+/// Additive / lazy. Keyed by campaign-local YYYY-MM-DD. Does not mutate Missions.
+model CampaignDayLaunchReview {
+  id                   String                      @id @default(cuid())
+  campaignDateKey      String                      @unique
+  status               CampaignDayLaunchStatus     @default(NOT_STARTED)
+  readinessAssessment  CampaignDayLaunchReadiness  @default(NOT_ASSESSED)
+  launchSummary        String?
+  overnightChangeNotes String?
+  acceptedRiskSummary  String?
+  internalNotes        String?
+  startedAt            DateTime?
+  reviewedAt           DateTime?
+  launchedAt           DateTime?
+  startedByUserId      String?
+  reviewedByUserId     String?
+  launchedByUserId     String?
+  createdByUserId      String?
+  updatedByUserId      String?
+  createdAt            DateTime                    @default(now())
+  updatedAt            DateTime                    @updatedAt
+
+  acknowledgements CampaignDayLaunchAcknowledgement[]
+
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+/// Day-level acknowledgement / accepted-risk ledger for Morning Launch Review.
+model CampaignDayLaunchAcknowledgement {
+  id                   String                                 @id @default(cuid())
+  launchReviewId       String
+  acknowledgementType  CampaignDayLaunchAcknowledgementType
+  sourceType           CampaignDayLaunchSourceType
+  sourceRecordId       String?
+  /// Deterministic key: acknowledgementType + sourceType + sourceRecordId
+  importKey            String?
+  missionId            String?
+  title                String
+  status               CampaignDayLaunchAcknowledgementStatus @default(OPEN)
+  acknowledgementNote  String?
+  acceptedRiskReason   String?
+  acknowledgedAt       DateTime?
+  acknowledgedByUserId String?
+  createdAt            DateTime                               @default(now())
+  updatedAt            DateTime                               @updatedAt
+
+  launchReview CampaignDayLaunchReview @relation(fields: [launchReviewId], references: [id], onDelete: Cascade)
+
+  @@unique([launchReviewId, importKey])
+  @@index([launchReviewId, status])
+  @@index([acknowledgementType])
+  @@schema("kelly_calendar")
+}

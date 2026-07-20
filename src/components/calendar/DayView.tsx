@@ -55,6 +55,10 @@ export function DayView({ data, focusEventId = null }: Props) {
           {data.isToday ? "Today’s Briefing" : "Campaign Day Briefing"}
         </Link>
         {" · "}
+        <Link href={`/system/briefing/${data.dateKey}/launch`}>
+          {data.isToday ? "Launch Today" : "Morning Launch Review"}
+        </Link>
+        {" · "}
         <Link href="/system/missions/command-center">Mission Command Center</Link>
       </p>
 

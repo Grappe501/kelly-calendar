@@ -72,6 +72,13 @@ export function TodaysMissionSurface({ result }: Props) {
           <span aria-hidden="true"> · </span>
           <Link
             className="todays-mission-calendar-link"
+            href="/system/briefing/launch"
+          >
+            Launch Today
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <Link
+            className="todays-mission-calendar-link"
             href="/system/briefing/closeout"
           >
             Close Out Today

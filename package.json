@@ -114,6 +114,7 @@
     "missions:v21:command-center:validate": "node scripts/missions-command-center-validate-v21.mjs",
     "missions:v21:day-briefing:validate": "node scripts/campaign-day-briefing-validate-v21.mjs",
     "missions:v21:day-closeout:validate": "node scripts/campaign-day-closeout-validate-v21.mjs",
+    "missions:v21:day-launch:validate": "node scripts/campaign-day-launch-review-validate-v21.mjs",
     "missions:v21:backfill": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs",
     "missions:v21:backfill:apply": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs --apply",
     "campaign:routes:doctor": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-doctor.mjs",

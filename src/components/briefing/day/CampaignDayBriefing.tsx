@@ -85,6 +85,9 @@ export function CampaignDayBriefing({ model }: Props) {
             Mission Command Center
           </Link>
           <Link href={model.navigation.calendarHref}>Calendar</Link>
+          <Link href={`/system/briefing/${model.briefingDate}/launch`}>
+            Launch Today
+          </Link>
           <Link href={`/system/briefing/${model.briefingDate}/closeout`}>
             Close Out Today
           </Link>
@@ -548,7 +551,10 @@ export function CampaignDayBriefing({ model }: Props) {
           Status: <strong>{model.endOfDayStatusLabel}</strong>
         </p>
         <p>
-          <Link className="button" href={`/system/briefing/${model.briefingDate}/closeout`}>
+          <Link className="button" href={`/system/briefing/${model.briefingDate}/launch`}>
+            Launch Today
+          </Link>{" "}
+          <Link className="button secondary" href={`/system/briefing/${model.briefingDate}/closeout`}>
             Close Out Today
           </Link>
         </p>

@@ -45,4 +45,8 @@ npm run missions:v21:day-closeout:validate
 
 ## Recommended Deliverable 10
 
-**Briefing acknowledgement + optional morning snapshot** (or closeout amendment audit trail) — still without AI or automated delivery.
+Superseded by Deliverable 10 (Morning Launch Review). See `KCCC_V2_1_MORNING_LAUNCH_REVIEW_DELIVERABLE_10.md`.
+
+## Recommended Deliverable 11
+
+**Travel and Movement Operations Layer** — Mission-linked departure plans, travel legs, buffers, drivers, vehicles, lodging transitions, parking, access instructions, and arrival confirmation — without external maps or automatic routing in v1.

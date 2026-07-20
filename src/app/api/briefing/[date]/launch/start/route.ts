@@ -1,0 +1,25 @@
+import { roleHasFullCalendarAccess } from "@/lib/auth/system-roles";
+import { PermissionDeniedError } from "@/lib/security/safe-error";
+import { withAuthenticatedMutation } from "@/server/auth/api-mutation";
+import { startCampaignDayLaunchReview } from "@/server/services/campaign-day-launch-review-service";
+
+export const dynamic = "force-dynamic";
+type Ctx = { params: Promise<{ date: string }> };
+
+export async function POST(request: Request, context: Ctx) {
+  const { date } = await context.params;
+  return withAuthenticatedMutation(
+    request,
+    "/api/briefing/[date]/launch/start",
+    async ({ actor }) => {
+      if (!roleHasFullCalendarAccess(actor.primarySystemRole)) {
+        throw new PermissionDeniedError(
+          "Morning Launch Review requires campaign leadership access.",
+        );
+      }
+      return {
+        model: await startCampaignDayLaunchReview({ dateKey: date, actor }),
+      };
+    },
+  );
+}

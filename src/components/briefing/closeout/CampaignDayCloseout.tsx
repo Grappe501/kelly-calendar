@@ -48,6 +48,9 @@ export function CampaignDayCloseout({ model }: Props) {
             <Link href={model.navigation.nextHref}>Next day</Link>
           ) : null}
           <Link href={model.navigation.briefingHref}>Day Briefing</Link>
+          <Link href={`/system/briefing/${model.campaignDate}/launch`}>
+            Morning Launch Review
+          </Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>
           <Link href={model.navigation.calendarHref}>Calendar</Link>
           <Link href={model.navigation.reportHref}>Report</Link>
@@ -321,12 +324,18 @@ export function CampaignDayCloseout({ model }: Props) {
             </ul>
           </div>
         ) : null}
-        <p>
+        <p className="closeout-button-row">
           <Link
             className="button secondary"
             href={`/system/briefing/${addOne(model.campaignDate)}`}
           >
             Open Tomorrow’s Briefing
+          </Link>
+          <Link
+            className="button secondary"
+            href={`/system/briefing/${addOne(model.campaignDate)}/launch`}
+          >
+            Tomorrow Morning Launch Review
           </Link>
         </p>
       </section>
