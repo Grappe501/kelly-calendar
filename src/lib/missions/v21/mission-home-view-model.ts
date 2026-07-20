@@ -283,10 +283,9 @@ export function primaryActionForPhase(
     case "EXECUTE":
       return {
         label: "Open Execute Mode",
-        href: `${detail}?mode=execute`,
+        href: `${detail}/execute`,
         available: true,
-        forthcomingNote:
-          "Execute Mode is forthcoming — this opens the mission record.",
+        forthcomingNote: null,
       };
     case "DEBRIEF":
       return {

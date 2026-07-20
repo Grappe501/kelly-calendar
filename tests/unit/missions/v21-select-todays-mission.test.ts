@@ -245,7 +245,7 @@ describe("V2.1 Today’s Mission selection", () => {
     expect(prepare.label).toBe("Open Mission Brief");
     expect(execute.label).toBe("Open Execute Mode");
     expect(prepare.href).toBe("/system/missions/m1/prepare");
-    expect(execute.href).toContain("mode=execute");
+    expect(execute.href).toBe("/system/missions/m1/execute");
   });
 
   it("sets next mission after primary without listing everything", () => {

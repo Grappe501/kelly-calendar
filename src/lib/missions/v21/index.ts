@@ -32,6 +32,7 @@ export {
   type TodaysMissionSelectionReason,
 } from "@/lib/missions/v21/mission-home-view-model";
 export * from "@/lib/missions/v21/preparation";
+export * from "@/lib/missions/v21/execution";
 export type {
   CampaignMission,
   EventMissionSource,

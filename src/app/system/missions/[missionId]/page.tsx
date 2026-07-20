@@ -20,9 +20,12 @@ export default async function MissionDetailPage({ params, searchParams }: Ctx) {
   const { missionId } = await params;
   const { mode } = await searchParams;
 
-  // Canonical Prepare Mode route — do not keep a second Prepare UI.
+  // Canonical phase workspaces — do not keep competing UIs.
   if (mode === "prepare") {
     redirect(`/system/missions/${missionId}/prepare`);
+  }
+  if (mode === "execute") {
+    redirect(`/system/missions/${missionId}/execute`);
   }
 
   await requireSystemAdminPage(`/system/missions/${missionId}`);

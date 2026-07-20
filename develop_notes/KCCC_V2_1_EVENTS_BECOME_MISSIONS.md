@@ -1,12 +1,13 @@
 # KCCC V2.1 — Events Become Missions
 
-**Status:** DELIVERABLE 3 LANDED — Prepare Mode workspace  
+**Status:** DELIVERABLE 4 LANDED — Execute Mode field workspace  
 **Date:** 2026-07-19 (updated 2026-07-20)  
 **Parent:** `KCCC_CAMPAIGN_OPERATING_SYSTEM_V2.md`  
 **Google:** PAUSED — no dependency for V2.1  
 **Deliverable 1 notes:** `KCCC_V2_1_MISSION_MODEL_DELIVERABLE_1.md` · rollback `KCCC_V2_1_MISSION_MODEL_ROLLBACK.md`  
 **Deliverable 2 notes:** `KCCC_V2_1_TODAYS_MISSION_DELIVERABLE_2.md`  
-**Deliverable 3 notes:** `KCCC_V2_1_PREPARE_MODE_DELIVERABLE_3.md` · rollback `KCCC_V2_1_PREPARE_MODE_ROLLBACK.md`
+**Deliverable 3 notes:** `KCCC_V2_1_PREPARE_MODE_DELIVERABLE_3.md` · rollback `KCCC_V2_1_PREPARE_MODE_ROLLBACK.md`  
+**Deliverable 4 notes:** `KCCC_V2_1_EXECUTE_MODE_DELIVERABLE_4.md` · rollback `KCCC_V2_1_EXECUTE_MODE_ROLLBACK.md`
 
 ## Product shift
 
@@ -64,7 +65,7 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 
 1. **Mission data model** — DONE: `CampaignMission` + deterministic Event→Mission projection + backfill + mission APIs.
 2. **Mission dashboard** — DONE: `/` is Today’s Mission operating surface. Detail at `/system/missions/[missionId]`.
-3. **Mission lifecycle** — Prepare Mode DONE (`/system/missions/[missionId]/prepare` + `MissionPreparation`). NEXT: **Execute Mode** (narrow event-time capture), then Debrief / Follow-up.
+3. **Mission lifecycle** — Prepare Mode DONE (`/system/missions/[missionId]/prepare` + `MissionPreparation`). Execute Mode DONE (`/system/missions/[missionId]/execute` + `MissionExecution`). NEXT: **Debrief Mode**, then Follow-up.
 
 Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform.
 

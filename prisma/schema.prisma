@@ -1955,6 +1955,16 @@ enum MissionPreparationReadiness {
   @@schema("kelly_calendar")
 }
 
+/// V2.1 Execute Mode field status — distinct from lifecycle phase, operational status, and prep readiness.
+enum MissionExecutionStatus {
+  NOT_STARTED
+  ARRIVED
+  IN_PROGRESS
+  COMPLETED
+
+  @@schema("kelly_calendar")
+}
+
 enum GoogleConnectionStatus {
   NOT_CONNECTED
   CONNECTED
@@ -2099,6 +2109,7 @@ model CampaignMission {
 
   sourceEvent  Event               @relation(fields: [sourceEventId], references: [id], onDelete: Restrict)
   preparation  MissionPreparation?
+  execution    MissionExecution?
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
@@ -2148,5 +2159,36 @@ model MissionPreparation {
   mission CampaignMission @relation(fields: [missionId], references: [id], onDelete: Cascade)
 
   @@index([readinessState])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Execute Mode — field capture (1:1 with CampaignMission).
+/// Additive. Never stores Event schedule fields. Survives Mission reprojection.
+/// Does not overwrite MissionPreparation content.
+model MissionExecution {
+  id                 String                 @id @default(cuid())
+  missionId          String                 @unique
+  executionStatus    MissionExecutionStatus @default(NOT_STARTED)
+  arrivedAt          DateTime?
+  startedAt          DateTime?
+  endedAt            DateTime?
+  arrivalNote        String?
+  liveObservations   Json                   @default("[]")
+  peopleContacts     Json                   @default("[]")
+  organizationContacts Json                 @default("[]")
+  commitments        Json                   @default("[]")
+  immediateFollowUps Json                   @default("[]")
+  fieldNotes         String?
+  arrivedByUserId    String?
+  startedByUserId    String?
+  completedByUserId  String?
+  createdByUserId    String?
+  updatedByUserId    String?
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+
+  mission CampaignMission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+
+  @@index([executionStatus])
   @@schema("kelly_calendar")
 }
