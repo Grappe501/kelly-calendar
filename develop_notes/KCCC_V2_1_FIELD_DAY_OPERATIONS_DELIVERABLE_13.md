@@ -1,7 +1,9 @@
 # KCCC V2.1 — Deliverable 13: Field Day Operations / Live Kit Confirmation
 
-**Status:** LIVE (pending Netlify verification after ship)  
+**Status:** LIVE  
 **Date:** 2026-07-20  
+**Git:** `main` @ `d571839`  
+**Netlify:** https://kelly-calendar.netlify.app · deploy `6a5e554901cc2300dca09a8a`  
 **Baseline:** Mission Logistics Pack (Deliverable 12) · `c3d41f7`  
 **Routes:** `/system/missions/[missionId]/field-ops` · `/system/briefing/field-ops` · `/system/briefing/[date]/field-ops` · `.../report`
 
