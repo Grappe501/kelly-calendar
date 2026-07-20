@@ -1,0 +1,44 @@
+# Deploy kelly-calendar on every push to main.
+# Builds on GitHub Actions and uploads to Netlify — does not rely on
+# Netlify cloning the GitHub repo (avoids exit 128 / host key failures).
+name: Deploy Netlify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: netlify-prod-kelly-calendar
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+          NPM_CONFIG_PRODUCTION: "false"
+
+      - name: Deploy production to Netlify
+        run: npx --yes netlify-cli@23 deploy --build --prod --message "gha ${GITHUB_SHA}"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+          NPM_CONFIG_PRODUCTION: "false"
+          NODE_VERSION: "20"
