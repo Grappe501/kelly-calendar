@@ -180,7 +180,45 @@ enum ExternalProvider {
   MICROSOFT_OUTLOOK
   ICS
   MANUAL
+  MOBILIZE
   OTHER
+
+  @@schema("kelly_calendar")
+}
+
+/// Provider-neutral remote object kinds for future adapters (Mobilize, etc.).
+/// Local system of record remains CampaignMission / Event / related models.
+enum ExternalObjectType {
+  EVENT
+  TIMESLOT
+  SHIFT
+  SIGNUP
+  ATTENDANCE
+  PERSON
+  ORGANIZATION
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalSyncProvenance {
+  MANUAL
+  POLL
+  WEBHOOK
+  IMPORT
+  PUBLISH
+  RECONCILE
+  UNKNOWN
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalConflictState {
+  NONE
+  DETECTED
+  RESOLVED_LOCAL
+  RESOLVED_REMOTE
+  MANUAL_REQUIRED
 
   @@schema("kelly_calendar")
 }
@@ -3367,5 +3405,75 @@ model MissionIncidentAcknowledgement {
   @@unique([incidentId, issueKey])
   @@index([incidentId, disposition])
   @@index([issueType])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Campaign Day Exception Digest review metadata only.
+/// Digest content is derived from MissionIncident facts — never copied into this row.
+/// Lazy-created on explicit "Complete Exception Review". Does not mutate incidents/Closeout/Launch.
+enum CampaignDayIncidentDigestReviewStatus {
+  DRAFT
+  REVIEWED
+  STALE
+
+  @@schema("kelly_calendar")
+}
+
+model CampaignDayIncidentDigestReview {
+  id                String                                 @id @default(cuid())
+  campaignDateKey   String                                 @unique
+  status            CampaignDayIncidentDigestReviewStatus  @default(DRAFT)
+  reviewedByUserId  String?
+  reviewedAt        DateTime?
+  note              String?
+  /// Deterministic fingerprint of material incident facts at review time.
+  sourceFingerprint String
+  staleAt           DateTime?
+  createdByUserId   String?
+  updatedByUserId   String?
+  createdAt         DateTime                               @default(now())
+  updatedAt         DateTime                               @updatedAt
+
+  @@index([status])
+  @@index([campaignDateKey, status])
+  @@schema("kelly_calendar")
+}
+
+/// Provider-neutral external identity + sync metadata foundation (Mobilize-ready).
+/// Does not perform network calls. Local models remain system of record.
+/// Secrets must never be stored here — use encrypted credential stores separately.
+model ExternalObjectReference {
+  id                   String                 @id @default(cuid())
+  provider             ExternalProvider
+  objectType           ExternalObjectType
+  /// Remote provider object id (Mobilize event id, etc.). Never fabricate.
+  externalObjectId     String
+  /// Soft local binding — e.g. CampaignMission, Event. Not a hard FK.
+  localObjectType      String?
+  localObjectId        String?
+  remoteVersion        String?
+  remoteUpdatedAt      DateTime?
+  lastSuccessfulSyncAt DateTime?
+  lastAttemptAt        DateTime?
+  syncDirection        SyncDirection          @default(NONE)
+  syncStatus           SyncStatus             @default(NOT_CONFIGURED)
+  provenance           ExternalSyncProvenance @default(UNKNOWN)
+  conflictState        ExternalConflictState  @default(NONE)
+  /// Stable idempotency key for imports/publishes. Unique per provider when set.
+  idempotencyKey       String?
+  lastErrorCode        String?
+  /// Safe operator-facing summary — never store secrets or tokens.
+  lastErrorSummary     String?
+  createdByUserId      String?
+  updatedByUserId      String?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  archivedAt           DateTime?
+
+  @@unique([provider, objectType, externalObjectId])
+  @@unique([provider, idempotencyKey])
+  @@index([provider, syncStatus])
+  @@index([localObjectType, localObjectId])
+  @@index([conflictState])
   @@schema("kelly_calendar")
 }

@@ -96,6 +96,64 @@ export async function getCampaignDayLaunchReview(options: {
     pools.dayMissions.map((m) => m.missionId),
   );
 
+  const { findIncidentsForExceptionDigest } = await import(
+    "@/server/repositories/mission-incident-repository"
+  );
+  const { findCloseoutByDateKey: findCloseoutForDigest } = await import(
+    "@/server/repositories/campaign-day-closeout-repository"
+  );
+  const {
+    deriveExceptionDigestEntries,
+  } = await import("@/lib/missions/v21/exception-digest");
+  const priorDayKey = addDaysToDateKey(dateKey, -1);
+  const [digestIncidents, priorDayCloseout] = await Promise.all([
+    findIncidentsForExceptionDigest(priorDayKey),
+    findCloseoutForDigest(priorDayKey),
+  ]);
+  const digestContexts = new Map(
+    pools.dayMissions.map((m) => [
+      m.missionId,
+      {
+        missionId: m.missionId,
+        title: m.title,
+        startsAt: m.startsAt,
+        endsAt: m.endsAt,
+        timezone: m.timezone,
+        campaignDateKey: priorDayKey,
+        lifecyclePhase: m.lifecyclePhase,
+        operationalStatus: m.operationalStatus,
+        executionStatus: m.execution.status,
+        isCancelled: m.operationalStatus === "CANCELLED",
+        closeoutReviewedAt: priorDayCloseout?.reviewedAt ?? null,
+      },
+    ]),
+  );
+  // Also attach contexts for incident origin missions not in today's pool.
+  for (const incident of digestIncidents) {
+    if (!digestContexts.has(incident.missionId)) {
+      digestContexts.set(incident.missionId, {
+        missionId: incident.missionId,
+        title: "Mission",
+        startsAt: `${incident.campaignDateKey}T12:00:00.000Z`,
+        endsAt: `${incident.campaignDateKey}T13:00:00.000Z`,
+        timezone: campaignTimezone,
+        campaignDateKey: incident.campaignDateKey,
+        lifecyclePhase: "EXECUTE",
+        operationalStatus: "READY",
+        executionStatus: null,
+        isCancelled: false,
+        closeoutReviewedAt: priorDayCloseout?.reviewedAt ?? null,
+      });
+    }
+  }
+  const exceptionDigestEntries = deriveExceptionDigestEntries({
+    selectedDateKey: priorDayKey,
+    incidents: digestIncidents,
+    contextsByMissionId: digestContexts,
+    digestReviewedAt: null,
+    now,
+  });
+
   return buildCampaignDayLaunchReviewViewModel({
     campaignDate: dateKey,
     now,
@@ -106,6 +164,7 @@ export async function getCampaignDayLaunchReview(options: {
     priorCloseoutDateKey: priorDateKey,
     launchReview,
     logisticsPacksByMissionId,
+    exceptionDigestEntries,
   });
 }
 

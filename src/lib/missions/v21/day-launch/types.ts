@@ -345,6 +345,13 @@ export type CampaignDayLaunchReviewViewModel = {
     stateLabel: string;
   };
   blockingConditions: LaunchBlocker[];
+  exceptionDigest: {
+    href: string;
+    qualifiedCount: number;
+    overnightCount: number;
+    carryForwardCount: number;
+    highCriticalCount: number;
+  };
   acceptedRisks: Array<{
     id: string;
     title: string;
@@ -369,6 +376,8 @@ export type CampaignDayLaunchReviewViewModel = {
     closeoutHref: string;
     todaysMissionHref: string;
     commandCenterHref: string;
+    exceptionsHref: string;
+    incidentsHref: string;
     reportHref: string;
     todayHref: string;
     previousHref: string | null;

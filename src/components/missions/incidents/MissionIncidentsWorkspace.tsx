@@ -123,6 +123,9 @@ export function MissionIncidentsWorkspace({ initial }: Props) {
           <Link href={`/system/briefing/${dateKey}/incidents`}>
             Day Incidents
           </Link>
+          <Link href={`/system/briefing/${dateKey}/exceptions`}>
+            Exception Digest
+          </Link>
           <Link href={`/system/briefing/${dateKey}/launch`}>Launch</Link>
         </nav>
       </header>

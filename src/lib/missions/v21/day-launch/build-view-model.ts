@@ -39,6 +39,9 @@ import type {
   LaunchMissionCard,
 } from "@/lib/missions/v21/day-launch/types";
 import { buildLogisticsLaunchBlockers } from "@/lib/missions/v21/logistics-pack/launch-integration";
+import { buildExceptionDigestLaunchBlockers } from "@/lib/missions/v21/exception-digest/launch-integration";
+import type { DigestIncidentEntry } from "@/lib/missions/v21/exception-digest/types";
+import { buildLaunchExceptionDigestPanel } from "@/lib/missions/v21/exception-digest/closeout-integration";
 import type { MissionLogisticsPackPersisted } from "@/lib/missions/v21/logistics-pack/types";
 import { selectTodaysMission } from "@/lib/missions/v21/select-todays-mission";
 import { primaryActionForPhase } from "@/lib/missions/v21/mission-home-view-model";
@@ -111,6 +114,7 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
   priorCloseoutDateKey: string;
   launchReview: CampaignDayLaunchReviewPersisted | null;
   logisticsPacksByMissionId?: Map<string, MissionLogisticsPackPersisted>;
+  exceptionDigestEntries?: DigestIncidentEntry[];
   config?: CampaignDayLaunchConfig;
 }): CampaignDayLaunchReviewViewModel {
   const config = input.config ?? DEFAULT_DAY_LAUNCH_CONFIG;
@@ -191,6 +195,15 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
     acknowledgements: launch.acknowledgements,
     campaignDateKey: dateKey,
   });
+  const digestEntries = input.exceptionDigestEntries ?? [];
+  const digestBlockers = buildExceptionDigestLaunchBlockers({
+    entries: digestEntries,
+    acknowledgements: launch.acknowledgements,
+  });
+  const exceptionDigestPanel = buildLaunchExceptionDigestPanel({
+    campaignDateKey: dateKey,
+    entries: digestEntries,
+  });
   const provisionalBlockers = [
     ...buildLaunchBlockers({
       dayMissions,
@@ -207,6 +220,7 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
       acknowledgements: launch.acknowledgements,
     }),
     ...logisticsBlockers,
+    ...digestBlockers,
   ];
   const derivedReadiness = deriveLaunchReadiness({
     dayMissionCount: dayMissions.length,
@@ -662,6 +676,13 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
               : "Not applicable",
     },
     blockingConditions: blockingConditions.slice(0, limits.blockers),
+    exceptionDigest: {
+      href: exceptionDigestPanel.href,
+      qualifiedCount: exceptionDigestPanel.qualifiedCount,
+      overnightCount: exceptionDigestPanel.overnightCount,
+      carryForwardCount: exceptionDigestPanel.carryForwardCount,
+      highCriticalCount: exceptionDigestPanel.highCriticalCount,
+    },
     acceptedRisks,
     acknowledgements: launch.acknowledgements
       .slice(0, limits.acknowledgements)
@@ -681,6 +702,8 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
       closeoutHref: `/system/briefing/${input.priorCloseoutDateKey}/closeout`,
       todaysMissionHref: "/",
       commandCenterHref: "/system/missions/command-center",
+      exceptionsHref: `/system/briefing/${dateKey}/exceptions`,
+      incidentsHref: `/system/briefing/${dateKey}/incidents`,
       reportHref: `/system/briefing/${dateKey}/launch/report`,
       todayHref: "/system/briefing/launch",
       previousHref: `/system/briefing/${prev}/launch`,

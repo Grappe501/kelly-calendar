@@ -143,7 +143,11 @@ Concise **Incidents** / **Day Incidents** links added to: Execute, Mission detai
 
 ## Recommended Deliverable 15
 
-**Campaign Day Exception Rollup / After-Action Exception Digest** — consolidate overnight open incidents (high/critical, carry-forward required, unlinked follow-up) into Closeout summary and next-day Morning Launch Review without becoming a ticketing system. Read-only rollup + explicit leadership acknowledgement; no auto-assignment or SLA engine.
+**DONE — Campaign Day Exception Digest.** See `KCCC_V2_1_CAMPAIGN_DAY_EXCEPTION_DIGEST_DELIVERABLE_15.md`. Day Incident Board and Closeout/Launch now link to `/system/briefing/[date]/exceptions`.
+
+## Recommended Deliverable 16
+
+**Mobilize Integration Foundation** — see `KCCC_V2_1_PROVIDER_INTEGRATION_MOBILIZE_ARCHITECTURE.md`.
 
 ## Rollback
 

@@ -54,6 +54,9 @@ export function CampaignDayCloseout({ model }: Props) {
           <Link href={`/system/briefing/${model.campaignDate}/incidents`}>
             Day Incidents
           </Link>
+          <Link href={`/system/briefing/${model.campaignDate}/exceptions`}>
+            Exception Digest
+          </Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>
           <Link href={model.navigation.calendarHref}>Calendar</Link>
           <Link href={model.navigation.reportHref}>Report</Link>
@@ -357,6 +360,18 @@ export function CampaignDayCloseout({ model }: Props) {
             href={`/system/briefing/${addOne(model.campaignDate)}/incidents`}
           >
             Tomorrow Day Incidents
+          </Link>
+          <Link
+            className="button secondary"
+            href={`/system/briefing/${model.campaignDate}/exceptions`}
+          >
+            Today Exception Digest
+          </Link>
+          <Link
+            className="button secondary"
+            href={`/system/briefing/${addOne(model.campaignDate)}/exceptions`}
+          >
+            Tomorrow Exception Digest
           </Link>
           <Link
             className="button secondary"

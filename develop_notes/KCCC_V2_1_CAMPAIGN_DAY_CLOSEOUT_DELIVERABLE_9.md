@@ -43,6 +43,10 @@ Signoff means the day was responsibly reviewed — not that underlying work is c
 npm run missions:v21:day-closeout:validate
 ```
 
+## Exception Digest (Deliverable 15)
+
+Closeout navigates to `/system/briefing/[date]/exceptions`. Completing Closeout does **not** complete Exception Digest review, and digest review does **not** complete Closeout or auto-carry/resolve incidents.
+
 ## Recommended Deliverable 10
 
 Superseded by Deliverable 10 (Morning Launch Review). See `KCCC_V2_1_MORNING_LAUNCH_REVIEW_DELIVERABLE_10.md`.

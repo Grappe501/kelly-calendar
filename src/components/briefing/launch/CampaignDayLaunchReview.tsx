@@ -46,6 +46,7 @@ export function CampaignDayLaunchReview({ model }: Props) {
           <Link href={`/system/briefing/${model.campaignDate}/incidents`}>
             Day Incidents
           </Link>
+          <Link href={model.navigation.exceptionsHref}>Exception Digest</Link>
           <Link href={model.navigation.reportHref}>Report</Link>
         </nav>
       </header>
@@ -68,6 +69,10 @@ export function CampaignDayLaunchReview({ model }: Props) {
           <li>{model.summary.overnightChangeCount} overnight changes</li>
           <li>{model.summary.urgentCarryForwardCount} urgent carry-forward</li>
           <li>{model.summary.blockingConditionCount} blockers</li>
+          <li>
+            Exception digest qualified: {model.exceptionDigest.qualifiedCount}{" "}
+            (high/critical {model.exceptionDigest.highCriticalCount})
+          </li>
           <li>{model.summary.dueBeforeLaunchCount} due before launch</li>
           <li>{model.summary.unacknowledgedCount} unacknowledged</li>
         </ul>
@@ -96,6 +101,26 @@ export function CampaignDayLaunchReview({ model }: Props) {
           </ul>
         </section>
       ) : null}
+
+      <section className="panel briefing-section" aria-labelledby="launch-digest-h">
+        <h2 id="launch-digest-h">Overnight exception digest</h2>
+        <p>
+          Qualified overnight / carry-forward incidents from the prior campaign
+          day: {model.exceptionDigest.qualifiedCount} (overnight{" "}
+          {model.exceptionDigest.overnightCount}, carry-forward{" "}
+          {model.exceptionDigest.carryForwardCount}).
+        </p>
+        <p>
+          <Link href={model.exceptionDigest.href}>Open Exception Digest</Link>
+          {" · "}
+          <Link href={model.navigation.incidentsHref}>Day Incidents</Link>
+        </p>
+        <p className="muted">
+          Completing Morning Review or launching the day does not complete
+          Exception Digest review or resolve incidents. ACKNOWLEDGED does not
+          clear blockers.
+        </p>
+      </section>
 
       {model.departureReview ? (
         <section className="panel briefing-section" aria-labelledby="launch-dep-h">

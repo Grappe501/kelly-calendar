@@ -207,6 +207,46 @@ export async function findIncidentsByCampaignDateKey(campaignDateKey: string) {
   return rows.map(mapIncident);
 }
 
+/**
+ * Digest load: selected-day incidents plus earlier-day active / carry-forward /
+ * follow-up-gap incidents. Never fabricates rows.
+ */
+export async function findIncidentsForExceptionDigest(
+  campaignDateKey: string,
+): Promise<MissionIncidentPersisted[]> {
+  const dayRows = await prisma.missionIncident.findMany({
+    where: { campaignDateKey },
+    include,
+  });
+  const earlierRows = await prisma.missionIncident.findMany({
+    where: {
+      campaignDateKey: { lt: campaignDateKey },
+      isArchived: false,
+      OR: [
+        { status: { in: ["OPEN", "MONITORING", "STABILIZED"] } },
+        { carryForwardRequired: true },
+        { carriedForwardAt: { not: null } },
+        {
+          AND: [
+            { followUpRequired: true },
+            { linkedFollowUpActionId: null },
+          ],
+        },
+      ],
+    },
+    include,
+  });
+  const byId = new Map<string, MissionIncidentPersisted>();
+  for (const row of [...dayRows, ...earlierRows]) {
+    byId.set(row.id, mapIncident(row));
+  }
+  return [...byId.values()].sort(
+    (a, b) =>
+      b.observedAt.localeCompare(a.observedAt) ||
+      a.incidentRef.localeCompare(b.incidentRef),
+  );
+}
+
 export async function createIncident(input: {
   missionId: string;
   campaignDateKey: string;

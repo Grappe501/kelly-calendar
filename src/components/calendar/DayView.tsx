@@ -75,6 +75,10 @@ export function DayView({ data, focusEventId = null }: Props) {
           Day Incidents
         </Link>
         {" · "}
+        <Link href={`/system/briefing/${data.dateKey}/exceptions`}>
+          Exception Digest
+        </Link>
+        {" · "}
         <Link href="/system/missions/command-center">Mission Command Center</Link>
       </p>
 

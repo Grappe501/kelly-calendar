@@ -220,6 +220,9 @@ export function MissionIncidentDetail({ initial }: Props) {
           <Link href={`/system/briefing/${dateKey}/incidents`}>
             Day Incidents
           </Link>
+          <Link href={`/system/briefing/${dateKey}/exceptions`}>
+            Exception Digest
+          </Link>
         </nav>
       </header>
 

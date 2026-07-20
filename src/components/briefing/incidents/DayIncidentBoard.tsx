@@ -36,6 +36,9 @@ export function DayIncidentBoard({ model }: Props) {
             Day Logistics
           </Link>
           <Link href={model.navigation.fieldOpsHref}>Day Field Ops</Link>
+          <Link href={`/system/briefing/${model.campaignDate}/exceptions`}>
+            Exception Digest
+          </Link>
           <Link href={model.navigation.launchHref}>Launch Review</Link>
           <Link href={model.navigation.closeoutHref}>Closeout</Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>

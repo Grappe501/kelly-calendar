@@ -119,6 +119,7 @@
     "missions:v21:logistics-pack:validate": "node scripts/campaign-logistics-pack-validate-v21.mjs",
     "missions:v21:field-ops:validate": "node scripts/campaign-field-ops-validate-v21.mjs",
     "missions:v21:incidents:validate": "node scripts/campaign-incident-log-validate-v21.mjs",
+    "missions:v21:exception-digest:validate": "node scripts/campaign-exception-digest-validate-v21.mjs",
     "missions:v21:backfill": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs",
     "missions:v21:backfill:apply": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs --apply",
     "campaign:routes:doctor": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-doctor.mjs",

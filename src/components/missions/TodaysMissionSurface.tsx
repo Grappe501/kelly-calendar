@@ -104,6 +104,12 @@ export function TodaysMissionSurface({ result }: Props) {
           >
             Day Incidents
           </Link>
+          <Link
+            className="button secondary"
+            href="/system/briefing/exceptions"
+          >
+            Exception Digest
+          </Link>
           <span aria-hidden="true"> · </span>
           <Link
             className="todays-mission-calendar-link"
