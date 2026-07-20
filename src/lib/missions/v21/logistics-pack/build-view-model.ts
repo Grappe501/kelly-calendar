@@ -15,8 +15,44 @@ export function buildDayLogisticsBoardView(input: { campaignDate: string; now: D
   const config = input.config ?? DEFAULT_LOGISTICS_PACK_CONFIG; const { campaignDate: dateKey, campaignTimezone: tz } = input; const day = classifyLogisticsDay(dateKey, input.now, tz);
   const sorted = [...input.missions].sort((a, b) => a.startsAt.localeCompare(b.startsAt) || a.missionId.localeCompare(b.missionId)); const firstId = sorted[0]?.missionId ?? null;
   const primaryId = selectTodaysMission(sorted.map((m) => ({ id: m.missionId, startsAt: m.startsAt, endsAt: m.endsAt, lifecyclePhase: m.lifecyclePhase as never })), { now: input.now, timezone: tz }).primaryId;
-  const missions = sorted.map((m) => { const pack = input.packsByMissionId.get(m.missionId) ?? null; const findings = evaluateLogisticsFindings({ context: m, pack, config }); const readiness = deriveLogisticsReadiness({ context: m, pack, findings }); return { missionId: m.missionId, title: m.title, whenLabel: formatCampaignTime(m.startsAt, tz, { includeDate: false }), locationLabel: m.locationLabel, isFirst: m.missionId === firstId, isPrimary: m.missionId === primaryId, isCancelled: m.isCancelled, packExists: Boolean(pack && !["INACTIVE", "CANCELLED"].includes(pack.status)), packStatus: pack?.status ?? null, readiness, readinessLabel: labelLogisticsReadiness(readiness), itemCount: pack?.items.filter((item) => !["CANCELLED", "NOT_APPLICABLE"].includes(item.status)).length ?? 0, blockerCount: findings.filter((f) => f.severity === "BLOCKER" && !f.clearsForReadiness).length, warningCount: findings.filter((f) => f.severity === "WARNING" && !f.clearsForReadiness).length, findings: findings.slice(0, config.sectionLimits.findings), href: `/system/missions/${m.missionId}/logistics` }; });
+  const missions = sorted.map((m) => {
+    const pack = input.packsByMissionId.get(m.missionId) ?? null;
+    const findings = evaluateLogisticsFindings({ context: m, pack, config });
+    const readiness = deriveLogisticsReadiness({ context: m, pack, findings });
+    const activeItems = pack?.items.filter((item) => !["CANCELLED", "NOT_APPLICABLE"].includes(item.status)) ?? [];
+    return {
+      missionId: m.missionId,
+      title: m.title,
+      whenLabel: formatCampaignTime(m.startsAt, tz, { includeDate: false }),
+      locationLabel: m.locationLabel,
+      isFirst: m.missionId === firstId,
+      isPrimary: m.missionId === primaryId,
+      isCancelled: m.isCancelled,
+      packExists: Boolean(pack && !["INACTIVE", "CANCELLED"].includes(pack.status)),
+      packStatus: pack?.status ?? null,
+      readiness,
+      readinessLabel: labelLogisticsReadiness(readiness),
+      itemCount: activeItems.length,
+      packOwnerName: pack?.packOwnerName ?? null,
+      travelDepartureLabel: m.travelPlannedDepartureAt
+        ? formatCampaignTime(m.travelPlannedDepartureAt, tz)
+        : null,
+      logisticsRequiredExplicit: pack?.logisticsRequired ?? null,
+      travelHref: `/system/missions/${m.missionId}/travel`,
+      openHandoffCount:
+        pack?.handoffs.filter((h) => !["COMPLETED", "CANCELLED"].includes(h.status)).length ?? 0,
+      outstandingReturnCount: activeItems.filter(
+        (item) =>
+          item.returnRequired &&
+          !["RETURNED", "CANCELLED", "NOT_APPLICABLE"].includes(item.status),
+      ).length,
+      blockerCount: findings.filter((f) => f.severity === "BLOCKER" && !f.clearsForReadiness).length,
+      warningCount: findings.filter((f) => f.severity === "WARNING" && !f.clearsForReadiness).length,
+      findings: findings.slice(0, config.sectionLimits.findings),
+      href: `/system/missions/${m.missionId}/logistics`,
+    };
+  });
   const withPackCount = missions.filter((m) => m.packExists).length; const prev = addDaysToDateKey(dateKey, -1); const next = addDaysToDateKey(dateKey, 1);
-  return { campaignDate: dateKey, dateLabel: formatFullCampaignDate(dateKey, tz), timezone: tz, generatedAt: input.now.toISOString(), ...day, summary: { missionCount: missions.length, withPackCount, withoutPackCount: missions.length - withPackCount, blockerCount: missions.reduce((n, m) => n + m.blockerCount, 0), warningCount: missions.reduce((n, m) => n + m.warningCount, 0), firstMissionTitle: missions.find((m) => m.isFirst)?.title ?? null, primaryMissionTitle: missions.find((m) => m.isPrimary)?.title ?? null }, missions: missions.slice(0, config.sectionLimits.dayMissions), navigation: { todayHref: "/system/briefing/logistics", briefingHref: `/system/briefing/${dateKey}`, launchHref: `/system/briefing/${dateKey}/launch`, closeoutHref: `/system/briefing/${dateKey}/closeout`, commandCenterHref: "/system/missions/command-center", todaysMissionHref: "/", reportHref: `/system/briefing/${dateKey}/logistics/report`, previousHref: `/system/briefing/${prev}/logistics`, nextHref: `/system/briefing/${next}/logistics` }, isolation: { mutatesMissionLifecycle: false, startsExecution: false, launchesCampaignDay: false } };
+  return { campaignDate: dateKey, dateLabel: formatFullCampaignDate(dateKey, tz), timezone: tz, generatedAt: input.now.toISOString(), ...day, summary: { missionCount: missions.length, withPackCount, withoutPackCount: missions.length - withPackCount, blockerCount: missions.reduce((n, m) => n + m.blockerCount, 0), warningCount: missions.reduce((n, m) => n + m.warningCount, 0), firstMissionTitle: missions.find((m) => m.isFirst)?.title ?? null, primaryMissionTitle: missions.find((m) => m.isPrimary)?.title ?? null }, missions: missions.slice(0, config.sectionLimits.dayMissions), navigation: { todayHref: "/system/briefing/logistics", briefingHref: `/system/briefing/${dateKey}`, launchHref: `/system/briefing/${dateKey}/launch`, closeoutHref: `/system/briefing/${dateKey}/closeout`, commandCenterHref: "/system/missions/command-center", todaysMissionHref: "/", movementHref: `/system/briefing/${dateKey}/movement`, reportHref: `/system/briefing/${dateKey}/logistics/report`, previousHref: `/system/briefing/${prev}/logistics`, nextHref: `/system/briefing/${next}/logistics` }, isolation: { mutatesMissionLifecycle: false, startsExecution: false, launchesCampaignDay: false } };
 }
 export { scheduleFingerprint, travelFingerprint };

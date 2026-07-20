@@ -44,6 +44,10 @@ export function MissionDetailView({ mission, mode }: Props) {
           <Link href={`/system/missions/${mission.missionId}/travel`}>
             Travel
           </Link>
+          <span aria-hidden="true"> · </span>
+          <Link href={`/system/missions/${mission.missionId}/logistics`}>
+            Logistics
+          </Link>
         </p>
       </header>
 

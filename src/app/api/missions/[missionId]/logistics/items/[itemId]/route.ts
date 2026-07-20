@@ -1,0 +1,59 @@
+import { roleHasFullCalendarAccess } from "@/lib/auth/system-roles";
+import { PermissionDeniedError, NotFoundError } from "@/lib/security/safe-error";
+import { withAuthenticatedMutation } from "@/server/auth/api-mutation";
+import { requireAuthorized } from "@/server/auth/authorization";
+import { getCampaignMissionById } from "@/server/repositories/mission-repository";
+import {
+  removeItem,
+  upsertItem,
+} from "@/server/services/mission-logistics-service";
+
+export const dynamic = "force-dynamic";
+type Ctx = { params: Promise<{ missionId: string; itemId: string }> };
+
+async function authorize(
+  actor: Parameters<typeof requireAuthorized>[0],
+  missionId: string,
+) {
+  if (!roleHasFullCalendarAccess(actor.primarySystemRole)) {
+    throw new PermissionDeniedError(
+      "Logistics Pack Operations requires campaign leadership access.",
+    );
+  }
+  const mission = await getCampaignMissionById(missionId);
+  if (!mission) throw new NotFoundError("Mission not found.");
+  await requireAuthorized(actor, {
+    action: "EVENT_EDIT",
+    resource: { type: "event", id: mission.sourceEventId },
+  });
+}
+
+export async function PATCH(request: Request, context: Ctx) {
+  const { missionId, itemId } = await context.params;
+  return withAuthenticatedMutation(
+    request,
+    "/api/missions/[missionId]/logistics/items/[itemId]",
+    async ({ actor }) => {
+      await authorize(actor, missionId);
+      const body = await request.json().catch(() => null);
+      return {
+        model: await upsertItem({ missionId, actor, itemId, body }),
+      };
+    },
+  );
+}
+
+export async function DELETE(request: Request, context: Ctx) {
+  const { missionId, itemId } = await context.params;
+  return withAuthenticatedMutation(
+    request,
+    "/api/missions/[missionId]/logistics/items/[itemId]",
+    async ({ actor }) => {
+      await authorize(actor, missionId);
+      const body = await request.json().catch(() => ({}));
+      return {
+        model: await removeItem({ missionId, actor, itemId, body }),
+      };
+    },
+  );
+}

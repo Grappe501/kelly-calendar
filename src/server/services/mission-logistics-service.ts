@@ -23,4 +23,46 @@ export async function reorderItems(options: { missionId: string; actor: Authenti
 export async function removeItem(options: { missionId: string; actor: AuthenticatedActor; itemId: string; body: unknown }): Promise<MissionLogisticsWorkspaceView> { assertLeadership(options.actor); const pack = await findLogisticsPackByMissionId(options.missionId); if (!pack) throw new NotFoundError("Logistics pack not found."); const body = options.body && typeof options.body === "object" ? options.body as { expectedUpdatedAt?: string } : {}; await deleteLogisticsItem({ logisticsPackId: pack.id, itemId: options.itemId, expectedUpdatedAt: body.expectedUpdatedAt, actorUserId: options.actor.userId }); return getMissionLogisticsWorkspace(options.missionId, options.actor); }
 export async function upsertHandoff(options: { missionId: string; actor: AuthenticatedActor; handoffId?: string | null; body: unknown }): Promise<MissionLogisticsWorkspaceView> { assertLeadership(options.actor); const validated = validateLogisticsHandoffUpsert(options.body, DEFAULT_LOGISTICS_PACK_CONFIG); if (!validated.ok) throw new ValidationError(validated.error); const pack = await requirePack(options.missionId, options.actor); if (options.handoffId && !pack.handoffs.some((handoff) => handoff.id === options.handoffId)) throw new NotFoundError("Logistics handoff not found on this pack."); const { expectedUpdatedAt, ...data } = validated.patch; if (typeof data.logisticsItemId === "string" && !pack.items.some((item) => item.id === data.logisticsItemId)) throw new NotFoundError("Logistics handoff item not found on this pack."); await upsertLogisticsHandoff({ logisticsPackId: pack.id, handoffId: options.handoffId, data, expectedUpdatedAt: expectedUpdatedAt as string | null | undefined, actorUserId: options.actor.userId }); return getMissionLogisticsWorkspace(options.missionId, options.actor); }
 export async function acknowledgeIssue(options: { missionId: string; actor: AuthenticatedActor; body: unknown; now?: Date }): Promise<MissionLogisticsWorkspaceView & { ackCreated: boolean }> { assertLeadership(options.actor); const validated = validateLogisticsAcknowledgement(options.body); if (!validated.ok) throw new ValidationError(validated.error); const pack = await requirePack(options.missionId, options.actor, options.now); const acknowledgement = validated.patch as { issueKey: string; issueType: Parameters<typeof upsertLogisticsAcknowledgement>[0]["issueType"]; title: string; disposition: Parameters<typeof upsertLogisticsAcknowledgement>[0]["disposition"]; note: string | null; acceptedRiskReason: string | null }; const result = await upsertLogisticsAcknowledgement({ logisticsPackId: pack.id, ...acknowledgement, actorUserId: options.actor.userId, now: options.now ?? new Date() }); return { ...(await getMissionLogisticsWorkspace(options.missionId, options.actor)), ackCreated: result.created }; }
-export async function getDayLogisticsBoard(options: { dateKey?: string; actor: AuthenticatedActor; now?: Date }): Promise<DayLogisticsBoardView> { assertLeadership(options.actor); const now = options.now ?? new Date(); const timezone = getPublicAppConfig().campaignTimezone; const dateKey = options.dateKey ?? campaignDateKey(now, timezone); const ranged = assertLogisticsDateInRange(dateKey, now, timezone); if (!ranged.ok) throw new ValidationError(ranged.error); const { start, end } = campaignDayBounds(dateKey, timezone); const day = (await loadMissionsForDayBriefing({ rangeStart: start, rangeEnd: end, operationalLookbackStart: start, now })).filter((m) => missionIntersectsCampaignDay(m.startsAt, m.endsAt, dateKey, timezone)); const contexts: LogisticsMissionContext[] = day.map((m) => ({ missionId: m.missionId, title: m.title, startsAt: m.startsAt, endsAt: m.endsAt, timezone: m.timezone, locationLabel: m.locationLabel, campaignDateKey: dateKey, lifecyclePhase: m.lifecyclePhase, operationalStatus: m.operationalStatus, isCancelled: m.operationalStatus === "CANCELLED", materialsIndicated: m.preparation.materialsNeeded.length > 0 || false, travelPlannedDepartureAt: null })); return buildDayLogisticsBoardView({ campaignDate: dateKey, now, campaignTimezone: timezone, missions: contexts, packsByMissionId: await findLogisticsPacksByMissionIds(contexts.map((context) => context.missionId)) }); }
+export async function getDayLogisticsBoard(options: { dateKey?: string; actor: AuthenticatedActor; now?: Date }): Promise<DayLogisticsBoardView> {
+  assertLeadership(options.actor);
+  const now = options.now ?? new Date();
+  const timezone = getPublicAppConfig().campaignTimezone;
+  const dateKey = options.dateKey ?? campaignDateKey(now, timezone);
+  const ranged = assertLogisticsDateInRange(dateKey, now, timezone);
+  if (!ranged.ok) throw new ValidationError(ranged.error);
+  const { start, end } = campaignDayBounds(dateKey, timezone);
+  const day = (
+    await loadMissionsForDayBriefing({
+      rangeStart: start,
+      rangeEnd: end,
+      operationalLookbackStart: start,
+      now,
+    })
+  ).filter((m) =>
+    missionIntersectsCampaignDay(m.startsAt, m.endsAt, dateKey, timezone),
+  );
+  const contexts: LogisticsMissionContext[] = day.map((m) => ({
+    missionId: m.missionId,
+    title: m.title,
+    startsAt: m.startsAt,
+    endsAt: m.endsAt,
+    timezone: m.timezone,
+    locationLabel: m.locationLabel,
+    campaignDateKey: dateKey,
+    lifecyclePhase: m.lifecyclePhase,
+    operationalStatus: m.operationalStatus,
+    isCancelled: m.operationalStatus === "CANCELLED",
+    materialsIndicated: m.preparation.materialsNeeded.length > 0,
+    travelPlannedDepartureAt:
+      m.missionTravelPlan?.plannedDepartureAt ?? null,
+  }));
+  return buildDayLogisticsBoardView({
+    campaignDate: dateKey,
+    now,
+    campaignTimezone: timezone,
+    missions: contexts,
+    packsByMissionId: await findLogisticsPacksByMissionIds(
+      contexts.map((context) => context.missionId),
+    ),
+  });
+}

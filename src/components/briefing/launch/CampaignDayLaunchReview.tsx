@@ -37,6 +37,9 @@ export function CampaignDayLaunchReview({ model }: Props) {
           <Link href={`/system/briefing/${model.campaignDate}/movement`}>
             Day Movement
           </Link>
+          <Link href={`/system/briefing/${model.campaignDate}/logistics`}>
+            Day Logistics
+          </Link>
           <Link href={model.navigation.reportHref}>Report</Link>
         </nav>
       </header>

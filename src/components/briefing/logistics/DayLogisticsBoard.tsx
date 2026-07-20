@@ -1,15 +1,16 @@
 import Link from "next/link";
-import type { DayMovementBoardView } from "@/lib/missions/v21/travel-movement";
+import type { DayLogisticsBoardView } from "@/lib/missions/v21/logistics-pack";
 
-type Props = { model: DayMovementBoardView };
+type Props = { model: DayLogisticsBoardView };
 
-export function DayMovementBoard({ model }: Props) {
+export function DayLogisticsBoard({ model }: Props) {
   return (
-    <article className="page-stack day-movement-board">
+    <article className="page-stack day-logistics-board">
       <header className="briefing-header">
-        <h1>Day Movement Board</h1>
+        <h1>Day Logistics Board</h1>
         <p className="executive-question">
-          Review departures, legs, and movement readiness for the campaign day.
+          Review field kits, pack owners, handoffs, and logistics readiness for
+          the campaign day.
         </p>
         <p className="briefing-date-line">{model.dateLabel}</p>
         <p className="muted">
@@ -17,30 +18,28 @@ export function DayMovementBoard({ model }: Props) {
           {model.isToday ? " · Today" : model.isPast ? " · Past day" : " · Future day"}
         </p>
         <p role="note">
-          Movement planning does not start Mission execution or launch the campaign
-          day.
+          Logistics planning does not start Mission execution or launch the
+          campaign day.
         </p>
-        <nav className="briefing-nav" aria-label="Movement navigation">
+        <nav className="briefing-nav" aria-label="Logistics navigation">
           <Link href={model.navigation.previousHref ?? "#"}>Previous</Link>
           <Link href={model.navigation.todayHref}>Today</Link>
           <Link href={model.navigation.nextHref ?? "#"}>Next</Link>
           <Link href={model.navigation.briefingHref}>Briefing</Link>
+          <Link href={model.navigation.movementHref}>Day Movement</Link>
           <Link href={model.navigation.launchHref}>Launch Review</Link>
-          <Link href={`/system/briefing/${model.campaignDate}/logistics`}>
-            Day Logistics
-          </Link>
           <Link href={model.navigation.closeoutHref}>Closeout</Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>
           <Link href={model.navigation.reportHref}>Report</Link>
         </nav>
       </header>
 
-      <section className="panel" aria-labelledby="movement-sum-h">
-        <h2 id="movement-sum-h">Summary</h2>
+      <section className="panel" aria-labelledby="logistics-sum-h">
+        <h2 id="logistics-sum-h">Summary</h2>
         <ul className="briefing-fact-list">
           <li>{model.summary.missionCount} Missions</li>
-          <li>{model.summary.withPlanCount} with travel plans</li>
-          <li>{model.summary.withoutPlanCount} without plans</li>
+          <li>{model.summary.withPackCount} with logistics packs</li>
+          <li>{model.summary.withoutPackCount} without packs</li>
           <li>{model.summary.blockerCount} blockers</li>
           <li>{model.summary.warningCount} warnings</li>
           <li>
@@ -56,12 +55,12 @@ export function DayMovementBoard({ model }: Props) {
         <section className="panel empty-state">
           <h2>No Missions scheduled</h2>
           <p className="muted">
-            There is no Mission movement to review for this campaign day.
+            There is no Mission logistics to review for this campaign day.
           </p>
         </section>
       ) : (
-        <section className="panel" aria-labelledby="movement-list-h">
-          <h2 id="movement-list-h">Chronological movement</h2>
+        <section className="panel" aria-labelledby="logistics-list-h">
+          <h2 id="logistics-list-h">Chronological logistics</h2>
           <ul className="briefing-list">
             {model.missions.map((m) => (
               <li key={m.missionId}>
@@ -77,34 +76,28 @@ export function DayMovementBoard({ model }: Props) {
                 </p>
                 <p>
                   Readiness: <strong>{m.readinessLabel}</strong>
-                  {m.planExists ? "" : " · No plan"}
+                  {m.packExists ? "" : " · No pack"}
                 </p>
                 <dl className="briefing-dl">
-                  <dt>Departure</dt>
-                  <dd>{m.departureLabel ?? "Not set"}</dd>
-                  <dt>Arrival</dt>
-                  <dd>{m.arrivalLabel ?? "Not set"}</dd>
-                  <dt>Buffer</dt>
+                  <dt>Pack owner</dt>
+                  <dd>{m.packOwnerName ?? "Not set"}</dd>
+                  <dt>Items</dt>
+                  <dd>{m.itemCount}</dd>
+                  <dt>Open handoffs</dt>
+                  <dd>{m.openHandoffCount}</dd>
+                  <dt>Outstanding returns</dt>
+                  <dd>{m.outstandingReturnCount}</dd>
+                  <dt>Travel departure</dt>
+                  <dd>{m.travelDepartureLabel ?? "Not set"}</dd>
+                  <dt>Logistics required</dt>
                   <dd>
-                    {m.bufferMinutes != null
-                      ? `${m.bufferMinutes} minutes`
-                      : "Not set"}
+                    {m.logisticsRequiredExplicit === true
+                      ? "Yes (explicit)"
+                      : m.logisticsRequiredExplicit === false
+                        ? "No (explicit)"
+                        : "From materials signal"}
                   </dd>
-                  <dt>Driver</dt>
-                  <dd>{m.driverLabel ?? "Not set"}</dd>
-                  <dt>Vehicle</dt>
-                  <dd>{m.vehicleLabel ?? "Not set"}</dd>
                 </dl>
-                {m.legs.length > 0 ? (
-                  <ol>
-                    {m.legs.map((l) => (
-                      <li key={`${m.missionId}-${l.sequence}`}>
-                        {l.originLabel ?? "—"} → {l.destinationLabel ?? "—"}
-                        {l.departureLabel ? ` · leave ${l.departureLabel}` : ""}
-                      </li>
-                    ))}
-                  </ol>
-                ) : null}
                 {m.findings.length > 0 ? (
                   <ul>
                     {m.findings.slice(0, 4).map((f) => (
@@ -114,11 +107,11 @@ export function DayMovementBoard({ model }: Props) {
                     ))}
                   </ul>
                 ) : null}
-                <Link href={m.href}>Open Mission travel</Link>
-                {" · "}
-                <Link href={`/system/missions/${m.missionId}/logistics`}>
-                  Open Mission logistics
-                </Link>
+                <p>
+                  <Link href={m.href}>Open Mission logistics</Link>
+                  {" · "}
+                  <Link href={m.travelHref}>Open Mission travel</Link>
+                </p>
               </li>
             ))}
           </ul>
@@ -126,7 +119,10 @@ export function DayMovementBoard({ model }: Props) {
       )}
 
       <footer className="briefing-footer muted">
-        <p>Generated {model.generatedAt} · Manual travel data only · No routing</p>
+        <p>
+          Generated {model.generatedAt} · Manual logistics data only · No
+          inventory system
+        </p>
       </footer>
     </article>
   );

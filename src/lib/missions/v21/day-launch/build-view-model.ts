@@ -38,6 +38,8 @@ import type {
   LaunchCarryForwardItem,
   LaunchMissionCard,
 } from "@/lib/missions/v21/day-launch/types";
+import { buildLogisticsLaunchBlockers } from "@/lib/missions/v21/logistics-pack/launch-integration";
+import type { MissionLogisticsPackPersisted } from "@/lib/missions/v21/logistics-pack/types";
 import { selectTodaysMission } from "@/lib/missions/v21/select-todays-mission";
 import { primaryActionForPhase } from "@/lib/missions/v21/mission-home-view-model";
 import { labelFollowUpActionStatus } from "@/lib/missions/v21/follow-up/labels";
@@ -108,6 +110,7 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
   priorCloseout: CampaignDayCloseoutPersisted | null;
   priorCloseoutDateKey: string;
   launchReview: CampaignDayLaunchReviewPersisted | null;
+  logisticsPacksByMissionId?: Map<string, MissionLogisticsPackPersisted>;
   config?: CampaignDayLaunchConfig;
 }): CampaignDayLaunchReviewViewModel {
   const config = input.config ?? DEFAULT_DAY_LAUNCH_CONFIG;
@@ -120,6 +123,9 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
       a.startsAt.localeCompare(b.startsAt) ||
       a.missionId.localeCompare(b.missionId),
   );
+  const logisticsPacks =
+    input.logisticsPacksByMissionId ??
+    new Map<string, MissionLogisticsPackPersisted>();
 
   const first = selectFirstMission(dayMissions);
   const selection = selectTodaysMission(
@@ -179,20 +185,29 @@ export function buildCampaignDayLaunchReviewViewModel(input: {
     .length;
 
   // Provisional readiness for overnight comparison (without ack-cleared blockers yet)
-  const provisionalBlockers = buildLaunchBlockers({
+  const logisticsBlockers = buildLogisticsLaunchBlockers({
     dayMissions,
-    firstMission: first,
-    departureState,
-    prepImpact,
-    overlaps,
-    urgentUnownedCarryForward: config.requireCriticalCarryForwardOwner
-      ? urgentUnowned
-      : 0,
-    unacknowledgedCritical: 0,
-    priorCloseoutMissing: !input.priorCloseout,
-    requirePriorCloseoutReview: config.requirePriorCloseoutReview,
+    packsByMissionId: logisticsPacks,
     acknowledgements: launch.acknowledgements,
+    campaignDateKey: dateKey,
   });
+  const provisionalBlockers = [
+    ...buildLaunchBlockers({
+      dayMissions,
+      firstMission: first,
+      departureState,
+      prepImpact,
+      overlaps,
+      urgentUnownedCarryForward: config.requireCriticalCarryForwardOwner
+        ? urgentUnowned
+        : 0,
+      unacknowledgedCritical: 0,
+      priorCloseoutMissing: !input.priorCloseout,
+      requirePriorCloseoutReview: config.requirePriorCloseoutReview,
+      acknowledgements: launch.acknowledgements,
+    }),
+    ...logisticsBlockers,
+  ];
   const derivedReadiness = deriveLaunchReadiness({
     dayMissionCount: dayMissions.length,
     blockers: provisionalBlockers,

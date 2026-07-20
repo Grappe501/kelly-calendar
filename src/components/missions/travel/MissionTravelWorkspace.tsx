@@ -80,8 +80,14 @@ export function MissionTravelWorkspace({ initial }: Props) {
           <Link href={model.mission.href}>Mission</Link>
           <Link href={model.mission.prepareHref}>Prepare</Link>
           <Link href={model.mission.executeHref}>Execute</Link>
+          <Link href={`/system/missions/${model.mission.missionId}/logistics`}>
+            Logistics Pack
+          </Link>
           <Link href={`/system/briefing/${model.mission.campaignDateKey}/movement`}>
             Day Movement
+          </Link>
+          <Link href={`/system/briefing/${model.mission.campaignDateKey}/logistics`}>
+            Day Logistics
           </Link>
           <Link href={`/system/briefing/${model.mission.campaignDateKey}/launch`}>
             Morning Launch

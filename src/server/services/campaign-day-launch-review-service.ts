@@ -89,6 +89,12 @@ export async function getCampaignDayLaunchReview(options: {
     findLaunchReviewByDateKey(dateKey),
     findCloseoutByDateKey(priorDateKey),
   ]);
+  const { findLogisticsPacksByMissionIds } = await import(
+    "@/server/repositories/mission-logistics-repository"
+  );
+  const logisticsPacksByMissionId = await findLogisticsPacksByMissionIds(
+    pools.dayMissions.map((m) => m.missionId),
+  );
 
   return buildCampaignDayLaunchReviewViewModel({
     campaignDate: dateKey,
@@ -99,6 +105,7 @@ export async function getCampaignDayLaunchReview(options: {
     priorCloseout,
     priorCloseoutDateKey: priorDateKey,
     launchReview,
+    logisticsPacksByMissionId,
   });
 }
 

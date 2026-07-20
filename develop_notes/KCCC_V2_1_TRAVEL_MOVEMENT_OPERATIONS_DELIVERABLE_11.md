@@ -81,4 +81,6 @@ KCCC_ALLOW_SCHEMA_MIGRATION=1 node scripts/apply-day-travel-migration.mjs
 
 ## Known limitations / recommended D12
 
-**Recommended Deliverable 12:** Mission Logistics Pack / Field Kit Layer — packing lists, materials handoff, charging/equipment check, and day-of kit confirmation tied to Mission travel without external inventory systems.
+**Deliverable 12 (landed):** Mission Logistics Pack / Field Kit — see `KCCC_V2_1_MISSION_LOGISTICS_PACK_DELIVERABLE_12.md`.
+
+**Recommended Deliverable 13:** Field Day Ops — live kit confirmation during Execute with evidence-based capture.

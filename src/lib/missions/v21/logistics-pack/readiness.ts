@@ -35,13 +35,41 @@ export function evaluateLogisticsFindings(input: { context: LogisticsMissionCont
   if (pack.scheduleFingerprint && pack.scheduleFingerprint !== scheduleFingerprint(ctx.startsAt, ctx.endsAt)) push({ issueKey: issueKey("STALE_AFTER_RESCHEDULE", pack.id), issueType: "STALE_AFTER_RESCHEDULE", title: "Pack not reconfirmed after Mission schedule change", explanation: "Mission start or end changed after the pack was last confirmed.", severity: "WARNING", missionId: ctx.missionId });
   if (pack.travelFingerprint !== null && pack.travelFingerprint !== travelFingerprint(ctx.travelPlannedDepartureAt)) push({ issueKey: issueKey("STALE_AFTER_TRAVEL_CHANGE", pack.id), issueType: "STALE_AFTER_TRAVEL_CHANGE", title: "Pack not reconfirmed after travel change", explanation: "The stored travel departure differs from the pack confirmation.", severity: "WARNING", missionId: ctx.missionId });
   if (pack.campaignDateKey !== ctx.campaignDateKey) push({ issueKey: issueKey("WRONG_CAMPAIGN_DAY", pack.id), issueType: "WRONG_CAMPAIGN_DAY", title: "Pack is associated with another campaign day", explanation: "The pack campaign date does not match the Mission campaign date.", severity: "WARNING", missionId: ctx.missionId });
+  if (
+    ctx.travelPlannedDepartureAt &&
+    items.some((item) => item.criticality === "CRITICAL" && !packed(item.status))
+  ) {
+    push({
+      issueKey: issueKey("DEPARTURE_NOT_READY", pack.id),
+      issueType: "DEPARTURE_NOT_READY",
+      title: "Critical items not ready before stored departure",
+      explanation:
+        "A Mission travel departure is stored and one or more critical logistics items are not packed-or-better.",
+      severity: "BLOCKER",
+      missionId: ctx.missionId,
+    });
+  }
+  if (!pack.packOwnerName?.trim() && !pack.packOwnerUserId) {
+    push({
+      issueKey: issueKey("MISSING_OWNER", pack.id),
+      issueType: "MISSING_OWNER",
+      title: "Pack owner not identified",
+      explanation: "An active logistics pack has no pack owner stored.",
+      severity: "WARNING",
+      missionId: ctx.missionId,
+    });
+  }
   return findings.sort((a, b) => a.issueKey.localeCompare(b.issueKey));
 }
 
 export function deriveLogisticsReadiness(input: { context: LogisticsMissionContext; pack: MissionLogisticsPackPersisted | null; findings: LogisticsFinding[] }): MissionLogisticsReadiness {
   if (!required(input.context, input.pack)) return "NOT_REQUIRED";
-  if (!input.pack || ["INACTIVE", "CANCELLED"].includes(input.pack.status)) return "NOT_READY";
   const blockers = input.findings.filter((f) => f.severity === "BLOCKER");
   if (blockers.some((f) => !f.clearsForReadiness)) return "NOT_READY";
-  return blockers.some((f) => f.disposition === "ACCEPTED_RISK") ? "READY_WITH_ACCEPTED_RISK" : "READY";
+  if (blockers.some((f) => f.disposition === "ACCEPTED_RISK")) return "READY_WITH_ACCEPTED_RISK";
+  if (!input.pack || ["INACTIVE", "CANCELLED"].includes(input.pack.status)) {
+    // Required with no active pack and no open blockers means accepted/resolved disposition covered it.
+    return blockers.length > 0 ? "READY_WITH_ACCEPTED_RISK" : "NOT_READY";
+  }
+  return "READY";
 }

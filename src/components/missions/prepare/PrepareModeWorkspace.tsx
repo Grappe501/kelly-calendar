@@ -105,6 +105,9 @@ export function PrepareModeWorkspace({ initial }: Props) {
             Mission Command Center
           </Link>
           <Link href={mission.detailHref}>Mission record</Link>
+          <Link href={`/system/missions/${mission.missionId}/logistics`}>
+            Logistics
+          </Link>
           <Link href="/calendar">Calendar</Link>
         </nav>
         <div className="prepare-save-status" role="status" aria-live="polite">

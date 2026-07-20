@@ -2186,6 +2186,7 @@ model CampaignMission {
   debrief      MissionDebrief?
   followUp     MissionFollowUp?
   travelPlan   MissionTravelPlan?
+  logisticsPack MissionLogisticsPack?
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
@@ -2773,6 +2774,234 @@ model MissionTravelAcknowledgement {
 
   @@unique([travelPlanId, issueKey])
   @@index([travelPlanId, disposition])
+  @@index([issueType])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Mission Logistics Pack / Field Kit — packing, handoffs, readiness.
+/// Not an inventory, procurement, or warehouse system. Manual campaign data only.
+enum MissionLogisticsPackStatus {
+  DRAFT
+  ACTIVE
+  READY
+  NEEDS_REVIEW
+  INACTIVE
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionLogisticsReadiness {
+  NOT_ASSESSED
+  READY
+  READY_WITH_ACCEPTED_RISK
+  NOT_READY
+  NOT_REQUIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionLogisticsItemCategory {
+  DOCUMENTS
+  CREDENTIALS
+  SIGNAGE
+  PRINTED_MATERIALS
+  TECHNOLOGY
+  AUDIO_VISUAL
+  WARDROBE
+  FOOD_WATER
+  ACCESSIBILITY
+  SECURITY
+  VOLUNTEER_MATERIALS
+  GENERAL_SUPPLIES
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionLogisticsItemStatus {
+  REQUIRED
+  ASSIGNED
+  PACKED
+  HANDED_OFF
+  RECEIVED
+  READY
+  USED
+  RETURN_PENDING
+  RETURNED
+  NOT_APPLICABLE
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionLogisticsItemCriticality {
+  CRITICAL
+  STANDARD
+  OPTIONAL
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionLogisticsHandoffStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionLogisticsIssueType {
+  NO_PACK
+  CRITICAL_UNASSIGNED
+  CRITICAL_NOT_PACKED
+  DEPARTURE_NOT_READY
+  HANDOFF_INCOMPLETE
+  HANDOFF_PARTIAL_CONFIRM
+  MISSING_OWNER
+  ITEM_INCOMPLETE
+  RETURN_OUTSTANDING
+  STALE_AFTER_RESCHEDULE
+  STALE_AFTER_TRAVEL_CHANGE
+  CANCELLED_MISSION_ACTIVE_PACK
+  WRONG_CAMPAIGN_DAY
+  TIME_CONFLICT
+  OWNER_OVERLAP
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionLogisticsAcknowledgementDisposition {
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+/// Optional 1:1 logistics pack for a CampaignMission. Lazy-created on intentional write.
+model MissionLogisticsPack {
+  id                    String                      @id @default(cuid())
+  missionId             String                      @unique
+  campaignDateKey       String
+  label                 String                      @default("Field kit")
+  status                MissionLogisticsPackStatus  @default(DRAFT)
+  readinessState        MissionLogisticsReadiness   @default(NOT_ASSESSED)
+  /// Explicit. When null, detection may use Prepare materialsNeeded / Event packing presence.
+  logisticsRequired     Boolean?
+  packOwnerName         String?
+  packOwnerUserId       String?
+  assemblyLocation      String?
+  plannedHandoffAt      DateTime?
+  plannedHandoffLocation String?
+  /// Optional soft reference to Mission travel plan id (not FK — avoids cross-layer cascade risk).
+  relatedTravelPlanId   String?
+  acceptedRiskSummary   String?
+  internalNotes         String?
+  logisticsNotes        String?
+  /// Mission startsAt|endsAt fingerprint at last confirmation.
+  scheduleFingerprint   String?
+  /// Travel plannedDepartureAt fingerprint at last confirmation.
+  travelFingerprint     String?
+  confirmedAt           DateTime?
+  confirmedByUserId     String?
+  createdByUserId       String?
+  updatedByUserId       String?
+  createdAt             DateTime                    @default(now())
+  updatedAt             DateTime                    @updatedAt
+
+  mission          CampaignMission                      @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  items            MissionLogisticsItem[]
+  handoffs         MissionLogisticsHandoff[]
+  acknowledgements MissionLogisticsAcknowledgement[]
+
+  @@index([campaignDateKey])
+  @@index([status])
+  @@index([readinessState])
+  @@schema("kelly_calendar")
+}
+
+model MissionLogisticsItem {
+  id                 String                          @id @default(cuid())
+  logisticsPackId    String
+  sequence           Int
+  category           MissionLogisticsItemCategory    @default(OTHER)
+  description        String
+  quantityLabel      String?
+  responsibleName    String?
+  responsibleUserId  String?
+  recipientName      String?
+  requiredByAt       DateTime?
+  packLocation       String?
+  status             MissionLogisticsItemStatus      @default(REQUIRED)
+  criticality        MissionLogisticsItemCriticality @default(STANDARD)
+  returnRequired     Boolean                         @default(false)
+  notes              String?
+  createdByUserId    String?
+  updatedByUserId    String?
+  createdAt          DateTime                        @default(now())
+  updatedAt          DateTime                        @updatedAt
+
+  logisticsPack MissionLogisticsPack       @relation(fields: [logisticsPackId], references: [id], onDelete: Cascade)
+  handoffs      MissionLogisticsHandoff[]
+
+  @@unique([logisticsPackId, sequence])
+  @@index([logisticsPackId])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model MissionLogisticsHandoff {
+  id                    String                        @id @default(cuid())
+  logisticsPackId       String
+  logisticsItemId       String?
+  fromName              String?
+  toName                String?
+  plannedAt             DateTime?
+  plannedLocation       String?
+  actualAt              DateTime?
+  actualLocation        String?
+  status                MissionLogisticsHandoffStatus @default(PLANNED)
+  giverConfirmedAt      DateTime?
+  giverConfirmedByUserId String?
+  receiverConfirmedAt   DateTime?
+  receiverConfirmedByUserId String?
+  notes                 String?
+  createdByUserId       String?
+  updatedByUserId       String?
+  createdAt             DateTime                      @default(now())
+  updatedAt             DateTime                      @updatedAt
+
+  logisticsPack MissionLogisticsPack  @relation(fields: [logisticsPackId], references: [id], onDelete: Cascade)
+  logisticsItem MissionLogisticsItem? @relation(fields: [logisticsItemId], references: [id], onDelete: SetNull)
+
+  @@index([logisticsPackId])
+  @@index([logisticsItemId])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model MissionLogisticsAcknowledgement {
+  id                   String                                       @id @default(cuid())
+  logisticsPackId      String
+  issueKey             String
+  issueType            MissionLogisticsIssueType
+  title                String
+  disposition          MissionLogisticsAcknowledgementDisposition
+  note                 String?
+  acceptedRiskReason   String?
+  acknowledgedAt       DateTime                                     @default(now())
+  acknowledgedByUserId String?
+  createdAt            DateTime                                     @default(now())
+  updatedAt            DateTime                                     @updatedAt
+
+  logisticsPack MissionLogisticsPack @relation(fields: [logisticsPackId], references: [id], onDelete: Cascade)
+
+  @@unique([logisticsPackId, issueKey])
+  @@index([logisticsPackId, disposition])
   @@index([issueType])
   @@schema("kelly_calendar")
 }
