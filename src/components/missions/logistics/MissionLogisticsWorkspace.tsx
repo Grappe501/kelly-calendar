@@ -198,11 +198,20 @@ export function MissionLogisticsWorkspace({ initial }: Props) {
         <nav className="briefing-nav" aria-label="Logistics navigation">
           <Link href={model.mission.href}>Mission</Link>
           <Link href={model.mission.prepareHref}>Prepare</Link>
+          <Link href={`/system/missions/${model.mission.missionId}/execute`}>
+            Execute
+          </Link>
           <Link href={`/system/missions/${model.mission.missionId}/travel`}>
             Travel
           </Link>
+          <Link href={`/system/missions/${model.mission.missionId}/field-ops`}>
+            Field Ops
+          </Link>
           <Link href={`/system/briefing/${dateKey}/logistics`}>
             Day Logistics
+          </Link>
+          <Link href={`/system/briefing/${dateKey}/field-ops`}>
+            Day Field Ops
           </Link>
           <Link href={`/system/briefing/${dateKey}/launch`}>
             Morning Launch

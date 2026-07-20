@@ -125,6 +125,9 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${mission.missionId}/prepare`}>
             Open Mission Brief
           </Link>
+          <Link href={`/system/missions/${mission.missionId}/field-ops`}>
+            Field Ops
+          </Link>
           <Link href={mission.detailHref}>Mission record</Link>
         </nav>
         <div className="prepare-save-status" role="status" aria-live="polite">
@@ -150,6 +153,21 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           </button>
         </div>
       ) : null}
+
+      <section className="panel" aria-labelledby="execute-field-ops-h">
+        <h2 id="execute-field-ops-h">Field Day Operations</h2>
+        <p className="muted" role="note">
+          Execute Mode tracks active mission progress. Field Ops confirms
+          on-site readiness and item presence — it does not start or complete
+          execution.
+        </p>
+        <Link
+          className="button secondary"
+          href={`/system/missions/${mission.missionId}/field-ops`}
+        >
+          Open Field Ops
+        </Link>
+      </section>
 
       {execution.executionStatus === "NOT_STARTED" ? (
         <section className="panel" aria-labelledby="arrive-heading">

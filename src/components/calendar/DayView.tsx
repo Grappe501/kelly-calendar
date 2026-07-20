@@ -67,6 +67,10 @@ export function DayView({ data, focusEventId = null }: Props) {
           Day Logistics
         </Link>
         {" · "}
+        <Link href={`/system/briefing/${data.dateKey}/field-ops`}>
+          Day Field Ops
+        </Link>
+        {" · "}
         <Link href="/system/missions/command-center">Mission Command Center</Link>
       </p>
 

@@ -345,6 +345,12 @@ export function CampaignDayCloseout({ model }: Props) {
           </Link>
           <Link
             className="button secondary"
+            href={`/system/briefing/${addOne(model.campaignDate)}/field-ops`}
+          >
+            Tomorrow Day Field Ops
+          </Link>
+          <Link
+            className="button secondary"
             href={`/system/briefing/${addOne(model.campaignDate)}/launch`}
           >
             Tomorrow Morning Launch Review

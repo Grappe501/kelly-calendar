@@ -145,12 +145,11 @@ Migration, validation, build, and report rendering create zero logistics rows.
 ## Known limitations
 
 - No inline Prepare → pack item import (by design in v1)
-- No live Execute-mode kit confirmation (recommended D13)
 - `TIME_CONFLICT` / `OWNER_OVERLAP` issue types reserved, not fully evaluated
 
-## Recommended Deliverable 13
+## Recommended next (Deliverable 13 — landed)
 
-**Field Day Ops / live kit confirmation during Execute** — evidence-based confirmation (photo/note/timestamp) that critical items are on-site and returns are captured, without external inventory systems.
+Field Day Ops / live kit confirmation is delivered in `KCCC_V2_1_FIELD_DAY_OPERATIONS_DELIVERABLE_13.md`.
 
 ## Rollback
 

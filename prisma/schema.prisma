@@ -2187,6 +2187,7 @@ model CampaignMission {
   followUp     MissionFollowUp?
   travelPlan   MissionTravelPlan?
   logisticsPack MissionLogisticsPack?
+  fieldOpsSession MissionFieldOpsSession?
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
@@ -2947,6 +2948,7 @@ model MissionLogisticsItem {
 
   logisticsPack MissionLogisticsPack       @relation(fields: [logisticsPackId], references: [id], onDelete: Cascade)
   handoffs      MissionLogisticsHandoff[]
+  fieldConfirmations MissionFieldItemConfirmation[]
 
   @@unique([logisticsPackId, sequence])
   @@index([logisticsPackId])
@@ -3002,6 +3004,181 @@ model MissionLogisticsAcknowledgement {
 
   @@unique([logisticsPackId, issueKey])
   @@index([logisticsPackId, disposition])
+  @@index([issueType])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Field Day Operations — on-site kit confirmation against D12 items.
+/// Observations only. Does not rewrite logistics packing/handoff history or Execute state.
+enum MissionFieldOpsSessionStatus {
+  OPEN
+  CHECKING
+  READY
+  READY_WITH_RISK
+  WRAP_PENDING
+  CLOSED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFieldOpsReadiness {
+  NOT_ASSESSED
+  READY
+  READY_WITH_ACCEPTED_RISK
+  NOT_READY
+  NOT_REQUIRED
+  WRAP_PENDING
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFieldConfirmationState {
+  PRESENT
+  MISSING
+  DAMAGED
+  SUBSTITUTED
+  NOT_USABLE
+  NOT_APPLICABLE
+  RETURNED
+  RETURN_MISSING
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFieldItemCondition {
+  GOOD
+  DAMAGED
+  UNKNOWN
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFieldOpsIssueType {
+  NO_PACK
+  NO_SESSION
+  CRITICAL_UNCONFIRMED
+  CRITICAL_MISSING
+  CRITICAL_DAMAGED
+  CRITICAL_SUBSTITUTED
+  CRITICAL_NOT_USABLE
+  SUBSTITUTE_UNACCEPTED
+  HANDOFF_INCOMPLETE_AT_CHECK
+  RETURN_OUTSTANDING
+  RETURN_MISSING
+  RETURN_DAMAGED
+  STALE_AFTER_LOGISTICS_CHANGE
+  STALE_AFTER_RESCHEDULE
+  STALE_AFTER_TRAVEL_CHANGE
+  CANCELLED_MISSION_OPEN_SESSION
+  WRONG_CAMPAIGN_DAY
+  OVERNIGHT_WRAP_OPEN
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionFieldOpsAcknowledgementDisposition {
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+/// Optional 1:1 field-ops session for a CampaignMission. Lazy-created on intentional open.
+model MissionFieldOpsSession {
+  id                    String                       @id @default(cuid())
+  missionId             String                       @unique
+  campaignDateKey       String
+  status                MissionFieldOpsSessionStatus @default(OPEN)
+  readinessState        MissionFieldOpsReadiness     @default(NOT_ASSESSED)
+  fieldLeadName         String?
+  fieldLeadUserId       String?
+  locationLabel         String?
+  contextNote           String?
+  checkInAt             DateTime?
+  checkInByUserId       String?
+  readinessConfirmedAt  DateTime?
+  readinessConfirmedByUserId String?
+  wrapStartedAt         DateTime?
+  wrapStartedByUserId   String?
+  closedAt              DateTime?
+  closedByUserId        String?
+  acceptedRiskSummary   String?
+  internalNotes         String?
+  fieldNotes            String?
+  /// Fingerprint of critical D12 item ids/criticality/quantity/return/updatedAt at last readiness confirm.
+  logisticsFingerprint  String?
+  scheduleFingerprint   String?
+  travelFingerprint     String?
+  createdByUserId       String?
+  updatedByUserId       String?
+  createdAt             DateTime                     @default(now())
+  updatedAt             DateTime                     @updatedAt
+
+  mission          CampaignMission                      @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  confirmations    MissionFieldItemConfirmation[]
+  acknowledgements MissionFieldOpsAcknowledgement[]
+
+  @@index([campaignDateKey])
+  @@index([status])
+  @@index([readinessState])
+  @@schema("kelly_calendar")
+}
+
+/// Current on-site observation for a D12 logistics item within a field session.
+/// Prior states append into historyJson; does not mutate D12 item status.
+model MissionFieldItemConfirmation {
+  id                       String                        @id @default(cuid())
+  fieldOpsSessionId        String
+  logisticsItemId          String?
+  itemDescriptionSnapshot  String
+  itemCriticalitySnapshot  String                        @default("STANDARD")
+  itemReturnRequiredSnapshot Boolean                     @default(false)
+  state                    MissionFieldConfirmationState
+  observedQuantityLabel    String?
+  condition                MissionFieldItemCondition     @default(UNKNOWN)
+  substituteDescription    String?
+  exceptionNote            String?
+  locationLabel            String?
+  confirmedAt              DateTime
+  confirmedByUserId        String?
+  historyJson              Json                          @default("[]")
+  createdByUserId          String?
+  updatedByUserId          String?
+  createdAt                DateTime                      @default(now())
+  updatedAt                DateTime                      @updatedAt
+
+  fieldOpsSession MissionFieldOpsSession @relation(fields: [fieldOpsSessionId], references: [id], onDelete: Cascade)
+  logisticsItem   MissionLogisticsItem?  @relation(fields: [logisticsItemId], references: [id], onDelete: SetNull)
+
+  @@unique([fieldOpsSessionId, logisticsItemId])
+  @@index([fieldOpsSessionId])
+  @@index([logisticsItemId])
+  @@index([state])
+  @@schema("kelly_calendar")
+}
+
+model MissionFieldOpsAcknowledgement {
+  id                   String                                     @id @default(cuid())
+  fieldOpsSessionId    String
+  issueKey             String
+  issueType            MissionFieldOpsIssueType
+  title                String
+  disposition          MissionFieldOpsAcknowledgementDisposition
+  note                 String?
+  acceptedRiskReason   String?
+  acknowledgedAt       DateTime                                   @default(now())
+  acknowledgedByUserId String?
+  createdAt            DateTime                                   @default(now())
+  updatedAt            DateTime                                   @updatedAt
+
+  fieldOpsSession MissionFieldOpsSession @relation(fields: [fieldOpsSessionId], references: [id], onDelete: Cascade)
+
+  @@unique([fieldOpsSessionId, issueKey])
+  @@index([fieldOpsSessionId, disposition])
   @@index([issueType])
   @@schema("kelly_calendar")
 }

@@ -27,6 +27,9 @@ export function DayLogisticsBoard({ model }: Props) {
           <Link href={model.navigation.nextHref ?? "#"}>Next</Link>
           <Link href={model.navigation.briefingHref}>Briefing</Link>
           <Link href={model.navigation.movementHref}>Day Movement</Link>
+          <Link href={`/system/briefing/${model.campaignDate}/field-ops`}>
+            Day Field Ops
+          </Link>
           <Link href={model.navigation.launchHref}>Launch Review</Link>
           <Link href={model.navigation.closeoutHref}>Closeout</Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>
@@ -111,6 +114,10 @@ export function DayLogisticsBoard({ model }: Props) {
                   <Link href={m.href}>Open Mission logistics</Link>
                   {" · "}
                   <Link href={m.travelHref}>Open Mission travel</Link>
+                  {" · "}
+                  <Link href={`/system/missions/${m.missionId}/field-ops`}>
+                    Open Mission field ops
+                  </Link>
                 </p>
               </li>
             ))}
