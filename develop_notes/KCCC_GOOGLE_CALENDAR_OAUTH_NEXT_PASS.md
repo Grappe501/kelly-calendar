@@ -6,10 +6,13 @@
 ## Snapshot
 
 ```text
-Google OAuth .................. NOT CONFIGURED (local doctor)
+Google OAuth .................. CONFIGURED
+Database connection ........... CONFIGURED
+Calendar connection ........... NOT_CONNECTED  ← browser Connect required
 Routes enabled ................ NO
 History start ................. 2025-11-01T00:00:00-05:00
-Sync apply gate ............... OFF (dry-run default)
+Sync apply gate ............... OFF
+CLI dry-run ................... wired (tsx → runGoogleCalendarImport, no DB writes)
 ```
 
 ## Operator sequence

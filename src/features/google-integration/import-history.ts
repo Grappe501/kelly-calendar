@@ -22,6 +22,26 @@ export type ImportHistoryOptions = {
   apply?: boolean;
   mode?: "history" | "sync";
   reviewDir?: string;
+  /**
+   * When false, dry-run performs zero GoogleCalendarConnection writes
+   * (including token-refresh timestamps / sync cursors). Default: false for dry-run, true for apply.
+   */
+  persistConnectionState?: boolean;
+  /** Include capped review rows in the returned report (CLI / API review). */
+  includeReviewRows?: boolean;
+};
+
+export type ImportHistoryReviewRow = {
+  googleEventId: string;
+  iCalUid: string | null;
+  status: string | null;
+  summary: string | null;
+  start: unknown;
+  end: unknown;
+  location: string | null;
+  visibility: string | null;
+  reconcileStatus: string;
+  wouldChange: boolean;
 };
 
 export type ImportHistoryReport = {
@@ -29,17 +49,27 @@ export type ImportHistoryReport = {
   dryRun: boolean;
   skippedSafely?: boolean;
   reason?: string;
+  fromIso?: string;
+  toIso?: string;
+  eventsDiscovered: number;
   eventsRead: number;
   newCandidates: number;
   updates: number;
   cancellations: number;
+  cancelledEvents: number;
   possibleDuplicates: number;
+  possibleKcccMatches: number;
   privateEvents: number;
   recurringInstances: number;
+  unresolvedRecords: number;
+  recordsThatWouldBeCreatedOrUpdated: number;
   errors: number;
   recordsThatWouldChange: number;
   applied: number;
   nextSyncTokenPresent: boolean;
+  databaseMutations: "none" | "connection_metadata" | "import_staging";
+  reviewArtifactPath?: string | null;
+  reviewRows?: ImportHistoryReviewRow[];
 };
 
 function fingerprintGoogleEvent(event: GoogleCalendarEvent): string {
@@ -62,18 +92,47 @@ function isPrivateVisibility(event: GoogleCalendarEvent): boolean {
   return event.visibility === "private" || event.visibility === "confidential";
 }
 
-async function loadAccessToken() {
+async function loadAccessToken(persistConnectionState: boolean) {
   const connection = await getActiveConnection();
   if (!connection || connection.connectionStatus !== "CONNECTED") {
     return { connection: null, accessToken: null as string | null };
   }
   const refreshToken = decryptRefreshToken(connection);
   const tokens = await refreshAccessToken(refreshToken);
-  await prisma.googleCalendarConnection.update({
-    where: { id: connection.id },
-    data: { lastTokenRefreshAt: new Date() },
-  });
+  if (persistConnectionState) {
+    await prisma.googleCalendarConnection.update({
+      where: { id: connection.id },
+      data: { lastTokenRefreshAt: new Date() },
+    });
+  }
   return { connection, accessToken: tokens.access_token };
+}
+
+function emptyReport(
+  partial: Partial<ImportHistoryReport> &
+    Pick<ImportHistoryReport, "mode" | "dryRun">,
+): ImportHistoryReport {
+  return {
+    eventsDiscovered: 0,
+    eventsRead: 0,
+    newCandidates: 0,
+    updates: 0,
+    cancellations: 0,
+    cancelledEvents: 0,
+    possibleDuplicates: 0,
+    possibleKcccMatches: 0,
+    privateEvents: 0,
+    recurringInstances: 0,
+    unresolvedRecords: 0,
+    recordsThatWouldBeCreatedOrUpdated: 0,
+    errors: 0,
+    recordsThatWouldChange: 0,
+    applied: 0,
+    nextSyncTokenPresent: false,
+    databaseMutations: "none",
+    reviewArtifactPath: null,
+    ...partial,
+  };
 }
 
 export async function runGoogleCalendarImport(
@@ -82,55 +141,38 @@ export async function runGoogleCalendarImport(
   const env = getGoogleIntegrationEnv();
   const dryRun = options.apply !== true;
   const mode = options.mode ?? "history";
+  const persistConnectionState =
+    options.persistConnectionState ?? (options.apply === true);
+  const includeReviewRows = options.includeReviewRows === true;
 
   if (!env.syncEnabled && options.apply) {
-    return {
+    return emptyReport({
       mode,
       dryRun: true,
       skippedSafely: true,
       reason: "KCCC_GOOGLE_SYNC_ENABLED is false",
-      eventsRead: 0,
-      newCandidates: 0,
-      updates: 0,
-      cancellations: 0,
-      possibleDuplicates: 0,
-      privateEvents: 0,
-      recurringInstances: 0,
-      errors: 0,
-      recordsThatWouldChange: 0,
-      applied: 0,
-      nextSyncTokenPresent: false,
-    };
+    });
   }
 
-  const { connection, accessToken } = await loadAccessToken();
+  const { connection, accessToken } = await loadAccessToken(persistConnectionState);
   if (!connection || !accessToken) {
-    return {
+    return emptyReport({
       mode,
       dryRun,
       skippedSafely: true,
       reason: "Google OAuth connection not available",
-      eventsRead: 0,
-      newCandidates: 0,
-      updates: 0,
-      cancellations: 0,
-      possibleDuplicates: 0,
-      privateEvents: 0,
-      recurringInstances: 0,
-      errors: 0,
-      recordsThatWouldChange: 0,
-      applied: 0,
-      nextSyncTokenPresent: false,
-    };
+    });
   }
 
   const fromIso = options.fromIso ?? env.historyStartIso;
   const toIso = options.toIso ?? new Date().toISOString();
 
-  await prisma.googleCalendarConnection.update({
-    where: { id: connection.id },
-    data: { lastSyncStartedAt: new Date(), lastSyncStatus: "PENDING" },
-  });
+  if (persistConnectionState) {
+    await prisma.googleCalendarConnection.update({
+      where: { id: connection.id },
+      data: { lastSyncStartedAt: new Date(), lastSyncStatus: "PENDING" },
+    });
+  }
 
   let items: GoogleCalendarEvent[] = [];
   let nextSyncToken: string | undefined;
@@ -162,13 +204,15 @@ export async function runGoogleCalendarImport(
       nextSyncToken = result.nextSyncToken;
     }
   } catch (error) {
-    await prisma.googleCalendarConnection.update({
-      where: { id: connection.id },
-      data: {
-        lastSyncStatus: "ERROR",
-        lastSyncErrorCode: "FETCH_FAILED",
-      },
-    });
+    if (persistConnectionState) {
+      await prisma.googleCalendarConnection.update({
+        where: { id: connection.id },
+        data: {
+          lastSyncStatus: "ERROR",
+          lastSyncErrorCode: "FETCH_FAILED",
+        },
+      });
+    }
     throw error;
   }
 
@@ -218,7 +262,9 @@ export async function runGoogleCalendarImport(
   let applied = 0;
   const errors = 0;
 
-  const reviewRows: Array<Record<string, unknown>> = [];
+  const reviewRows: ImportHistoryReviewRow[] = [];
+  let possibleKcccMatches = 0;
+  let unresolvedRecords = 0;
 
   let externalSource = connection.externalSourceId
     ? await prisma.externalCalendarSource.findUnique({ where: { id: connection.externalSourceId } })
@@ -269,6 +315,19 @@ export async function runGoogleCalendarImport(
       reconcile.status === "SOURCE_CONFLICT"
     ) {
       possibleDuplicates += 1;
+    }
+    if (
+      reconcile.status === "AUTO_MATCH_HIGH_CONFIDENCE" ||
+      reconcile.status === "REVIEW_POSSIBLE_MATCH"
+    ) {
+      possibleKcccMatches += 1;
+    }
+    if (
+      reconcile.status === "NO_MATCH" ||
+      reconcile.status === "SOURCE_CONFLICT" ||
+      reconcile.status === "REVIEW_POSSIBLE_MATCH"
+    ) {
+      unresolvedRecords += 1;
     }
 
     if (!existingIdentity) newCandidates += 1;
@@ -376,66 +435,93 @@ export async function runGoogleCalendarImport(
     });
   }
 
-  await prisma.googleCalendarConnection.update({
-    where: { id: connection.id },
-    data: {
-      lastSyncCompletedAt: new Date(),
-      lastSyncStatus: "ACTIVE",
-      lastSyncErrorCode: null,
-      syncCursor: nextSyncToken ?? connection.syncCursor,
-      historicalImportedThrough: mode === "history" ? new Date(toIso) : connection.historicalImportedThrough,
-      pendingReconcileCount: possibleDuplicates,
-    },
-  });
+  if (persistConnectionState) {
+    await prisma.googleCalendarConnection.update({
+      where: { id: connection.id },
+      data: {
+        lastSyncCompletedAt: new Date(),
+        lastSyncStatus: "ACTIVE",
+        lastSyncErrorCode: null,
+        syncCursor: nextSyncToken ?? connection.syncCursor,
+        historicalImportedThrough:
+          mode === "history" ? new Date(toIso) : connection.historicalImportedThrough,
+        pendingReconcileCount: possibleDuplicates,
+      },
+    });
+  }
 
   const reviewDir =
     options.reviewDir ??
     path.join(process.cwd(), "data", "private", "google-calendar-review");
-  if (!dryRun || process.env.KCCC_WRITE_GOOGLE_REVIEW_ARTIFACT === "true") {
-    fs.mkdirSync(reviewDir, { recursive: true });
-    const file = path.join(
-      reviewDir,
-      `${mode}-${dryRun ? "dryrun" : "apply"}-${Date.now()}.json`,
-    );
-    fs.writeFileSync(
-      file,
-      JSON.stringify(
-        {
-          generatedAt: new Date().toISOString(),
-          mode,
-          dryRun,
-          counts: {
-            eventsRead: items.length,
-            newCandidates,
-            updates,
-            cancellations,
-            possibleDuplicates,
-            privateEvents,
-            recurringInstances,
-            applied,
-          },
-          // summaries only — no descriptions
-          rows: reviewRows.slice(0, 500),
+  let reviewArtifactPath: string | null = null;
+  // Always write a gitignored review artifact for operator inspection.
+  fs.mkdirSync(reviewDir, { recursive: true });
+  reviewArtifactPath = path.join(
+    reviewDir,
+    `${mode}-${dryRun ? "dryrun" : "apply"}-${Date.now()}.json`,
+  );
+  fs.writeFileSync(
+    reviewArtifactPath,
+    JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        mode,
+        dryRun,
+        fromIso,
+        toIso,
+        databaseMutations: dryRun
+          ? "none"
+          : persistConnectionState
+            ? "import_staging"
+            : "none",
+        counts: {
+          eventsDiscovered: items.length,
+          newCandidates,
+          updates,
+          cancelledEvents: cancellations,
+          possibleDuplicates,
+          possibleKcccMatches,
+          privateEvents,
+          recurringInstances,
+          unresolvedRecords,
+          recordsThatWouldBeCreatedOrUpdated: recordsThatWouldChange,
+          applied,
         },
-        null,
-        2,
-      ),
-    );
-  }
+        // summaries only — no descriptions
+        rows: reviewRows.slice(0, 500),
+      },
+      null,
+      2,
+    ),
+  );
 
   return {
     mode,
     dryRun,
+    fromIso,
+    toIso,
+    eventsDiscovered: items.length,
     eventsRead: items.length,
     newCandidates,
     updates,
     cancellations,
+    cancelledEvents: cancellations,
     possibleDuplicates,
+    possibleKcccMatches,
     privateEvents,
     recurringInstances,
+    unresolvedRecords,
+    recordsThatWouldBeCreatedOrUpdated: recordsThatWouldChange,
     errors,
     recordsThatWouldChange,
     applied,
     nextSyncTokenPresent: Boolean(nextSyncToken),
+    databaseMutations: dryRun
+      ? "none"
+      : persistConnectionState
+        ? "import_staging"
+        : "none",
+    reviewArtifactPath,
+    reviewRows: includeReviewRows ? reviewRows.slice(0, 200) : undefined,
   };
 }
