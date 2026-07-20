@@ -1,8 +1,8 @@
 # KCCC V2.1 — Campaign Communications and Mobilization Queue (Deliverable 20)
 
-**Status:** Live on `main` (pending deploy-docs)  
-**Feature commit:** pending  
-**Deploy ID:** pending · https://kelly-calendar.netlify.app  
+**Status:** Live on `main`  
+**Feature commit:** `5b30760`  
+**Deploy ID:** `6a5e8005f002f01635509176` · https://kelly-calendar.netlify.app  
 **Baseline:** D19 `main` @ `6422591` · deploy-docs `06164b1` · Netlify `6a5e78e3cbc466ee73d04534` · 241 tests · D18 observations/matches/correlations 0 · staffing rows 0  
 **D1–D20 validation:** 252 tests passed (`npm run missions:v21:communications:validate`; D20 adds 11)  
 **Counts after migration/build:** Missions 37 · Events 38 · D18 observations/matches/correlations 0 · local people 0 · D19 staffing rows 0 · **D20 policy / contact points / evidence / suppressions / communications / audience / approvals / queue / delivery events 0** · fabricated **0** · externally sent **0**  
