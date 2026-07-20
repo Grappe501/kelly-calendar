@@ -1,10 +1,11 @@
 # KCCC V2.1 — Events Become Missions
 
-**Status:** DELIVERABLE 16 READY — Mobilize Integration Foundation (server-only adapter, dry-run, identity mapping; outbound writes disabled)  
+**Status:** DELIVERABLE 17 READY — Mobilize Event Publishing and Bidirectional Reconciliation  
 **Date:** 2026-07-19 (updated 2026-07-20)  
 **Parent:** `KCCC_CAMPAIGN_OPERATING_SYSTEM_V2.md`  
 **Google:** PAUSED — no dependency for V2.1  
-**Mobilize:** D16 foundation — see `KCCC_V2_1_MOBILIZE_INTEGRATION_FOUNDATION_DELIVERABLE_16.md` · architecture `KCCC_V2_1_PROVIDER_INTEGRATION_MOBILIZE_ARCHITECTURE.md`  
+**Mobilize:** D17 publishing — see `KCCC_V2_1_MOBILIZE_EVENT_PUBLISHING_DELIVERABLE_17.md` · D16 foundation `KCCC_V2_1_MOBILIZE_INTEGRATION_FOUNDATION_DELIVERABLE_16.md` · architecture `KCCC_V2_1_PROVIDER_INTEGRATION_MOBILIZE_ARCHITECTURE.md` · operator `KCCC_V2_1_MOBILIZE_PUBLISHING_OPERATOR_GUIDE.md`  
+**Authority:** Event→Mission remains explicit (`POST /api/events/[eventId]/mission`). Mobilize publish never creates Missions. Mission changes never auto-publish.
 **Deliverable 1 notes:** `KCCC_V2_1_MISSION_MODEL_DELIVERABLE_1.md` · rollback `KCCC_V2_1_MISSION_MODEL_ROLLBACK.md`  
 **Deliverable 2 notes:** `KCCC_V2_1_TODAYS_MISSION_DELIVERABLE_2.md`  
 **Deliverable 3 notes:** `KCCC_V2_1_PREPARE_MODE_DELIVERABLE_3.md` · rollback `KCCC_V2_1_PREPARE_MODE_ROLLBACK.md`  

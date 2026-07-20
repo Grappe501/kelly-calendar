@@ -63,7 +63,10 @@ export async function getMobilizeIntegrationStatus(actor: AuthenticatedActor) {
           lastErrorCode: connection.lastErrorCode,
           lastErrorCategory: connection.lastErrorCategory,
           lastErrorSummary: connection.lastErrorSummary,
-          outboundWritesEnabled: false,
+          outboundWritesEnabled: config.outboundWritesEnabled,
+          publishingEnabled: config.publishingEnabled,
+          updatesEnabled: config.updatesEnabled,
+          deleteEnabled: config.deleteEnabled,
           enabledImportScopes: connection.enabledImportScopesJson,
         }
       : null,
@@ -86,7 +89,11 @@ export async function verifyMobilizeConnection(actor: AuthenticatedActor) {
   assertMobilizeIntegrationAdmin(actor);
   const env = getMobilizeIntegrationEnv();
   if (!env.apiKey || !env.organizationId) {
-    const capability = buildBaseCapabilityReport("NOT_CONFIGURED");
+    const capability = buildBaseCapabilityReport("NOT_CONFIGURED", {
+      publishingEnabled: env.publishingEnabled,
+      updatesEnabled: env.updatesEnabled,
+      deleteEnabled: env.deleteEnabled,
+    });
     return {
       ok: false as const,
       state: "NOT_CONFIGURED" as const,
@@ -100,12 +107,14 @@ export async function verifyMobilizeConnection(actor: AuthenticatedActor) {
     apiBaseUrl: env.apiBaseUrl,
     organizationId: env.organizationId,
   });
-  adapter.assertWritesDisabled();
 
   const capability = await discoverMobilizeCapabilities({
     adapter,
     importEventsEnabled: env.importEventsEnabled,
     expectedOrganizationId: env.organizationId,
+    publishingEnabled: env.publishingEnabled,
+    updatesEnabled: env.updatesEnabled,
+    deleteEnabled: env.deleteEnabled,
   });
 
   const connection = await upsertMobilizeConnection({

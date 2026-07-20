@@ -17,8 +17,7 @@ export default async function MobilizeIntegrationPage() {
       <header className="page-header">
         <h1>Mobilize Integration Foundation</h1>
         <p>
-          Server-only connection, capability discovery, and dry-run event
-          reconciliation. Outbound publishing is disabled.
+          Outbound publishing is gated (D17). Preview works without credentials.
         </p>
       </header>
       <MobilizeIntegrationPanel />
@@ -26,6 +25,18 @@ export default async function MobilizeIntegrationPage() {
         <div className="button-row">
           <Link className="button secondary" href="/system/integrations">
             All integrations
+          </Link>
+          <Link
+            className="button"
+            href="/system/integrations/mobilize/publishing"
+          >
+            Event publishing
+          </Link>
+          <Link
+            className="button secondary"
+            href="/system/integrations/mobilize/conflicts"
+          >
+            Conflicts
           </Link>
           <Link className="button secondary" href="/system/integrations/mobilize/runs">
             Sync runs

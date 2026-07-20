@@ -3657,3 +3657,145 @@ model ExternalSyncCheckpoint {
   @@unique([campaignScopeKey, provider, scope])
   @@schema("kelly_calendar")
 }
+
+/// D17 Mobilize Event Publishing — local publication state (credentials stay in env).
+enum ExternalPublicationStatus {
+  DRAFT
+  PREVIEWED
+  AWAITING_APPROVAL
+  APPROVED
+  PUBLISHING
+  PUBLISHED
+  LOCALLY_CHANGED
+  REMOTELY_CHANGED
+  CONFLICT
+  REMOTE_DELETED
+  UNKNOWN_REMOTE_OUTCOME
+  FAILED
+  RECONCILED
+  CANCELLED_LOCAL
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalPublicationRemoteOutcome {
+  NONE
+  SUCCESS
+  FAILED
+  UNKNOWN
+  RECONCILED
+
+  @@schema("kelly_calendar")
+}
+
+model ExternalPublication {
+  id                       String                         @id @default(cuid())
+  campaignScopeKey         String                         @default("KELLY")
+  provider                 ExternalProvider               @default(MOBILIZE)
+  localObjectType          String                         @default("Event")
+  localObjectId            String
+  externalObjectReferenceId String?
+  status                   ExternalPublicationStatus      @default(DRAFT)
+  targetOrganizationId     String?
+  mappingVersion           String
+  localFingerprint         String?
+  proposedPayloadFingerprint String?
+  lastSyncedBaseFingerprint String?
+  remoteFingerprint        String?
+  lastPublishedAt          DateTime?
+  lastUpdatedAtRemote      DateTime?
+  lastSuccessfulActorUserId String?
+  conflictState            ExternalConflictState          @default(NONE)
+  remoteOutcome            ExternalPublicationRemoteOutcome @default(NONE)
+  mobilizeBrowserUrl       String?
+  createdByUserId          String?
+  updatedByUserId          String?
+  createdAt                DateTime                       @default(now())
+  updatedAt                DateTime                       @updatedAt
+
+  approvals ExternalPublicationApproval[]
+  attempts  ExternalPublicationAttempt[]
+
+  @@unique([campaignScopeKey, provider, localObjectType, localObjectId])
+  @@index([status])
+  @@index([provider, targetOrganizationId])
+  @@schema("kelly_calendar")
+}
+
+enum ExternalPublicationActionType {
+  CREATE
+  UPDATE
+  DELETE
+  REFRESH
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalPublicationApprovalState {
+  ACTIVE
+  CONSUMED
+  EXPIRED
+  SUPERSEDED
+  REVOKED
+
+  @@schema("kelly_calendar")
+}
+
+model ExternalPublicationApproval {
+  id                   String                         @id @default(cuid())
+  publicationId        String
+  actionType           ExternalPublicationActionType
+  localFingerprint     String
+  payloadFingerprint   String
+  mappingVersion       String
+  targetOrganizationId String
+  approvedByUserId     String?
+  approvedAt           DateTime                       @default(now())
+  expiresAt            DateTime?
+  state                ExternalPublicationApprovalState @default(ACTIVE)
+  reason               String?
+  createdAt            DateTime                       @default(now())
+
+  publication ExternalPublication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+
+  @@index([publicationId, state])
+  @@index([payloadFingerprint])
+  @@schema("kelly_calendar")
+}
+
+enum ExternalPublicationAttemptStatus {
+  STARTED
+  SUCCEEDED
+  FAILED
+  UNKNOWN_OUTCOME
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+model ExternalPublicationAttempt {
+  id                   String                           @id @default(cuid())
+  publicationId        String
+  syncRunId            String?
+  actionType           ExternalPublicationActionType
+  status               ExternalPublicationAttemptStatus @default(STARTED)
+  requestCorrelationId String?
+  idempotencyKey       String
+  startedAt            DateTime                         @default(now())
+  completedAt          DateTime?
+  responseClass        String?
+  remoteObjectId       String?
+  errorCategory        String?
+  unknownOutcome       Boolean                          @default(false)
+  actorUserId          String?
+  mappingVersion       String
+  redactedSummary      String?
+  createdAt            DateTime                         @default(now())
+
+  publication ExternalPublication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+
+  @@unique([idempotencyKey])
+  @@index([publicationId, startedAt])
+  @@index([status])
+  @@schema("kelly_calendar")
+}

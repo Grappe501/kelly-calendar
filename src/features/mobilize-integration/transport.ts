@@ -3,9 +3,10 @@ import { safeErrorSummary } from "@/features/mobilize-integration/redact";
 import type { MobilizeErrorCategory } from "@/features/mobilize-integration/types";
 
 export type MobilizeTransportRequest = {
-  method: "GET";
+  method: "GET" | "POST" | "PUT" | "DELETE";
   url: string;
   headers?: Record<string, string>;
+  body?: string;
   signal?: AbortSignal;
   timeoutMs?: number;
 };
@@ -116,6 +117,7 @@ export function createFetchTransport(): MobilizeTransport {
       const res = await fetch(req.url, {
         method: req.method,
         headers: req.headers,
+        body: req.body,
         signal: controller.signal,
       });
       const headers: Record<string, string> = {};

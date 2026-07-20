@@ -1,5 +1,5 @@
 /**
- * V2.1 Mobilize Integration Foundation + prior mission unit validation (D1–D16).
+ * V2.1 Mobilize Event Publishing + prior mission unit validation (D1–D17).
  */
 import { spawnSync } from "node:child_process";
 import path from "node:path";

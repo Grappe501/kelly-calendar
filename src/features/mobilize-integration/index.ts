@@ -36,3 +36,4 @@ export {
   normalizePerson,
 } from "@/features/mobilize-integration/normalize";
 export type * from "@/features/mobilize-integration/types";
+export * from "@/features/mobilize-integration/publishing";

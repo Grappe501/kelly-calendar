@@ -97,11 +97,37 @@ export class MobilizeAdapter {
     return this.organizationId;
   }
 
-  private async getJson(pathOrAbsolute: string): Promise<Envelope> {
+  private resolveUrl(pathOrAbsolute: string): string {
     const url = pathOrAbsolute.startsWith("http")
       ? assertAllowlistedMobilizeUrl(pathOrAbsolute).toString()
       : `${this.baseUrl}${pathOrAbsolute.startsWith("/") ? "" : "/"}${pathOrAbsolute}`;
     assertAllowlistedMobilizeUrl(url);
+    return url;
+  }
+
+  private parseEnvelope(status: number, bodyText: string): Envelope {
+    let parsed: Envelope;
+    try {
+      parsed = JSON.parse(bodyText) as Envelope;
+    } catch {
+      throw new MobilizeTransportError({
+        message: "Malformed Mobilize JSON response.",
+        category: "PARSE",
+        status,
+      });
+    }
+    if (parsed.error) {
+      throw new MobilizeTransportError({
+        message: "Mobilize returned an error envelope.",
+        category: "VALIDATION",
+        status,
+      });
+    }
+    return parsed;
+  }
+
+  private async getJson(pathOrAbsolute: string): Promise<Envelope> {
+    const url = this.resolveUrl(pathOrAbsolute);
 
     const res = await withReadRetries(this.transport, {
       method: "GET",
@@ -116,25 +142,44 @@ export class MobilizeAdapter {
 
     if (res.status === 429) this.rateLimitObserved = true;
     if (res.status >= 400) throw classifyHttpError(res.status, res.bodyText);
+    return this.parseEnvelope(res.status, res.bodyText);
+  }
 
-    let parsed: Envelope;
-    try {
-      parsed = JSON.parse(res.bodyText) as Envelope;
-    } catch {
-      throw new MobilizeTransportError({
-        message: "Malformed Mobilize JSON response.",
-        category: "PARSE",
-        status: res.status,
-      });
+  /**
+   * Single-shot write — never blindly retries CREATE.
+   * Caller must handle UNKNOWN_REMOTE_OUTCOME on timeout.
+   */
+  private async writeJsonOnce(input: {
+    method: "POST" | "PUT" | "DELETE";
+    path: string;
+    body?: unknown;
+  }): Promise<{ status: number; envelope: Envelope | null; bodyText: string }> {
+    const url = this.resolveUrl(input.path);
+    const res = await this.transport({
+      method: input.method,
+      url,
+      headers: {
+        Authorization: `Bearer ${this.apiKey}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-Request-Id": this.correlationId,
+      },
+      body: input.body === undefined ? undefined : JSON.stringify(input.body),
+      timeoutMs: 30_000,
+    });
+    if (res.status === 429) this.rateLimitObserved = true;
+    if (res.status >= 400) throw classifyHttpError(res.status, res.bodyText);
+    if (input.method === "DELETE" && res.status === 200) {
+      return { status: res.status, envelope: null, bodyText: res.bodyText };
     }
-    if (parsed.error) {
-      throw new MobilizeTransportError({
-        message: "Mobilize returned an error envelope.",
-        category: "VALIDATION",
-        status: res.status,
-      });
+    if (!res.bodyText.trim()) {
+      return { status: res.status, envelope: null, bodyText: res.bodyText };
     }
-    return parsed;
+    return {
+      status: res.status,
+      envelope: this.parseEnvelope(res.status, res.bodyText),
+      bodyText: res.bodyText,
+    };
   }
 
   private mapPage<T>(
@@ -244,8 +289,77 @@ export class MobilizeAdapter {
       : {}) as Record<string, unknown>;
   }
 
-  /** Never calls write endpoints in D16. */
-  assertWritesDisabled(): void {
-    // intentional no-op marker for tests
+  /**
+   * Create organization event. Caller must gate by publishing flags.
+   * Does not retry — ambiguous timeouts must reconcile before any retry.
+   */
+  async createOrganizationEvent(
+    payload: Record<string, unknown>,
+  ): Promise<NormalizedMobilizeEvent> {
+    const result = await this.writeJsonOnce({
+      method: "POST",
+      path: `/organizations/${this.organizationId}/events`,
+      body: payload,
+    });
+    const raw = result.envelope?.data;
+    if (!raw || typeof raw !== "object") {
+      throw new MobilizeTransportError({
+        message: "Malformed Mobilize create response — no event object.",
+        category: "PARSE",
+        status: result.status,
+      });
+    }
+    const normalized = normalizeEvent(raw as Record<string, unknown>);
+    if (!normalized?.id) {
+      throw new MobilizeTransportError({
+        message: "Malformed Mobilize create response — missing event id.",
+        category: "PARSE",
+        status: result.status,
+      });
+    }
+    return normalized;
+  }
+
+  /**
+   * Update organization event. Full-document PUT per Mobilize docs.
+   * Does not blind-retry; caller revalidates fingerprints first.
+   */
+  async updateOrganizationEvent(
+    eventId: string,
+    payload: Record<string, unknown>,
+  ): Promise<NormalizedMobilizeEvent> {
+    const result = await this.writeJsonOnce({
+      method: "PUT",
+      path: `/organizations/${this.organizationId}/events/${eventId}?send_update_notifications=false`,
+      body: payload,
+    });
+    const raw = result.envelope?.data;
+    if (!raw || typeof raw !== "object") {
+      throw new MobilizeTransportError({
+        message: "Malformed Mobilize update response — no event object.",
+        category: "PARSE",
+        status: result.status,
+      });
+    }
+    const normalized = normalizeEvent(raw as Record<string, unknown>);
+    if (!normalized?.id) {
+      throw new MobilizeTransportError({
+        message: "Malformed Mobilize update response — missing event id.",
+        category: "PARSE",
+        status: result.status,
+      });
+    }
+    return normalized;
+  }
+
+  /**
+   * Delete is disabled by default at the application layer.
+   * Adapter method exists for guarded future use only.
+   */
+  async deleteOrganizationEvent(eventId: string): Promise<void> {
+    await this.writeJsonOnce({
+      method: "DELETE",
+      path: `/organizations/${this.organizationId}/events/${eventId}?send_update_notifications=false`,
+    });
   }
 }

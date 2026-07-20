@@ -9,7 +9,7 @@ type StatusPayload = {
     organizationIdConfigured: boolean;
     apiBaseUrl: string;
     importEventsEnabled: boolean;
-    outboundWritesEnabled: false;
+    outboundWritesEnabled: boolean;
     fullyConfigured: boolean;
     documentationRevision: string;
   };
@@ -28,7 +28,7 @@ type StatusPayload = {
       string,
       { documented: boolean; credentialTested: boolean; applicationEnabled: boolean }
     >;
-    outboundWritesForcedDisabled: true;
+    outboundWritesForcedDisabled: boolean;
     personLevelApplyEnabled: false;
   };
   documentation: {
@@ -168,6 +168,9 @@ export function MobilizeIntegrationPanel() {
           <Link className="button secondary" href="/system/integrations/mobilize/runs">
             Sync runs
           </Link>
+          <Link className="button" href="/system/integrations/mobilize/publishing">
+            Publishing
+          </Link>
         </div>
         {message ? <p>{message}</p> : null}
         {error ? <p role="alert">{error}</p> : null}
@@ -176,8 +179,9 @@ export function MobilizeIntegrationPanel() {
       <section className="panel">
         <h2>Capabilities</h2>
         <p className="muted">
-          Documented vs credential-tested vs application-enabled. Write
-          capabilities remain application-disabled in D16.
+          Documented vs credential-tested vs application-enabled. Create/update
+          require explicit env flags (D17). Delete stays disabled by default.
+          Person/attendance/affiliation/image writes remain forced off.
         </p>
         <ul>
           {caps.map(([name, tier]) => (
@@ -199,6 +203,11 @@ export function MobilizeIntegrationPanel() {
           <li>Person/attendance apply disabled pending consent-aware local model.</li>
           <li>API keys are never shown, logged, or returned by these routes.</li>
         </ul>
+        <div className="button-row">
+          <Link className="button" href="/system/integrations/mobilize/publishing">
+            Event publishing (D17)
+          </Link>
+        </div>
       </section>
     </div>
   );

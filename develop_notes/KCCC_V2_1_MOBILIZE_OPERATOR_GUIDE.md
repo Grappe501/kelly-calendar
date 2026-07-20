@@ -29,6 +29,6 @@
 2. Click **Apply selected** — registers `ExternalObjectReference` only.
 3. Does **not** create Missions or complete Execute/attendance.
 
-## Outbound publishing
+## Outbound publishing (D17)
 
-Disabled in D16. Do not enable write probes.
+Preview/approve at `/system/integrations/mobilize/publishing`. Network create/update require credentials plus `MOBILIZE_PUBLISHING_ENABLED` / `MOBILIZE_UPDATES_ENABLED`. See `KCCC_V2_1_MOBILIZE_PUBLISHING_OPERATOR_GUIDE.md`. Delete remains disabled. Do not probe write endpoints during verify.

@@ -21,7 +21,15 @@ const documentedOff = (): CapabilityTier => ({
 
 export function buildBaseCapabilityReport(
   state: MobilizeConnectionState,
+  flags?: {
+    publishingEnabled?: boolean;
+    updatesEnabled?: boolean;
+    deleteEnabled?: boolean;
+  },
 ): MobilizeCapabilityReport {
+  const publishing = flags?.publishingEnabled === true;
+  const updates = flags?.updatesEnabled === true;
+  const deletes = flags?.deleteEnabled === true;
   return {
     connectionState: state,
     organization: { id: null, name: null, slug: null },
@@ -36,18 +44,21 @@ export function buildBaseCapabilityReport(
       readAttendances: documentedOn(false),
       readEventAttendances: documentedOn(false),
       readEnums: documentedOn(false),
-      createEvents: documentedOff(),
-      updateEvents: documentedOff(),
-      deleteEvents: documentedOff(),
+      createEvents: documentedOn(publishing),
+      updateEvents: documentedOn(updates),
+      deleteEvents: documentedOn(deletes),
       createAttendances: documentedOff(),
       uploadImages: documentedOff(),
       createAffiliations: documentedOff(),
     },
-    outboundWritesForcedDisabled: true,
+    outboundWritesForcedDisabled: !(publishing || updates),
     personLevelApplyEnabled: false,
     attendanceApplyEnabled: false,
+    affiliationWritesEnabled: false,
+    imageUploadsEnabled: false,
     documentationRevision: MOBILIZE_DOCS.documentationRevisionShort,
     adapterVersion: MOBILIZE_DOCS.adapterVersion,
+    mappingVersion: MOBILIZE_DOCS.mappingVersion,
   };
 }
 
@@ -71,12 +82,19 @@ export async function discoverMobilizeCapabilities(input: {
   adapter: MobilizeAdapter;
   importEventsEnabled: boolean;
   expectedOrganizationId: string;
+  publishingEnabled?: boolean;
+  updatesEnabled?: boolean;
+  deleteEnabled?: boolean;
 }): Promise<MobilizeCapabilityReport> {
-  const report = buildBaseCapabilityReport("CONFIGURED_UNVERIFIED");
+  const report = buildBaseCapabilityReport("CONFIGURED_UNVERIFIED", {
+    publishingEnabled: input.publishingEnabled,
+    updatesEnabled: input.updatesEnabled,
+    deleteEnabled: input.deleteEnabled,
+  });
   report.organization.id = input.expectedOrganizationId;
 
   try {
-    // Safe probe: list org events (authenticated org scope).
+    // Safe probe: list org events (authenticated org scope). Never probe writes.
     const eventsPage = await input.adapter.listOrganizationEvents({ perPage: 1 });
     report.capabilities.readOrganizationEvents = markTested(
       report.capabilities.readOrganizationEvents,
@@ -147,7 +165,24 @@ export async function discoverMobilizeCapabilities(input: {
       // leave untested
     }
 
-    // Optional org name from first event sponsor if present — keep null-safe.
+    // Create/update/delete remain credential-tested:false until a real write succeeds
+    // under operator-enabled flags — never probe write endpoints to discover permission.
+    report.capabilities.createEvents = {
+      documented: true,
+      credentialTested: false,
+      applicationEnabled: Boolean(input.publishingEnabled),
+    };
+    report.capabilities.updateEvents = {
+      documented: true,
+      credentialTested: false,
+      applicationEnabled: Boolean(input.updatesEnabled),
+    };
+    report.capabilities.deleteEvents = {
+      documented: true,
+      credentialTested: false,
+      applicationEnabled: Boolean(input.deleteEnabled),
+    };
+
     void eventsPage;
     report.connectionState = input.adapter.rateLimitObserved
       ? "DEGRADED"

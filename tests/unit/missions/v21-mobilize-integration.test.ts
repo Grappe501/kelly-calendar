@@ -64,6 +64,10 @@ describe("V2.1 Mobilize Integration Foundation", () => {
       organizationId: null,
       apiBaseUrl: MOBILIZE_DOCS.apiBaseUrl,
       importEventsEnabled: false,
+      publishingEnabled: false,
+      updatesEnabled: false,
+      deleteEnabled: false,
+      defaultContactEmail: null,
       campaignScopeKey: "KELLY",
     });
     expect(status.fullyConfigured).toBe(false);

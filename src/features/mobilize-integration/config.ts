@@ -9,6 +9,10 @@ export type MobilizeIntegrationEnv = {
   organizationId: string | null;
   apiBaseUrl: string;
   importEventsEnabled: boolean;
+  publishingEnabled: boolean;
+  updatesEnabled: boolean;
+  deleteEnabled: boolean;
+  defaultContactEmail: string | null;
   campaignScopeKey: string;
 };
 
@@ -35,7 +39,6 @@ export function resolveMobilizeApiBaseUrl(raw: string | undefined): string {
   ) {
     throw new Error("MOBILIZE_API_BASE_URL host is not allowlisted.");
   }
-  // Normalize to .../v1 without trailing slash
   const path = url.pathname.replace(/\/$/, "") || "/v1";
   return `${url.origin}${path.endsWith("/v1") ? path : `${path}/v1`}`.replace(
     /\/v1\/v1$/,
@@ -51,19 +54,38 @@ export function getMobilizeIntegrationEnv(): MobilizeIntegrationEnv {
     organizationId: env.MOBILIZE_ORGANIZATION_ID?.trim() || null,
     apiBaseUrl: resolveMobilizeApiBaseUrl(env.MOBILIZE_API_BASE_URL),
     importEventsEnabled: truthy(env.MOBILIZE_IMPORT_EVENTS_ENABLED),
+    publishingEnabled: truthy(env.MOBILIZE_PUBLISHING_ENABLED),
+    updatesEnabled: truthy(env.MOBILIZE_UPDATES_ENABLED),
+    /** Default false — never enable from absence. */
+    deleteEnabled: truthy(env.MOBILIZE_DELETE_ENABLED),
+    defaultContactEmail: env.MOBILIZE_DEFAULT_CONTACT_EMAIL?.trim() || null,
     campaignScopeKey: MOBILIZE_CAMPAIGN_SCOPE,
   };
 }
 
 export function mobilizeConfigStatus(env = getMobilizeIntegrationEnv()) {
+  const networkWritesPossible = Boolean(env.apiKey && env.organizationId);
   return {
     apiKeyConfigured: Boolean(env.apiKey),
     organizationIdConfigured: Boolean(env.organizationId),
     apiBaseUrl: env.apiBaseUrl,
     importEventsEnabled: env.importEventsEnabled,
-    outboundWritesEnabled: false as const,
+    publishingEnabled: env.publishingEnabled,
+    updatesEnabled: env.updatesEnabled,
+    deleteEnabled: env.deleteEnabled,
+    defaultContactEmailConfigured: Boolean(env.defaultContactEmail),
+    /** Application may enable create/update only when flags + credentials exist. */
+    outboundWritesEnabled: Boolean(
+      networkWritesPossible && (env.publishingEnabled || env.updatesEnabled),
+    ),
+    networkPublishingAvailable: Boolean(
+      networkWritesPossible && env.publishingEnabled,
+    ),
+    networkUpdatesAvailable: Boolean(networkWritesPossible && env.updatesEnabled),
+    networkDeleteAvailable: Boolean(networkWritesPossible && env.deleteEnabled),
     fullyConfigured: Boolean(env.apiKey && env.organizationId),
     documentationRevision: MOBILIZE_DOCS.documentationRevisionShort,
     adapterVersion: MOBILIZE_DOCS.adapterVersion,
+    mappingVersion: MOBILIZE_DOCS.mappingVersion,
   };
 }

@@ -53,11 +53,15 @@ export type MobilizeCapabilityReport = {
     uploadImages: CapabilityTier;
     createAffiliations: CapabilityTier;
   };
-  outboundWritesForcedDisabled: true;
+  /** True when neither create nor update application flags are on. */
+  outboundWritesForcedDisabled: boolean;
   personLevelApplyEnabled: false;
   attendanceApplyEnabled: false;
+  affiliationWritesEnabled: false;
+  imageUploadsEnabled: false;
   documentationRevision: string;
   adapterVersion: string;
+  mappingVersion: string;
 };
 
 export type NormalizedUnknownEnum = string;

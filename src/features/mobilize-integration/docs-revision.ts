@@ -1,9 +1,11 @@
 /**
- * Official Mobilize API documentation inspection record (D16).
+ * Official Mobilize API documentation inspection record (D16 + D17 write surface).
  * Source: https://github.com/mobilizeamerica/api
+ * Reverified for D17 without implementing from memory.
  */
 export const MOBILIZE_DOCS = {
   inspectionDate: "2026-07-20",
+  d17InspectionDate: "2026-07-20",
   repository: "https://github.com/mobilizeamerica/api",
   documentationRevision: "1025d0f8920f9484f4e68368c0f403c8b68a3e92",
   documentationRevisionShort: "1025d0f",
@@ -35,15 +37,112 @@ export const MOBILIZE_DOCS = {
     "GET /v1/organizations/:organization_id/events/:event_id/attendances",
     "GET /v1/enums",
   ],
+  writeEndpoints: {
+    createEvent: "POST /v1/organizations/:organization_id/events",
+    updateEvent: "PUT /v1/organizations/:organization_id/events/:event_id",
+    deleteEvent: "DELETE /v1/organizations/:organization_id/events/:event_id",
+    createAttendance:
+      "POST /v1/organizations/:organization_id/events/:event_id/attendances",
+    createAffiliation: "POST /v1/organizations/:organization_id/affiliations",
+    uploadImage: "POST /v1/images",
+    status: "RESTRICTED — request access from Mobilize support",
+  },
   writeEndpointsDocumentedNotEnabled: [
-    "POST /v1/organizations/:organization_id/events",
-    "PUT /v1/organizations/:organization_id/events/:event_id",
-    "DELETE /v1/organizations/:organization_id/events/:event_id",
     "POST /v1/organizations/:organization_id/events/:event_id/attendances",
     "POST /v1/organizations/:organization_id/affiliations",
     "POST /v1/images",
   ],
-  adapterVersion: "kccc-mobilize-adapter-d16.1",
+  createRequiredFields: [
+    "title",
+    "description",
+    "timeslots",
+    "timezone",
+    "event_type",
+    "visibility",
+    "contact",
+  ] as const,
+  createOptionalFields: [
+    "location",
+    "is_virtual",
+    "virtual_action_url",
+    "address_visibility",
+    "accessibility_status",
+    "accessibility_notes",
+    "featured_image_url",
+    "tag_ids",
+    "instructions",
+    "high_priority",
+  ] as const,
+  /** Write-time event_type set from Create event docs (ADVOCACY_CALL not supported on create). */
+  writableEventTypes: [
+    "CANVASS",
+    "PHONE_BANK",
+    "TEXT_BANK",
+    "MEETING",
+    "COMMUNITY",
+    "FUNDRAISER",
+    "OTHER",
+    "MEET_GREET",
+    "HOUSE_PARTY",
+    "VOTER_REG",
+    "TRAINING",
+    "FRIEND_TO_FRIEND_OUTREACH",
+    "DEBATE_WATCH_PARTY",
+    "RALLY",
+    "TOWN_HALL",
+    "OFFICE_OPENING",
+    "BARNSTORM",
+    "SOLIDARITY_EVENT",
+    "COMMUNITY_CANVASS",
+    "SIGNATURE_GATHERING",
+    "CARPOOL",
+    "WORKSHOP",
+    "PETITION",
+    "AUTOMATED_PHONE_BANK",
+    "LETTER_WRITING",
+    "LITERATURE_DROP_OFF",
+    "VISIBILITY_EVENT",
+    "PLEDGE",
+    "INTEREST_FORM",
+    "DONATION_CAMPAIGN",
+    "SOCIAL_MEDIA_CAMPAIGN",
+    "POSTCARD_WRITING",
+    "GROUP",
+    "VOLUNTEER_SHIFT",
+  ] as const,
+  /** Create timezone allowlist from docs. */
+  writableTimezones: [
+    "America/New_York",
+    "Pacific/Honolulu",
+    "America/Los_Angeles",
+    "America/Denver",
+    "America/Phoenix",
+    "America/Chicago",
+  ] as const,
+  visibilityValues: ["PUBLIC", "PRIVATE"] as const,
+  addressVisibilityValues: ["PUBLIC", "PRIVATE"] as const,
+  accessibilityStatusValues: [
+    "ACCESSIBLE",
+    "NOT_ACCESSIBLE",
+    "NOT_SURE",
+  ] as const,
+  updateNotes: [
+    "All editable fields must be specified or timeslots/tags may be removed / nulled.",
+    "Upcoming timeslots omitted from PUT timeslots array are deleted by Mobilize.",
+    "Timeslots with id update; new timeslots omit id.",
+    "Past timeslots are not modified by update.",
+    "is_virtual cannot be updated after creation.",
+  ] as const,
+  privateInstructionBehavior:
+    "instructions are private attendee instructions after signup — not public description.",
+  imageRequirements:
+    "featured_image_url must be a Mobilize-hosted URL from POST /v1/images (D17 leaves image upload disabled).",
+  contactFieldNote:
+    "Contact object table in docs has typo email_adddress; request examples use email_address — KCCC sends email_address.",
+  liveBehaviorUnknownWithoutCredentials:
+    "No live write credential-testing performed without an API key. Restricted write endpoints may 403 until Mobilize grants access.",
+  adapterVersion: "kccc-mobilize-adapter-d17.1",
+  mappingVersion: "kccc-mobilize-map-d17.1",
 } as const;
 
 export const MOBILIZE_CAMPAIGN_SCOPE = "KELLY";
