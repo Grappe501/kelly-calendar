@@ -27,6 +27,9 @@ export default async function MissionDetailPage({ params, searchParams }: Ctx) {
   if (mode === "execute") {
     redirect(`/system/missions/${missionId}/execute`);
   }
+  if (mode === "debrief") {
+    redirect(`/system/missions/${missionId}/debrief`);
+  }
 
   await requireSystemAdminPage(`/system/missions/${missionId}`);
   const mission = await getMissionHomeViewModelById(missionId);

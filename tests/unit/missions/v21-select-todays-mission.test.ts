@@ -242,10 +242,13 @@ describe("V2.1 Today’s Mission selection", () => {
   it("operational status does not replace lifecycle phase in CTAs", () => {
     const prepare = primaryActionForPhase("m1", "PREPARE");
     const execute = primaryActionForPhase("m1", "EXECUTE");
+    const debrief = primaryActionForPhase("m1", "DEBRIEF");
     expect(prepare.label).toBe("Open Mission Brief");
     expect(execute.label).toBe("Open Execute Mode");
+    expect(debrief.label).toBe("Start Debrief");
     expect(prepare.href).toBe("/system/missions/m1/prepare");
     expect(execute.href).toBe("/system/missions/m1/execute");
+    expect(debrief.href).toBe("/system/missions/m1/debrief");
   });
 
   it("sets next mission after primary without listing everything", () => {

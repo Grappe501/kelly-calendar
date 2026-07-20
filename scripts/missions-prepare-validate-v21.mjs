@@ -18,6 +18,7 @@ const result = spawnSync(
     "tests/unit/missions/v21-select-todays-mission.test.ts",
     "tests/unit/missions/v21-prepare-mode.test.ts",
     "tests/unit/missions/v21-execute-mode.test.ts",
+    "tests/unit/missions/v21-debrief-mode.test.ts",
   ],
   { cwd: root, stdio: "inherit", env: process.env },
 );

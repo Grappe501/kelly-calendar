@@ -109,6 +109,7 @@
     "missions:v21:validate": "node scripts/missions-validate-v21.mjs",
     "missions:v21:prepare:validate": "node scripts/missions-prepare-validate-v21.mjs",
     "missions:v21:execute:validate": "node scripts/missions-execute-validate-v21.mjs",
+    "missions:v21:debrief:validate": "node scripts/missions-debrief-validate-v21.mjs",
     "missions:v21:backfill": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs",
     "missions:v21:backfill:apply": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs --apply",
     "campaign:routes:doctor": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-doctor.mjs",

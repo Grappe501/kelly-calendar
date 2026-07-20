@@ -2,6 +2,7 @@ import {
   labelMissionLifecyclePhase,
   labelMissionOperationalStatus,
 } from "@/lib/missions/v21/labels";
+import type { MissionDebriefStatus } from "@/lib/missions/v21/debrief/types";
 import type {
   CampaignMission,
   MissionLifecyclePhase,
@@ -256,12 +257,12 @@ function intelligenceSections(
 }
 
 /**
- * Phase CTAs. Prepare Mode is real at /prepare; other phases remain forthcoming
- * placeholders via ?mode= (honest notes, not fake controls).
+ * Phase CTAs. Prepare / Execute / Debrief are real workspaces; Travel and Follow-up remain forthcoming.
  */
 export function primaryActionForPhase(
   missionId: string,
   phase: MissionLifecyclePhase,
+  options?: { debriefStatus?: MissionDebriefStatus | null },
 ): MissionHomePrimaryAction {
   const detail = `/system/missions/${missionId}`;
   switch (phase) {
@@ -287,14 +288,21 @@ export function primaryActionForPhase(
         available: true,
         forthcomingNote: null,
       };
-    case "DEBRIEF":
+    case "DEBRIEF": {
+      const status = options?.debriefStatus ?? null;
+      const label =
+        status === "IN_PROGRESS" ||
+        status === "COMPLETED" ||
+        status === "APPROVED"
+          ? "Continue Debrief"
+          : "Start Debrief";
       return {
-        label: "Start Debrief",
-        href: `${detail}?mode=debrief`,
+        label,
+        href: `${detail}/debrief`,
         available: true,
-        forthcomingNote:
-          "Debrief capture is forthcoming — this opens the mission record.",
+        forthcomingNote: null,
       };
+    }
     case "FOLLOW_UP":
       return {
         label: "Review Follow-ups",
@@ -320,6 +328,7 @@ export function toMissionHomeViewModel(input: {
   lifecyclePhase: MissionLifecyclePhase;
   travelRequired: boolean;
   campaignTimezone?: string;
+  debriefStatus?: MissionDebriefStatus | null;
 }): MissionHomeViewModel {
   const { mission, lifecyclePhase, travelRequired } = input;
   if (!mission.id) {
@@ -349,7 +358,9 @@ export function toMissionHomeViewModel(input: {
     successCriteria: mission.successCriteria.map((c) => c.text),
     readiness,
     intelligence: { hasAny, sections },
-    primaryAction: primaryActionForPhase(mission.id, lifecyclePhase),
+    primaryAction: primaryActionForPhase(mission.id, lifecyclePhase, {
+      debriefStatus: input.debriefStatus ?? null,
+    }),
     detailHref: `/system/missions/${mission.id}`,
     projectionVersion: mission.projectionVersion,
     projectedAt: mission.projectedAt,

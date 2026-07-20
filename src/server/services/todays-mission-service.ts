@@ -9,6 +9,7 @@ import {
   type TodaysMissionResult,
 } from "@/lib/missions/v21/mission-home-view-model";
 import { selectTodaysMission } from "@/lib/missions/v21/select-todays-mission";
+import { getDebriefStatusByMissionId } from "@/server/repositories/mission-debrief-repository";
 import {
   campaignMissionFromRow,
   getCampaignMissionById,
@@ -40,11 +41,17 @@ async function buildViewModelForRow(
     followupCount: row.sourceEvent.followups.length,
     now,
   });
+  const debriefStatus =
+    lifecyclePhase === "DEBRIEF" && mission.id
+      ? await getDebriefStatusByMissionId(mission.id)
+      : null;
+
   return toMissionHomeViewModel({
     mission,
     lifecyclePhase,
     travelRequired,
     campaignTimezone,
+    debriefStatus,
   });
 }
 
@@ -148,10 +155,15 @@ export async function getMissionHomeViewModelById(
     now,
   });
   const timezone = getPublicAppConfig().campaignTimezone;
+  const debriefStatus =
+    lifecyclePhase === "DEBRIEF" && mission.id
+      ? await getDebriefStatusByMissionId(mission.id)
+      : null;
   return toMissionHomeViewModel({
     mission,
     lifecyclePhase,
     travelRequired,
     campaignTimezone: timezone,
+    debriefStatus,
   });
 }

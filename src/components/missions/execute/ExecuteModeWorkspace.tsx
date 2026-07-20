@@ -200,9 +200,9 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           </p>
           <Link
             className="button"
-            href={`/system/missions/${mission.missionId}?mode=debrief`}
+            href={`/system/missions/${mission.missionId}/debrief`}
           >
-            Continue to Debrief (forthcoming)
+            Open Debrief
           </Link>
         </section>
       ) : null}

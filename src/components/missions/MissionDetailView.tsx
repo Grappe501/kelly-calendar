@@ -11,7 +11,6 @@ type Props = {
 
 const MODE_NOTES: Record<string, string> = {
   travel: "Travel Mode is forthcoming. This page is the mission record.",
-  debrief: "Debrief capture is forthcoming. This page is the mission record.",
   "follow-up":
     "Follow-up task generation is forthcoming. This page is the mission record.",
 };
@@ -102,6 +101,12 @@ export function MissionDetailView({ mission, mode }: Props) {
           href={`/system/missions/${mission.missionId}/execute`}
         >
           Open Execute Mode
+        </Link>
+        <Link
+          className="button secondary"
+          href={`/system/missions/${mission.missionId}/debrief`}
+        >
+          Open Debrief Mode
         </Link>
         <Link className="button secondary" href="/">
           Back to Today’s Mission

@@ -1965,6 +1965,27 @@ enum MissionExecutionStatus {
   @@schema("kelly_calendar")
 }
 
+/// V2.1 Debrief Mode review status — distinct from lifecycle, ops, prep readiness, and execution status.
+enum MissionDebriefStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  APPROVED
+
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 human outcome assessment — never inferred from attendance or execution completion.
+enum MissionOutcomeAssessment {
+  NOT_ASSESSED
+  ACHIEVED
+  PARTIALLY_ACHIEVED
+  NOT_ACHIEVED
+  INCONCLUSIVE
+
+  @@schema("kelly_calendar")
+}
+
 enum GoogleConnectionStatus {
   NOT_CONNECTED
   CONNECTED
@@ -2110,6 +2131,7 @@ model CampaignMission {
   sourceEvent  Event               @relation(fields: [sourceEventId], references: [id], onDelete: Restrict)
   preparation  MissionPreparation?
   execution    MissionExecution?
+  debrief      MissionDebrief?
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
@@ -2190,5 +2212,44 @@ model MissionExecution {
   mission CampaignMission @relation(fields: [missionId], references: [id], onDelete: Cascade)
 
   @@index([executionStatus])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Debrief Mode — after-action review (1:1 with CampaignMission).
+/// Additive. Never stores Event schedule fields. Survives Mission reprojection.
+/// Does not overwrite MissionPreparation or MissionExecution content.
+model MissionDebrief {
+  id                   String                   @id @default(cuid())
+  missionId            String                   @unique
+  debriefStatus        MissionDebriefStatus     @default(NOT_STARTED)
+  outcomeAssessment    MissionOutcomeAssessment @default(NOT_ASSESSED)
+  outcomeSummary       String?
+  criterionAssessments Json                     @default("[]")
+  peopleOutcomes       Json                     @default("[]")
+  organizationOutcomes Json                     @default("[]")
+  commitmentReviews    Json                     @default("[]")
+  followUpReviews      Json                     @default("[]")
+  whatWorked           Json                     @default("[]")
+  whatDidNotWork       Json                     @default("[]")
+  lessonsLearned       Json                     @default("[]")
+  strategicInsights    Json                     @default("[]")
+  unresolvedQuestions  Json                     @default("[]")
+  recommendedNextSteps Json                     @default("[]")
+  internalNotes        String?
+  startedAt            DateTime?
+  completedAt          DateTime?
+  approvedAt           DateTime?
+  startedByUserId      String?
+  completedByUserId    String?
+  approvedByUserId     String?
+  createdByUserId      String?
+  updatedByUserId      String?
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+
+  mission CampaignMission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+
+  @@index([debriefStatus])
+  @@index([outcomeAssessment])
   @@schema("kelly_calendar")
 }
