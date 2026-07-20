@@ -11,7 +11,12 @@ import {
 import { labelPreparationReadiness } from "@/lib/missions/v21/preparation/labels";
 
 function departureOf(m: DayBriefingMissionSnapshot): string | null {
-  return m.eventDepartureAt ?? m.travelPlan?.departureAt ?? null;
+  return (
+    m.missionTravelPlan?.plannedDepartureAt ??
+    m.eventDepartureAt ??
+    m.travelPlan?.departureAt ??
+    null
+  );
 }
 
 export function buildTomorrowMissionItem(

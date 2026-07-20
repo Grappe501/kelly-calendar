@@ -88,6 +88,9 @@ export function CampaignDayBriefing({ model }: Props) {
           <Link href={`/system/briefing/${model.briefingDate}/launch`}>
             Launch Today
           </Link>
+          <Link href={`/system/briefing/${model.briefingDate}/movement`}>
+            Day Movement
+          </Link>
           <Link href={`/system/briefing/${model.briefingDate}/closeout`}>
             Close Out Today
           </Link>

@@ -32,7 +32,12 @@ function ackStatus(
 }
 
 function departureOf(m: DayBriefingMissionSnapshot): string | null {
-  return m.eventDepartureAt ?? m.travelPlan?.departureAt ?? null;
+  return (
+    m.missionTravelPlan?.plannedDepartureAt ??
+    m.eventDepartureAt ??
+    m.travelPlan?.departureAt ??
+    null
+  );
 }
 
 export function selectFirstMission(
@@ -167,6 +172,34 @@ export function buildOvernightChanges(input: {
 
   const first = input.firstMission;
   if (first) {
+    if (
+      first.travelRequired &&
+      (!first.missionTravelPlan ||
+        first.missionTravelPlan.status === "INACTIVE" ||
+        first.missionTravelPlan.status === "CANCELLED")
+    ) {
+      const key = acknowledgementImportKey(
+        "TRAVEL",
+        "CAMPAIGN_MISSION",
+        `${first.missionId}:no-mission-travel-plan`,
+      );
+      items.push({
+        id: key,
+        category: "TRAVEL",
+        categoryLabel: labelOvernightCategory("TRAVEL"),
+        title: `No Mission travel plan for ${first.title}`,
+        missionId: first.missionId,
+        missionTitle: first.title,
+        previousValue: null,
+        currentValue: "Mission travel plan absent",
+        changeAt: null,
+        severity: "CRITICAL",
+        severityLabel: labelSeverity("CRITICAL"),
+        href: `/system/missions/${first.missionId}/travel`,
+        acknowledgementImportKey: key,
+        acknowledgementStatus: ackStatus(acks, key),
+      });
+    }
     if (!first.preparation.exists || first.preparation.readiness === "NEEDS_ATTENTION") {
       const key = acknowledgementImportKey(
         "FIRST_MISSION_PREPARATION",

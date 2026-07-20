@@ -123,6 +123,7 @@ export function MissionCommandCenter({ model }: Props) {
           <Link href="/">Today’s Mission</Link>
           <Link href="/system/briefing/today">Today’s Briefing</Link>
           <Link href="/system/briefing/launch">Morning Launch Review</Link>
+          <Link href="/system/briefing/movement">Day Movement</Link>
           <Link href="/system/briefing/closeout">Day Closeout</Link>
           <Link href="/calendar">Calendar</Link>
           <Link href="/system/missions">Mission index</Link>

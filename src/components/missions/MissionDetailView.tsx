@@ -9,9 +9,7 @@ type Props = {
   mode: string | null;
 };
 
-const MODE_NOTES: Record<string, string> = {
-  travel: "Travel Mode is forthcoming. This page is the mission record.",
-};
+const MODE_NOTES: Record<string, string> = {};
 
 export function MissionDetailView({ mission, mode }: Props) {
   const modeNote = mode ? MODE_NOTES[mode] ?? null : null;
@@ -34,6 +32,19 @@ export function MissionDetailView({ mission, mode }: Props) {
         </p>
         <p className="muted">{mission.whenLabel}</p>
         <p className="muted">{mission.locationLabel ?? "Location unknown"}</p>
+        <p className="todays-mission-header-links">
+          <Link href={`/system/missions/${mission.missionId}/prepare`}>
+            Prepare
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <Link href={`/system/missions/${mission.missionId}/execute`}>
+            Execute
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <Link href={`/system/missions/${mission.missionId}/travel`}>
+            Travel
+          </Link>
+        </p>
       </header>
 
       {modeNote ? (

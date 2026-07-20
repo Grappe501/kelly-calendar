@@ -183,7 +183,10 @@ export function buildCarryForwardSuggestions(input: {
       });
     }
     const departure =
-      m.eventDepartureAt ?? m.travelPlan?.departureAt ?? null;
+      m.missionTravelPlan?.plannedDepartureAt ??
+      m.eventDepartureAt ??
+      m.travelPlan?.departureAt ??
+      null;
     if (m.travelRequired && !departure) {
       const key = carryForwardImportKey("TOMORROW_TRAVEL", m.missionId);
       out.push({

@@ -2185,6 +2185,7 @@ model CampaignMission {
   execution    MissionExecution?
   debrief      MissionDebrief?
   followUp     MissionFollowUp?
+  travelPlan   MissionTravelPlan?
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
@@ -2612,5 +2613,166 @@ model CampaignDayLaunchAcknowledgement {
   @@unique([launchReviewId, importKey])
   @@index([launchReviewId, status])
   @@index([acknowledgementType])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Travel and Movement Operations — Mission-owned travel support metadata.
+/// Does not mutate Event schedule or Mission lifecycle. Manual input only (no maps/routing).
+enum MissionTravelPlanStatus {
+  DRAFT
+  ACTIVE
+  READY
+  NEEDS_REVIEW
+  INACTIVE
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionTravelReadiness {
+  NOT_ASSESSED
+  READY
+  READY_WITH_ACCEPTED_RISK
+  NOT_READY
+  NOT_REQUIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionTravelMode {
+  UNSPECIFIED
+  DRIVE
+  WALK
+  FLIGHT
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionTravelLegStatus {
+  PLANNED
+  CONFIRMED
+  SKIPPED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionTravelIssueType {
+  NO_PLAN
+  MISSING_DEPARTURE
+  MISSING_DESTINATION
+  MISSING_DRIVER
+  MISSING_VEHICLE
+  ARRIVAL_AFTER_MISSION_START
+  TIME_CONFLICT
+  LEG_INCOMPLETE
+  LEG_ORDER
+  MOVEMENT_OVERLAP
+  MISSING_BUFFER
+  STALE_AFTER_RESCHEDULE
+  CANCELLED_MISSION_ACTIVE_PLAN
+  CROSS_MIDNIGHT_AMBIGUITY
+  PREP_INCOMPLETE
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionTravelAcknowledgementDisposition {
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+/// Optional 1:1 travel plan for a CampaignMission. Lazy-created on intentional write only.
+model MissionTravelPlan {
+  id                    String                 @id @default(cuid())
+  missionId             String                 @unique
+  campaignDateKey       String
+  status                MissionTravelPlanStatus @default(DRAFT)
+  readinessState        MissionTravelReadiness  @default(NOT_ASSESSED)
+  /// Explicit operator flag. When null, detection may fall back to Event travelRequired.
+  movementRequired      Boolean?
+  plannedReadyAt        DateTime?
+  plannedDepartureAt    DateTime?
+  requiredArrivalAt     DateTime?
+  bufferMinutes         Int?
+  driverRequired        Boolean                @default(false)
+  vehicleRequired       Boolean                @default(false)
+  driverName            String?
+  driverUserId          String?
+  vehicleDescription    String?
+  passengerNotes        String?
+  accessibilityNotes    String?
+  securityNotes         String?
+  logisticsNotes        String?
+  acceptedRiskSummary   String?
+  internalNotes         String?
+  /// Mission startsAt|endsAt fingerprint at last operator confirmation.
+  scheduleFingerprint   String?
+  confirmedAt           DateTime?
+  confirmedByUserId     String?
+  createdByUserId       String?
+  updatedByUserId       String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  mission          CampaignMission                 @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  legs             MissionTravelLeg[]
+  acknowledgements MissionTravelAcknowledgement[]
+
+  @@index([campaignDateKey])
+  @@index([status])
+  @@index([readinessState])
+  @@schema("kelly_calendar")
+}
+
+model MissionTravelLeg {
+  id                 String                @id @default(cuid())
+  travelPlanId       String
+  sequence           Int
+  originLabel        String?
+  destinationLabel   String?
+  plannedDepartureAt DateTime?
+  plannedArrivalAt   DateTime?
+  mode               MissionTravelMode     @default(UNSPECIFIED)
+  driverName         String?
+  vehicleDescription String?
+  bufferMinutes      Int?
+  instructions       String?
+  status             MissionTravelLegStatus @default(PLANNED)
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+
+  travelPlan MissionTravelPlan @relation(fields: [travelPlanId], references: [id], onDelete: Cascade)
+
+  @@unique([travelPlanId, sequence])
+  @@index([travelPlanId])
+  @@schema("kelly_calendar")
+}
+
+model MissionTravelAcknowledgement {
+  id                   String                                   @id @default(cuid())
+  travelPlanId         String
+  issueKey             String
+  issueType            MissionTravelIssueType
+  title                String
+  disposition          MissionTravelAcknowledgementDisposition
+  note                 String?
+  acceptedRiskReason   String?
+  acknowledgedAt       DateTime                                 @default(now())
+  acknowledgedByUserId String?
+  createdAt            DateTime                                 @default(now())
+  updatedAt            DateTime                                 @updatedAt
+
+  travelPlan MissionTravelPlan @relation(fields: [travelPlanId], references: [id], onDelete: Cascade)
+
+  @@unique([travelPlanId, issueKey])
+  @@index([travelPlanId, disposition])
+  @@index([issueType])
   @@schema("kelly_calendar")
 }

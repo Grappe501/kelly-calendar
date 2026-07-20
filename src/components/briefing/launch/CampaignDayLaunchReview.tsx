@@ -34,6 +34,9 @@ export function CampaignDayLaunchReview({ model }: Props) {
           <Link href={model.navigation.closeoutHref}>Prior Closeout</Link>
           <Link href={model.navigation.todaysMissionHref}>Today’s Mission</Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>
+          <Link href={`/system/briefing/${model.campaignDate}/movement`}>
+            Day Movement
+          </Link>
           <Link href={model.navigation.reportHref}>Report</Link>
         </nav>
       </header>
@@ -146,6 +149,10 @@ export function CampaignDayLaunchReview({ model }: Props) {
               </p>
             ) : null}
             <Link href={model.firstMission.href}>Open Mission workspace</Link>
+            {" · "}
+            <Link href={`/system/missions/${model.firstMission.missionId}/travel`}>
+              Open Travel
+            </Link>
           </>
         )}
       </section>

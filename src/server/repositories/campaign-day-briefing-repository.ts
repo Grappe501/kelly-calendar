@@ -127,6 +127,13 @@ function mapRow(row: {
       relatedOrganizationName: string | null;
     }>;
   } | null;
+  travelPlan: {
+    status: string;
+    plannedDepartureAt: Date | null;
+    requiredArrivalAt: Date | null;
+    bufferMinutes: number | null;
+    movementRequired: boolean | null;
+  } | null;
 }, now: Date): DayBriefingMissionSnapshot {
   const travelRequired = row.sourceEvent.travelPlans.some((t) => t.travelRequired);
   const plan = row.sourceEvent.travelPlans[0] ?? null;
@@ -208,6 +215,18 @@ function mapRow(row: {
           targetArrivalAt: plan.targetArrivalAt?.toISOString() ?? null,
           estimatedDurationMinutes: plan.estimatedDurationMinutes,
           parkingInstructions: plan.parkingInstructions,
+        }
+      : null,
+    missionTravelPlan: row.travelPlan
+      ? {
+          exists: true,
+          status: row.travelPlan.status,
+          plannedDepartureAt:
+            row.travelPlan.plannedDepartureAt?.toISOString() ?? null,
+          requiredArrivalAt:
+            row.travelPlan.requiredArrivalAt?.toISOString() ?? null,
+          bufferMinutes: row.travelPlan.bufferMinutes,
+          movementRequired: row.travelPlan.movementRequired,
         }
       : null,
     preparation: {
@@ -412,6 +431,15 @@ export async function loadMissionsForDayBriefing(options: {
             take: 60,
             orderBy: [{ dueAt: "asc" }, { id: "asc" }],
           },
+        },
+      },
+      travelPlan: {
+        select: {
+          status: true,
+          plannedDepartureAt: true,
+          requiredArrivalAt: true,
+          bufferMinutes: true,
+          movementRequired: true,
         },
       },
     },

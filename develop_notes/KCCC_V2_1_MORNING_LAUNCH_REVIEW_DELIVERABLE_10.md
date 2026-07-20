@@ -157,4 +157,8 @@ KCCC_ALLOW_SCHEMA_MIGRATION=1 node scripts/apply-day-launch-migration.mjs
 
 ## Recommended Deliverable 11
 
-**Travel and Movement Operations Layer** — Mission-linked departure plans, travel legs, buffers, drivers, vehicles, lodging transitions, parking, access instructions, and arrival confirmation — without external maps or automatic routing in v1.
+Superseded by Deliverable 11 (Travel and Movement Operations). See `KCCC_V2_1_TRAVEL_MOVEMENT_OPERATIONS_DELIVERABLE_11.md`.
+
+## Recommended Deliverable 12
+
+**Mission Logistics Pack / Field Kit Layer** — packing lists, materials handoff, charging/equipment check, and day-of kit confirmation tied to Mission travel without external inventory systems.

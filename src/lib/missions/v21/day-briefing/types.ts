@@ -357,6 +357,15 @@ export type DayBriefingMissionSnapshot = {
     estimatedDurationMinutes: number | null;
     parkingInstructions: string | null;
   } | null;
+  /** V2.1 Mission-owned travel plan (D11). Null when not created. */
+  missionTravelPlan: {
+    exists: boolean;
+    status: string | null;
+    plannedDepartureAt: string | null;
+    requiredArrivalAt: string | null;
+    bufferMinutes: number | null;
+    movementRequired: boolean | null;
+  } | null;
   preparation: {
     exists: boolean;
     readiness: PreparationReadinessState | null;

@@ -39,6 +39,7 @@ function mission(
     eventDepartureAt: overrides.eventDepartureAt ?? null,
     eventArrivalAt: overrides.eventArrivalAt ?? null,
     travelPlan: overrides.travelPlan ?? null,
+    missionTravelPlan: overrides.missionTravelPlan ?? null,
     preparation: {
       exists: true,
       readiness: "READY",
