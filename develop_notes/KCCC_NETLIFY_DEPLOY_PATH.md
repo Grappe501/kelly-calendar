@@ -16,11 +16,11 @@ This is a Netlify ↔ GitHub clone permission/host-key failure, not an app build
 
 ## Fix (durable)
 
-1. **Stopped** Netlify git auto-builds (`stop_builds=true`) so broken clone attempts stop failing.
-2. **GitHub Actions** deploys on every `main` push: `.github/workflows/netlify-deploy.yml`
+1. Temporarily stopped Netlify git auto-builds during the `exit 128` / host-key clone outage (noise control only). **Git auto-builds are ACTIVE again** as of 2026-07-19 evening.
+2. **GitHub Actions** remains a backup path on every `main` push: `.github/workflows/netlify-deploy.yml`
    - Secrets: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`
    - Command: `netlify deploy --build --prod` (builds on GitHub; no Netlify git clone)
-3. **Emergency local deploy** (when Actions runners are unavailable):
+3. **Emergency local deploy** (when Netlify git or Actions is unavailable):
 
 ```powershell
 # Stop local next dev first — file locks on .next break @netlify/plugin-nextjs publish
