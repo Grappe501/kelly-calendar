@@ -3,6 +3,8 @@
 **Status:** LIVE (foundation; live credential verification pending if key unset)  
 **Date:** 2026-07-20  
 **Branch:** `main`  
+**Feature commit:** `02e3db8`  
+**Netlify:** https://kelly-calendar.netlify.app · deploy `6a5e679557a9567df786f5e0`  
 **Migration:** `20260720160000_v21_mobilize_integration_foundation`  
 **Validate:** `npm run missions:v21:mobilize:validate`  
 **Rollback:** `KCCC_V2_1_MOBILIZE_INTEGRATION_FOUNDATION_DELIVERABLE_16_ROLLBACK.md`  
