@@ -1,7 +1,13 @@
 # KCCC V2.1 — Mobilize Event Publishing and Bidirectional Reconciliation (Deliverable 17)
 
-**Status:** Live on `main` (feature + deploy-docs commits recorded at ship)  
+**Status:** Live on `main`  
+**Feature commit:** `8e1fc60`  
+**Deploy ID:** `6a5e6e26e76a19a84a484788` · https://kelly-calendar.netlify.app  
 **Baseline:** D16 `main` @ `db1a826` · 210 tests · Mobilize `NOT_CONFIGURED` · 0 fabricated integration records  
+**D1–D17 validation:** 222 tests passed  
+**Counts after ship:** Missions 37 · Events 38 · publications/approvals/attempts/refs/connections/runs 0 · remotely published 0 · fabricated 0  
+**Credential-tested writes:** Pending — no Mobilize API key available  
+
 
 ## Official API documentation (reverified)
 
