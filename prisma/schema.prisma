@@ -3444,6 +3444,8 @@ model CampaignDayIncidentDigestReview {
 /// Secrets must never be stored here — use encrypted credential stores separately.
 model ExternalObjectReference {
   id                   String                 @id @default(cuid())
+  /// Soft campaign scope (no Campaign table). Default singleton Kelly campaign.
+  campaignScopeKey     String                 @default("KELLY")
   provider             ExternalProvider
   objectType           ExternalObjectType
   /// Remote provider object id (Mobilize event id, etc.). Never fabricate.
@@ -3452,7 +3454,11 @@ model ExternalObjectReference {
   localObjectType      String?
   localObjectId        String?
   remoteVersion        String?
+  remoteCreatedAt      DateTime?
   remoteUpdatedAt      DateTime?
+  remoteDeletedAt      DateTime?
+  contentFingerprint   String?
+  lastObservedAt       DateTime?
   lastSuccessfulSyncAt DateTime?
   lastAttemptAt        DateTime?
   syncDirection        SyncDirection          @default(NONE)
@@ -3470,10 +3476,184 @@ model ExternalObjectReference {
   updatedAt            DateTime               @updatedAt
   archivedAt           DateTime?
 
-  @@unique([provider, objectType, externalObjectId])
+  @@unique([campaignScopeKey, provider, objectType, externalObjectId])
   @@unique([provider, idempotencyKey])
   @@index([provider, syncStatus])
   @@index([localObjectType, localObjectId])
   @@index([conflictState])
+  @@index([campaignScopeKey, provider])
+  @@schema("kelly_calendar")
+}
+
+/// Mobilize / external provider connection metadata. Credentials stay in env only.
+enum ExternalIntegrationConnectionStatus {
+  NOT_CONFIGURED
+  CONFIGURED_UNVERIFIED
+  CONNECTED
+  INVALID_CREDENTIALS
+  ORGANIZATION_MISMATCH
+  INSUFFICIENT_ACCESS
+  RATE_LIMITED
+  UNAVAILABLE
+  DEGRADED
+
+  @@schema("kelly_calendar")
+}
+
+model ExternalIntegrationConnection {
+  id                         String                               @id @default(cuid())
+  campaignScopeKey           String                               @default("KELLY")
+  provider                   ExternalProvider
+  externalOrganizationId     String
+  organizationName           String?
+  organizationSlug           String?
+  status                     ExternalIntegrationConnectionStatus  @default(NOT_CONFIGURED)
+  lastVerifiedAt             DateTime?
+  lastSuccessfulConnectionAt DateTime?
+  lastErrorCode              String?
+  lastErrorCategory          String?
+  lastErrorSummary           String?
+  /// Documented / tested / application-enabled capability snapshot (no secrets).
+  capabilityJson             Json                                 @default("{}")
+  /// Enabled import scopes, e.g. ["EVENTS","TIMESLOTS"].
+  enabledImportScopesJson    Json                                 @default("[]")
+  /// Forced false in D16 — outbound writes disabled.
+  outboundWritesEnabled      Boolean                              @default(false)
+  createdByUserId            String?
+  updatedByUserId            String?
+  createdAt                  DateTime                             @default(now())
+  updatedAt                  DateTime                             @updatedAt
+
+  syncRuns ExternalSyncRun[]
+
+  @@unique([campaignScopeKey, provider, externalOrganizationId])
+  @@index([provider, status])
+  @@schema("kelly_calendar")
+}
+
+enum ExternalSyncRunMode {
+  DRY_RUN
+  APPLY
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalSyncRunStatus {
+  STARTED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+model ExternalSyncRun {
+  id                     String                @id @default(cuid())
+  campaignScopeKey       String                @default("KELLY")
+  provider               ExternalProvider
+  connectionId           String?
+  direction              SyncDirection         @default(IMPORT_ONLY)
+  objectScope            String
+  mode                   ExternalSyncRunMode   @default(DRY_RUN)
+  status                 ExternalSyncRunStatus @default(STARTED)
+  startedAt              DateTime              @default(now())
+  completedAt            DateTime?
+  requestedByUserId      String?
+  completedByUserId      String?
+  cursorCheckpointJson   Json?
+  remoteExaminedCount    Int                   @default(0)
+  createsProposed        Int                   @default(0)
+  createsApplied         Int                   @default(0)
+  updatesProposed        Int                   @default(0)
+  updatesApplied         Int                   @default(0)
+  unchangedCount         Int                   @default(0)
+  conflictCount          Int                   @default(0)
+  skippedCount           Int                   @default(0)
+  errorCount             Int                   @default(0)
+  rateLimitObserved      Boolean               @default(false)
+  diagnosticSummary      String?
+  documentationRevision  String?
+  adapterVersion         String?
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  connection ExternalIntegrationConnection? @relation(fields: [connectionId], references: [id])
+  candidates ExternalSyncCandidate[]
+
+  @@index([campaignScopeKey, provider, startedAt])
+  @@index([status])
+  @@index([mode])
+  @@schema("kelly_calendar")
+}
+
+enum ExternalSyncCandidateAction {
+  NEW_REMOTE
+  MATCHED_UNCHANGED
+  REMOTE_CHANGED
+  LOCAL_CHANGED
+  BOTH_CHANGED
+  REMOTE_DELETED
+  AMBIGUOUS_MATCH
+  CONFLICT
+  UNSUPPORTED
+  IGNORED
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalSyncCandidateDisposition {
+  PENDING
+  APPROVED
+  REJECTED
+  APPLIED
+  STALE
+  SKIPPED
+
+  @@schema("kelly_calendar")
+}
+
+model ExternalSyncCandidate {
+  id                     String                            @id @default(cuid())
+  syncRunId              String
+  provider               ExternalProvider
+  externalObjectType     ExternalObjectType
+  externalObjectId       String
+  proposedLocalObjectType String?
+  proposedLocalObjectId  String?
+  action                 ExternalSyncCandidateAction
+  conflictState          ExternalConflictState             @default(NONE)
+  comparisonFingerprint  String?
+  /// Redacted operator-facing summary — no raw PII or secrets.
+  changeSummary          String?
+  disposition            ExternalSyncCandidateDisposition  @default(PENDING)
+  reviewedByUserId       String?
+  reviewedAt             DateTime?
+  appliedAt              DateTime?
+  errorCode              String?
+  errorSummary           String?
+  createdAt              DateTime                          @default(now())
+  updatedAt              DateTime                          @updatedAt
+
+  syncRun ExternalSyncRun @relation(fields: [syncRunId], references: [id], onDelete: Cascade)
+
+  @@index([syncRunId, action])
+  @@index([syncRunId, disposition])
+  @@index([provider, externalObjectType, externalObjectId])
+  @@schema("kelly_calendar")
+}
+
+model ExternalSyncCheckpoint {
+  id                   String           @id @default(cuid())
+  campaignScopeKey     String           @default("KELLY")
+  provider             ExternalProvider
+  scope                String
+  cursorToken          String?
+  lastRemoteModifiedAt DateTime?
+  lastCompletedRunId   String?
+  updatedAt            DateTime         @updatedAt
+  createdAt            DateTime         @default(now())
+
+  @@unique([campaignScopeKey, provider, scope])
   @@schema("kelly_calendar")
 }
