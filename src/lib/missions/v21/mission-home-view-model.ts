@@ -256,8 +256,8 @@ function intelligenceSections(
 }
 
 /**
- * Phase CTAs for Deliverable 2. Deeper phase workspaces are forthcoming —
- * href lands on mission detail with a mode query; do not fake working controls.
+ * Phase CTAs. Prepare Mode is real at /prepare; other phases remain forthcoming
+ * placeholders via ?mode= (honest notes, not fake controls).
  */
 export function primaryActionForPhase(
   missionId: string,
@@ -268,10 +268,9 @@ export function primaryActionForPhase(
     case "PREPARE":
       return {
         label: "Open Mission Brief",
-        href: `${detail}?mode=prepare`,
+        href: `${detail}/prepare`,
         available: true,
-        forthcomingNote:
-          "Prepare Mode workspace ships in Deliverable 3 — this opens the mission record.",
+        forthcomingNote: null,
       };
     case "TRAVEL":
       return {

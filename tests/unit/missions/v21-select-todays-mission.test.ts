@@ -244,7 +244,7 @@ describe("V2.1 Today’s Mission selection", () => {
     const execute = primaryActionForPhase("m1", "EXECUTE");
     expect(prepare.label).toBe("Open Mission Brief");
     expect(execute.label).toBe("Open Execute Mode");
-    expect(prepare.href).toContain("mode=prepare");
+    expect(prepare.href).toBe("/system/missions/m1/prepare");
     expect(execute.href).toContain("mode=execute");
   });
 

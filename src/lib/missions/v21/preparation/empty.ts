@@ -1,0 +1,43 @@
+import type { MissionPreparationRecord } from "@/lib/missions/v21/preparation/types";
+
+export function emptyMissionPreparation(
+  missionId: string,
+  nowIso = new Date().toISOString(),
+): Omit<MissionPreparationRecord, "id"> & { id: null } {
+  return {
+    id: null,
+    missionId,
+    briefingSummary: null,
+    strategicPurpose: null,
+    desiredImpression: null,
+    keyMessage: null,
+    openingApproach: null,
+    closingApproach: null,
+    questionsToAsk: [],
+    talkingPoints: [],
+    thingsToNotice: [],
+    sensitivities: [],
+    commitmentsToAvoid: [],
+    storiesOrExamples: [],
+    peopleBriefings: [],
+    organizationBriefings: [],
+    logisticsNotes: null,
+    arrivalInstructions: null,
+    parkingInstructions: null,
+    entryContact: null,
+    attireNotes: null,
+    accessibilityNotes: null,
+    travelNotes: null,
+    lodgingNotes: null,
+    materialsNeeded: [],
+    preparationTasks: [],
+    operatorNotes: null,
+    readinessState: "DRAFT",
+    markedReadyAt: null,
+    markedReadyByUserId: null,
+    createdByUserId: null,
+    updatedByUserId: null,
+    createdAt: nowIso,
+    updatedAt: nowIso,
+  };
+}

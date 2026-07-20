@@ -1,5 +1,5 @@
 /**
- * Offline V2.1 mission projection validation (seed examples only, no DB).
+ * V2.1 Prepare Mode + full mission unit validation.
  */
 import { spawnSync } from "node:child_process";
 import path from "node:path";

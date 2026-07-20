@@ -1,11 +1,12 @@
 # KCCC V2.1 — Events Become Missions
 
-**Status:** DELIVERABLE 2 LANDED — Today’s Mission home surface  
+**Status:** DELIVERABLE 3 LANDED — Prepare Mode workspace  
 **Date:** 2026-07-19 (updated 2026-07-20)  
 **Parent:** `KCCC_CAMPAIGN_OPERATING_SYSTEM_V2.md`  
 **Google:** PAUSED — no dependency for V2.1  
 **Deliverable 1 notes:** `KCCC_V2_1_MISSION_MODEL_DELIVERABLE_1.md` · rollback `KCCC_V2_1_MISSION_MODEL_ROLLBACK.md`  
-**Deliverable 2 notes:** `KCCC_V2_1_TODAYS_MISSION_DELIVERABLE_2.md`
+**Deliverable 2 notes:** `KCCC_V2_1_TODAYS_MISSION_DELIVERABLE_2.md`  
+**Deliverable 3 notes:** `KCCC_V2_1_PREPARE_MODE_DELIVERABLE_3.md` · rollback `KCCC_V2_1_PREPARE_MODE_ROLLBACK.md`
 
 ## Product shift
 
@@ -62,8 +63,8 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 ## V2.1 deliverables (ONLY)
 
 1. **Mission data model** — DONE: `CampaignMission` + deterministic Event→Mission projection + backfill + mission APIs.
-2. **Mission dashboard** — DONE: `/` is Today’s Mission operating surface (selection + hero + readiness + intelligence + next). Detail at `/system/missions/[missionId]`. Phase workspaces still forthcoming.
-3. **Mission lifecycle** — NEXT (start with **Prepare Mode**, not all five stages): briefing, readiness gaps, operator-owned edits, then Execute/Debrief.
+2. **Mission dashboard** — DONE: `/` is Today’s Mission operating surface. Detail at `/system/missions/[missionId]`.
+3. **Mission lifecycle** — Prepare Mode DONE (`/system/missions/[missionId]/prepare` + `MissionPreparation`). NEXT: **Execute Mode** (narrow event-time capture), then Debrief / Follow-up.
 
 Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform.
 

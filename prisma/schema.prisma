@@ -1946,6 +1946,15 @@ enum MissionOperationalStatus {
   @@schema("kelly_calendar")
 }
 
+/// V2.1 Prepare Mode briefing readiness — distinct from lifecycle phase and operational status.
+enum MissionPreparationReadiness {
+  DRAFT
+  NEEDS_ATTENTION
+  READY
+
+  @@schema("kelly_calendar")
+}
+
 enum GoogleConnectionStatus {
   NOT_CONNECTED
   CONNECTED
@@ -2088,11 +2097,56 @@ model CampaignMission {
   createdAt            DateTime                 @default(now())
   updatedAt            DateTime                 @updatedAt
 
-  sourceEvent Event @relation(fields: [sourceEventId], references: [id], onDelete: Restrict)
+  sourceEvent  Event               @relation(fields: [sourceEventId], references: [id], onDelete: Restrict)
+  preparation  MissionPreparation?
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
   @@index([startsAt, endsAt])
   @@index([sourceEventNumber])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Prepare Mode — operator-owned briefing (1:1 with CampaignMission).
+/// Additive. Never stores Event schedule fields. Survives Mission reprojection.
+model MissionPreparation {
+  id                   String                      @id @default(cuid())
+  missionId            String                      @unique
+  briefingSummary      String?
+  strategicPurpose     String?
+  desiredImpression    String?
+  keyMessage           String?
+  openingApproach      String?
+  closingApproach      String?
+  questionsToAsk       Json                        @default("[]")
+  talkingPoints        Json                        @default("[]")
+  thingsToNotice       Json                        @default("[]")
+  sensitivities        Json                        @default("[]")
+  commitmentsToAvoid   Json                        @default("[]")
+  storiesOrExamples    Json                        @default("[]")
+  peopleBriefings      Json                        @default("[]")
+  organizationBriefings Json                       @default("[]")
+  logisticsNotes       String?
+  arrivalInstructions  String?
+  parkingInstructions  String?
+  entryContact         String?
+  attireNotes          String?
+  accessibilityNotes   String?
+  travelNotes          String?
+  lodgingNotes         String?
+  materialsNeeded      Json                        @default("[]")
+  preparationTasks     Json                        @default("[]")
+  operatorNotes        String?
+  readinessState       MissionPreparationReadiness @default(DRAFT)
+  markedReadyAt        DateTime?
+  markedReadyByUserId  String?
+  createdByUserId      String?
+  updatedByUserId      String?
+  createdAt            DateTime                    @default(now())
+  updatedAt            DateTime                    @updatedAt
+
+  mission CampaignMission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+
+  @@index([readinessState])
   @@schema("kelly_calendar")
 }

@@ -1773,6 +1773,125 @@ legend {
   border: 0;
 }
 
+/* V2.1 Prepare Mode */
+.prepare-mode-header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+}
+
+.prepare-mode-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.prepare-mode-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.prepare-badge {
+  font-weight: 600;
+}
+
+.prepare-save-status {
+  min-height: 1.5rem;
+  margin-top: var(--space-3);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.prepare-projected {
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: rgba(15, 76, 92, 0.06);
+  border: 1px solid var(--color-border);
+}
+
+.prepare-source-label {
+  margin: 0 0 var(--space-2);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.prepare-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.prepare-fieldset legend {
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.prepare-fieldset label {
+  font-weight: 600;
+  margin-top: var(--space-2);
+}
+
+.prepare-help {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.prepare-fieldset textarea,
+.prepare-fieldset input[type="text"] {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.prepare-fieldset textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.prepare-save-btn {
+  margin-top: var(--space-3);
+  position: sticky;
+  bottom: calc(var(--nav-height) + var(--space-3));
+  z-index: 2;
+}
+
+.prepare-task-list {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.prepare-task-row {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  min-height: 44px;
+}
+
+.prepare-task-row input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.2rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

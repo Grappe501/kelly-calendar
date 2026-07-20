@@ -107,6 +107,7 @@
     "google:calendar:status": "node scripts/run-with-h-drive-env.cjs node scripts/google-calendar-status.mjs",
     "deploy:netlify:prod": "node scripts/run-with-h-drive-env.cjs npx --yes netlify-cli@23 deploy --build --prod",
     "missions:v21:validate": "node scripts/missions-validate-v21.mjs",
+    "missions:v21:prepare:validate": "node scripts/missions-prepare-validate-v21.mjs",
     "missions:v21:backfill": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs",
     "missions:v21:backfill:apply": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs --apply",
     "campaign:routes:doctor": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-doctor.mjs",
