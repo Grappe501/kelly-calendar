@@ -1,7 +1,14 @@
 # KCCC V2.1 — Mobilize Signup and Attendance Read Integration (Deliverable 18)
 
-**Status:** Shipping  
+**Status:** Live on `main`  
+**Feature commit:** `26e1952`  
+**Deploy ID:** `6a5e726e7a6dd749d494af2d` · https://kelly-calendar.netlify.app  
 **Baseline:** D17 `main` @ `52619ec` · 222 tests · publications 0 · `NOT_CONFIGURED`  
+**D1–D18 validation:** 231 tests passed  
+**Counts after ship:** Missions 37 · Events 38 · observations/matches/correlations/refs/publications/connections/runs 0 · local people 0 · fabricated 0  
+**Credential-tested attendance:** Pending — no Mobilize API key  
+**Person-level apply:** Disabled (no consent-aware Person authority)  
+
 
 ## Official API documentation (reverified)
 
