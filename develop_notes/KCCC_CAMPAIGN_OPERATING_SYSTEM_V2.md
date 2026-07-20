@@ -1,8 +1,9 @@
 # KCCC Campaign Operating System — Version 2 Direction
 
-**Status:** CAPTURED / NOT STARTED  
+**Status:** CAPTURED  
 **Date:** 2026-07-19  
-**Google integration:** PAUSED (OAuth + import + sync infrastructure retained; Routes disabled)
+**Google integration:** PAUSED (OAuth + import + sync infrastructure retained; Routes disabled)  
+**First slice:** **V2.1 Events Become Missions** — see `KCCC_V2_1_EVENTS_BECOME_MISSIONS.md`
 
 ## Pivot
 
