@@ -1,9 +1,10 @@
 # KCCC V2.1 — Events Become Missions
 
-**Status:** SCOPED / NOT STARTED  
-**Date:** 2026-07-19  
+**Status:** DELIVERABLE 1 IN PROGRESS / FOUNDATION LANDED  
+**Date:** 2026-07-19 (updated 2026-07-20)  
 **Parent:** `KCCC_CAMPAIGN_OPERATING_SYSTEM_V2.md`  
-**Google:** PAUSED — no dependency for V2.1
+**Google:** PAUSED — no dependency for V2.1  
+**Deliverable 1 notes:** `KCCC_V2_1_MISSION_MODEL_DELIVERABLE_1.md` · rollback `KCCC_V2_1_MISSION_MODEL_ROLLBACK.md`
 
 ## Product shift
 
@@ -59,8 +60,8 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 
 ## V2.1 deliverables (ONLY)
 
-1. **Mission data model** — transform calendar events into structured campaign missions (objective, success criteria, status, phase, intelligence fields). Prefer extending/projecting from existing Event + Mission Card foundations; no fake certainty.
-2. **Mission dashboard** — home (`/`) becomes **Today's Mission**, not a generic calendar list.
+1. **Mission data model** — FOUNDATION: `CampaignMission` + deterministic Event→Mission projection + backfill + `/system/missions` preview. (Home screen unchanged.)
+2. **Mission dashboard** — home (`/`) becomes **Today's Mission**, not a generic calendar list. **NEXT**
 3. **Mission lifecycle** — Prepare → Travel → Execute → Debrief → Follow-up with automatic follow-up task generation.
 
 Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform.

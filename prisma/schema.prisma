@@ -745,6 +745,7 @@ model Event {
   operationalRecommendations OperationalRecommendationRecord[]
   travelLegsFrom       CampaignTravelLeg[] @relation("TravelLegFrom")
   travelLegsTo         CampaignTravelLeg[] @relation("TravelLegTo")
+  campaignMission      CampaignMission?
 
   @@index([startsAt, endsAt])
   @@index([status])
@@ -1918,6 +1919,33 @@ model AuthSession {
 
 // ─── Google Calendar OAuth + Routes (read-only import / estimated mileage) ─
 
+/// V2.1 mission lifecycle (Prepare → Travel → Execute → Debrief → Follow-up → Complete)
+enum MissionLifecyclePhase {
+  PREPARE
+  TRAVEL
+  EXECUTE
+  DEBRIEF
+  FOLLOW_UP
+  COMPLETE
+
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 mission operational status (draft-valid when incomplete)
+enum MissionOperationalStatus {
+  DRAFT
+  PREPARING
+  READY
+  IN_PROGRESS
+  DEBRIEFING
+  FOLLOW_UP
+  COMPLETE
+  CANCELLED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
 enum GoogleConnectionStatus {
   NOT_CONNECTED
   CONNECTED
@@ -2033,5 +2061,38 @@ model CampaignTravelLeg {
   @@index([fromEventId, toEventId])
   @@index([routeTruthType])
   @@index([reviewStatus])
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Campaign Mission — projection store for Event → Mission.
+/// Additive only. Does not replace Event scheduling behavior.
+model CampaignMission {
+  id                   String                   @id @default(cuid())
+  sourceEventId        String                   @unique
+  sourceEventNumber    String
+  sourceEventVersion   Int
+  projectionVersion    String                   @default("v2.1.0")
+  attendTitle          String
+  objective            String?
+  objectiveSource      String                   @default("UNKNOWN")
+  successCriteria      Json
+  missionStatus        MissionOperationalStatus @default(DRAFT)
+  lifecyclePhase       MissionLifecyclePhase    @default(PREPARE)
+  intelligence         Json
+  completeness         Json
+  startsAt             DateTime
+  endsAt               DateTime
+  timezone             String                   @default("America/Chicago")
+  operatorOwnedFields  String[]                 @default([])
+  projectedAt          DateTime                 @default(now())
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+
+  sourceEvent Event @relation(fields: [sourceEventId], references: [id], onDelete: Restrict)
+
+  @@index([missionStatus])
+  @@index([lifecyclePhase])
+  @@index([startsAt, endsAt])
+  @@index([sourceEventNumber])
   @@schema("kelly_calendar")
 }
