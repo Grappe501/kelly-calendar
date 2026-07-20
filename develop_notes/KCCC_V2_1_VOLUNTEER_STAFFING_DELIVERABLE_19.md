@@ -1,8 +1,8 @@
 # KCCC V2.1 — Volunteer Staffing and Assignment Reconciliation (Deliverable 19)
 
 **Status:** Live on `main`  
-**Feature commit:** pending (fill after commit)  
-**Deploy ID:** pending ship · https://kelly-calendar.netlify.app  
+**Feature commit:** `6422591`  
+**Deploy ID:** `6a5e78e3cbc466ee73d04534` · https://kelly-calendar.netlify.app  
 **Baseline:** D18 `main` @ `67608e9` · 231 tests · observations/matches/correlations 0 · person-level apply disabled  
 **D1–D19 validation:** 241 tests passed (`npm run missions:v21:staffing:validate`; D19 adds 10)  
 **Counts after migration/build:** Missions 37 · Events 38 · D18 observations/matches/correlations 0 · local people 0 · staffing plans/requirements/assignments/acks **0** · fabricated **0**  
