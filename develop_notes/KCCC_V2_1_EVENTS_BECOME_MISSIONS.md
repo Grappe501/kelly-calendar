@@ -90,6 +90,7 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 11. **Mission Exception / Incident Log** — DONE: structured live incident capture with carry-forward and soft Follow-up link (not emergency dispatch).
 12. **Campaign Day Exception Digest** — DONE: read-oriented day rollup for Closeout + next-day Launch with optional review metadata + Mobilize-ready external reference foundation.
 13. **Mobilize Integration Foundation** — READY: server-only adapter, capability discovery, dry-run reconciliation, external identity mapping; outbound publishing disabled. NEXT recommended: **Mobilize Event Publishing and Bidirectional Reconciliation**.
+14. **Volunteer Staffing and Assignment Reconciliation (D19)** — Mission role requirements, explicit assignments, coverage gaps, D18 RSVP availability context (read-only), cancellation reconciliation signals, day-of staffing confirmation. Does not mutate Prepare/Execute/Debrief/Follow-up/Travel/Logistics/Field Ops/Launch/Closeout. RSVP ≠ assignment.
 
 Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform.
 

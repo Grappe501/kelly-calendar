@@ -67,6 +67,16 @@ Local `Person` lacks consent-aware communication fields. Therefore **person-leve
 npm run missions:v21:mobilize-attendance:validate
 ```
 
-## Recommended D19
+## Deliverable 19 boundary (Volunteer Staffing)
 
-**Volunteer Staffing and Assignment Reconciliation** — Mission role requirements, Mobilize RSVP availability, explicit volunteer-to-role assignment, coverage gaps, cancellations, and day-of confirmation without auto-assigning people or inferring consent.
+D19 reads D18 `MobilizeAttendanceObservation` aggregates and optional per-assignment observation links as **read-only availability context** only.
+
+- Mobilize RSVP / signup counts **≠** staffing assignment **≠** local check-in **≠** Execute.
+- D19 does not import Mobilize on page load, auto-assign from RSVP, or enable person-level apply.
+- Assignment cancellation reconciliation surfaces linked Mobilize cancellations — **does not auto-change assignment status**.
+
+See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19.md`.
+
+## Recommended D20
+
+**Campaign Communications and Mobilization Queue** — consent-aware channel eligibility, audience review, message approval, Mobilize event links, and delivery audit without inferring consent or auto-sending.

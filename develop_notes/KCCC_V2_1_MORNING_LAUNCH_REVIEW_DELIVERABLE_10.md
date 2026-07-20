@@ -159,6 +159,10 @@ KCCC_ALLOW_SCHEMA_MIGRATION=1 node scripts/apply-day-launch-migration.mjs
 
 Launch Review loads prior-day digest-qualified overnight/carry-forward/high-critical incidents into blockers and an Exception Digest panel. Completing Morning Review or launching the day does **not** complete digest review or mutate incidents. `ACKNOWLEDGED` does not clear blockers.
 
+## Volunteer staffing (Deliverable 19)
+
+Launch may surface staffing BLOCKER findings when `staffingRequired` and uncleared gaps exist. Launch authorization does **not** confirm assignments or mutate staffing plans. RSVP availability (D18 aggregates) ≠ staffed roles. See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19.md`.
+
 ## Recommended Deliverable 11
 
 Superseded by Deliverable 11 (Travel and Movement Operations). See `KCCC_V2_1_TRAVEL_MOVEMENT_OPERATIONS_DELIVERABLE_11.md`.

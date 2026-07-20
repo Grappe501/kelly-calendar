@@ -79,6 +79,10 @@ Lazy create only — no seed of field activity.
 
 Event reprojection updates projected Mission fields only. `MissionExecution` is keyed by `missionId` and is never rewritten by projection. Execution PATCH rejects Event schedule fields and Mission lifecycle / operational / preparation readiness mutations.
 
+## Volunteer staffing (Deliverable 19)
+
+Staffing assignments and day-of staffing check-in are independent of Execute. Staffing `CHECKED_IN` does not start or complete Execute. Execute surfaces may link to staffing read-only. See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19.md`.
+
 ## Recommended Deliverable 5
 
 **Debrief Mode** — consume Prepare + Execute records for results, lessons, commitments, follow-up decisions, and operator-approved after-action report.

@@ -128,6 +128,9 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${mission.missionId}/field-ops`}>
             Field Ops
           </Link>
+          <Link href={`/system/missions/${mission.missionId}/staffing`}>
+            Staffing
+          </Link>
           <Link href={`/system/missions/${mission.missionId}/incidents`}>
             Incidents
           </Link>
@@ -169,6 +172,20 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           href={`/system/missions/${mission.missionId}/field-ops`}
         >
           Open Field Ops
+        </Link>
+      </section>
+
+      <section className="panel" aria-labelledby="execute-staffing-h">
+        <h2 id="execute-staffing-h">Volunteer Staffing</h2>
+        <p className="muted" role="note">
+          Staffing tracks explicit volunteer assignments — separate from RSVP,
+          check-in, and Execute progress.
+        </p>
+        <Link
+          className="button secondary"
+          href={`/system/missions/${mission.missionId}/staffing`}
+        >
+          Open Staffing
         </Link>
       </section>
 

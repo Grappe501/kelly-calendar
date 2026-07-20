@@ -29,6 +29,9 @@ Signup ≠ attendance ≠ check-in ≠ Execute. Aggregates keep counts separated
 
 See `KCCC_V2_1_MOBILIZE_EVENT_PUBLISHING_DELIVERABLE_17.md`.
 
+## Volunteer staffing (D19)
+
+See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19.md`. D19 consumes D18 observation aggregates as read-only availability context. RSVP ≠ assignment. No Mobilize people/attendance writes. Person-level apply remains disabled.
 
 ## Recommended D17
 

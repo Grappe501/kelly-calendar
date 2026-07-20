@@ -97,6 +97,9 @@ export function CampaignDayBriefing({ model }: Props) {
           <Link href={`/system/briefing/${model.briefingDate}/field-ops`}>
             Day Field Ops
           </Link>
+          <Link href={`/system/briefing/${model.briefingDate}/staffing`}>
+            Day Staffing
+          </Link>
           <Link href={`/system/briefing/${model.briefingDate}/incidents`}>
             Day Incidents
           </Link>

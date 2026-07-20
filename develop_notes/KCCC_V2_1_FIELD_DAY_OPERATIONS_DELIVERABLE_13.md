@@ -110,6 +110,10 @@ After migration apply (2026-07-20):
 - `npm run typecheck` — pass
 - `npm run build` — pass (includes field-ops routes)
 
+## Volunteer staffing (Deliverable 19)
+
+Field Ops kit confirmation and staffing day-of check-in are separate state machines. Staffing readiness ≠ Field Ops readiness. D13 does not read or mutate D19 assignment rows. See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19.md`.
+
 ## Recommended Deliverable 14
 
 **Mission Exception / Incident Log during Field Ops & Execute** — structured live incident capture (safety, access, press, medical) with carry-forward into Closeout without becoming a ticketing system.

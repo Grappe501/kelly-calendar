@@ -2227,6 +2227,7 @@ model CampaignMission {
   travelPlan   MissionTravelPlan?
   logisticsPack MissionLogisticsPack?
   fieldOpsSession MissionFieldOpsSession?
+  staffingPlan MissionStaffingPlan?
   incidents    MissionIncident[]
 
   @@index([missionStatus])
@@ -3936,5 +3937,175 @@ model MissionAttendanceCorrelation {
   @@index([missionId, status])
   @@index([attendanceObservationId])
   @@index([localCheckInObjectType, localCheckInObjectId])
+  @@schema("kelly_calendar")
+}
+
+/// D19 Volunteer Staffing — campaign-owned requirements and explicit assignments.
+enum MissionStaffingPlanStatus {
+  DRAFT
+  IN_PROGRESS
+  READY
+  READY_WITH_RISK
+  WRAP_PENDING
+  CLOSED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionStaffingRequirementCriticality {
+  CRITICAL
+  STANDARD
+  OPTIONAL
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionStaffingAssignmentTargetType {
+  CAMPAIGN_USER
+  LOCAL_PERSON
+  MANUAL_SCOPED
+  CONFIRMED_EXTERNAL_REF
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionStaffingAssignmentStatus {
+  PROPOSED
+  ASSIGNED
+  CONFIRMED
+  DECLINED
+  CANCELLED
+  CHECKED_IN
+  RELEASED
+  NO_SHOW
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionStaffingAcknowledgementDisposition {
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+/// Optional 1:1 staffing plan for a CampaignMission. Lazy-created on intentional open.
+model MissionStaffingPlan {
+  id                      String                     @id @default(cuid())
+  missionId               String                     @unique
+  campaignScopeKey        String                     @default("KELLY")
+  campaignDateKey         String
+  status                  MissionStaffingPlanStatus  @default(DRAFT)
+  staffingRequired        Boolean                    @default(false)
+  staffingLeadName        String?
+  staffingLeadUserId      String?
+  confirmationFingerprint String?
+  confirmedAt             DateTime?
+  confirmedByUserId       String?
+  isStale                 Boolean                    @default(false)
+  notes                   String?
+  isActive                Boolean                    @default(true)
+  createdByUserId         String?
+  updatedByUserId         String?
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
+
+  mission          CampaignMission                 @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  requirements     MissionStaffingRequirement[]
+  assignments      MissionStaffingAssignment[]
+  acknowledgements MissionStaffingAcknowledgement[]
+
+  @@index([campaignDateKey])
+  @@index([status])
+  @@index([campaignScopeKey])
+  @@schema("kelly_calendar")
+}
+
+model MissionStaffingRequirement {
+  id              String                                  @id @default(cuid())
+  staffingPlanId  String
+  roleKey         String
+  roleLabel       String
+  description     String?
+  requiredCount   Int                                     @default(1)
+  minimumCount    Int                                     @default(1)
+  criticality     MissionStaffingRequirementCriticality   @default(STANDARD)
+  requiredByAt    DateTime?
+  skillsNote      String?
+  sortOrder       Int                                     @default(0)
+  isActive        Boolean                                 @default(true)
+  createdByUserId String?
+  updatedByUserId String?
+  createdAt       DateTime                                @default(now())
+  updatedAt       DateTime                                @updatedAt
+
+  staffingPlan MissionStaffingPlan          @relation(fields: [staffingPlanId], references: [id], onDelete: Cascade)
+  assignments  MissionStaffingAssignment[]
+
+  @@unique([staffingPlanId, roleKey])
+  @@index([staffingPlanId, sortOrder])
+  @@schema("kelly_calendar")
+}
+
+model MissionStaffingAssignment {
+  id                        String                              @id @default(cuid())
+  staffingPlanId            String
+  requirementId             String
+  targetType                MissionStaffingAssignmentTargetType
+  campaignUserId            String?
+  localPersonId             String?
+  /// Display-only scoped identity — not communication consent.
+  manualDisplayLabel        String?
+  manualContactHint         String?
+  confirmedExternalPersonId String?
+  mobilizeObservationId     String?
+  status                    MissionStaffingAssignmentStatus     @default(PROPOSED)
+  assignedByUserId          String?
+  assignedAt                DateTime?
+  confirmedByUserId         String?
+  confirmedAt               DateTime?
+  checkedInAt               DateTime?
+  checkedInByUserId         String?
+  releasedAt                DateTime?
+  cancelledAt               DateTime?
+  noShowAt                  DateTime?
+  provenance                String?
+  notes                     String?
+  createdByUserId           String?
+  updatedByUserId           String?
+  createdAt                 DateTime                            @default(now())
+  updatedAt                 DateTime                            @updatedAt
+
+  staffingPlan MissionStaffingPlan        @relation(fields: [staffingPlanId], references: [id], onDelete: Cascade)
+  requirement  MissionStaffingRequirement @relation(fields: [requirementId], references: [id], onDelete: Cascade)
+
+  @@index([staffingPlanId, status])
+  @@index([requirementId, status])
+  @@index([campaignUserId])
+  @@index([localPersonId])
+  @@index([confirmedExternalPersonId])
+  @@schema("kelly_calendar")
+}
+
+model MissionStaffingAcknowledgement {
+  id                 String                                     @id @default(cuid())
+  staffingPlanId     String
+  issueKey           String
+  issueType          String
+  title              String
+  disposition        MissionStaffingAcknowledgementDisposition
+  note               String?
+  acceptedRiskReason String?
+  acknowledgedAt     DateTime                                   @default(now())
+  acknowledgedByUserId String?
+  createdAt          DateTime                                   @default(now())
+  updatedAt          DateTime                                   @updatedAt
+
+  staffingPlan MissionStaffingPlan @relation(fields: [staffingPlanId], references: [id], onDelete: Cascade)
+
+  @@unique([staffingPlanId, issueKey])
+  @@index([staffingPlanId])
   @@schema("kelly_calendar")
 }

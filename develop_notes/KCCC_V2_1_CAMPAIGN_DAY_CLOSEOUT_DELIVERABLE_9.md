@@ -47,6 +47,10 @@ npm run missions:v21:day-closeout:validate
 
 Closeout navigates to `/system/briefing/[date]/exceptions`. Completing Closeout does **not** complete Exception Digest review, and digest review does **not** complete Closeout or auto-carry/resolve incidents.
 
+## Volunteer staffing (Deliverable 19)
+
+Closeout may link to day staffing report for review. Completing Closeout does **not** close staffing plans or auto-release assignments. Overnight wrap findings remain operator-owned on the staffing board. See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19.md`.
+
 ## Recommended Deliverable 10
 
 Superseded by Deliverable 10 (Morning Launch Review). See `KCCC_V2_1_MORNING_LAUNCH_REVIEW_DELIVERABLE_10.md`.

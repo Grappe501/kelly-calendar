@@ -53,6 +53,10 @@ export function MissionDetailView({ mission, mode }: Props) {
             Field Ops
           </Link>
           <span aria-hidden="true"> · </span>
+          <Link href={`/system/missions/${mission.missionId}/staffing`}>
+            Staffing
+          </Link>
+          <span aria-hidden="true"> · </span>
           <Link href={`/system/missions/${mission.missionId}/incidents`}>
             Incidents
           </Link>

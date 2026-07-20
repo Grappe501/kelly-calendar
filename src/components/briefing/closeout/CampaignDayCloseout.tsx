@@ -349,11 +349,14 @@ export function CampaignDayCloseout({ model }: Props) {
           >
             Tomorrow Day Logistics
           </Link>
+          <Link href={`/system/briefing/${addOne(model.campaignDate)}/field-ops`}>
+            Tomorrow Day Field Ops
+          </Link>
           <Link
             className="button secondary"
-            href={`/system/briefing/${addOne(model.campaignDate)}/field-ops`}
+            href={`/system/briefing/${addOne(model.campaignDate)}/staffing`}
           >
-            Tomorrow Day Field Ops
+            Tomorrow Day Staffing
           </Link>
           <Link
             className="button secondary"

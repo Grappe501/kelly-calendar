@@ -32,6 +32,9 @@ export function DayMovementBoard({ model }: Props) {
           <Link href={`/system/briefing/${model.campaignDate}/field-ops`}>
             Day Field Ops
           </Link>
+          <Link href={`/system/briefing/${model.campaignDate}/staffing`}>
+            Day Staffing
+          </Link>
           <Link href={`/system/briefing/${model.campaignDate}/incidents`}>
             Day Incidents
           </Link>
@@ -128,6 +131,10 @@ export function DayMovementBoard({ model }: Props) {
                 {" · "}
                 <Link href={`/system/missions/${m.missionId}/field-ops`}>
                   Open Mission field ops
+                </Link>
+                {" · "}
+                <Link href={`/system/missions/${m.missionId}/staffing`}>
+                  Open Mission staffing
                 </Link>
               </li>
             ))}
