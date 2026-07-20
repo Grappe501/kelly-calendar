@@ -19,6 +19,8 @@ const envLocalTmp = path.join(root, ".env.local.tmp.kccc");
 
 const args = process.argv.slice(2);
 const routesOnly = args.includes("--routes-only");
+const calendarOauthOnly =
+  args.includes("--calendar-oauth-only") || args.includes("--oauth-only");
 
 function assertRepo() {
   if (!fs.existsSync(path.join(root, "package.json"))) {
@@ -151,7 +153,9 @@ const next = { ...existing };
 console.log(
   routesOnly
     ? "KCCC Google Routes secret configure (--routes-only)"
-    : "KCCC Google integration secret configure",
+    : calendarOauthOnly
+      ? "KCCC Google Calendar OAuth configure (--calendar-oauth-only)"
+      : "KCCC Google integration secret configure",
 );
 console.log("Values are written only to .env.local and are never printed.\n");
 
@@ -185,6 +189,105 @@ if (routesOnly) {
       next.KCCC_GOOGLE_ROUTES_ENABLED === "true" ? "YES" : "NO"
     }`,
   );
+  process.exit(0);
+}
+
+if (calendarOauthOnly) {
+  const rlCal = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  async function promptKeepOrReplaceCal(
+    label,
+    key,
+    { hidden = false, generateOption = false } = {},
+  ) {
+    const has = Boolean(existing[key]?.trim());
+    console.log(`${label.padEnd(28, ".")} ${configuredLabel(existing[key])}`);
+    if (has) {
+      const choice = await promptPlain(
+        rlCal,
+        "Press Enter to keep existing, or type replace:",
+      );
+      if (!choice || choice.toLowerCase() !== "replace") {
+        return existing[key];
+      }
+    }
+    if (generateOption) {
+      const gen = await promptPlain(rlCal, "Generate encryption key? [Y/n]");
+      if (!gen || gen.toLowerCase().startsWith("y")) {
+        return crypto.randomBytes(32).toString("hex");
+      }
+    }
+    rlCal.pause();
+    const value = hidden
+      ? await promptHiddenSilent(`${label} (hidden): `)
+      : await promptPlain(rlCal, `${label}:`);
+    rlCal.resume();
+    return value.trim() || existing[key] || "";
+  }
+
+  try {
+    next.KCCC_GOOGLE_CLIENT_ID = await promptKeepOrReplaceCal(
+      "Google Client ID",
+      "KCCC_GOOGLE_CLIENT_ID",
+      { hidden: true },
+    );
+    next.KCCC_GOOGLE_CLIENT_SECRET = await promptKeepOrReplaceCal(
+      "Google Client Secret",
+      "KCCC_GOOGLE_CLIENT_SECRET",
+      { hidden: true },
+    );
+    next.KCCC_GOOGLE_OAUTH_REDIRECT_URI = await promptKeepOrReplaceCal(
+      "OAuth redirect URI",
+      "KCCC_GOOGLE_OAUTH_REDIRECT_URI",
+      { hidden: false },
+    );
+    if (!next.KCCC_GOOGLE_OAUTH_REDIRECT_URI) {
+      next.KCCC_GOOGLE_OAUTH_REDIRECT_URI =
+        "http://localhost:3000/api/integrations/google/calendar/callback";
+    }
+    next.KCCC_GOOGLE_TOKEN_ENCRYPTION_KEY = await promptKeepOrReplaceCal(
+      "Token encryption key",
+      "KCCC_GOOGLE_TOKEN_ENCRYPTION_KEY",
+      { hidden: true, generateOption: true },
+    );
+    next.KCCC_GOOGLE_CALENDAR_ID = await promptKeepOrReplaceCal(
+      "Google Calendar ID",
+      "KCCC_GOOGLE_CALENDAR_ID",
+      { hidden: false },
+    );
+    if (!next.KCCC_GOOGLE_CALENDAR_ID) next.KCCC_GOOGLE_CALENDAR_ID = "primary";
+
+    // Hard hold — Calendar history milestone must not enable Routes/apply.
+    next.KCCC_GOOGLE_ROUTES_ENABLED = "false";
+    next.KCCC_GOOGLE_SYNC_ENABLED = "false";
+    if (!next.KCCC_GOOGLE_HISTORY_START) {
+      next.KCCC_GOOGLE_HISTORY_START = "2025-11-01T00:00:00-05:00";
+    }
+
+    writeEnvAtomic(next);
+    console.log("\nGoogle Client ID ........ " + configuredLabel(next.KCCC_GOOGLE_CLIENT_ID));
+    console.log("Google Client Secret .... " + configuredLabel(next.KCCC_GOOGLE_CLIENT_SECRET));
+    console.log(
+      "Encryption Key .......... " +
+        configuredLabel(next.KCCC_GOOGLE_TOKEN_ENCRYPTION_KEY),
+    );
+    console.log("Redirect URI ............ " + configuredLabel(next.KCCC_GOOGLE_OAUTH_REDIRECT_URI));
+    console.log("Calendar ID ............. CONFIGURED");
+    console.log("Routes enabled .......... NO");
+    console.log("Sync apply gate ......... OFF");
+    console.log(".env.local ................ UPDATED SAFELY");
+    console.log("Tracked by Git ............ NO");
+    console.log("Secret printed ............ NO");
+  } finally {
+    rlCal.close();
+    try {
+      if (fs.existsSync(envLocalTmp)) fs.unlinkSync(envLocalTmp);
+    } catch {
+      // ignore
+    }
+  }
   process.exit(0);
 }
 

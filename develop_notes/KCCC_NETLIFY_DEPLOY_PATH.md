@@ -2,6 +2,8 @@
 
 **Date:** 2026-07-19  
 
+**Mandatory protocol:** After every interaction that changes files → commit/push GitHub **and** deploy Netlify. See `KCCC_END_OF_PASS_GITHUB_AND_NETLIFY.md`.
+
 ## Problem
 
 Netlify continuous deployment failed at **preparing repo**:

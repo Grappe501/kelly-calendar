@@ -1,0 +1,14 @@
+---
+description: After every pass that changes files — commit/push GitHub and deploy Netlify
+alwaysApply: true
+---
+
+# End-of-pass GitHub + Netlify (KCCC)
+
+After any interaction that modifies tracked files in `Kelly-calendar`:
+
+1. Commit and `git push` to origin (never stage `.env.local` or secrets).
+2. Deploy production: stop local `next dev` if running, then `npm run deploy:netlify:prod`.
+3. Report branch, commit hash, push status, and Netlify deploy result.
+
+Authoritative notes: `develop_notes/KCCC_END_OF_PASS_GITHUB_AND_NETLIFY.md`.
