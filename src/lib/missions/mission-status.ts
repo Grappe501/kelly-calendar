@@ -1,7 +1,11 @@
 import type { EventReadinessResult } from "@/features/operational-intelligence/types/readiness-types";
 
 /**
- * Canonical Mission Card status (stabilizes contract ahead of 6.5 one-tap completion).
+ * Canonical Mission Card status (Step 6 UI contract).
+ *
+ * Do NOT treat as interchangeable with V2.1 MissionOperationalStatus /
+ * MissionLifecyclePhase (src/lib/missions/v21). Deliverable 2 Today’s Mission
+ * uses the V2.1 enums only.
  */
 export type MissionStatus =
   | "PENDING"

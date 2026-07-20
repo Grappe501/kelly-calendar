@@ -15,6 +15,7 @@ const result = spawnSync(
     "vitest",
     "run",
     "tests/unit/missions/v21-project-event-to-mission.test.ts",
+    "tests/unit/missions/v21-select-todays-mission.test.ts",
   ],
   { cwd: root, stdio: "inherit", env: process.env },
 );

@@ -14,6 +14,23 @@ export {
   type MissionValidationResult,
 } from "@/lib/missions/v21/validate-mission";
 export { MISSION_V21_SEED_SOURCES } from "@/lib/missions/v21/seed-examples";
+export {
+  labelMissionLifecyclePhase,
+  labelMissionOperationalStatus,
+} from "@/lib/missions/v21/labels";
+export {
+  selectTodaysMission,
+  campaignDateKey,
+  type TodaysMissionCandidate,
+  type TodaysMissionSelection,
+} from "@/lib/missions/v21/select-todays-mission";
+export {
+  toMissionHomeViewModel,
+  primaryActionForPhase,
+  type MissionHomeViewModel,
+  type TodaysMissionResult,
+  type TodaysMissionSelectionReason,
+} from "@/lib/missions/v21/mission-home-view-model";
 export type {
   CampaignMission,
   EventMissionSource,

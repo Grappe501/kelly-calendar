@@ -1582,6 +1582,197 @@ legend {
   }
 }
 
+/* V2.1 Today’s Mission operating surface — mobile-first */
+.todays-mission-header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 5vw, 2.4rem);
+  letter-spacing: -0.02em;
+}
+
+.todays-mission-kicker {
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+.todays-mission-phase {
+  margin: var(--space-2) 0 0;
+  font-size: 1.1rem;
+}
+
+.todays-mission-phase-label {
+  font-weight: 700;
+}
+
+.todays-mission-selection-hint {
+  margin-top: var(--space-2);
+  font-size: 0.95rem;
+}
+
+.todays-mission-calendar-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  font-weight: 600;
+}
+
+.todays-mission-hero {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.todays-mission-hero-eyebrow {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.todays-mission-hero-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 4.5vw, 1.9rem);
+  line-height: 1.2;
+}
+
+.todays-mission-hero-when,
+.todays-mission-hero-where {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.todays-mission-hero-objective {
+  margin: var(--space-2) 0 0;
+  font-size: 1.05rem;
+}
+
+.todays-mission-hero-readiness {
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+.todays-mission-hero-actions {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.todays-mission-primary-action {
+  min-height: 48px;
+  font-size: 1.05rem;
+}
+
+.todays-mission-forthcoming {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.todays-mission-success h3 {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: 1rem;
+}
+
+.todays-mission-success h3:first-child {
+  margin-top: 0;
+}
+
+.todays-mission-success ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.todays-mission-readiness-state {
+  margin: 0 0 var(--space-3);
+  font-weight: 700;
+}
+
+.todays-mission-readiness-badge {
+  margin-right: var(--space-2);
+}
+
+.todays-mission-check-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.todays-mission-intel {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.todays-mission-intel-section h3 {
+  margin: 0 0 var(--space-2);
+}
+
+.todays-mission-intel-section ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.todays-mission-next-card {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.todays-mission-next-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.todays-mission-next-title a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.todays-mission-meta {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.todays-mission-meta div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.todays-mission-meta dt {
+  font-weight: 700;
+}
+
+.todays-mission-meta dd {
+  margin: 0;
+}
+
+.todays-mission-index-list {
+  margin: 0 0 var(--space-4);
+  padding-left: 1.25rem;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

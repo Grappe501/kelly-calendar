@@ -6,16 +6,24 @@ import {
   MISSION_V21_SEED_SOURCES,
   validateCampaignMission,
 } from "@/lib/missions/v21";
+import { labelMissionLifecyclePhase } from "@/lib/missions/v21/labels";
 import { requireSystemAdminPage } from "@/lib/system/require-system-admin";
+import {
+  campaignMissionFromRow,
+  listCampaignMissions,
+} from "@/server/repositories/mission-repository";
 
 export const metadata: Metadata = {
-  title: "V2.1 Mission model preview",
+  title: "Mission index",
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function SystemMissionsPage() {
   await requireSystemAdminPage("/system/missions");
+
+  const rows = await listCampaignMissions(100);
+  const persisted = rows.map(campaignMissionFromRow);
 
   const previews = MISSION_V21_SEED_SOURCES.map((source) => {
     const comparison = compareLegacyEventToMission(source, undefined, {
@@ -28,31 +36,53 @@ export default async function SystemMissionsPage() {
   return (
     <div className="page-stack">
       <header className="page-header">
-        <h1>V2.1 Mission model</h1>
+        <h1>Mission index</h1>
         <p>
-          Event → Mission projection preview ({MISSION_PROJECTION_VERSION}). Seed
-          examples only — no scheduling behavior changed.
+          Persisted V2.1 missions ({MISSION_PROJECTION_VERSION}). Home surface is
+          Today’s Mission at <Link href="/">/</Link>.
         </p>
       </header>
 
-      <section className="panel">
-        <h2>Completion gate</h2>
-        <p>
-          Existing Event → Mission Projection → Mission Record → Read API/UI Preview
-        </p>
-        <ul>
-          <li>GET /api/events/[eventId]/mission — live projection + comparison</li>
-          <li>POST /api/events/[eventId]/mission — persist mission record</li>
-          <li>GET /api/missions/[missionId] — read persisted mission</li>
-        </ul>
+      <section className="panel" aria-labelledby="persisted-heading">
+        <h2 id="persisted-heading">Persisted missions</h2>
+        {persisted.length === 0 ? (
+          <p className="muted">
+            No CampaignMission rows yet. Run{" "}
+            <code>npm run missions:v21:backfill:apply</code> after dry-run.
+          </p>
+        ) : (
+          <ul className="todays-mission-index-list">
+            {persisted.map((mission) =>
+              mission.id ? (
+                <li key={mission.id}>
+                  <Link href={`/system/missions/${mission.id}`}>
+                    {mission.attendTitle}
+                  </Link>
+                  <span className="muted">
+                    {" "}
+                    · {labelMissionLifecyclePhase(mission.lifecyclePhase)} ·{" "}
+                    {mission.missionStatus}
+                  </span>
+                </li>
+              ) : null,
+            )}
+          </ul>
+        )}
         <div className="button-row">
-          <Link className="button secondary" href="/system/status">
-            System status
+          <Link className="button" href="/">
+            Today’s Mission
           </Link>
           <Link className="button secondary" href="/calendar">
-            Calendar (unchanged)
+            Calendar
           </Link>
         </div>
+      </section>
+
+      <section className="panel">
+        <h2>Seed projection previews</h2>
+        <p className="muted">
+          Synthetic examples for Deliverable 1 validation — not live campaign data.
+        </p>
       </section>
 
       {previews.map(({ source, comparison, validation }) => (
@@ -65,13 +95,6 @@ export default async function SystemMissionsPage() {
             {validation.issues.filter((i) => i.severity === "warning").length}{" "}
             warnings)
           </p>
-
-          <h3>Legacy event</h3>
-          <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.85rem" }}>
-            {JSON.stringify(comparison.legacyEvent, null, 2)}
-          </pre>
-
-          <h3>Mission projection</h3>
           <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.85rem" }}>
             {JSON.stringify(
               {
@@ -80,35 +103,12 @@ export default async function SystemMissionsPage() {
                 successCriteria: comparison.mission.successCriteria,
                 missionStatus: comparison.mission.missionStatus,
                 lifecyclePhase: comparison.mission.lifecyclePhase,
-                intelligence: comparison.mission.intelligence,
                 completeness: comparison.mission.completeness,
               },
               null,
               2,
             )}
           </pre>
-
-          <h3>Field map</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Mission field</th>
-                <th>Legacy source</th>
-                <th>Status</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparison.fieldMap.map((row) => (
-                <tr key={row.missionField}>
-                  <td>{row.missionField}</td>
-                  <td>{row.legacySource}</td>
-                  <td>{row.status}</td>
-                  <td>{row.valueSummary}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </section>
       ))}
     </div>

@@ -70,6 +70,29 @@ export async function listCampaignMissions(limit = 50) {
 }
 
 /**
+ * Load missions with Event signals needed to recompute lifecycle for Today’s Mission.
+ * Does not mutate Event scheduling fields.
+ */
+export async function listCampaignMissionsForTodaySelection(limit = 200) {
+  return prisma.campaignMission.findMany({
+    orderBy: { startsAt: "asc" },
+    take: Math.min(Math.max(limit, 1), 500),
+    include: {
+      sourceEvent: {
+        select: {
+          id: true,
+          status: true,
+          archivedAt: true,
+          travelPlans: { select: { travelRequired: true } },
+          outcomes: { select: { id: true }, take: 1 },
+          followups: { select: { id: true } },
+        },
+      },
+    },
+  });
+}
+
+/**
  * Upsert projected mission. Operator-owned fields are preserved from existing row.
  */
 export async function upsertCampaignMissionFromProjection(
