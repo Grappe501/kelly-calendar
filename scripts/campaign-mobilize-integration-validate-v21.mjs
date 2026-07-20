@@ -24,6 +24,7 @@ const files = [
   "tests/unit/missions/v21-exception-digest.test.ts",
   "tests/unit/missions/v21-mobilize-integration.test.ts",
   "tests/unit/missions/v21-mobilize-publishing.test.ts",
+  "tests/unit/missions/v21-mobilize-attendance.test.ts",
 ];
 const result = spawnSync(
   process.execPath,

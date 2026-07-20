@@ -6,6 +6,7 @@
 export const MOBILIZE_DOCS = {
   inspectionDate: "2026-07-20",
   d17InspectionDate: "2026-07-20",
+  d18InspectionDate: "2026-07-20",
   repository: "https://github.com/mobilizeamerica/api",
   documentationRevision: "1025d0f8920f9484f4e68368c0f403c8b68a3e92",
   documentationRevisionShort: "1025d0f",
@@ -141,8 +142,41 @@ export const MOBILIZE_DOCS = {
     "Contact object table in docs has typo email_adddress; request examples use email_address — KCCC sends email_address.",
   liveBehaviorUnknownWithoutCredentials:
     "No live write credential-testing performed without an API key. Restricted write endpoints may 403 until Mobilize grants access.",
-  adapterVersion: "kccc-mobilize-adapter-d17.1",
+  adapterVersion: "kccc-mobilize-adapter-d18.1",
   mappingVersion: "kccc-mobilize-map-d17.1",
+  attendanceAdapterVersion: "kccc-mobilize-attendance-d18.1",
+  attendanceStatusesDocumented: ["REGISTERED", "CANCELLED", "CONFIRMED"] as const,
+  attendanceEndpoints: {
+    listOrgAttendances: "GET /v1/organizations/:organization_id/attendances",
+    listEventAttendances:
+      "GET /v1/organizations/:organization_id/events/:event_id/attendances",
+    getAttendance: "GET /v1/organizations/:organization_id/attendances/:attendance_id",
+    listPeople: "GET /v1/organizations/:organization_id/people",
+    incrementalFilter: "updated_since (Unix timestamp on modified_date)",
+  },
+  attendanceFieldsUsed: [
+    "id",
+    "created_date",
+    "modified_date",
+    "status",
+    "attended",
+    "event.id",
+    "timeslot.id",
+    "person.id",
+  ] as const,
+  attendanceFieldsDeniedByDefault: [
+    "referrer",
+    "custom_signup_field_values",
+    "person.email_addresses",
+    "person.phone_numbers",
+    "person.postal_addresses",
+    "person.given_name",
+    "person.family_name",
+  ] as const,
+  personLevelApplyDefault: false,
+  personConsentAuthorityPresent: false,
+  liveAttendanceCredentialTesting:
+    "Pending — no Mobilize API key available during D18.",
 } as const;
 
 export const MOBILIZE_CAMPAIGN_SCOPE = "KELLY";

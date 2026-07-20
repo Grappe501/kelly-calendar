@@ -129,10 +129,19 @@ export type NormalizedMobilizePerson = {
 export type NormalizedMobilizeAttendance = {
   id: string;
   eventId: string;
+  timeslotId: string | null;
   personId: string | null;
   status: NormalizedUnknownEnum | null;
-  /** Signup ≠ attendance confirmation. */
+  /** Documented REGISTERED/CONFIRMED are signup/RSVP states — not on-site check-in. */
   isSignup: boolean;
+  isCancelled: boolean;
+  /** Documented `attended` bool — null means unset, not no-show. */
+  attended: boolean | null;
+  createdAt: string | null;
+  modifiedAt: string | null;
+  /** Count of denied custom signup fields — values never stored. */
+  customSignupFieldCount: number;
+  hasReferrer: boolean;
   fingerprint: string;
 };
 

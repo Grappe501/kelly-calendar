@@ -69,6 +69,7 @@ describe("V2.1 Mobilize Integration Foundation", () => {
       deleteEnabled: false,
       defaultContactEmail: null,
       campaignScopeKey: "KELLY",
+      importAttendanceEnabled: false,
     });
     expect(status.fullyConfigured).toBe(false);
     expect(status.outboundWritesEnabled).toBe(false);

@@ -207,6 +207,9 @@ export function MobilizeIntegrationPanel() {
           <Link className="button" href="/system/integrations/mobilize/publishing">
             Event publishing (D17)
           </Link>
+          <Link className="button" href="/system/integrations/mobilize/attendance">
+            Attendance (D18)
+          </Link>
         </div>
       </section>
     </div>

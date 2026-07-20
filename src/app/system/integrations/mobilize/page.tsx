@@ -33,6 +33,12 @@ export default async function MobilizeIntegrationPage() {
             Event publishing
           </Link>
           <Link
+            className="button"
+            href="/system/integrations/mobilize/attendance"
+          >
+            Attendance
+          </Link>
+          <Link
             className="button secondary"
             href="/system/integrations/mobilize/conflicts"
           >

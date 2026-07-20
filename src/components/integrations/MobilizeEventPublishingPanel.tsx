@@ -212,6 +212,12 @@ export function MobilizeEventPublishingPanel({ eventId }: Props) {
         >
           Conflicts
         </Link>
+        <Link
+          className="button secondary"
+          href={`/system/integrations/mobilize/attendance/${eventId}`}
+        >
+          Attendance
+        </Link>
       </div>
     </div>
   );

@@ -34,6 +34,11 @@ PUT replaces the upcoming timeslot collection. Remote-only timeslots must be inc
 
 Remote delete is **disabled by default** and remains blocked in the D17 production path even if the flag is set, until explicit post-credential authorization.
 
+## Attendance (D18)
+
+Linked from publishing event panel → `/system/integrations/mobilize/attendance/[eventId]`. Signup counts are separate from remote `attended` and from local check-in correlation.
+
+
 ## Do not
 
 - Publish from Mission-only surfaces without the Event publication page

@@ -3799,3 +3799,142 @@ model ExternalPublicationAttempt {
   @@index([status])
   @@schema("kelly_calendar")
 }
+
+/// D18 Mobilize Signup/Attendance read observations — minimized, no raw PII payloads.
+enum MobilizeAttendancePrivacyClass {
+  AGGREGATE_ONLY
+  IDENTITY_REDACTED
+  MATCH_REVIEW
+  RESTRICTED
+
+  @@schema("kelly_calendar")
+}
+
+model MobilizeAttendanceObservation {
+  id                     String                         @id @default(cuid())
+  campaignScopeKey       String                         @default("KELLY")
+  provider               ExternalProvider               @default(MOBILIZE)
+  externalAttendanceId   String
+  externalEventId        String
+  externalTimeslotId     String?
+  /// Stored only when person-level observation is authorized; otherwise null.
+  externalPersonId       String?
+  localEventId           String?
+  /// Soft Mission link only when Event→Mission exists; never invents Missions.
+  localMissionId         String?
+  remoteStatus           String
+  /// Normalized category without losing remoteStatus.
+  statusCategory         String
+  attendedFlag           Boolean?
+  signupAt               DateTime?
+  cancelledAt            DateTime?
+  observedAttendedAt     DateTime?
+  remoteModifiedAt       DateTime?
+  contentFingerprint     String
+  firstObservedAt        DateTime                       @default(now())
+  lastObservedAt         DateTime                       @default(now())
+  lastSyncRunId          String?
+  privacyClassification  MobilizeAttendancePrivacyClass @default(AGGREGATE_ONLY)
+  remoteDeletedAt        DateTime?
+  isActive               Boolean                        @default(true)
+  createdAt              DateTime                       @default(now())
+  updatedAt              DateTime                       @updatedAt
+
+  correlations MissionAttendanceCorrelation[]
+
+  @@unique([campaignScopeKey, provider, externalAttendanceId])
+  @@index([externalEventId, externalTimeslotId])
+  @@index([localEventId])
+  @@index([localMissionId])
+  @@index([statusCategory, isActive])
+  @@index([lastSyncRunId])
+  @@schema("kelly_calendar")
+}
+
+enum ExternalPersonMatchStatus {
+  UNMATCHED
+  PROPOSED
+  AMBIGUOUS
+  CONFIRMED
+  REJECTED
+  DO_NOT_LINK
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalPersonMatchMethod {
+  EXISTING_EXTERNAL_REF
+  EXACT_EMAIL
+  EXACT_PHONE
+  OPERATOR_SELECTED
+  MULTI_FIELD
+  NAME_ONLY
+
+  @@schema("kelly_calendar")
+}
+
+enum ExternalPersonMatchConfidence {
+  HIGH
+  MEDIUM
+  LOW
+  AMBIGUOUS
+
+  @@schema("kelly_calendar")
+}
+
+/// Person-level match review architecture — persistence of local Person links requires consent-aware authority (disabled in D18).
+model ExternalPersonMatch {
+  id                       String                        @id @default(cuid())
+  campaignScopeKey         String                        @default("KELLY")
+  provider                 ExternalProvider              @default(MOBILIZE)
+  externalPersonId         String
+  proposedLocalPersonId    String?
+  matchMethod              ExternalPersonMatchMethod
+  confidenceCategory       ExternalPersonMatchConfidence
+  status                   ExternalPersonMatchStatus     @default(UNMATCHED)
+  reviewedByUserId         String?
+  reviewedAt               DateTime?
+  conflictReason           String?
+  provenanceSummary        String?
+  createdAt                DateTime                      @default(now())
+  updatedAt                DateTime                      @updatedAt
+
+  @@unique([campaignScopeKey, provider, externalPersonId])
+  @@index([status])
+  @@index([proposedLocalPersonId])
+  @@schema("kelly_calendar")
+}
+
+enum MissionAttendanceCorrelationStatus {
+  PROPOSED
+  CONFIRMED
+  CORRECTED
+  REMOVED
+
+  @@schema("kelly_calendar")
+}
+
+/// Explicit correlation between Mobilize observation and a local check-in/Field Ops record.
+/// Does not rewrite either source. Soft local refs — no automatic Field Ops mutation.
+model MissionAttendanceCorrelation {
+  id                          String                              @id @default(cuid())
+  campaignScopeKey            String                              @default("KELLY")
+  missionId                   String
+  localCheckInObjectType      String
+  localCheckInObjectId        String
+  attendanceObservationId     String
+  status                      MissionAttendanceCorrelationStatus  @default(PROPOSED)
+  correlationReason           String?
+  confirmedByUserId           String?
+  confirmedAt                 DateTime?
+  correctedFromCorrelationId  String?
+  createdAt                   DateTime                            @default(now())
+  updatedAt                   DateTime                            @updatedAt
+
+  observation MobilizeAttendanceObservation @relation(fields: [attendanceObservationId], references: [id], onDelete: Cascade)
+
+  @@index([missionId, status])
+  @@index([attendanceObservationId])
+  @@index([localCheckInObjectType, localCheckInObjectId])
+  @@schema("kelly_calendar")
+}

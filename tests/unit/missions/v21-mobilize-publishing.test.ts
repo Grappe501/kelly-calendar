@@ -377,6 +377,7 @@ describe("V2.1 Mobilize Event Publishing (D17)", () => {
       deleteEnabled: false,
       defaultContactEmail: null,
       campaignScopeKey: "KELLY",
+      importAttendanceEnabled: false,
     });
     expect(status.outboundWritesEnabled).toBe(false);
     expect(status.networkPublishingAvailable).toBe(false);

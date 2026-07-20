@@ -9,6 +9,7 @@ export type MobilizeIntegrationEnv = {
   organizationId: string | null;
   apiBaseUrl: string;
   importEventsEnabled: boolean;
+  importAttendanceEnabled: boolean;
   publishingEnabled: boolean;
   updatesEnabled: boolean;
   deleteEnabled: boolean;
@@ -54,6 +55,7 @@ export function getMobilizeIntegrationEnv(): MobilizeIntegrationEnv {
     organizationId: env.MOBILIZE_ORGANIZATION_ID?.trim() || null,
     apiBaseUrl: resolveMobilizeApiBaseUrl(env.MOBILIZE_API_BASE_URL),
     importEventsEnabled: truthy(env.MOBILIZE_IMPORT_EVENTS_ENABLED),
+    importAttendanceEnabled: truthy(env.MOBILIZE_IMPORT_ATTENDANCE_ENABLED),
     publishingEnabled: truthy(env.MOBILIZE_PUBLISHING_ENABLED),
     updatesEnabled: truthy(env.MOBILIZE_UPDATES_ENABLED),
     /** Default false — never enable from absence. */
@@ -70,6 +72,7 @@ export function mobilizeConfigStatus(env = getMobilizeIntegrationEnv()) {
     organizationIdConfigured: Boolean(env.organizationId),
     apiBaseUrl: env.apiBaseUrl,
     importEventsEnabled: env.importEventsEnabled,
+    importAttendanceEnabled: env.importAttendanceEnabled,
     publishingEnabled: env.publishingEnabled,
     updatesEnabled: env.updatesEnabled,
     deleteEnabled: env.deleteEnabled,

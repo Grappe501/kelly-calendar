@@ -240,26 +240,49 @@ export function normalizeAttendance(
     raw.person && typeof raw.person === "object"
       ? (raw.person as Record<string, unknown>)
       : null;
+  const timeslotObj =
+    raw.timeslot && typeof raw.timeslot === "object"
+      ? (raw.timeslot as Record<string, unknown>)
+      : null;
   const eventId = asId(eventObj?.id ?? raw.event_id);
   if (!eventId) return null;
   const status = asString(raw.status);
-  // Documented Mobilize attendance/signup objects — signup is not check-in.
+  const isCancelled = status === "CANCELLED";
+  // Documented statuses REGISTERED/CONFIRMED are signup/RSVP — not Mission check-in.
   const isSignup =
-    status === "REGISTERED" ||
-    status === "CONFIRMED" ||
-    status == null ||
-    Boolean(personObj);
+    status === "REGISTERED" || status === "CONFIRMED" || (!isCancelled && status != null);
+  const attended =
+    typeof raw.attended === "boolean"
+      ? raw.attended
+      : raw.attended === null
+        ? null
+        : null;
+  const customFields = Array.isArray(raw.custom_signup_field_values)
+    ? raw.custom_signup_field_values
+    : [];
+  const timeslotId = asId(timeslotObj?.id ?? raw.timeslot_id);
+  const personId = asId(personObj?.id ?? raw.person_id);
   return {
     id,
     eventId,
-    personId: asId(personObj?.id ?? raw.person_id),
+    timeslotId,
+    personId,
     status,
-    isSignup,
+    isSignup: isSignup && !isCancelled,
+    isCancelled,
+    attended,
+    createdAt: unixToIso(raw.created_date),
+    modifiedAt: unixToIso(raw.modified_date),
+    customSignupFieldCount: customFields.length,
+    hasReferrer: Boolean(raw.referrer && typeof raw.referrer === "object"),
     fingerprint: fingerprintPayload([
       id,
       eventId,
+      timeslotId ?? "",
       status ?? "",
-      asId(personObj?.id) ?? "",
+      personId ?? "",
+      String(attended),
+      String(raw.modified_date ?? ""),
     ]),
   };
 }

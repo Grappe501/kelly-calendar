@@ -32,3 +32,8 @@
 ## Outbound publishing (D17)
 
 Preview/approve at `/system/integrations/mobilize/publishing`. Network create/update require credentials plus `MOBILIZE_PUBLISHING_ENABLED` / `MOBILIZE_UPDATES_ENABLED`. See `KCCC_V2_1_MOBILIZE_PUBLISHING_OPERATOR_GUIDE.md`. Delete remains disabled. Do not probe write endpoints during verify.
+
+## Attendance read (D18)
+
+`/system/integrations/mobilize/attendance` — aggregates and dry-run only when `MOBILIZE_IMPORT_ATTENDANCE_ENABLED` and credentials exist. Person-level apply disabled. See `KCCC_V2_1_MOBILIZE_ATTENDANCE_PRIVACY_OPERATOR_GUIDE.md`.
+
