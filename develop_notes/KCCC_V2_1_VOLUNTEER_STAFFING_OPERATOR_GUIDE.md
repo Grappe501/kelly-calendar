@@ -72,8 +72,19 @@ Expect zero pre-existing staffing rows; post-migration counts should remain 0 un
 - Auto-assign from RSVP counts or attendance observations.
 - Create Person records from staffing surfaces.
 - Treat staffing `CHECKED_IN` as Execute or Field Ops confirmation.
-- Send volunteer messages from staffing (deferred to D20 communications queue).
+- Send volunteer messages from staffing (use D20 communications queue — export/handoff only; no auto-send).
 - Expect Closeout or Launch to close staffing plans automatically.
+
+## Campaign communications (D20)
+
+Staffing and communications are separate decisions:
+
+1. Staffing assignments may appear as **audience candidates** when materializing a communication with source `STAFFING_ASSIGNMENTS`.
+2. Assignment status, RSVP context, and `MANUAL_SCOPED` hints are **not** communication consent.
+3. Record explicit consent evidence on contact points before expecting `ELIGIBLE` queue items.
+4. D20 external send is disabled — plan, review, export, or hand off; do not treat export as delivered.
+
+See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_OPERATOR_GUIDE.md` and `KCCC_V2_1_COMMUNICATION_CONSENT_SUPPRESSION_POLICY.md`.
 
 ## Rollback
 

@@ -124,6 +124,7 @@
     "missions:v21:mobilize-publishing:validate": "node scripts/campaign-mobilize-publishing-validate-v21.mjs",
     "missions:v21:mobilize-attendance:validate": "node scripts/campaign-mobilize-attendance-validate-v21.mjs",
     "missions:v21:staffing:validate": "node scripts/campaign-staffing-validate-v21.mjs",
+    "missions:v21:communications:validate": "node scripts/campaign-communications-validate-v21.mjs",
     "missions:v21:backfill": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs",
     "missions:v21:backfill:apply": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs --apply",
     "campaign:routes:doctor": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-doctor.mjs",

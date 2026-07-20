@@ -57,6 +57,14 @@ export function MissionDetailView({ mission, mode }: Props) {
             Staffing
           </Link>
           <span aria-hidden="true"> · </span>
+          <Link href="/system/communications">Communications queue</Link>
+          <span aria-hidden="true"> · </span>
+          <Link
+            href={`/system/communications/new?missionId=${encodeURIComponent(mission.missionId)}`}
+          >
+            Prepare Communication
+          </Link>
+          <span aria-hidden="true"> · </span>
           <Link href={`/system/missions/${mission.missionId}/incidents`}>
             Incidents
           </Link>

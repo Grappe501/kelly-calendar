@@ -162,3 +162,5 @@ See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19_ROLLBACK.md`.
 ## Recommended D20
 
 **Campaign Communications and Mobilization Queue** — consent-aware channel eligibility, audience review, message approval, Mobilize event links, and delivery audit **without** inferring consent or auto-sending messages.
+
+**Shipped as:** `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md` (commit/deploy TBD pending ship).

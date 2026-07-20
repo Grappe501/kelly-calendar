@@ -50,6 +50,9 @@ export default async function MobilizeIntegrationPage() {
           <Link className="button secondary" href="/system/missions/command-center">
             Command Center
           </Link>
+          <Link className="button secondary" href="/system/communications">
+            Communications queue
+          </Link>
           <Link className="button secondary" href="/system/status">
             System status
           </Link>

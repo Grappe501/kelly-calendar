@@ -107,6 +107,13 @@ export function TodaysMissionSurface({ result }: Props) {
           <span aria-hidden="true"> · </span>
           <Link
             className="todays-mission-calendar-link"
+            href="/system/communications"
+          >
+            Communications queue
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <Link
+            className="todays-mission-calendar-link"
             href="/system/briefing/incidents"
           >
             Day Incidents

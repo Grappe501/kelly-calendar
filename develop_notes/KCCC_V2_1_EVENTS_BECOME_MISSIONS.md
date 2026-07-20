@@ -1,6 +1,6 @@
 # KCCC V2.1 — Events Become Missions
 
-**Status:** DELIVERABLE 18 READY — Mobilize Signup and Attendance Read Integration  
+**Status:** DELIVERABLE 20 READY — Campaign Communications and Mobilization Queue  
 **Date:** 2026-07-19 (updated 2026-07-20)  
 **Parent:** `KCCC_CAMPAIGN_OPERATING_SYSTEM_V2.md`  
 **Google:** PAUSED — no dependency for V2.1  
@@ -90,9 +90,10 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 11. **Mission Exception / Incident Log** — DONE: structured live incident capture with carry-forward and soft Follow-up link (not emergency dispatch).
 12. **Campaign Day Exception Digest** — DONE: read-oriented day rollup for Closeout + next-day Launch with optional review metadata + Mobilize-ready external reference foundation.
 13. **Mobilize Integration Foundation** — READY: server-only adapter, capability discovery, dry-run reconciliation, external identity mapping; outbound publishing disabled. NEXT recommended: **Mobilize Event Publishing and Bidirectional Reconciliation**.
-14. **Volunteer Staffing and Assignment Reconciliation (D19)** — Mission role requirements, explicit assignments, coverage gaps, D18 RSVP availability context (read-only), cancellation reconciliation signals, day-of staffing confirmation. Does not mutate Prepare/Execute/Debrief/Follow-up/Travel/Logistics/Field Ops/Launch/Closeout. RSVP ≠ assignment.
+14. **Volunteer Staffing and Assignment Reconciliation (D19)** — DONE: Mission role requirements, explicit assignments, coverage gaps, D18 RSVP availability context (read-only), cancellation reconciliation signals, day-of staffing confirmation. Does not mutate Prepare/Execute/Debrief/Follow-up/Travel/Logistics/Field Ops/Launch/Closeout. RSVP ≠ assignment.
+15. **Campaign Communications and Mobilization Queue (D20)** — Consent-aware policy, contact points, evidence, suppressions, audience review, dual approval, queue prepare, export, manual handoff. External send disabled; Mobilize links in content only. RSVP/attendance/staffing/check-in ≠ consent. NEXT recommended: **Communications Provider Dispatch Foundation**.
 
-Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform.
+Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform, automated email/SMS dispatch (deferred to D21 foundation).
 
 ## Constraints
 

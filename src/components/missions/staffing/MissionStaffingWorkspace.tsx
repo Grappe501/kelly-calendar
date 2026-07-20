@@ -185,6 +185,12 @@ export function MissionStaffingWorkspace({ initial }: Props) {
           <Link href={`/system/briefing/${dateKey}/staffing`}>
             Day Staffing Board
           </Link>
+          <Link href="/system/communications">Communications queue</Link>
+          <Link
+            href={`/system/communications/new?missionId=${encodeURIComponent(model.mission.id)}`}
+          >
+            Prepare Communication
+          </Link>
           <Link href={`/system/briefing/${dateKey}/field-ops`}>
             Day Field Ops
           </Link>

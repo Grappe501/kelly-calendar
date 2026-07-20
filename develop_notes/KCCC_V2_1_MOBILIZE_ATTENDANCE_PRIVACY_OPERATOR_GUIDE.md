@@ -22,3 +22,14 @@
 - Broad ops views show aggregates only.
 - Contact details are not shown.
 - No consent is inferred from Mobilize `sms_opt_in_status` or signup.
+
+## Campaign communications (D20)
+
+D20 outreach planning uses **documented consent evidence** per channel and purpose — not D18 observations:
+
+1. Mobilize signup/attendance aggregates cannot become person-level communication audience members.
+2. Person match status (`CONFIRMED` / `DO_NOT_LINK` / `AMBIGUOUS`) gates external-person eligibility when linked.
+3. Mobilize event URLs may appear in message **content** with verified local references — not sent through Mobilize.
+4. External email/SMS dispatch is disabled in D20; export and manual handoff only.
+
+See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_OPERATOR_GUIDE.md` and `KCCC_V2_1_COMMUNICATION_CONSENT_SUPPRESSION_POLICY.md`.

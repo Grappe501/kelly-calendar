@@ -123,6 +123,12 @@ Does **not** mutate Event schedule, lifecycle, operational status, preparation, 
 npm run missions:v21:command-center:validate
 ```
 
+## Campaign communications (D20)
+
+Command Center remains read-only aggregation. D20 communications do **not** send notifications from Command Center and do not mutate Mission phase state. When communications workspaces link from Mission surfaces, operators plan outreach in the owning communications workflow — aggregate here, approve and queue there.
+
+See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md`.
+
 ## Recommended Deliverable 8
 
 **Campaign Day Briefing** — deterministic daily operating packet from Command Center + Today’s Mission (no AI conclusions, no automated delivery).

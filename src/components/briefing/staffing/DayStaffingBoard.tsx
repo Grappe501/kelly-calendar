@@ -39,6 +39,7 @@ export function DayStaffingBoard({ model }: Props) {
           <Link href={model.navigation.launchHref}>Launch Review</Link>
           <Link href={model.navigation.closeoutHref}>Closeout</Link>
           <Link href={model.navigation.commandCenterHref}>Command Center</Link>
+          <Link href="/system/communications">Communications queue</Link>
           <Link href={model.navigation.reportHref}>Report</Link>
         </nav>
       </header>

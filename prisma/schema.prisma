@@ -2228,6 +2228,7 @@ model CampaignMission {
   logisticsPack MissionLogisticsPack?
   fieldOpsSession MissionFieldOpsSession?
   staffingPlan MissionStaffingPlan?
+  communications CampaignCommunication[]
   incidents    MissionIncident[]
 
   @@index([missionStatus])
@@ -4107,5 +4108,422 @@ model MissionStaffingAcknowledgement {
 
   @@unique([staffingPlanId, issueKey])
   @@index([staffingPlanId])
+  @@schema("kelly_calendar")
+}
+
+/// D20 Campaign Communications — consent evidence, suppressions, queue (no auto-send).
+enum CampaignCommChannel {
+  EMAIL
+  SMS
+  PHONE
+  IN_APP
+  MANUAL
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommContactVerification {
+  UNVERIFIED
+  OPERATOR_VERIFIED
+  PROVIDER_VERIFIED
+  INVALID
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommConsentEvidenceType {
+  EXPLICIT_OPT_IN
+  CAMPAIGN_RELATIONSHIP
+  TRANSACTIONAL_CONTEXT
+  OPERATOR_ATTESTATION
+  PROVIDER_IMPORT
+  UNKNOWN
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommConsentState {
+  ACTIVE
+  REVOKED
+  SUPERSEDED
+  EXPIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommSuppressionReason {
+  OPT_OUT
+  DO_NOT_CONTACT
+  INVALID_DESTINATION
+  BOUNCE
+  COMPLAINT
+  WRONG_PERSON
+  SHARED_CONTACT_RESTRICTED
+  PRIVACY_HOLD
+  MANUAL_POLICY
+  UNKNOWN
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommunicationStatus {
+  DRAFT
+  AUDIENCE_REVIEW
+  CONTENT_REVIEW
+  APPROVED
+  QUEUED
+  EXPORTED
+  HANDED_OFF
+  PARTIALLY_DISPATCHED
+  DISPATCHED
+  CANCELLED
+  STALE
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommPurpose {
+  MISSION_STAFFING
+  EVENT_REMINDER
+  OPERATIONAL_UPDATE
+  FOLLOW_UP
+  MOBILIZE_SIGNUP_LINK
+  MANUAL_OUTREACH
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommEligibilityState {
+  ELIGIBLE
+  INELIGIBLE
+  SUPPRESSED
+  AMBIGUOUS
+  MISSING_CONTACT
+  UNVERIFIED
+  REQUIRES_REVIEW
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommInclusionState {
+  CANDIDATE
+  INCLUDED
+  EXCLUDED
+  EXCEPTION_INCLUDED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommApprovalType {
+  CONTENT
+  AUDIENCE
+  DISPATCH
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommQueueStatus {
+  PREPARED
+  BLOCKED
+  EXPORTED
+  HANDED_OFF
+  DISPATCH_ACCEPTED
+  DISPATCH_REJECTED
+  CANCELLED
+  UNKNOWN_OUTCOME
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommDeliveryEventType {
+  DISPATCH_ACCEPTED
+  DISPATCH_REJECTED
+  DELIVERED
+  BOUNCED
+  FAILED
+  UNSUBSCRIBED
+  COMPLAINT
+  REPLIED
+  CLICKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignCommDeliverySource {
+  PROVIDER
+  MANUAL_OPERATOR
+  IMPORT
+  SYSTEM
+
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunicationPolicy {
+  id                                     String   @id @default(cuid())
+  campaignScopeKey                       String   @default("KELLY")
+  version                                Int      @default(1)
+  policyFingerprint                      String
+  allowedChannels                        String[]
+  allowedPurposes                        String[]
+  acceptedEvidenceByChannelPurpose       Json     @default("{}")
+  allowOperatorAttestation               Boolean  @default(false)
+  requireVerifiedContact                 Boolean  @default(true)
+  sharedContactMode                      String   @default("REQUIRE_REVIEW")
+  requireSeparateAudienceAndContentApproval Boolean @default(true)
+  approvalExpiresHours                   Int?
+  externalDispatchEnabled                Boolean  @default(false)
+  exportEnabled                          Boolean  @default(true)
+  handoffEnabled                         Boolean  @default(true)
+  retentionDays                          Int?
+  notes                                  String?
+  isActive                               Boolean  @default(true)
+  createdByUserId                        String?
+  updatedByUserId                        String?
+  createdAt                              DateTime @default(now())
+  updatedAt                              DateTime @updatedAt
+
+  @@unique([campaignScopeKey, version])
+  @@index([campaignScopeKey, isActive])
+  @@schema("kelly_calendar")
+}
+
+model CampaignContactPoint {
+  id                        String                          @id @default(cuid())
+  campaignScopeKey          String                          @default("KELLY")
+  localPersonId             String?
+  campaignUserId            String?
+  confirmedExternalPersonId String?
+  channel                   CampaignCommChannel
+  normalizedDestination     String
+  maskedDisplay             String
+  verificationState         CampaignCommContactVerification @default(UNVERIFIED)
+  provenance                String                          @default("OPERATOR")
+  isActive                  Boolean                         @default(true)
+  firstObservedAt           DateTime?
+  lastObservedAt            DateTime?
+  createdByUserId           String?
+  updatedByUserId           String?
+  createdAt                 DateTime                        @default(now())
+  updatedAt                 DateTime                        @updatedAt
+
+  consentEvidence CampaignCommunicationConsentEvidence[]
+  suppressions    CampaignCommunicationSuppression[]
+  audienceMembers CampaignCommunicationAudienceMember[]
+
+  @@unique([campaignScopeKey, channel, normalizedDestination], map: "CampaignContactPoint_scope_channel_dest_key")
+  @@index([localPersonId])
+  @@index([campaignUserId])
+  @@index([confirmedExternalPersonId])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunicationConsentEvidence {
+  id               String                         @id @default(cuid())
+  campaignScopeKey String                         @default("KELLY")
+  contactPointId   String
+  channel          CampaignCommChannel
+  purpose          CampaignCommPurpose
+  evidenceType     CampaignCommConsentEvidenceType
+  source           String
+  sourceReference  String?
+  capturedAt       DateTime
+  effectiveFrom    DateTime
+  expiresAt        DateTime?
+  scopeNote        String?
+  evidenceNote     String?
+  state            CampaignCommConsentState       @default(ACTIVE)
+  recordedByUserId String?
+  revokedAt        DateTime?
+  revokedByUserId  String?
+  revocationReason String?
+  createdAt        DateTime                       @default(now())
+  updatedAt        DateTime                       @updatedAt
+
+  contactPoint CampaignContactPoint @relation(fields: [contactPointId], references: [id], onDelete: Cascade)
+
+  @@index([contactPointId])
+  @@index([channel, purpose, state])
+  @@index([campaignScopeKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunicationSuppression {
+  id               String                          @id @default(cuid())
+  campaignScopeKey String                          @default("KELLY")
+  contactPointId   String?
+  localPersonId    String?
+  campaignUserId   String?
+  channel          CampaignCommChannel?
+  allChannels      Boolean                         @default(false)
+  purpose          CampaignCommPurpose?
+  reason           CampaignCommSuppressionReason
+  source           String
+  effectiveAt      DateTime
+  expiresAt        DateTime?
+  isActive         Boolean                         @default(true)
+  recordedByUserId String?
+  revokedAt        DateTime?
+  revokedByUserId  String?
+  revocationReason String?
+  createdAt        DateTime                        @default(now())
+  updatedAt        DateTime                        @updatedAt
+
+  contactPoint CampaignContactPoint? @relation(fields: [contactPointId], references: [id], onDelete: SetNull)
+
+  @@index([contactPointId])
+  @@index([campaignScopeKey, isActive])
+  @@index([localPersonId])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunication {
+  id                       String                      @id @default(cuid())
+  campaignScopeKey         String                      @default("KELLY")
+  missionId                String?
+  eventId                  String?
+  staffingPlanId           String?
+  staffingRequirementId    String?
+  campaignDateKey          String?
+  purpose                  CampaignCommPurpose
+  channel                  CampaignCommChannel
+  title                    String
+  subject                  String?
+  bodyText                 String?
+  bodyHtml                 String?
+  mobilizeEventUrl         String?
+  mobilizeEventReferenceId String?
+  status                   CampaignCommunicationStatus @default(DRAFT)
+  contentFingerprint       String?
+  audienceFingerprint      String?
+  policyVersion            Int?
+  policyFingerprint        String?
+  isStale                  Boolean                     @default(false)
+  staleReason              String?
+  createdByUserId          String?
+  updatedByUserId          String?
+  cancelledAt              DateTime?
+  cancelledByUserId        String?
+  isActive                 Boolean                     @default(true)
+  createdAt                DateTime                    @default(now())
+  updatedAt                DateTime                    @updatedAt
+
+  mission         CampaignMission?                     @relation(fields: [missionId], references: [id], onDelete: SetNull)
+  audienceMembers CampaignCommunicationAudienceMember[]
+  approvals       CampaignCommunicationApproval[]
+  queueItems      CampaignCommunicationQueueItem[]
+
+  @@index([campaignScopeKey, status])
+  @@index([missionId])
+  @@index([eventId])
+  @@index([campaignDateKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunicationAudienceMember {
+  id                        String                       @id @default(cuid())
+  communicationId           String
+  contactPointId            String?
+  localPersonId             String?
+  campaignUserId            String?
+  confirmedExternalPersonId String?
+  manualDisplayLabel        String?
+  candidateSource           String
+  eligibilityState          CampaignCommEligibilityState
+  inclusionState            CampaignCommInclusionState   @default(CANDIDATE)
+  eligibilityReasonCodes    String[]
+  warningReasonCodes        String[]                     @default([])
+  consentEvidenceIds        String[]                     @default([])
+  suppressionIds            String[]                     @default([])
+  eligibilityFingerprint    String
+  reviewedAt                DateTime?
+  reviewedByUserId          String?
+  inclusionActorUserId      String?
+  inclusionNote             String?
+  createdAt                 DateTime                     @default(now())
+  updatedAt                 DateTime                     @updatedAt
+
+  communication CampaignCommunication              @relation(fields: [communicationId], references: [id], onDelete: Cascade)
+  contactPoint  CampaignContactPoint?              @relation(fields: [contactPointId], references: [id], onDelete: SetNull)
+  queueItems    CampaignCommunicationQueueItem[]
+
+  @@index([communicationId])
+  @@index([eligibilityState])
+  @@index([contactPointId])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunicationApproval {
+  id                  String                 @id @default(cuid())
+  communicationId     String
+  approvalType        CampaignCommApprovalType
+  contentFingerprint  String?
+  audienceFingerprint String?
+  policyVersion       Int?
+  policyFingerprint   String?
+  approvedByUserId    String
+  approvedAt          DateTime               @default(now())
+  expiresAt           DateTime?
+  isConsumed          Boolean                @default(false)
+  isInvalidated       Boolean                @default(false)
+  invalidatedAt       DateTime?
+  invalidationReason  String?
+  reason              String?
+  createdAt           DateTime               @default(now())
+
+  communication CampaignCommunication @relation(fields: [communicationId], references: [id], onDelete: Cascade)
+
+  @@index([communicationId, approvalType])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunicationQueueItem {
+  id                  String                 @id @default(cuid())
+  communicationId     String
+  audienceMemberId    String
+  contactPointId      String?
+  channel             CampaignCommChannel
+  destinationRef      String?
+  status              CampaignCommQueueStatus @default(PREPARED)
+  contentFingerprint  String
+  audienceFingerprint String
+  idempotencyKey      String                 @unique
+  preparedAt          DateTime               @default(now())
+  exportedAt          DateTime?
+  handedOffAt         DateTime?
+  handedOffToLabel    String?
+  provider            String?
+  externalDispatchId  String?
+  lastErrorClass      String?
+  blockReasonCodes    String[]               @default([])
+  createdByUserId     String?
+  updatedByUserId     String?
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+
+  communication  CampaignCommunication                 @relation(fields: [communicationId], references: [id], onDelete: Cascade)
+  audienceMember CampaignCommunicationAudienceMember   @relation(fields: [audienceMemberId], references: [id], onDelete: Cascade)
+  deliveryEvents CampaignCommunicationDeliveryEvent[]
+
+  @@index([communicationId, status])
+  @@index([audienceMemberId])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCommunicationDeliveryEvent {
+  id                  String                       @id @default(cuid())
+  queueItemId         String
+  eventType           CampaignCommDeliveryEventType
+  source              CampaignCommDeliverySource
+  providerEventId     String?                      @unique
+  occurredAt          DateTime
+  observedAt          DateTime                     @default(now())
+  provenance          String
+  redactedDiagnostics Json?
+  createdAt           DateTime                     @default(now())
+
+  queueItem CampaignCommunicationQueueItem @relation(fields: [queueItemId], references: [id], onDelete: Cascade)
+
+  @@index([queueItemId])
   @@schema("kelly_calendar")
 }

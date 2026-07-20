@@ -49,7 +49,9 @@ Follow-up keyed by `missionId`; actions keyed by `followUpId`. Reprojection neve
 
 ## Deferred
 
-Communications sending, Google Tasks, global task inbox, campaign memory promotion, full offline sync, PDF export.
+Automated communications sending (D20 ships consent-aware queue with export/handoff only — provider dispatch deferred to D21), Google Tasks, global task inbox, campaign memory promotion, full offline sync, PDF export.
+
+See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md`.
 
 ## Migration report (`20260720080000_v21_mission_follow_up`)
 

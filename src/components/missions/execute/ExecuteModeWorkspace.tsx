@@ -131,6 +131,7 @@ export function ExecuteModeWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${mission.missionId}/staffing`}>
             Staffing
           </Link>
+          <Link href="/system/communications">Communications queue</Link>
           <Link href={`/system/missions/${mission.missionId}/incidents`}>
             Incidents
           </Link>

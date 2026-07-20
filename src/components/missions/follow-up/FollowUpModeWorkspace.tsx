@@ -181,6 +181,7 @@ export function FollowUpModeWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${mission.missionId}/debrief`}>
             Debrief
           </Link>
+          <Link href="/system/communications">Communications queue</Link>
           <Link href={`/system/missions/${mission.missionId}`}>
             Full record
           </Link>
