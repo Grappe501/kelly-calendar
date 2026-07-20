@@ -40,6 +40,7 @@ export * from "@/lib/missions/v21/day-briefing";
 export * from "@/lib/missions/v21/day-closeout";
 export * from "@/lib/missions/v21/day-launch";
 export * from "@/lib/missions/v21/travel-movement";
+export * from "@/lib/missions/v21/logistics-pack";
 export type {
   CampaignMission,
   EventMissionSource,

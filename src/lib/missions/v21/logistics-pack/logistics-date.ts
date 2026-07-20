@@ -1,0 +1,6 @@
+import { addDaysToDateKey, classifyBriefingDay, formatCampaignTime, formatFullCampaignDate, parseBriefingDateKey, type BriefingDateParseResult } from "@/lib/missions/v21/day-briefing/briefing-date";
+import { campaignDateKey } from "@/lib/missions/v21/select-todays-mission";
+import { DEFAULT_LOGISTICS_PACK_CONFIG, type LogisticsPackConfig } from "@/lib/missions/v21/logistics-pack/logistics-config";
+export { addDaysToDateKey, formatCampaignTime, formatFullCampaignDate, parseBriefingDateKey };
+export function assertLogisticsDateInRange(dateKey: string, now: Date, timeZone: string, config: LogisticsPackConfig = DEFAULT_LOGISTICS_PACK_CONFIG): BriefingDateParseResult { const parsed = parseBriefingDateKey(dateKey); if (!parsed.ok) return parsed; const today = campaignDateKey(now, timeZone); const earliest = addDaysToDateKey(today, -config.allowedPastDays); const latest = addDaysToDateKey(today, config.allowedFutureDays); return dateKey < earliest || dateKey > latest ? { ok: false, error: `Date ${dateKey} is outside the allowed logistics board range (${earliest}–${latest}).` } : parsed; }
+export const classifyLogisticsDay = (dateKey: string, now: Date, timeZone: string) => classifyBriefingDay(dateKey, now, timeZone);
