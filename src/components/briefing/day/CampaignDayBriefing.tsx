@@ -85,6 +85,9 @@ export function CampaignDayBriefing({ model }: Props) {
             Mission Command Center
           </Link>
           <Link href={model.navigation.calendarHref}>Calendar</Link>
+          <Link href={`/system/briefing/${model.briefingDate}/closeout`}>
+            Close Out Today
+          </Link>
           <Link
             href={`/system/briefing/${model.briefingDate}`}
             className="briefing-refresh no-print"
@@ -543,6 +546,11 @@ export function CampaignDayBriefing({ model }: Props) {
         <h2 id="briefing-eod-heading">End-of-day responsibilities</h2>
         <p>
           Status: <strong>{model.endOfDayStatusLabel}</strong>
+        </p>
+        <p>
+          <Link className="button" href={`/system/briefing/${model.briefingDate}/closeout`}>
+            Close Out Today
+          </Link>
         </p>
         {model.endOfDay.length === 0 ? (
           <p className="muted">

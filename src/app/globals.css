@@ -2500,7 +2500,9 @@ legend {
     display: none !important;
   }
 
-  .campaign-day-briefing .panel {
+  .campaign-day-briefing .panel,
+  .campaign-day-closeout .panel,
+  .campaign-day-closeout-report section {
     break-inside: avoid;
     box-shadow: none;
     border: 1px solid #ccc;
@@ -2513,6 +2515,39 @@ legend {
   .briefing-collapsible summary {
     display: none;
   }
+}
+
+.campaign-day-closeout .closeout-forms label,
+.campaign-day-closeout .closeout-actions label {
+  display: block;
+  margin: 0.75rem 0;
+}
+
+.campaign-day-closeout textarea,
+.campaign-day-closeout select {
+  display: block;
+  width: 100%;
+  max-width: 40rem;
+  margin-top: 0.35rem;
+}
+
+.campaign-day-closeout .closeout-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.campaign-day-closeout .closeout-save-status {
+  color: #1a5c2e;
+}
+
+.campaign-day-closeout .closeout-save-error {
+  color: #8a1f1f;
+}
+
+.campaign-day-closeout .closeout-final {
+  margin-top: 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

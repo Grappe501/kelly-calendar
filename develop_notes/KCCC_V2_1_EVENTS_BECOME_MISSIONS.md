@@ -1,6 +1,6 @@
 # KCCC V2.1 — Events Become Missions
 
-**Status:** DELIVERABLE 8 LANDED — Campaign Day Briefing  
+**Status:** DELIVERABLE 9 LANDED — Campaign Day Closeout  
 **Date:** 2026-07-19 (updated 2026-07-20)  
 **Parent:** `KCCC_CAMPAIGN_OPERATING_SYSTEM_V2.md`  
 **Google:** PAUSED — no dependency for V2.1  
@@ -11,7 +11,8 @@
 **Deliverable 5 notes:** `KCCC_V2_1_DEBRIEF_MODE_DELIVERABLE_5.md` · rollback `KCCC_V2_1_DEBRIEF_MODE_ROLLBACK.md`  
 **Deliverable 6 notes:** `KCCC_V2_1_FOLLOW_UP_MODE_DELIVERABLE_6.md` · rollback `KCCC_V2_1_FOLLOW_UP_MODE_ROLLBACK.md`  
 **Deliverable 7 notes:** `KCCC_V2_1_MISSION_COMMAND_CENTER_DELIVERABLE_7.md` · rollback `KCCC_V2_1_MISSION_COMMAND_CENTER_ROLLBACK.md`  
-**Deliverable 8 notes:** `KCCC_V2_1_CAMPAIGN_DAY_BRIEFING_DELIVERABLE_8.md` · rollback `KCCC_V2_1_CAMPAIGN_DAY_BRIEFING_ROLLBACK.md`
+**Deliverable 8 notes:** `KCCC_V2_1_CAMPAIGN_DAY_BRIEFING_DELIVERABLE_8.md` · rollback `KCCC_V2_1_CAMPAIGN_DAY_BRIEFING_ROLLBACK.md`  
+**Deliverable 9 notes:** `KCCC_V2_1_CAMPAIGN_DAY_CLOSEOUT_DELIVERABLE_9.md` · rollback `KCCC_V2_1_CAMPAIGN_DAY_CLOSEOUT_ROLLBACK.md`
 
 ## Product shift
 
@@ -71,7 +72,8 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 2. **Mission dashboard** — DONE: `/` is Today’s Mission operating surface. Detail at `/system/missions/[missionId]`.
 3. **Mission lifecycle** — Prepare / Execute / Debrief / Follow-up DONE.  
 4. **Mission Command Center** — DONE: `/system/missions/command-center` cross-Mission operating view (read-only aggregation).  
-5. **Campaign Day Briefing** — DONE: `/system/briefing/today` and `/system/briefing/[date]` deterministic daily operating packet. NEXT recommended: **Briefing acknowledgement + optional morning snapshot** (still no AI / no automated delivery).
+5. **Campaign Day Briefing** — DONE: `/system/briefing/today` and `/system/briefing/[date]` deterministic daily operating packet.  
+6. **Campaign Day Closeout** — DONE: `/system/briefing/closeout` and `/system/briefing/[date]/closeout` evening review + tomorrow readiness + leadership signoff. NEXT recommended: **Briefing acknowledgement + optional morning snapshot** (still no AI / no automated delivery).
 
 Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform.
 

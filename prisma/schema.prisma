@@ -2377,3 +2377,123 @@ model MissionFollowUpAction {
   @@index([sourceType])
   @@schema("kelly_calendar")
 }
+
+/// V2.1 Campaign Day Closeout — day-level review status (not Mission workspace state).
+enum CampaignDayCloseoutStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  REVIEWED
+  SIGNED_OFF
+
+  @@schema("kelly_calendar")
+}
+
+/// Today assessment for day closeout — derived selection persisted by operators.
+enum CampaignDayAssessment {
+  NOT_ASSESSED
+  CLEAR
+  RESPONSIBILITY_REMAINS
+  LEADERSHIP_ACTION_REQUIRED
+
+  @@schema("kelly_calendar")
+}
+
+/// Tomorrow readiness conclusion for day closeout.
+enum TomorrowReadinessStatus {
+  NOT_ASSESSED
+  READY
+  NEEDS_ATTENTION
+  NOT_READY
+  NO_MISSIONS_SCHEDULED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignDayCarryForwardSourceType {
+  ACTIVE_EXECUTION
+  DEBRIEF_REQUIRED
+  DEBRIEF_APPROVAL
+  FOLLOW_UP_ACTION
+  COMMITMENT
+  BLOCKED_ACTION
+  UNASSIGNED_ACTION
+  LEADERSHIP_DECISION
+  TOMORROW_PREPARATION
+  TOMORROW_TRAVEL
+  TOMORROW_SCHEDULE
+  DATA_INTEGRITY
+  OPERATOR_ADDED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignDayCarryForwardStatus {
+  OPEN
+  TRANSFERRED
+  RESOLVED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+/// V2.1 Campaign Day Closeout — evening review + tomorrow readiness handoff.
+/// Additive / lazy. Keyed by campaign-local YYYY-MM-DD (no UTC date shift).
+/// Does not mutate Events, Missions, Prepare, Execute, Debrief, or Follow-up.
+model CampaignDayCloseout {
+  id                  String                     @id @default(cuid())
+  /// Campaign-local calendar day as YYYY-MM-DD (America/Chicago semantics in app).
+  campaignDateKey     String                     @unique
+  status              CampaignDayCloseoutStatus  @default(NOT_STARTED)
+  todayAssessment     CampaignDayAssessment      @default(NOT_ASSESSED)
+  tomorrowReadiness   TomorrowReadinessStatus    @default(NOT_ASSESSED)
+  closeoutSummary     String?
+  carryForwardSummary String?
+  tomorrowSummary     String?
+  internalNotes       String?
+  startedAt           DateTime?
+  reviewedAt          DateTime?
+  signedOffAt         DateTime?
+  startedByUserId     String?
+  reviewedByUserId    String?
+  signedOffByUserId   String?
+  createdByUserId     String?
+  updatedByUserId     String?
+  createdAt           DateTime                   @default(now())
+  updatedAt           DateTime                   @updatedAt
+
+  carryForwardItems CampaignDayCarryForwardItem[]
+
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+/// Day-level handoff ledger entry — does not resolve underlying Mission actions.
+model CampaignDayCarryForwardItem {
+  id             String                            @id @default(cuid())
+  closeoutId     String
+  sourceType     CampaignDayCarryForwardSourceType
+  sourceRecordId String?
+  /// Deterministic import key: sourceType + sourceRecordId (or client key for operator-added)
+  importKey      String?
+  missionId      String?
+  title          String
+  reason         String?
+  ownerName      String?
+  ownerUserId    String?
+  targetDateKey  String?
+  destination    String?
+  status         CampaignDayCarryForwardStatus     @default(OPEN)
+  createdByUserId String?
+  resolvedAt     DateTime?
+  resolvedByUserId String?
+  cancellationReason String?
+  createdAt      DateTime                          @default(now())
+  updatedAt      DateTime                          @updatedAt
+
+  closeout CampaignDayCloseout @relation(fields: [closeoutId], references: [id], onDelete: Cascade)
+
+  @@unique([closeoutId, importKey])
+  @@index([closeoutId, status])
+  @@index([sourceType])
+  @@schema("kelly_calendar")
+}
