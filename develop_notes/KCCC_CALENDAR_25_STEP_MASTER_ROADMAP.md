@@ -10,12 +10,14 @@ Runtime: src/lib/system/constants.ts
 ## Governing decision
 
 ```text
-Primary product: Kelly Campaign Calendar
+Primary product: Kelly Campaign Calendar → Campaign Operating System (calendar as center)
 Canonical schedule entity: Prisma Event ONLY
 Communications OS (D20–D26): FROZEN
 LG-1: PAUSED
 AI: disabled until Step 16 (proposal_only)
-Step 12: NOT AUTHORIZED until operator usability pass reviewed
+Step 12: NOT AUTHORIZED until operator usability pass + synthesis reviewed
+Cadence: Build → validate → observe → synthesize → refine → next phase
+  (see develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md)
 ```
 
 ---
@@ -86,9 +88,11 @@ Validate: `npm run calendar:canonical:validate`
 ## Next authorized build
 
 ```text
-HOLD — complete Operator Usability Pass 1 first
+HOLD — complete Operator Usability Pass 1 + Synthesis 1
 develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
+develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md
+Standing cadence: develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md
 ```
 
-Step 12 (`KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`) is **not authorized** until the pass is reviewed.
-Do not start automatically.
+Step 12 (`KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`) is **not authorized** until the pass is synthesized and reviewed with Steve.
+Do not start automatically. Do not change the Pass 1 protocol further — run it.
