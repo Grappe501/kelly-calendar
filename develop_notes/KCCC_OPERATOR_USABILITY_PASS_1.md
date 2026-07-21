@@ -8,6 +8,45 @@ After: Step 11 Event Operations (d8bd594)
 Doc: develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
 ```
 
+## Operator Context
+
+_Fill one block before each observation session. Context matters when reviewing later._
+
+### Session — Kelly
+
+| Field | Value |
+|-------|-------|
+| Operator | Kelly |
+| Date / time | |
+| Device | desktop · laptop · tablet · phone |
+| Browser | |
+| Experience level | first use · second use · other: ___ |
+| Campaign context | planning tomorrow · entering a new event · reviewing the week · other: ___ |
+
+### Session — Steve
+
+| Field | Value |
+|-------|-------|
+| Operator | Steve |
+| Date / time | |
+| Device | desktop · laptop · tablet · phone |
+| Browser | |
+| Experience level | first use · second use · builder familiarity · other: ___ |
+| Campaign context | planning tomorrow · entering a new event · reviewing the week · stress / edge cases · other: ___ |
+
+### Session — Staff
+
+| Field | Value |
+|-------|-------|
+| Operator | Staff (name): ___ |
+| Date / time | |
+| Device | desktop · laptop · tablet · phone |
+| Browser | |
+| Experience level | first use · second use · other: ___ |
+| Campaign context | planning tomorrow · entering a new event · reviewing the week · other: ___ |
+
+---
+
 ## Framing
 
 This is **not testing**.
@@ -26,6 +65,8 @@ Record **hesitation** first. Bugs are secondary.
 
 Stay disciplined: do not authorize Step 12 until this pass informs it. The pause may save weeks of rework.
 
+This is the first point where we intentionally **slow development** — not for lack of ideas, but because the product is finally usable enough for real operator behavior to guide the next phase.
+
 ---
 
 ## Success criteria
@@ -41,6 +82,22 @@ If any answer is “not yet,” fix (or consciously defer) before Availability R
 
 ---
 
+## How to capture each prompt
+
+For every prompt or scenario, note approximate timings — not to optimize seconds, but because **long pauses often mean uncertainty**:
+
+| Metric | Notes |
+|--------|-------|
+| Time to first click | |
+| Time to complete | |
+| Number of pauses | |
+| Number of backtracks | |
+| Needed assistance? | Y / N — if Y, what was asked? |
+
+Do not defend the software during the session. Do not explain why something works the way it does. Just listen and write.
+
+---
+
 ## Protocol
 
 ### A. Kelly session (30–60 min) — observe
@@ -49,7 +106,7 @@ Do **not** tell her where anything is.
 
 Give **realistic requests**, then watch. If she hesitates, that is a design problem.
 
-Suggested prompts (use as conversation, not a checklist to coach through):
+Suggested prompts (conversation, not a coached checklist):
 
 - “Add tomorrow’s Rotary meeting.”
 - “Move Friday’s fundraiser back an hour.”
@@ -58,9 +115,39 @@ Suggested prompts (use as conversation, not a checklist to coach through):
 - “Show me everything in Pulaski County.”
 - “What do you have to prepare today?”
 
-| Time | Prompt / what she tried | Where she looked / clicked | Hesitation / expectation | Outcome |
-|------|-------------------------|----------------------------|--------------------------|---------|
-| | | | | |
+| Prompt | First click | Time to first click | Time to complete | Pauses | Backtracks | Help? | Hesitation / expectation | Outcome |
+|--------|-------------|---------------------|------------------|--------|------------|-------|--------------------------|---------|
+| | | | | | | | | |
+
+**Operator confidence (mark what you saw):**
+
+- [ ] Confident
+- [ ] Hesitant
+- [ ] Frustrated
+- [ ] Curious
+- [ ] Surprised
+- [ ] Lost
+- [ ] Relieved
+
+Notes on confidence shifts during the session:
+
+>
+
+**Magic moment**
+
+> At what moment did the software start making sense?
+
+Answer:
+
+>
+
+**Closing question** (ask only this; do not defend)
+
+> If you could change one thing tomorrow, what would it be?
+
+Answer:
+
+>
 
 ---
 
@@ -85,9 +172,35 @@ Edge-case hunting:
 - [ ] Stress-test navigation speed
 - [ ] Rapid reschedule / visibility churn / dense weeks (optional)
 
-| Scenario | Feels like campaign work? (Y/N) | Awkwardness | Notes |
-|----------|---------------------------------|-------------|-------|
-| | | | |
+| Scenario | First click | Time to first click | Time to complete | Pauses | Backtracks | Feels like campaign work? | Awkwardness | Notes |
+|----------|-------------|---------------------|------------------|--------|------------|---------------------------|-------------|-------|
+| | | | | | | Y / N | | |
+
+**Operator confidence (mark what you felt / observed in yourself):**
+
+- [ ] Confident
+- [ ] Hesitant
+- [ ] Frustrated
+- [ ] Curious
+- [ ] Surprised
+- [ ] Lost
+- [ ] Relieved
+
+**Magic moment**
+
+> At what moment did the software start making sense?
+
+Answer:
+
+>
+
+**Closing question**
+
+> If you could change one thing tomorrow, what would it be?
+
+Answer:
+
+>
 
 ---
 
@@ -107,9 +220,83 @@ Their wording tells us how the software should be organized.
 
 Example: if they say “I’m trying to find tomorrow…,” maybe Today / Tomorrow / This Week deserves more prominence than traditional calendar chrome.
 
-| First click / destination | What they said they were looking for | Questions held back | Notes |
-|---------------------------|--------------------------------------|---------------------|-------|
-| | | | |
+| Prompt / moment | First click | Time to first click | Time to complete | Pauses | Backtracks | Looking for (their words) | Help held back | Notes |
+|-----------------|-------------|---------------------|------------------|--------|------------|---------------------------|----------------|-------|
+| Schedule tomorrow | | | | | | | | |
+
+**Operator confidence:**
+
+- [ ] Confident
+- [ ] Hesitant
+- [ ] Frustrated
+- [ ] Curious
+- [ ] Surprised
+- [ ] Lost
+- [ ] Relieved
+
+**Magic moment**
+
+> At what moment did the software start making sense?
+
+Answer:
+
+>
+
+**Closing question**
+
+> If you could change one thing tomorrow, what would it be?
+
+Answer:
+
+>
+
+---
+
+## Closing answers — synthesis
+
+_If Kelly, Steve, and staff converge on roughly the same change, that is almost certainly the highest-priority refinement before Step 12._
+
+| Participant | One thing they would change tomorrow |
+|-------------|--------------------------------------|
+| Kelly | |
+| Steve | |
+| Staff | |
+
+**Convergent theme (if any):**
+
+>
+
+---
+
+## Magic moments — synthesis
+
+_What the product’s true mental model is, according to when it “clicked.”_
+
+| Participant | When it started making sense |
+|-------------|------------------------------|
+| Kelly | |
+| Steve | |
+| Staff | |
+
+**Shared mental model (if any):** e.g. Today · one Event across views · prep on the card · …
+
+>
+
+---
+
+## Operator Confidence — synthesis
+
+| Emotion | Kelly | Steve | Staff | Notes |
+|---------|-------|-------|-------|-------|
+| Confident | | | | |
+| Hesitant | | | | |
+| Frustrated | | | | |
+| Curious | | | | |
+| Surprised | | | | |
+| Lost | | | | |
+| Relieved | | | | |
+
+People often will not say they are confused; you will see it in behavior. Capture that here.
 
 ---
 
@@ -270,11 +457,11 @@ _Can wait until after Availability / Conflict work._
 
 ## Session log
 
-| Date | Observer / participant | Role | Duration | Environment | Summary |
-|------|------------------------|------|----------|-------------|---------|
-| | Kelly | Candidate / principal | | Production | |
-| | Steve | Power user / edge cases | | Production | |
-| | | Campaign staff | | Production | |
+| Date | Operator | Device | Experience | Duration | Summary |
+|------|----------|--------|------------|----------|---------|
+| | Kelly | | | | |
+| | Steve | | | | |
+| | Staff | | | | |
 
 ---
 
@@ -288,12 +475,15 @@ or explicitly deferred by Steve.
 
 When ready to close:
 
-- [ ] Kelly observation session complete
-- [ ] Steve edge-case session complete
+- [ ] Operator Context filled for each session
+- [ ] Kelly observation session complete (timings + confidence + magic moment + one change)
+- [ ] Steve edge-case session complete (same)
 - [ ] Staff “Schedule tomorrow” session complete (or waived with reason)
+- [ ] Closing-answer synthesis reviewed (convergent “one thing”?)
+- [ ] Magic-moment synthesis reviewed
 - [ ] Expected-vs-observed section filled
 - [ ] Repeated behaviors section filled
-- [ ] Success criteria answered (Kelly day / staff without training / correct workflow / friction before Step 12)
+- [ ] Success criteria answered
 - [ ] Must-fix list reviewed
 - [ ] Steve authorizes Step 12: `KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`
 
@@ -315,3 +505,4 @@ Availability should behave like an experienced scheduler, not a hard wall—**sh
 
 Goal: help staff make good decisions **before** conflicts form.
 Use this pass to shape Step 12; do not force users to adapt to the design.
+Once observation is complete and patterns are reviewed together, Step 12 and beyond should have an evidence-based roadmap.
