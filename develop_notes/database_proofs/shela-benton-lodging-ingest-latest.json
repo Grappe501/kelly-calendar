@@ -1,0 +1,21 @@
+{
+  "pass": "SHELA-BENTON-LODGING-2026-07-12",
+  "draft": {
+    "id": "draft_obs_benton_aug_trip_2026",
+    "status": "PLANNING"
+  },
+  "immersion": {
+    "key": "nwa-immersion-tour-2026-08-17",
+    "eventNumber": "KCCC-2026-0062",
+    "status": "HOLD"
+  },
+  "classification": "CRM / lodging offer — no new dated Event",
+  "omittedFromGit": [
+    "Contact phone numbers",
+    "Contact emails"
+  ],
+  "openDecisions": [
+    "Accept Shela Norman Bella Vista Airbnb for Aug 17–20 Benton immersion?",
+    "Confirm FOIA tax-rolls path stays with Scott (no Kelly calendar block)."
+  ]
+}
