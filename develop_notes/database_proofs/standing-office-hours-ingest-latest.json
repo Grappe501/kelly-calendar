@@ -1,0 +1,479 @@
+{
+  "pass": "STANDING-OFFICE-2026-07-21",
+  "range": {
+    "start": "2026-07-22",
+    "end": "2026-09-30"
+  },
+  "created": [
+    {
+      "key": "standing-office-am-2026-07-27",
+      "eventNumber": "KCCC-2026-0074"
+    },
+    {
+      "key": "standing-office-pm-2026-07-27",
+      "eventNumber": "KCCC-2026-0075"
+    },
+    {
+      "key": "standing-office-am-2026-07-28",
+      "eventNumber": "KCCC-2026-0076"
+    },
+    {
+      "key": "standing-office-pm-2026-07-28",
+      "eventNumber": "KCCC-2026-0077"
+    },
+    {
+      "key": "standing-office-am-2026-07-29",
+      "eventNumber": "KCCC-2026-0078"
+    },
+    {
+      "key": "standing-office-pm-2026-07-29",
+      "eventNumber": "KCCC-2026-0079"
+    },
+    {
+      "key": "standing-office-am-2026-07-30",
+      "eventNumber": "KCCC-2026-0080"
+    },
+    {
+      "key": "standing-office-pm-2026-07-30",
+      "eventNumber": "KCCC-2026-0081"
+    },
+    {
+      "key": "standing-office-am-2026-07-31",
+      "eventNumber": "KCCC-2026-0082"
+    },
+    {
+      "key": "standing-office-pm-2026-07-31",
+      "eventNumber": "KCCC-2026-0083"
+    },
+    {
+      "key": "standing-office-am-2026-08-04",
+      "eventNumber": "KCCC-2026-0084"
+    },
+    {
+      "key": "standing-office-pm-2026-08-04",
+      "eventNumber": "KCCC-2026-0085"
+    },
+    {
+      "key": "standing-office-am-2026-08-06",
+      "eventNumber": "KCCC-2026-0086"
+    },
+    {
+      "key": "standing-office-pm-2026-08-06",
+      "eventNumber": "KCCC-2026-0087"
+    },
+    {
+      "key": "standing-office-am-2026-08-07",
+      "eventNumber": "KCCC-2026-0088"
+    },
+    {
+      "key": "standing-office-am-2026-08-10",
+      "eventNumber": "KCCC-2026-0089"
+    },
+    {
+      "key": "standing-office-pm-2026-08-10",
+      "eventNumber": "KCCC-2026-0090"
+    },
+    {
+      "key": "standing-office-am-2026-08-11",
+      "eventNumber": "KCCC-2026-0091"
+    },
+    {
+      "key": "standing-office-pm-2026-08-11",
+      "eventNumber": "KCCC-2026-0092"
+    },
+    {
+      "key": "standing-office-am-2026-08-14",
+      "eventNumber": "KCCC-2026-0093"
+    },
+    {
+      "key": "standing-office-pm-2026-08-14",
+      "eventNumber": "KCCC-2026-0094"
+    },
+    {
+      "key": "standing-office-am-2026-08-21",
+      "eventNumber": "KCCC-2026-0095"
+    },
+    {
+      "key": "standing-office-pm-2026-08-21",
+      "eventNumber": "KCCC-2026-0096"
+    },
+    {
+      "key": "standing-office-am-2026-08-25",
+      "eventNumber": "KCCC-2026-0097"
+    },
+    {
+      "key": "standing-office-pm-2026-08-25",
+      "eventNumber": "KCCC-2026-0098"
+    },
+    {
+      "key": "standing-office-am-2026-08-26",
+      "eventNumber": "KCCC-2026-0099"
+    },
+    {
+      "key": "standing-office-pm-2026-08-26",
+      "eventNumber": "KCCC-2026-0100"
+    },
+    {
+      "key": "standing-office-pm-2026-08-27",
+      "eventNumber": "KCCC-2026-0101"
+    },
+    {
+      "key": "standing-office-am-2026-08-28",
+      "eventNumber": "KCCC-2026-0102"
+    },
+    {
+      "key": "standing-office-pm-2026-08-28",
+      "eventNumber": "KCCC-2026-0103"
+    },
+    {
+      "key": "standing-office-am-2026-08-31",
+      "eventNumber": "KCCC-2026-0104"
+    },
+    {
+      "key": "standing-office-pm-2026-08-31",
+      "eventNumber": "KCCC-2026-0105"
+    },
+    {
+      "key": "standing-office-am-2026-09-01",
+      "eventNumber": "KCCC-2026-0106"
+    },
+    {
+      "key": "standing-office-pm-2026-09-01",
+      "eventNumber": "KCCC-2026-0107"
+    },
+    {
+      "key": "standing-office-am-2026-09-02",
+      "eventNumber": "KCCC-2026-0108"
+    },
+    {
+      "key": "standing-office-pm-2026-09-02",
+      "eventNumber": "KCCC-2026-0109"
+    },
+    {
+      "key": "standing-office-am-2026-09-03",
+      "eventNumber": "KCCC-2026-0110"
+    },
+    {
+      "key": "standing-office-pm-2026-09-03",
+      "eventNumber": "KCCC-2026-0111"
+    },
+    {
+      "key": "standing-office-am-2026-09-04",
+      "eventNumber": "KCCC-2026-0112"
+    },
+    {
+      "key": "standing-office-pm-2026-09-04",
+      "eventNumber": "KCCC-2026-0113"
+    },
+    {
+      "key": "standing-office-am-2026-09-07",
+      "eventNumber": "KCCC-2026-0114"
+    },
+    {
+      "key": "standing-office-pm-2026-09-07",
+      "eventNumber": "KCCC-2026-0115"
+    },
+    {
+      "key": "standing-office-am-2026-09-08",
+      "eventNumber": "KCCC-2026-0116"
+    },
+    {
+      "key": "standing-office-pm-2026-09-08",
+      "eventNumber": "KCCC-2026-0117"
+    },
+    {
+      "key": "standing-office-am-2026-09-09",
+      "eventNumber": "KCCC-2026-0118"
+    },
+    {
+      "key": "standing-office-pm-2026-09-09",
+      "eventNumber": "KCCC-2026-0119"
+    },
+    {
+      "key": "standing-office-am-2026-09-10",
+      "eventNumber": "KCCC-2026-0120"
+    },
+    {
+      "key": "standing-office-pm-2026-09-10",
+      "eventNumber": "KCCC-2026-0121"
+    },
+    {
+      "key": "standing-office-am-2026-09-11",
+      "eventNumber": "KCCC-2026-0122"
+    },
+    {
+      "key": "standing-office-pm-2026-09-11",
+      "eventNumber": "KCCC-2026-0123"
+    },
+    {
+      "key": "standing-office-am-2026-09-14",
+      "eventNumber": "KCCC-2026-0124"
+    },
+    {
+      "key": "standing-office-pm-2026-09-14",
+      "eventNumber": "KCCC-2026-0125"
+    },
+    {
+      "key": "standing-office-am-2026-09-15",
+      "eventNumber": "KCCC-2026-0126"
+    },
+    {
+      "key": "standing-office-pm-2026-09-15",
+      "eventNumber": "KCCC-2026-0127"
+    },
+    {
+      "key": "standing-office-am-2026-09-16",
+      "eventNumber": "KCCC-2026-0128"
+    },
+    {
+      "key": "standing-office-pm-2026-09-16",
+      "eventNumber": "KCCC-2026-0129"
+    },
+    {
+      "key": "standing-office-am-2026-09-17",
+      "eventNumber": "KCCC-2026-0130"
+    },
+    {
+      "key": "standing-office-pm-2026-09-17",
+      "eventNumber": "KCCC-2026-0131"
+    },
+    {
+      "key": "standing-office-am-2026-09-18",
+      "eventNumber": "KCCC-2026-0132"
+    },
+    {
+      "key": "standing-office-pm-2026-09-18",
+      "eventNumber": "KCCC-2026-0133"
+    },
+    {
+      "key": "standing-office-am-2026-09-21",
+      "eventNumber": "KCCC-2026-0134"
+    },
+    {
+      "key": "standing-office-pm-2026-09-21",
+      "eventNumber": "KCCC-2026-0135"
+    },
+    {
+      "key": "standing-office-am-2026-09-22",
+      "eventNumber": "KCCC-2026-0136"
+    },
+    {
+      "key": "standing-office-pm-2026-09-22",
+      "eventNumber": "KCCC-2026-0137"
+    },
+    {
+      "key": "standing-office-am-2026-09-23",
+      "eventNumber": "KCCC-2026-0138"
+    },
+    {
+      "key": "standing-office-pm-2026-09-23",
+      "eventNumber": "KCCC-2026-0139"
+    },
+    {
+      "key": "standing-office-am-2026-09-24",
+      "eventNumber": "KCCC-2026-0140"
+    },
+    {
+      "key": "standing-office-pm-2026-09-24",
+      "eventNumber": "KCCC-2026-0141"
+    },
+    {
+      "key": "standing-office-am-2026-09-25",
+      "eventNumber": "KCCC-2026-0142"
+    },
+    {
+      "key": "standing-office-pm-2026-09-25",
+      "eventNumber": "KCCC-2026-0143"
+    },
+    {
+      "key": "standing-office-am-2026-09-28",
+      "eventNumber": "KCCC-2026-0144"
+    },
+    {
+      "key": "standing-office-pm-2026-09-28",
+      "eventNumber": "KCCC-2026-0145"
+    },
+    {
+      "key": "standing-office-am-2026-09-29",
+      "eventNumber": "KCCC-2026-0146"
+    },
+    {
+      "key": "standing-office-pm-2026-09-29",
+      "eventNumber": "KCCC-2026-0147"
+    },
+    {
+      "key": "standing-office-am-2026-09-30",
+      "eventNumber": "KCCC-2026-0148"
+    },
+    {
+      "key": "standing-office-pm-2026-09-30",
+      "eventNumber": "KCCC-2026-0149"
+    }
+  ],
+  "updated": [],
+  "skippedOverride": [
+    {
+      "key": "standing-office-am-2026-07-22",
+      "overriddenBy": [
+        "KCCC-2026-0025"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-07-22",
+      "overriddenBy": [
+        "KCCC-2026-0025"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-07-23",
+      "overriddenBy": [
+        "KCCC-2026-0027",
+        "KCCC-2026-0040"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-07-23",
+      "overriddenBy": [
+        "KCCC-2026-0027",
+        "KCCC-2026-0028",
+        "KCCC-2026-0039",
+        "KCCC-2026-0040"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-07-24",
+      "overriddenBy": [
+        "KCCC-2026-0024"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-07-24",
+      "overriddenBy": [
+        "KCCC-2026-0024",
+        "KCCC-2026-0041"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-03",
+      "overriddenBy": [
+        "KCCC-2026-0046"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-03",
+      "overriddenBy": [
+        "KCCC-2026-0047"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-05",
+      "overriddenBy": [
+        "KCCC-2026-0034"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-05",
+      "overriddenBy": [
+        "KCCC-2026-0034",
+        "KCCC-2026-0035"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-07",
+      "overriddenBy": [
+        "KCCC-2026-0036"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-12",
+      "overriddenBy": [
+        "KCCC-2026-0055"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-12",
+      "overriddenBy": [
+        "KCCC-2026-0055"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-13",
+      "overriddenBy": [
+        "KCCC-2026-0055"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-13",
+      "overriddenBy": [
+        "KCCC-2026-0055"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-17",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-17",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-18",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-18",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-19",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-19",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-20",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-20",
+      "overriddenBy": [
+        "KCCC-2026-0062"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-24",
+      "overriddenBy": [
+        "KCCC-2026-0067"
+      ]
+    },
+    {
+      "key": "standing-office-pm-2026-08-24",
+      "overriddenBy": [
+        "KCCC-2026-0067"
+      ]
+    },
+    {
+      "key": "standing-office-am-2026-08-27",
+      "overriddenBy": [
+        "KCCC-2026-0069"
+      ]
+    }
+  ],
+  "cancelledStanding": []
+}

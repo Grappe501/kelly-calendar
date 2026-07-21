@@ -1,9 +1,8 @@
 import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 /**
- * Standing campaign availability rules (policy only — not database events).
- * Future calendar steps materialize these as recurring blocked/default blocks
- * with explicit vacation / exception overrides.
+ * Standing campaign availability / office-hour rhythm (policy + optional materialization).
+ * Campaign missions, travel, and major events override these defaults (Doctrine #1).
  */
 
 export type Weekday =
@@ -23,7 +22,7 @@ export type TimeWindow = {
 
 export type StandingAvailabilityRule = {
   id: string;
-  kind: "work_block" | "default_location" | "override_capable";
+  kind: "work_block" | "default_location" | "override_capable" | "open_window";
   weekdays: Weekday[];
   windows?: TimeWindow[];
   location?: string;
@@ -32,56 +31,74 @@ export type StandingAvailabilityRule = {
   notes: string[];
 };
 
-/** Kelly still works Mon–Fri; campaign scheduling must treat these as unavailable by default. */
-export const WORKDAY_UNAVAILABLE_WINDOWS: TimeWindow[] = [
+/** Default Mon–Fri campaign office hours (Busy). Lunch is intentionally open. */
+export const WORKDAY_OFFICE_WINDOWS: TimeWindow[] = [
   {
     start: "08:00",
     end: "12:00",
-    label: "Day job — morning (unavailable)",
+    label: "Kelly Grappe – Secretary of State Campaign Office Hours (morning)",
   },
   {
     start: "13:00",
     end: "17:00",
-    label: "Day job — afternoon (unavailable)",
+    label: "Kelly Grappe – Secretary of State Campaign Office Hours (afternoon)",
   },
 ];
 
+/** @deprecated Use WORKDAY_OFFICE_WINDOWS — kept for older imports */
+export const WORKDAY_UNAVAILABLE_WINDOWS = WORKDAY_OFFICE_WINDOWS;
+
 export const STANDING_AVAILABILITY_RULES: StandingAvailabilityRule[] = [
   {
-    id: "weekday-work-blocks",
+    id: "weekday-campaign-office-hours",
     kind: "work_block",
     weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    windows: WORKDAY_UNAVAILABLE_WINDOWS,
+    windows: WORKDAY_OFFICE_WINDOWS,
     summary:
-      "Monday–Friday 8:00 AM–12:00 PM and 1:00 PM–5:00 PM America/Chicago are unavailable work time.",
+      "Monday–Friday 8:00 AM–12:00 PM and 1:00 PM–5:00 PM America/Chicago are Campaign Office Hours (Busy).",
     overrideAllowed: true,
     notes: [
-      "Override only when Kelly is on vacation or explicitly releases the block.",
-      "Command Calendar must support vacation / exception overrides before scheduling into these windows.",
-      "Lunch 12:00–1:00 PM is not auto-blocked by this rule.",
+      "Title: Kelly Grappe – Secretary of State Campaign Office Hours.",
+      "Typical work: correspondence, admin, staff/media/finance, strategy, volunteers, RCC follow-up, event/travel prep.",
+      "Campaign events, travel, festivals, rallies, immersions, debates, and major meetings OVERRIDE these blocks.",
+      "Vacation / explicit release may also open a block (human-approved, audited).",
     ],
   },
   {
-    id: "tuesday-little-rock-default",
+    id: "weekday-lunch-open",
+    kind: "open_window",
+    weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    windows: [{ start: "12:00", end: "13:00", label: "Lunch — open unless scheduled" }],
+    summary: "Monday–Friday 12:00 PM–1:00 PM stays open unless an event is scheduled.",
+    overrideAllowed: true,
+    notes: [
+      "Do not auto-block lunch.",
+      "Use for lunch meetings, donors, media, community leaders, or personal time.",
+    ],
+  },
+  {
+    id: "tuesday-little-rock-office",
     kind: "default_location",
     weekdays: ["Tuesday"],
-    location: "Little Rock, Arkansas",
-    summary: "Every Tuesday defaults to Little Rock unless staff overrides.",
+    location: "Little Rock Campaign Office",
+    summary:
+      "Every Tuesday defaults to the Little Rock Campaign Office (8:00–5:00 with noon lunch open) unless a statewide mission or travel supersedes.",
     overrideAllowed: true,
     notes: [
-      "Note this standing default on week, month, and campaign-year views from the beginning.",
-      "Override when travel or remote Tuesday plans are confirmed.",
+      "Reserved for staff coordination, governmental/press/finance meetings, planning, vendors, content, RCC, admin.",
+      "Override when a campaign mission or major event is already scheduled.",
     ],
   },
   {
-    id: "vacation-override",
+    id: "mission-override",
     kind: "override_capable",
     weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    summary: "Vacation and explicit releases may open weekday work blocks for campaign time.",
+    summary:
+      "Dated campaign missions replace standing office hours for the overlapping windows.",
     overrideAllowed: true,
     notes: [
-      "Overrides must be human-approved and audited.",
-      "AI may propose opening a block; it may not silently clear work unavailability.",
+      "Examples: Jefferson immersion Aug 12–13; NWA immersion Aug 18–20; Miller immersion Aug 24.",
+      "System must not silently clear operator-defined mission reality (Doctrine #1).",
     ],
   },
 ];
@@ -91,8 +108,9 @@ export function getStandingAvailabilityPolicy() {
   return {
     timezone: "America/Chicago" as const,
     rules: STANDING_AVAILABILITY_RULES,
-    materialization: "pending_calendar_schema" as const,
-    databaseEventsCreated: false,
+    officeHoursTitle: "Kelly Grappe – Secretary of State Campaign Office Hours",
+    materialization: "event_materialization_supported" as const,
+    databaseEventsCreated: true,
     candidateData: flags.candidateDataReady,
   };
 }
