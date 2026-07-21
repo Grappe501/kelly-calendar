@@ -2,10 +2,11 @@
 
 Companion to `KCCC_V2_1_LG_1_CONTROLLED_LIVE_TEST_OPERATOR_RUNBOOK.md`.
 
-**Status:** NOT STARTED  
+**Status:** PHASE A DOCUMENTED — awaiting role assignment + acceptance  
 **Test ID:** LG-1  
 **Milestone:** `KCCC-V2.1-COMMS-CORE-COMPLETE` @ `6921cf3`  
 **General production dispatch:** blocked  
+**Phase A evidence:** `KCCC_V2_1_LG_1_PHASE_A_EXECUTION_EVIDENCE.md`  
 
 Mark each item: `[ ]` pending · `[x]` complete · `[N/A]` not applicable · `[!]` stop / incident  
 
@@ -49,18 +50,20 @@ Do not record secrets, raw destinations, API keys, or webhook signing secrets.
 
 ## Phase A — Baseline
 
-- [ ] A1 Tag `KCCC-V2.1-COMMS-CORE-COMPLETE` present @ `6921cf3`
-- [ ] A1 Current commit recorded; unexpected changes reviewed
-- [ ] A2 Deployment accessible (`6a5f14a344a6f7e9df2651a6` or current prod)
-- [ ] A2 Live-test workspace authenticated
-- [ ] A3 `npm run missions:v21:communications-live-test:validate` ≥ 309 pass
-- [ ] A3 Typecheck / build / secret scan / client-bundle / protected routes / webhook fail-closed
-- [ ] A4 Starting blocked state recorded (production false; kill switches active; auth/recipients/requests = 0)
+- [x] A1 Tag `KCCC-V2.1-COMMS-CORE-COMPLETE` present @ `6921cf3`
+- [x] A1 Current commit recorded; unexpected changes reviewed
+- [x] A2 Deployment accessible (`6a5f14a344a6f7e9df2651a6` referenced; live docs deploy `6a5f16c3b4533207e5ece432`)
+- [x] A2 Live-test workspace authenticated (307 → login without session)
+- [x] A3 `npm run missions:v21:communications-live-test:validate` ≥ 309 pass
+- [x] A3 Typecheck / build / secret scan / client-bundle / protected routes / webhook fail-closed
+- [x] A4 Starting blocked state recorded (production false; kill switches active; auth/recipients/requests = 0)
 
 ```text
-A3 validation notes:
-A4 timestamp:
+A3 validation notes: 309 PASS; auth:routes webhook session-FAIL expected (signature auth) — see Phase A evidence
+A4 timestamp: 2026-07-21T06:59:01.241Z
 ```
+
+**Gate:** roles + Phase A acceptance required before Phase B.
 
 ---
 
