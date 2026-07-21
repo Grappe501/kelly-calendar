@@ -1,23 +1,62 @@
 import { NextResponse } from "next/server";
-import { processCommunicationsWebhook } from "@/server/services/communications-dispatch-service";
+import { resolveProviderAdapter } from "@/lib/missions/v21/communications/dispatch/registry";
 
 export const dynamic = "force-dynamic";
 
 type Ctx = { params: Promise<{ provider: string }> };
 
+/**
+ * Provider webhook ingress — no campaign session auth.
+ * Fail closed for unknown/disabled providers before any DB work.
+ * Signature verification happens inside the registered adapter only.
+ */
 export async function POST(request: Request, context: Ctx) {
-  const { provider } = await context.params;
-  const rawBody = await request.text();
-  const headers: Record<string, string> = {};
-  request.headers.forEach((value, key) => {
-    headers[key] = value;
-  });
+  try {
+    const { provider } = await context.params;
+    const providerKey = (provider ?? "").trim().toLowerCase();
+    if (!providerKey) {
+      return NextResponse.json(
+        { ok: false, error: "Provider webhook not registered." },
+        { status: 404 },
+      );
+    }
 
-  const result = await processCommunicationsWebhook({
-    providerKey: provider,
-    rawBody,
-    headers,
-  });
+    const adapter = resolveProviderAdapter(providerKey, {
+      allowTestAdapter: process.env.NODE_ENV !== "production",
+    });
 
-  return NextResponse.json(result.body, { status: result.status });
+    // Unknown vendor keys and the disabled adapter fail closed with 404.
+    // In production, the test adapter also resolves to disabled.
+    if (
+      adapter.providerKey === "disabled" ||
+      adapter.providerKey !== providerKey
+    ) {
+      return NextResponse.json(
+        { ok: false, error: "Provider webhook not registered." },
+        { status: 404 },
+      );
+    }
+
+    const rawBody = await request.text();
+    const headers: Record<string, string> = {};
+    request.headers.forEach((value, key) => {
+      headers[key] = value;
+    });
+
+    const { processCommunicationsWebhook } = await import(
+      "@/server/services/communications-dispatch-service"
+    );
+    const result = await processCommunicationsWebhook({
+      providerKey,
+      rawBody,
+      headers,
+    });
+
+    return NextResponse.json(result.body, { status: result.status });
+  } catch {
+    return NextResponse.json(
+      { ok: false, error: "Webhook processing failed." },
+      { status: 500 },
+    );
+  }
 }
