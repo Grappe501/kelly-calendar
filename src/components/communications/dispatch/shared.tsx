@@ -7,6 +7,10 @@ export function DispatchAdminNav() {
       <Link href="/system/communications/templates">Templates</Link>
       <Link href="/system/communications/briefs">Briefs</Link>
       <Link href="/system/communications/compositions">Compositions</Link>
+      <Link href="/system/communications/audiences">Audiences</Link>
+      <Link href="/system/communications/recipients/conflicts">
+        Recipient conflicts
+      </Link>
       <Link href="/system/communications/providers">Providers</Link>
       <Link href="/system/communications/providers/health">Provider health</Link>
       <Link href="/system/communications/providers/sandbox">Sandbox console</Link>

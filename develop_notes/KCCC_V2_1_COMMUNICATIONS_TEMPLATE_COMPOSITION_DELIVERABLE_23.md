@@ -7,7 +7,7 @@
 **Seed:** `npm run missions:v21:communications-composition:seed` (sandbox templates only)  
 **Baseline:** D22 `KCCC_V2_1_COMMUNICATIONS_PROVIDER_INTEGRATION_DELIVERABLE_22.md`  
 **Parent stack:** D20 queue/consent · D21 dispatch · D22 provider abstraction  
-**Next:** D24 audience, segmentation & recipient resolution (who receives approved content)  
+**Next:** D24 shipped — see `KCCC_V2_1_COMMUNICATIONS_AUDIENCE_RECIPIENT_RESOLUTION_DELIVERABLE_24.md`. Recommended D25: campaign scheduling & controlled execution.  
 **Production dispatch:** **DISPATCH BLOCKED** — unchanged from D20–D22 ship state
 
 ## Governing objective

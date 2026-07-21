@@ -355,6 +355,14 @@ export async function createBoundedDispatchBatch(
     );
   }
 
+  const recipientManifestId =
+    typeof b.recipientManifestId === "string" ? b.recipientManifestId : null;
+  if (b.destinationOverride != null) {
+    throw new ValidationError(
+      "ARBITRARY_DESTINATION_OVERRIDE_REJECTED — destinations resolve from approved manifests only.",
+    );
+  }
+
   const batch = await createDispatchBatch({
     communicationId,
     providerKey: adapter.providerKey,
@@ -373,6 +381,7 @@ export async function createBoundedDispatchBatch(
     maxBatchSize,
     actorUserId: actor.userId,
     status: "BLOCKED",
+    recipientManifestId,
   });
 
   await writeAttributedAudit({
@@ -384,6 +393,8 @@ export async function createBoundedDispatchBatch(
       blocked: true,
       reason: preflight.exactDisabledReason,
       prepared: prepared.length,
+      recipientManifestId,
+      d24: "manifest attach does not enable production dispatch",
     },
   });
 
@@ -393,7 +404,9 @@ export async function createBoundedDispatchBatch(
     dispatched: 0,
     providerRequests: 0,
     reason: preflight.exactDisabledReason,
+    recipientManifestId,
     preflight,
+    productionDispatchEnabled: false,
   };
 }
 

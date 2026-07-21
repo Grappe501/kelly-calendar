@@ -158,6 +158,7 @@ export async function createDispatchBatch(data: {
   maxBatchSize?: number;
   actorUserId: string;
   status?: string;
+  recipientManifestId?: string | null;
 }) {
   return prisma.communicationDispatchBatch.create({
     data: {
@@ -174,6 +175,7 @@ export async function createDispatchBatch(data: {
       maxBatchSize: data.maxBatchSize ?? 25,
       requestedByUserId: data.actorUserId,
       status: (data.status as never) ?? "DRAFT",
+      recipientManifestId: data.recipientManifestId ?? null,
     },
   });
 }
@@ -231,6 +233,8 @@ export async function createDispatchAttempt(data: {
   unknownOutcome?: boolean;
   reconciliationState?: string;
   completedAt?: Date | null;
+  renderArtifactId?: string | null;
+  recipientManifestEntryId?: string | null;
 }) {
   return prisma.communicationDispatchAttempt.create({
     data: {
@@ -246,6 +250,8 @@ export async function createDispatchAttempt(data: {
       unknownOutcome: data.unknownOutcome ?? false,
       reconciliationState: data.reconciliationState ?? "NONE",
       completedAt: data.completedAt ?? null,
+      renderArtifactId: data.renderArtifactId ?? null,
+      recipientManifestEntryId: data.recipientManifestEntryId ?? null,
     },
   });
 }

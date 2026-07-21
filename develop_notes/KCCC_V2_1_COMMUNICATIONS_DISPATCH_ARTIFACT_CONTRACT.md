@@ -40,8 +40,17 @@ In addition to existing D21 codes (`MISSING_CONTENT_FINGERPRINT`, consent, kill 
 | `ARTIFACT_HASH_MISMATCH` | Content changed since attach |
 | `RECIPIENT_FINGERPRINT_MISMATCH` | Wrong recipient context |
 | `ARTIFACT_CHANNEL_MISMATCH` | EMAIL artifact on SMS item, etc. |
+| `RECIPIENT_MANIFEST_REQUIRED` | D24 approved manifest missing |
+| `RECIPIENT_MANIFEST_NOT_APPROVED` | Manifest not approved |
+| `RECIPIENT_MANIFEST_REVOKED` | Manifest revoked |
+| `RECIPIENT_MANIFEST_EXPIRED` | Manifest expired |
+| `RECIPIENT_MANIFEST_ENTRY_REQUIRED` | Attempt lacks manifest entry |
+| `DESTINATION_FINGERPRINT_MISMATCH` | Live destination ≠ manifest fingerprint |
+| `MANIFEST_ARTIFACT_CHANNEL_MISMATCH` | Manifest channel ≠ render artifact |
+| `PERSONALIZATION_INTEGRITY_MISMATCH` | Person bound to personalization ≠ destination person |
+| `ARBITRARY_DESTINATION_OVERRIDE_REJECTED` | Client destination override blocked |
 
-D20 content/audience/dispatch approvals and D21 kill switches remain mandatory. **Production dispatch stays blocked** at D23 ship regardless of artifact validity.
+D20 content/audience/dispatch approvals, D24 manifests, and D21 kill switches remain mandatory. **Production dispatch stays blocked** regardless of artifact or manifest validity.
 
 ## Canonical provider transport payload
 

@@ -51,6 +51,44 @@ export function evaluateDispatchPreflight(
     warnings.push("PRODUCTION_MODE_REQUIRES_EXPLICIT_AUTHORIZATION");
   }
 
+  // D24 recipient manifest + personalization integrity (when fields provided)
+  if (input.arbitraryDestinationOverride === true) {
+    blocking.push("ARBITRARY_DESTINATION_OVERRIDE_REJECTED");
+  }
+  if (input.recipientManifestId !== undefined) {
+    if (!input.recipientManifestId) blocking.push("RECIPIENT_MANIFEST_REQUIRED");
+    if (input.recipientManifestApproved === false) {
+      blocking.push("RECIPIENT_MANIFEST_NOT_APPROVED");
+    }
+    if (input.recipientManifestRevoked === true) {
+      blocking.push("RECIPIENT_MANIFEST_REVOKED");
+    }
+    if (input.recipientManifestExpired === true) {
+      blocking.push("RECIPIENT_MANIFEST_EXPIRED");
+    }
+    if (input.recipientManifestEntryId === null || input.recipientManifestEntryId === "") {
+      blocking.push("RECIPIENT_MANIFEST_ENTRY_REQUIRED");
+    }
+    if (input.recipientManifestEntryMatches === false) {
+      blocking.push("RECIPIENT_MANIFEST_ENTRY_MISMATCH");
+    }
+    if (input.destinationFingerprintMatches === false) {
+      blocking.push("DESTINATION_FINGERPRINT_MISMATCH");
+    }
+    if (input.channelMatchesManifest === false) {
+      blocking.push("MANIFEST_ARTIFACT_CHANNEL_MISMATCH");
+    }
+    if (input.personalizationIntegrityOk === false) {
+      blocking.push("PERSONALIZATION_INTEGRITY_MISMATCH");
+    }
+    if (input.renderArtifactId !== undefined && !input.renderArtifactId) {
+      blocking.push("RENDER_ARTIFACT_REQUIRED");
+    }
+    if (input.renderArtifactValid === false) {
+      blocking.push("RENDER_ARTIFACT_INVALID");
+    }
+  }
+
   return {
     ok: blocking.length === 0,
     blockingReasonCodes: blocking,

@@ -91,6 +91,19 @@ export type DispatchPreflightInput = {
   emailKillSwitch: boolean;
   smsKillSwitch: boolean;
   rateLimitExceeded: boolean;
+  /** D24: approved recipient manifest required for attachable batches */
+  recipientManifestId?: string | null;
+  recipientManifestApproved?: boolean;
+  recipientManifestRevoked?: boolean;
+  recipientManifestExpired?: boolean;
+  recipientManifestEntryId?: string | null;
+  recipientManifestEntryMatches?: boolean;
+  destinationFingerprintMatches?: boolean;
+  channelMatchesManifest?: boolean;
+  personalizationIntegrityOk?: boolean;
+  arbitraryDestinationOverride?: boolean;
+  renderArtifactId?: string | null;
+  renderArtifactValid?: boolean;
 };
 
 export type DispatchPreflightResult = {

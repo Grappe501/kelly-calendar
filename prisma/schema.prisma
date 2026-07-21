@@ -4650,6 +4650,7 @@ model CommunicationDispatchBatch {
   killSwitchSnapshot  Json                    @default("{}")
   capabilityVersion   String?
   maxBatchSize        Int                     @default(25)
+  recipientManifestId String?
   startedAt           DateTime?
   completedAt         DateTime?
   requestedByUserId   String?
@@ -4661,6 +4662,7 @@ model CommunicationDispatchBatch {
 
   @@index([communicationId])
   @@index([status])
+  @@index([recipientManifestId])
   @@schema("kelly_calendar")
 }
 
@@ -4674,6 +4676,7 @@ model CommunicationDispatchAttempt {
   providerKey          String
   providerMessageId    String?
   renderArtifactId     String?
+  recipientManifestEntryId String?
   status               CommDispatchAttemptStatus  @default(REQUESTED)
   startedAt            DateTime                   @default(now())
   completedAt          DateTime?
@@ -4689,6 +4692,7 @@ model CommunicationDispatchAttempt {
   @@index([queueItemId])
   @@index([providerMessageId])
   @@index([renderArtifactId])
+  @@index([recipientManifestEntryId])
   @@schema("kelly_calendar")
 }
 
@@ -5141,5 +5145,317 @@ model CommunicationCompositionApproval {
   compositionRevision CommunicationCompositionRevision @relation(fields: [compositionRevisionId], references: [id], onDelete: Cascade)
 
   @@index([compositionId])
+  @@schema("kelly_calendar")
+}
+
+/// D24 — Audience, segmentation & recipient resolution foundation.
+enum CommAudienceType {
+  STATIC
+  DYNAMIC
+  MISSION
+  EVENT
+  RELATIONSHIP
+  INTERNAL
+  TEST_ONLY
+
+  @@schema("kelly_calendar")
+}
+
+enum CommAudienceChannelScope {
+  EMAIL
+  SMS
+  MULTI_CHANNEL
+
+  @@schema("kelly_calendar")
+}
+
+enum CommAudienceStatus {
+  DRAFT
+  READY_FOR_EVALUATION
+  IN_REVIEW
+  APPROVED
+  RETIRED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommSegmentDefinitionStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  SUPERSEDED
+  REJECTED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommAudienceEvaluationType {
+  PREVIEW
+  REVIEW
+  MANIFEST
+  TEST
+
+  @@schema("kelly_calendar")
+}
+
+enum CommAudienceEvaluationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  COMPLETED_WITH_WARNINGS
+  BLOCKED
+  FAILED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommAudienceCandidateStatus {
+  INCLUDED
+  EXCLUDED
+  BLOCKED
+  DUPLICATE_PERSON
+  DUPLICATE_DESTINATION
+  INVALID_DESTINATION
+  MISSING_DESTINATION
+  CONSENT_REQUIRED
+  SUPPRESSED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommRecipientManifestStatus {
+  DRAFT
+  READY_FOR_REVIEW
+  APPROVED
+  REVOKED
+  EXPIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommAudienceApprovalDecision {
+  APPROVED
+  CHANGES_REQUESTED
+  REVOKED
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationAudience {
+  id               String                   @id @default(cuid())
+  campaignScopeKey String                   @default("KELLY")
+  audienceKey      String
+  name             String
+  description      String?
+  audienceType     CommAudienceType         @default(DYNAMIC)
+  channelScope     CommAudienceChannelScope @default(EMAIL)
+  status           CommAudienceStatus       @default(DRAFT)
+  purpose          String?
+  ownerType        String                   @default("CAMPAIGN")
+  missionId        String?
+  eventId          String?
+  createdByUserId  String?
+  archivedAt       DateTime?
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+
+  definitions CommunicationSegmentDefinition[]
+  evaluations CommunicationAudienceEvaluation[]
+  manifests   CommunicationRecipientManifest[]
+  approvals   CommunicationAudienceApproval[]
+  staticMembers CommunicationAudienceStaticMember[]
+
+  @@unique([campaignScopeKey, audienceKey], map: "CommunicationAudience_scope_key")
+  @@index([status])
+  @@index([missionId])
+  @@index([eventId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationAudienceStaticMember {
+  id               String   @id @default(cuid())
+  audienceId       String
+  localPersonId    String
+  inclusionReason  String?
+  addedByUserId    String?
+  createdAt        DateTime @default(now())
+
+  audience CommunicationAudience @relation(fields: [audienceId], references: [id], onDelete: Cascade)
+
+  @@unique([audienceId, localPersonId], map: "CommunicationAudienceStaticMember_audience_person")
+  @@index([localPersonId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationSegmentDefinition {
+  id                 String                       @id @default(cuid())
+  audienceId         String
+  versionNumber      Int
+  status             CommSegmentDefinitionStatus  @default(DRAFT)
+  criteriaJson       Json                         @default("{}")
+  criteriaSchemaVersion String                    @default("d24-1")
+  sourcePolicyJson   Json                         @default("{}")
+  channel            CampaignCommChannel
+  estimatedSize      Int?
+  evaluationLimit    Int                          @default(500)
+  contentHash        String
+  changeSummary      String?
+  createdByUserId    String?
+  approvedByUserId   String?
+  createdAt          DateTime                     @default(now())
+  approvedAt         DateTime?
+  supersededAt       DateTime?
+
+  audience    CommunicationAudience            @relation(fields: [audienceId], references: [id], onDelete: Cascade)
+  evaluations CommunicationAudienceEvaluation[]
+  manifests   CommunicationRecipientManifest[]
+  approvals   CommunicationAudienceApproval[]
+
+  @@unique([audienceId, versionNumber], map: "CommunicationSegmentDefinition_audience_version")
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationAudienceEvaluation {
+  id                       String                        @id @default(cuid())
+  audienceId               String
+  segmentDefinitionId      String
+  evaluationType           CommAudienceEvaluationType    @default(PREVIEW)
+  status                   CommAudienceEvaluationStatus  @default(PENDING)
+  startedAt                DateTime?
+  completedAt              DateTime?
+  sourceAsOf               DateTime?
+  candidateCount           Int                           @default(0)
+  includedCount            Int                           @default(0)
+  excludedCount            Int                           @default(0)
+  duplicatePersonCount     Int                           @default(0)
+  duplicateDestinationCount Int                          @default(0)
+  invalidDestinationCount  Int                           @default(0)
+  consentBlockedCount      Int                           @default(0)
+  suppressedCount          Int                           @default(0)
+  limitApplied             Boolean                       @default(false)
+  criteriaHash             String
+  sourceFingerprint        String
+  createdByUserId          String?
+  createdAt                DateTime                      @default(now())
+
+  audience          CommunicationAudience          @relation(fields: [audienceId], references: [id], onDelete: Cascade)
+  segmentDefinition CommunicationSegmentDefinition @relation(fields: [segmentDefinitionId], references: [id], onDelete: Cascade)
+  candidates        CommunicationAudienceCandidate[]
+  manifests         CommunicationRecipientManifest[]
+  approvals         CommunicationAudienceApproval[]
+
+  @@index([audienceId])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationAudienceCandidate {
+  id                      String                       @id @default(cuid())
+  evaluationId            String
+  localPersonId           String?
+  relationshipId          String?
+  missionParticipantId    String?
+  eventParticipantId      String?
+  channel                 CampaignCommChannel
+  candidateStatus         CommAudienceCandidateStatus
+  inclusionReasonsJson    Json                         @default("[]")
+  exclusionReasonsJson    Json                         @default("[]")
+  sourceFactsJson         Json                         @default("{}")
+  resolvedContactPointId  String?
+  destinationFingerprint  String?
+  destinationMasked       String?
+  consentSnapshotJson     Json                         @default("{}")
+  suppressionSnapshotJson Json                         @default("{}")
+  deduplicationKey        String?
+  createdAt               DateTime                     @default(now())
+
+  evaluation CommunicationAudienceEvaluation @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+
+  @@index([evaluationId, candidateStatus])
+  @@index([localPersonId])
+  @@index([destinationFingerprint])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationRecipientManifest {
+  id                       String                       @id @default(cuid())
+  campaignScopeKey         String                       @default("KELLY")
+  audienceId               String
+  evaluationId             String
+  segmentDefinitionId      String
+  channel                  CampaignCommChannel
+  status                   CommRecipientManifestStatus  @default(DRAFT)
+  recipientCount           Int                          @default(0)
+  manifestHash             String
+  criteriaHash             String
+  sourceFingerprint        String
+  consentPolicyVersion     String?
+  suppressionPolicyVersion String?
+  createdByUserId          String?
+  approvedByUserId         String?
+  createdAt                DateTime                     @default(now())
+  approvedAt               DateTime?
+  revokedAt                DateTime?
+  revocationReason         String?
+
+  audience          CommunicationAudience          @relation(fields: [audienceId], references: [id], onDelete: Cascade)
+  evaluation        CommunicationAudienceEvaluation @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+  segmentDefinition CommunicationSegmentDefinition @relation(fields: [segmentDefinitionId], references: [id], onDelete: Cascade)
+  entries           CommunicationRecipientManifestEntry[]
+  approvals         CommunicationAudienceApproval[]
+
+  @@index([audienceId])
+  @@index([status])
+  @@index([manifestHash])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationRecipientManifestEntry {
+  id                            String   @id @default(cuid())
+  manifestId                    String
+  localPersonId                 String?
+  contactPointId                String?
+  channel                       CampaignCommChannel
+  destinationFingerprint        String
+  destinationMasked             String
+  recipientKey                  String
+  personalizationSourceFingerprint String
+  consentSnapshotJson           Json     @default("{}")
+  suppressionSnapshotJson       Json     @default("{}")
+  eligibilityReasonsJson        Json     @default("[]")
+  createdAt                     DateTime @default(now())
+  invalidatedAt                 DateTime?
+
+  manifest CommunicationRecipientManifest @relation(fields: [manifestId], references: [id], onDelete: Cascade)
+
+  @@unique([manifestId, recipientKey], map: "CommunicationRecipientManifestEntry_manifest_recipient")
+  @@index([destinationFingerprint])
+  @@index([localPersonId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationAudienceApproval {
+  id                  String                        @id @default(cuid())
+  audienceId          String
+  segmentDefinitionId String?
+  evaluationId        String?
+  manifestId          String?
+  decision            CommAudienceApprovalDecision
+  reviewerUserId      String?
+  reviewNotes         String?
+  criteriaHash        String?
+  manifestHash        String?
+  summarySnapshotJson Json                          @default("{}")
+  createdAt           DateTime                      @default(now())
+
+  audience          CommunicationAudience           @relation(fields: [audienceId], references: [id], onDelete: Cascade)
+  segmentDefinition CommunicationSegmentDefinition? @relation(fields: [segmentDefinitionId], references: [id], onDelete: SetNull)
+  evaluation        CommunicationAudienceEvaluation? @relation(fields: [evaluationId], references: [id], onDelete: SetNull)
+  manifest          CommunicationRecipientManifest? @relation(fields: [manifestId], references: [id], onDelete: SetNull)
+
+  @@index([audienceId])
   @@schema("kelly_calendar")
 }
