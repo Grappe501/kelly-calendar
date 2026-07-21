@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import {
-  labelDebriefStatus,
   labelFollowUpStatus,
-  labelOutcomeAssessment,
   type MissionFollowUpActionViewModel,
   type MissionFollowUpViewModel,
-} from "@/lib/missions/v21";
+} from "@/lib/missions/v21/follow-up";
+import {
+  labelDebriefStatus,
+  labelOutcomeAssessment,
+} from "@/lib/missions/v21/debrief";
 
 type Props = { initial: MissionFollowUpViewModel };
 type SaveStatus = "idle" | "saving" | "saved" | "error";

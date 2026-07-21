@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { labelCommChannel } from "@/lib/missions/v21/communications";
+import { labelCommChannel } from "@/lib/missions/v21/communications/labels";
 import {
   commJsonFetch,
   type DispatchBatchDetailView,

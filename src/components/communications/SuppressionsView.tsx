@@ -6,11 +6,11 @@ import type {
   CampaignCommChannel,
   CampaignCommPurpose,
   CampaignCommSuppressionReason,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/types";
 import {
   labelCommChannel,
   labelCommPurpose,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/labels";
 import {
   commJsonFetch,
   type SuppressionListView,

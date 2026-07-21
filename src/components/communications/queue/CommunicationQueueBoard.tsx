@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { labelQueueStatus } from "@/lib/missions/v21/communications";
+import { labelQueueStatus } from "@/lib/missions/v21/communications/labels";
 import {
   commJsonFetch,
   type CommunicationDetail,

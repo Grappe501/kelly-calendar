@@ -1,7 +1,7 @@
 import {
   OPERATOR_NOTICE,
   NO_INFERENCE_NOTICE,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/types";
 import type { ProviderCapabilityStatus } from "@/lib/missions/v21/communications/provider-adapter";
 
 export const COMMUNICATION_NOTICES = [OPERATOR_NOTICE, NO_INFERENCE_NOTICE] as const;

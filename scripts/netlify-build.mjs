@@ -55,6 +55,10 @@ run("prisma generate", [
   console.log("KCCC Netlify build: prisma engines present:", engines.join(", ") || "(none)");
 }
 
-run("next build", [path.join(root, "node_modules", "next", "dist", "bin", "next"), "build"]);
+run("next build", [
+  path.join(root, "node_modules", "next", "dist", "bin", "next"),
+  "build",
+  "--webpack",
+]);
 
 console.log("KCCC Netlify build: complete");

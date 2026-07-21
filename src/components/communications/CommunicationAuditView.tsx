@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { labelQueueStatus } from "@/lib/missions/v21/communications";
+import { labelQueueStatus } from "@/lib/missions/v21/communications/labels";
 import type { CommunicationDetail } from "@/components/communications/shared";
 import { CommunicationDetailShell } from "@/components/communications/CommunicationDetailShell";
 

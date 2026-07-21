@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "node scripts/run-with-h-drive-env.cjs next dev",
-    "build": "node scripts/run-with-h-drive-env.cjs next build",
+    "build": "node scripts/run-with-h-drive-env.cjs next build --webpack",
     "start": "node scripts/run-with-h-drive-env.cjs next start",
     "lint": "node scripts/run-with-h-drive-env.cjs eslint .",
     "typecheck": "node scripts/run-with-h-drive-env.cjs tsc --noEmit",

@@ -6,7 +6,7 @@ import {
   labelEligibilityState,
   labelInclusionState,
   labelQueueStatus,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/labels";
 import type { CommunicationDetail } from "@/components/communications/shared";
 import { CommunicationDetailShell } from "@/components/communications/CommunicationDetailShell";
 

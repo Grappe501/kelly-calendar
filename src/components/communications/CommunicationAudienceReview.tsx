@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import {
   labelEligibilityState,
   labelInclusionState,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/labels";
 import {
   commJsonFetch,
   type CommunicationDetail,

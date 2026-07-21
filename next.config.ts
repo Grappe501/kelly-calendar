@@ -25,6 +25,31 @@ const nextConfig: NextConfig = {
     "/api/**/*": ["./node_modules/.prisma/client/**/*"],
     "/*": ["./node_modules/.prisma/client/**/*"],
   },
+  // Production builds use `--webpack` to avoid Turbopack's hashed
+  // `@prisma/client-<hash>` externals that break Netlify Functions.
+  // Webpack needs `node:` builtins remapped; client falls back to empty shims.
+  webpack: (config, { isServer, webpack }) => {
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /^node:/,
+        (resource: { request: string }) => {
+          resource.request = resource.request.replace(/^node:/, "");
+        },
+      ),
+    );
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        crypto: false,
+        stream: false,
+        buffer: false,
+        fs: false,
+        path: false,
+        os: false,
+      };
+    }
+    return config;
+  },
   async headers() {
     return [
       {

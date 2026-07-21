@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { labelCommChannel } from "@/lib/missions/v21/communications";
+import { labelCommChannel } from "@/lib/missions/v21/communications/labels";
 import type { DispatchHistoryView } from "@/components/communications/shared";
 import { CommunicationsNotices } from "@/components/communications/CommunicationsNotices";
 import { DispatchAdminNav } from "@/components/communications/dispatch/shared";

@@ -6,11 +6,11 @@ import { useState, useTransition } from "react";
 import type {
   CampaignCommChannel,
   CampaignCommPurpose,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/types";
 import {
   labelCommChannel,
   labelCommPurpose,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/labels";
 import { commJsonFetch } from "@/components/communications/shared";
 import { CommunicationsNotices } from "@/components/communications/CommunicationsNotices";
 

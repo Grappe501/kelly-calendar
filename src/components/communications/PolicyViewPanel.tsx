@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import {
   labelCommChannel,
   labelCommPurpose,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/labels";
 import {
   commJsonFetch,
   type PolicyView,

@@ -6,7 +6,7 @@ import {
   labelCommChannel,
   labelCommPurpose,
   labelCommStatus,
-} from "@/lib/missions/v21/communications";
+} from "@/lib/missions/v21/communications/labels";
 import type { CommunicationDetail } from "@/components/communications/shared";
 import { CommunicationsNotices } from "@/components/communications/CommunicationsNotices";
 
