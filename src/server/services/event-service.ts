@@ -286,16 +286,79 @@ export async function removeEventCalendarMembership(input: {
 }
 
 export async function listEventsForActor(actor: AuthenticatedActor) {
+  return listEventsForActorInRange(actor, {
+    // Backward-compatible default: upcoming window, not an unbounded catalogue.
+    rangeStart: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+    rangeEnd: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
+    take: 200,
+  });
+}
+
+/**
+ * Canonical Event range query for operating views.
+ * One source for Today / Day / Week / Month / Agenda lenses.
+ */
+export async function listEventsForActorInRange(
+  actor: AuthenticatedActor,
+  input: {
+    rangeStart: Date;
+    rangeEnd: Date;
+    take?: number;
+  },
+) {
   await requireAuthorized(actor, {
     action: "EVENT_VIEW",
     resource: { type: "system" },
   });
-  // Leadership sees recent synthetic/manual events; others see events they can access via primary calendar grants.
+  const take = Math.min(Math.max(input.take ?? 200, 1), 500);
   const events = await prisma.event.findMany({
-    where: { archivedAt: null },
+    where: {
+      archivedAt: null,
+      // Overlap [rangeStart, rangeEnd)
+      startsAt: { lt: input.rangeEnd },
+      endsAt: { gt: input.rangeStart },
+    },
     orderBy: { startsAt: "asc" },
-    take: 50,
-    include: { primaryCalendar: true },
+    take,
+    include: {
+      primaryCalendar: true,
+      campaignMission: { select: { id: true, lifecyclePhase: true, missionStatus: true } },
+      travelPlans: {
+        take: 1,
+        orderBy: { updatedAt: "desc" },
+        select: {
+          travelRequired: true,
+          departureAt: true,
+          targetArrivalAt: true,
+          estimatedDurationMinutes: true,
+          bufferMinutes: true,
+        },
+      },
+      followups: {
+        where: { status: { not: "COMPLETE" } },
+        take: 5,
+        select: { id: true, title: true, status: true, dueAt: true },
+      },
+      actionItems: {
+        where: { status: { notIn: ["COMPLETE", "CANCELLED"] } },
+        take: 8,
+        select: {
+          id: true,
+          title: true,
+          phase: true,
+          status: true,
+          dueAt: true,
+        },
+      },
+      eventPeople: {
+        take: 6,
+        include: { person: { select: { displayName: true } } },
+      },
+      packingItems: {
+        take: 8,
+        select: { itemName: true, state: true },
+      },
+    },
   });
   const out = [];
   for (const event of events) {
@@ -304,13 +367,54 @@ export async function listEventsForActor(actor: AuthenticatedActor) {
       viewerUserId: actor.userId,
     });
     if (!access.allowed) continue;
-    out.push(
-      projectSafeEvent({
-        event,
-        calendar: event.primaryCalendar,
-        viewerAccess: mapAccessToViewer(access.accessLevel),
-      }),
-    );
+    const safe = projectSafeEvent({
+      event,
+      calendar: event.primaryCalendar,
+      viewerAccess: mapAccessToViewer(access.accessLevel),
+    });
+    if (!safe) continue;
+    out.push({
+      ...safe,
+      missionId: event.campaignMission?.id ?? null,
+      missionLifecyclePhase: event.campaignMission?.lifecyclePhase ?? null,
+      missionStatus: event.campaignMission?.missionStatus ?? null,
+      travel: event.travelPlans[0]
+        ? {
+            travelRequired: event.travelPlans[0].travelRequired,
+            departureAt: event.travelPlans[0].departureAt?.toISOString() ?? null,
+            targetArrivalAt:
+              event.travelPlans[0].targetArrivalAt?.toISOString() ?? null,
+            estimatedDurationMinutes:
+              event.travelPlans[0].estimatedDurationMinutes ?? null,
+            bufferMinutes: event.travelPlans[0].bufferMinutes ?? null,
+          }
+        : null,
+      openFollowUps: event.followups.map((f) => ({
+        id: f.id,
+        title: f.title,
+        status: f.status,
+        dueAt: f.dueAt?.toISOString() ?? null,
+      })),
+      openActions: event.actionItems.map((a) => ({
+        id: a.id,
+        title: a.title,
+        phase: a.phase,
+        status: a.status,
+        dueAt: a.dueAt?.toISOString() ?? null,
+      })),
+      people: event.eventPeople
+        .map((p) => p.person.displayName)
+        .filter((name): name is string => Boolean(name)),
+      packing: event.packingItems.map((p) => ({
+        name: p.itemName,
+        state: p.state,
+      })),
+    });
   }
   return out;
 }
+
+export type OperatingEventRecord = Awaited<
+  ReturnType<typeof listEventsForActorInRange>
+>[number];
+

@@ -7,23 +7,22 @@ import {
   chicagoDateKey,
   chicagoTodayKey,
   formatMonthLabel,
-  monthDateKeys,
   monthGridDateKeys,
-  resolveCalendarDateKey,
   startOfMonthDateKey,
   startOfWeekDateKey,
   weekDateKeys,
 } from "@/lib/calendar/chicago-date";
+import { OPERATING_VIEW_QUESTIONS } from "@/lib/calendar/operating-view-lenses";
 import { getElectionCountdown } from "@/lib/dates/election";
 import { toMissionCard, type MissionCard } from "@/lib/missions/mission-card";
 import { computeMissionTimeline } from "@/lib/missions/mission-timeline";
 import { roleMayMutate } from "@/lib/auth/system-roles";
 import type { AuthenticatedActor } from "@/server/auth/actor";
-import { listEventsForActor } from "@/server/services/event-service";
 import {
   loadMissionContextForIds,
   type MissionContextBundle,
 } from "@/server/services/mission-context-loader";
+import { loadEventGraphForChicagoMonth } from "@/server/services/operating-views/load-event-graph";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
 
 const TIMEZONE = CAMPAIGN_CALENDAR_TIMEZONE;
@@ -54,6 +53,7 @@ export type MonthWeekRhythm = {
   weekStartKey: string;
   focusTitle: string | null;
   eventCount: number;
+  peak: "overloaded" | "empty" | "steady";
   weekHref: string;
 };
 
@@ -197,20 +197,17 @@ export async function getCalendarMonthViewData(
   dateKeyInput?: string | null,
 ): Promise<CalendarMonthViewData> {
   const now = new Date();
-  const anchor = resolveCalendarDateKey(dateKeyInput, now);
+  const graph = await loadEventGraphForChicagoMonth(actor, dateKeyInput);
+  const anchor = graph.dateKey;
   const monthStartKey = startOfMonthDateKey(anchor);
-  const monthKeys = monthDateKeys(anchor);
+  const monthKeys = graph.monthKeys;
   const monthKeySet = new Set(monthKeys);
   const gridKeys = monthGridDateKeys(anchor);
   const todayKey = chicagoTodayKey(now);
   const monthPrefix = monthStartKey.slice(0, 7);
+  const cataloguePartial = graph.cataloguePartial;
 
-  const all = (await listEventsForActor(actor)).filter(
-    (e): e is SafeEventProjection => e != null,
-  );
-  const cataloguePartial = all.length >= 50;
-
-  const monthEvents = all
+  const monthEvents = graph.events
     .filter((e) => monthKeySet.has(chicagoDateKey(e.startsAt)))
     .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
 
@@ -330,11 +327,15 @@ export async function getCalendarMonthViewData(
     const focus =
       [...weekMissions].sort((a, b) => riskRank(a.riskLevel) - riskRank(b.riskLevel))[0] ??
       null;
+    const eventCount = weekMissions.length;
+    const peak =
+      eventCount === 0 ? "empty" : eventCount >= 8 ? "overloaded" : "steady";
     return {
       weekLabel: `Week ${index + 1}`,
       weekStartKey,
       focusTitle: focus?.title ?? null,
-      eventCount: weekMissions.length,
+      eventCount,
+      peak,
       weekHref: `/calendar?view=week&date=${weekStartKey}`,
     };
   });
@@ -403,8 +404,7 @@ export async function getCalendarMonthViewData(
     monthStartKey,
     monthLabel: formatMonthLabel(monthStartKey),
     timezone: TIMEZONE,
-    executiveQuestion:
-      "What are the major campaign commitments and strategic milestones over the next 30–60 days?",
+    executiveQuestion: OPERATING_VIEW_QUESTIONS.month,
     electionLabel: countdown.label,
     daysRemaining: countdown.daysRemaining,
     scheduledEventCount: monthEvents.length,

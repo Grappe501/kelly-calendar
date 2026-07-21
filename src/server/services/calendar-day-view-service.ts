@@ -3,6 +3,12 @@ import "server-only";
 import { detectCandidateOverlaps } from "@/features/operational-intelligence/services/conflict-service";
 import type { OperationalConflict } from "@/features/operational-intelligence/types/conflict-types";
 import { getStandingAvailabilityPolicy } from "@/lib/campaign/availability-policy";
+import {
+  CAMPAIGN_CALENDAR_TIMEZONE,
+  chicagoTodayKey,
+} from "@/lib/calendar/chicago-date";
+import { OPERATING_VIEW_QUESTIONS } from "@/lib/calendar/operating-view-lenses";
+import { roleMayMutate } from "@/lib/auth/system-roles";
 import { toMissionCard, type MissionCard } from "@/lib/missions/mission-card";
 import { computeMissionTimeline } from "@/lib/missions/mission-timeline";
 import {
@@ -10,58 +16,45 @@ import {
   buildTodayReadinessSummary,
   type TodayReadinessSummary,
 } from "@/lib/missions/today-readiness";
-import {
-  CAMPAIGN_CALENDAR_TIMEZONE,
-  chicagoDateKey,
-  chicagoTodayKey,
-  resolveCalendarDateKey,
-} from "@/lib/calendar/chicago-date";
-import { roleMayMutate } from "@/lib/auth/system-roles";
 import type { AuthenticatedActor } from "@/server/auth/actor";
-import { listEventsForActor } from "@/server/services/event-service";
+import type { OperatingEventRecord } from "@/server/services/event-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
-import type { SafeEventProjection } from "@/server/services/event-visibility-service";
-
-const TIMEZONE = CAMPAIGN_CALENDAR_TIMEZONE;
+import {
+  eventsOnChicagoDate,
+  loadEventGraphForChicagoDay,
+} from "@/server/services/operating-views/load-event-graph";
 
 export type CalendarDayViewData = {
   dateKey: string;
   timezone: string;
   isToday: boolean;
   executiveQuestion: string;
-  schedule: SafeEventProjection[];
+  schedule: OperatingEventRecord[];
   missions: MissionCard[];
   readiness: TodayReadinessSummary;
   conflicts: OperationalConflict[];
   standingReminders: string[];
   weatherStatus: "NOT_INTEGRATED";
   viewerDisplayName: string;
+  cataloguePartial: boolean;
 };
 
 /**
- * Calendar Experience Day View — presentation adapter only.
- * Owns no facts; consumes listEventsForActor + mission context loaders.
+ * Day lens — full-day flow from the canonical Event graph.
  */
 export async function getCalendarDayViewData(
   actor: AuthenticatedActor,
   dateKeyInput?: string | null,
 ): Promise<CalendarDayViewData> {
   const now = new Date();
-  const dateKey = resolveCalendarDateKey(dateKeyInput, now);
-  const todayKey = chicagoTodayKey(now);
-  const all = (await listEventsForActor(actor)).filter(
-    (e): e is SafeEventProjection => e != null,
-  );
-
-  const schedule = all
-    .filter((e) => chicagoDateKey(e.startsAt) === dateKey)
-    .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
-
+  const graph = await loadEventGraphForChicagoDay(actor, dateKeyInput);
+  const schedule = eventsOnChicagoDate(graph.events, graph.dateKey);
   const context = await loadMissionContextForIds(schedule.map((e) => e.eventId));
   const canMutateDayActions = roleMayMutate(actor.primarySystemRole);
+  const todayKey = chicagoTodayKey(now);
 
   const missions = schedule.map((event, index) => {
-    const travel = context.travel.get(event.eventId);
+    const travel = context.travel.get(event.eventId) ?? event.travel;
     const day = context.day.get(event.eventId);
     const timeline = computeMissionTimeline({
       missionId: event.eventId,
@@ -69,23 +62,24 @@ export async function getCalendarDayViewData(
       endsAt: event.endsAt,
       now,
       travelRequired: travel?.travelRequired,
-      estimatedDurationMinutes: travel?.estimatedDurationMinutes,
-      bufferMinutes: travel?.bufferMinutes,
-      departureAt: travel?.departureAt,
-      targetArrivalAt: travel?.targetArrivalAt,
+      estimatedDurationMinutes: travel?.estimatedDurationMinutes ?? undefined,
+      bufferMinutes: travel?.bufferMinutes ?? undefined,
+      departureAt: travel?.departureAt ?? undefined,
+      targetArrivalAt: travel?.targetArrivalAt ?? undefined,
     });
 
     return toMissionCard({
       event,
-      timezone: TIMEZONE,
+      timezone: CAMPAIGN_CALENDAR_TIMEZONE,
       readiness: context.readiness.get(event.eventId) ?? null,
       timeline,
-      isNext: dateKey === todayKey && index === 0,
+      isNext: graph.dateKey === todayKey && index === 0,
       now,
       eventVersion: day?.version,
       arrivalAt: day?.arrivalAt ?? null,
       confirmationStatus: day?.confirmationStatus ?? null,
-      canMutateDayActions: dateKey === todayKey ? canMutateDayActions : false,
+      canMutateDayActions:
+        graph.dateKey === todayKey ? canMutateDayActions : false,
     });
   });
 
@@ -111,19 +105,18 @@ export async function getCalendarDayViewData(
     })),
   );
 
-  const standingReminders = getStandingAvailabilityPolicy().rules.map((r) => r.summary);
-
   return {
-    dateKey,
-    timezone: TIMEZONE,
-    isToday: dateKey === todayKey,
-    executiveQuestion: "What am I doing today?",
+    dateKey: graph.dateKey,
+    timezone: CAMPAIGN_CALENDAR_TIMEZONE,
+    isToday: graph.isToday,
+    executiveQuestion: OPERATING_VIEW_QUESTIONS.day,
     schedule,
     missions,
     readiness,
     conflicts,
-    standingReminders,
+    standingReminders: getStandingAvailabilityPolicy().rules.map((r) => r.summary),
     weatherStatus: "NOT_INTEGRATED",
     viewerDisplayName: actor.displayName,
+    cataloguePartial: graph.cataloguePartial,
   };
 }

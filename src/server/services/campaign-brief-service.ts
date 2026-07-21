@@ -16,7 +16,6 @@ import { roleMayMutate } from "@/lib/auth/system-roles";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { listEventsForActor } from "@/server/services/event-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
-import type { SafeEventProjection } from "@/server/services/event-visibility-service";
 
 const TIMEZONE = "America/Chicago";
 
@@ -48,9 +47,7 @@ export async function getCampaignBrief(
   const now = new Date();
   const todayKey = chicagoDateKey(now);
 
-  const all = (await listEventsForActor(actor)).filter(
-    (e): e is SafeEventProjection => e != null,
-  );
+  const all = await listEventsForActor(actor);
   const eventsToday = all
     .filter((e) => chicagoDateKey(e.startsAt) === todayKey)
     .sort(

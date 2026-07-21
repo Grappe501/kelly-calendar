@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+  chicagoDateKey,
+  chicagoDateKeyToUtcBounds,
+  chicagoDateKeysToUtcRange,
   displayCampaignWeekIndex,
   formatMonthLabel,
   monthDateKeys,
@@ -55,5 +58,13 @@ describe("chicago-date helpers", () => {
     expect(grid[0]).toBe(startOfWeekDateKey("2026-08-01"));
     expect(grid.length % 7).toBe(0);
     expect(shiftMonthDateKey("2026-08-31", 1)).toBe("2026-09-30");
+  });
+
+  it("maps Chicago date keys to UTC bounds that round-trip", () => {
+    const { start, endExclusive } = chicagoDateKeyToUtcBounds("2026-07-21");
+    expect(chicagoDateKey(start)).toBe("2026-07-21");
+    expect(chicagoDateKey(new Date(endExclusive.getTime() - 1))).toBe("2026-07-21");
+    const range = chicagoDateKeysToUtcRange("2026-07-20", "2026-07-22");
+    expect(range.rangeStart.getTime()).toBeLessThan(range.rangeEnd.getTime());
   });
 });

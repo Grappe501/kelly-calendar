@@ -95,6 +95,25 @@ export function WeekView({ data, focusEventId = null }: Props) {
         </ul>
       </section>
 
+      <section className="panel" aria-labelledby="week-themes-heading">
+        <h2 id="week-themes-heading">What this week is trying to accomplish</h2>
+        {data.campaignThemes.length === 0 ? (
+          <p className="muted">No campaign themes classified from this week’s loaded events.</p>
+        ) : (
+          <ul className="week-campaign-themes">
+            {data.campaignThemes.map((theme) => (
+              <li key={theme.id}>
+                <strong>{theme.label}</strong>
+                <span className="muted">
+                  {" "}
+                  · {theme.eventCount} · {theme.sampleTitles.join(" · ")}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
       <section className="panel" aria-labelledby="week-grid-heading">
         <h2 id="week-grid-heading">Week calendar</h2>
         <div className="week-grid" role="list">

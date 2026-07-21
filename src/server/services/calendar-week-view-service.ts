@@ -9,10 +9,8 @@ import {
   chicagoTodayKey,
   displayCampaignWeekIndex,
   formatWeekRangeLabel,
-  resolveCalendarDateKey,
   shiftChicagoDateKey,
   startOfWeekDateKey,
-  weekDateKeys,
 } from "@/lib/calendar/chicago-date";
 import { getElectionCountdown } from "@/lib/dates/election";
 import { HISTORICAL_IMPORT_FLOOR } from "@/lib/system/constants";
@@ -28,12 +26,13 @@ import {
   type TodayReadinessSummary,
 } from "@/lib/missions/today-readiness";
 import { roleMayMutate } from "@/lib/auth/system-roles";
+import { OPERATING_VIEW_QUESTIONS } from "@/lib/calendar/operating-view-lenses";
 import type { AuthenticatedActor } from "@/server/auth/actor";
-import { listEventsForActor } from "@/server/services/event-service";
 import {
   loadMissionContextForIds,
   type MissionContextBundle,
 } from "@/server/services/mission-context-loader";
+import { loadEventGraphForChicagoWeek } from "@/server/services/operating-views/load-event-graph";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
 
 const TIMEZONE = CAMPAIGN_CALENDAR_TIMEZONE;
@@ -118,6 +117,14 @@ export type WeekBriefSignals = {
   fullBriefHref: string;
 };
 
+/** Week accomplishment themes — not day-by-day inventory. */
+export type WeekCampaignTheme = {
+  id: string;
+  label: string;
+  eventCount: number;
+  sampleTitles: string[];
+};
+
 export type CalendarWeekViewData = {
   dateKey: string;
   weekStartKey: string;
@@ -132,6 +139,7 @@ export type CalendarWeekViewData = {
   highPriorityTitle: string | null;
   domainStrip: WeekDomainTile[];
   days: WeekDayColumn[];
+  campaignThemes: WeekCampaignTheme[];
   missionRail: WeekMissionPriority[];
   travel: WeekTravelSummary;
   counties: WeekCountyActivity[];
@@ -195,6 +203,94 @@ function riskRank(level: MissionCard["riskLevel"]): number {
   }
 }
 
+function buildWeekCampaignThemes(events: SafeEventProjection[]): WeekCampaignTheme[] {
+  const buckets: Array<{
+    id: string;
+    label: string;
+    match: (e: SafeEventProjection) => boolean;
+  }> = [
+    {
+      id: "fundraising",
+      label: "Fundraisers",
+      match: (e) =>
+        classifyFundraisingEvent({
+          title: e.title,
+          isFundraisingCalendar: e.primaryCalendar.type === "FUNDRAISING",
+        }) !== "NOT_FUNDRAISING",
+    },
+    {
+      id: "media",
+      label: "Media",
+      match: (e) => {
+        const kind = classifyPublicAppearance({
+          title: e.title,
+          hasSpeech: false,
+          hasPressItem: false,
+        });
+        return (
+          kind !== "NOT_PUBLIC" &&
+          /DEBATE|INTERVIEW|PODCAST|EDITORIAL|PRESS|LIVESTREAM|RADIO|EARNED_MEDIA|RECORDED_VIDEO/.test(
+            kind,
+          )
+        );
+      },
+    },
+    {
+      id: "appearances",
+      label: "Major appearances",
+      match: (e) =>
+        classifyPublicAppearance({
+          title: e.title,
+          hasSpeech: false,
+          hasPressItem: false,
+        }) !== "NOT_PUBLIC",
+    },
+    {
+      id: "volunteer",
+      label: "Volunteer events",
+      match: (e) =>
+        e.primaryCalendar.type === "VOLUNTEER" ||
+        classifyGotvActivity({ title: e.title }) !== "NOT_GOTV",
+    },
+    {
+      id: "county",
+      label: "County visits",
+      match: (e) =>
+        e.primaryCalendar.type === "COUNTY_ACTIVITY" ||
+        /county|tour|springfield/i.test(e.title),
+    },
+    {
+      id: "travel",
+      label: "Travel",
+      match: (e) => e.primaryCalendar.type === "TRAVEL" || /travel|drive|flight/i.test(e.title),
+    },
+  ];
+
+  const themes: WeekCampaignTheme[] = [];
+  const claimed = new Set<string>();
+  for (const bucket of buckets) {
+    const matched = events.filter((e) => !claimed.has(e.eventId) && bucket.match(e));
+    if (matched.length === 0) continue;
+    for (const e of matched) claimed.add(e.eventId);
+    themes.push({
+      id: bucket.id,
+      label: bucket.label,
+      eventCount: matched.length,
+      sampleTitles: matched.slice(0, 3).map((e) => e.title),
+    });
+  }
+  const residual = events.filter((e) => !claimed.has(e.eventId));
+  if (residual.length > 0) {
+    themes.unshift({
+      id: "campaign_goals",
+      label: "Campaign goals",
+      eventCount: residual.length,
+      sampleTitles: residual.slice(0, 3).map((e) => e.title),
+    });
+  }
+  return themes;
+}
+
 function classifyCandidateKind(title: string, calendarType: string): string | null {
   const appearance = classifyPublicAppearance({
     title,
@@ -227,26 +323,22 @@ export async function getCalendarWeekViewData(
   dateKeyInput?: string | null,
 ): Promise<CalendarWeekViewData> {
   const now = new Date();
-  const anchor = resolveCalendarDateKey(dateKeyInput, now);
-  const weekStartKey = startOfWeekDateKey(anchor);
-  const weekKeys = weekDateKeys(anchor);
-  const todayKey = chicagoTodayKey(now);
+  const graph = await loadEventGraphForChicagoWeek(actor, dateKeyInput);
+  const weekKeys = graph.weekKeys;
+  const weekStartKey = weekKeys[0];
   const weekKeySet = new Set(weekKeys);
+  const todayKey = chicagoTodayKey(now);
+  const cataloguePartial = graph.cataloguePartial;
 
-  const all = (await listEventsForActor(actor)).filter(
-    (e): e is SafeEventProjection => e != null,
-  );
-  const cataloguePartial = all.length >= 50;
-
-  const weekEvents = all
-    .filter((e) => weekKeySet.has(chicagoDateKey(e.startsAt)))
+  const weekEvents = graph.events
+    .slice()
     .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
 
   const context = await loadMissionContextBatched(weekEvents.map((e) => e.eventId));
   const canMutate = roleMayMutate(actor.primarySystemRole);
 
   const missions = weekEvents.map((event, index) => {
-    const travel = context.travel.get(event.eventId);
+    const travel = context.travel.get(event.eventId) ?? event.travel;
     const day = context.day.get(event.eventId);
     const timeline = computeMissionTimeline({
       missionId: event.eventId,
@@ -254,10 +346,10 @@ export async function getCalendarWeekViewData(
       endsAt: event.endsAt,
       now,
       travelRequired: travel?.travelRequired,
-      estimatedDurationMinutes: travel?.estimatedDurationMinutes,
-      bufferMinutes: travel?.bufferMinutes,
-      departureAt: travel?.departureAt,
-      targetArrivalAt: travel?.targetArrivalAt,
+      estimatedDurationMinutes: travel?.estimatedDurationMinutes ?? undefined,
+      bufferMinutes: travel?.bufferMinutes ?? undefined,
+      departureAt: travel?.departureAt ?? undefined,
+      targetArrivalAt: travel?.targetArrivalAt ?? undefined,
     });
     return toMissionCard({
       event,
@@ -318,6 +410,7 @@ export async function getCalendarWeekViewData(
       readinessLabel: m.todayReadiness.state,
     }));
 
+  const campaignThemes = buildWeekCampaignThemes(weekEvents);
   let driveSum = 0;
   let driveKnown = 0;
   let milesSum = 0;
@@ -439,19 +532,20 @@ export async function getCalendarWeekViewData(
   }));
 
   return {
-    dateKey: anchor,
+    dateKey: graph.dateKey,
     weekStartKey,
     weekKeys,
     weekRangeLabel: formatWeekRangeLabel(weekKeys),
     campaignWeekDisplay: displayCampaignWeekIndex(weekStartKey, HISTORICAL_IMPORT_FLOOR),
     timezone: TIMEZONE,
-    executiveQuestion: "What does the campaign need to accomplish this week?",
+    executiveQuestion: OPERATING_VIEW_QUESTIONS.week,
     electionLabel: countdown.label,
     daysRemaining: countdown.daysRemaining,
     scheduleReadiness,
     highPriorityTitle,
     domainStrip,
     days,
+    campaignThemes,
     missionRail,
     travel,
     counties,

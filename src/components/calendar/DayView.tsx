@@ -144,6 +144,28 @@ export function DayView({ data, focusEventId = null }: Props) {
                     {event.primaryCalendar.name}
                     {event.location?.label ? ` · ${event.location.label}` : ""}
                   </p>
+                  {event.travel?.departureAt || event.travel?.travelRequired ? (
+                    <p className="muted">
+                      Travel:{" "}
+                      {event.travel.departureAt
+                        ? `leave ${formatClock(event.travel.departureAt, data.timezone)}`
+                        : "required"}
+                      {event.travel.estimatedDurationMinutes != null
+                        ? ` · ~${event.travel.estimatedDurationMinutes} min`
+                        : ""}
+                      {event.travel.bufferMinutes != null
+                        ? ` · ${event.travel.bufferMinutes} min buffer`
+                        : ""}
+                    </p>
+                  ) : null}
+                  {event.openActions.length > 0 || event.openFollowUps.length > 0 ? (
+                    <p className="muted">
+                      Prep {event.openActions.filter((a) => a.phase === "PRE_EVENT").length}
+                      {" · "}
+                      After {event.openFollowUps.length}
+                      {event.people.length > 0 ? ` · People ${event.people.length}` : ""}
+                    </p>
+                  ) : null}
                 </div>
               </li>
             ))}

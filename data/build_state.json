@@ -140,7 +140,7 @@
   "calendar_foundation_status": "in_progress_recovery",
   "foundation_implementation_started": true,
   "redesign_implementation_started": false,
-  "next_engineering_deliverable": "KCCC-EA-10-CALENDAR-OPERATING-VIEWS-1.0",
+  "next_engineering_deliverable": "KCCC-EA-11-EVENT-CREATION-EDITING-1.0",
   "calendar_recovery_build_id": "KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0",
   "calendar_primary_track_status": "active",
   "communications_os_track_status": "frozen",
@@ -178,8 +178,8 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-EA-10-CALENDAR-OPERATING-VIEWS",
-  "current_step_number": 10,
+  "current_step": "KCCC-EA-11-EVENT-CREATION-EDITING",
+  "current_step_number": 11,
   "current_step_status": "ready",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
@@ -234,5 +234,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "EA-9 COMPLETE: single canonical Event locked. Mission/Travel/Briefing attach to Event. Next Step 10 operating views. Communications frozen."
+  "notes": "EA-10 COMPLETE: Today/Day/Week/Month/Agenda + secondary lenses from one Event graph. Next Step 11 event creation/editing. Communications frozen."
 }

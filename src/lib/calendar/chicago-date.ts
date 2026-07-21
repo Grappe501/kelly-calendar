@@ -139,3 +139,38 @@ export function shiftMonthDateKey(dateKey: string, deltaMonths: number): string 
 }
 
 export const CAMPAIGN_CALENDAR_TIMEZONE = TIMEZONE;
+
+/**
+ * UTC bounds for a Chicago calendar date [start, endExclusive).
+ * Picks CST/CDT offset so chicagoDateKey(start) === dateKey.
+ */
+export function chicagoDateKeyToUtcBounds(dateKey: string): {
+  start: Date;
+  endExclusive: Date;
+} {
+  const candidates = [
+    new Date(`${dateKey}T00:00:00-05:00`),
+    new Date(`${dateKey}T00:00:00-06:00`),
+  ];
+  const start =
+    candidates.find((d) => chicagoDateKey(d) === dateKey) ?? candidates[1];
+  const nextKey = shiftChicagoDateKey(dateKey, 1);
+  const nextCandidates = [
+    new Date(`${nextKey}T00:00:00-05:00`),
+    new Date(`${nextKey}T00:00:00-06:00`),
+  ];
+  const endExclusive =
+    nextCandidates.find((d) => chicagoDateKey(d) === nextKey) ??
+    nextCandidates[1];
+  return { start, endExclusive };
+}
+
+/** Inclusive Chicago date range → UTC query window overlapping those days. */
+export function chicagoDateKeysToUtcRange(
+  firstKey: string,
+  lastKeyInclusive: string,
+): { rangeStart: Date; rangeEnd: Date } {
+  const { start } = chicagoDateKeyToUtcBounds(firstKey);
+  const { endExclusive } = chicagoDateKeyToUtcBounds(lastKeyInclusive);
+  return { rangeStart: start, rangeEnd: endExclusive };
+}

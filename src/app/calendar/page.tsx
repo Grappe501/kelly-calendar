@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { AgendaView } from "@/components/calendar/AgendaView";
 import { DayView } from "@/components/calendar/DayView";
 import { MonthView } from "@/components/calendar/MonthView";
 import { WeekView } from "@/components/calendar/WeekView";
@@ -8,6 +9,7 @@ import {
   sanitizeCalendarReturnTo,
 } from "@/lib/calendar/mission-deep-link";
 import { requireActiveAuthenticatedActor } from "@/server/auth/actor";
+import { getCalendarAgendaViewData } from "@/server/services/calendar-agenda-view-service";
 import { getCalendarDayViewData } from "@/server/services/calendar-day-view-service";
 import { getCalendarMonthViewData } from "@/server/services/calendar-month-view-service";
 import { getCalendarWeekViewData } from "@/server/services/calendar-week-view-service";
@@ -27,8 +29,8 @@ type SearchParams = Promise<{
 }>;
 
 /**
- * Calendar Experience Track A — Day, Week, Month.
- * Consumes `?event=` for Open Mission deep links (HL-039 / OW-001).
+ * Operating views — Day / Week / Month / Agenda.
+ * All lenses read from the canonical Event graph.
  */
 export default async function CalendarPage({
   searchParams,
@@ -38,9 +40,12 @@ export default async function CalendarPage({
   const params = await searchParams;
   const actor = await requireActiveAuthenticatedActor();
   const view =
-    params.view === "week" || params.view === "month" ? params.view : "day";
+    params.view === "week" ||
+    params.view === "month" ||
+    params.view === "agenda"
+      ? params.view
+      : "day";
 
-  // Validate returnTo early (no open redirects); not yet rendered as a control.
   void sanitizeCalendarReturnTo(params.returnTo);
 
   const deepLink = await resolveMissionDeepLink({
@@ -48,7 +53,6 @@ export default async function CalendarPage({
     rawEventId: params.event,
   });
 
-  // Period continuity: jump to the event's Chicago date when the deep link resolves.
   if (
     deepLink.eventDateKey &&
     deepLink.focusEventId &&
@@ -82,6 +86,16 @@ export default async function CalendarPage({
       <>
         {banner}
         <WeekView data={data} focusEventId={focusEventId} />
+      </>
+    );
+  }
+
+  if (view === "agenda") {
+    const data = await getCalendarAgendaViewData(actor, params.date);
+    return (
+      <>
+        {banner}
+        <AgendaView data={data} focusEventId={focusEventId} />
       </>
     );
   }

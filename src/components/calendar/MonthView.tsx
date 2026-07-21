@@ -146,7 +146,15 @@ export function MonthView({ data, focusEventId = null }: Props) {
               <span>
                 {" "}
                 {week.focusTitle ?? "No focus surfaced"}{" "}
-                <span className="muted">({week.eventCount} events)</span>
+                <span className="muted">
+                  ({week.eventCount} events
+                  {week.peak === "overloaded"
+                    ? " · overloaded"
+                    : week.peak === "empty"
+                      ? " · empty"
+                      : ""}
+                  )
+                </span>
               </span>
             </li>
           ))}

@@ -1,16 +1,22 @@
-import { TodaysMissionSurface } from "@/components/missions/TodaysMissionSurface";
+import { TodayOperatingView } from "@/components/today/TodayOperatingView";
 import { requireActiveAuthenticatedActor } from "@/server/auth/actor";
-import { getTodaysMissionResult } from "@/server/services/todays-mission-service";
+import { getTodayOperatingViewData } from "@/server/services/today-operating-view-service";
 
 export const dynamic = "force-dynamic";
 
-/**
- * V2.1 Deliverable 2 — Today’s Mission operating surface.
- * Calendar remains secondary navigation; legacy Mission Cards are unchanged elsewhere.
- */
-export default async function TodayPage() {
-  await requireActiveAuthenticatedActor();
-  const result = await getTodaysMissionResult();
+type SearchParams = Promise<{ date?: string }>;
 
-  return <TodaysMissionSurface result={result} />;
+/**
+ * Flagship Today operating view — canonical Event graph, mission-driven cards.
+ */
+export default async function TodayPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const params = await searchParams;
+  const actor = await requireActiveAuthenticatedActor();
+  const data = await getTodayOperatingViewData(actor, params.date);
+
+  return <TodayOperatingView data={data} />;
 }

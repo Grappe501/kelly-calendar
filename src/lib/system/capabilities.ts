@@ -11,6 +11,7 @@ import {
   NEXT_AUTHORIZED_BUILD,
   STEP_8_CLOSEOUT_STATUS,
   STEP_9_CANONICAL_EVENT_STATUS,
+  STEP_10_OPERATING_VIEWS_STATUS,
   TOTAL_STEPS,
 } from "@/lib/system/constants";
 
@@ -26,6 +27,7 @@ export {
   NEXT_AUTHORIZED_BUILD,
   STEP_8_CLOSEOUT_STATUS,
   STEP_9_CANONICAL_EVENT_STATUS,
+  STEP_10_OPERATING_VIEWS_STATUS,
 } from "@/lib/system/constants";
 
 export type CapabilityStatus = {
@@ -44,6 +46,7 @@ export type CapabilityStatus = {
     lg1Status: string;
     step8CloseoutStatus: string;
     step9CanonicalEventStatus: string;
+    step10OperatingViewsStatus: string;
   };
   environment: {
     publicConfigurationValid: boolean;
@@ -102,12 +105,13 @@ export function getCapabilityStatus(options?: {
       environment: process.env.NODE_ENV ?? "development",
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
-      primaryFocus: "Step 10 calendar operating views",
+      primaryFocus: "Step 11 event creation and editing",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       communicationsTrack: COMMUNICATIONS_OS_TRACK_STATUS,
       lg1Status: LG1_CONTROLLED_LIVE_TEST_STATUS,
       step8CloseoutStatus: STEP_8_CLOSEOUT_STATUS,
       step9CanonicalEventStatus: STEP_9_CANONICAL_EVENT_STATUS,
+      step10OperatingViewsStatus: STEP_10_OPERATING_VIEWS_STATUS,
     },
     environment: {
       publicConfigurationValid: envStatus.publicConfigurationValid,
@@ -148,7 +152,7 @@ export function getCapabilityStatus(options?: {
     },
     warnings: [
       authFlags.candidateDataReady
-        ? "Step 8–9 complete — canonical Event locked; next focus is calendar operating views (Step 10)."
+        ? "Step 8–10 complete — operating views ship from the canonical Event graph; next is event creation/editing (Step 11)."
         : "Calendar foundation in progress — complete Step 8 security closeout before real schedule entry.",
       authFlags.authenticationComplete
         ? "Authentication is enabled for campaign operators."

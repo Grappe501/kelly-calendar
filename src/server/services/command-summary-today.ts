@@ -55,9 +55,7 @@ export async function getTodayCommandShellData(
   actor: AuthenticatedActor,
 ): Promise<TodayCommandShellData> {
   const { now, todayKey, tomorrowKey } = chicagoNowParts();
-  const all = (await listEventsForActor(actor)).filter(
-    (e): e is SafeEventProjection => e != null,
-  );
+  const all = await listEventsForActor(actor);
 
   const eventsToday = all
     .filter((e) => chicagoDateKey(e.startsAt) === todayKey)
