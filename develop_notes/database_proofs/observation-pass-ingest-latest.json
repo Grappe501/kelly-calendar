@@ -1,0 +1,454 @@
+{
+  "pass": "OBS-2026-07-21",
+  "createdAt": "2026-07-21T21:13:16.772Z",
+  "eventsCreated": [
+    {
+      "key": "hsv-dems-road-to-blue-2026-07-23",
+      "eventNumber": "KCCC-2026-0039",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "lodging-hsv-host-2026-07-22",
+      "eventNumber": "KCCC-2026-0040",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "cave-city-watermelon-festival-2026-07-24",
+      "eventNumber": "KCCC-2026-0041",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-batesville-2026-07-24",
+      "eventNumber": "KCCC-2026-0042",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-blytheville-2026-07-25",
+      "eventNumber": "KCCC-2026-0043",
+      "status": "HOLD"
+    },
+    {
+      "key": "slovak-fish-fry-2026-08-01",
+      "eventNumber": "KCCC-2026-0044",
+      "status": "HOLD"
+    },
+    {
+      "key": "sw-ar-leadership-2026-08-01",
+      "eventNumber": "KCCC-2026-0045",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "personal-dental-2026-08-03",
+      "eventNumber": "KCCC-2026-0046",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "personal-dental-recovery-buffer-2026-08-03",
+      "eventNumber": "KCCC-2026-0047",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-eldorado-position-2026-08-04",
+      "eventNumber": "KCCC-2026-0048",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "travel-rosebud-home-2026-08-06",
+      "eventNumber": "KCCC-2026-0049",
+      "status": "HOLD"
+    },
+    {
+      "key": "hope-watermelon-festival-2026-08-08",
+      "eventNumber": "KCCC-2026-0050",
+      "status": "HOLD"
+    },
+    {
+      "key": "clinton-day-dinner-2026-08-08",
+      "eventNumber": "KCCC-2026-0051",
+      "status": "HOLD"
+    },
+    {
+      "key": "canvass-benton-josh-irby-2026-08-09",
+      "eventNumber": "KCCC-2026-0052",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "rowdy-women-lunch-searcy-2026-08-10",
+      "eventNumber": "KCCC-2026-0053",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "travel-pine-bluff-2026-08-11",
+      "eventNumber": "KCCC-2026-0054",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "jefferson-immersion-2026-08-12",
+      "eventNumber": "KCCC-2026-0055",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "travel-rosebud-2026-08-13",
+      "eventNumber": "KCCC-2026-0056",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-horseshoe-bend-2026-08-14",
+      "eventNumber": "KCCC-2026-0057",
+      "status": "HOLD"
+    },
+    {
+      "key": "pioneer-days-horseshoe-bend-2026-08-15",
+      "eventNumber": "KCCC-2026-0058",
+      "status": "HOLD"
+    },
+    {
+      "key": "back-to-school-shemal-carter-2026-08-15",
+      "eventNumber": "KCCC-2026-0059",
+      "status": "HOLD"
+    },
+    {
+      "key": "jonesboro-rally-after-bts-2026-08-15",
+      "eventNumber": "KCCC-2026-0060",
+      "status": "HOLD"
+    },
+    {
+      "key": "bryant-rally-josh-irby-2026-08-16",
+      "eventNumber": "KCCC-2026-0061",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "nwa-immersion-tour-2026-08-17",
+      "eventNumber": "KCCC-2026-0062",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-mountain-view-2026-08-21",
+      "eventNumber": "KCCC-2026-0063",
+      "status": "HOLD"
+    },
+    {
+      "key": "bluegrass-fried-chicken-2026-08-21",
+      "eventNumber": "KCCC-2026-0064",
+      "status": "HOLD"
+    },
+    {
+      "key": "alread-eh-club-meet-2026-08-22",
+      "eventNumber": "KCCC-2026-0065",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-fouke-miller-2026-08-22",
+      "eventNumber": "KCCC-2026-0066",
+      "status": "HOLD"
+    },
+    {
+      "key": "miller-immersion-2026-08-23",
+      "eventNumber": "KCCC-2026-0067",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-littlerock-2026-08-24",
+      "eventNumber": "KCCC-2026-0068",
+      "status": "HOLD"
+    },
+    {
+      "key": "clark-county-meeting-arkadelphia-2026-08-27",
+      "eventNumber": "KCCC-2026-0069",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "mt-nebo-chicken-fry-2026-08-29",
+      "eventNumber": "KCCC-2026-0070",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-marion-2026-08-29",
+      "eventNumber": "KCCC-2026-0071",
+      "status": "HOLD"
+    },
+    {
+      "key": "marion-immersion-2026-08-30",
+      "eventNumber": "KCCC-2026-0072",
+      "status": "HOLD"
+    },
+    {
+      "key": "baxter-farm-bureau-2026-10-06",
+      "eventNumber": "KCCC-2026-0073",
+      "status": "CONFIRMED"
+    }
+  ],
+  "eventsUpdated": [
+    {
+      "key": "fundraiser-bramlett-2026-08-02",
+      "eventNumber": "KCCC-2026-0029",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "retired-ministers-eldorado-2026-08-05",
+      "eventNumber": "KCCC-2026-0034",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "travel-russellville-2026-08-05",
+      "eventNumber": "KCCC-2026-0035",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-hope-2026-08-07",
+      "eventNumber": "KCCC-2026-0036",
+      "status": "HOLD"
+    }
+  ],
+  "draftsUpserted": [
+    "draft_obs_benton_aug_trip_2026",
+    "draft_obs_pope_venue_planning_2026"
+  ],
+  "conflictsSurfaced": [
+    "hope-watermelon-festival-2026-08-08 ∩ clinton-day-dinner-2026-08-08",
+    "Aug 22 Rose Bud return vs Fouke/Miller travel — Fouke path ingested"
+  ],
+  "omittedFromGit": [
+    "Phone numbers",
+    "Email addresses",
+    "Street addresses",
+    "Google Meet join URLs"
+  ],
+  "activeCount": 39,
+  "active": [
+    {
+      "eventNumber": "KCCC-2026-0040",
+      "title": "Overnight lodging – Hot Springs Village (host)",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-22T23:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0039",
+      "title": "Hot Springs Village Democratic Club – Road to Blue Dinner",
+      "status": "CONFIRMED",
+      "startsAt": "2026-07-23T20:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0041",
+      "title": "Cave City Watermelon Festival 2026",
+      "status": "HOLD",
+      "startsAt": "2026-07-24T17:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0042",
+      "title": "Overnight Stay – Batesville",
+      "status": "HOLD",
+      "startsAt": "2026-07-25T02:30:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0043",
+      "title": "Overnight Stay – Blytheville",
+      "status": "HOLD",
+      "startsAt": "2026-07-26T02:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0044",
+      "title": "Slovak Fish Fry – Community Event",
+      "status": "HOLD",
+      "startsAt": "2026-08-01T16:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0045",
+      "title": "Southwest Arkansas Regional Leadership Gathering",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-01T18:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0029",
+      "title": "Fundraiser at Jim Bob Bramlett's",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-02T21:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0046",
+      "title": "Dental Appointment – Crown Procedure",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-03T15:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0047",
+      "title": "Recovery / soft buffer after private appointment",
+      "status": "HOLD",
+      "startsAt": "2026-08-03T17:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0048",
+      "title": "Travel to El Dorado (positioning)",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-04T22:30:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0034",
+      "title": "Retired Ministers Luncheon – El Dorado",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-05T15:30:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0035",
+      "title": "Travel to Russellville (after El Dorado luncheon)",
+      "status": "HOLD",
+      "startsAt": "2026-08-05T19:30:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0049",
+      "title": "Travel Russellville/Pope → Rose Bud (home reset)",
+      "status": "HOLD",
+      "startsAt": "2026-08-06T23:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0036",
+      "title": "Travel to Hope (festival positioning)",
+      "status": "HOLD",
+      "startsAt": "2026-08-07T19:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0050",
+      "title": "Hope Watermelon Festival",
+      "status": "HOLD",
+      "startsAt": "2026-08-08T13:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0051",
+      "title": "30th Annual Clinton Day Dinner – Clark County Democrats",
+      "status": "HOLD",
+      "startsAt": "2026-08-08T22:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0052",
+      "title": "Canvass Benton with Josh Irby",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-09T18:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0053",
+      "title": "Rowdy Women Lunch – Searcy",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-10T17:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0054",
+      "title": "Travel to Pine Bluff (Jefferson immersion)",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-11T22:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0055",
+      "title": "Jefferson County Immersion",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-12T14:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0056",
+      "title": "Travel home – Rose Bud (after Jefferson)",
+      "status": "HOLD",
+      "startsAt": "2026-08-13T22:30:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0057",
+      "title": "Travel to Horseshoe Bend",
+      "status": "HOLD",
+      "startsAt": "2026-08-14T22:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0058",
+      "title": "Horseshoe Bend Pioneer Days Festival",
+      "status": "HOLD",
+      "startsAt": "2026-08-15T13:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0059",
+      "title": "Back-to-School Event with Shemal Carter",
+      "status": "HOLD",
+      "startsAt": "2026-08-15T21:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0060",
+      "title": "Rally following Back-to-School (Jonesboro)",
+      "status": "HOLD",
+      "startsAt": "2026-08-15T22:30:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0061",
+      "title": "Bryant Community Rally with Josh Irby",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-16T21:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0062",
+      "title": "Northwest Arkansas Immersion Tour – Benton County",
+      "status": "HOLD",
+      "startsAt": "2026-08-17T14:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0063",
+      "title": "Travel to Mountain View",
+      "status": "HOLD",
+      "startsAt": "2026-08-21T22:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0064",
+      "title": "Bluegrass & Fried Chicken Festival – Mountain View",
+      "status": "HOLD",
+      "startsAt": "2026-08-21T23:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0065",
+      "title": "ALREAD EH Club Meeting (Google Meet)",
+      "status": "HOLD",
+      "startsAt": "2026-08-22T19:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0066",
+      "title": "Travel to Fouke (Miller County immersion)",
+      "status": "HOLD",
+      "startsAt": "2026-08-22T21:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0067",
+      "title": "Miller County Immersion Tour",
+      "status": "HOLD",
+      "startsAt": "2026-08-23T14:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0068",
+      "title": "Overnight Stay – Little Rock (after Miller)",
+      "status": "HOLD",
+      "startsAt": "2026-08-25T00:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0069",
+      "title": "Clark County Community Meeting – Arkadelphia",
+      "status": "CONFIRMED",
+      "startsAt": "2026-08-27T15:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0070",
+      "title": "Mt. Nebo Chicken Fry – Dardanelle",
+      "status": "HOLD",
+      "startsAt": "2026-08-29T15:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0071",
+      "title": "Travel to Marion County (after Mt. Nebo)",
+      "status": "HOLD",
+      "startsAt": "2026-08-29T22:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0072",
+      "title": "Marion County Immersion",
+      "status": "HOLD",
+      "startsAt": "2026-08-30T14:00:00.000Z"
+    },
+    {
+      "eventNumber": "KCCC-2026-0073",
+      "title": "Baxter County Farm Bureau Annual Convention & Candidate Forum",
+      "status": "CONFIRMED",
+      "startsAt": "2026-10-06T22:00:00.000Z"
+    }
+  ]
+}
