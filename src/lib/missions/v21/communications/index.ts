@@ -43,3 +43,4 @@ export {
   labelQueueStatus,
   labelInclusionState,
 } from "@/lib/missions/v21/communications/labels";
+export * from "@/lib/missions/v21/communications/dispatch";

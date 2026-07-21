@@ -1,4 +1,4 @@
-# KCCC — Campaign communications operator guide (D20)
+# KCCC — Campaign communications operator guide (D20 + D21 context)
 
 ## Principles
 
@@ -7,7 +7,7 @@
 3. Staffing assignments are **operational relevance** only — they do not grant outreach permission.
 4. Mobilize signup/attendance aggregates are **never** person-level audience sources.
 5. **Export ≠ sent ≠ delivered.** **Handoff ≠ sent ≠ delivered.**
-6. External provider dispatch is **disabled** in D20 — use export or manual handoff only.
+6. External provider dispatch is **disabled** at D21 ship — use export or manual handoff; see D21 dispatch guide for foundation status.
 7. Page loads do not seed policy, create drafts, or materialize audiences.
 
 ## Who
@@ -35,7 +35,7 @@ npm run typecheck
 
 1. First intentional policy ensure creates version 1 with conservative defaults (`externalDispatchEnabled: false`).
 2. Review allowed channels, purposes, and accepted evidence map before any outreach planning.
-3. Do not enable operator attestation or external dispatch in D20 — deferred to D21 with provider foundation.
+3. Do not enable operator attestation or external dispatch without D22 provider selection and production-readiness checklist.
 
 ## Workflow — Draft communication
 
@@ -117,10 +117,20 @@ npm run typecheck
 2. `MANUAL_SCOPED` contact hints on assignments are **not** consent.
 3. Confirm staffing separately; confirm outreach consent separately.
 
+## Workflow — Dispatch (D21 foundation)
+
+Production dispatch is **not available** at D21 ship. When evaluating future enablement:
+
+1. Complete D20 queue prepare and obtain **dispatch** approval in addition to content and audience.
+2. Review D21 preflight — expect blocking reasons until provider selected and gates opened.
+3. Use bounded batches only (max 25) — no background queue.
+
+See `KCCC_V2_1_COMMUNICATIONS_DISPATCH_OPERATOR_GUIDE.md` and `KCCC_V2_1_COMMUNICATIONS_PROVIDER_SELECTION_GUIDE.md`.
+
 ## Validation before ship / after changes
 
 ```bash
-npm run missions:v21:communications:validate
+npm run missions:v21:communications-dispatch:validate
 npm run typecheck
 ```
 
@@ -135,12 +145,12 @@ See `KCCC_V2_1_COMMUNICATION_CONSENT_SUPPRESSION_POLICY.md` and `KCCC_V2_1_MOBIL
 
 ## Do not
 
-- Auto-send email or SMS from Kelly Calendar in D20.
-- Mark queue items `DISPATCHED` or record delivery events without D21 provider/manual import path.
+- Auto-send email or SMS from Kelly Calendar until production-readiness checklist complete.
+- Mark queue items `DISPATCHED` or record delivery events without provider/webhook facts.
 - Treat export or handoff as delivery confirmation.
 - Include staffing-only hints as consent.
 - Use aggregate Mobilize counts as recipients.
-- Enable external dispatch without D21 provider foundation.
+- Enable external dispatch without D22 provider selection and kill-switch authorization.
 
 ## Rollback
 

@@ -91,9 +91,10 @@ Horizontal phase bar: Prepare → Travel → Execute → Follow-up → Complete 
 12. **Campaign Day Exception Digest** — DONE: read-oriented day rollup for Closeout + next-day Launch with optional review metadata + Mobilize-ready external reference foundation.
 13. **Mobilize Integration Foundation** — READY: server-only adapter, capability discovery, dry-run reconciliation, external identity mapping; outbound publishing disabled. NEXT recommended: **Mobilize Event Publishing and Bidirectional Reconciliation**.
 14. **Volunteer Staffing and Assignment Reconciliation (D19)** — DONE: Mission role requirements, explicit assignments, coverage gaps, D18 RSVP availability context (read-only), cancellation reconciliation signals, day-of staffing confirmation. Does not mutate Prepare/Execute/Debrief/Follow-up/Travel/Logistics/Field Ops/Launch/Closeout. RSVP ≠ assignment.
-15. **Campaign Communications and Mobilization Queue (D20)** — Consent-aware policy, contact points, evidence, suppressions, audience review, dual approval, queue prepare, export, manual handoff. External send disabled; Mobilize links in content only. RSVP/attendance/staffing/check-in ≠ consent. NEXT recommended: **Communications Provider Dispatch Foundation**.
+15. **Campaign Communications and Mobilization Queue (D20)** — Consent-aware policy, contact points, evidence, suppressions, audience review, dual approval, queue prepare, export, manual handoff. External send disabled; Mobilize links in content only. RSVP/attendance/staffing/check-in ≠ consent.
+16. **Communications Provider Dispatch Foundation (D21)** — Provider registry, kill switches, bounded batches, webhook ingress, dispatch preflight. No production provider selected; kill switches default ON; no durable background queue. NEXT recommended: **Communications Provider Selection and Sandbox Adapter**.
 
-Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform, automated email/SMS dispatch (deferred to D21 foundation).
+Out of scope for V2.1: Google sync, Routes, full War Room, full relationship graph UI, AI briefing engine, AAR analytics platform, live production email/SMS dispatch (D22+ after provider selection).
 
 ## Constraints
 

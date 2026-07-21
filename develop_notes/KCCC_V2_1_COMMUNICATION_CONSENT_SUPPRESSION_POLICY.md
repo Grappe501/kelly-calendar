@@ -1,8 +1,8 @@
 # KCCC V2.1 — Communication consent and suppression policy
 
-**Scope:** Deliverable 20 (`CampaignCommunicationPolicy`, consent evidence, suppressions, eligibility engine)  
-**Status:** Active with D20 ship — commit/deploy **TBD**  
-**Parent:** `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md`
+**Scope:** Deliverable 20 (`CampaignCommunicationPolicy`, consent evidence, suppressions, eligibility engine) + D21 dispatch preflight gates  
+**Status:** Active with D20 ship; D21 dispatch foundation documented — commit/deploy **TBD**  
+**Parent:** `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md` · **D21:** `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISPATCH_FOUNDATION_DELIVERABLE_21.md`
 
 ## Purpose
 
@@ -41,7 +41,7 @@ Engine warning codes: `SOURCE_NOT_CONSENT:<source>`.
 | `CAMPAIGN_RELATIONSHIP` | Not in default map — requires policy change |
 | `TRANSACTIONAL_CONTEXT` | Not in default map |
 | `OPERATOR_ATTESTATION` | **Blocked** (`allowOperatorAttestation: false`) |
-| `PROVIDER_IMPORT` | Not in default map — future D21 import path |
+| `PROVIDER_IMPORT` | Not in default map — D21 webhook path may create suppressions; evidence import deferred to D22+ |
 | `UNKNOWN` | Stored for audit; **never positive** (`UNKNOWN_EVIDENCE_NOT_POSITIVE`) |
 
 Evidence must be:
@@ -115,7 +115,7 @@ Suppression is evaluated **before** positive consent.
 |----------|------------------|
 | `AUDIENCE` | Audience membership or eligibility fingerprints change |
 | `CONTENT` | Subject, body, or Mobilize URL fingerprint changes |
-| `DISPATCH` | Reserved for future provider dispatch gate |
+| `DISPATCH` | Required for D21 dispatch preflight when external dispatch enabled (D21 ship: dispatch still blocked by kill switches and policy) |
 
 Default: separate audience and content approvals required. Default expiry: 72 hours when configured.
 
@@ -131,14 +131,17 @@ Queue idempotency key binds: communication id + audience member id + content fin
 
 Audit metadata includes `notDelivery: true` on export and handoff actions.
 
-## External dispatch gate (D20)
+## External dispatch gate (D20 + D21)
 
-| Gate | D20 value |
-|------|-----------|
+| Gate | D21 ship value |
+|------|----------------|
 | `externalDispatchEnabled` (policy) | `false` |
-| Provider adapter | `DisabledCommunicationProviderAdapter` |
+| D20 provider adapter (export/handoff) | `DisabledCommunicationProviderAdapter` |
+| D21 dispatch provider (env unset) | `disabled` |
+| Kill switches (global / email / SMS) | **ON** (blocking) |
+| `applicationDispatchEnabled` (connection) | `false` |
 | Mobilize messaging API | **Not available** |
-| `attemptProviderDispatch` | Always blocked with audit |
+| `attemptProviderDispatch` / bounded batch | Blocked with audit — batch status `BLOCKED` |
 
 ## Operator attestation
 
@@ -155,6 +158,11 @@ Policy model supports `retentionDays` — unset at defaults. Follow campaign rec
 - `KCCC_V2_1_VOLUNTEER_STAFFING_OPERATOR_GUIDE.md`
 - `KCCC_V2_1_PROVIDER_INTEGRATION_MOBILIZE_ARCHITECTURE.md`
 
-## Recommended D21
+## Provider webhook suppressions (D21)
 
-Provider dispatch foundation with credential-tested adapters, explicit dispatch approval, provider-originated delivery events, and suppression/bounce import — still without consent inference.
+Verified webhook events may create suppressions (`OPT_OUT`, `COMPLAINT`, `BOUNCE`, `INVALID_DESTINATION`) via `PROVIDER_WEBHOOK:{providerKey}` source. Temporary bounces do **not** auto-suppress. See `KCCC_V2_1_COMMUNICATIONS_WEBHOOK_SECURITY.md`.
+
+## Related D21 docs
+
+- `KCCC_V2_1_COMMUNICATIONS_DISPATCH_OPERATOR_GUIDE.md`
+- `KCCC_V2_1_COMMUNICATIONS_PROVIDER_SELECTION_GUIDE.md`

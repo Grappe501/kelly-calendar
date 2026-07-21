@@ -128,6 +128,8 @@ export function MissionCommandCenter({ model }: Props) {
           <Link href="/system/briefing/field-ops">Day Field Ops</Link>
           <Link href="/system/briefing/staffing">Day Staffing</Link>
           <Link href="/system/communications">Communications queue</Link>
+          <Link href="/system/communications/providers">Providers</Link>
+          <Link href="/system/communications/dispatch">Dispatch</Link>
           <Link href="/system/briefing/incidents">Day Incidents</Link>
           <Link href="/system/briefing/exceptions">Exception Digest</Link>
           <Link href="/system/integrations/mobilize">Mobilize</Link>

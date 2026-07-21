@@ -7,6 +7,7 @@ import {
   type CommunicationDetail,
 } from "@/components/communications/shared";
 import { CommunicationDetailShell } from "@/components/communications/CommunicationDetailShell";
+import { DispatchPreflightPanel } from "@/components/communications/dispatch/DispatchPreflightPanel";
 
 type Props = { initial: CommunicationDetail };
 
@@ -148,11 +149,9 @@ export function CommunicationQueueBoard({ initial }: Props) {
       <section className="panel" aria-labelledby="queue-dispatch-h">
         <h2 id="queue-dispatch-h">Provider dispatch</h2>
         <p className="muted">
-          External dispatch is disabled. No send action is available.
+          External dispatch is disabled. Preflight records gates only — not
+          delivery.
         </p>
-        <button type="button" className="button secondary" disabled>
-          Send (disabled — not delivery)
-        </button>
         {dispatchDisabled ? (
           <ul className="briefing-fact-list">
             {detail.providerCapabilities.map((cap) => (
@@ -160,12 +159,17 @@ export function CommunicationQueueBoard({ initial }: Props) {
                 {cap.capability}:{" "}
                 {cap.applicationEnabled
                   ? "application enabled"
-                  : "disabled (D20 — not delivery)"}
+                  : "disabled (D21 — not delivery)"}
               </li>
             ))}
           </ul>
         ) : null}
       </section>
+
+      <DispatchPreflightPanel
+        communicationId={detail.communication.id}
+        compact
+      />
 
       {detail.queue.length > 0 ? (
         <section className="panel" aria-labelledby="queue-items-h">

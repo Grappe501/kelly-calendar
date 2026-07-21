@@ -33,21 +33,22 @@ See `KCCC_V2_1_MOBILIZE_EVENT_PUBLISHING_DELIVERABLE_17.md`.
 
 See `KCCC_V2_1_VOLUNTEER_STAFFING_DELIVERABLE_19.md`. D19 consumes D18 observation aggregates as read-only availability context. RSVP ≠ assignment. No Mobilize people/attendance writes. Person-level apply remains disabled.
 
-## Campaign communications (D20)
+## Campaign communications (D20 + D21)
 
-See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md` and `KCCC_V2_1_COMMUNICATION_CONSENT_SUPPRESSION_POLICY.md`.
+See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md`, `KCCC_V2_1_COMMUNICATION_CONSENT_SUPPRESSION_POLICY.md`, and `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISPATCH_FOUNDATION_DELIVERABLE_21.md`.
 
 | Concern | Rule |
 |---------|------|
 | Mobilize as comms provider | **No** — Mobilize API covers events/signups/attendance, not general campaign messaging |
 | Mobilize in D20 | Verified `ExternalObjectReference` + optional signup URL in message content only |
-| Outbound send | **Disabled** — `DisabledCommunicationProviderAdapter`; export/handoff only |
+| Outbound send (D21 ship) | **Disabled** — no production provider; kill switches ON; export/handoff only |
+| D21 dispatch foundation | Registry, preflight, bounded batches, webhooks — no live send at ship |
 | Consent | Documented per channel/purpose — never from RSVP, attendance, staffing, or check-in |
 | Audience from Mobilize | Aggregate observations **cannot** become person-level recipients |
 | Person-level apply | Still disabled (unchanged from D18) |
 
 D20 reads D18 match status and D19 staffing assignments as **candidate relevance** only. No Mobilize people writes. No messages through Mobilize.
 
-## Recommended D21
+## Recommended D22
 
-**Communications Provider Dispatch Foundation** — email/SMS adapter behind explicit policy gates; not Mobilize messaging.
+**Communications Provider Selection and Sandbox Adapter** — first real email/SMS vendor behind D21 gates; not Mobilize messaging.

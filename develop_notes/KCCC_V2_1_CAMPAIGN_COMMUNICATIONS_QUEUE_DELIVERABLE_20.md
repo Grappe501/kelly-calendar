@@ -53,7 +53,7 @@ Communications support operational outreach planning tied to Missions, staffing 
 | Staffing → consent | Staffing assignments are **relevance** candidates only |
 | Check-in → consent | Same |
 | Mobilize `sms_opt_in_status` → consent | Denied — see privacy guide |
-| Provider dispatch | Blocked until D21 foundation |
+| Provider dispatch | Blocked until D21+ gates open — see D21 foundation doc |
 
 ## Semantics
 
@@ -206,6 +206,10 @@ See `KCCC_V2_1_COMMUNICATION_CONSENT_SUPPRESSION_POLICY.md`.
 
 See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20_ROLLBACK.md`.
 
-## Recommended D21
+## D21 follow-on (dispatch foundation)
 
-**Communications Provider Dispatch Foundation** — credential-tested email/SMS adapter, gated `externalDispatchEnabled`, provider delivery events, bounce/suppression import, and dispatch approval — still without inferring consent or auto-sending without operator queue action.
+See `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISPATCH_FOUNDATION_DELIVERABLE_21.md`. D21 adds provider registry, kill switches, bounded batches, webhook ingress, and dispatch preflight — **production dispatch remains disabled** at D21 ship (no provider selected, kill switches ON).
+
+## Recommended D22
+
+**Communications Provider Selection and Sandbox Adapter** — first real vendor registration, sandbox credential flow, and explicit production promotion — still without consent inference or unbounded auto-send.

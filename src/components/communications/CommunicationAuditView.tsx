@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { labelQueueStatus } from "@/lib/missions/v21/communications";
 import type { CommunicationDetail } from "@/components/communications/shared";
 import { CommunicationDetailShell } from "@/components/communications/CommunicationDetailShell";
@@ -101,6 +102,11 @@ export function CommunicationAuditView({ detail }: Props) {
           External dispatch is disabled. Queue records status only — no raw
           destinations are shown in this audit view.
         </p>
+        <nav className="briefing-nav" aria-label="Dispatch administration">
+          <Link href="/system/communications/providers">Providers</Link>
+          <Link href="/system/communications/dispatch">Dispatch history</Link>
+          <Link href="/system/communications/controls">Kill switches</Link>
+        </nav>
       </section>
     </CommunicationDetailShell>
   );

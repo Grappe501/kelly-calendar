@@ -30,6 +30,8 @@ export function PolicyViewPanel({ initial }: Props) {
         <nav className="briefing-nav" aria-label="Communications navigation">
           <Link href="/system/communications">Communications queue</Link>
           <Link href="/system/communications/suppressions">Suppressions</Link>
+          <Link href="/system/communications/providers">Providers</Link>
+          <Link href="/system/communications/dispatch">Dispatch</Link>
         </nav>
       </header>
 

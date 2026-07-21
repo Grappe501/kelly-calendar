@@ -25,6 +25,8 @@ export function CommunicationsListView({ initial }: Props) {
           <Link href="/system/communications/new">New draft</Link>
           <Link href="/system/communications/suppressions">Suppressions</Link>
           <Link href="/system/communications/policy">Policy</Link>
+          <Link href="/system/communications/providers">Providers</Link>
+          <Link href="/system/communications/dispatch">Dispatch</Link>
           <Link href="/system/missions/command-center">Command Center</Link>
           <Link href="/system/status">System status</Link>
         </nav>

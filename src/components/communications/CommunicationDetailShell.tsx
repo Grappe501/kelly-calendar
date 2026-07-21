@@ -53,6 +53,8 @@ export function CommunicationDetailShell({ detail, active, children }: Props) {
           <Link href="/system/communications">All communications</Link>
           <Link href="/system/communications/suppressions">Suppressions</Link>
           <Link href="/system/communications/policy">Policy</Link>
+          <Link href="/system/communications/providers">Providers</Link>
+          <Link href="/system/communications/dispatch">Dispatch</Link>
           {tabs.map(([key, label, href]) => (
             <Link
               key={key}

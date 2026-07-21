@@ -4412,6 +4412,7 @@ model CampaignCommunication {
   audienceMembers CampaignCommunicationAudienceMember[]
   approvals       CampaignCommunicationApproval[]
   queueItems      CampaignCommunicationQueueItem[]
+  dispatchBatches CommunicationDispatchBatch[]
 
   @@index([campaignScopeKey, status])
   @@index([missionId])
@@ -4504,6 +4505,7 @@ model CampaignCommunicationQueueItem {
   communication  CampaignCommunication                 @relation(fields: [communicationId], references: [id], onDelete: Cascade)
   audienceMember CampaignCommunicationAudienceMember   @relation(fields: [audienceMemberId], references: [id], onDelete: Cascade)
   deliveryEvents CampaignCommunicationDeliveryEvent[]
+  dispatchAttempts CommunicationDispatchAttempt[]
 
   @@index([communicationId, status])
   @@index([audienceMemberId])
@@ -4525,5 +4527,186 @@ model CampaignCommunicationDeliveryEvent {
   queueItem CampaignCommunicationQueueItem @relation(fields: [queueItemId], references: [id], onDelete: Cascade)
 
   @@index([queueItemId])
+  @@schema("kelly_calendar")
+}
+
+/// D21 Provider Dispatch Foundation — no credentials stored; production dispatch off by default.
+enum CommProviderMode {
+  DISABLED
+  SANDBOX
+  PRODUCTION
+
+  @@schema("kelly_calendar")
+}
+
+enum CommProviderConfigState {
+  NOT_CONFIGURED
+  PARTIAL
+  CONFIGURED
+  VERIFIED
+  DEGRADED
+  DISABLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommDispatchBatchStatus {
+  DRAFT
+  PREFLIGHT_FAILED
+  READY
+  RUNNING
+  PAUSED
+  COMPLETED
+  COMPLETED_WITH_ERRORS
+  CANCELLED
+  BLOCKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommDispatchAttemptStatus {
+  REQUESTED
+  PROVIDER_ACCEPTED
+  PROVIDER_REJECTED
+  UNKNOWN_OUTCOME
+  BLOCKED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommWebhookProcessingStatus {
+  RECEIVED
+  VERIFIED
+  REJECTED
+  PROCESSED
+  DUPLICATE
+  UNMATCHED
+  UNSUPPORTED
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationProviderConnection {
+  id                       String                  @id @default(cuid())
+  campaignScopeKey         String                  @default("KELLY")
+  providerKey              String
+  mode                     CommProviderMode        @default(DISABLED)
+  configurationState       CommProviderConfigState @default(NOT_CONFIGURED)
+  capabilitySnapshot       Json                    @default("{}")
+  senderIdentitySummary    String?
+  lastVerifiedAt           DateTime?
+  lastSuccessfulRequestAt  DateTime?
+  lastErrorCategory        String?
+  lastErrorSummaryRedacted String?
+  emailEnabled             Boolean                 @default(false)
+  smsEnabled               Boolean                 @default(false)
+  webhooksEnabled          Boolean                 @default(false)
+  applicationDispatchEnabled Boolean               @default(false)
+  notes                    String?
+  isActive                 Boolean                 @default(true)
+  createdByUserId          String?
+  updatedByUserId          String?
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+
+  @@unique([campaignScopeKey, providerKey], map: "CommunicationProviderConnection_scope_provider_key")
+  @@index([mode])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationDispatchControl {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @unique
+  version          Int      @default(1)
+  globalKillSwitch Boolean  @default(true)
+  emailKillSwitch  Boolean  @default(true)
+  smsKillSwitch    Boolean  @default(true)
+  reason           String   @default("D21 default — production dispatch disabled")
+  changedByUserId  String?
+  changedAt        DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationDispatchBatch {
+  id                  String                  @id @default(cuid())
+  campaignScopeKey    String                  @default("KELLY")
+  communicationId     String
+  providerKey         String
+  channel             CampaignCommChannel
+  status              CommDispatchBatchStatus @default(DRAFT)
+  contentFingerprint  String
+  audienceFingerprint String
+  policyVersion       Int?
+  policyFingerprint   String?
+  queueItemCount      Int                     @default(0)
+  acceptedCount       Int                     @default(0)
+  rejectedCount       Int                     @default(0)
+  unknownCount        Int                     @default(0)
+  blockedCount        Int                     @default(0)
+  killSwitchSnapshot  Json                    @default("{}")
+  capabilityVersion   String?
+  maxBatchSize        Int                     @default(25)
+  startedAt           DateTime?
+  completedAt         DateTime?
+  requestedByUserId   String?
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+
+  communication CampaignCommunication         @relation(fields: [communicationId], references: [id], onDelete: Cascade)
+  attempts      CommunicationDispatchAttempt[]
+
+  @@index([communicationId])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationDispatchAttempt {
+  id                   String                     @id @default(cuid())
+  batchId              String
+  queueItemId          String
+  attemptNumber        Int                        @default(1)
+  idempotencyKey       String                     @unique
+  requestCorrelationId String
+  providerKey          String
+  providerMessageId    String?
+  status               CommDispatchAttemptStatus  @default(REQUESTED)
+  startedAt            DateTime                   @default(now())
+  completedAt          DateTime?
+  errorCategory        String?
+  unknownOutcome       Boolean                    @default(false)
+  reconciliationState  String                     @default("NONE")
+  createdAt            DateTime                   @default(now())
+
+  batch     CommunicationDispatchBatch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  queueItem CampaignCommunicationQueueItem @relation(fields: [queueItemId], references: [id], onDelete: Cascade)
+
+  @@index([batchId])
+  @@index([queueItemId])
+  @@index([providerMessageId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationWebhookReceipt {
+  id                   String                      @id @default(cuid())
+  providerKey          String
+  providerEventId      String?
+  signatureValid       Boolean                     @default(false)
+  receivedAt           DateTime                    @default(now())
+  providerEventAt      DateTime?
+  replayFingerprint    String                      @unique
+  processingStatus     CommWebhookProcessingStatus @default(RECEIVED)
+  matchedAttemptId     String?
+  normalizedEventCount Int                         @default(0)
+  errorCategory        String?
+  purgeAfter           DateTime?
+  createdAt            DateTime                    @default(now())
+
+  @@index([providerKey])
+  @@index([providerEventId])
+  @@index([matchedAttemptId])
   @@schema("kelly_calendar")
 }

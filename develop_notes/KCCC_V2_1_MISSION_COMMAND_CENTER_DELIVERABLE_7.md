@@ -123,11 +123,11 @@ Does **not** mutate Event schedule, lifecycle, operational status, preparation, 
 npm run missions:v21:command-center:validate
 ```
 
-## Campaign communications (D20)
+## Campaign communications (D20 + D21)
 
-Command Center remains read-only aggregation. D20 communications do **not** send notifications from Command Center and do not mutate Mission phase state. When communications workspaces link from Mission surfaces, operators plan outreach in the owning communications workflow — aggregate here, approve and queue there.
+Command Center remains read-only aggregation. D20/D21 communications do **not** send notifications from Command Center and do not mutate Mission phase state. When communications workspaces link from Mission surfaces, operators plan outreach in the owning communications workflow — aggregate here, approve and queue there. D21 dispatch admin (kill switches, preflight) lives in communications surfaces, not Command Center.
 
-See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md`.
+See `KCCC_V2_1_CAMPAIGN_COMMUNICATIONS_QUEUE_DELIVERABLE_20.md` and `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISPATCH_FOUNDATION_DELIVERABLE_21.md`.
 
 ## Recommended Deliverable 8
 
