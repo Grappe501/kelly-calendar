@@ -23,7 +23,7 @@
 | Layers | [`develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md`](develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md) |
 | Doctrine #1 | [`develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md`](develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md) — operator defines reality; system interprets |
 | Baseline 1.0 | [`develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`](develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md) — frozen immutable snapshot |
-| Chapter closeout | [`develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md`](develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md) — next: observation → Baseline 1.1 |
+| Chapter closeout | [`develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md`](develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md) — Chapter 1 complete; review = Evidence → Patterns → 1.1 → Authorize |
 | Event architecture | [`develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md`](develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md) |
 | Operating views | [`develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md`](develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md) |
 | Create / edit | [`develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md`](develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md) |
