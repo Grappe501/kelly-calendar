@@ -260,13 +260,43 @@ Do not begin Phase C until Phase B is re-run and accepted after credentials are 
 
 ## Remediation (Technical operator)
 
-1. Install in **Netlify production** env (and local approved env for probes):  
-   `KCCC_RESEND_API_KEY`, `KCCC_RESEND_WEBHOOK_SECRET`, `KCCC_RESEND_FROM_EMAIL`  
-   Optional: `KCCC_COMMUNICATIONS_PROVIDER_KEY=resend`
-2. Never commit values; never paste into docs/chat.
-3. Re-run Phase B B2–B4 (read-only `GET /domains` auth probe).
-4. Only then consider marking program provider state `LIVE_TEST_READY` while kill switches stay ON.
-5. Obtain Kelly Grappe readiness acceptance before Phase C.
+**Kelly acceptance (2026-07-21):** Phase B correctly blocked — code capability ≠ production readiness without server-side credentials. Phase C / D27 / general production remain unauthorized.
+
+Approved install path (values never in Git, chat, Markdown, screenshots, or terminal transcripts):
+
+1. In Resend dashboard, create/use API key + webhook signing secret for endpoint  
+   `https://kelly-calendar.netlify.app/api/webhooks/communications/resend`  
+   Set FROM email to the intended LG-1 sender identity (do not invent a throwaway sender).
+2. Local (ignored `.env.local`):
+
+```text
+npm run resend:secrets:configure
+```
+
+3. Netlify production (REST API body from local env — no CLI argv secrets):
+
+```text
+npm run resend:secrets:push-netlify
+npm run deploy:netlify:prod
+```
+
+   Alternate: Netlify UI → Environment variables for site `kelly-calendar` (same three keys).
+4. Re-run Phase B B2–B4 only:
+
+```text
+npm run resend:phase-b:probe
+```
+
+   Then required validators + secret/client/route/webhook scans (see runbook).
+5. Mark `LIVE_TEST_READY` in refreshed evidence only if probe reports AUTHENTICATED and `mayMarkLiveTestReady=true`, while kill switches stay ON and transport remains BLOCKED.
+6. Obtain Kelly Grappe readiness acceptance before Phase C.
+
+Presence recheck after tooling ship (booleans only; still blocked):
+
+| Source | API key | Webhook secret | From email |
+|--------|---------|----------------|------------|
+| Local approved env | false | false | false |
+| Netlify env list | false | false | false |
 
 ---
 

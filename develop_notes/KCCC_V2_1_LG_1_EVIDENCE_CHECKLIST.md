@@ -79,8 +79,9 @@ A4 timestamp: 2026-07-21T06:59:01.241Z
 
 ```text
 Provider evidence: KCCC_V2_1_LG_1_PHASE_B_PROVIDER_READINESS_EVIDENCE.md
-Status: BLOCKED — CREDENTIALS_NOT_CONFIGURED
+Status: BLOCKED — CREDENTIALS_NOT_CONFIGURED (accepted as correct fail-closed)
 LIVE_TEST_READY: false
+Remediation tooling: npm run resend:secrets:configure | push-netlify | phase-b:probe
 ```
 
 ---
