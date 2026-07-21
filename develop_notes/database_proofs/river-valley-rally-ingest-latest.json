@@ -1,0 +1,11 @@
+{
+  "pass": "RIVER-VALLEY-RALLY-2026-09-13",
+  "key": "river-valley-has-a-choice-rally-2026-09-13",
+  "eventNumber": "KCCC-2026-0160",
+  "status": "CONFIRMED",
+  "startsAt": "2026-09-13T18:00:00.000Z",
+  "endsAt": "2026-09-13T21:00:00.000Z",
+  "omittedFromGit": [
+    "Guest invitation emails"
+  ]
+}
