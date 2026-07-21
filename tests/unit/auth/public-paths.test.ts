@@ -8,10 +8,16 @@ describe("public paths", () => {
     expect(isPublicPath("/api/health")).toBe(true);
   });
 
+  it("allows communications provider webhooks without session", () => {
+    expect(isPublicPath("/api/webhooks/communications/disabled")).toBe(true);
+    expect(isPublicPath("/api/webhooks/communications/kccc-test")).toBe(true);
+  });
+
   it("requires auth for app and protected APIs", () => {
     expect(isPublicPath("/")).toBe(false);
     expect(isPublicPath("/calendar")).toBe(false);
     expect(isPublicPath("/api/events")).toBe(false);
     expect(isPublicPath("/system/status")).toBe(false);
+    expect(isPublicPath("/api/communications/providers")).toBe(false);
   });
 });

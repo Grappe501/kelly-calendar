@@ -9,6 +9,8 @@ export const PUBLIC_PATH_PREFIXES = [
   "/api/auth/session",
   "/api/auth/status",
   "/api/health",
+  /** Provider webhooks — authenticated by signature, not campaign session. */
+  "/api/webhooks/communications/",
   "/manifest.webmanifest",
   "/icons/",
 ] as const;

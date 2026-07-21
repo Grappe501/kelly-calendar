@@ -12,6 +12,7 @@ Define how Kelly Calendar accepts, verifies, deduplicates, and processes inbound
 | Rule | Behavior |
 |------|----------|
 | Unknown provider key | HTTP 404 — webhook not registered |
+| Session cookie | **Not required** — path `/api/webhooks/communications/` is middleware-public; auth is signature verification only |
 | `disabled` adapter | HTTP 404 |
 | Test adapter in production | Not registered for production webhooks |
 | Invalid signature | HTTP 401 — receipt stored as `REJECTED` |
