@@ -3,8 +3,12 @@ import { getEnvironmentCapabilityStatus } from "@/lib/env/environment-status";
 import { getSecurityCapabilityStatus } from "@/lib/security/security-status";
 import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import {
+  CALENDAR_RECOVERY_BUILD_ID,
+  COMMUNICATIONS_OS_TRACK_STATUS,
   CURRENT_STEP_ID,
   CURRENT_STEP_NUMBER,
+  LG1_CONTROLLED_LIVE_TEST_STATUS,
+  NEXT_AUTHORIZED_BUILD,
   TOTAL_STEPS,
 } from "@/lib/system/constants";
 
@@ -14,6 +18,10 @@ export {
   TOTAL_STEPS,
   PRODUCT_CODE,
   SERVICE_NAME,
+  CALENDAR_RECOVERY_BUILD_ID,
+  COMMUNICATIONS_OS_TRACK_STATUS,
+  LG1_CONTROLLED_LIVE_TEST_STATUS,
+  NEXT_AUTHORIZED_BUILD,
 } from "@/lib/system/constants";
 
 export type CapabilityStatus = {
@@ -25,6 +33,11 @@ export type CapabilityStatus = {
     stepId: string;
     environment: string;
     commitRef: string | null;
+    recoveryBuildId: string;
+    primaryFocus: string;
+    nextAuthorizedBuild: string;
+    communicationsTrack: string;
+    lg1Status: string;
   };
   environment: {
     publicConfigurationValid: boolean;
@@ -82,6 +95,11 @@ export function getCapabilityStatus(options?: {
       stepId: CURRENT_STEP_ID,
       environment: process.env.NODE_ENV ?? "development",
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+      recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
+      primaryFocus: "complete Step 8 security closeout",
+      nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
+      communicationsTrack: COMMUNICATIONS_OS_TRACK_STATUS,
+      lg1Status: LG1_CONTROLLED_LIVE_TEST_STATUS,
     },
     environment: {
       publicConfigurationValid: envStatus.publicConfigurationValid,
@@ -121,9 +139,12 @@ export function getCapabilityStatus(options?: {
       provider: "netlify",
     },
     warnings: [
+      "Calendar foundation in progress — primary build focus is Step 8 security closeout, then Step 9 canonical calendar model.",
       authFlags.authenticationComplete
-        ? "Authentication is enabled. Real candidate schedule PII remains prohibited until candidate_data_ready is certified."
+        ? "Authentication infrastructure is present. Operator certification still incomplete until Step 8 closeout acceptance."
         : "Authentication is not configured (set APP_SESSION_SECRET). Do not enter real candidate schedule information.",
+      "Real candidate schedule data is prohibited until candidate-data readiness is certified.",
+      "Communications OS (D20–D26) is frozen and not production-enabled. LG-1 is paused.",
       "Monday–Friday 8am–noon and 1pm–5pm are standing work-unavailable blocks (vacation override required).",
       "Tuesdays default to Little Rock unless overridden.",
     ],

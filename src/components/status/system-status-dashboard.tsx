@@ -6,8 +6,47 @@ type SystemStatusDashboardProps = {
 };
 
 export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
+  const authComplete = status.security.authenticationComplete;
+  const candidateReady = status.security.candidateDataReady;
+
   return (
     <div className="page-stack">
+      <CapabilityStatusCard
+        title="Calendar recovery"
+        rows={[
+          { label: "Primary status", value: "Calendar foundation in progress" },
+          {
+            label: "Authentication",
+            value: authComplete
+              ? "Infrastructure present — closeout certification pending"
+              : "Incomplete",
+          },
+          {
+            label: "Real candidate data",
+            value: candidateReady ? "Permitted (certified)" : "Prohibited",
+          },
+          {
+            label: "Current build focus",
+            value: status.application.primaryFocus,
+          },
+          {
+            label: "Next build",
+            value: "Step 9 canonical calendar model (after Step 8 acceptance)",
+          },
+          {
+            label: "Communications subsystem",
+            value: `${status.application.communicationsTrack} — not production-enabled`,
+          },
+          {
+            label: "LG-1 controlled live test",
+            value: status.application.lg1Status,
+          },
+          {
+            label: "Recovery build",
+            value: status.application.recoveryBuildId,
+          },
+        ]}
+      />
       <CapabilityStatusCard
         title="Application"
         rows={[
@@ -21,6 +60,10 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
           {
             label: "Commit",
             value: status.application.commitRef ?? "local / unavailable",
+          },
+          {
+            label: "Next authorized build",
+            value: status.application.nextAuthorizedBuild,
           },
         ]}
       />
@@ -79,8 +122,14 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
             label: "Service config present",
             value: status.authentication.serviceConfigurationPresent ? "Yes" : "No",
           },
-          { label: "Enabled", value: "false" },
-          { label: "Planned step", value: "4" },
+          {
+            label: "Enabled (infrastructure)",
+            value: status.authentication.enabled ? "Yes" : "No",
+          },
+          {
+            label: "Closeout certification",
+            value: authComplete ? "Pending Step 8 acceptance" : "Blocked — secret/session",
+          },
         ]}
       />
       <CapabilityStatusCard
@@ -103,8 +152,14 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
             label: "Rate-limit foundation",
             value: "Active (in-memory · not distributed)",
           },
-          { label: "Authentication complete", value: "false" },
-          { label: "Candidate-data ready", value: "false" },
+          {
+            label: "Authentication complete",
+            value: authComplete ? "true (infra) — closeout pending" : "false",
+          },
+          {
+            label: "Candidate-data ready",
+            value: candidateReady ? "true" : "false",
+          },
         ]}
       />
       <CapabilityStatusCard

@@ -1,7 +1,12 @@
 # Twenty-Five Step Build Registry
 
+> **Sequencing superseded (2026-07-21).**  
+> Live calendar-centered tracker: [`../develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md`](../develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md)  
+> Recovery inventory: [`../develop_notes/KCCC_CALENDAR_CURRENT_IMPLEMENTATION_INVENTORY.md`](../develop_notes/KCCC_CALENDAR_CURRENT_IMPLEMENTATION_INVENTORY.md)  
+> This registry remains historical evidence of the original federation plan. Do not use Steps 4–25 status rows below as the live build queue.
+
 **Kelly Campaign Command Calendar (KCCC)**  
-Registry version: **1.1.0**
+Registry version: **1.1.0** (historical)
 
 Each step is one commit-ready pass. Status updates in README after each push.
 

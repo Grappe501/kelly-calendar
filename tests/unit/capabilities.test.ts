@@ -22,4 +22,15 @@ describe("capability honesty", () => {
     expect(security.databaseMutationsAuthorized).toBe(true);
     expect(security.rateLimitDistributed).toBe(false);
   });
+
+  it("exposes calendar recovery posture on capability status", async () => {
+    const { getCapabilityStatus } = await import("@/lib/system/capabilities");
+    const status = getCapabilityStatus();
+    expect(status.application.step).toBe(8);
+    expect(status.application.communicationsTrack).toBe("FROZEN");
+    expect(status.application.lg1Status).toBe("PAUSED");
+    expect(status.application.nextAuthorizedBuild).toBe(
+      "KCCC-EA-8-SECURITY-CLOSEOUT-1.0",
+    );
+  });
 });

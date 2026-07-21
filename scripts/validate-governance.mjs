@@ -12,6 +12,9 @@ const required = [
   "docs/MASTER_PRODUCT_CONSTITUTION.md",
   "docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md",
   "develop_notes/KCCC_NEW_THREAD_HANDOFF.md",
+  "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md",
+  "develop_notes/KCCC_CALENDAR_CURRENT_IMPLEMENTATION_INVENTORY.md",
+  "develop_notes/KCCC_EA_8_SECURITY_CLOSEOUT_PLAN.md",
   "develop_notes/KCCC_STEP_05_6_IMPLEMENTATION_REPORT.md",
   "develop_notes/KCCC_STEP_05_7_NETLIFY_AUTH_AND_LIVE_MUTATION_PROOF.md",
   "develop_notes/KCCC_STEP_05_7_IMPLEMENTATION_REPORT.md",
@@ -36,24 +39,28 @@ const buildState = JSON.parse(
 
 const step57 = "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF";
 const step06 = "KCCC-STEP-06-MOBILE-COMMAND-SHELL";
-const expectedStep = step57;
-const allowedCurrent = new Set([step57, step06]);
+const ea8 = "KCCC-EA-8-SECURITY";
+const allowedCurrent = new Set([step57, step06, ea8]);
 if (!allowedCurrent.has(buildState.current_step)) {
   console.error(
-    `FAIL: build_state current_step must be ${step57} or ${step06}`,
+    `FAIL: build_state current_step must be one of ${[...allowedCurrent].join(", ")}`,
   );
   failed = true;
 } else {
   console.log(`PASS: build_state current_step is ${buildState.current_step}`);
 }
 
-if (
-  !["blocked", "partial", "complete", "ready", "in_progress"].includes(
-    buildState.current_step_status,
-  )
-) {
+const allowedStatuses = new Set([
+  "blocked",
+  "partial",
+  "complete",
+  "ready",
+  "in_progress",
+  "closeout_in_progress",
+]);
+if (!allowedStatuses.has(buildState.current_step_status)) {
   console.error(
-    "FAIL: current_step_status must be blocked|partial|complete|ready|in_progress",
+    "FAIL: current_step_status must be blocked|partial|complete|ready|in_progress|closeout_in_progress",
   );
   failed = true;
 } else {
@@ -74,46 +81,53 @@ if (buildState.database_mutations_authorized !== true) {
   console.log("PASS: database_mutations_authorized is true");
 }
 
-if (buildState.candidate_data_ready === true || buildState.real_candidate_data_enabled === true) {
+if (
+  buildState.candidate_data_ready === true ||
+  buildState.real_candidate_data_enabled === true
+) {
   console.error("FAIL: candidate data must remain disabled");
   failed = true;
 } else {
   console.log("PASS: candidate data remains disabled");
 }
 
-if (
+if (buildState.current_step === ea8) {
+  if (
+    buildState.calendar_recovery_build_id !==
+    "KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0"
+  ) {
+    console.error("FAIL: calendar recovery build id missing or wrong");
+    failed = true;
+  } else {
+    console.log("PASS: calendar recovery build id present");
+  }
+  if (buildState.communications_os_track_status !== "frozen") {
+    console.error("FAIL: communications OS must be frozen during recovery");
+    failed = true;
+  } else {
+    console.log("PASS: communications OS frozen");
+  }
+  if (
+    buildState.next_engineering_deliverable !==
+    "KCCC-EA-8-SECURITY-CLOSEOUT-1.0"
+  ) {
+    console.error("FAIL: next engineering deliverable must be EA-8 closeout");
+    failed = true;
+  } else {
+    console.log("PASS: next engineering deliverable is EA-8 closeout");
+  }
+} else if (
   buildState.operator_acceptance_recorded === true &&
-  buildState.current_step === "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF" &&
+  buildState.current_step === step57 &&
   buildState.current_step_status !== "complete"
 ) {
   console.error("FAIL: Step 5.7 acceptance recorded but step not complete");
   failed = true;
 } else if (
   buildState.operator_acceptance_recorded === true &&
-  buildState.completed_steps?.includes(
-    "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF",
-  )
+  buildState.completed_steps?.includes(step57)
 ) {
   console.log("PASS: Step 5.7 operator acceptance retained after promotion");
-}
-
-if (
-  buildState.next_step === "KCCC-STEP-06-MOBILE-COMMAND-SHELL" &&
-  buildState.operator_acceptance_recorded !== true
-) {
-  console.error("FAIL: Step 6 must remain held until operator acceptance");
-  failed = true;
-} else if (
-  buildState.current_step === "KCCC-STEP-06-MOBILE-COMMAND-SHELL" ||
-  buildState.next_step === "KCCC-STEP-06-MOBILE-COMMAND-SHELL" ||
-  buildState.eventual_next_after_gate === "KCCC-STEP-06-MOBILE-COMMAND-SHELL"
-) {
-  console.log("PASS: Step 6 is active or correctly queued");
-} else if (buildState.next_step === expectedStep) {
-  console.log("PASS: next_step matches expected gate");
-} else {
-  console.error("FAIL: next_step / eventual_next_after_gate misconfigured");
-  failed = true;
 }
 
 if (

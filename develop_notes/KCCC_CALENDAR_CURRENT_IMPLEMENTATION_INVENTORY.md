@@ -1,0 +1,96 @@
+# KCCC Calendar — Current Implementation Inventory
+
+```text
+Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
+Date: 2026-07-21
+Lane: Kelly-calendar
+Purpose: Honest inventory of calendar product capability (not communications)
+```
+
+## Tracker sources (resolved)
+
+| Source | Path | Role |
+|--------|------|------|
+| **Runtime step** | `src/lib/system/constants.ts` | `CURRENT_STEP_NUMBER=8`, `CURRENT_STEP_ID=KCCC-EA-8-SECURITY` |
+| **Recovery roadmap** | `develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md` | Canonical calendar-centered 25-step sequence from this recovery |
+| Historical registry | `docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md` | Stale product registry (Steps 4–25 still ⬜) — superseded for sequencing |
+| README | `README.md` | Still says active Step 6 in places — drift |
+
+Communications D20–D26 remain **preserved and frozen**. They are out of sequence relative to the calendar.
+
+---
+
+## Capability matrix
+
+| Capability | Status | Evidence | Blocker | Next action |
+| ---------- | ------ | -------- | ------- | ----------- |
+| Authentication | PARTIAL | Login/session/middleware/`AuthSession`; `authenticationComplete` follows `APP_SESSION_SECRET`; status UI often hardcodes `false` | Honesty + candidate-data certification | EA-8 closeout: prove auth end-to-end; stop hardcoded false UI |
+| Roles and permissions | PARTIAL | `system-roles.ts`, `authorization.ts`, calendar/event memberships | Remaining HL items; uneven enforcement surfaces | Close least-privilege gaps listed in EA-8 plan |
+| Candidate-data protection | COMPLETE (gate) / BLOCKED (real data) | `candidateDataReady: false` hard in `auth-flags.ts` / security / APIs | Explicit certification never flipped | Certify checklist → flip gate only after acceptance |
+| Calendar database model | COMPLETE | Prisma `Calendar*`, `Event*`, travel, staffing, people, missions | N/A for existence | Step 9: map/extend, do not duplicate |
+| Event creation | PARTIAL | `/api/events` POST, `/add/*` UI, drafts | Candidate-data gate; draft-era copy | Unlock after Step 8; finish operator UX in Step 11 |
+| Event editing | PARTIAL | `/api/events/[eventId]` mutations | Same | Step 11 |
+| Event cancellation | PARTIAL | Archive/restore paths (soft) | Product cancel UX incomplete | Step 11 cancel/reschedule flows |
+| Recurring events | PARTIAL | Schema `isRecurring`/`recurrenceRule`/`seriesId`; import RRULE | No first-class recurrence UX | Step 11 |
+| Day view | PARTIAL | `/calendar?view=day` + day-view service | Candidate-data; polish | Step 10 |
+| Week view | PARTIAL | `/calendar?view=week` | Same | Step 10 |
+| Month view | PARTIAL | `/calendar?view=month` | Same | Step 10 |
+| Agenda view | PLACEHOLDER | View switcher chip `ready: false` | Not built | Step 10 |
+| Availability rules | DOCUMENTED_ONLY | `availability-policy.ts` + status/env cards | Not materialized; not conflict inputs | Step 12 |
+| Tuesday Little Rock rule | DOCUMENTED_ONLY | Same policy | Same | Step 12 |
+| Vacation overrides | DOCUMENTED_ONLY | Policy text only; no model/UI | Same | Step 12 |
+| Conflict detection | PARTIAL | `conflict-service.ts`, APIs, synthetic `/system/conflicts` | Not full scheduler UX | Step 13 |
+| Travel planning | PARTIAL | `EventTravelPlan`/`Segment`, mission travel, Google Routes estimate | Import-only Google; not core Today UX | Steps 14/17 |
+| Participants | PARTIAL | `Person`/`EventPerson`/`Organization` | Thin event UI | Step 15 |
+| Staff assignments | PARTIAL | `EventStaffAssignment` + mission staffing | Same | Steps 11/21 |
+| Event preparation | PARTIAL | Objectives, packing, program-flow, mission prepare | Mission-centric vs event page | Steps 11/14 |
+| Mission conversion | PARTIAL | `CampaignMission` projection from Event | Downstream of usable events | Step 14 |
+| Follow-up | PARTIAL | `EventFollowup` + `MissionFollowUp` | Same | Step 19 |
+| Google Calendar scaffolding | PARTIAL | OAuth + IMPORT_ONLY sync; no push | Correct freeze for now | Step 23 |
+| Calendar import/export | PARTIAL | Import strong; export restricted | Export not productized | Step 22 |
+| Audit history | PARTIAL | `AuditLog` / `DataAccessLog` | No full operator browser | Step 8/24 |
+| Mobile usability | PARTIAL | Bottom nav + mobile shell | Not certified | Step 24 |
+| Communications OS (D20–D26) | COMPLETE (subsystem) / FROZEN | Deliverables + hard production blocks | Out of sequence | **No further work** until calendar Steps 14+ need it |
+| LG-1 live test | BLOCKED / PAUSED | Phase B correctly blocked; credentials not installed | Recovery freeze | Do not configure |
+
+---
+
+## Route inventory (calendar-facing)
+
+| Surface | Route | Notes |
+|---------|-------|-------|
+| Today | `/` | Today’s Mission surface exists |
+| Calendar | `/calendar` | day/week/month |
+| Add | `/add`, `/add/quick`, `/add/full`, `/add/templates` | Creation hub; real PII prohibited |
+| Login | `/login` | Session auth |
+| System status | `/system/status` | Recovery messaging updated this pass |
+| Missions | `/system/missions/*` | Lifecycle UI (event command is mission-centric) |
+| Google import | `/import/google-calendar*` | Scaffolding / import path |
+| Communications | `/system/communications*` | **Frozen — not primary product** |
+
+**Missing:** dedicated `/events/[eventId]` product page (operators use mission + API surfaces).
+
+---
+
+## Estimated completion (honest)
+
+```text
+Infrastructure and security foundation: ~65%
+Usable calendar product (views + CRUD that operators trust): ~25–30%
+Candidate-ready operational calendar: not ready (gate false)
+Communications subsystem: advanced but disconnected / frozen
+```
+
+## Primary blockers
+
+1. Step 8 closeout: authenticate + certify candidate-data readiness (gate flip).
+2. Tracker drift (registry / README / EA constants / recovery roadmap).
+3. Availability rules not enforced in create/conflict paths.
+4. Agenda and event-detail UX gaps.
+5. Communications work must not consume the build center.
+
+## Recommended next build (do not auto-start)
+
+```text
+KCCC-EA-8-SECURITY-CLOSEOUT-1.0
+```
