@@ -1,15 +1,17 @@
 # Kelly Campaign Command Calendar (KCCC)
 
-**Status:** **Campaign OS Baseline 1.0 Frozen** · Operator Observation **OPEN** · Step 12 **blocked**
+**Status:** **Engineering Chapter 1 CLOSED** · Baseline **1.0 Frozen** · Phase **Evidence Acquisition**
 
 | Field | Value |
 |-------|-------|
 | Path | `H:\SOSWebsite\Kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
 | Production | https://kelly-calendar.netlify.app |
-| Baseline | **Campaign OS Baseline 1.0 Frozen** — ready for observation |
+| Chapter 1 | **CLOSED** — [`KCCC_ENGINEERING_CHAPTER_1_CLOSED.md`](develop_notes/KCCC_ENGINEERING_CHAPTER_1_CLOSED.md) |
+| Baseline | **1.0 Frozen** — ready for observation |
 | Milestone | [`develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`](develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md) |
 | Active gate | **Operator Usability Pass 1** (bring evidence, not bugs) |
+| Next authority | **Operator evidence** — not design intuition |
 | Canonical entity | **Prisma `Event` only** |
 | Step 11 | `KCCC-EA-11-EVENT-CREATION-EDITING-1.0` |
 | Step 12 | **Not authorized** until observation + synthesis reviewed |
@@ -23,7 +25,8 @@
 | Layers | [`develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md`](develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md) |
 | Doctrine #1 | [`develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md`](develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md) — operator defines reality; system interprets |
 | Baseline 1.0 | [`develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`](develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md) — frozen immutable snapshot |
-| Chapter closeout | [`develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md`](develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md) — Chapter 1 complete; review = Evidence → Patterns → 1.1 → Authorize |
+| Chapter closeout | [`develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md`](develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md) |
+| Chapter 1 closed | [`develop_notes/KCCC_ENGINEERING_CHAPTER_1_CLOSED.md`](develop_notes/KCCC_ENGINEERING_CHAPTER_1_CLOSED.md) — formal record; evidence acquisition |
 | Event architecture | [`develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md`](develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md) |
 | Operating views | [`develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md`](develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md) |
 | Create / edit | [`develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md`](develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md) |

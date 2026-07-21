@@ -3,17 +3,22 @@
 ```text
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE
-Updated: Campaign OS Baseline 1.0 FROZEN → Operator Observation OPEN (Step 12 blocked)
+Updated: Engineering Chapter 1 CLOSED · Baseline 1.0 FROZEN · Phase EVIDENCE_ACQUISITION
 Runtime: src/lib/system/constants.ts
 ```
 
 ## Governing decision
 
 ```text
+Engineering Chapter 1: CLOSED
+  (develop_notes/KCCC_ENGINEERING_CHAPTER_1_CLOSED.md)
+Campaign OS Phase: EVIDENCE_ACQUISITION
+Next Authority: OPERATOR_EVIDENCE
+Governing cycle: Observe → Record → Synthesize → Decide → Build → Observe Again
 Campaign OS Baseline: 1.0 FROZEN (immutable — do not rewrite after observation)
   (develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md)
 Next baseline: 1.1 from observation evidence (version-defining, not bug fixes)
-  Closeout: Engineering Chapter 1 COMPLETE
+  Closeout: Engineering Chapter 1 CLOSED
   (develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md)
   Post-observation review: Evidence → Patterns → Baseline 1.1 Requirements → Authorization
 Primary product: Kelly Campaign Calendar → Campaign Operating System (calendar as center)
