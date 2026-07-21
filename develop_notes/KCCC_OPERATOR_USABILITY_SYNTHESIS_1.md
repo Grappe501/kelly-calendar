@@ -16,15 +16,89 @@ After all three observation sessions:
 3. Classify every recommendation into **exactly one** of three buckets.
 4. Bring findings back for review **before** authorizing Step 12.
 
+**Do not bring a bug list.** Bring evidence in this shape:
+
+```text
+Universal Pattern #N
+
+Kelly: …
+Steve: …
+Staff: …
+
+Evidence: …
+Interpretation: …
+```
+
+Weak: “Search should be bigger.”  
+Strong: “All three expected search as primary navigation.”
+
+---
+
+## Success questions (fill from sessions)
+
+| Question | Answer (evidence-backed) |
+|----------|--------------------------|
+| What screen do users naturally gravitate to first? | |
+| Which information do they look for before taking action? | |
+| Which fields do they consistently ignore? | |
+| Which actions feel obvious? | |
+| Which actions require thought? | |
+| Where do they expect relationships, preparation, or travel info? | |
+
+---
+
+## Qualitative trend scorecard (Pass 1 baseline)
+
+_Consistency over precision. Revisit after later observation passes._
+
+| Measure | Kelly | Staff | Steve | Pass trend note |
+|---------|-------|-------|-------|-----------------|
+| Confusion moments | | | | Baseline |
+| Requests for help | | | | Baseline |
+| Navigation backtracks | | | | Baseline |
+| Confidence at session end (low/med/high) | | | | Baseline |
+| Time until “magic moment” (rough) | | | | Baseline |
+
+Targets across future phases: confusion / help / backtracks ↓ · confidence ↑ · magic-moment time ↓.
+
 ---
 
 ## 1. Universal patterns
 
 _Things all three operators did. These carry the most weight._
 
-1.
-2.
-3.
+### Pattern 1
+
+```text
+Kelly:
+Steve:
+Staff:
+
+Evidence:
+Interpretation:
+```
+
+### Pattern 2
+
+```text
+Kelly:
+Steve:
+Staff:
+
+Evidence:
+Interpretation:
+```
+
+### Pattern 3
+
+```text
+Kelly:
+Steve:
+Staff:
+
+Evidence:
+Interpretation:
+```
 
 | Pattern | Evidence | Shared interpretation |
 |---------|----------|----------------------|
@@ -147,6 +221,10 @@ Decision:
   [ ] Authorize Step 12 after must-fix complete
   [ ] Authorize Step 12 with listed deferrals
   [ ] Hold Step 12 — more observation / fixes needed
+
+Step 12 shape (from evidence):
+  [ ] Small refinements to existing experience
+  [ ] Reshape how availability / scheduling intelligence is presented
 ```
 
 Notes:

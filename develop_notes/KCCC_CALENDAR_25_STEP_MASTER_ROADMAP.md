@@ -3,7 +3,7 @@
 ```text
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE
-Updated: Step 11 COMPLETE → Operator Usability Pass OPEN (Step 12 blocked)
+Updated: Calendar Foundation v1 BUILD COMPLETE → Operator Observation OPEN (Step 12 blocked)
 Runtime: src/lib/system/constants.ts
 ```
 
@@ -15,14 +15,23 @@ Canonical schedule entity: Prisma Event ONLY
 Communications OS (D20–D26): FROZEN
 LG-1: PAUSED
 AI: disabled until Step 16 (proposal_only)
-Step 12: NOT AUTHORIZED until operator usability pass + synthesis reviewed
+Calendar Foundation v1: BUILD COMPLETE (Steps 8–11)
+Step 12: NOT AUTHORIZED until operator observation + evidence synthesis reviewed
 Cadence: Build → validate → observe → synthesize → refine → next phase
   (see develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md)
+Review return: evidence patterns, not bug lists
 ```
 
 ---
 
-## Phase 1 — Foundation (usable calendar)
+## Phase 1 — Calendar Foundation v1
+
+```text
+✅ Steps 8–11 shipped — build complete
+⏸ Operator Observation Pass 1
+⏸ Synthesis (evidence → interpretation → Step 12 decision)
+⬜ Step 12+ (shaped by observation, not assumptions)
+```
 
 | Step | Name | Status |
 |------|------|--------|

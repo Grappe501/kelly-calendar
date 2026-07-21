@@ -1,16 +1,17 @@
 # Kelly Campaign Command Calendar (KCCC)
 
-**Status:** Step 11 **COMPLETE** · **Operator Usability Pass OPEN** · Step 12 **blocked**
+**Status:** **Calendar Foundation v1** build complete · **Operator Observation OPEN** · Step 12 **blocked**
 
 | Field | Value |
 |-------|-------|
 | Path | `H:\SOSWebsite\Kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
 | Production | https://kelly-calendar.netlify.app |
-| Active gate | **Operator Usability Pass 1** |
+| Milestone | **Calendar Foundation v1** (Steps 8–11) — observe before Step 12 |
+| Active gate | **Operator Usability Pass 1** (bring evidence, not bugs) |
 | Canonical entity | **Prisma `Event` only** |
 | Step 11 | `KCCC-EA-11-EVENT-CREATION-EDITING-1.0` |
-| Step 12 | **Not authorized** until usability pass reviewed |
+| Step 12 | **Not authorized** until observation + synthesis reviewed |
 | Candidate data | **Enabled for authorized roles** |
 | Communications OS | **Frozen** |
 | Roadmap | [`develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md`](develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md) |
