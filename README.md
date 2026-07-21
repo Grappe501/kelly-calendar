@@ -18,6 +18,7 @@
 | Usability pass | [`develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md`](develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md) |
 | Synthesis | [`develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`](develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md) |
 | Observation cadence | [`develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md`](develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md) |
+| Step 13 architecture | [`develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md`](develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md) — design only; blocked until Step 12 |
 | Event architecture | [`develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md`](develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md) |
 | Operating views | [`develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md`](develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md) |
 | Create / edit | [`develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md`](develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md) |

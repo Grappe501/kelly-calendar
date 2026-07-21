@@ -43,7 +43,7 @@ Review return: evidence patterns, not bug lists
 | **⏸** | **Operator Usability Pass 1** | **OPEN** — `KCCC_OPERATOR_USABILITY_PASS_1.md` |
 | | Synthesis (after sessions) | `KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md` — empty until sessions done |
 | **12** | **Availability & Standing Rules** | **⬜ BLOCKED** until synthesis reviewed |
-| 13 | Conflict Engine | ⬜ |
+| **13** | **Conflict Engine** | **📐 DESIGN READY** · **⬜ IMPLEMENTATION BLOCKED** until Step 12 — `KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md` |
 
 ---
 
@@ -105,3 +105,5 @@ Standing cadence: develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md
 
 Step 12 (`KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`) is **not authorized** until the pass is synthesized and reviewed with Steve.
 Do not start automatically. Do not change the Pass 1 protocol further — run it.
+
+Step 13 (`KCCC-EA-13-CONFLICT-ENGINE-1.0`) **depends on Step 12**. Architecture may be matured now (`KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md`); **implementation is not authorized** until Step 12 availability is an input to conflict detection. Do not skip to Step 13 build.

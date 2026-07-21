@@ -136,7 +136,7 @@ Later passes may be lighter copies of the same pipeline (Context → Observe →
 |-----------------|-------------------|
 | Step 11 Event Operations | **Pass 1 — in progress** (blocks Step 12) |
 | Step 12 Availability Rules | How standing rules feel in real scheduling |
-| Step 13 Conflict Engine | Conflict signals vs false alarms / noise |
+| Step 13 Conflict Engine | Conflict signals vs false alarms / noise — **architecture ready; implement only after Step 12** |
 | Step 14 Mission Integration | Mission vs Event mental model |
 | Step 15 Relationship Integration | People/orgs in daily schedule work |
 
