@@ -1,8 +1,8 @@
 # KCCC V2.1 — Communications Controlled Live-Test Authorization & Deliverability Readiness (Deliverable 26)
 
 **Status:** SHIPPED — controlled live-test foundation — **general production dispatch remains blocked**  
-**Git:** `main` @ _(fill after push)_  
-**Netlify:** _(fill after deploy)_ · https://kelly-calendar.netlify.app  
+**Git:** `main` @ `0478fc1`  
+**Netlify:** deploy `6a5f11de20c00cded0749c3a` · https://kelly-calendar.netlify.app  
 **Baseline:** D25 `KCCC_V2_1_COMMUNICATIONS_CAMPAIGN_EXECUTION_DELIVERABLE_25.md`  
 **Parent stack:** D20 consent · D21 dispatch · D22 provider · D23 composition · D24 audience · D25 campaigns  
 **Next:** D27 communications production governance, sending limits & phased launch  
