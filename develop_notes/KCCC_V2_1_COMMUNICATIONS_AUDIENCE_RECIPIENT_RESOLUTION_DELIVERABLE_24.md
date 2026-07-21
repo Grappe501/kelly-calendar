@@ -1,11 +1,13 @@
 # KCCC V2.1 — Communications Audience, Segmentation & Recipient Resolution Foundation (Deliverable 24)
 
 **Status:** SHIPPED — audience & resolution foundation — **production dispatch remains blocked**  
+**Git:** `main` @ `06e24bd`  
+**Netlify:** deploy `6a5f050a7b2b84cb0fe8c0de` · https://kelly-calendar.netlify.app  
 **Baseline:** D23 `KCCC_V2_1_COMMUNICATIONS_TEMPLATE_COMPOSITION_DELIVERABLE_23.md`  
 **Parent stack:** D20 consent/queue · D21 dispatch · D22 provider · D23 composition  
 **Next:** D25 campaign scheduling & controlled execution  
-**Validate:** `npm run missions:v21:communications-audience:validate`  
-**Seed:** `npm run missions:v21:communications-audience:seed`  
+**Validate:** `npm run missions:v21:communications-audience:validate` (291 tests D1–D24)  
+**Seed:** `npm run missions:v21:communications-audience:seed` (sandbox audiences only; approved production audiences = 0)  
 **Production dispatch:** **DISPATCH BLOCKED** — unchanged from D20–D23 ship state
 
 ## Governing objective
