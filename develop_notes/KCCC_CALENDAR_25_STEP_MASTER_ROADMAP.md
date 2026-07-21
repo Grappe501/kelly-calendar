@@ -10,8 +10,10 @@ Runtime: src/lib/system/constants.ts
 ## Governing decision
 
 ```text
-Campaign OS Baseline: 1.0 FROZEN
+Campaign OS Baseline: 1.0 FROZEN (immutable — do not rewrite after observation)
   (develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md)
+Next baseline: 1.1 from observation evidence (version-defining, not bug fixes)
+  Closeout: develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md
 Primary product: Kelly Campaign Calendar → Campaign Operating System (calendar as center)
 Canonical schedule entity: Prisma Event ONLY
 Communications OS (D20–D26): FROZEN

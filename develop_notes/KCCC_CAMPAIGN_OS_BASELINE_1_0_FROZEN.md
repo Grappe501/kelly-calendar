@@ -2,12 +2,15 @@
 
 ```text
 Milestone:     Campaign OS Baseline 1.0 Frozen
-Status:        FROZEN
+Status:        FROZEN · IMMUTABLE SNAPSHOT
 Declared:      2026-07-21
 Meaning:       Platform stopped being "an application under construction"
                and became "an operational system ready for observation."
+Immutability:  Do NOT retroactively edit this document after observations.
+               Evidence-driven change → Baseline 1.1 (new doc), not rewrite of 1.0.
 Further doctrine: NOT AUTHORIZED until observation evidence reviewed
-Next work:     Operator Observation Pass 1 → Synthesis 1 → Step 12 gate
+Next work:     Operator Observation Pass 1 → Synthesis 1 → Baseline 1.1 → Step 12
+Closeout:      develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md
 ```
 
 ## Why this milestone exists
@@ -75,7 +78,21 @@ Including, per operator (Kelly / Staff / Steve):
 - Magic moment  
 - One thing they'd change  
 
-Then: review evidence → decide Step 12 incremental vs rethink → authorize with confidence.
+Then: review evidence → define **Baseline 1.1** from patterns (version-defining, not a bug list) → decide Step 12 incremental vs rethink → authorize with confidence.
+
+---
+
+## Version path (after this freeze)
+
+```text
+Baseline 1.0 (this document — frozen forever as pre-observation snapshot)
+        ↓
+Operator Observation → Evidence
+        ↓
+Baseline 1.1
+        ↓
+Step 12 → Step 13
+```
 
 ---
 
@@ -84,5 +101,7 @@ Then: review evidence → decide Step 12 incremental vs rethink → authorize wi
 ```text
 CAMPAIGN_OS_BASELINE = 1.0
 CAMPAIGN_OS_BASELINE_STATUS = FROZEN
+CAMPAIGN_OS_BASELINE_IMMUTABLE = true
 POSTURE = READY_FOR_OPERATOR_OBSERVATION
+NEXT_BASELINE = 1.1 (pending observation evidence)
 ```
