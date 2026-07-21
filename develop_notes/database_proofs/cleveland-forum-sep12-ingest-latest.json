@@ -1,0 +1,22 @@
+{
+  "pass": "CLEVELAND-FORUM-2026-09-12",
+  "forum": {
+    "key": "cleveland-county-forum-jametta-harper-2026-09-12",
+    "eventNumber": "KCCC-2026-0163",
+    "status": "CONFIRMED",
+    "isAllDay": true
+  },
+  "adjacentDay": {
+    "key": "river-valley-has-a-choice-rally-2026-09-13",
+    "eventNumber": "KCCC-2026-0160",
+    "note": "cross-noted"
+  },
+  "openDecisions": [
+    "Lock exact time and venue (Rison / Cleveland County) with Jametta Harper.",
+    "Plan overnight / early travel for Sep 13 Fort Smith River Valley rally (1:00 PM arrival)."
+  ],
+  "omittedFromGit": [
+    "Guest email addresses",
+    "Contact phones"
+  ]
+}
