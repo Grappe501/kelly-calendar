@@ -4,16 +4,7 @@
     "start": "2026-07-22",
     "end": "2026-09-30"
   },
-  "created": [
-    {
-      "key": "standing-office-am-2026-08-24",
-      "eventNumber": "KCCC-2026-0158"
-    },
-    {
-      "key": "standing-office-pm-2026-08-24",
-      "eventNumber": "KCCC-2026-0159"
-    }
-  ],
+  "created": [],
   "updated": [
     {
       "key": "standing-office-am-2026-07-27",
@@ -60,10 +51,6 @@
       "eventNumber": "KCCC-2026-0086"
     },
     {
-      "key": "standing-office-pm-2026-08-06",
-      "eventNumber": "KCCC-2026-0087"
-    },
-    {
       "key": "standing-office-am-2026-08-07",
       "eventNumber": "KCCC-2026-0088"
     },
@@ -98,6 +85,14 @@
     {
       "key": "standing-office-pm-2026-08-21",
       "eventNumber": "KCCC-2026-0096"
+    },
+    {
+      "key": "standing-office-am-2026-08-24",
+      "eventNumber": "KCCC-2026-0158"
+    },
+    {
+      "key": "standing-office-pm-2026-08-24",
+      "eventNumber": "KCCC-2026-0159"
     },
     {
       "key": "standing-office-pm-2026-08-26",
@@ -335,6 +330,14 @@
       ]
     },
     {
+      "key": "standing-office-am-2026-07-28",
+      "reason": "last_tuesday_skip"
+    },
+    {
+      "key": "standing-office-pm-2026-07-28",
+      "reason": "last_tuesday_skip"
+    },
+    {
       "key": "standing-office-am-2026-08-03",
       "overriddenBy": [
         "KCCC-2026-0046"
@@ -438,28 +441,12 @@
       ]
     },
     {
-      "key": "standing-office-am-2026-08-27",
-      "overriddenBy": [
-        "KCCC-2026-0069"
-      ]
-    }
-  ],
-  "cancelledStanding": [
-    {
-      "key": "standing-office-am-2026-07-28",
-      "reason": "last_tuesday_field_day"
-    },
-    {
-      "key": "standing-office-pm-2026-07-28",
-      "reason": "last_tuesday_field_day"
-    },
-    {
       "key": "standing-office-am-2026-08-25",
-      "reason": "last_tuesday_field_day"
+      "reason": "last_tuesday_skip"
     },
     {
       "key": "standing-office-pm-2026-08-25",
-      "reason": "last_tuesday_field_day"
+      "reason": "last_tuesday_skip"
     },
     {
       "key": "standing-office-am-2026-08-26",
@@ -468,12 +455,26 @@
       ]
     },
     {
+      "key": "standing-office-am-2026-08-27",
+      "overriddenBy": [
+        "KCCC-2026-0069"
+      ]
+    },
+    {
       "key": "standing-office-am-2026-09-29",
-      "reason": "last_tuesday_field_day"
+      "reason": "last_tuesday_skip"
     },
     {
       "key": "standing-office-pm-2026-09-29",
-      "reason": "last_tuesday_field_day"
+      "reason": "last_tuesday_skip"
+    }
+  ],
+  "cancelledStanding": [
+    {
+      "key": "standing-office-pm-2026-08-06",
+      "overriddenBy": [
+        "KCCC-2026-0161"
+      ]
     }
   ]
 }

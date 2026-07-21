@@ -1,0 +1,17 @@
+{
+  "pass": "POPE-RIBBON-2026-08-06",
+  "ribbon": {
+    "key": "pope-hq-chamber-ribbon-cutting-2026-08-06",
+    "eventNumber": "KCCC-2026-0161",
+    "status": "CONFIRMED"
+  },
+  "travel": {
+    "key": "travel-rosebud-home-2026-08-06",
+    "eventNumber": "KCCC-2026-0049",
+    "status": "HOLD"
+  },
+  "omittedFromGit": [
+    "Contact phone numbers",
+    "Contact emails"
+  ]
+}
