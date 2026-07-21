@@ -19,6 +19,13 @@ const csp = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Keep Prisma + native engines outside the Turbopack/webpack server bundle so
+  // Netlify Linux functions receive the rhel query engine (CLI deploys from Windows).
+  serverExternalPackages: ["@prisma/client", "prisma"],
+  outputFileTracingIncludes: {
+    "/api/**/*": ["./node_modules/.prisma/client/**/*"],
+    "/*": ["./node_modules/.prisma/client/**/*"],
+  },
   async headers() {
     return [
       {
