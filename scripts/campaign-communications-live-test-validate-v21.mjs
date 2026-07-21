@@ -33,6 +33,7 @@ const files = [
   "tests/unit/missions/v21-communications-audience.test.ts",
   "tests/unit/missions/v21-communications-campaign.test.ts",
   "tests/unit/missions/v21-communications-live-test.test.ts",
+  "tests/unit/missions/v21-communications-live-test-provider-readiness.test.ts",
 ];
 const result = spawnSync(
   process.execPath,

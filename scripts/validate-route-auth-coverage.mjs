@@ -26,6 +26,8 @@ const publicOk = [
   `${path.sep}api${path.sep}auth${path.sep}`,
   `${path.sep}api${path.sep}workflows${path.sep}`,
   `${path.sep}api${path.sep}event-entry${path.sep}`,
+  // Provider webhooks authenticate via signature verification (D21/D22/D26), not sessions.
+  `${path.sep}api${path.sep}webhooks${path.sep}communications${path.sep}`,
 ];
 
 let failed = 0;

@@ -59,6 +59,8 @@ Before D27 implementation, complete **Engineering Gate LG-1** using:
 
 - Operator runbook: `KCCC_V2_1_LG_1_CONTROLLED_LIVE_TEST_OPERATOR_RUNBOOK.md`
 - Evidence checklist: `KCCC_V2_1_LG_1_EVIDENCE_CHECKLIST.md`
+- Phase A: `KCCC_V2_1_LG_1_PHASE_A_EXECUTION_EVIDENCE.md` (**accepted**)
+- Phase B: `KCCC_V2_1_LG_1_PHASE_B_PROVIDER_READINESS_EVIDENCE.md` (**BLOCKED** — Resend credentials not configured; `LIVE_TEST_READY` not marked)
 
 ## Engineering Gate LG-1 (Live Gate 1)
 

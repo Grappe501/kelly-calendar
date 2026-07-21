@@ -12,6 +12,8 @@ Communications Core: frozen
 General production dispatch: blocked
 Production campaigns authorized: 0
 LG-1 scope: one recipient, one message, one provider request
+Phase A: accepted — KCCC_V2_1_LG_1_PHASE_A_EXECUTION_EVIDENCE.md
+Phase B: BLOCKED — KCCC_V2_1_LG_1_PHASE_B_PROVIDER_READINESS_EVIDENCE.md (Resend credentials not configured)
 ```
 
 **Related**

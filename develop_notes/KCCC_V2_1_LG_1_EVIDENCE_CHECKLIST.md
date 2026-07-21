@@ -2,7 +2,7 @@
 
 Companion to `KCCC_V2_1_LG_1_CONTROLLED_LIVE_TEST_OPERATOR_RUNBOOK.md`.
 
-**Status:** PHASE A ACCEPTED · PHASE B BLOCKED (credentials)  
+**Status:** PHASE A ACCEPTED · PHASE B BLOCKED (credentials) · build `KCCC-V2.1-LG-1-PHASE-B-PROVIDER-READINESS-1.0`  
 **Test ID:** LG-1  
 **Milestone:** `KCCC-V2.1-COMMS-CORE-COMPLETE` @ `6921cf3`  
 **General production dispatch:** blocked  
@@ -70,15 +70,17 @@ A4 timestamp: 2026-07-21T06:59:01.241Z
 
 ## Phase B — Provider
 
-- [x] B1 One provider selected (recommended: resend)
-- [ ] B2 Credentials server-side only; auth succeeds; scope minimum — **BLOCKED: keys absent locally + Netlify**
-- [ ] B3 Provider state = `LIVE_TEST_READY` (not general production) — held until B2
-- [ ] B4 Health / channel / idempotency / rate-limit / suppression checks pass — held until B2
+- [x] B1 One provider selected (`resend` / EMAIL)
+- [ ] B2 Credentials server-side only; auth succeeds; scope minimum — **BLOCKED: NOT_CONFIGURED**
+- [ ] B3 Provider state = `LIVE_TEST_READY` (not general production) — held
+- [ ] B4 Health / channel / idempotency / rate-limit / suppression checks pass — held pending B2
+- [x] B Phase B policy tests added (`v21-communications-live-test-provider-readiness.test.ts`)
+- [x] B Kill switches / production remain blocked verified in policy tests
 
 ```text
-Provider evidence hash: pending B2
-Health expires: n/a
-Phase B note: see KCCC_V2_1_LG_1_PHASE_B_PROVIDER_READINESS_EVIDENCE.md
+Provider evidence: KCCC_V2_1_LG_1_PHASE_B_PROVIDER_READINESS_EVIDENCE.md
+Status: BLOCKED — CREDENTIALS_NOT_CONFIGURED
+LIVE_TEST_READY: false
 ```
 
 ---
