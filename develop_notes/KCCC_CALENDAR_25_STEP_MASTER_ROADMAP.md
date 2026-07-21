@@ -20,8 +20,10 @@ Step 12: NOT AUTHORIZED until operator observation + evidence synthesis reviewed
 Cadence: Build → validate → observe → synthesize → refine → next phase
   (see develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md)
 Layers: Operational (operator defines reality) vs Intelligence (system interprets)
-  (see develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md)
+  Doctrine #1: develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md
+  (see also develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md)
 Schedule mutations: detect / explain / recommend / simulate — never without explicit approval
+Further doctrine: HOLD until observation + synthesis complete
 Review return: evidence patterns, not bug lists
 ```
 

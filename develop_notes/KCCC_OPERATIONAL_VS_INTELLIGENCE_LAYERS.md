@@ -1,16 +1,17 @@
 # KCCC — Operational vs Intelligence Layers
 
 ```text
-Status: STANDING ARCHITECTURE PRINCIPLE
-Established: Calendar Foundation v1 complete · Step 13 architecture ready
-Does not authorize implementation
+Status: STANDING ARCHITECTURE (implements Campaign OS Doctrine #1)
+Doctrine: develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md
+Further doctrine: HOLD until Operator Observation Pass 1 complete
 ```
 
-## Why this exists
+## Doctrine #1 (canonical)
 
-Through Step 12, the product is largely **deterministic**: store, display, edit, organize, and (after authorization) express availability.
+> **The operator defines reality. The system interprets reality.**
 
-Step 13 is the first point where the system begins to **reason about the schedule**. That boundary should stay explicit so intelligence features grow without contaminating the operational core.
+Full statement, responsibilities, module test, and recommendation presentation pattern:  
+`develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md`
 
 ---
 
@@ -45,11 +46,7 @@ Intelligence may detect, explain, recommend, and simulate. It does **not** silen
 
 > **The system may detect, explain, recommend, and simulate—but it never changes the operator's schedule without explicit approval.**
 
-Consistent with:
-
-- Conflict engine design (`automaticallyResolved === false`; suggest, don’t apply)
-- Communications / AI posture (proposal-only until authorized)
-- Observation cadence (evidence before expanding intelligence)
+Consistent with Doctrine #1 and observation cadence (evidence before expanding intelligence).
 
 ---
 
@@ -63,12 +60,13 @@ Consistent with:
 5. Campaign intelligence   — missions, relationships, briefings, travel, AI
 ```
 
-Next **code** should follow observation → synthesis → Step 12 authorization, so intelligence layers are shaped by campaign behavior, not assumptions.
+Next **code** should follow observation → synthesis → Step 12 authorization.
 
 ---
 
 ## Related
 
+- Doctrine #1: `KCCC_CAMPAIGN_OS_DOCTRINE_1.md`
 - Step 13 architecture: `KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md`
 - Observation cadence: `KCCC_OPERATOR_OBSERVATION_CADENCE.md`
 - Roadmap: `KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md`
