@@ -15,6 +15,7 @@ import {
 import { getAuthProviderStatus } from "@/server/auth/provider";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const bodySchema = z.object({
   email: z.string().email().max(320),
@@ -24,7 +25,7 @@ const bodySchema = z.object({
 export async function POST(request: Request) {
   const requestId = getRequestIdFromHeaders(request.headers);
   try {
-    getServerEnvironment();
+    const serverEnv = getServerEnvironment();
     const provider = getAuthProviderStatus();
     if (!provider.loginEnabled) {
       throw new AppError({
@@ -32,6 +33,14 @@ export async function POST(request: Request) {
         status: 503,
         publicMessage:
           "Login is not configured. Set APP_SESSION_SECRET (32+ chars) in kelly-calendar/.env.local.",
+      });
+    }
+    if (!serverEnv.databaseUrl) {
+      throw new AppError({
+        code: "DATABASE_UNAVAILABLE",
+        status: 503,
+        publicMessage:
+          "Database is not configured. Set DATABASE_URL (and DIRECT_URL) for this environment.",
       });
     }
 
@@ -46,7 +55,18 @@ export async function POST(request: Request) {
     }
 
     const email = parsed.data.email.trim().toLowerCase();
-    const user = await prisma.user.findUnique({ where: { email } });
+    let user;
+    try {
+      user = await prisma.user.findUnique({ where: { email } });
+    } catch (dbError) {
+      throw new AppError({
+        code: "DATABASE_UNAVAILABLE",
+        status: 503,
+        publicMessage:
+          "Database is temporarily unavailable. Try again shortly.",
+        cause: dbError,
+      });
+    }
     if (!user || !user.isActive || !user.passwordHash) {
       throw new AppError({
         code: "AUTHENTICATION_REQUIRED",

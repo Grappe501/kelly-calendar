@@ -1,12 +1,16 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export function LoginForm() {
+type Props = {
+  /** Server-resolved post-login path (avoids useSearchParams CSR bailout). */
+  nextPath?: string;
+};
+
+export function LoginForm({ nextPath = "/" }: Props) {
   const router = useRouter();
-  const search = useSearchParams();
-  const nextPath = search.get("next") || "/";
+  const safeNext = nextPath.startsWith("/") ? nextPath : "/";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -22,16 +26,26 @@ export function LoginForm() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      const data = (await response.json()) as {
-        ok?: boolean;
-        error?: { message?: string };
-      };
+      const raw = await response.text();
+      let data: { ok?: boolean; error?: { message?: string; code?: string } } =
+        {};
+      try {
+        data = raw ? (JSON.parse(raw) as typeof data) : {};
+      } catch {
+        setError(
+          response.status >= 500
+            ? "Sign-in service is unavailable. Try again shortly."
+            : "Sign-in failed.",
+        );
+        setPending(false);
+        return;
+      }
       if (!response.ok || !data.ok) {
         setError(data.error?.message ?? "Sign-in failed.");
         setPending(false);
         return;
       }
-      router.replace(nextPath.startsWith("/") ? nextPath : "/");
+      router.replace(safeNext);
       router.refresh();
     } catch {
       setError("Sign-in failed.");

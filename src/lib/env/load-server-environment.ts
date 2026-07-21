@@ -48,12 +48,14 @@ function isNetlifyOrCi(): boolean {
 }
 
 function defaultFallbackEnabled(): boolean {
+  // Never pull RedDirt secrets on Netlify/CI — production must set DATABASE_URL there.
   if (isNetlifyOrCi()) return false;
   if (process.env.ENV_FALLBACK_TO_REDDIRT !== undefined) {
     return isTruthy(process.env.ENV_FALLBACK_TO_REDDIRT);
   }
-  // Local development convenience default
-  return process.env.NODE_ENV !== "production";
+  // Local sandbox (including `next start` with NODE_ENV=production) may fill
+  // approved missing keys from RedDirt so Prisma can connect.
+  return true;
 }
 
 export type LoadedEnvironment = {

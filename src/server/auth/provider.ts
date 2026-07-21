@@ -7,6 +7,11 @@ import "server-only";
  * (maps externalAuthId → User; does not mutate Supabase/RedDirt tables from KCCC).
  */
 
+import {
+  applyLoadedEnvToProcess,
+  loadApprovedEnvironment,
+} from "@/lib/env/load-server-environment";
+
 export type AuthProviderId = "app_session" | "supabase";
 
 export type AuthProviderStatus = {
@@ -17,8 +22,10 @@ export type AuthProviderStatus = {
 };
 
 export function getAuthProviderStatus(): AuthProviderStatus {
+  applyLoadedEnvToProcess(loadApprovedEnvironment());
   const appSessionReady = Boolean(
-    process.env.APP_SESSION_SECRET && process.env.APP_SESSION_SECRET.trim().length >= 32,
+    process.env.APP_SESSION_SECRET &&
+      process.env.APP_SESSION_SECRET.trim().length >= 32,
   );
   const supabaseConfigured = Boolean(
     process.env.NEXT_PUBLIC_SUPABASE_URL &&

@@ -1,9 +1,20 @@
-import { Suspense } from "react";
 import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { LoginForm } from "./LoginForm";
 
-export default function LoginPage() {
+type SearchParams = Promise<{ next?: string }>;
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const flags = getSharedAuthFlags();
+  const params = await searchParams;
+  const nextPath =
+    typeof params.next === "string" && params.next.startsWith("/")
+      ? params.next
+      : "/";
+
   return (
     <div className="page-stack">
       <header className="page-header">
@@ -18,9 +29,7 @@ export default function LoginPage() {
 
       <section className="panel" aria-labelledby="login-heading">
         <h2 id="login-heading">Campaign login</h2>
-        <Suspense fallback={<p className="muted">Loading…</p>}>
-          <LoginForm />
-        </Suspense>
+        <LoginForm nextPath={nextPath} />
       </section>
     </div>
   );

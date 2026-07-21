@@ -33,7 +33,9 @@ export default function MorePage() {
           </li>
           <li>
             <span>Next step</span>
-            <strong>V1 COMPLETE · EA-4 PASS · EA-1 next · XR-01 Hero queued · Phase 3 paused</strong>
+            <strong>
+              Operator Observation Pass 1 · Step 12 blocked until evidence
+            </strong>
           </li>
         </ul>
       </section>
