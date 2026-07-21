@@ -196,7 +196,7 @@ export function FullEventForm({ draftId: initialDraftId }: Props) {
         return;
       }
       setDraftId(json.draft.draftId);
-      setMessage("Planning draft saved to staging — not live.");
+      setMessage("Planning draft saved — stored securely (not on the live calendar yet).");
     } catch {
       setMessage("Network error");
     } finally {

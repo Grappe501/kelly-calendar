@@ -26,7 +26,7 @@ export async function GET(request: Request, context: Ctx) {
       });
       enforceScaffoldRateLimit("/api/drafts/events/[draftId]", requestId);
       const { draftId } = await context.params;
-      const draft = getDraft(draftId);
+      const draft = await getDraft(draftId);
       if (!draft) {
         throw new AppError({
           code: "NOT_FOUND",
@@ -50,7 +50,7 @@ export async function PATCH(request: Request, context: Ctx) {
       });
       enforceScaffoldRateLimit("/api/drafts/events/[draftId]", requestId);
       const { draftId } = await context.params;
-      const existing = getDraft(draftId);
+      const existing = await getDraft(draftId);
       if (!existing) {
         throw new AppError({
           code: "NOT_FOUND",
@@ -59,11 +59,11 @@ export async function PATCH(request: Request, context: Ctx) {
         });
       }
       const body = await request.json();
-      const draft = saveDraft({ ...existing, ...body, draftId });
+      const draft = await saveDraft({ ...existing, ...body, draftId });
       return {
         draft,
         banner: "DRAFT — NOT YET ON LIVE CALENDAR",
-        databaseWriteAttempted: false,
+        databaseWriteAttempted: true,
       };
     },
   );
@@ -80,7 +80,7 @@ export async function DELETE(request: Request, context: Ctx) {
       });
       enforceScaffoldRateLimit("/api/drafts/events/[draftId]", requestId);
       const { draftId } = await context.params;
-      const removed = deleteDraft(draftId);
+      const removed = await deleteDraft(draftId);
       if (!removed) {
         throw new AppError({
           code: "NOT_FOUND",

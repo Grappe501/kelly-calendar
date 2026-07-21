@@ -15,14 +15,14 @@ export async function GET(request: Request) {
       resource: { type: "system" },
     });
     enforceScaffoldRateLimit("/api/drafts/events", requestId);
-    const drafts = listDrafts().map((d) => ({
+    const drafts = (await listDrafts()).map((d) => ({
       draftId: d.draftId,
       status: d.status,
       title: d.basic.campaignDisplayTitle || d.basic.internalTitle,
       primaryCalendar: d.basic.primaryCalendar,
       updatedAt: d.updatedAt,
       liveCalendar: false,
-      databaseWriteAttempted: false,
+      databaseWriteAttempted: true,
     }));
     return { drafts };
   });
@@ -36,11 +36,11 @@ export async function POST(request: Request) {
     });
     enforceScaffoldRateLimit("/api/drafts/events", requestId);
     const body = await request.json();
-    const draft = saveDraft(body);
+    const draft = await saveDraft(body);
     return {
       draft,
       banner: "DRAFT — NOT YET ON LIVE CALENDAR",
-      databaseWriteAttempted: false,
+      databaseWriteAttempted: true,
     };
   });
 }

@@ -6461,4 +6461,21 @@ model CommunicationLiveTestIncident {
   @@schema("kelly_calendar")
 }
 
+/// Full planner staging drafts (not live calendar). Postgres-backed so Netlify Functions can persist.
+model EventPlanningDraft {
+  id              String   @id
+  status          String   @default("PLANNING")
+  title           String   @default("")
+  primaryCalendar String   @default("Public Events")
+  payload         Json
+  draftVersion    Int      @default(1)
+  createdByUserId String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([updatedAt])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
 

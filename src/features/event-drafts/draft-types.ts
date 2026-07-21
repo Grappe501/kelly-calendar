@@ -161,6 +161,6 @@ export type StagedEventDraft = {
     hideProtectedDetails: boolean;
   };
   aiSuggestionsApplied: Array<{ suggestionId: string; appliedAt: string }>;
-  databaseWriteAttempted: false;
+  databaseWriteAttempted: boolean;
   liveCalendar: false;
 };

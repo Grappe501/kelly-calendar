@@ -1,21 +1,11 @@
 import "server-only";
 
-import fs from "node:fs";
-import path from "node:path";
 import { randomUUID } from "node:crypto";
+import type { Prisma } from "@prisma/client";
 import type { StagedEventDraft } from "@/features/event-drafts/draft-types";
 import { stagedEventDraftSchema } from "@/features/event-drafts/draft-schema";
-import { AppError } from "@/lib/security/safe-error";
-
-const DRAFTS_DIR = path.join(process.cwd(), "data", "ingest_staging", "drafts");
-
-function ensure(): void {
-  fs.mkdirSync(DRAFTS_DIR, { recursive: true });
-}
-
-function draftPath(draftId: string): string {
-  return path.join(DRAFTS_DIR, `${draftId}.json`);
-}
+import { AppError, DatabaseUnavailableError } from "@/lib/security/safe-error";
+import { prisma } from "@/server/db/prisma";
 
 export function createEmptyDraft(
   partial?: Partial<StagedEventDraft>,
@@ -74,8 +64,19 @@ export function createEmptyDraft(
   };
 }
 
-export function saveDraft(input: unknown): StagedEventDraft {
-  ensure();
+function rowToDraft(payload: unknown): StagedEventDraft {
+  return payload as StagedEventDraft;
+}
+
+function draftTitle(draft: StagedEventDraft): string {
+  return (
+    draft.basic.campaignDisplayTitle ||
+    draft.basic.internalTitle ||
+    ""
+  ).trim();
+}
+
+export async function saveDraft(input: unknown): Promise<StagedEventDraft> {
   const parsed = stagedEventDraftSchema.safeParse(input);
   if (!parsed.success) {
     throw new AppError({
@@ -87,9 +88,10 @@ export function saveDraft(input: unknown): StagedEventDraft {
   }
 
   const existingId = parsed.data.draftId;
-  const prior = existingId && fs.existsSync(draftPath(existingId))
-    ? (JSON.parse(fs.readFileSync(draftPath(existingId), "utf8")) as StagedEventDraft)
-    : null;
+  let prior: StagedEventDraft | null = null;
+  if (existingId) {
+    prior = await getDraft(existingId);
+  }
 
   const base = prior ?? createEmptyDraft();
   const now = new Date().toISOString();
@@ -137,7 +139,7 @@ export function saveDraft(input: unknown): StagedEventDraft {
     },
     aiSuggestionsApplied:
       parsed.data.aiSuggestionsApplied ?? base.aiSuggestionsApplied,
-    databaseWriteAttempted: false,
+    databaseWriteAttempted: true,
     liveCalendar: false,
   };
 
@@ -149,35 +151,67 @@ export function saveDraft(input: unknown): StagedEventDraft {
     });
   }
 
-  fs.writeFileSync(draftPath(draft.draftId), JSON.stringify(draft, null, 2), "utf8");
+  try {
+    await prisma.eventPlanningDraft.upsert({
+      where: { id: draft.draftId },
+      create: {
+        id: draft.draftId,
+        status: draft.status,
+        title: draftTitle(draft),
+        primaryCalendar: draft.basic.primaryCalendar,
+        payload: draft as unknown as Prisma.InputJsonValue,
+        draftVersion: draft.draftVersion,
+      },
+      update: {
+        status: draft.status,
+        title: draftTitle(draft),
+        primaryCalendar: draft.basic.primaryCalendar,
+        payload: draft as unknown as Prisma.InputJsonValue,
+        draftVersion: draft.draftVersion,
+      },
+    });
+  } catch (cause) {
+    throw new DatabaseUnavailableError(undefined, cause);
+  }
+
   return draft;
 }
 
-export function listDrafts(): StagedEventDraft[] {
-  ensure();
-  return fs
-    .readdirSync(DRAFTS_DIR)
-    .filter((f) => f.endsWith(".json"))
-    .map(
-      (f) =>
-        JSON.parse(fs.readFileSync(path.join(DRAFTS_DIR, f), "utf8")) as StagedEventDraft,
-    )
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+export async function listDrafts(): Promise<StagedEventDraft[]> {
+  try {
+    const rows = await prisma.eventPlanningDraft.findMany({
+      orderBy: { updatedAt: "desc" },
+      take: 200,
+    });
+    return rows.map((row) => rowToDraft(row.payload));
+  } catch (cause) {
+    throw new DatabaseUnavailableError(undefined, cause);
+  }
 }
 
-export function getDraft(draftId: string): StagedEventDraft | null {
-  ensure();
-  const file = draftPath(draftId);
-  if (!fs.existsSync(file)) return null;
-  return JSON.parse(fs.readFileSync(file, "utf8")) as StagedEventDraft;
+export async function getDraft(draftId: string): Promise<StagedEventDraft | null> {
+  try {
+    const row = await prisma.eventPlanningDraft.findUnique({
+      where: { id: draftId },
+    });
+    return row ? rowToDraft(row.payload) : null;
+  } catch (cause) {
+    throw new DatabaseUnavailableError(undefined, cause);
+  }
 }
 
-export function deleteDraft(draftId: string): boolean {
-  ensure();
-  const file = draftPath(draftId);
-  if (!fs.existsSync(file)) return false;
-  fs.unlinkSync(file);
-  return true;
+export async function deleteDraft(draftId: string): Promise<boolean> {
+  try {
+    const existing = await prisma.eventPlanningDraft.findUnique({
+      where: { id: draftId },
+      select: { id: true },
+    });
+    if (!existing) return false;
+    await prisma.eventPlanningDraft.delete({ where: { id: draftId } });
+    return true;
+  } catch (cause) {
+    throw new DatabaseUnavailableError(undefined, cause);
+  }
 }
 
 export function unassignedRequiredRoles(draft: StagedEventDraft): string[] {
