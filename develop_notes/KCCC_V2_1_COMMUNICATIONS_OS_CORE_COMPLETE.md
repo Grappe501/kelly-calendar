@@ -3,7 +3,8 @@
 **Milestone tag:** `KCCC-V2.1-COMMS-CORE-COMPLETE`  
 **Tag tip / baseline:** `6921cf3`  
 **Milestone note:** `a5d7316` · feature `0478fc1` · D26 identifiers `259d4fb`  
-**Netlify baseline:** `6a5f11de20c00cded0749c3a` · https://kelly-calendar.netlify.app  
+**Netlify at milestone docs:** `6a5f14a344a6f7e9df2651a6` · https://kelly-calendar.netlify.app  
+**D26 feature Netlify:** `6a5f11de20c00cded0749c3a`  
 **Status:** Core complete — **general production intentionally blocked**  
 **Date:** 2026-07-21
 
