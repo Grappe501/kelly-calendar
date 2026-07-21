@@ -95,3 +95,5 @@ Observe → explain why → recommend → operator decides.
 ## Hold
 
 No further architectural doctrine until observation evidence is in. Next system change should be shaped by Kelly, staff, and Steve sessions—not additional design assumptions.
+
+**Baseline:** Campaign OS Baseline 1.0 is **FROZEN** — `KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`

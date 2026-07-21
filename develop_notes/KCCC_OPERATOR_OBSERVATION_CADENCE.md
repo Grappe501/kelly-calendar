@@ -175,8 +175,10 @@ When Pass 1 + synthesis are complete, use evidence to decide whether Step 12 nee
 ## Current hold
 
 ```text
-Engineering: PAUSED — Calendar Foundation v1 build complete
+Campaign OS Baseline: 1.0 FROZEN
+Engineering: PAUSED — ready for operator observation
 Gate: Operator Observation Pass 1 + Synthesis 1
 Step 12: NOT AUTHORIZED until evidence reviewed with Steve
+Further doctrine: NOT AUTHORIZED
 Do not change Pass 1 protocol further — run it
 ```

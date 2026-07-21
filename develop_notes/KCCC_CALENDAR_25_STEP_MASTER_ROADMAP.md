@@ -3,13 +3,15 @@
 ```text
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE
-Updated: Calendar Foundation v1 BUILD COMPLETE → Operator Observation OPEN (Step 12 blocked)
+Updated: Campaign OS Baseline 1.0 FROZEN → Operator Observation OPEN (Step 12 blocked)
 Runtime: src/lib/system/constants.ts
 ```
 
 ## Governing decision
 
 ```text
+Campaign OS Baseline: 1.0 FROZEN
+  (develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md)
 Primary product: Kelly Campaign Calendar → Campaign Operating System (calendar as center)
 Canonical schedule entity: Prisma Event ONLY
 Communications OS (D20–D26): FROZEN

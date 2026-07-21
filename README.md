@@ -1,13 +1,14 @@
 # Kelly Campaign Command Calendar (KCCC)
 
-**Status:** **Calendar Foundation v1** build complete · **Operator Observation OPEN** · Step 12 **blocked**
+**Status:** **Campaign OS Baseline 1.0 Frozen** · Operator Observation **OPEN** · Step 12 **blocked**
 
 | Field | Value |
 |-------|-------|
 | Path | `H:\SOSWebsite\Kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
 | Production | https://kelly-calendar.netlify.app |
-| Milestone | **Calendar Foundation v1** (Steps 8–11) — observe before Step 12 |
+| Baseline | **Campaign OS Baseline 1.0 Frozen** — ready for observation |
+| Milestone | [`develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`](develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md) |
 | Active gate | **Operator Usability Pass 1** (bring evidence, not bugs) |
 | Canonical entity | **Prisma `Event` only** |
 | Step 11 | `KCCC-EA-11-EVENT-CREATION-EDITING-1.0` |
@@ -21,6 +22,7 @@
 | Step 13 architecture | [`develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md`](develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md) — design only; blocked until Step 12 |
 | Layers | [`develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md`](develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md) |
 | Doctrine #1 | [`develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md`](develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md) — operator defines reality; system interprets |
+| Baseline 1.0 | [`develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`](develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md) — frozen; observation next |
 | Event architecture | [`develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md`](develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md) |
 | Operating views | [`develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md`](develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md) |
 | Create / edit | [`develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md`](develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md) |
