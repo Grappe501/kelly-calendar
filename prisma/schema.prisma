@@ -5,6 +5,8 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
+  // native = local Windows/macOS; rhel = Netlify/AWS Lambda Linux (CLI deploy from Windows)
+  binaryTargets   = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
