@@ -1,11 +1,13 @@
 # KCCC V2.1 — Communications Campaign, Scheduling & Controlled Execution Foundation (Deliverable 25)
 
 **Status:** SHIPPED — campaign execution foundation — **production dispatch remains blocked**  
+**Git:** `main` @ `2ff7858`  
+**Netlify:** deploy `6a5f0bb2cbc466d6b5d046c0` · https://kelly-calendar.netlify.app  
 **Baseline:** D24 `KCCC_V2_1_COMMUNICATIONS_AUDIENCE_RECIPIENT_RESOLUTION_DELIVERABLE_24.md`  
 **Parent stack:** D20 consent · D21 dispatch · D22 provider · D23 composition · D24 audience  
 **Next:** D26 controlled live-test authorization & deliverability readiness  
-**Validate:** `npm run missions:v21:communications-campaign:validate`  
-**Seed:** `npm run missions:v21:communications-campaign:seed`  
+**Validate:** `npm run missions:v21:communications-campaign:validate` (299 tests D1–D25)  
+**Seed:** `npm run missions:v21:communications-campaign:seed` (sandbox drafts only; production authorized = 0)  
 **Production dispatch:** **DISPATCH BLOCKED**
 
 ## Governing rule
