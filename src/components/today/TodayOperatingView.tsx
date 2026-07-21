@@ -52,6 +52,8 @@ export function TodayOperatingView({ data }: Props) {
       <CalendarViewSwitcher active="today" dateKey={data.dateKey} />
 
       <p className="muted">
+        <Link href="/add/quick">Add event</Link>
+        {" · "}
         <Link href={`/calendar?view=day&date=${data.dateKey}`}>Day flow</Link>
         {" · "}
         <Link href={`/calendar?view=agenda&date=${data.dateKey}`}>Agenda</Link>
@@ -83,7 +85,7 @@ export function TodayOperatingView({ data }: Props) {
               <time dateTime={card.startsAt}>{card.timeLabel}</time>
             </p>
             <h2>
-              <Link href={card.href}>{card.title}</Link>
+              <Link href={`/events/${card.eventId}/edit`}>{card.title}</Link>
             </h2>
             {card.locationLabel ? (
               <p className="muted">{card.locationLabel}</p>

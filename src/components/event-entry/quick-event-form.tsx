@@ -2,14 +2,17 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   PRIMARY_CALENDARS,
   eventTypesForCalendar,
 } from "@/features/event-drafts/arkansas-counties";
-import { DraftStatusBanner } from "@/components/event-entry/draft-status-banner";
-import { AiSuggestionPanel } from "@/components/event-entry/ai-suggestion-panel";
 import { EventTemplatePicker } from "@/components/event-entry/event-template-picker";
 import { getPreset } from "@/features/event-drafts/event-presets";
+import {
+  chicagoWallTimeToUtc,
+  endsAtFromStartAndDuration,
+} from "@/lib/calendar/event-wall-time";
 
 const DURATIONS = [
   "15 minutes",
@@ -40,7 +43,13 @@ function addDays(isoDate: string, days: number): string {
   return d.toISOString().slice(0, 10);
 }
 
+type CalendarRow = { id: string; name: string };
+
+/**
+ * Quick create — writes a canonical Event (not filesystem draft).
+ */
 export function QuickEventForm() {
+  const router = useRouter();
   const [primaryCalendar, setPrimaryCalendar] = useState<string>("Public Events");
   const [eventType, setEventType] = useState("Community meeting");
   const [title, setTitle] = useState("");
@@ -48,10 +57,11 @@ export function QuickEventForm() {
   const [startTime, setStartTime] = useState("09:00");
   const [duration, setDuration] = useState("1 hour");
   const [city, setCity] = useState("");
-  const [status, setStatus] = useState("Hold");
+  const [venueName, setVenueName] = useState("");
+  const [visibility, setVisibility] = useState("TITLE_LOCATION");
+  const [asDraft, setAsDraft] = useState(false);
+  const [weeklyOccurrences, setWeeklyOccurrences] = useState(0);
   const [message, setMessage] = useState<string | null>(null);
-  const [draftId, setDraftId] = useState<string | null>(null);
-  const [showAi, setShowAi] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const types = useMemo(() => eventTypesForCalendar(primaryCalendar), [primaryCalendar]);
@@ -81,209 +91,212 @@ export function QuickEventForm() {
     if (label === "Next week") setDate(addDays(today, 7));
   }
 
-  async function saveDraft() {
+  async function resolveCalendarId(): Promise<string> {
+    const res = await fetch("/api/calendars");
+    const json = (await res.json()) as { calendars?: CalendarRow[] };
+    const calendars = json.calendars ?? [];
+    const match =
+      calendars.find((c) => c.name === primaryCalendar) ||
+      calendars.find((c) =>
+        c.name.toLowerCase().includes(primaryCalendar.split(" ")[0].toLowerCase()),
+      ) ||
+      calendars[0];
+    if (!match) throw new Error("No calendars available. Seed calendars first.");
+    return match.id;
+  }
+
+  async function createLiveEvent() {
+    if (!title.trim()) {
+      setMessage("Title is required.");
+      return;
+    }
     setSaving(true);
     setMessage(null);
     try {
-      const preset = EVENT_PRESETS_LOOKUP(primaryCalendar, eventType);
-      const res = await fetch("/api/drafts/events", {
+      const primaryCalendarId = await resolveCalendarId();
+      const startsAt = chicagoWallTimeToUtc(date, startTime);
+      const endsAt = endsAtFromStartAndDuration(startsAt, duration);
+      const res = await fetch("/api/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          status: "QUICK_DRAFT",
-          basic: {
-            primaryCalendar,
-            additionalCalendars: [],
-            eventType,
-            internalTitle: title,
-            campaignDisplayTitle: title,
-            priority: "Normal",
-            confirmationStatus: status,
-          },
-          timing: {
-            date,
-            startTime,
-            durationPreset: duration,
-            timezone: "America/Chicago",
-          },
-          location: {
-            city,
-            state: "Arkansas",
-            locationDisclosure: "CITY",
-          },
-          visibility: {
-            locationDisclosure: "CITY",
-            generalVisibility: "Campaign-wide limited",
-            showCalendarName: true,
-            showSafeTitle: true,
-            showGeneralLocation: true,
-            showStartEnd: true,
-            hideProtectedDetails: true,
-            campaignDisplayTitle: title,
-          },
-          ...preset,
+          primaryCalendarId,
+          internalTitle: title.trim(),
+          campaignDisplayTitle: title.trim(),
+          eventType,
+          status: asDraft ? "DRAFT" : "CONFIRMED",
+          startsAt: startsAt.toISOString(),
+          endsAt: endsAt.toISOString(),
+          timezone: "America/Chicago",
+          city: city.trim() || undefined,
+          venueName: venueName.trim() || undefined,
+          defaultVisibility: visibility,
+          locationDisclosure: "CITY",
+          weeklyOccurrences: weeklyOccurrences > 1 ? weeklyOccurrences : undefined,
+          isRecurring: weeklyOccurrences > 1,
         }),
       });
-      const json = await res.json();
-      if (!res.ok) {
-        setMessage(json?.error?.message ?? "Could not save draft.");
-        return;
+      const json = (await res.json()) as {
+        ok?: boolean;
+        event?: { eventId?: string };
+        error?: { message?: string };
+      };
+      if (!res.ok || !json.event?.eventId) {
+        throw new Error(json.error?.message ?? "Could not create event.");
       }
-      setDraftId(json.draft.draftId);
-      setMessage("Draft saved to H-drive staging. Not on the live calendar.");
-    } catch {
-      setMessage("Network error saving draft.");
-    } finally {
+      router.push(`/events/${json.event.eventId}/edit`);
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : "Create failed.");
       setSaving(false);
     }
   }
 
   return (
-    <div className="page-stack">
-      <DraftStatusBanner />
+    <div className="page-stack event-quick-create">
+      <header className="page-header">
+        <h1>Add event</h1>
+        <p className="executive-question">Place something on the calendar quickly.</p>
+        <p className="muted">
+          Writes the canonical Event · progressive detail on the next screen ·{" "}
+          <Link href="/add/full">Full planner draft</Link> still available for staging.
+        </p>
+      </header>
+
+      <EventTemplatePicker onSelect={applyPreset} />
 
       <section className="panel">
-        <h2>Use a template</h2>
-        <EventTemplatePicker onSelect={applyPreset} />
-      </section>
-
-      <section className="panel">
-        <h2>Quick entry</h2>
-        <div className="form-grid">
-          <label>
-            Primary calendar
-            <select
-              value={primaryCalendar}
-              onChange={(e) => {
-                setPrimaryCalendar(e.target.value);
-                const next = eventTypesForCalendar(e.target.value);
-                setEventType(next[0] ?? "Other");
-              }}
+        <label>
+          Title
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Coffee with Chamber"
+            required
+          />
+        </label>
+        <label>
+          Calendar
+          <select
+            value={primaryCalendar}
+            onChange={(e) => setPrimaryCalendar(e.target.value)}
+          >
+            {PRIMARY_CALENDARS.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Type
+          <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
+            {types.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="quick-date-chips">
+          {QUICK_DATES.map((label) => (
+            <button
+              key={label}
+              type="button"
+              className="chip chip-link"
+              onClick={() => applyQuickDate(label)}
             >
-              {PRIMARY_CALENDARS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            Event type
-            <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
-              {types.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            What? (title)
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              maxLength={500}
-              placeholder="County Fair Appearance"
-              required
-            />
-          </label>
-
-          <fieldset>
-            <legend>When?</legend>
-            <div className="chip-row">
-              {QUICK_DATES.map((d) => (
-                <button key={d} type="button" className="chip-button" onClick={() => applyQuickDate(d)}>
-                  {d}
-                </button>
-              ))}
-            </div>
-            <label>
-              Date
-              <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-            </label>
-            <label>
-              Start time
-              <input
-                type="time"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-              />
-            </label>
-            <div className="chip-row" role="group" aria-label="Duration">
-              {DURATIONS.map((d) => (
-                <button
-                  key={d}
-                  type="button"
-                  className={`chip-button ${duration === d ? "chip-button--active" : ""}`}
-                  onClick={() => setDuration(d)}
-                >
-                  {d}
-                </button>
-              ))}
-            </div>
-          </fieldset>
-
-          <label>
-            Where? (city)
-            <input
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="Little Rock"
-              maxLength={120}
-            />
-          </label>
-
-          <label>
-            Status
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option>Hold</option>
-              <option>Tentative</option>
-              <option>Confirmed</option>
-              <option>Cancelled</option>
-            </select>
-          </label>
+              {label}
+            </button>
+          ))}
         </div>
-
-        <div className="button-row" style={{ marginTop: "1rem" }}>
-          <button type="button" className="button" disabled={saving || !title.trim()} onClick={saveDraft}>
-            {saving ? "Saving…" : "Save draft"}
-          </button>
-          <Link className="button secondary" href={draftId ? `/add/full?draftId=${draftId}` : "/add/full"}>
-            Continue planning
-          </Link>
-          <button type="button" className="button secondary" onClick={() => setShowAi((v) => !v)}>
-            Ask AI to help
-          </button>
-        </div>
-        {message ? <p className="muted" style={{ marginTop: "0.75rem" }}>{message}</p> : null}
-        {draftId ? (
+        <label>
+          Date
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        </label>
+        <label>
+          Start time
+          <input
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+        </label>
+        <label>
+          Duration
+          <select value={duration} onChange={(e) => setDuration(e.target.value)}>
+            {DURATIONS.map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Venue
+          <input
+            value={venueName}
+            onChange={(e) => setVenueName(e.target.value)}
+            placeholder="Optional"
+          />
+        </label>
+        <label>
+          City
+          <input
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="Little Rock"
+          />
+        </label>
+        <label>
+          Visibility
+          <select value={visibility} onChange={(e) => setVisibility(e.target.value)}>
+            <option value="TITLE_LOCATION">Title + location</option>
+            <option value="FULL">Full</option>
+            <option value="BUSY_ONLY">Busy only</option>
+            <option value="TEAM_ONLY">Team only</option>
+            <option value="LEADERSHIP_ONLY">Leadership only</option>
+            <option value="PROTECTED">Protected</option>
+          </select>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={asDraft}
+            onChange={(e) => setAsDraft(e.target.checked)}
+          />{" "}
+          Save as draft (not yet confirmed on calendar)
+        </label>
+        <label>
+          Weekly repeats (optional)
+          <select
+            value={weeklyOccurrences}
+            onChange={(e) => setWeeklyOccurrences(Number(e.target.value))}
+          >
+            <option value={0}>No repeat</option>
+            <option value={2}>2 weeks</option>
+            <option value={4}>4 weeks</option>
+            <option value={8}>8 weeks</option>
+          </select>
+        </label>
+        {weeklyOccurrences > 1 ? (
           <p className="muted">
-            Draft ID: <code>{draftId}</code>
+            Creates separate Event rows in one series. Editing a series later will warn
+            before changing multiple occurrences.
           </p>
         ) : null}
+        <div className="form-actions">
+          <button
+            type="button"
+            className="button"
+            disabled={saving}
+            onClick={() => void createLiveEvent()}
+          >
+            {saving ? "Creating…" : asDraft ? "Save draft event" : "Create & schedule"}
+          </button>
+          <Link href="/">Cancel</Link>
+        </div>
+        {message ? <p className="muted">{message}</p> : null}
       </section>
-
-      {showAi ? <AiSuggestionPanel /> : null}
     </div>
   );
-}
-
-function EVENT_PRESETS_LOOKUP(calendar: string, eventType: string) {
-  const preset = getPreset(
-    calendar === "Fundraising" && eventType === "Call time"
-      ? "donor_call_time"
-      : calendar === "Travel"
-        ? "travel_block"
-        : calendar === "Protected Personal Time"
-          ? "personal_protected"
-          : eventType === "Festival"
-            ? "festival"
-            : "community_meeting",
-  );
-  if (!preset) return {};
-  const rest = { ...preset.defaults };
-  delete rest.basic;
-  return rest;
 }

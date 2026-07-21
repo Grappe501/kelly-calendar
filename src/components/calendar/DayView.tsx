@@ -139,7 +139,9 @@ export function DayView({ data, focusEventId = null }: Props) {
                     : `${formatClock(event.startsAt, data.timezone)} – ${formatClock(event.endsAt, data.timezone)}`}
                 </time>
                 <div>
-                  <span>{event.title}</span>
+                  <span>
+                    <Link href={`/events/${event.eventId}/edit`}>{event.title}</Link>
+                  </span>
                   <p className="muted">
                     {event.primaryCalendar.name}
                     {event.location?.label ? ` · ${event.location.label}` : ""}

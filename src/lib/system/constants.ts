@@ -1,5 +1,5 @@
-export const CURRENT_STEP_ID = "KCCC-EA-11-EVENT-CREATION-EDITING";
-export const CURRENT_STEP_NUMBER = 11;
+export const CURRENT_STEP_ID = "KCCC-EA-12-AVAILABILITY-STANDING-RULES";
+export const CURRENT_STEP_NUMBER = 12;
 /** Calendar recovery — communications frozen; primary track returns to calendar. */
 export const CALENDAR_RECOVERY_BUILD_ID =
   "KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0";
@@ -14,8 +14,11 @@ export const STEP_9_CANONICAL_EVENT_STATUS = "COMPLETE";
 export const STEP_10_OPERATING_VIEWS_BUILD_ID =
   "KCCC-EA-10-CALENDAR-OPERATING-VIEWS-1.0";
 export const STEP_10_OPERATING_VIEWS_STATUS = "COMPLETE";
-export const NEXT_AUTHORIZED_BUILD =
+export const STEP_11_EVENT_EDITING_BUILD_ID =
   "KCCC-EA-11-EVENT-CREATION-EDITING-1.0";
+export const STEP_11_EVENT_EDITING_STATUS = "COMPLETE";
+export const NEXT_AUTHORIZED_BUILD =
+  "KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0";
 export const CALENDAR_ROADMAP_DOC =
   "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md";
 /** Prisma model name — the only top-level Event entity. */

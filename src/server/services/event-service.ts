@@ -3,7 +3,6 @@ import "server-only";
 import { getEventById } from "@/server/repositories/event-repository";
 import { projectSafeEvent } from "@/server/services/event-visibility-service";
 import {
-  createCanonicalEvent,
   updateCanonicalEvent,
   archiveCanonicalEvent,
   restoreCanonicalEvent,
@@ -11,6 +10,7 @@ import {
   type CreateEventInput,
   type UpdateEventInput,
 } from "@/server/repositories/event-mutation-repository";
+import { createEventWithOptionalRecurrence } from "@/server/services/event-lifecycle-service";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { requireAuthorized } from "@/server/auth/authorization";
 import { AppError } from "@/lib/security/safe-error";
@@ -79,21 +79,9 @@ export async function getSafeEventForViewer(input: {
 
 export async function createEvent(input: {
   actor: AuthenticatedActor;
-  data: CreateEventInput;
+  data: CreateEventInput & { weeklyOccurrences?: number };
 }) {
-  await requireAuthorized(input.actor, {
-    action: "EVENT_CREATE",
-    resource: {
-      type: "calendar",
-      calendarId: input.data.primaryCalendarId,
-    },
-  });
-  const event = await createCanonicalEvent(input);
-  return getSafeEventForViewer({
-    eventId: event.id,
-    viewerUserId: input.actor.userId,
-    viewerAccess: "FULL",
-  });
+  return createEventWithOptionalRecurrence(input);
 }
 
 export async function updateEvent(input: {

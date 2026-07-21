@@ -6,6 +6,8 @@ import { ConflictError, NotFoundError, ValidationError } from "@/lib/security/sa
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { writeAttributedAudit } from "@/server/services/audit-write";
 import type { EventStatus, LocationDisclosure, EventVisibilityLevel } from "@prisma/client";
+import type { EventPersistenceStatus } from "@/lib/calendar/canonical-event";
+import { canTransitionEventStatus } from "@/lib/calendar/event-status-transitions";
 
 export type CreateEventInput = {
   primaryCalendarId: string;
@@ -17,14 +19,22 @@ export type CreateEventInput = {
   startsAt: string;
   endsAt: string;
   timezone?: string;
+  isAllDay?: boolean;
   city?: string;
   countyId?: string;
   venueName?: string;
+  streetAddress?: string;
+  locationNotes?: string;
+  virtualMeetingUrl?: string;
   locationDisclosure?: LocationDisclosure;
   defaultVisibility?: EventVisibilityLevel;
   candidateAttendance?: boolean;
   candidateRole?: string;
+  privateNotes?: string;
   relatedCalendarIds?: string[];
+  isRecurring?: boolean;
+  recurrenceRule?: string;
+  recurrenceSeriesId?: string;
   requestId?: string;
 };
 
@@ -38,15 +48,34 @@ export type UpdateEventInput = {
   startsAt?: string;
   endsAt?: string;
   timezone?: string;
-  city?: string;
+  isAllDay?: boolean;
+  city?: string | null;
   countyId?: string | null;
   venueName?: string | null;
+  streetAddress?: string | null;
+  locationNotes?: string | null;
+  virtualMeetingUrl?: string | null;
   locationDisclosure?: LocationDisclosure;
   defaultVisibility?: EventVisibilityLevel;
   candidateRole?: string | null;
   privateNotes?: string | null;
+  isRecurring?: boolean;
+  recurrenceRule?: string | null;
+  recurrenceSeriesId?: string | null;
+  statusChangeReason?: string;
   requestId?: string;
 };
+
+function assertStatusTransition(from: EventStatus, to: EventStatus) {
+  if (
+    !canTransitionEventStatus(
+      from as EventPersistenceStatus,
+      to as EventPersistenceStatus,
+    )
+  ) {
+    throw new ValidationError(`Cannot change status from ${from} to ${to}.`);
+  }
+}
 
 async function allocateEventNumber(
   tx: Parameters<Parameters<typeof prisma.$transaction>[0]>[0],
@@ -111,13 +140,21 @@ export async function createCanonicalEvent(input: {
         startsAt,
         endsAt,
         timezone: input.data.timezone ?? "America/Chicago",
+        isAllDay: input.data.isAllDay ?? false,
         city: input.data.city ?? null,
         countyId: input.data.countyId ?? null,
         venueName: input.data.venueName ?? null,
+        streetAddress: input.data.streetAddress ?? null,
+        locationNotes: input.data.locationNotes ?? null,
+        virtualMeetingUrl: input.data.virtualMeetingUrl?.trim() || null,
         locationDisclosure: input.data.locationDisclosure ?? "CITY",
         defaultVisibility: input.data.defaultVisibility ?? "TITLE_LOCATION",
         candidateAttendance: input.data.candidateAttendance ?? null,
         candidateRole: input.data.candidateRole ?? null,
+        privateNotes: input.data.privateNotes ?? null,
+        isRecurring: input.data.isRecurring ?? Boolean(input.data.recurrenceRule),
+        recurrenceRule: input.data.recurrenceRule?.trim() || null,
+        recurrenceSeriesId: input.data.recurrenceSeriesId ?? null,
         version: 1,
       },
     });
@@ -197,6 +234,10 @@ export async function updateCanonicalEvent(input: {
     assertTimeRange(startsAt, endsAt);
 
     const nextStatus = input.data.status ?? existing.status;
+    if (nextStatus !== existing.status) {
+      assertStatusTransition(existing.status, nextStatus);
+    }
+
     const updated = await tx.event.update({
       where: { id: input.eventId },
       data: {
@@ -212,11 +253,25 @@ export async function updateCanonicalEvent(input: {
         startsAt,
         endsAt,
         timezone: input.data.timezone ?? existing.timezone,
+        isAllDay:
+          input.data.isAllDay !== undefined ? input.data.isAllDay : existing.isAllDay,
         city: input.data.city !== undefined ? input.data.city : existing.city,
         countyId:
           input.data.countyId !== undefined ? input.data.countyId : existing.countyId,
         venueName:
           input.data.venueName !== undefined ? input.data.venueName : existing.venueName,
+        streetAddress:
+          input.data.streetAddress !== undefined
+            ? input.data.streetAddress
+            : existing.streetAddress,
+        locationNotes:
+          input.data.locationNotes !== undefined
+            ? input.data.locationNotes
+            : existing.locationNotes,
+        virtualMeetingUrl:
+          input.data.virtualMeetingUrl !== undefined
+            ? input.data.virtualMeetingUrl?.trim() || null
+            : existing.virtualMeetingUrl,
         locationDisclosure:
           input.data.locationDisclosure ?? existing.locationDisclosure,
         defaultVisibility:
@@ -229,6 +284,18 @@ export async function updateCanonicalEvent(input: {
           input.data.privateNotes !== undefined
             ? input.data.privateNotes
             : existing.privateNotes,
+        isRecurring:
+          input.data.isRecurring !== undefined
+            ? input.data.isRecurring
+            : existing.isRecurring,
+        recurrenceRule:
+          input.data.recurrenceRule !== undefined
+            ? input.data.recurrenceRule?.trim() || null
+            : existing.recurrenceRule,
+        recurrenceSeriesId:
+          input.data.recurrenceSeriesId !== undefined
+            ? input.data.recurrenceSeriesId
+            : existing.recurrenceSeriesId,
         version: { increment: 1 },
       },
     });
@@ -240,7 +307,7 @@ export async function updateCanonicalEvent(input: {
           fromStatus: existing.status,
           toStatus: nextStatus,
           changedByUserId: input.actor.userId,
-          reason: "Status update",
+          reason: input.data.statusChangeReason?.trim() || "Status update",
         },
       });
     }
@@ -255,11 +322,15 @@ export async function updateCanonicalEvent(input: {
         version: existing.version,
         status: existing.status,
         title: existing.internalTitle,
+        startsAt: existing.startsAt.toISOString(),
+        endsAt: existing.endsAt.toISOString(),
       },
       newState: {
         version: updated.version,
         status: updated.status,
         title: updated.internalTitle,
+        startsAt: updated.startsAt.toISOString(),
+        endsAt: updated.endsAt.toISOString(),
       },
       tx,
     });
@@ -439,5 +510,67 @@ export async function changePrimaryCalendar(input: {
       tx,
     });
     return updated;
+  });
+}
+
+/** Cancel retains history — status CANCELLED, never hard-delete. */
+export async function cancelCanonicalEvent(input: {
+  actor: AuthenticatedActor;
+  eventId: string;
+  expectedVersion: number;
+  reason: string;
+  requestId?: string;
+}) {
+  if (!input.reason?.trim()) throw new ValidationError("Cancel reason is required.");
+  return updateCanonicalEvent({
+    actor: input.actor,
+    eventId: input.eventId,
+    data: {
+      expectedVersion: input.expectedVersion,
+      status: "CANCELLED",
+      statusChangeReason: input.reason.trim(),
+      requestId: input.requestId,
+    },
+  });
+}
+
+/** Duplicate writes a new canonical Event (DRAFT) copying core fields. */
+export async function duplicateCanonicalEvent(input: {
+  actor: AuthenticatedActor;
+  eventId: string;
+  requestId?: string;
+}) {
+  const source = await prisma.event.findFirst({
+    where: { id: input.eventId, archivedAt: null },
+  });
+  if (!source) throw new NotFoundError("Event not found.");
+
+  return createCanonicalEvent({
+    actor: input.actor,
+    data: {
+      primaryCalendarId: source.primaryCalendarId,
+      internalTitle: `${source.internalTitle} (copy)`,
+      campaignDisplayTitle: `${source.campaignDisplayTitle} (copy)`,
+      publicTitle: source.publicTitle ?? undefined,
+      eventType: source.eventType ?? undefined,
+      status: "DRAFT",
+      startsAt: source.startsAt.toISOString(),
+      endsAt: source.endsAt.toISOString(),
+      timezone: source.timezone,
+      isAllDay: source.isAllDay,
+      city: source.city ?? undefined,
+      countyId: source.countyId ?? undefined,
+      venueName: source.venueName ?? undefined,
+      streetAddress: source.streetAddress ?? undefined,
+      locationNotes: source.locationNotes ?? undefined,
+      virtualMeetingUrl: source.virtualMeetingUrl ?? undefined,
+      locationDisclosure: source.locationDisclosure,
+      defaultVisibility: source.defaultVisibility,
+      candidateAttendance: source.candidateAttendance ?? undefined,
+      candidateRole: source.candidateRole ?? undefined,
+      privateNotes: source.privateNotes ?? undefined,
+      isRecurring: false,
+      requestId: input.requestId,
+    },
   });
 }

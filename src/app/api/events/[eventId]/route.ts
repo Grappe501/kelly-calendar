@@ -13,15 +13,57 @@ const patchSchema = z.object({
   campaignDisplayTitle: z.string().max(300).optional(),
   publicTitle: z.string().max(300).optional(),
   eventType: z.string().max(120).optional(),
-  status: z.string().optional(),
+  status: z
+    .enum([
+      "DRAFT",
+      "REQUESTED",
+      "TENTATIVE",
+      "HOLD",
+      "UNDER_REVIEW",
+      "APPROVED",
+      "CONFIRMED",
+      "IN_PROGRESS",
+      "COMPLETED",
+      "CANCELLED",
+      "DECLINED",
+      "POSTPONED",
+      "ARCHIVED",
+    ])
+    .optional(),
+  statusChangeReason: z.string().max(500).optional(),
   startsAt: z.string().optional(),
   endsAt: z.string().optional(),
   timezone: z.string().optional(),
-  city: z.string().optional(),
+  isAllDay: z.boolean().optional(),
+  city: z.string().nullable().optional(),
   countyId: z.string().nullable().optional(),
   venueName: z.string().nullable().optional(),
+  streetAddress: z.string().nullable().optional(),
+  locationNotes: z.string().nullable().optional(),
+  virtualMeetingUrl: z.string().nullable().optional(),
+  locationDisclosure: z
+    .enum(["EXACT", "VENUE", "CITY", "COUNTY", "REGION", "HIDDEN"])
+    .optional(),
+  defaultVisibility: z
+    .enum([
+      "FULL",
+      "LIMITED",
+      "TITLE_LOCATION",
+      "BUSY_WITH_CATEGORY",
+      "BUSY_ONLY",
+      "CAMPAIGN_AUTHENTICATED",
+      "TEAM_ONLY",
+      "LEADERSHIP_ONLY",
+      "NAMED_USERS",
+      "PUBLIC",
+      "PROTECTED",
+    ])
+    .optional(),
   candidateRole: z.string().nullable().optional(),
   privateNotes: z.string().nullable().optional(),
+  isRecurring: z.boolean().optional(),
+  recurrenceRule: z.string().nullable().optional(),
+  recurrenceSeriesId: z.string().nullable().optional(),
 });
 
 export async function GET(request: Request, context: Ctx) {
@@ -52,7 +94,7 @@ export async function PATCH(request: Request, context: Ctx) {
       const event = await updateEvent({
         actor,
         eventId,
-        data: { ...parsed.data, requestId, status: parsed.data.status as never },
+        data: { ...parsed.data, requestId },
       });
       return { event };
     },

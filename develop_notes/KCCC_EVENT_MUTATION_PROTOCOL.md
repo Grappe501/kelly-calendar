@@ -6,8 +6,14 @@ All event mutations resolve the actor from the server session, authorize a named
 | --- | --- | --- |
 | Create | `POST /api/events` | `EVENT_CREATE` |
 | Update | `PATCH /api/events/[eventId]` | `EVENT_EDIT` (+ section actions) |
+| Publish | `POST /api/events/[eventId]/publish` | `EVENT_EDIT` |
+| Cancel | `POST /api/events/[eventId]/cancel` | `EVENT_EDIT` (retained CANCELLED) |
+| Reschedule | `POST /api/events/[eventId]/reschedule` | `EVENT_EDIT` |
+| Duplicate | `POST /api/events/[eventId]/duplicate` | `EVENT_CREATE` |
 | Archive | `POST /api/events/[eventId]/archive` | `EVENT_ARCHIVE` |
 | Restore | `POST /api/events/[eventId]/restore` | `EVENT_RESTORE` |
+| Editor + history | `GET /api/events/[eventId]/editor` | `EVENT_VIEW` / `AUDIT_VIEW` |
+| Progressive details | `POST /api/events/[eventId]/details` | section edits |
 | Primary calendar | `POST /api/events/[eventId]/primary-calendar` | `EVENT_CHANGE_PRIMARY_CALENDAR` |
 | Add calendar | `POST /api/events/[eventId]/calendars` | `EVENT_MANAGE_CALENDARS` |
 | Remove calendar | `DELETE /api/events/[eventId]/calendars/[calendarId]` | `EVENT_MANAGE_CALENDARS` |

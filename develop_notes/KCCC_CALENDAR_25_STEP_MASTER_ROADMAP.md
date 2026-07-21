@@ -3,7 +3,7 @@
 ```text
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE
-Updated: Step 10 operating views COMPLETE → Step 11 ready
+Updated: Step 11 event create/edit COMPLETE → Step 12 ready
 Runtime: src/lib/system/constants.ts
 ```
 
@@ -27,8 +27,8 @@ AI: disabled until Step 16 (proposal_only)
 | **8** | **Security + Candidate Data Certification** | **✅ COMPLETE** |
 | **9** | **Canonical Calendar Data Model** | **✅ COMPLETE** |
 | **10** | **Calendar Operating Views** | **✅ COMPLETE** |
-| **11** | **Event Creation & Editing** | **⬜ NEXT** |
-| 12 | Availability & Standing Rules | ⬜ |
+| **11** | **Event Creation & Editing** | **✅ COMPLETE** |
+| **12** | **Availability & Standing Rules** | **⬜ NEXT** |
 | 13 | Conflict Engine | ⬜ |
 
 ---
@@ -76,13 +76,14 @@ Event  (one table of record)
 
 Architecture: `develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md`  
 Operating views: `develop_notes/KCCC_EA_10_CALENDAR_OPERATING_VIEWS.md`  
+Create/edit: `develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md`  
 Code lock: `src/lib/calendar/canonical-event.ts`  
 Validate: `npm run calendar:canonical:validate`
 
 ## Next authorized build
 
 ```text
-KCCC-EA-11-EVENT-CREATION-EDITING-1.0
+KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0
 ```
 
 Do not start automatically.

@@ -25,11 +25,37 @@ const createSchema = z.object({
   startsAt: z.string().min(1),
   endsAt: z.string().min(1),
   timezone: z.string().optional(),
+  isAllDay: z.boolean().optional(),
   city: z.string().optional(),
   countyId: z.string().optional(),
   venueName: z.string().optional(),
+  streetAddress: z.string().optional(),
+  locationNotes: z.string().optional(),
+  virtualMeetingUrl: z.string().url().or(z.literal("")).optional(),
+  locationDisclosure: z
+    .enum(["EXACT", "VENUE", "CITY", "COUNTY", "REGION", "HIDDEN"])
+    .optional(),
+  defaultVisibility: z
+    .enum([
+      "FULL",
+      "LIMITED",
+      "TITLE_LOCATION",
+      "BUSY_WITH_CATEGORY",
+      "BUSY_ONLY",
+      "CAMPAIGN_AUTHENTICATED",
+      "TEAM_ONLY",
+      "LEADERSHIP_ONLY",
+      "NAMED_USERS",
+      "PUBLIC",
+      "PROTECTED",
+    ])
+    .optional(),
   relatedCalendarIds: z.array(z.string()).optional(),
   candidateRole: z.string().optional(),
+  privateNotes: z.string().optional(),
+  isRecurring: z.boolean().optional(),
+  recurrenceRule: z.string().max(500).optional(),
+  weeklyOccurrences: z.number().int().min(0).max(12).optional(),
 });
 
 export async function GET(request: Request) {
@@ -46,9 +72,14 @@ export async function POST(request: Request) {
       const { ValidationError } = await import("@/lib/security/safe-error");
       throw new ValidationError("Invalid event create payload.");
     }
+    const { virtualMeetingUrl, ...rest } = parsed.data;
     const event = await createEvent({
       actor,
-      data: { ...parsed.data, requestId },
+      data: {
+        ...rest,
+        virtualMeetingUrl: virtualMeetingUrl || undefined,
+        requestId,
+      },
     });
     return { event };
   });

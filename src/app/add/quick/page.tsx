@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
 import { QuickEventForm } from "@/components/event-entry/quick-event-form";
+import { requireActiveAuthenticatedActor } from "@/server/auth/actor";
 
 export const metadata: Metadata = {
-  title: "Quick event entry",
+  title: "Add event",
 };
 
-export default function QuickAddPage() {
-  return (
-    <div className="page-stack">
-      <header className="page-header">
-        <h1>Quick entry</h1>
-        <p>Dropdowns, duration chips, and templates — optimized for phone speed.</p>
-      </header>
-      <QuickEventForm />
-    </div>
-  );
+export const dynamic = "force-dynamic";
+
+export default async function QuickAddPage() {
+  await requireActiveAuthenticatedActor();
+  return <QuickEventForm />;
 }

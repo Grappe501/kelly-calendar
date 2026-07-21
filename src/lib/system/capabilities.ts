@@ -12,6 +12,7 @@ import {
   STEP_8_CLOSEOUT_STATUS,
   STEP_9_CANONICAL_EVENT_STATUS,
   STEP_10_OPERATING_VIEWS_STATUS,
+  STEP_11_EVENT_EDITING_STATUS,
   TOTAL_STEPS,
 } from "@/lib/system/constants";
 
@@ -28,6 +29,7 @@ export {
   STEP_8_CLOSEOUT_STATUS,
   STEP_9_CANONICAL_EVENT_STATUS,
   STEP_10_OPERATING_VIEWS_STATUS,
+  STEP_11_EVENT_EDITING_STATUS,
 } from "@/lib/system/constants";
 
 export type CapabilityStatus = {
@@ -47,6 +49,7 @@ export type CapabilityStatus = {
     step8CloseoutStatus: string;
     step9CanonicalEventStatus: string;
     step10OperatingViewsStatus: string;
+    step11EventEditingStatus: string;
   };
   environment: {
     publicConfigurationValid: boolean;
@@ -105,13 +108,14 @@ export function getCapabilityStatus(options?: {
       environment: process.env.NODE_ENV ?? "development",
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
-      primaryFocus: "Step 11 event creation and editing",
+      primaryFocus: "Step 12 availability and standing rules",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       communicationsTrack: COMMUNICATIONS_OS_TRACK_STATUS,
       lg1Status: LG1_CONTROLLED_LIVE_TEST_STATUS,
       step8CloseoutStatus: STEP_8_CLOSEOUT_STATUS,
       step9CanonicalEventStatus: STEP_9_CANONICAL_EVENT_STATUS,
       step10OperatingViewsStatus: STEP_10_OPERATING_VIEWS_STATUS,
+      step11EventEditingStatus: STEP_11_EVENT_EDITING_STATUS,
     },
     environment: {
       publicConfigurationValid: envStatus.publicConfigurationValid,
@@ -152,7 +156,7 @@ export function getCapabilityStatus(options?: {
     },
     warnings: [
       authFlags.candidateDataReady
-        ? "Step 8–10 complete — operating views ship from the canonical Event graph; next is event creation/editing (Step 11)."
+        ? "Step 8–11 complete — create/edit/cancel loop on canonical Event; next is availability/standing rules (Step 12)."
         : "Calendar foundation in progress — complete Step 8 security closeout before real schedule entry.",
       authFlags.authenticationComplete
         ? "Authentication is enabled for campaign operators."

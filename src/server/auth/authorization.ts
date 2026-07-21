@@ -42,6 +42,8 @@ function minRankForAction(action: MutationAction): number {
     case "RECOMMENDATION_VIEW":
     case "READINESS_VIEW":
     case "CONFLICT_VIEW":
+    case "HISTORICAL_IMPORT_VIEW":
+    case "AUDIT_VIEW":
       return 1;
     case "EVENT_CREATE":
     case "EVENT_EDIT":

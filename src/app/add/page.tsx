@@ -14,7 +14,7 @@ export default function AddPage() {
         <h1>Add</h1>
         <p>
           {flags.candidateDataReady
-            ? "Create and stage campaign events. Sign in with an authorized role before saving live Command Calendar data."
+            ? "Create a live calendar Event quickly, then add detail. Full planner draft staging remains available."
             : "Fast structured entry with drafts staged on H-drive. Real candidate schedule persistence is not yet certified."}
         </p>
       </header>
