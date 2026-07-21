@@ -45,3 +45,4 @@ export {
 } from "@/lib/missions/v21/communications/labels";
 export * from "@/lib/missions/v21/communications/dispatch";
 export * from "@/lib/missions/v21/communications/providers";
+export * from "@/lib/missions/v21/communications/composition";

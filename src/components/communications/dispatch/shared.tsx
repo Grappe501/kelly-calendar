@@ -4,6 +4,9 @@ export function DispatchAdminNav() {
   return (
     <nav className="briefing-nav" aria-label="Dispatch administration">
       <Link href="/system/communications">Communications queue</Link>
+      <Link href="/system/communications/templates">Templates</Link>
+      <Link href="/system/communications/briefs">Briefs</Link>
+      <Link href="/system/communications/compositions">Compositions</Link>
       <Link href="/system/communications/providers">Providers</Link>
       <Link href="/system/communications/providers/health">Provider health</Link>
       <Link href="/system/communications/providers/sandbox">Sandbox console</Link>

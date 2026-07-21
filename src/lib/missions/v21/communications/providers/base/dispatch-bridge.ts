@@ -100,7 +100,7 @@ export function sendInputFromApproved(
     destination: input.destinationRef,
     subject: input.subject ?? null,
     bodyText: input.bodyText ?? "",
-    bodyHtml: null,
+    bodyHtml: input.bodyHtml ?? null,
     fromIdentity: null,
     sandboxOnly: input.mode !== "PRODUCTION",
     timeoutMs: input.timeoutMs,

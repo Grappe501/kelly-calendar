@@ -4673,6 +4673,7 @@ model CommunicationDispatchAttempt {
   requestCorrelationId String
   providerKey          String
   providerMessageId    String?
+  renderArtifactId     String?
   status               CommDispatchAttemptStatus  @default(REQUESTED)
   startedAt            DateTime                   @default(now())
   completedAt          DateTime?
@@ -4687,6 +4688,7 @@ model CommunicationDispatchAttempt {
   @@index([batchId])
   @@index([queueItemId])
   @@index([providerMessageId])
+  @@index([renderArtifactId])
   @@schema("kelly_calendar")
 }
 
@@ -4870,5 +4872,274 @@ model CommunicationProductionGateState {
   createdAt                    DateTime @default(now())
   updatedAt                    DateTime @updatedAt
 
+  @@schema("kelly_calendar")
+}
+
+/// D23 — Template, personalization & composition foundation.
+enum CommTemplateStatus {
+  DRAFT
+  ACTIVE
+  RETIRED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommTemplateCategory {
+  MISSION_PREPARATION
+  EVENT_REMINDER
+  EVENT_FOLLOW_UP
+  VOLUNTEER
+  RELATIONSHIP_FOLLOW_UP
+  INTERNAL_NOTIFICATION
+  GENERAL_OUTREACH
+  TEST_ONLY
+
+  @@schema("kelly_calendar")
+}
+
+enum CommTemplateVersionStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  SUPERSEDED
+  REJECTED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommBriefStatus {
+  DRAFT
+  READY_FOR_COMPOSITION
+  COMPOSING
+  READY_FOR_REVIEW
+  APPROVED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommCompositionValidationState {
+  NOT_VALIDATED
+  VALID
+  WARNING
+  BLOCKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommCompositionApprovalState {
+  DRAFT
+  READY_FOR_REVIEW
+  CHANGES_REQUESTED
+  APPROVED
+  REVOKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommCompositionApprovalDecision {
+  APPROVED
+  CHANGES_REQUESTED
+  REVOKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommRenderPurpose {
+  PREVIEW
+  TEST
+  APPROVAL
+  DISPATCH
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationTemplate {
+  id              String               @id @default(cuid())
+  campaignScopeKey String              @default("KELLY")
+  templateKey     String
+  name            String
+  description     String?
+  purpose         String?
+  channel         CampaignCommChannel
+  status          CommTemplateStatus   @default(DRAFT)
+  category        CommTemplateCategory @default(GENERAL_OUTREACH)
+  ownerType       String               @default("CAMPAIGN")
+  createdByUserId String?
+  archivedAt      DateTime?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  versions CommunicationTemplateVersion[]
+
+  @@unique([campaignScopeKey, templateKey], map: "CommunicationTemplate_scope_key")
+  @@index([channel, status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationTemplateVersion {
+  id                   String                     @id @default(cuid())
+  templateId           String
+  versionNumber        Int
+  status               CommTemplateVersionStatus  @default(DRAFT)
+  subjectTemplate      String?
+  htmlTemplate         String?
+  textTemplate         String?
+  smsTemplate          String?
+  requiredTokensJson   Json                       @default("[]")
+  optionalTokensJson   Json                       @default("[]")
+  defaultValuesJson    Json                       @default("{}")
+  complianceProfileKey String                     @default("EMAIL_SANDBOX_TEST")
+  changeSummary        String?
+  contentHash          String
+  createdByUserId      String?
+  approvedByUserId     String?
+  createdAt            DateTime                   @default(now())
+  approvedAt           DateTime?
+  retiredAt            DateTime?
+
+  template     CommunicationTemplate      @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  compositions CommunicationComposition[]
+  artifacts    CommunicationRenderArtifact[]
+
+  @@unique([templateId, versionNumber], map: "CommunicationTemplateVersion_template_version")
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationBrief {
+  id                   String          @id @default(cuid())
+  campaignScopeKey     String          @default("KELLY")
+  missionId            String?
+  eventId              String?
+  relationshipId       String?
+  purpose              String
+  objective            String?
+  audienceDescription  String?
+  channel              CampaignCommChannel
+  desiredAction        String?
+  tone                 String?
+  factsJson            Json            @default("[]")
+  prohibitedClaimsJson Json            @default("[]")
+  requiredContentJson  Json            @default("[]")
+  operatorNotes        String?
+  status               CommBriefStatus @default(DRAFT)
+  createdByUserId      String?
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  compositions CommunicationComposition[]
+
+  @@index([status])
+  @@index([missionId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationComposition {
+  id                 String                          @id @default(cuid())
+  campaignScopeKey   String                          @default("KELLY")
+  briefId            String?
+  templateVersionId  String?
+  channel            CampaignCommChannel
+  name               String
+  subjectDraft       String?
+  htmlDraft          String?
+  textDraft          String?
+  smsDraft           String?
+  tokenOverridesJson Json                            @default("{}")
+  linkMetadataJson   Json                            @default("{}")
+  validationState    CommCompositionValidationState  @default(NOT_VALIDATED)
+  approvalState      CommCompositionApprovalState    @default(DRAFT)
+  revisionNumber     Int                             @default(0)
+  createdByUserId    String?
+  updatedByUserId    String?
+  createdAt          DateTime                        @default(now())
+  updatedAt          DateTime                        @updatedAt
+
+  brief           CommunicationBrief?                 @relation(fields: [briefId], references: [id], onDelete: SetNull)
+  templateVersion CommunicationTemplateVersion?       @relation(fields: [templateVersionId], references: [id], onDelete: SetNull)
+  revisions       CommunicationCompositionRevision[]
+  approvals       CommunicationCompositionApproval[]
+  artifacts       CommunicationRenderArtifact[]
+
+  @@index([approvalState])
+  @@index([channel])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationCompositionRevision {
+  id                         String   @id @default(cuid())
+  compositionId              String
+  revisionNumber             Int
+  subjectSnapshot            String?
+  htmlSnapshot               String?
+  textSnapshot               String?
+  smsSnapshot                String?
+  tokenOverridesSnapshotJson Json     @default("{}")
+  contentHash                String
+  changeSummary              String?
+  createdByUserId            String?
+  createdAt                  DateTime @default(now())
+
+  composition CommunicationComposition @relation(fields: [compositionId], references: [id], onDelete: Cascade)
+  approvals   CommunicationCompositionApproval[]
+  artifacts   CommunicationRenderArtifact[]
+
+  @@unique([compositionId, revisionNumber], map: "CommunicationCompositionRevision_comp_rev")
+  @@index([contentHash])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationRenderArtifact {
+  id                        String            @id @default(cuid())
+  campaignScopeKey          String            @default("KELLY")
+  compositionId             String
+  compositionRevisionId     String
+  templateVersionId         String?
+  channel                   CampaignCommChannel
+  renderPurpose             CommRenderPurpose
+  recipientFingerprint      String
+  personalizationFingerprint String
+  subjectRendered           String?
+  htmlRendered              String?
+  textRendered              String?
+  smsRendered               String?
+  resolvedTokensJson        Json              @default("{}")
+  unresolvedTokensJson      Json              @default("[]")
+  linkManifestJson          Json              @default("[]")
+  complianceManifestJson    Json              @default("{}")
+  contentHash               String
+  renderEngineVersion       String            @default("d23-1")
+  validationResultJson      Json              @default("{}")
+  createdByUserId           String?
+  createdAt                 DateTime          @default(now())
+  invalidatedAt             DateTime?
+
+  composition         CommunicationComposition         @relation(fields: [compositionId], references: [id], onDelete: Cascade)
+  compositionRevision CommunicationCompositionRevision @relation(fields: [compositionRevisionId], references: [id], onDelete: Cascade)
+  templateVersion     CommunicationTemplateVersion?    @relation(fields: [templateVersionId], references: [id], onDelete: SetNull)
+
+  @@index([compositionId, renderPurpose])
+  @@index([contentHash])
+  @@index([renderPurpose])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationCompositionApproval {
+  id                    String                           @id @default(cuid())
+  compositionId         String
+  compositionRevisionId String
+  decision              CommCompositionApprovalDecision
+  reviewerUserId        String?
+  reviewNotes           String?
+  validationSnapshotJson Json                            @default("{}")
+  contentHash           String
+  createdAt             DateTime                         @default(now())
+
+  composition         CommunicationComposition         @relation(fields: [compositionId], references: [id], onDelete: Cascade)
+  compositionRevision CommunicationCompositionRevision @relation(fields: [compositionRevisionId], references: [id], onDelete: Cascade)
+
+  @@index([compositionId])
   @@schema("kelly_calendar")
 }

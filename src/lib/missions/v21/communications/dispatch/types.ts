@@ -105,6 +105,9 @@ export type ApprovedDispatchInput = {
   destinationRef: string;
   subject: string | null;
   bodyText: string | null;
+  /** D23 — preferred; when present, adapters transport artifact fields only. */
+  renderArtifactId?: string | null;
+  bodyHtml?: string | null;
   contentFingerprint: string;
   audienceFingerprint: string;
   idempotencyKey: string;
