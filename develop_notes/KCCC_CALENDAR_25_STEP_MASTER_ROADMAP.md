@@ -30,7 +30,8 @@ Step 12: NOT AUTHORIZED until operator usability pass reviewed
 | **10** | **Calendar Operating Views** | **✅ COMPLETE** |
 | **11** | **Event Creation & Editing** | **✅ COMPLETE** |
 | **⏸** | **Operator Usability Pass 1** | **OPEN** — `KCCC_OPERATOR_USABILITY_PASS_1.md` |
-| **12** | **Availability & Standing Rules** | **⬜ BLOCKED** |
+| | Synthesis (after sessions) | `KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md` — empty until sessions done |
+| **12** | **Availability & Standing Rules** | **⬜ BLOCKED** until synthesis reviewed |
 | 13 | Conflict Engine | ⬜ |
 
 ---

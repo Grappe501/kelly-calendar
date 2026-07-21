@@ -6,7 +6,24 @@ Gate: Blocks Step 12 (Availability & Standing Rules)
 Live: https://kelly-calendar.netlify.app
 After: Step 11 Event Operations (d8bd594)
 Doc: develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
+Synthesis (after all sessions): develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md
 ```
+
+## Observer Rules
+
+_Establish before every session. One of the easiest ways to lose good usability data is unintentional steering._
+
+```text
+• Do not teach.
+• Do not point.
+• Do not finish sentences.
+• Do not explain terminology.
+• Do not suggest where to click.
+• Answer only direct questions.
+• Record behavior before interpretation.
+```
+
+---
 
 ## Operator Context
 
@@ -149,6 +166,16 @@ Answer:
 
 >
 
+**Evidence vs interpretation** (end of Kelly session)
+
+_Separate what you saw from what you think it means. Redesign from evidence, not assumptions._
+
+| Evidence (what happened) | Interpretation (possible meaning) |
+|--------------------------|-----------------------------------|
+| | |
+| | |
+| | |
+
 ---
 
 ### B. Steve session — edge cases, not bug hunting
@@ -202,6 +229,14 @@ Answer:
 
 >
 
+**Evidence vs interpretation** (end of Steve session)
+
+| Evidence (what happened) | Interpretation (possible meaning) |
+|--------------------------|-----------------------------------|
+| | |
+| | |
+| | |
+
 ---
 
 ### C. Staff session — most valuable
@@ -249,6 +284,22 @@ Answer:
 Answer:
 
 >
+
+**Evidence vs interpretation** (end of Staff session)
+
+| Evidence (what happened) | Interpretation (possible meaning) |
+|--------------------------|-----------------------------------|
+| | |
+| | |
+| | |
+
+Example of the separation we want:
+
+| Evidence | Interpretation |
+|----------|----------------|
+| Kelly clicked Today three times before finding Week. | Week navigation may not be prominent enough. |
+| Staff searched for "Rotary" instead of browsing dates. | Search may be a more natural entry point than calendar navigation. |
+| Steve ignored Agenda throughout the session. | Agenda may need a clearer purpose or placement. |
 
 ---
 
@@ -469,14 +520,20 @@ _Can wait until after Availability / Conflict work._
 
 ```text
 Step 12 (Availability & Standing Rules) remains NOT AUTHORIZED
-until this pass is filled, reviewed, and must-fix items are cleared
-or explicitly deferred by Steve.
+until:
+  1. All three observation sessions are complete
+  2. Synthesis is written: develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md
+  3. Findings are reviewed here with Steve (evidence, not intuition)
+  4. Must-fix items are cleared or explicitly deferred
 ```
+
+Do **not** fix anything immediately after sessions. Capture → synthesize → review → then decide.
 
 When ready to close:
 
+- [ ] Observer Rules followed in every session
 - [ ] Operator Context filled for each session
-- [ ] Kelly observation session complete (timings + confidence + magic moment + one change)
+- [ ] Kelly observation complete (timings + confidence + magic moment + one change + evidence/interpretation)
 - [ ] Steve edge-case session complete (same)
 - [ ] Staff “Schedule tomorrow” session complete (or waived with reason)
 - [ ] Closing-answer synthesis reviewed (convergent “one thing”?)
@@ -484,6 +541,8 @@ When ready to close:
 - [ ] Expected-vs-observed section filled
 - [ ] Repeated behaviors section filled
 - [ ] Success criteria answered
+- [ ] **Synthesis doc written** (`KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`)
+- [ ] Findings brought back for review **before** Step 12 authorization
 - [ ] Must-fix list reviewed
 - [ ] Steve authorizes Step 12: `KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`
 
