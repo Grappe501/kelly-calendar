@@ -20,10 +20,10 @@ Reviewer:
 Kelly Grappe (Readiness reviewer) — pending acceptance of this evidence
 
 Repository commit:
-(fill at ship)
+3f7d0f6
 
 Deployment ID:
-(fill at ship)
+3f7d0f6
 ```
 
 ---
@@ -52,7 +52,7 @@ Milestone tag: KCCC-V2.1-COMMS-CORE-COMPLETE
 Milestone commit: 6921cf3
 Phase A evidence commit: 326492d
 Phase A acceptance commit: 7cc4e32
-Current commit: (ship commit)
+Current commit: 3f7d0f6
 Architecture changes since freeze: Phase B policy module + tests only (no production enablement; no D27)
 ```
 
