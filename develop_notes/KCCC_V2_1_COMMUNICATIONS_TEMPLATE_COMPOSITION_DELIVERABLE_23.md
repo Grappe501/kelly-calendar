@@ -1,6 +1,8 @@
 # KCCC V2.1 — Communications Template, Personalization & Composition Foundation (Deliverable 23)
 
 **Status:** SHIPPED — composition foundation only — **production dispatch remains blocked**  
+**Git:** `main` @ `f4212ed`  
+**Netlify:** deploy `6a5eff30965de8272dd45eb7` · https://kelly-calendar.netlify.app  
 **Validate:** `npm run missions:v21:communications-composition:validate` (276 tests D1–D23)  
 **Seed:** `npm run missions:v21:communications-composition:seed` (sandbox templates only)  
 **Baseline:** D22 `KCCC_V2_1_COMMUNICATIONS_PROVIDER_INTEGRATION_DELIVERABLE_22.md`  
