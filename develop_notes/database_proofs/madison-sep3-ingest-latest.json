@@ -1,0 +1,18 @@
+{
+  "pass": "MADISON-COUNTY-2026-09-03",
+  "event": {
+    "key": "madison-county-2026-09-03",
+    "eventNumber": "KCCC-2026-0164",
+    "status": "CONFIRMED",
+    "isAllDay": true
+  },
+  "openDecisions": [
+    "Lock event type (forum / immersion / party meeting / other), clock time, and venue in Madison County.",
+    "Confirm city (default Huntsville = county seat) and local host contact."
+  ],
+  "omittedFromGit": [
+    "Guest email addresses",
+    "Contact phones"
+  ],
+  "googleVsKccc": "Google: no other events that day. KCCC had standing office hours AM/PM Sep 3 — overridden by this county day."
+}
