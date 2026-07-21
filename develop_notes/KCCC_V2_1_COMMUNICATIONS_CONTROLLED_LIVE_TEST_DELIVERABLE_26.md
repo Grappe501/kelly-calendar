@@ -5,10 +5,11 @@
 **Netlify:** deploy `6a5f11de20c00cded0749c3a` · https://kelly-calendar.netlify.app  
 **Baseline:** D25 `KCCC_V2_1_COMMUNICATIONS_CAMPAIGN_EXECUTION_DELIVERABLE_25.md`  
 **Parent stack:** D20 consent · D21 dispatch · D22 provider · D23 composition · D24 audience · D25 campaigns  
-**Next:** D27 communications production governance, sending limits & phased launch  
+**Next:** Engineering Gate **LG-1** (one controlled live communication for evidence) before D27. See `KCCC_V2_1_COMMUNICATIONS_OS_CORE_COMPLETE.md`. Do not start D27 production-governance code until LG-1 is complete.  
 **Validate:** `npm run missions:v21:communications-live-test:validate` (309 tests D1–D26)  
 **Seed:** `npm run missions:v21:communications-live-test:seed` (draft programs only; approved recipients = 0; active authorizations = 0)  
 **Production dispatch:** **DISPATCH BLOCKED**
+**Milestone:** `KCCC-V2.1-COMMS-CORE-COMPLETE`
 
 ## Governing rule
 
@@ -92,6 +93,8 @@ Do not treat this UI as a campaign-send workflow.
 - [x] D1–D26 validate green; TypeScript/build/secret scan  
 - [x] Git + Netlify verified; rollback documented  
 
-## Recommended D27
+## Recommended D27 (after LG-1 only)
 
-Communications Production Governance, Sending Limits & Phased Launch — Level 0–4 ladder; still not immediate broad production.
+Do **not** begin D27 implementation until Engineering Gate LG-1 completes one real controlled live communication and post-test review. See `KCCC_V2_1_COMMUNICATIONS_OS_CORE_COMPLETE.md`.
+
+D27 should be policy-driven: authorization ladder, send limits, reputation/complaint thresholds, frequency caps, approval workflows, incident response, and progressive expansion — not another infrastructure foundation.
