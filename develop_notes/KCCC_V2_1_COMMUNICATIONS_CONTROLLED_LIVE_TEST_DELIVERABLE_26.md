@@ -5,10 +5,10 @@
 **Netlify:** deploy `6a5f11de20c00cded0749c3a` · https://kelly-calendar.netlify.app  
 **Baseline:** D25 `KCCC_V2_1_COMMUNICATIONS_CAMPAIGN_EXECUTION_DELIVERABLE_25.md`  
 **Parent stack:** D20 consent · D21 dispatch · D22 provider · D23 composition · D24 audience · D25 campaigns  
-**Next:** Engineering Gate **LG-1** (one controlled live communication for evidence) before D27. See `KCCC_V2_1_COMMUNICATIONS_OS_CORE_COMPLETE.md`. Do not start D27 production-governance code until LG-1 is complete.  
+**Next:** Engineering Gate **LG-1** — operate from `KCCC_V2_1_LG_1_CONTROLLED_LIVE_TEST_OPERATOR_RUNBOOK.md` and `KCCC_V2_1_LG_1_EVIDENCE_CHECKLIST.md`. Do not start D27 production-governance code until LG-1 is complete.  
 **Validate:** `npm run missions:v21:communications-live-test:validate` (309 tests D1–D26)  
 **Seed:** `npm run missions:v21:communications-live-test:seed` (draft programs only; approved recipients = 0; active authorizations = 0)  
-**Production dispatch:** **DISPATCH BLOCKED**
+**Production dispatch:** **DISPATCH BLOCKED**  
 **Milestone:** `KCCC-V2.1-COMMS-CORE-COMPLETE`
 
 ## Governing rule

@@ -55,7 +55,10 @@ No layer owns responsibilities belonging to another layer.
 
 D27 must remain **policy-driven operational governance**, not another infrastructure phase. Infrastructure for a single controlled path already exists in D26.
 
-Before D27 implementation, complete **Engineering Gate LG-1**.
+Before D27 implementation, complete **Engineering Gate LG-1** using:
+
+- Operator runbook: `KCCC_V2_1_LG_1_CONTROLLED_LIVE_TEST_OPERATOR_RUNBOOK.md`
+- Evidence checklist: `KCCC_V2_1_LG_1_EVIDENCE_CHECKLIST.md`
 
 ## Engineering Gate LG-1 (Live Gate 1)
 
