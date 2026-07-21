@@ -104,6 +104,16 @@ export type DispatchPreflightInput = {
   arbitraryDestinationOverride?: boolean;
   renderArtifactId?: string | null;
   renderArtifactValid?: boolean;
+  /** D25 campaign execution gates */
+  campaignId?: string | null;
+  campaignRevisionApproved?: boolean;
+  launchAuthorizationValid?: boolean;
+  executionRunActive?: boolean;
+  executionBatchActive?: boolean;
+  insideAuthorizedWindow?: boolean;
+  campaignPaused?: boolean;
+  campaignCancelled?: boolean;
+  sandboxAllowlisted?: boolean;
 };
 
 export type DispatchPreflightResult = {

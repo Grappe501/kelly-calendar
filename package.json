@@ -131,6 +131,8 @@
     "missions:v21:communications-composition:seed": "node scripts/run-with-h-drive-env.cjs node scripts/seed-communications-composition-templates.mjs",
     "missions:v21:communications-audience:validate": "node scripts/campaign-communications-audience-validate-v21.mjs",
     "missions:v21:communications-audience:seed": "node scripts/run-with-h-drive-env.cjs node scripts/seed-communications-audiences.mjs",
+    "missions:v21:communications-campaign:validate": "node scripts/campaign-communications-campaign-validate-v21.mjs",
+    "missions:v21:communications-campaign:seed": "node scripts/run-with-h-drive-env.cjs node scripts/seed-communications-campaigns.mjs",
     "missions:v21:backfill": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs",
     "missions:v21:backfill:apply": "node scripts/run-with-h-drive-env.cjs node scripts/run-missions-backfill-v21.cjs --apply",
     "campaign:routes:doctor": "node scripts/run-with-h-drive-env.cjs node scripts/campaign-routes-doctor.mjs",

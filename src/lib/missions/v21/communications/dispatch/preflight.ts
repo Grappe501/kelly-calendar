@@ -89,6 +89,31 @@ export function evaluateDispatchPreflight(
     }
   }
 
+  // D25 campaign execution gates (when campaignId provided)
+  if (input.campaignId !== undefined) {
+    if (!input.campaignId) blocking.push("CAMPAIGN_REQUIRED");
+    if (input.campaignRevisionApproved === false) {
+      blocking.push("CAMPAIGN_REVISION_NOT_APPROVED");
+    }
+    if (input.launchAuthorizationValid === false) {
+      blocking.push("LAUNCH_AUTHORIZATION_INVALID");
+    }
+    if (input.executionRunActive === false) {
+      blocking.push("EXECUTION_RUN_INACTIVE");
+    }
+    if (input.executionBatchActive === false) {
+      blocking.push("EXECUTION_BATCH_INACTIVE");
+    }
+    if (input.insideAuthorizedWindow === false) {
+      blocking.push("OUTSIDE_AUTHORIZED_WINDOW");
+    }
+    if (input.campaignPaused === true) blocking.push("CAMPAIGN_PAUSED");
+    if (input.campaignCancelled === true) blocking.push("CAMPAIGN_CANCELLED");
+    if (input.sandboxAllowlisted === false) {
+      blocking.push("RECIPIENT_NOT_SANDBOX_ALLOWLISTED");
+    }
+  }
+
   return {
     ok: blocking.length === 0,
     blockingReasonCodes: blocking,

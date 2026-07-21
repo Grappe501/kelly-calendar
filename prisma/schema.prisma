@@ -4677,6 +4677,10 @@ model CommunicationDispatchAttempt {
   providerMessageId    String?
   renderArtifactId     String?
   recipientManifestEntryId String?
+  campaignId           String?
+  campaignRevisionId   String?
+  executionRunId       String?
+  executionBatchId     String?
   status               CommDispatchAttemptStatus  @default(REQUESTED)
   startedAt            DateTime                   @default(now())
   completedAt          DateTime?
@@ -4693,6 +4697,9 @@ model CommunicationDispatchAttempt {
   @@index([providerMessageId])
   @@index([renderArtifactId])
   @@index([recipientManifestEntryId])
+  @@index([campaignId])
+  @@index([executionRunId])
+  @@index([executionBatchId])
   @@schema("kelly_calendar")
 }
 
@@ -5457,5 +5464,478 @@ model CommunicationAudienceApproval {
   manifest          CommunicationRecipientManifest? @relation(fields: [manifestId], references: [id], onDelete: SetNull)
 
   @@index([audienceId])
+  @@schema("kelly_calendar")
+}
+
+/// D25 — Campaign, scheduling & controlled execution foundation.
+enum CommCampaignType {
+  MISSION
+  EVENT
+  FOLLOW_UP
+  VOLUNTEER
+  RELATIONSHIP
+  INTERNAL
+  TEST_ONLY
+  GENERAL_OUTREACH
+
+  @@schema("kelly_calendar")
+}
+
+enum CommCampaignStatus {
+  DRAFT
+  CONFIGURING
+  READY_FOR_REVIEW
+  APPROVED
+  SCHEDULED
+  READY_TO_LAUNCH
+  RUNNING
+  PAUSED
+  COMPLETED
+  COMPLETED_WITH_WARNINGS
+  CANCELLED
+  FAILED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommCampaignRevisionStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  SUPERSEDED
+  REJECTED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommExecutionPlanStatus {
+  DRAFT
+  READY_FOR_REVIEW
+  APPROVED
+  REVOKED
+  SUPERSEDED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommExecutionMode {
+  MANUAL_SANDBOX
+  SCHEDULED_SANDBOX
+  CONTROLLED_LIVE_TEST
+  PRODUCTION
+
+  @@schema("kelly_calendar")
+}
+
+enum CommScheduleExceptionType {
+  BLACKOUT
+  PAUSE_WINDOW
+  OPERATOR_OVERRIDE
+  EMERGENCY_HOLD
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLaunchReviewStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  BLOCKED
+  READY
+  APPROVED
+  REVOKED
+  EXPIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLaunchAuthDecision {
+  AUTHORIZED
+  CHANGES_REQUESTED
+  REVOKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommExecutionRunStatus {
+  PLANNED
+  READY
+  STARTING
+  RUNNING
+  PAUSING
+  PAUSED
+  RESUMING
+  COMPLETING
+  COMPLETED
+  COMPLETED_WITH_WARNINGS
+  CANCELLING
+  CANCELLED
+  FAILED
+  EXPIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommExecutionBatchStatus {
+  PLANNED
+  READY
+  RUNNING
+  PAUSED
+  COMPLETED
+  COMPLETED_WITH_WARNINGS
+  CANCELLED
+  FAILED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommRetryEligibility {
+  NON_RETRYABLE
+  RETRYABLE
+  REVIEW_REQUIRED
+  UNKNOWN
+
+  @@schema("kelly_calendar")
+}
+
+enum CommRetryDecisionStatus {
+  NOT_ELIGIBLE
+  ELIGIBLE
+  APPROVED
+  DECLINED
+  EXECUTED
+  EXPIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommCompletionReportStatus {
+  DRAFT
+  FINALIZED
+  SUPERSEDED
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationCampaign {
+  id                            String            @id @default(cuid())
+  campaignScopeKey              String            @default("KELLY")
+  campaignKey                   String
+  name                          String
+  description                   String?
+  purpose                       String?
+  channel                       CampaignCommChannel
+  campaignType                  CommCampaignType  @default(TEST_ONLY)
+  status                        CommCampaignStatus @default(DRAFT)
+  missionId                     String?
+  eventId                       String?
+  compositionId                 String?
+  approvedCompositionRevisionId String?
+  recipientManifestId           String?
+  providerKey                   String            @default("kccc-sandbox")
+  providerMode                  String            @default("SANDBOX")
+  timezone                      String            @default("America/Chicago")
+  ownerUserId                   String?
+  createdByUserId               String?
+  archivedAt                    DateTime?
+  createdAt                     DateTime          @default(now())
+  updatedAt                     DateTime          @updatedAt
+
+  revisions          CommunicationCampaignRevision[]
+  executionPlans     CommunicationExecutionPlan[]
+  scheduleExceptions CommunicationCampaignScheduleException[]
+  launchReviews      CommunicationLaunchReview[]
+  authorizations     CommunicationLaunchAuthorization[]
+  runs               CommunicationExecutionRun[]
+  completionReports  CommunicationCampaignCompletionReport[]
+
+  @@unique([campaignScopeKey, campaignKey], map: "CommunicationCampaign_scope_key")
+  @@index([status])
+  @@index([compositionId])
+  @@index([recipientManifestId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationCampaignRevision {
+  id                        String                      @id @default(cuid())
+  campaignId                String
+  revisionNumber            Int
+  status                    CommCampaignRevisionStatus  @default(DRAFT)
+  configurationSnapshotJson Json                        @default("{}")
+  compositionRevisionId     String?
+  recipientManifestId       String?
+  providerKey               String                      @default("kccc-sandbox")
+  providerMode              String                      @default("SANDBOX")
+  scheduleSnapshotJson      Json                        @default("{}")
+  ratePolicySnapshotJson    Json                        @default("{}")
+  retryPolicySnapshotJson   Json                        @default("{}")
+  contentHash               String
+  changeSummary             String?
+  createdByUserId           String?
+  createdAt                 DateTime                    @default(now())
+  approvedAt                DateTime?
+  supersededAt              DateTime?
+
+  campaign       CommunicationCampaign        @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  executionPlans CommunicationExecutionPlan[]
+  launchReviews  CommunicationLaunchReview[]
+  authorizations CommunicationLaunchAuthorization[]
+  runs           CommunicationExecutionRun[]
+
+  @@unique([campaignId, revisionNumber], map: "CommunicationCampaignRevision_campaign_version")
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationExecutionPlan {
+  id                                String                   @id @default(cuid())
+  campaignId                        String
+  campaignRevisionId                String
+  status                            CommExecutionPlanStatus  @default(DRAFT)
+  executionMode                     CommExecutionMode        @default(MANUAL_SANDBOX)
+  timezone                          String                   @default("America/Chicago")
+  scheduledStartAt                  DateTime?
+  scheduledEndAt                    DateTime?
+  allowedWeekdaysJson               Json                     @default("[1,2,3,4,5]")
+  dailyWindowStart                  String?
+  dailyWindowEnd                    String?
+  maximumRecipients                 Int                      @default(25)
+  maximumBatchSize                  Int                      @default(5)
+  maximumAttemptsPerRun             Int                      @default(25)
+  maximumAttemptsPerHour            Int                      @default(25)
+  minimumDelayBetweenBatchesSeconds Int                      @default(30)
+  retryPolicyJson                   Json                     @default("{}")
+  failureThresholdJson              Json                     @default("{}")
+  pauseThresholdJson                Json                     @default("{}")
+  completionPolicyJson              Json                     @default("{}")
+  createdByUserId                   String?
+  createdAt                         DateTime                 @default(now())
+  updatedAt                         DateTime                 @updatedAt
+  approvedAt                        DateTime?
+
+  campaign         CommunicationCampaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignRevision CommunicationCampaignRevision @relation(fields: [campaignRevisionId], references: [id], onDelete: Cascade)
+  launchReviews    CommunicationLaunchReview[]
+  runs             CommunicationExecutionRun[]
+
+  @@index([campaignId])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationCampaignScheduleException {
+  id              String                     @id @default(cuid())
+  campaignId      String
+  exceptionType   CommScheduleExceptionType
+  startsAt        DateTime
+  endsAt          DateTime
+  timezone        String                     @default("America/Chicago")
+  reason          String?
+  approvedByUserId String?
+  createdByUserId String?
+  createdAt       DateTime                   @default(now())
+
+  campaign CommunicationCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@index([campaignId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLaunchReview {
+  id                     String                  @id @default(cuid())
+  campaignId             String
+  campaignRevisionId     String
+  executionPlanId        String
+  status                 CommLaunchReviewStatus  @default(NOT_STARTED)
+  compositionCheckJson   Json                    @default("{}")
+  audienceCheckJson      Json                    @default("{}")
+  consentCheckJson       Json                    @default("{}")
+  suppressionCheckJson   Json                    @default("{}")
+  providerCheckJson      Json                    @default("{}")
+  scheduleCheckJson      Json                    @default("{}")
+  volumeCheckJson        Json                    @default("{}")
+  complianceCheckJson    Json                    @default("{}")
+  securityCheckJson      Json                    @default("{}")
+  operatorChecklistJson  Json                    @default("{}")
+  blockingIssuesJson     Json                    @default("[]")
+  warningsJson           Json                    @default("[]")
+  readinessHash          String
+  reviewedByUserId       String?
+  approvedByUserId       String?
+  createdAt              DateTime                @default(now())
+  reviewedAt             DateTime?
+  approvedAt             DateTime?
+  revokedAt              DateTime?
+
+  campaign         CommunicationCampaign         @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignRevision CommunicationCampaignRevision @relation(fields: [campaignRevisionId], references: [id], onDelete: Cascade)
+  executionPlan    CommunicationExecutionPlan    @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  authorizations   CommunicationLaunchAuthorization[]
+
+  @@index([campaignId])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLaunchAuthorization {
+  id                       String                 @id @default(cuid())
+  campaignId               String
+  campaignRevisionId       String
+  launchReviewId           String
+  decision                 CommLaunchAuthDecision
+  authorizedMode           CommExecutionMode      @default(MANUAL_SANDBOX)
+  authorizedRecipientLimit Int                    @default(10)
+  authorizedBatchLimit     Int                    @default(5)
+  authorizedStartAt        DateTime?
+  authorizedEndAt          DateTime?
+  authorizationHash        String
+  authorizedByUserId       String?
+  authorizationNotes       String?
+  createdAt                DateTime               @default(now())
+  revokedAt                DateTime?
+  revokedByUserId          String?
+  revocationReason         String?
+
+  campaign         CommunicationCampaign         @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignRevision CommunicationCampaignRevision @relation(fields: [campaignRevisionId], references: [id], onDelete: Cascade)
+  launchReview     CommunicationLaunchReview     @relation(fields: [launchReviewId], references: [id], onDelete: Cascade)
+  runs             CommunicationExecutionRun[]
+
+  @@index([campaignId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationExecutionRun {
+  id                     String                   @id @default(cuid())
+  campaignId             String
+  campaignRevisionId     String
+  executionPlanId        String
+  launchAuthorizationId  String
+  runNumber              Int
+  mode                   CommExecutionMode        @default(MANUAL_SANDBOX)
+  status                 CommExecutionRunStatus   @default(PLANNED)
+  scheduledFor           DateTime?
+  startedAt              DateTime?
+  pausedAt               DateTime?
+  resumedAt              DateTime?
+  completedAt            DateTime?
+  cancelledAt            DateTime?
+  pauseReason            String?
+  cancelReason           String?
+  recipientTargetCount   Int                      @default(0)
+  attemptCreatedCount    Int                      @default(0)
+  preflightPassedCount   Int                      @default(0)
+  preflightBlockedCount  Int                      @default(0)
+  providerAcceptedCount  Int                      @default(0)
+  deliveredCount         Int                      @default(0)
+  failedCount            Int                      @default(0)
+  suppressedCount        Int                      @default(0)
+  consentBlockedCount    Int                      @default(0)
+  duplicateBlockedCount  Int                      @default(0)
+  invalidDestinationCount Int                     @default(0)
+  retryEligibleCount     Int                      @default(0)
+  retryCreatedCount      Int                      @default(0)
+  currentBatchNumber     Int                      @default(0)
+  lastHeartbeatAt        DateTime?
+  failureSummaryJson     Json                     @default("{}")
+  completionSummaryJson  Json                     @default("{}")
+  createdByUserId        String?
+  startedByUserId        String?
+  completedByUserId      String?
+  createdAt              DateTime                 @default(now())
+
+  campaign             CommunicationCampaign              @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignRevision     CommunicationCampaignRevision      @relation(fields: [campaignRevisionId], references: [id], onDelete: Cascade)
+  executionPlan        CommunicationExecutionPlan         @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  launchAuthorization  CommunicationLaunchAuthorization   @relation(fields: [launchAuthorizationId], references: [id], onDelete: Cascade)
+  batches              CommunicationExecutionBatch[]
+  retryDecisions       CommunicationRetryDecision[]
+  completionReports    CommunicationCampaignCompletionReport[]
+
+  @@unique([campaignId, runNumber], map: "CommunicationExecutionRun_campaign_run")
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationExecutionBatch {
+  id                    String                    @id @default(cuid())
+  runId                 String
+  batchNumber           Int
+  status                CommExecutionBatchStatus  @default(PLANNED)
+  recipientStartIndex   Int                       @default(0)
+  recipientEndIndex     Int                       @default(0)
+  plannedCount          Int                       @default(0)
+  attemptCreatedCount   Int                       @default(0)
+  preflightPassedCount  Int                       @default(0)
+  preflightBlockedCount Int                       @default(0)
+  providerAcceptedCount Int                       @default(0)
+  deliveredCount        Int                       @default(0)
+  failedCount           Int                       @default(0)
+  startedAt             DateTime?
+  completedAt           DateTime?
+  pausedAt              DateTime?
+  contentHash           String
+  createdAt             DateTime                  @default(now())
+
+  run CommunicationExecutionRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@unique([runId, batchNumber], map: "CommunicationExecutionBatch_run_batch")
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationRetryDecision {
+  id                 String                   @id @default(cuid())
+  originalAttemptId  String
+  executionRunId     String
+  failureClass       CommRetryEligibility     @default(UNKNOWN)
+  retryEligibility   CommRetryEligibility     @default(UNKNOWN)
+  decision           CommRetryDecisionStatus  @default(NOT_ELIGIBLE)
+  decisionReason     String?
+  retryAttemptId     String?
+  reviewedByUserId   String?
+  createdAt          DateTime                 @default(now())
+  approvedAt         DateTime?
+  executedAt         DateTime?
+
+  executionRun CommunicationExecutionRun @relation(fields: [executionRunId], references: [id], onDelete: Cascade)
+
+  @@index([executionRunId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationCampaignCompletionReport {
+  id                           String                     @id @default(cuid())
+  campaignId                   String
+  executionRunId               String
+  status                       CommCompletionReportStatus @default(DRAFT)
+  manifestCount                Int                        @default(0)
+  attemptCount                 Int                        @default(0)
+  preflightPassedCount         Int                        @default(0)
+  preflightBlockedCount        Int                        @default(0)
+  providerAcceptedCount        Int                        @default(0)
+  deliveredCount               Int                        @default(0)
+  bouncedCount                 Int                        @default(0)
+  complaintCount               Int                        @default(0)
+  failedCount                  Int                        @default(0)
+  unknownCount                 Int                        @default(0)
+  suppressedDuringRunCount     Int                        @default(0)
+  consentChangedDuringRunCount Int                        @default(0)
+  retryCount                   Int                        @default(0)
+  startedAt                    DateTime?
+  completedAt                  DateTime?
+  durationSeconds              Int?
+  summaryJson                  Json                       @default("{}")
+  blockingIssuesJson           Json                       @default("[]")
+  warningsJson                 Json                       @default("[]")
+  evidenceHash                 String
+  createdByUserId              String?
+  createdAt                    DateTime                   @default(now())
+
+  campaign     CommunicationCampaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  executionRun CommunicationExecutionRun @relation(fields: [executionRunId], references: [id], onDelete: Cascade)
+
+  @@unique([executionRunId], map: "CommunicationCampaignCompletionReport_run")
+  @@index([campaignId])
   @@schema("kelly_calendar")
 }

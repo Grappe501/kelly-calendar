@@ -8,6 +8,7 @@ export function DispatchAdminNav() {
       <Link href="/system/communications/briefs">Briefs</Link>
       <Link href="/system/communications/compositions">Compositions</Link>
       <Link href="/system/communications/audiences">Audiences</Link>
+      <Link href="/system/communications/campaigns">Campaigns</Link>
       <Link href="/system/communications/recipients/conflicts">
         Recipient conflicts
       </Link>
