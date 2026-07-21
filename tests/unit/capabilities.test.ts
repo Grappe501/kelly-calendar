@@ -16,7 +16,7 @@ describe("capability honesty", () => {
 
   it("marks auth and candidate-data ready when session secret is configured", () => {
     const security = getSecurityCapabilityStatus();
-    expect(CURRENT_STEP_NUMBER).toBe(12);
+    expect(CURRENT_STEP_NUMBER).toBe(11);
     expect(security.authenticationComplete).toBe(true);
     expect(security.candidateDataReady).toBe(true);
     expect(security.databaseMutationsAuthorized).toBe(true);
@@ -26,15 +26,17 @@ describe("capability honesty", () => {
   it("exposes calendar recovery posture on capability status", async () => {
     const { getCapabilityStatus } = await import("@/lib/system/capabilities");
     const status = getCapabilityStatus();
-    expect(status.application.step).toBe(12);
+    expect(status.application.step).toBe(11);
     expect(status.application.communicationsTrack).toBe("FROZEN");
     expect(status.application.lg1Status).toBe("PAUSED");
     expect(status.application.step8CloseoutStatus).toBe("COMPLETE");
     expect(status.application.step9CanonicalEventStatus).toBe("COMPLETE");
     expect(status.application.step10OperatingViewsStatus).toBe("COMPLETE");
     expect(status.application.step11EventEditingStatus).toBe("COMPLETE");
+    expect(status.application.operatorUsabilityPassStatus).toBe("OPEN");
+    expect(status.application.step12AvailabilityStatus).toBe("NOT_AUTHORIZED");
     expect(status.application.nextAuthorizedBuild).toBe(
-      "KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0",
+      "HOLD-UNTIL-OPERATOR-USABILITY-PASS-1",
     );
     expect(status.security.candidateDataReady).toBe(true);
   });

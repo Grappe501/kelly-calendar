@@ -140,7 +140,7 @@
   "calendar_foundation_status": "in_progress_recovery",
   "foundation_implementation_started": true,
   "redesign_implementation_started": false,
-  "next_engineering_deliverable": "KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0",
+  "next_engineering_deliverable": "HOLD-UNTIL-OPERATOR-USABILITY-PASS-1",
   "calendar_recovery_build_id": "KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0",
   "calendar_primary_track_status": "active",
   "communications_os_track_status": "frozen",
@@ -178,9 +178,9 @@
   "capability_layer_status": "frozen",
   "application_version": "0.8.4-petition",
   "versioning_tracks_separated": true,
-  "current_step": "KCCC-EA-12-AVAILABILITY-STANDING-RULES",
-  "current_step_number": 12,
-  "current_step_status": "ready",
+  "current_step": "KCCC-OPERATOR-USABILITY-PASS-1",
+  "current_step_number": 11,
+  "current_step_status": "operator_validation_open",
   "architecture_1_0_close_tip": "2dbc1d9",
   "architecture_register_commit": "6690ce2",
   "architecture_baseline_immutable_at": "6690ce2",
@@ -234,5 +234,5 @@
   "phase_2_5_tip": "fb69bad",
   "phase_2_certification_tip": "dc60d6f",
   "phase_2_version": "0.8.4-petition",
-  "notes": "EA-11 COMPLETE: create/edit/cancel/reschedule/duplicate on canonical Event. Quick add + editor. Next Step 12 availability. Communications frozen."
+  "notes": "Step 11 COMPLETE. Operator Usability Pass 1 OPEN — Step 12 Availability NOT AUTHORIZED until pass reviewed. Communications frozen."
 }

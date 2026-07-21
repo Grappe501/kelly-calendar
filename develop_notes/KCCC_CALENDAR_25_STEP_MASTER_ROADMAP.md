@@ -3,7 +3,7 @@
 ```text
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE
-Updated: Step 11 event create/edit COMPLETE → Step 12 ready
+Updated: Step 11 COMPLETE → Operator Usability Pass OPEN (Step 12 blocked)
 Runtime: src/lib/system/constants.ts
 ```
 
@@ -15,6 +15,7 @@ Canonical schedule entity: Prisma Event ONLY
 Communications OS (D20–D26): FROZEN
 LG-1: PAUSED
 AI: disabled until Step 16 (proposal_only)
+Step 12: NOT AUTHORIZED until operator usability pass reviewed
 ```
 
 ---
@@ -28,7 +29,8 @@ AI: disabled until Step 16 (proposal_only)
 | **9** | **Canonical Calendar Data Model** | **✅ COMPLETE** |
 | **10** | **Calendar Operating Views** | **✅ COMPLETE** |
 | **11** | **Event Creation & Editing** | **✅ COMPLETE** |
-| **12** | **Availability & Standing Rules** | **⬜ NEXT** |
+| **⏸** | **Operator Usability Pass 1** | **OPEN** — `KCCC_OPERATOR_USABILITY_PASS_1.md` |
+| **12** | **Availability & Standing Rules** | **⬜ BLOCKED** |
 | 13 | Conflict Engine | ⬜ |
 
 ---
@@ -83,7 +85,9 @@ Validate: `npm run calendar:canonical:validate`
 ## Next authorized build
 
 ```text
-KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0
+HOLD — complete Operator Usability Pass 1 first
+develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
 ```
 
+Step 12 (`KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`) is **not authorized** until the pass is reviewed.
 Do not start automatically.
