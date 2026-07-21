@@ -25,12 +25,24 @@ export async function POST(request: Request, context: Ctx) {
       allowTestAdapter: process.env.NODE_ENV !== "production",
     });
 
+    // Allow official adapters: resend (always) and kccc-sandbox (non-production only).
+    const allowedOfficial =
+      providerKey === "resend" ||
+      (providerKey === "kccc-sandbox" && process.env.NODE_ENV !== "production");
+
     // Unknown vendor keys and the disabled adapter fail closed with 404.
-    // In production, the test adapter also resolves to disabled.
     if (
-      adapter.providerKey === "disabled" ||
-      adapter.providerKey !== providerKey
+      !allowedOfficial &&
+      (adapter.providerKey === "disabled" ||
+        adapter.providerKey !== providerKey)
     ) {
+      return NextResponse.json(
+        { ok: false, error: "Provider webhook not registered." },
+        { status: 404 },
+      );
+    }
+
+    if (allowedOfficial && adapter.providerKey === "disabled") {
       return NextResponse.json(
         { ok: false, error: "Provider webhook not registered." },
         { status: 404 },

@@ -5,9 +5,14 @@ export function DispatchAdminNav() {
     <nav className="briefing-nav" aria-label="Dispatch administration">
       <Link href="/system/communications">Communications queue</Link>
       <Link href="/system/communications/providers">Providers</Link>
+      <Link href="/system/communications/providers/health">Provider health</Link>
+      <Link href="/system/communications/providers/sandbox">Sandbox console</Link>
+      <Link href="/system/communications/providers/domains">Domains</Link>
+      <Link href="/system/communications/providers/gates">Safety gates</Link>
       <Link href="/system/communications/dispatch">Dispatch history</Link>
       <Link href="/system/communications/controls">Kill switches</Link>
       <Link href="/system/communications/webhooks">Webhooks</Link>
+      <Link href="/system/communications/providers/webhooks">Webhook inspector</Link>
       <Link href="/system/communications/policy">Policy</Link>
     </nav>
   );

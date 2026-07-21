@@ -1,7 +1,7 @@
 # KCCC V2.1 — Communications provider selection guide
 
-**Scope:** D21 foundation + future D22 vendor registration  
-**Status:** No production provider selected at D21 ship  
+**Scope:** D21 foundation + D22 sandbox adapter registration  
+**Status:** Sandbox integration at D22 ship — production dispatch blocked  
 **Parent:** `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISPATCH_FOUNDATION_DELIVERABLE_21.md`
 
 ## Current state (D21 ship)
@@ -91,9 +91,38 @@ Mobilize is **not** a communications provider candidate. Use Mobilize for event 
 
 See `KCCC_V2_1_PROVIDER_INTEGRATION_MOBILIZE_ARCHITECTURE.md`.
 
-## Recommended D22
+## Deliverable 22 (sandbox integration — production still blocked)
 
-Register first vendor adapter, sandbox credential UX, and explicit promotion from `SANDBOX` to `PRODUCTION` — documented in a future revision of this guide.
+D22 registers vendor adapters and sandbox certification. **Production dispatch remains disabled** until every gate in the production enablement checklist is signed off.
+
+| Item | D22 ship value |
+|------|----------------|
+| Official adapter | **Resend** (server `fetch`, sandbox credentials) |
+| Certification harness | **`kccc-sandbox`** (no vendor network) |
+| `KCCC_COMMUNICATIONS_PROVIDER_KEY` | `resend` for sandbox drill only, or unset → `disabled` |
+| Connection mode | `SANDBOX` — not `PRODUCTION` |
+| `applicationDispatchEnabled` | **false** |
+| Kill switches | Default **ON** |
+| Message templates | **D23** — not in D22 |
+
+Env (sandbox, Netlify only): `KCCC_RESEND_API_KEY`, `KCCC_RESEND_WEBHOOK_SECRET`.
+
+Architecture: Mission → Dispatch → Interface → Adapter → Vendor. Adapters live under `src/lib/missions/v21/communications/providers/`; register in `provider-registry.ts`. Never bypass the interface from mission or API layers.
+
+### D22 operator docs
+
+| Doc | Purpose |
+|-----|---------|
+| `KCCC_V2_1_COMMUNICATIONS_PROVIDER_INTEGRATION_DELIVERABLE_22.md` | Main deliverable |
+| `KCCC_V2_1_COMMUNICATIONS_PROVIDER_INTEGRATION_DELIVERABLE_22_ROLLBACK.md` | Rollback |
+| `KCCC_V2_1_COMMUNICATIONS_PROVIDER_ADAPTER_DEVELOPMENT_GUIDE.md` | New adapter implementation |
+| `KCCC_V2_1_COMMUNICATIONS_SANDBOX_CERTIFICATION_CHECKLIST.md` | Certify before promotion |
+| `KCCC_V2_1_COMMUNICATIONS_PROVIDER_HEALTH_DASHBOARD_GUIDE.md` | Dashboard health |
+| `KCCC_V2_1_COMMUNICATIONS_WEBHOOK_VALIDATION_GUIDE.md` | Webhook drills |
+| `KCCC_V2_1_COMMUNICATIONS_CREDENTIAL_ROTATION_GUIDE.md` | Rotate env secrets |
+| `KCCC_V2_1_COMMUNICATIONS_PRODUCTION_ENABLEMENT_CHECKLIST.md` | Go-live gates (**DISPATCH BLOCKED** until complete) |
+| `KCCC_V2_1_COMMUNICATIONS_PROVIDER_COMPARISON_MATRIX.md` | Vendor capability matrix |
+| `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISASTER_RECOVERY_GUIDE.md` | Outage response |
 
 ## Related docs
 

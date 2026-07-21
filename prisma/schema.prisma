@@ -4710,3 +4710,165 @@ model CommunicationWebhookReceipt {
   @@index([matchedAttemptId])
   @@schema("kelly_calendar")
 }
+
+/// D22 — Provider Abstraction Layer catalog + sandbox certification.
+enum CommProviderLifecycleStatus {
+  AVAILABLE
+  INSTALLED
+  VERIFIED
+  SANDBOX_READY
+  PRODUCTION_READY
+  DISABLED
+  RETIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommSandboxRunStatus {
+  PENDING
+  RUNNING
+  PASSED
+  FAILED
+  BLOCKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommDomainCheckStatus {
+  UNKNOWN
+  PASS
+  FAIL
+  PENDING
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationProviderCatalogEntry {
+  id                      String                      @id @default(cuid())
+  campaignScopeKey        String                      @default("KELLY")
+  providerKey             String
+  displayName             String
+  lifecycleStatus         CommProviderLifecycleStatus @default(AVAILABLE)
+  capabilitiesJson        Json                        @default("{}")
+  healthSnapshotJson      Json                        @default("{}")
+  isOfficialAdapter       Boolean                     @default(false)
+  isSandboxOnly           Boolean                     @default(false)
+  isStub                  Boolean                     @default(false)
+  averageLatencyMs        Int?
+  lastSuccessAt           DateTime?
+  lastFailureAt           DateTime?
+  domainVerified          Boolean                     @default(false)
+  senderVerified          Boolean                     @default(false)
+  webhookVerified         Boolean                     @default(false)
+  sandboxWorking          Boolean                     @default(false)
+  productionEnabled       Boolean                     @default(false)
+  suppressionSyncAgeMinutes Int?
+  operatorNotes           String?
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+
+  @@unique([campaignScopeKey, providerKey], map: "CommunicationProviderCatalog_scope_provider")
+  @@index([lifecycleStatus])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationSandboxCertificationRun {
+  id                String               @id @default(cuid())
+  campaignScopeKey  String               @default("KELLY")
+  providerKey       String
+  status            CommSandboxRunStatus @default(PENDING)
+  checklistJson     Json                 @default("[]")
+  evidenceJson      Json                 @default("{}")
+  passedCount       Int                  @default(0)
+  failedCount       Int                  @default(0)
+  averageLatencyMs  Int?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  requestedByUserId String?
+  createdAt         DateTime             @default(now())
+
+  @@index([providerKey])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationDomainVerification {
+  id                String                @id @default(cuid())
+  campaignScopeKey  String                @default("KELLY")
+  providerKey       String
+  domain            String
+  spfStatus         CommDomainCheckStatus @default(UNKNOWN)
+  dkimStatus        CommDomainCheckStatus @default(UNKNOWN)
+  dmarcStatus       CommDomainCheckStatus @default(UNKNOWN)
+  senderVerified    Boolean               @default(false)
+  returnPathOk      Boolean               @default(false)
+  trackingDomainOk  Boolean               @default(false)
+  bimiStatus        CommDomainCheckStatus @default(NOT_APPLICABLE)
+  detailsJson       Json                  @default("{}")
+  lastCheckedAt     DateTime?
+  nextCheckAt       DateTime?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  @@unique([campaignScopeKey, providerKey, domain], map: "CommunicationDomainVerification_scope_provider_domain")
+  @@index([providerKey])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationSandboxTestRun {
+  id                String               @id @default(cuid())
+  campaignScopeKey  String               @default("KELLY")
+  providerKey       String
+  status            CommSandboxRunStatus @default(PENDING)
+  recipientMasked   String?
+  subject           String?
+  expectedEventsJson Json                @default("[]")
+  resultsJson       Json                 @default("{}")
+  webhookTimelineJson Json               @default("[]")
+  latencyMs         Int?
+  evidenceJson      Json                 @default("{}")
+  requestedByUserId String?
+  createdAt         DateTime             @default(now())
+  completedAt       DateTime?
+
+  @@index([providerKey])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationProviderMetricSample {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  providerKey      String
+  metricKey        String
+  value            Float
+  windowStart      DateTime
+  windowEnd        DateTime
+  createdAt        DateTime @default(now())
+
+  @@index([providerKey, metricKey])
+  @@index([windowStart])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationProductionGateState {
+  id                           String   @id @default(cuid())
+  campaignScopeKey             String   @unique
+  productionProviderSelected   Boolean  @default(false)
+  sandboxPassed                Boolean  @default(false)
+  senderVerified               Boolean  @default(false)
+  domainVerified               Boolean  @default(false)
+  webhookVerified              Boolean  @default(false)
+  killSwitchOff                Boolean  @default(false)
+  operatorApproval             Boolean  @default(false)
+  campaignApproval             Boolean  @default(false)
+  finalConfirmation            Boolean  @default(false)
+  controlledLiveTestApproved   Boolean  @default(false)
+  blockedReason                String   @default("DISPATCH BLOCKED — D22 production gates incomplete")
+  changedByUserId              String?
+  changedAt                    DateTime @default(now())
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+
+  @@schema("kelly_calendar")
+}
