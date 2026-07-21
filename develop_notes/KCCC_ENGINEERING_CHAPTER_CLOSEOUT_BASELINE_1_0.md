@@ -1,15 +1,42 @@
-# Campaign OS — Engineering Chapter Closeout
+# Campaign OS — Engineering Chapter 1 Closeout
 
 ```text
-Chapter:       Calendar Foundation → Campaign OS Baseline 1.0
-Status:        CLOSED
-Sealed at:     commit era of Baseline 1.0 Frozen (see git history)
+Chapter:       Engineering Chapter 1
+Title:         Calendar Foundation → Campaign OS Baseline 1.0
+Status:        COMPLETE · PERMANENT REFERENCE
+Sealed at:     Baseline 1.0 Frozen (immutable)
 Next chapter:  Operator Observation → Baseline 1.1 → Step 12
 ```
 
-## Architectural decisions that changed direction
+## Transition this chapter marks
 
-These are not completed tasks—they are decisions that bind future work:
+From:
+
+> "We are building what we think a campaign needs."
+
+To:
+
+> "We are refining a system based on how campaigns are actually operated."
+
+---
+
+## What was accomplished
+
+Not only software—the **rules by which future software will be built**:
+
+| Model | Locked decision |
+|-------|-----------------|
+| Operational | One canonical Event |
+| Architectural | Operational vs Intelligence layers |
+| Governance | Operator authority (Doctrine #1) |
+| Engineering | Architecture → observation → implementation |
+| Release | Immutable baselines (1.0 frozen; 1.1 from evidence) |
+
+These decisions reduce complexity as the project grows rather than adding to it.
+
+---
+
+## Architectural decisions that changed direction
 
 1. **From Calendar to Campaign Operating System** — dates → campaign operations  
 2. **One Canonical Event** — every capability grows from a single operational truth  
@@ -32,6 +59,31 @@ If any answer is **no**, revisit the design before implementation.
 
 ---
 
+## Post-observation review (four stages)
+
+When returning after sessions, structure the review in this order only:
+
+### Stage 1 — Evidence
+
+No recommendations. Observations only from Kelly, Staff, and Steve.
+
+### Stage 2 — Patterns
+
+Only what is supported across observations. Isolated preferences only if they reveal a broader issue.
+
+### Stage 3 — Baseline 1.1 Requirements
+
+Translate validated patterns into concrete Baseline 1.1 requirements. These become Step 12 input.
+
+### Stage 4 — Authorization
+
+Only then decide whether Step 12 is:
+
+* an incremental enhancement to the current operational flow, or  
+* a more fundamental redesign of how availability is represented  
+
+---
+
 ## Version path
 
 ```text
@@ -39,17 +91,16 @@ Baseline 1.0  (FROZEN — immutable snapshot)
         ↓
 Operator Observation
         ↓
-Evidence
+Evidence → Patterns → Baseline 1.1 Requirements → Authorization
         ↓
-Baseline 1.1  (version-defining requirements from observation — not a bug list)
+Baseline 1.1
         ↓
 Step 12
         ↓
 Step 13
 ```
 
-Observation results are **version-defining**. They become requirements for Baseline 1.1.  
-Step 12 is the first capability built on validated operator experience—not merely “the next feature.”
+Observation results are **version-defining**. Step 12 is the first capability built on validated operator experience.
 
 ---
 
@@ -57,7 +108,6 @@ Step 12 is the first capability built on validated operator experience—not mer
 
 **Do not retroactively edit** `KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md` after observations.
 
-Let it remain the snapshot of the system **before** real-world usage.  
 Evidence-driven changes land in Baseline 1.1+ so the historical trace stays clear.
 
 ---
@@ -67,3 +117,9 @@ Evidence-driven changes land in Baseline 1.1+ so the historical trace stays clea
 - Baseline 1.0: `KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`  
 - Doctrine #1: `KCCC_CAMPAIGN_OS_DOCTRINE_1.md`  
 - Pass / Synthesis: `KCCC_OPERATOR_USABILITY_PASS_1.md` · `KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`  
+
+```text
+ENGINEERING_CHAPTER_1 = COMPLETE
+BASELINE_1_0 = CLOSED
+NEXT_ENGINEERING_DECISION = FROM_OBSERVATION_EVIDENCE_ONLY
+```
