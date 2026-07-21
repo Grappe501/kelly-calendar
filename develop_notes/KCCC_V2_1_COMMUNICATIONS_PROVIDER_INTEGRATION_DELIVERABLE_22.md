@@ -1,6 +1,9 @@
 # KCCC V2.1 — Communications Provider Selection & Sandbox Integration (Deliverable 22)
 
-**Status:** Sandbox integration only — **production dispatch remains blocked**  
+**Status:** SHIPPED — Sandbox integration only — **production dispatch remains blocked**  
+**Git:** `main` @ `62b390c`  
+**Netlify:** deploy `6a5efa1ce674079586131dab` · https://kelly-calendar.netlify.app  
+**Validate:** `npm run missions:v21:communications-provider:validate` (268 tests D1–D22)  
 **Baseline:** D21 `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISPATCH_FOUNDATION_DELIVERABLE_21.md`  
 **Parent:** D20 queue + D21 dispatch foundation  
 **Next:** D23 message templates and content assembly (explicitly **not** in D22)
