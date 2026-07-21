@@ -19,6 +19,9 @@ Calendar Foundation v1: BUILD COMPLETE (Steps 8–11)
 Step 12: NOT AUTHORIZED until operator observation + evidence synthesis reviewed
 Cadence: Build → validate → observe → synthesize → refine → next phase
   (see develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md)
+Layers: Operational (operator defines reality) vs Intelligence (system interprets)
+  (see develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md)
+Schedule mutations: detect / explain / recommend / simulate — never without explicit approval
 Review return: evidence patterns, not bug lists
 ```
 
@@ -43,7 +46,7 @@ Review return: evidence patterns, not bug lists
 | **⏸** | **Operator Usability Pass 1** | **OPEN** — `KCCC_OPERATOR_USABILITY_PASS_1.md` |
 | | Synthesis (after sessions) | `KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md` — empty until sessions done |
 | **12** | **Availability & Standing Rules** | **⬜ BLOCKED** until synthesis reviewed |
-| **13** | **Conflict Engine** | **📐 DESIGN READY** · **⬜ IMPLEMENTATION BLOCKED** until Step 12 — `KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md` |
+| **13** | **Conflict Engine** | **📐 DESIGN READY** · first **Intelligence Layer** slice · **⬜ IMPLEMENTATION BLOCKED** until Step 12 — `KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md` |
 
 ---
 

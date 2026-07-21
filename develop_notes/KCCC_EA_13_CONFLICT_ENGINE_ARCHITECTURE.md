@@ -44,14 +44,18 @@ Operator Observation → Synthesis → Step 12 authorized & built
 ## Architecture position
 
 ```text
-Canonical Event (write authority)
+Operational Layer (operator defines reality)
+  Canonical Event · Views · Editing · Availability (Step 12)
         ↓
-Availability service (Step 12)     ← rules / buffers / priorities
-        ↓
-Conflict engine (Step 13)          ← detect · explain · suggest · never auto-resolve
+Intelligence Layer (system interprets reality) — Step 13 is the first slice
+  Conflict engine · Travel feasibility · later: readiness, AI, optimization
         ↓
 Operating views + event editor     ← surface conflicts where operators act
 ```
+
+**Governing rule:** The system may detect, explain, recommend, and simulate—but it never changes the operator's schedule without explicit approval.
+
+Standing doc: `develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md`
 
 Preserved constitutional rules:
 
