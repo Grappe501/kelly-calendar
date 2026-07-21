@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import {
   buildCommunicationsOperationsHome,
@@ -14,7 +15,7 @@ import { loadMissionContextForIds } from "@/server/services/mission-context-load
 export type CommunicationsOperationsPayload = {
   communications: CommunicationsOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 export async function getCommunicationsOperations(
@@ -94,6 +95,6 @@ export async function getCommunicationsOperations(
   return {
     communications,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

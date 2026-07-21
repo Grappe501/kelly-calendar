@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateExecutiveCommandAdvisory } from "@/server/services/executive-command-ai";
 import { getExecutiveCommand } from "@/server/services/executive-command-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         command: data.command,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

@@ -6,6 +6,7 @@ Parent recovery: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Date: 2026-07-21
 Goal: Make Authentication complete: true AND Candidate-data ready: true
 Scope: Narrow closeout — not a new security architecture
+Status: COMPLETE — see KCCC_EA_8_SECURITY_CLOSEOUT_EVIDENCE.md
 ```
 
 ## Context

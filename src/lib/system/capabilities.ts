@@ -9,6 +9,7 @@ import {
   CURRENT_STEP_NUMBER,
   LG1_CONTROLLED_LIVE_TEST_STATUS,
   NEXT_AUTHORIZED_BUILD,
+  STEP_8_CLOSEOUT_STATUS,
   TOTAL_STEPS,
 } from "@/lib/system/constants";
 
@@ -22,6 +23,7 @@ export {
   COMMUNICATIONS_OS_TRACK_STATUS,
   LG1_CONTROLLED_LIVE_TEST_STATUS,
   NEXT_AUTHORIZED_BUILD,
+  STEP_8_CLOSEOUT_STATUS,
 } from "@/lib/system/constants";
 
 export type CapabilityStatus = {
@@ -38,6 +40,7 @@ export type CapabilityStatus = {
     nextAuthorizedBuild: string;
     communicationsTrack: string;
     lg1Status: string;
+    step8CloseoutStatus: string;
   };
   environment: {
     publicConfigurationValid: boolean;
@@ -96,10 +99,13 @@ export function getCapabilityStatus(options?: {
       environment: process.env.NODE_ENV ?? "development",
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
-      primaryFocus: "complete Step 8 security closeout",
+      primaryFocus: authFlags.candidateDataReady
+        ? "Step 9 canonical calendar data model"
+        : "complete Step 8 security closeout",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       communicationsTrack: COMMUNICATIONS_OS_TRACK_STATUS,
       lg1Status: LG1_CONTROLLED_LIVE_TEST_STATUS,
+      step8CloseoutStatus: STEP_8_CLOSEOUT_STATUS,
     },
     environment: {
       publicConfigurationValid: envStatus.publicConfigurationValid,
@@ -139,12 +145,13 @@ export function getCapabilityStatus(options?: {
       provider: "netlify",
     },
     warnings: [
-      "Calendar foundation in progress — primary build focus is Step 8 security closeout, then Step 9 canonical calendar model.",
+      authFlags.candidateDataReady
+        ? "Step 8 security closeout complete — authorized roles may enter real campaign schedule data."
+        : "Calendar foundation in progress — complete Step 8 security closeout before real schedule entry.",
       authFlags.authenticationComplete
-        ? "Authentication infrastructure is present. Operator certification still incomplete until Step 8 closeout acceptance."
-        : "Authentication is not configured (set APP_SESSION_SECRET). Do not enter real candidate schedule information.",
-      "Real candidate schedule data is prohibited until candidate-data readiness is certified.",
-      "Communications OS (D20–D26) is frozen and not production-enabled. LG-1 is paused.",
+        ? "Authentication is enabled for campaign operators."
+        : "Authentication is not configured (set APP_SESSION_SECRET).",
+      "Communications OS (D20–D26) remains frozen and not production-enabled. LG-1 is paused.",
       "Monday–Friday 8am–noon and 1pm–5pm are standing work-unavailable blocks (vacation override required).",
       "Tuesdays default to Little Rock unless overridden.",
     ],

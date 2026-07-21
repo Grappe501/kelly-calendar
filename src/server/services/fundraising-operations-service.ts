@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import type { FundraisingOperationsHome } from "@/lib/missions/fundraising-operations";
 import type { AuthenticatedActor } from "@/server/auth/actor";
@@ -7,7 +8,7 @@ import { assemblePhase1OpsStack } from "@/server/services/phase1-ops-stack";
 export type FundraisingOperationsPayload = {
   fundraising: FundraisingOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Fundraising Operations — resource-generation workflow. */
@@ -18,6 +19,6 @@ export async function getFundraisingOperations(
   return {
     fundraising: stack.fundraising,
     viewerDisplayName: stack.briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

@@ -132,9 +132,8 @@ export default function MorePage() {
         <h2>Privacy classification</h2>
         <p>
           This application is an <strong>internal campaign operations tool</strong>. It is not a
-          public calendar. Real candidate schedule information remains prohibited until
-          authentication, role-based access control, and the protected calendar database layer are
-          implemented and certified.
+          public calendar. Private campaign schedules require authenticated roles with calendar
+          membership. Public users only see public-classified events.
         </p>
       </section>
     </div>

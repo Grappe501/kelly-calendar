@@ -1,24 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 export const metadata: Metadata = {
   title: "Add event",
 };
 
 export default function AddPage() {
+  const flags = getSharedAuthFlags();
   return (
     <div className="page-stack">
       <header className="page-header">
         <h1>Add</h1>
         <p>
-          Fast structured entry with drafts staged on H-drive. Nothing is live on the Command
-          Calendar yet.
+          {flags.candidateDataReady
+            ? "Create and stage campaign events. Sign in with an authorized role before saving live Command Calendar data."
+            : "Fast structured entry with drafts staged on H-drive. Real candidate schedule persistence is not yet certified."}
         </p>
       </header>
 
-      <section className="dev-banner" role="status">
-        DRAFT WORKFLOW ONLY — authentication and protected database persistence are not complete.
-      </section>
+      {flags.candidateDataReady ? null : (
+        <section className="dev-banner" role="status">
+          DRAFT WORKFLOW ONLY — candidate-data certification incomplete.
+        </section>
+      )}
 
       <section className="panel">
         <div className="button-row">

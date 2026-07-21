@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import {
   buildCandidateOperationsHome,
@@ -10,7 +11,7 @@ import { assemblePhase1OpsStack } from "@/server/services/phase1-ops-stack";
 export type CandidateOperationsPayload = {
   candidate: CandidateOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Candidate Operations — orchestrates Phase 1 + Phase 2 feeds. */
@@ -41,6 +42,6 @@ export async function getCandidateOperations(
   return {
     candidate,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

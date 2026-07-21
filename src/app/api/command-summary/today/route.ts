@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { getTodayCommandShellData } from "@/server/services/command-summary-today";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
         missionsToday: data.missionsToday,
         nextEvent: data.nextEvent,
         upcomingToday: data.upcomingToday,
-        candidateDataReady: false,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

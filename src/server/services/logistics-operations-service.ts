@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
 import {
@@ -12,7 +13,7 @@ import { loadMissionContextForIds } from "@/server/services/mission-context-load
 export type LogisticsOperationsPayload = {
   logistics: LogisticsOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Logistics Operations — can we execute today's plan? */
@@ -68,6 +69,6 @@ export async function getLogisticsOperations(
   return {
     logistics,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

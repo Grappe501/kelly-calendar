@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import {
   type DebateMediaOperationsHome,
@@ -9,7 +10,7 @@ import { assemblePhase1OpsStack } from "@/server/services/phase1-ops-stack";
 export type DebateMediaOperationsPayload = {
   debateMedia: DebateMediaOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Debate & Media Operations — public communication preparedness. */
@@ -20,6 +21,6 @@ export async function getDebateMediaOperations(
   return {
     debateMedia: stack.debateMedia,
     viewerDisplayName: stack.briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

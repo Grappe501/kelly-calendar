@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateCountyOperationsAdvisory } from "@/server/services/county-operations-ai";
 import { getCountyOperations } from "@/server/services/county-operations-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         counties: data.counties,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

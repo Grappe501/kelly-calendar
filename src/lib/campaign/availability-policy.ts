@@ -1,3 +1,5 @@
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
+
 /**
  * Standing campaign availability rules (policy only — not database events).
  * Future calendar steps materialize these as recurring blocked/default blocks
@@ -85,11 +87,12 @@ export const STANDING_AVAILABILITY_RULES: StandingAvailabilityRule[] = [
 ];
 
 export function getStandingAvailabilityPolicy() {
+  const flags = getSharedAuthFlags();
   return {
     timezone: "America/Chicago" as const,
     rules: STANDING_AVAILABILITY_RULES,
     materialization: "pending_calendar_schema" as const,
     databaseEventsCreated: false,
-    candidateData: false,
+    candidateData: flags.candidateDataReady,
   };
 }

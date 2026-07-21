@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateDebateMediaOperationsAdvisory } from "@/server/services/debate-media-operations-ai";
 import { getDebateMediaOperations } from "@/server/services/debate-media-operations-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         debateMedia: data.debateMedia,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

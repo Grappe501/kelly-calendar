@@ -1,26 +1,29 @@
 # Kelly Campaign Command Calendar (KCCC)
 
-**Status:** Step 5.7 complete · **Step 6 Mobile Command Shell IN PROGRESS**
+**Status:** Step 8 security closeout **COMPLETE** · **Step 9** canonical calendar data model **NEXT**
 
 | Field | Value |
 |-------|-------|
-| Path | `H:\SOSWebsite\kelly-calendar\` |
+| Path | `H:\SOSWebsite\Kelly-calendar\` |
 | GitHub | [github.com/Grappe501/kelly-calendar](https://github.com/Grappe501/kelly-calendar) |
 | Production | https://kelly-calendar.netlify.app |
-| Active step | **6** Mobile Command Shell |
-| Closure tip (5.7) | `fc13413` |
-| Candidate data | **Disabled** |
+| Active step | **9** Canonical Calendar Data Model |
+| Step 8 closeout | `KCCC-EA-8-SECURITY-CLOSEOUT-1.0` |
+| Candidate data | **Enabled for authorized roles** |
+| Communications OS | **Frozen** (D20–D26 preserved; production blocked) |
+| Roadmap | [`develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md`](develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md) |
 
 ## Local validation
 
 ```powershell
-cd H:\SOSWebsite\kelly-calendar
-npm run step6:validate
+cd H:\SOSWebsite\Kelly-calendar
+npm run auth:validate
+npm run governance:validate
 npm run typecheck
-npm run test
+npm run build
 ```
 
 ## Notes
 
-- Auth, DB (`kelly_calendar` schema), safe projections, and audit are proven in Step 5.7.
-- Step 6 ships mobile command surfaces in increments; do not reopen Step 5.7 wiring.
+- Primary track is the campaign calendar (Today / Calendar / Event), not communications.
+- Reuse Prisma `Event` as the single canonical event object in Step 9+.

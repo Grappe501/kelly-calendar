@@ -12,26 +12,33 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
   return (
     <div className="page-stack">
       <CapabilityStatusCard
-        title="Calendar recovery"
+        title="Calendar status"
         rows={[
-          { label: "Primary status", value: "Calendar foundation in progress" },
+          {
+            label: "Primary status",
+            value: candidateReady
+              ? "Secure calendar foundation certified — Step 9 next"
+              : "Calendar foundation in progress",
+          },
           {
             label: "Authentication",
-            value: authComplete
-              ? "Infrastructure present — closeout certification pending"
-              : "Incomplete",
+            value: authComplete ? "Complete" : "Incomplete",
           },
           {
             label: "Real candidate data",
-            value: candidateReady ? "Permitted (certified)" : "Prohibited",
+            value: candidateReady ? "Permitted for authorized roles" : "Prohibited",
+          },
+          {
+            label: "Step 8 closeout",
+            value: status.application.step8CloseoutStatus,
           },
           {
             label: "Current build focus",
             value: status.application.primaryFocus,
           },
           {
-            label: "Next build",
-            value: "Step 9 canonical calendar model (after Step 8 acceptance)",
+            label: "Next authorized build",
+            value: status.application.nextAuthorizedBuild,
           },
           {
             label: "Communications subsystem",
@@ -40,10 +47,6 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
           {
             label: "LG-1 controlled live test",
             value: status.application.lg1Status,
-          },
-          {
-            label: "Recovery build",
-            value: status.application.recoveryBuildId,
           },
         ]}
       />
@@ -62,8 +65,8 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
             value: status.application.commitRef ?? "local / unavailable",
           },
           {
-            label: "Next authorized build",
-            value: status.application.nextAuthorizedBuild,
+            label: "Recovery build",
+            value: status.application.recoveryBuildId,
           },
         ]}
       />
@@ -107,8 +110,10 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
                   : "No",
           },
           { label: "Target class", value: status.database.targetClass },
-          { label: "Mutation authorized", value: "false" },
-          { label: "Migration authorized", value: "false" },
+          {
+            label: "Mutations (auth-gated)",
+            value: status.security.databaseMutationsAuthorized ? "Authorized when signed in" : "Blocked",
+          },
         ]}
       />
       <CapabilityStatusCard
@@ -123,12 +128,12 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
             value: status.authentication.serviceConfigurationPresent ? "Yes" : "No",
           },
           {
-            label: "Enabled (infrastructure)",
+            label: "Enabled",
             value: status.authentication.enabled ? "Yes" : "No",
           },
           {
-            label: "Closeout certification",
-            value: authComplete ? "Pending Step 8 acceptance" : "Blocked — secret/session",
+            label: "Authentication complete",
+            value: authComplete ? "true" : "false",
           },
         ]}
       />
@@ -154,11 +159,15 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
           },
           {
             label: "Authentication complete",
-            value: authComplete ? "true (infra) — closeout pending" : "false",
+            value: authComplete ? "true" : "false",
           },
           {
             label: "Candidate-data ready",
             value: candidateReady ? "true" : "false",
+          },
+          {
+            label: "Certification build",
+            value: status.security.candidateDataCertificationBuildId,
           },
         ]}
       />

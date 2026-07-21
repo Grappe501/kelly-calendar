@@ -17,16 +17,16 @@ export default async function SystemStatusPage() {
     databaseSucceeded: diagnostic.connectionSucceeded,
     databaseTargetClass: diagnostic.targetClass,
   });
+  const candidateReady = status.security.candidateDataReady;
 
   return (
     <div className="page-stack">
       <header className="page-header">
         <h1>System status</h1>
         <p>
-          Calendar foundation in progress. Authentication closeout is incomplete and real
-          candidate schedule data remains prohibited. Current build focus: complete Step 8
-          security. Next: Step 9 canonical calendar model. Communications subsystem is frozen
-          and not production-enabled.
+          {candidateReady
+            ? "Step 8 security closeout is complete. Authorized operators may enter real campaign schedule data. Next build: Step 9 canonical calendar data model. Communications remains frozen."
+            : "Calendar foundation in progress. Complete Step 8 security closeout before entering real campaign schedule data."}
         </p>
       </header>
       <SystemStatusDashboard status={status} />

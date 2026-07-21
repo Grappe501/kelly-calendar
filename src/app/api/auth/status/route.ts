@@ -17,6 +17,7 @@ export async function GET(request: Request) {
     sessionValidationAvailable: status.sessionValidationAvailable,
     mutationApisAuthorized: status.mutationApisAuthorized,
     candidateDataEntryAuthorized: status.candidateDataEntryAuthorized,
+    candidateDataReady: status.candidateDataReady,
     loginEnabled: provider.loginEnabled,
     provider: {
       primary: provider.primary,

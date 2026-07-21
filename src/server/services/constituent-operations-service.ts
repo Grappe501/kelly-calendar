@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import {
   buildConstituentOperationsHome,
@@ -11,7 +12,7 @@ import { loadMissionContextForIds } from "@/server/services/mission-context-load
 export type ConstituentOperationsPayload = {
   constituents: ConstituentOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Voter & Constituent Operations — relationship readiness. */
@@ -42,6 +43,6 @@ export async function getConstituentOperations(
   return {
     constituents,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

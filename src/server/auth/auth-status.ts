@@ -4,9 +4,9 @@ import { getAuthProviderStatus } from "@/server/auth/provider";
 import { getSharedAuthFlags, isAuthInfrastructureReady } from "@/lib/auth/auth-flags";
 
 /**
- * Step 4 AUTH-RBAC status.
- * authenticationComplete reflects that the auth module is implemented and
- * session signing is configured. Candidate PII entry stays separately gated.
+ * Auth + candidate-data status.
+ * authenticationComplete = session signing configured + login enabled.
+ * candidateDataEntryAuthorized = Step 8 closeout certified AND auth ready.
  */
 export function refreshAuthStatus() {
   const provider = getAuthProviderStatus();
@@ -17,9 +17,12 @@ export function refreshAuthStatus() {
     authenticationComplete: complete,
     sessionValidationAvailable: complete,
     mutationApisAuthorized: complete,
-    candidateDataEntryAuthorized: false,
+    candidateDataEntryAuthorized: flags.candidateDataEntryAuthorized && complete,
+    candidateDataReady: flags.candidateDataReady && complete,
     reason: complete
-      ? "Step 4 AUTH-RBAC active (app sessions + RBAC)"
+      ? flags.candidateDataReady
+        ? "Auth active; candidate-data certified (EA-8 closeout)"
+        : "Auth active; candidate-data not certified"
       : "APP_SESSION_SECRET missing or too short — auth not ready",
     provider,
   } as const;

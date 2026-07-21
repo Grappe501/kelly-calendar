@@ -14,8 +14,9 @@ export type SecurityCapabilityStatus = {
   originFoundation: true;
   csrfFoundation: true;
   authenticationComplete: boolean;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
   databaseMutationsAuthorized: boolean;
+  candidateDataCertificationBuildId: string;
 };
 
 export function getSecurityCapabilityStatus(): SecurityCapabilityStatus {
@@ -34,7 +35,8 @@ export function getSecurityCapabilityStatus(): SecurityCapabilityStatus {
     originFoundation: true,
     csrfFoundation: true,
     authenticationComplete: flags.authenticationComplete,
-    candidateDataReady: false,
+    candidateDataReady: flags.candidateDataReady,
     databaseMutationsAuthorized: flags.databaseMutationsAuthorized,
+    candidateDataCertificationBuildId: flags.candidateDataCertificationBuildId,
   };
 }

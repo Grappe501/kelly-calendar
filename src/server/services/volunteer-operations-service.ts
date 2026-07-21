@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import { buildFinanceOperationsHome } from "@/lib/missions/finance-operations";
@@ -14,7 +15,7 @@ import { loadMissionContextForIds } from "@/server/services/mission-context-load
 export type VolunteerOperationsPayload = {
   volunteers: VolunteerOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 export async function getVolunteerOperations(
@@ -88,6 +89,6 @@ export async function getVolunteerOperations(
   return {
     volunteers,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

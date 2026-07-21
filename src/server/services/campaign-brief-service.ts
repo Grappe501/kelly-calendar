@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import { detectCandidateOverlaps } from "@/features/operational-intelligence/services/conflict-service";
 import {
@@ -34,7 +35,7 @@ export type CampaignBriefPayload = {
   allMissionsToday: MissionCard[];
   countiesByMission: Array<{ missionId: string; countyName: string | null }>;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /**
@@ -147,6 +148,6 @@ export async function getCampaignBrief(
     allMissionsToday,
     countiesByMission,
     viewerDisplayName: actor.displayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

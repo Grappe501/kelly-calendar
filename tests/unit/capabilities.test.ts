@@ -14,11 +14,11 @@ describe("capability honesty", () => {
     else process.env.APP_SESSION_SECRET = previous;
   });
 
-  it("marks auth complete when session secret is configured; candidate data stays gated", () => {
+  it("marks auth and candidate-data ready when session secret is configured", () => {
     const security = getSecurityCapabilityStatus();
-    expect(CURRENT_STEP_NUMBER).toBe(8);
+    expect(CURRENT_STEP_NUMBER).toBe(9);
     expect(security.authenticationComplete).toBe(true);
-    expect(security.candidateDataReady).toBe(false);
+    expect(security.candidateDataReady).toBe(true);
     expect(security.databaseMutationsAuthorized).toBe(true);
     expect(security.rateLimitDistributed).toBe(false);
   });
@@ -26,11 +26,20 @@ describe("capability honesty", () => {
   it("exposes calendar recovery posture on capability status", async () => {
     const { getCapabilityStatus } = await import("@/lib/system/capabilities");
     const status = getCapabilityStatus();
-    expect(status.application.step).toBe(8);
+    expect(status.application.step).toBe(9);
     expect(status.application.communicationsTrack).toBe("FROZEN");
     expect(status.application.lg1Status).toBe("PAUSED");
+    expect(status.application.step8CloseoutStatus).toBe("COMPLETE");
     expect(status.application.nextAuthorizedBuild).toBe(
-      "KCCC-EA-8-SECURITY-CLOSEOUT-1.0",
+      "KCCC-EA-9-CANONICAL-CALENDAR-DATA-MODEL-1.0",
     );
+    expect(status.security.candidateDataReady).toBe(true);
+  });
+
+  it("keeps candidate-data false when session secret is missing", () => {
+    delete process.env.APP_SESSION_SECRET;
+    const security = getSecurityCapabilityStatus();
+    expect(security.authenticationComplete).toBe(false);
+    expect(security.candidateDataReady).toBe(false);
   });
 });

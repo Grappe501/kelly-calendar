@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateCommunicationsOperationsAdvisory } from "@/server/services/communications-operations-ai";
 import { getCommunicationsOperations } from "@/server/services/communications-operations-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         communications: data.communications,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

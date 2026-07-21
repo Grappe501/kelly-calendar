@@ -107,9 +107,9 @@ const checks = [
     detail: "completed_steps must include KCCC-STEP-04-AUTH-RBAC",
   },
   {
-    name: "Candidate data remains gated",
-    pass: buildState.candidate_data_ready === false,
-    detail: "candidate_data_ready must stay false until certified",
+    name: "Candidate data certified (Step 8 closeout)",
+    pass: buildState.candidate_data_ready === true,
+    detail: "candidate_data_ready must be true after EA-8 security closeout",
   },
 ];
 

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { withAuthenticatedMutation } from "@/server/auth/api-mutation";
 import { applyMissionDayAction } from "@/server/services/mission-day-action-service";
 import { isMissionDayAction } from "@/lib/missions/mission-day-actions";
@@ -33,7 +34,7 @@ export async function POST(request: Request, context: Ctx) {
         expectedVersion: parsed.data.expectedVersion,
         requestId,
       });
-      return { missionDay: result, candidateDataReady: false };
+      return { missionDay: result, candidateDataReady: getSharedAuthFlags().candidateDataReady };
     },
   );
 }

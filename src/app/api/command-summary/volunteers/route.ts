@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateVolunteerOperationsAdvisory } from "@/server/services/volunteer-operations-ai";
 import { getVolunteerOperations } from "@/server/services/volunteer-operations-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         volunteers: data.volunteers,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

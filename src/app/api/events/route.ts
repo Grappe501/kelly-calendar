@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { withAuthenticatedMutation, withAuthenticatedQuery } from "@/server/auth/api-mutation";
 import { createEvent, listEventsForActor } from "@/server/services/event-service";
 
@@ -34,7 +35,7 @@ const createSchema = z.object({
 export async function GET(request: Request) {
   return withAuthenticatedQuery(request, "/api/events", async ({ actor }) => {
     const events = await listEventsForActor(actor);
-    return { events, candidateDataReady: false };
+    return { events, candidateDataReady: getSharedAuthFlags().candidateDataReady };
   });
 }
 

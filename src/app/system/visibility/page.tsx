@@ -24,10 +24,9 @@ export default function VisibilityDoctrinePage() {
         </p>
       </header>
 
-      <section className="dev-banner" role="alert">
-        These are demonstration visibility examples. Real candidate schedule data remains
-        prohibited until authentication, role-based access control, and the protected
-        calendar database layer are complete.
+      <section className="dev-banner" role="status">
+        These are demonstration visibility examples. Live private campaign events remain
+        protected by authentication, role-based access, and visibility policy.
       </section>
 
       <section className="panel">

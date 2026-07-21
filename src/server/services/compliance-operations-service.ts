@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import {
   buildComplianceOperationsHome,
@@ -13,7 +14,7 @@ import { loadMissionContextForIds } from "@/server/services/mission-context-load
 export type ComplianceOperationsPayload = {
   compliance: ComplianceOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Compliance Operations — can we execute lawfully / on-policy? */
@@ -79,6 +80,6 @@ export async function getComplianceOperations(
   return {
     compliance,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

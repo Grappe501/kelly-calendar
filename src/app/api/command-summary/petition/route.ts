@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGeneratePetitionBallotOperationsAdvisory } from "@/server/services/petition-ballot-operations-ai";
 import { getPetitionBallotOperations } from "@/server/services/petition-ballot-operations-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         petition: data.petition,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

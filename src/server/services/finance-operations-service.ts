@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
 import {
@@ -13,7 +14,7 @@ import { loadMissionContextForIds } from "@/server/services/mission-context-load
 export type FinanceOperationsPayload = {
   finance: FinanceOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Finance & Resources Operations — can we sustain the campaign? */
@@ -91,6 +92,6 @@ export async function getFinanceOperations(
   return {
     finance,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

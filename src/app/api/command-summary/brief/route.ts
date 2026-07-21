@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateCampaignBriefAdvisory } from "@/server/services/campaign-brief-ai";
 import { getCampaignBrief } from "@/server/services/campaign-brief-service";
 
@@ -22,7 +23,7 @@ export async function GET(request: Request) {
         brief: data.brief,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

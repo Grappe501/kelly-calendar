@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import { buildCommunicationsOperationsHome } from "@/lib/missions/communications-operations";
 import { buildComplianceOperationsHome } from "@/lib/missions/compliance-operations";
@@ -16,7 +17,7 @@ import { loadMissionContextForIds } from "@/server/services/mission-context-load
 export type FieldOperationsPayload = {
   field: FieldOperationsHome;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 export async function getFieldOperations(
@@ -119,6 +120,6 @@ export async function getFieldOperations(
   return {
     field,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

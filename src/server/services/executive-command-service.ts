@@ -1,4 +1,5 @@
 import "server-only";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 
 import { buildCandidateOperationsHome } from "@/lib/missions/candidate-operations";
 import { buildExecutiveCommand, type ExecutiveCommand } from "@/lib/missions/executive-command";
@@ -8,7 +9,7 @@ import { assemblePhase1OpsStack } from "@/server/services/phase1-ops-stack";
 export type ExecutiveCommandPayload = {
   command: ExecutiveCommand;
   viewerDisplayName: string;
-  candidateDataReady: false;
+  candidateDataReady: boolean;
 };
 
 /** Authenticated Executive Command — Phase 1 kernel + Phase 2 capabilities. */
@@ -59,6 +60,6 @@ export async function getExecutiveCommand(
   return {
     command,
     viewerDisplayName: briefPayload.viewerDisplayName,
-    candidateDataReady: false,
+    candidateDataReady: getSharedAuthFlags().candidateDataReady,
   };
 }

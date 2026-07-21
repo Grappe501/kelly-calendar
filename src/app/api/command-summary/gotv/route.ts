@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateGotvOperationsAdvisory } from "@/server/services/gotv-operations-ai";
 import { getGotvOperations } from "@/server/services/gotv-operations-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         gotv: data.gotv,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );

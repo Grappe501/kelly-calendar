@@ -5,9 +5,13 @@ import { usePathname } from "next/navigation";
 import { BottomNav } from "@/components/navigation/BottomNav";
 import { DevStageBanner } from "@/components/status/DevStageBanner";
 
-type Props = { children: ReactNode };
+type Props = {
+  children: ReactNode;
+  /** Server-computed; null when Step 8 certified and auth ready. */
+  securityBannerMessage?: string | null;
+};
 
-export function ShellChrome({ children }: Props) {
+export function ShellChrome({ children, securityBannerMessage = null }: Props) {
   const pathname = usePathname() ?? "/";
   const hideChrome = pathname === "/login" || pathname.startsWith("/login/");
 
@@ -18,7 +22,7 @@ export function ShellChrome({ children }: Props) {
       </a>
       {!hideChrome ? (
         <header>
-          <DevStageBanner />
+          <DevStageBanner message={securityBannerMessage} />
         </header>
       ) : null}
       <main id="main-content" className="app-main">

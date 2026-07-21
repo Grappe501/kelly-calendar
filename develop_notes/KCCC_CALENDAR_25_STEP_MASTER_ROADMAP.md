@@ -4,8 +4,9 @@
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE
 Date: 2026-07-21
+Updated: Step 8 closeout complete → Step 9 ready
 Supersedes sequencing in: docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md (historical)
-Runtime step constants: src/lib/system/constants.ts (must stay aligned)
+Runtime step constants: src/lib/system/constants.ts
 ```
 
 ## Governing decision
@@ -13,133 +14,100 @@ Runtime step constants: src/lib/system/constants.ts (must stay aligned)
 ```text
 Primary product: Kelly Campaign Calendar
 Communications OS (D20–D26): FROZEN — preserved, production blocked
-LG-1: PAUSED — no credentials, no Phase C+
+LG-1: PAUSED
 AI: disabled until Step 16 (proposal_only)
 ```
 
 Every build must visibly improve one of: **Today · Calendar · Event · Mission · People · Travel · Briefing · Follow-up**, or unlock security required to use them.
 
----
-
-## Progress tracker (operator)
-
-| Step | Name | Status | Notes |
-|------|------|--------|-------|
-| 1 | Master Product Constitution | ✅ DONE | Historical |
-| 2 | Application scaffold | ✅ DONE | Next.js/TS/Netlify |
-| 3 | Environment and security layer | ✅ DONE | Env loader, headers |
-| 4 | Authentication foundation | 🔄 PARTIAL | Login/session exist; honesty + cert pending |
-| 5 | Federated calendar schema foundation | 🔄 PARTIAL | Rich Prisma models exist |
-| 6 | Mobile application shell | 🔄 PARTIAL | Bottom nav present |
-| 7 | Event APIs and draft entry | 🔄 PARTIAL | APIs + `/add`; real PII prohibited |
-| **8** | **Security + candidate-data closeout** | **🔄 CURRENT** | **`KCCC-EA-8-SECURITY` — closeout plan** |
-| 9 | Canonical calendar data model | ⬜ NEXT | Spec ready; implement after Step 8 |
-| 10 | Calendar operating views | ⬜ | Today/Day/Week/Month/Agenda… |
-| 11 | Event creation and editing | ⬜ | Full operator CRUD |
-| 12 | Availability and standing rules | ⬜ | Work blocks, Tuesday LR, vacation |
-| 13 | Conflict and feasibility engine | ⬜ | Travel-time + overlaps |
-| 14 | Mission lifecycle integration | ⬜ | Event → mission ops |
-| 15 | People and relationship integration | ⬜ | Participants + history |
-| 16 | AI calendar assistance | ⬜ | proposal_only |
-| 17 | Travel planning | ⬜ | Deepen travel UX |
-| 18 | Briefing system | ⬜ | Daily/event briefings |
-| 19 | Debrief and follow-up | ⬜ | Close the loop |
-| 20 | Task and delegation integration | ⬜ | Assignments |
-| 21 | Volunteer and staff scheduling | ⬜ | Staffing calendars |
-| 22 | External calendar import/export | ⬜ | ICS + controlled export |
-| 23 | Google Calendar controlled sync | ⬜ | Import-first; never master |
-| 24 | Operational hardening and mobile review | ⬜ | Hardening + a11y |
-| 25 | Production launch certification | ⬜ | Launch gate |
-
-**Remaining steps to track:** **8 → 25** (18 steps). Steps 1–7 are foundation/partial — not reopened unless a defect blocks Step 8+.
+Landing experience goal (later, not this step): answer *What am I doing today? / Where do I need to be? / What do I need to prepare?* — admin/system behind secondary navigation.
 
 ---
 
-## Step detail (calendar-centered)
+## Phase 1 — Foundation (usable calendar)
 
-### Steps 1–8 — Foundation, auth, security
+| Step | Name | Status |
+|------|------|--------|
+| 1–7 | Environment, scaffold, auth foundation, schema, shell, entry APIs | ✅ / 🔄 foundation |
+| **8** | **Security + Candidate Data Certification** | **✅ COMPLETE** |
+| **9** | **Canonical Calendar Data Model** | **⬜ NEXT** |
+| 10 | Calendar Operating Views | ⬜ |
+| 11 | Event Creation & Editing | ⬜ |
+| 12 | Availability & Standing Rules | ⬜ |
+| 13 | Conflict Engine | ⬜ |
 
-Complete Step 8 per `KCCC_EA_8_SECURITY_CLOSEOUT_PLAN.md`:
+**Phase 1 outcome:** a genuinely usable, secure campaign calendar.
+
+---
+
+## Phase 2 — Campaign Operations
+
+| Step | Name | Status |
+|------|------|--------|
+| 14 | Mission Lifecycle | ⬜ |
+| 15 | Relationship Integration | ⬜ |
+| 16 | AI Assistance | ⬜ |
+| 17 | Travel Planning | ⬜ |
+| 18 | Briefing System | ⬜ |
+| 19 | Debrief / Follow-up | ⬜ |
+| 20 | Tasks & Delegation | ⬜ |
+| 21 | Volunteer Scheduling | ⬜ |
+
+**Phase 2 outcome:** Campaign Operating System on top of the calendar.
+
+---
+
+## Phase 3 — Ecosystem
+
+| Step | Name | Status |
+|------|------|--------|
+| 22 | Calendar Import / Export | ⬜ |
+| 23 | Google Sync | ⬜ |
+| 24 | Hardening / Mobile | ⬜ |
+| 25 | Launch Certification | ⬜ |
+
+**Phase 3 outcome:** external integrations and launch — only after the internal experience is solid.
+
+---
+
+## Step 8 closeout (accepted criteria)
 
 ```text
-Authentication complete: true
-Candidate-data ready: true
-Real schedule data permitted for authorized roles
+✓ Authentication complete
+✓ Authorization verified (middleware + RBAC + fail-closed APIs)
+✓ Candidate-data ready = true (authorized roles)
+✓ Real calendar entry enabled
+✓ Warning banner suppressed when certified
+✓ Status dashboard reflects certified state
+✓ No new product features in the closeout pass
 ```
 
-### Step 9 — Canonical calendar data model
+Evidence: `develop_notes/KCCC_EA_8_SECURITY_CLOSEOUT_EVIDENCE.md`
 
-`KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL_BUILD.md`  
-Reuse `Event` / `Calendar*` — extend availability; no duplicate schemas.
-
-### Step 10 — Calendar operating views
+## Canonical Event rule (Step 9+)
 
 ```text
-Today · Day · Week · Month · Agenda · Unscheduled · Needs attention · Conflicts · Travel
+Event  (one table of record)
+ ├── Participants
+ ├── Mission
+ ├── Travel
+ ├── Briefing
+ ├── Follow-up
+ ├── Tasks
+ ├── AI Summary
+ ├── Visibility
+ └── Audit
 ```
 
-Primary page: **Today’s Campaign Schedule** (not communications, not provider config).
+Do not invent parallel CampaignEvent / CalendarEvent / MissionEvent tables.
 
-### Step 11 — Event creation and editing
+## Communications
 
-Create, edit, cancel, reschedule, duplicate, attendees, staff, privacy, prep, travel, follow-up, recurrence + instance override.
+Frozen D20–D26 may later attach as an event panel only. No LG-1 / Resend / D27 while Phase 1–2 calendar work is open unless explicitly unfrozen.
 
-### Step 12 — Availability and standing schedule rules
-
-Mon–Fri work blocks; Tuesday Little Rock default; vacation overrides. Influence conflict detection and create warnings (never silent override).
-
-### Step 13 — Conflict and feasibility engine
-
-Overlaps, work-hour conflicts, travel-time conflicts, missing location/staff, override-required states.
-
-### Step 14 — Mission lifecycle integration
-
-Event → objective → preparation → travel → execution → debrief → follow-up. Reuse existing mission projection.
-
-### Step 15 — People and relationship integration
-
-Attendees, orgs, relationship history, owners, follow-up status on the event.
-
-### Step 16 — AI assistance
-
-Briefings, conflict explanations, prep/follow-up suggestions, optimization **proposals only**. No autonomous create/move/cancel.
-
-### Steps 17–21 — Operations depth
-
-Travel, briefing, debrief/follow-up, tasks/delegation, volunteer/staff scheduling.
-
-### Steps 22–23 — External calendars
-
-Import/export; Google controlled sync (never master of campaign truth).
-
-### Steps 24–25 — Hardening and launch
-
-Mobile/ops hardening; production launch certification.
-
----
-
-## Communications (dependent only)
-
-Frozen D20–D26 may later attach as an **event panel**:
-
-```text
-Event communications
-  Volunteer reminder / Press advisory / Follow-up / Thank-you
-```
-
-Never a second calendar app. No LG-1 / Resend / D27 work while Steps 8–15 are open unless Steve explicitly unfreezes.
-
----
-
-## Alignment rules for agents
-
-1. Update `CURRENT_STEP_NUMBER` / `CURRENT_STEP_ID` when a step is accepted.
-2. Update this table’s Status column in the same commit.
-3. Do not treat `docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md` as the live sequence without reconciling here.
-4. Status page links here as **Calendar roadmap**.
-
-## Related recovery docs
+## Related docs
 
 - `KCCC_CALENDAR_CURRENT_IMPLEMENTATION_INVENTORY.md`
 - `KCCC_EA_8_SECURITY_CLOSEOUT_PLAN.md`
+- `KCCC_EA_8_SECURITY_CLOSEOUT_EVIDENCE.md`
 - `KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL_BUILD.md`

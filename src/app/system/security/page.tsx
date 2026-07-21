@@ -15,7 +15,9 @@ export default function SecurityPage() {
       <header className="page-header">
         <h1>Security status</h1>
         <p>
-          Step 3 security foundation — not full production certification for candidate data.
+          {security.candidateDataReady
+            ? "Step 8 closeout certified — authentication and candidate-data readiness are active for authorized roles."
+            : "Security foundation active — candidate-data certification incomplete."}
         </p>
       </header>
 
@@ -34,19 +36,34 @@ export default function SecurityPage() {
             label: "Rate-limit foundation",
             value: "Partial (in-memory · not distributed)",
           },
-          { label: "Authentication", value: "Not complete" },
-          { label: "Database mutation", value: "Not authorized" },
-          { label: "Production data readiness", value: "No" },
+          {
+            label: "Authentication complete",
+            value: security.authenticationComplete ? "Yes" : "No",
+          },
+          {
+            label: "Database mutations",
+            value: security.databaseMutationsAuthorized
+              ? "Authorized when signed in"
+              : "Not authorized",
+          },
+          {
+            label: "Candidate-data ready",
+            value: security.candidateDataReady ? "Yes" : "No",
+          },
+          {
+            label: "Certification build",
+            value: security.candidateDataCertificationBuildId,
+          },
         ]}
       />
 
       <section className="panel">
         <div className="button-row">
-          <Link className="button secondary" href="/api/system/security">
-            Security JSON
-          </Link>
           <Link className="button secondary" href="/system/status">
             System status
+          </Link>
+          <Link className="button secondary" href="/more">
+            Back to More
           </Link>
         </div>
       </section>

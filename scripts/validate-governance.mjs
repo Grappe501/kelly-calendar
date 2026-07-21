@@ -15,6 +15,7 @@ const required = [
   "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md",
   "develop_notes/KCCC_CALENDAR_CURRENT_IMPLEMENTATION_INVENTORY.md",
   "develop_notes/KCCC_EA_8_SECURITY_CLOSEOUT_PLAN.md",
+  "develop_notes/KCCC_EA_8_SECURITY_CLOSEOUT_EVIDENCE.md",
   "develop_notes/KCCC_STEP_05_6_IMPLEMENTATION_REPORT.md",
   "develop_notes/KCCC_STEP_05_7_NETLIFY_AUTH_AND_LIVE_MUTATION_PROOF.md",
   "develop_notes/KCCC_STEP_05_7_IMPLEMENTATION_REPORT.md",
@@ -40,7 +41,8 @@ const buildState = JSON.parse(
 const step57 = "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF";
 const step06 = "KCCC-STEP-06-MOBILE-COMMAND-SHELL";
 const ea8 = "KCCC-EA-8-SECURITY";
-const allowedCurrent = new Set([step57, step06, ea8]);
+const ea9 = "KCCC-EA-9-CANONICAL-CALENDAR-DATA-MODEL";
+const allowedCurrent = new Set([step57, step06, ea8, ea9]);
 if (!allowedCurrent.has(buildState.current_step)) {
   console.error(
     `FAIL: build_state current_step must be one of ${[...allowedCurrent].join(", ")}`,
@@ -82,16 +84,16 @@ if (buildState.database_mutations_authorized !== true) {
 }
 
 if (
-  buildState.candidate_data_ready === true ||
-  buildState.real_candidate_data_enabled === true
+  buildState.candidate_data_ready !== true ||
+  buildState.real_candidate_data_enabled !== true
 ) {
-  console.error("FAIL: candidate data must remain disabled");
+  console.error("FAIL: candidate data must be certified true after EA-8 closeout");
   failed = true;
 } else {
-  console.log("PASS: candidate data remains disabled");
+  console.log("PASS: candidate data certified");
 }
 
-if (buildState.current_step === ea8) {
+if (buildState.current_step === ea9 || buildState.current_step === ea8) {
   if (
     buildState.calendar_recovery_build_id !==
     "KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0"
@@ -107,14 +109,20 @@ if (buildState.current_step === ea8) {
   } else {
     console.log("PASS: communications OS frozen");
   }
-  if (
-    buildState.next_engineering_deliverable !==
-    "KCCC-EA-8-SECURITY-CLOSEOUT-1.0"
-  ) {
-    console.error("FAIL: next engineering deliverable must be EA-8 closeout");
+  if (buildState.step_8_closeout_status !== "complete") {
+    console.error("FAIL: step_8_closeout_status must be complete");
     failed = true;
   } else {
-    console.log("PASS: next engineering deliverable is EA-8 closeout");
+    console.log("PASS: Step 8 closeout complete");
+  }
+  if (
+    buildState.next_engineering_deliverable !==
+    "KCCC-EA-9-CANONICAL-CALENDAR-DATA-MODEL-1.0"
+  ) {
+    console.error("FAIL: next engineering deliverable must be EA-9 model build");
+    failed = true;
+  } else {
+    console.log("PASS: next engineering deliverable is EA-9");
   }
 } else if (
   buildState.operator_acceptance_recorded === true &&

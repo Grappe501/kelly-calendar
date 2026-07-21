@@ -1,4 +1,5 @@
 import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import { maybeGenerateComplianceOperationsAdvisory } from "@/server/services/compliance-operations-ai";
 import { getComplianceOperations } from "@/server/services/compliance-operations-service";
 
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
         compliance: data.compliance,
         advisory,
         viewerDisplayName: data.viewerDisplayName,
-        candidateDataReady: false as const,
+        candidateDataReady: getSharedAuthFlags().candidateDataReady,
       };
     },
   );
