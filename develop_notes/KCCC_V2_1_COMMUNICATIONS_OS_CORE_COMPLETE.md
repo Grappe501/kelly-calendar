@@ -1,7 +1,7 @@
 # KCCC V2.1 — Communications Operating System Core Complete
 
 **Milestone tag:** `KCCC-V2.1-COMMS-CORE-COMPLETE`  
-**Baseline commit:** `259d4fb` (D26 docs + identifiers; feature `0478fc1`)  
+**Baseline commit:** `a5d7316a6271ebc84713ef38bc2f72c252ad3017` (milestone note; feature `0478fc1`; D26 identifiers `259d4fb`)  
 **Netlify baseline:** `6a5f11de20c00cded0749c3a` · https://kelly-calendar.netlify.app  
 **Status:** Core complete — **general production intentionally blocked**  
 **Date:** 2026-07-21
