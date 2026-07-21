@@ -1,0 +1,24 @@
+{
+  "pass": "GROSSFELD-LR-2026-08-07",
+  "meeting": {
+    "key": "meet-jim-grossfeld-lr-2026-08-07",
+    "eventNumber": "KCCC-2026-0162",
+    "status": "HOLD"
+  },
+  "travel": {
+    "key": "travel-hope-2026-08-07",
+    "eventNumber": "KCCC-2026-0036",
+    "status": "HOLD"
+  },
+  "conflictsSurfaced": [
+    "meet-jim-grossfeld-lr-2026-08-07 (LR, time TBD) ∩ travel-hope-2026-08-07 (depart ~2:00 PM HOLD)"
+  ],
+  "openDecisions": [
+    "Lock exact Aug 7 meeting time/place with Jim Grossfeld (he is in LR all day).",
+    "Keep Hope travel afternoon, or delay Hope positioning if meeting runs late."
+  ],
+  "omittedFromGit": [
+    "Contact phone numbers",
+    "Contact emails"
+  ]
+}

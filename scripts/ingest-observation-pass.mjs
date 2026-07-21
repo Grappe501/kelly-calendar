@@ -425,7 +425,10 @@ const LIVE_EVENTS = [
     defaultVisibility: "TITLE_LOCATION",
     privateNotes: notes(
       "travel-hope-2026-08-07",
-      "SUPPORT for hope-watermelon-festival-2026-08-08. Hotel TBD. Parent: Hope Watermelon Festival Campaign Swing.",
+      [
+        "SUPPORT for hope-watermelon-festival-2026-08-08. Hotel TBD. Parent: Hope Watermelon Festival Campaign Swing.",
+        "SAME-DAY: meet-jim-grossfeld-lr-2026-08-07 HOLD in Little Rock (time TBD). If meeting locks late, delay Hope travel — do not auto-resolve.",
+      ].join("\n"),
     ),
   },
   {
