@@ -94,15 +94,37 @@ function eachWeekday(startYmd, endYmd) {
       const y = cur.getUTCFullYear();
       const m = String(cur.getUTCMonth() + 1).padStart(2, "0");
       const d = String(cur.getUTCDate()).padStart(2, "0");
+      const ymd = `${y}-${m}-${d}`;
       out.push({
-        ymd: `${y}-${m}-${d}`,
+        ymd,
         weekday: dow,
         isTuesday: dow === 2,
+        isMonday: dow === 1,
+        isLastTuesdayOfMonth: dow === 2 && isLastTuesdayOfMonth(y, cur.getUTCMonth(), cur.getUTCDate()),
+        isMondayBeforeLastTuesday: false,
       });
     }
     cur.setUTCDate(cur.getUTCDate() + 1);
   }
+  // Mark Mondays that precede the last Tuesday of their month
+  for (const day of out) {
+    if (!day.isMonday) continue;
+    const [y, m, d] = day.ymd.split("-").map(Number);
+    const lastTue = lastTuesdayDate(y, m - 1);
+    if (d === lastTue - 1) day.isMondayBeforeLastTuesday = true;
+  }
   return out;
+}
+
+function lastTuesdayDate(year, monthIndex0) {
+  const last = new Date(Date.UTC(year, monthIndex0 + 1, 0));
+  const dow = last.getUTCDay();
+  const offset = (dow + 7 - 2) % 7; // days since Tuesday
+  return last.getUTCDate() - offset;
+}
+
+function isLastTuesdayOfMonth(year, monthIndex0, dayOfMonth) {
+  return dayOfMonth === lastTuesdayDate(year, monthIndex0);
 }
 
 async function allocateEventNumber(tx, year) {
@@ -284,8 +306,38 @@ try {
   console.log(`--- ${PASS} materialize ${days.length} weekdays ${RANGE_START}→${RANGE_END} ---`);
 
   for (const day of days) {
-    const locLine = day.isTuesday
-      ? "Location: Little Rock Campaign Office (Tuesday default)."
+    // Last Tuesday of month: skip Tue office blocks (field/immersion day).
+    // Preceding Monday: treat as Little Rock office day.
+    const forceLittleRock = day.isTuesday || day.isMondayBeforeLastTuesday;
+    const skipDay = day.isLastTuesdayOfMonth;
+
+    if (skipDay) {
+      for (const half of ["am", "pm"]) {
+        const key = `standing-office-${half}-${day.ymd}`;
+        const existing = await findByIngestKey(key);
+        if (existing && existing.status !== "CANCELLED") {
+          await prisma.event.update({
+            where: { id: existing.id },
+            data: {
+              status: "CANCELLED",
+              privateNotes: `${existing.privateNotes}\n[SUPERSEDED:${PASS}] Last Tuesday of month — LR office shifted to Monday; Tuesday reserved for field/immersion.`,
+              version: { increment: 1 },
+            },
+          });
+          proof.cancelledStanding.push({ key, reason: "last_tuesday_field_day" });
+          console.log(`CANCEL standing (last Tue): ${key}`);
+        } else {
+          proof.skippedOverride.push({ key, reason: "last_tuesday_skip" });
+          console.log(`SKIP (last Tue): ${key}`);
+        }
+      }
+      continue;
+    }
+
+    const locLine = forceLittleRock
+      ? day.isMondayBeforeLastTuesday
+        ? "Location: Little Rock Campaign Office (Monday before last Tuesday of month — office-day shift)."
+        : "Location: Little Rock Campaign Office (Tuesday default)."
       : "Location: As Scheduled.";
     const amKey = `standing-office-am-${day.ymd}`;
     const pmKey = `standing-office-pm-${day.ymd}`;
@@ -294,8 +346,8 @@ try {
       key: amKey,
       startsAt: chicagoLocalToDate(`${day.ymd}T08:00:00`),
       endsAt: chicagoLocalToDate(`${day.ymd}T12:00:00`),
-      city: day.isTuesday ? "Little Rock" : null,
-      venueName: day.isTuesday ? "Little Rock Campaign Office" : null,
+      city: forceLittleRock ? "Little Rock" : null,
+      venueName: forceLittleRock ? "Little Rock Campaign Office" : null,
       privateNotes: notes(
         amKey,
         [
@@ -311,8 +363,8 @@ try {
       key: pmKey,
       startsAt: chicagoLocalToDate(`${day.ymd}T13:00:00`),
       endsAt: chicagoLocalToDate(`${day.ymd}T17:00:00`),
-      city: day.isTuesday ? "Little Rock" : null,
-      venueName: day.isTuesday ? "Little Rock Campaign Office" : null,
+      city: forceLittleRock ? "Little Rock" : null,
+      venueName: forceLittleRock ? "Little Rock Campaign Office" : null,
       privateNotes: notes(
         pmKey,
         [

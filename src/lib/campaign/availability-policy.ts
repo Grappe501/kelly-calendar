@@ -87,6 +87,22 @@ export const STANDING_AVAILABILITY_RULES: StandingAvailabilityRule[] = [
     notes: [
       "Reserved for staff coordination, governmental/press/finance meetings, planning, vendors, content, RCC, admin.",
       "Override when a campaign mission or major event is already scheduled.",
+      "EXCEPTION: On the last Tuesday of each month, the Little Rock office day shifts to Monday so Tuesday can be used for statewide field / county immersion (see last-tuesday-office-shift).",
+    ],
+  },
+  {
+    id: "last-tuesday-office-shift",
+    kind: "override_capable",
+    weekdays: ["Monday", "Tuesday"],
+    location: "Little Rock Campaign Office",
+    summary:
+      "Last Tuesday of each month: Little Rock office day moves to Monday; Tuesday is field/immersion-capable.",
+    overrideAllowed: true,
+    notes: [
+      "When a major county immersion falls on the last Tuesday of the month, Kelly’s Little Rock office day shifts to Monday.",
+      "Enables Mon evening departure, full Tue–Wed immersion, return Wed evening before remaining week commitments.",
+      "Example: week of Aug 24–26 2026 — Mon LR office, Mon eve → Paragould, Tue–Wed Greene County, Thu Clark County.",
+      "Staff should plan around this predictable monthly pattern.",
     ],
   },
   {
@@ -97,7 +113,7 @@ export const STANDING_AVAILABILITY_RULES: StandingAvailabilityRule[] = [
       "Dated campaign missions replace standing office hours for the overlapping windows.",
     overrideAllowed: true,
     notes: [
-      "Examples: Jefferson immersion Aug 12–13; NWA immersion Aug 18–20; Miller immersion Aug 24.",
+      "Examples: Jefferson immersion Aug 12–13; NWA immersion Aug 17–20; Greene immersion Aug 25–26.",
       "System must not silently clear operator-defined mission reality (Doctrine #1).",
     ],
   },

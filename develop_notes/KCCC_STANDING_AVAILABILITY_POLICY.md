@@ -11,12 +11,13 @@
 2. **Monday–Friday 12:00 PM–1:00 PM** — **Open** (lunch / flexible meetings) — not auto-blocked  
 3. **Monday–Friday 1:00 PM–5:00 PM** — Campaign Office Hours (**Busy**) — same title  
 4. **Every Tuesday** — default location **Little Rock Campaign Office** (same hours + open lunch), unless superseded  
+5. **Last Tuesday of each month** — Little Rock office day **shifts to Monday**; Tuesday is available for statewide field / county immersion (Mon evening departure → multi-day immersion → return before remaining week commitments)
 
 ## Event override rule
 
 Campaign events, travel, festivals, rallies, county immersions, debates, speaking engagements, or major meetings **override** standing office blocks for overlapping windows.
 
-Examples: Jefferson immersion Aug 12–13; NWA immersion Aug 17–20; Miller immersion Aug 23–24.
+Examples: Jefferson immersion Aug 12–13; NWA immersion Aug 17–20; Greene immersion Aug 25–26 (with Mon Aug 24 as LR office under the last-Tuesday exception).
 
 ## Doctrine
 
