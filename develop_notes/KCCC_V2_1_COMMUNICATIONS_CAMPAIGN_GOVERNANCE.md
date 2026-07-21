@@ -4,4 +4,4 @@ Campaigns bind one channel, one approved composition revision, one approved reci
 
 After approval, configuration changes require a new campaign revision and invalidate readiness/authorization.
 
-Production and controlled live-test modes are not grantable in D25.
+Production mode is not grantable in D25. Controlled live tests use the separate D26 path (`LIVE_TEST_READY` + one-time authorization) and still do not enable general production campaigns.

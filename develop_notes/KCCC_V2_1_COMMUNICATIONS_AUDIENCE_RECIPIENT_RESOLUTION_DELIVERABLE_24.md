@@ -5,7 +5,7 @@
 **Netlify:** deploy `6a5f050a7b2b84cb0fe8c0de` · https://kelly-calendar.netlify.app  
 **Baseline:** D23 `KCCC_V2_1_COMMUNICATIONS_TEMPLATE_COMPOSITION_DELIVERABLE_23.md`  
 **Parent stack:** D20 consent/queue · D21 dispatch · D22 provider · D23 composition  
-**Next:** D25 shipped — see `KCCC_V2_1_COMMUNICATIONS_CAMPAIGN_EXECUTION_DELIVERABLE_25.md`. Recommended D26: controlled live-test authorization.  
+**Next:** D25 shipped — see `KCCC_V2_1_COMMUNICATIONS_CAMPAIGN_EXECUTION_DELIVERABLE_25.md`. D26 shipped — see `KCCC_V2_1_COMMUNICATIONS_CONTROLLED_LIVE_TEST_DELIVERABLE_26.md`. Recommended D27: production governance & phased launch.  
 **Validate:** `npm run missions:v21:communications-audience:validate` (291 tests D1–D24)  
 **Seed:** `npm run missions:v21:communications-audience:seed` (sandbox audiences only; approved production audiences = 0)  
 **Production dispatch:** **DISPATCH BLOCKED** — unchanged from D20–D23 ship state

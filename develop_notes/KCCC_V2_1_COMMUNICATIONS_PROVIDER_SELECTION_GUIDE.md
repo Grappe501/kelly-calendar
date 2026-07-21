@@ -123,6 +123,8 @@ Architecture: Mission → Dispatch → Interface → Adapter → Vendor. Adapter
 | `KCCC_V2_1_COMMUNICATIONS_PRODUCTION_ENABLEMENT_CHECKLIST.md` | Go-live gates (**DISPATCH BLOCKED** until complete) |
 | `KCCC_V2_1_COMMUNICATIONS_PROVIDER_COMPARISON_MATRIX.md` | Vendor capability matrix |
 | `KCCC_V2_1_COMMUNICATIONS_PROVIDER_DISASTER_RECOVERY_GUIDE.md` | Outage response |
+| `KCCC_V2_1_COMMUNICATIONS_PRODUCTION_PROVIDER_READINESS.md` | D26 `LIVE_TEST_READY` (not general production) |
+| `KCCC_V2_1_COMMUNICATIONS_CONTROLLED_LIVE_TEST_DELIVERABLE_26.md` | One-time live-test path beside D25 |
 
 ## Related docs
 

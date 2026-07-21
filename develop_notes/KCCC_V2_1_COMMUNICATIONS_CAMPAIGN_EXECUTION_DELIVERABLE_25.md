@@ -5,7 +5,7 @@
 **Netlify:** deploy `6a5f0bb2cbc466d6b5d046c0` · https://kelly-calendar.netlify.app  
 **Baseline:** D24 `KCCC_V2_1_COMMUNICATIONS_AUDIENCE_RECIPIENT_RESOLUTION_DELIVERABLE_24.md`  
 **Parent stack:** D20 consent · D21 dispatch · D22 provider · D23 composition · D24 audience  
-**Next:** D26 controlled live-test authorization & deliverability readiness  
+**Next:** D26 shipped — see `KCCC_V2_1_COMMUNICATIONS_CONTROLLED_LIVE_TEST_DELIVERABLE_26.md`. Recommended D27: production governance & phased launch.  
 **Validate:** `npm run missions:v21:communications-campaign:validate` (299 tests D1–D25)  
 **Seed:** `npm run missions:v21:communications-campaign:seed` (sandbox drafts only; production authorized = 0)  
 **Production dispatch:** **DISPATCH BLOCKED**
@@ -60,6 +60,6 @@ Primary operator path: **Prepare next batch → Run preflight → Dispatch sandb
 - [x] No durable autonomous queue; scheduled ingress fail-closed  
 - [x] Zero production messages  
 
-## Recommended D26
+## D26 (shipped)
 
-Controlled live-test authorization & deliverability readiness — still not general production launch.
+Controlled live-test authorization & deliverability readiness — separate one-time path beside D25. General production dispatch remains blocked. See `KCCC_V2_1_COMMUNICATIONS_CONTROLLED_LIVE_TEST_DELIVERABLE_26.md`.

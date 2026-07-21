@@ -48,3 +48,4 @@ export * from "@/lib/missions/v21/communications/providers";
 export * from "@/lib/missions/v21/communications/composition";
 export * from "@/lib/missions/v21/communications/audiences";
 export * from "@/lib/missions/v21/communications/campaigns";
+export * from "@/lib/missions/v21/communications/live-tests";

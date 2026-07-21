@@ -5939,3 +5939,517 @@ model CommunicationCampaignCompletionReport {
   @@index([campaignId])
   @@schema("kelly_calendar")
 }
+
+/// D26 — Controlled live-test authorization & deliverability readiness.
+enum CommLiveTestProgramStatus {
+  DRAFT
+  CONFIGURING
+  READINESS_REVIEW
+  READY_FOR_AUTHORIZATION
+  AUTHORIZED
+  IN_PROGRESS
+  COMPLETED
+  COMPLETED_WITH_WARNINGS
+  FAILED
+  CANCELLED
+  EXPIRED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestRevisionStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  SUPERSEDED
+  REJECTED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestCheckType {
+  PROVIDER_AUTHENTICATION
+  PROVIDER_PRODUCTION_CAPABILITY
+  SENDER_IDENTITY
+  SENDING_DOMAIN
+  SPF
+  DKIM
+  DMARC
+  RETURN_PATH
+  REPLY_TO
+  WEBHOOK_ENDPOINT
+  WEBHOOK_SIGNATURE
+  WEBHOOK_EVENT_NORMALIZATION
+  SUPPRESSION_SYNC
+  PROVIDER_HEALTH
+  RATE_LIMIT_VISIBILITY
+  CREDENTIAL_SCOPE
+  CREDENTIAL_ROTATION
+  EMERGENCY_STOP
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestCheckStatus {
+  NOT_CHECKED
+  PENDING
+  VERIFIED
+  WARNING
+  BLOCKED
+  EXPIRED
+  REVOKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestProviderState {
+  DISABLED
+  SANDBOX_ONLY
+  LIVE_TEST_READY
+  PRODUCTION_READY_FUTURE
+  REVOKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestRecipientStatus {
+  DRAFT
+  PENDING_VERIFICATION
+  VERIFIED
+  APPROVED
+  REVOKED
+  EXPIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestOwnershipMethod {
+  OPERATOR_ATTESTATION
+  CONFIRMATION_LINK
+  ONE_TIME_CODE
+  SIGNED_CONSENT_RECORD
+  CAMPAIGN_CONTROLLED_DESTINATION
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestReadinessStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  BLOCKED
+  READY
+  APPROVED
+  REVOKED
+  EXPIRED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestAuthStatus {
+  DRAFT
+  AUTHORIZED
+  CONSUMED
+  REVOKED
+  EXPIRED
+  FAILED_CLOSED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestExecutionStatus {
+  READY
+  PREFLIGHT_BLOCKED
+  SUBMITTING
+  SUBMITTED
+  ACCEPTED
+  DELIVERED
+  FAILED
+  UNKNOWN
+  CANCELLED_BEFORE_SUBMISSION
+  COMPLETED_WITH_WARNINGS
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestEvidenceFinalState {
+  DELIVERED
+  FAILED
+  BOUNCED
+  COMPLAINT
+  SUPPRESSED
+  UNKNOWN
+  PARTIAL_EVIDENCE
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestPostReviewStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  COMPLETED_WITH_WARNINGS
+  BLOCKED
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestIncidentSeverity {
+  INFO
+  WARNING
+  HIGH
+  CRITICAL
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestIncidentStatus {
+  OPEN
+  CONTAINED
+  RESOLVED
+  FALSE_ALARM
+
+  @@schema("kelly_calendar")
+}
+
+enum CommLiveTestConfirmStatus {
+  NOT_REQUESTED
+  PENDING
+  CONFIRMED
+  NOT_RECEIVED
+  UNCERTAIN
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestProgram {
+  id              String                     @id @default(cuid())
+  campaignScopeKey String                    @default("KELLY")
+  programKey      String
+  name            String
+  description     String?
+  channel         CampaignCommChannel
+  providerKey     String                     @default("kccc-sandbox")
+  providerState   CommLiveTestProviderState  @default(SANDBOX_ONLY)
+  status          CommLiveTestProgramStatus  @default(DRAFT)
+  purpose         String?
+  ownerUserId     String?
+  createdByUserId String?
+  archivedAt      DateTime?
+  createdAt       DateTime                   @default(now())
+  updatedAt       DateTime                   @updatedAt
+
+  revisions       CommunicationLiveTestRevision[]
+  readinessChecks CommunicationProductionReadinessCheck[]
+  recipients      CommunicationLiveTestRecipient[]
+  reviews         CommunicationLiveTestReadinessReview[]
+  authorizations  CommunicationLiveTestAuthorization[]
+  executions      CommunicationLiveTestExecution[]
+  postReviews     CommunicationLiveTestPostReview[]
+  incidents       CommunicationLiveTestIncident[]
+
+  @@unique([campaignScopeKey, programKey], map: "CommunicationLiveTestProgram_scope_key")
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestRevision {
+  id                        String                     @id @default(cuid())
+  programId                 String
+  revisionNumber            Int
+  status                    CommLiveTestRevisionStatus @default(DRAFT)
+  channel                   CampaignCommChannel
+  providerKey               String
+  providerConnectionId      String?
+  senderProfileKey          String?
+  domainIdentityKey         String?
+  compositionId             String?
+  compositionRevisionId     String?
+  renderArtifactId          String?
+  recipientAllowlistEntryId String?
+  configurationSnapshotJson Json                       @default("{}")
+  contentHash               String
+  changeSummary             String?
+  createdByUserId           String?
+  createdAt                 DateTime                   @default(now())
+  approvedAt                DateTime?
+  supersededAt              DateTime?
+
+  program         CommunicationLiveTestProgram            @relation(fields: [programId], references: [id], onDelete: Cascade)
+  reviews         CommunicationLiveTestReadinessReview[]
+  authorizations  CommunicationLiveTestAuthorization[]
+  executions      CommunicationLiveTestExecution[]
+
+  @@unique([programId, revisionNumber], map: "CommunicationLiveTestRevision_program_version")
+  @@schema("kelly_calendar")
+}
+
+model CommunicationProductionReadinessCheck {
+  id               String                 @id @default(cuid())
+  programId        String
+  programRevisionId String?
+  checkType        CommLiveTestCheckType
+  status           CommLiveTestCheckStatus @default(NOT_CHECKED)
+  providerKey      String?
+  subjectKey       String?
+  evidenceJson     Json                   @default("{}")
+  evidenceHash     String
+  verifiedAt       DateTime?
+  expiresAt        DateTime?
+  verifiedByUserId String?
+  failureReason    String?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+
+  program CommunicationLiveTestProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@index([programId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestRecipient {
+  id                           String                       @id @default(cuid())
+  programId                    String
+  localPersonId                String?
+  channel                      CampaignCommChannel
+  contactPointId               String?
+  destinationFingerprint       String
+  destinationMasked            String
+  status                       CommLiveTestRecipientStatus  @default(DRAFT)
+  relationshipToCampaign       String?
+  consentEvidenceId            String?
+  consentScope                 String                       @default("COMMUNICATIONS_CONTROLLED_LIVE_TEST")
+  ownershipVerifiedAt          DateTime?
+  ownershipVerificationMethod  CommLiveTestOwnershipMethod?
+  ownershipAttestationJson     Json                         @default("{}")
+  addedByUserId                String?
+  approvedByUserId             String?
+  createdAt                    DateTime                     @default(now())
+  expiresAt                    DateTime?
+  revokedAt                    DateTime?
+  revocationReason             String?
+
+  program        CommunicationLiveTestProgram         @relation(fields: [programId], references: [id], onDelete: Cascade)
+  authorizations CommunicationLiveTestAuthorization[]
+
+  @@index([programId])
+  @@index([destinationFingerprint])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestReadinessReview {
+  id                    String                     @id @default(cuid())
+  programId             String
+  programRevisionId     String
+  status                CommLiveTestReadinessStatus @default(NOT_STARTED)
+  providerChecksJson    Json                       @default("{}")
+  senderChecksJson      Json                       @default("{}")
+  domainChecksJson      Json                       @default("{}")
+  webhookChecksJson     Json                       @default("{}")
+  recipientChecksJson   Json                       @default("{}")
+  consentChecksJson     Json                       @default("{}")
+  artifactChecksJson    Json                       @default("{}")
+  dispatchChecksJson    Json                       @default("{}")
+  securityChecksJson    Json                       @default("{}")
+  operatorChecklistJson Json                       @default("{}")
+  blockingIssuesJson    Json                       @default("[]")
+  warningsJson          Json                       @default("[]")
+  readinessHash         String
+  reviewedByUserId      String?
+  approvedByUserId      String?
+  createdAt             DateTime                   @default(now())
+  reviewedAt            DateTime?
+  approvedAt            DateTime?
+  revokedAt             DateTime?
+  expiresAt             DateTime?
+
+  program        CommunicationLiveTestProgram         @relation(fields: [programId], references: [id], onDelete: Cascade)
+  programRevision CommunicationLiveTestRevision       @relation(fields: [programRevisionId], references: [id], onDelete: Cascade)
+  authorizations CommunicationLiveTestAuthorization[]
+
+  @@index([programId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestAuthorization {
+  id                       String                 @id @default(cuid())
+  programId                String
+  programRevisionId        String
+  readinessReviewId        String
+  status                   CommLiveTestAuthStatus @default(DRAFT)
+  providerKey              String
+  providerConnectionId     String?
+  senderProfileKey         String?
+  renderArtifactId         String
+  recipientId              String
+  destinationFingerprint   String
+  channel                  CampaignCommChannel
+  maximumRecipients        Int                    @default(1)
+  maximumAttempts          Int                    @default(1)
+  maximumProviderRequests  Int                    @default(1)
+  manualLaunchOnly         Boolean                @default(true)
+  retriesAllowed           Boolean                @default(false)
+  authorizedStartAt        DateTime?
+  authorizedEndAt          DateTime?
+  authorizationHash        String
+  authorizationPhraseHash  String?
+  authorizedByUserId       String?
+  authorizationNotes       String?
+  createdAt                DateTime               @default(now())
+  consumedAt               DateTime?
+  consumedByAttemptId      String?
+  revokedAt                DateTime?
+  revokedByUserId          String?
+  revocationReason         String?
+
+  program         CommunicationLiveTestProgram         @relation(fields: [programId], references: [id], onDelete: Cascade)
+  programRevision CommunicationLiveTestRevision        @relation(fields: [programRevisionId], references: [id], onDelete: Cascade)
+  readinessReview CommunicationLiveTestReadinessReview @relation(fields: [readinessReviewId], references: [id], onDelete: Cascade)
+  recipient       CommunicationLiveTestRecipient       @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  executions      CommunicationLiveTestExecution[]
+
+  @@index([programId])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestExecution {
+  id                           String                       @id @default(cuid())
+  programId                    String
+  programRevisionId            String
+  authorizationId              String
+  status                       CommLiveTestExecutionStatus  @default(READY)
+  attemptId                    String?
+  providerKey                  String
+  channel                      CampaignCommChannel
+  recipientId                  String
+  destinationFingerprint       String
+  renderArtifactId             String
+  startedAt                    DateTime?
+  providerSubmittedAt          DateTime?
+  providerAcceptedAt           DateTime?
+  deliveredAt                  DateTime?
+  failedAt                     DateTime?
+  completedAt                  DateTime?
+  providerRequestFingerprint   String?
+  providerMessageReference     String?
+  preflightSnapshotJson        Json                         @default("{}")
+  providerResponseSnapshotJson Json                         @default("{}")
+  reconciliationSnapshotJson   Json                         @default("{}")
+  failureReason                String?
+  createdByUserId              String?
+  createdAt                    DateTime                     @default(now())
+
+  program           CommunicationLiveTestProgram              @relation(fields: [programId], references: [id], onDelete: Cascade)
+  programRevision   CommunicationLiveTestRevision             @relation(fields: [programRevisionId], references: [id], onDelete: Cascade)
+  authorization     CommunicationLiveTestAuthorization        @relation(fields: [authorizationId], references: [id], onDelete: Cascade)
+  safetyVerification CommunicationPostTestSafetyVerification?
+  evidence          CommunicationLiveTestEvidence?
+  postReviews       CommunicationLiveTestPostReview[]
+
+  @@index([programId])
+  @@schema("kelly_calendar")
+}
+
+model CommunicationPostTestSafetyVerification {
+  id                            String   @id @default(cuid())
+  executionId                   String   @unique(map: "CommunicationPostTestSafetyVerification_execution")
+  productionDispatchFlagBlocked Boolean  @default(true)
+  productionCampaignModeBlocked Boolean  @default(true)
+  authorizationConsumed         Boolean  @default(false)
+  scheduledIngressBlocked       Boolean  @default(true)
+  audienceDispatchBlocked       Boolean  @default(true)
+  killSwitchesActive            Boolean  @default(true)
+  verificationSnapshotJson      Json     @default("{}")
+  verifiedAt                    DateTime @default(now())
+  verifiedByUserId              String?
+  evidenceHash                  String
+  failedClosed                  Boolean  @default(false)
+
+  execution CommunicationLiveTestExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestEvidence {
+  id                             String                        @id @default(cuid())
+  executionId                    String                        @unique(map: "CommunicationLiveTestEvidence_execution")
+  providerAuthenticationVerified Boolean                       @default(false)
+  senderIdentityVerified         Boolean                       @default(false)
+  domainVerified                 Boolean                       @default(false)
+  spfStatus                      String?
+  dkimStatus                     String?
+  dmarcStatus                    String?
+  webhookSignatureVerified       Boolean                       @default(false)
+  providerSubmissionObserved     Boolean                       @default(false)
+  providerAcceptanceObserved     Boolean                       @default(false)
+  deliveryObserved               Boolean                       @default(false)
+  bounceObserved                 Boolean                       @default(false)
+  complaintObserved              Boolean                       @default(false)
+  suppressionObserved            Boolean                       @default(false)
+  unsubscribeObserved            Boolean                       @default(false)
+  finalState                     CommLiveTestEvidenceFinalState @default(UNKNOWN)
+  recipientConfirmationStatus    CommLiveTestConfirmStatus      @default(NOT_REQUESTED)
+  recipientConfirmedAt           DateTime?
+  recipientConfirmationMethod    String?
+  recipientConfirmedByUserId     String?
+  evidenceSummaryJson            Json                           @default("{}")
+  evidenceHash                   String
+  createdAt                      DateTime                       @default(now())
+  finalizedAt                    DateTime?
+  finalizedByUserId              String?
+
+  execution CommunicationLiveTestExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestPostReview {
+  id                         String                      @id @default(cuid())
+  programId                  String
+  executionId                String                      @unique(map: "CommunicationLiveTestPostReview_execution")
+  status                     CommLiveTestPostReviewStatus @default(NOT_STARTED)
+  providerReviewJson         Json                        @default("{}")
+  deliverabilityReviewJson   Json                        @default("{}")
+  webhookReviewJson          Json                        @default("{}")
+  suppressionReviewJson      Json                        @default("{}")
+  securityReviewJson         Json                        @default("{}")
+  productionBlockReviewJson  Json                        @default("{}")
+  incidentSummaryJson        Json                        @default("{}")
+  lessonsLearned             String?
+  recommendedNextStep        String?
+  reviewedByUserId           String?
+  approvedByUserId           String?
+  createdAt                  DateTime                    @default(now())
+  completedAt                DateTime?
+  evidenceHash               String
+
+  program   CommunicationLiveTestProgram   @relation(fields: [programId], references: [id], onDelete: Cascade)
+  execution CommunicationLiveTestExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@schema("kelly_calendar")
+}
+
+model CommunicationLiveTestIncident {
+  id                     String                      @id @default(cuid())
+  programId              String
+  executionId            String?
+  severity               CommLiveTestIncidentSeverity @default(WARNING)
+  incidentType           String
+  status                 CommLiveTestIncidentStatus   @default(OPEN)
+  summary                String
+  evidenceJson           Json                         @default("{}")
+  containmentActionsJson Json                         @default("[]")
+  resolutionNotes        String?
+  createdByUserId        String?
+  createdAt              DateTime                     @default(now())
+  resolvedAt             DateTime?
+  resolvedByUserId       String?
+
+  program CommunicationLiveTestProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@index([programId])
+  @@schema("kelly_calendar")
+}
+
+

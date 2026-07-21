@@ -21,6 +21,8 @@ Define how Kelly Calendar accepts, verifies, deduplicates, and processes inbound
 
 Webhook routes never trust client-supplied message IDs without signature verification first.
 
+**D26:** Production webhook signature + normalization must be verified before a controlled live test. Webhooks must never launch a live test. See `KCCC_V2_1_COMMUNICATIONS_PRODUCTION_WEBHOOK_VERIFICATION.md`.
+
 ## Verification model
 
 Each registered provider adapter implements:

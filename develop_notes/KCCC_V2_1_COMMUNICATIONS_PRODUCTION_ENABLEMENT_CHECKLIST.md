@@ -7,6 +7,8 @@
 
 **D22 does NOT enable production.** Sandbox integration and certification may be complete while every item below remains unchecked.
 
+**D26** adds a separate one-time controlled live-test path (`LIVE_TEST_READY` + one-time authorization). Completing D26 readiness checks does **not** satisfy this checklist and does **not** enable general production campaigns. See `KCCC_V2_1_COMMUNICATIONS_CONTROLLED_LIVE_TEST_DELIVERABLE_26.md`.
+
 Until **all** gates are true: **`DISPATCH BLOCKED`** — preflight will report blocking reason codes and batches remain `BLOCKED` or fail preflight.
 
 ## Gates (all required)
@@ -47,6 +49,7 @@ Until **all** gates are true: **`DISPATCH BLOCKED`** — preflight will report b
 
 - [ ] `npm run missions:v21:communications-dispatch:validate` passes on release commit
 - [ ] `npm run missions:v21:communications-provider:validate` passes
+- [ ] `npm run missions:v21:communications-live-test:validate` passes (D26 path remains non-production)
 - [ ] `npm run typecheck` passes
 - [ ] No secrets in repo or migration artifacts
 
