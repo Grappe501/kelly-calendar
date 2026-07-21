@@ -671,6 +671,13 @@ model EventNumberCounter {
 }
 
 // ─── B. Canonical events ─────────────────────────────────────────────
+//
+// LOCK (KCCC-EA-9-CANONICAL-CALENDAR-DATA-MODEL-1.0):
+// There is exactly one top-level Event entity in the Campaign Operating System.
+// Do NOT create CalendarEvent / CampaignEvent / MissionEvent / ScheduleEvent /
+// MeetingEvent tables. Mission, Travel, Briefing, Tasks, etc. attach to Event.
+// See: develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md
+//      src/lib/calendar/canonical-event.ts
 
 model Event {
   id                          String                 @id @default(cuid())

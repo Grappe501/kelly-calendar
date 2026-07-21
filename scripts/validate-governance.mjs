@@ -16,6 +16,7 @@ const required = [
   "develop_notes/KCCC_CALENDAR_CURRENT_IMPLEMENTATION_INVENTORY.md",
   "develop_notes/KCCC_EA_8_SECURITY_CLOSEOUT_PLAN.md",
   "develop_notes/KCCC_EA_8_SECURITY_CLOSEOUT_EVIDENCE.md",
+  "develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md",
   "develop_notes/KCCC_STEP_05_6_IMPLEMENTATION_REPORT.md",
   "develop_notes/KCCC_STEP_05_7_NETLIFY_AUTH_AND_LIVE_MUTATION_PROOF.md",
   "develop_notes/KCCC_STEP_05_7_IMPLEMENTATION_REPORT.md",
@@ -42,7 +43,8 @@ const step57 = "KCCC-STEP-05.7-NETLIFY-AUTH-AND-LIVE-MUTATION-PROOF";
 const step06 = "KCCC-STEP-06-MOBILE-COMMAND-SHELL";
 const ea8 = "KCCC-EA-8-SECURITY";
 const ea9 = "KCCC-EA-9-CANONICAL-CALENDAR-DATA-MODEL";
-const allowedCurrent = new Set([step57, step06, ea8, ea9]);
+const ea10 = "KCCC-EA-10-CALENDAR-OPERATING-VIEWS";
+const allowedCurrent = new Set([step57, step06, ea8, ea9, ea10]);
 if (!allowedCurrent.has(buildState.current_step)) {
   console.error(
     `FAIL: build_state current_step must be one of ${[...allowedCurrent].join(", ")}`,
@@ -93,7 +95,11 @@ if (
   console.log("PASS: candidate data certified");
 }
 
-if (buildState.current_step === ea9 || buildState.current_step === ea8) {
+if (
+  buildState.current_step === ea10 ||
+  buildState.current_step === ea9 ||
+  buildState.current_step === ea8
+) {
   if (
     buildState.calendar_recovery_build_id !==
     "KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0"
@@ -115,14 +121,26 @@ if (buildState.current_step === ea9 || buildState.current_step === ea8) {
   } else {
     console.log("PASS: Step 8 closeout complete");
   }
-  if (
-    buildState.next_engineering_deliverable !==
-    "KCCC-EA-9-CANONICAL-CALENDAR-DATA-MODEL-1.0"
-  ) {
-    console.error("FAIL: next engineering deliverable must be EA-9 model build");
+  if (buildState.step_9_canonical_event_status !== "complete") {
+    console.error("FAIL: step_9_canonical_event_status must be complete");
     failed = true;
   } else {
-    console.log("PASS: next engineering deliverable is EA-9");
+    console.log("PASS: Step 9 canonical Event complete");
+  }
+  if (buildState.canonical_event_prisma_model !== "Event") {
+    console.error("FAIL: canonical_event_prisma_model must be Event");
+    failed = true;
+  } else {
+    console.log("PASS: canonical Event prisma model is Event");
+  }
+  if (
+    buildState.next_engineering_deliverable !==
+    "KCCC-EA-10-CALENDAR-OPERATING-VIEWS-1.0"
+  ) {
+    console.error("FAIL: next engineering deliverable must be EA-10 views");
+    failed = true;
+  } else {
+    console.log("PASS: next engineering deliverable is EA-10");
   }
 } else if (
   buildState.operator_acceptance_recorded === true &&

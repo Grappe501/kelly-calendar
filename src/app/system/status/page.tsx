@@ -25,7 +25,7 @@ export default async function SystemStatusPage() {
         <h1>System status</h1>
         <p>
           {candidateReady
-            ? "Step 8 security closeout is complete. Authorized operators may enter real campaign schedule data. Next build: Step 9 canonical calendar data model. Communications remains frozen."
+            ? "Steps 8–9 complete. Canonical Event is locked. Next: Step 10 calendar operating views. Communications remains frozen."
             : "Calendar foundation in progress. Complete Step 8 security closeout before entering real campaign schedule data."}
         </p>
       </header>
@@ -56,6 +56,14 @@ export default async function SystemStatusPage() {
             rel="noreferrer"
           >
             Security closeout plan
+          </a>
+          <a
+            className="button secondary"
+            href="https://github.com/Grappe501/kelly-calendar/blob/main/develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Canonical Event model
           </a>
         </div>
       </section>

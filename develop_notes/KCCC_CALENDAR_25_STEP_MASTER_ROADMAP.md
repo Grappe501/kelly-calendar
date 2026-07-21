@@ -3,24 +3,19 @@
 ```text
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE
-Date: 2026-07-21
-Updated: Step 8 closeout complete → Step 9 ready
-Supersedes sequencing in: docs/TWENTY_FIVE_STEP_BUILD_REGISTRY.md (historical)
-Runtime step constants: src/lib/system/constants.ts
+Updated: Step 9 canonical Event COMPLETE → Step 10 ready
+Runtime: src/lib/system/constants.ts
 ```
 
 ## Governing decision
 
 ```text
 Primary product: Kelly Campaign Calendar
-Communications OS (D20–D26): FROZEN — preserved, production blocked
+Canonical schedule entity: Prisma Event ONLY
+Communications OS (D20–D26): FROZEN
 LG-1: PAUSED
 AI: disabled until Step 16 (proposal_only)
 ```
-
-Every build must visibly improve one of: **Today · Calendar · Event · Mission · People · Travel · Briefing · Follow-up**, or unlock security required to use them.
-
-Landing experience goal (later, not this step): answer *What am I doing today? / Where do I need to be? / What do I need to prepare?* — admin/system behind secondary navigation.
 
 ---
 
@@ -30,13 +25,11 @@ Landing experience goal (later, not this step): answer *What am I doing today? /
 |------|------|--------|
 | 1–7 | Environment, scaffold, auth foundation, schema, shell, entry APIs | ✅ / 🔄 foundation |
 | **8** | **Security + Candidate Data Certification** | **✅ COMPLETE** |
-| **9** | **Canonical Calendar Data Model** | **⬜ NEXT** |
-| 10 | Calendar Operating Views | ⬜ |
+| **9** | **Canonical Calendar Data Model** | **✅ COMPLETE** |
+| **10** | **Calendar Operating Views** | **⬜ NEXT** |
 | 11 | Event Creation & Editing | ⬜ |
 | 12 | Availability & Standing Rules | ⬜ |
 | 13 | Conflict Engine | ⬜ |
-
-**Phase 1 outcome:** a genuinely usable, secure campaign calendar.
 
 ---
 
@@ -53,8 +46,6 @@ Landing experience goal (later, not this step): answer *What am I doing today? /
 | 20 | Tasks & Delegation | ⬜ |
 | 21 | Volunteer Scheduling | ⬜ |
 
-**Phase 2 outcome:** Campaign Operating System on top of the calendar.
-
 ---
 
 ## Phase 3 — Ecosystem
@@ -66,30 +57,14 @@ Landing experience goal (later, not this step): answer *What am I doing today? /
 | 24 | Hardening / Mobile | ⬜ |
 | 25 | Launch Certification | ⬜ |
 
-**Phase 3 outcome:** external integrations and launch — only after the internal experience is solid.
-
 ---
 
-## Step 8 closeout (accepted criteria)
-
-```text
-✓ Authentication complete
-✓ Authorization verified (middleware + RBAC + fail-closed APIs)
-✓ Candidate-data ready = true (authorized roles)
-✓ Real calendar entry enabled
-✓ Warning banner suppressed when certified
-✓ Status dashboard reflects certified state
-✓ No new product features in the closeout pass
-```
-
-Evidence: `develop_notes/KCCC_EA_8_SECURITY_CLOSEOUT_EVIDENCE.md`
-
-## Canonical Event rule (Step 9+)
+## Canonical Event rule (locked in Step 9)
 
 ```text
 Event  (one table of record)
  ├── Participants
- ├── Mission
+ ├── Mission          ← projection; NOT an Event
  ├── Travel
  ├── Briefing
  ├── Follow-up
@@ -99,15 +74,14 @@ Event  (one table of record)
  └── Audit
 ```
 
-Do not invent parallel CampaignEvent / CalendarEvent / MissionEvent tables.
+Architecture: `develop_notes/KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md`  
+Code lock: `src/lib/calendar/canonical-event.ts`  
+Validate: `npm run calendar:canonical:validate`
 
-## Communications
+## Next authorized build
 
-Frozen D20–D26 may later attach as an event panel only. No LG-1 / Resend / D27 while Phase 1–2 calendar work is open unless explicitly unfrozen.
+```text
+KCCC-EA-10-CALENDAR-OPERATING-VIEWS-1.0
+```
 
-## Related docs
-
-- `KCCC_CALENDAR_CURRENT_IMPLEMENTATION_INVENTORY.md`
-- `KCCC_EA_8_SECURITY_CLOSEOUT_PLAN.md`
-- `KCCC_EA_8_SECURITY_CLOSEOUT_EVIDENCE.md`
-- `KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL_BUILD.md`
+Do not start automatically.

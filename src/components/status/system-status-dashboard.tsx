@@ -33,6 +33,10 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
             value: status.application.step8CloseoutStatus,
           },
           {
+            label: "Step 9 canonical Event",
+            value: status.application.step9CanonicalEventStatus,
+          },
+          {
             label: "Current build focus",
             value: status.application.primaryFocus,
           },

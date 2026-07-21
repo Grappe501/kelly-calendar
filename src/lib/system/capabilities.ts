@@ -10,6 +10,7 @@ import {
   LG1_CONTROLLED_LIVE_TEST_STATUS,
   NEXT_AUTHORIZED_BUILD,
   STEP_8_CLOSEOUT_STATUS,
+  STEP_9_CANONICAL_EVENT_STATUS,
   TOTAL_STEPS,
 } from "@/lib/system/constants";
 
@@ -24,6 +25,7 @@ export {
   LG1_CONTROLLED_LIVE_TEST_STATUS,
   NEXT_AUTHORIZED_BUILD,
   STEP_8_CLOSEOUT_STATUS,
+  STEP_9_CANONICAL_EVENT_STATUS,
 } from "@/lib/system/constants";
 
 export type CapabilityStatus = {
@@ -41,6 +43,7 @@ export type CapabilityStatus = {
     communicationsTrack: string;
     lg1Status: string;
     step8CloseoutStatus: string;
+    step9CanonicalEventStatus: string;
   };
   environment: {
     publicConfigurationValid: boolean;
@@ -99,13 +102,12 @@ export function getCapabilityStatus(options?: {
       environment: process.env.NODE_ENV ?? "development",
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
-      primaryFocus: authFlags.candidateDataReady
-        ? "Step 9 canonical calendar data model"
-        : "complete Step 8 security closeout",
+      primaryFocus: "Step 10 calendar operating views",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       communicationsTrack: COMMUNICATIONS_OS_TRACK_STATUS,
       lg1Status: LG1_CONTROLLED_LIVE_TEST_STATUS,
       step8CloseoutStatus: STEP_8_CLOSEOUT_STATUS,
+      step9CanonicalEventStatus: STEP_9_CANONICAL_EVENT_STATUS,
     },
     environment: {
       publicConfigurationValid: envStatus.publicConfigurationValid,
@@ -146,11 +148,12 @@ export function getCapabilityStatus(options?: {
     },
     warnings: [
       authFlags.candidateDataReady
-        ? "Step 8 security closeout complete — authorized roles may enter real campaign schedule data."
+        ? "Step 8–9 complete — canonical Event locked; next focus is calendar operating views (Step 10)."
         : "Calendar foundation in progress — complete Step 8 security closeout before real schedule entry.",
       authFlags.authenticationComplete
         ? "Authentication is enabled for campaign operators."
         : "Authentication is not configured (set APP_SESSION_SECRET).",
+      "Canonical schedule entity is Prisma Event only — Mission/Travel/Briefing attach to Event.",
       "Communications OS (D20–D26) remains frozen and not production-enabled. LG-1 is paused.",
       "Monday–Friday 8am–noon and 1pm–5pm are standing work-unavailable blocks (vacation override required).",
       "Tuesdays default to Little Rock unless overridden.",

@@ -5,7 +5,7 @@ Build: KCCC-EA-9-CANONICAL-CALENDAR-DATA-MODEL-1.0
 Parent recovery: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Date: 2026-07-21
 Prerequisite: Step 8 closeout accepted (candidate-data ready)
-Status: SPEC ONLY — do not implement until authorized
+Status: COMPLETE — see KCCC_EA_9_CANONICAL_CALENDAR_DATA_MODEL.md
 ```
 
 ## Design principle
