@@ -1,37 +1,39 @@
 # KCCC V2.1 LG-1 Phase A — Execution Evidence
 
-**Status:** COMPLETE — awaiting operator acceptance  
+**Status:** ACCEPTED  
+**Accepted by:** Steve Grappe (Test owner / Technical operator)  
+**Accepted at:** 2026-07-21  
 **Captured at:** 2026-07-21T06:59:01Z (A4) · validation run ~2026-07-21T06:56–06:59Z  
-**Scope:** Phase A only (A1–A4)  
-**Not done:** provider credentials · recipient approval · live-test authorization · Phase B+
+**Scope:** Phase A only (A1–A4) — complete  
+**Next:** Phase B authorized (provider readiness)
 
 ```text
 Communications OS Core: frozen
 LG-1 documentation: complete
-LG-1 Phase A: documented (pending acceptance)
-LG-1 Phase B+: not started
+LG-1 Phase A: accepted
+Phase B: authorized to begin
 D27: not started
 General production dispatch: blocked
 ```
 
 ---
 
-## Role assignments (required before Phase B)
+## Role assignments
 
-Fill names before any Phase B work. Disclose self-review / self-authorization where applicable.
+Self-review / dual-role disclosure: Steve operates/launches/leads incidents and shares post-test review; Kelly independently reviews readiness and authorizes. Recipient is Steve (campaign-controlled).
 
 ```text
-Test owner:                 ________________________
-Technical operator:         ________________________
-Readiness reviewer:         ________________________
-Authorization approver:     ________________________
-Launch operator:            ________________________
-Recipient:                  ________________________
-Post-test reviewer:         ________________________
-Incident lead:              ________________________
+Test owner:                 Steve Grappe
+Technical operator:         Steve Grappe
+Readiness reviewer:         Kelly Grappe
+Authorization approver:     Kelly Grappe
+Launch operator:            Steve Grappe
+Recipient:                  Steve Grappe (campaign-controlled test address)
+Post-test reviewer:         Steve Grappe and Kelly Grappe (joint review)
+Incident lead:              Steve Grappe
 ```
 
-**Phase A executor note:** Technical checks below were run by the coding agent as evidence capture. Named human roles remain blank until Steve assigns them. Phase A acceptance still requires a named Test owner / Technical operator sign-off.
+Webhook session note (accepted): provider webhooks are signature-authenticated, not session-authenticated. Protected operator routes and live-test APIs remain session-protected. Fail-closed webhook behavior verified in unit tests. Consistent with D22/D26 — not a defect.
 
 ---
 
@@ -153,12 +155,13 @@ No provider credentials entered. No recipient approved. No live-test authorizati
 ## Phase A acceptance
 
 ```text
-[ ] Test owner accepts Phase A evidence
-[ ] Technical operator accepts Phase A evidence
-[ ] Roles assigned (all eight lines filled)
-[ ] Proceed to Phase B authorized
+[x] Test owner accepts Phase A evidence
+[x] Technical operator accepts Phase A evidence
+[x] Roles assigned (all eight lines filled)
+[x] Proceed to Phase B authorized
 ```
 
-**Stop until accepted.** Do not enter provider credentials, approve a recipient, or create a live-test authorization until the boxes above are checked.
+Accepted by: Steve Grappe  
+Date: 2026-07-21  
 
-Accepted by: ________________  Date: ________________
+**Hold after Phase A acceptance:** Do not approve a live recipient or create a one-time authorization until later phases. Phase B may begin (provider readiness only).

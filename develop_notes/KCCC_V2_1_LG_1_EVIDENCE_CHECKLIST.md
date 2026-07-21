@@ -2,11 +2,12 @@
 
 Companion to `KCCC_V2_1_LG_1_CONTROLLED_LIVE_TEST_OPERATOR_RUNBOOK.md`.
 
-**Status:** PHASE A DOCUMENTED — awaiting role assignment + acceptance  
+**Status:** PHASE A ACCEPTED · PHASE B BLOCKED (credentials)  
 **Test ID:** LG-1  
 **Milestone:** `KCCC-V2.1-COMMS-CORE-COMPLETE` @ `6921cf3`  
 **General production dispatch:** blocked  
 **Phase A evidence:** `KCCC_V2_1_LG_1_PHASE_A_EXECUTION_EVIDENCE.md`  
+**Phase B evidence:** `KCCC_V2_1_LG_1_PHASE_B_PROVIDER_READINESS_EVIDENCE.md`  
 
 Mark each item: `[ ]` pending · `[x]` complete · `[N/A]` not applicable · `[!]` stop / incident  
 
@@ -18,14 +19,14 @@ Do not record secrets, raw destinations, API keys, or webhook signing secrets.
 
 | Role | Name | Self-review disclosed? |
 |------|------|------------------------|
-| Test owner | | |
-| Technical operator | | |
-| Readiness reviewer | | |
-| Authorization approver | | |
-| Launch operator | | |
-| Recipient | | |
-| Post-test reviewer | | |
-| Incident lead | | |
+| Test owner | Steve Grappe | Yes — also technical/launch/incident |
+| Technical operator | Steve Grappe | Yes |
+| Readiness reviewer | Kelly Grappe | Independent of launch |
+| Authorization approver | Kelly Grappe | Independent of launch |
+| Launch operator | Steve Grappe | Yes |
+| Recipient | Steve Grappe (campaign-controlled) | Yes |
+| Post-test reviewer | Steve Grappe + Kelly Grappe (joint) | Joint |
+| Incident lead | Steve Grappe | Yes |
 
 ---
 
@@ -69,14 +70,15 @@ A4 timestamp: 2026-07-21T06:59:01.241Z
 
 ## Phase B — Provider
 
-- [ ] B1 One provider selected (recommended: resend)
-- [ ] B2 Credentials server-side only; auth succeeds; scope minimum
-- [ ] B3 Provider state = `LIVE_TEST_READY` (not general production)
-- [ ] B4 Health / channel / idempotency / rate-limit / suppression checks pass
+- [x] B1 One provider selected (recommended: resend)
+- [ ] B2 Credentials server-side only; auth succeeds; scope minimum — **BLOCKED: keys absent locally + Netlify**
+- [ ] B3 Provider state = `LIVE_TEST_READY` (not general production) — held until B2
+- [ ] B4 Health / channel / idempotency / rate-limit / suppression checks pass — held until B2
 
 ```text
-Provider evidence hash:
-Health expires:
+Provider evidence hash: pending B2
+Health expires: n/a
+Phase B note: see KCCC_V2_1_LG_1_PHASE_B_PROVIDER_READINESS_EVIDENCE.md
 ```
 
 ---
