@@ -20,10 +20,10 @@ Reviewer:
 Kelly Grappe (Readiness reviewer) — pending acceptance of this evidence
 
 Repository commit:
-3f7d0f6
+3f7d0f6 (feature) / bafcb01 (hash pin)
 
 Deployment ID:
-3f7d0f6
+6a5f7402b907704f2e8730a2
 ```
 
 ---
