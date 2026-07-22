@@ -50,4 +50,15 @@ Hard delete · bulk reschedule · bulk Mission mutation · bulk conflict disposi
 
 ## Ship evidence
 
-(Filled at end of ship.)
+| | |
+|--|--|
+| Feature commit | `f8186be` |
+| Netlify deploy | `6a612a7cba0c57774db91b5f` |
+| Live URL | https://kelly-calendar.netlify.app |
+| Migration | `20260722160000_cc09_bulk_operations` (db execute + migrate resolve; deploy blocked by prior failed google oauth migration) |
+| Validator | `calendar:bulk-operations:validate` — 32 passed · unit 10 |
+| CC-06/07/08 regressions | green |
+| Typecheck / production build | green |
+| Hard deletes / auto Missions / external writes / Phase Two | **0** |
+
+CC-08 release preserved: tip `e1ddaa7` · tip deploy `6a612111e81d923c5e6c58ca` · feature `7486aa9` / `6a611dc19547e64f0fa7874d`.

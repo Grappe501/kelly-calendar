@@ -32,7 +32,7 @@ Protected sequence .......... CC-07→08→09→10→11→12 → usability/AI-qu
 Standing execution .......... ADR-094
 Next engineering build ....... CC-10 (not authorized by CC-09) — design handoff only
 CC-08 ship evidence ......... tip e1ddaa7 · feature 7486aa9 · tip deploy 6a612111e81d923c5e6c58ca
-CC-09 ship evidence ......... (filled at ship)
+CC-09 ship evidence ......... commit f8186be · deploy 6a612a7cba0c57774db91b5f
 CC-09 migration ............. 20260722160000_cc09_bulk_operations (db execute + migrate resolve)
 CC-09 authorization ......... develop_notes/KCCC_CC_09_AUTHORIZATION_KELLY_2026-07-22.md
 ```
