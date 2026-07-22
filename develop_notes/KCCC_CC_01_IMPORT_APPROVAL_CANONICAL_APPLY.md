@@ -21,9 +21,11 @@ Make staged Google/iCal import records become canonical `Event` rows under opera
 
 ## Current evidence
 
-- `src/server/services/import-approval-service.ts` — `approveImportRecord` / `rejectImportRecord` / `mergeImportRecord` are auth-gated stubs  
-- Staging, fingerprints, IMPORT_ONLY OAuth, and review UI foundation already exist  
-- Manual ingests populate the Event graph; the external sync **apply** path does not  
+- `src/server/services/import-approval-service.ts` — real transactional `approveImportRecord` / `rejectImportRecord` / `mergeImportRecord` (CC-01 COMPLETE)
+- Provenance contracts: `src/lib/calendar/import-provenance.ts` (reused by CC-02)
+- Staging, fingerprints, IMPORT_ONLY OAuth, and review UI foundation exist
+- Operator apply queue: `/import/google-calendar/apply`
+- Decisive proof: `npm run import:apply:proof`
 
 ## Scope (keep small)
 
