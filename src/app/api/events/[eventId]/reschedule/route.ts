@@ -13,6 +13,13 @@ const bodySchema = z.object({
   endsAt: z.string().min(1),
   timezone: z.string().optional(),
   scope: z.enum(["this", "this_and_future", "series"]).optional(),
+  availabilityAcknowledgement: z
+    .object({
+      disposition: z.enum(["ACKNOWLEDGED", "ACCEPTED_RISK"]),
+      reason: z.string().max(500).optional(),
+      evaluationFingerprint: z.string().min(1),
+    })
+    .optional(),
 });
 
 export async function POST(request: Request, context: Ctx) {

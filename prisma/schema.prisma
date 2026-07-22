@@ -895,6 +895,159 @@ model CalendarOccurrenceException {
   @@schema("kelly_calendar")
 }
 
+// ─── CC-05 Standing Availability Inputs ──────────────────────────────
+
+enum CalendarAvailabilitySubjectType {
+  CANDIDATE
+  CAMPAIGN
+  CAMPAIGN_USER
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarAvailabilityRuleType {
+  GENERAL_AVAILABILITY
+  PREFERRED_WINDOW
+  UNAVAILABLE_WINDOW
+  PROTECTED_WORK
+  OFFICE_HOURS
+  TRAVEL_BUFFER
+  PREPARATION_BUFFER
+  RECOVERY_BUFFER
+  VACATION
+  BLACKOUT
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarAvailabilityClassification {
+  AVAILABLE
+  PREFERRED
+  CONSTRAINED
+  UNAVAILABLE
+  UNKNOWN
+  REQUIRES_REVIEW
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarAvailabilityApprovalState {
+  DRAFT
+  ACTIVE
+  INACTIVE
+  SUPERSEDED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarAvailabilityAckDisposition {
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarAvailabilityRule {
+  id                    String                             @id @default(cuid())
+  campaignKey           String                             @default("kelly")
+  subjectType           CalendarAvailabilitySubjectType    @default(CANDIDATE)
+  subjectUserId         String?
+  ruleType              CalendarAvailabilityRuleType
+  classification        CalendarAvailabilityClassification
+  timezone              String                             @default("America/Chicago")
+  effectiveStartDate    String
+  effectiveEndDate      String?
+  /// Local HH:mm (timed) — null for all-day date rules
+  startLocalTime        String?
+  endLocalTime          String?
+  /// ISO weekday ints 1=Mon … 7=Sun (empty = all days in range)
+  weekdays              Int[]
+  bufferBeforeMinutes   Int                                @default(0)
+  bufferAfterMinutes    Int                                @default(0)
+  priority              Int                                @default(50)
+  approvalState         CalendarAvailabilityApprovalState  @default(DRAFT)
+  ruleFingerprint       String
+  label                 String
+  /// Operator-facing reason; may be sensitive — redact in broad views
+  reasonSensitive       String?
+  locationHint          String?
+  visibilityNote        String?
+  source                String                             @default("OPERATOR")
+  isActive              Boolean                            @default(true)
+  approvedAt            DateTime?
+  approvedByUserId      String?
+  createdByUserId       String?
+  updatedByUserId       String?
+  createdAt             DateTime                           @default(now())
+  updatedAt             DateTime                           @updatedAt
+  deactivatedAt         DateTime?
+
+  exceptions CalendarAvailabilityException[]
+
+  @@index([campaignKey, approvalState, isActive])
+  @@index([ruleFingerprint])
+  @@index([subjectType, subjectUserId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarAvailabilityException {
+  id                    String                             @id @default(cuid())
+  campaignKey           String                             @default("kelly")
+  ruleId                String?
+  subjectType           CalendarAvailabilitySubjectType    @default(CANDIDATE)
+  subjectUserId         String?
+  /// Inclusive start date YYYY-MM-DD (campaign-local)
+  startDate             String
+  /// Exclusive end date YYYY-MM-DD (campaign-local) — half-open
+  endDateExclusive      String
+  startLocalTime        String?
+  endLocalTime          String?
+  isAllDay              Boolean                            @default(true)
+  timezone              String                             @default("America/Chicago")
+  classification        CalendarAvailabilityClassification
+  label                 String
+  reasonSensitive       String?
+  source                String                             @default("OPERATOR")
+  approvalState         CalendarAvailabilityApprovalState  @default(DRAFT)
+  exceptionFingerprint  String
+  isActive              Boolean                            @default(true)
+  approvedAt            DateTime?
+  approvedByUserId      String?
+  createdByUserId       String?
+  updatedByUserId       String?
+  createdAt             DateTime                           @default(now())
+  updatedAt             DateTime                           @updatedAt
+  cancelledAt           DateTime?
+
+  rule CalendarAvailabilityRule? @relation(fields: [ruleId], references: [id], onDelete: SetNull)
+
+  @@index([campaignKey, isActive, approvalState])
+  @@index([startDate, endDateExclusive])
+  @@index([ruleId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarAvailabilityAcknowledgement {
+  id                    String                             @id @default(cuid())
+  campaignKey           String                             @default("kelly")
+  eventId               String?
+  findingKey            String
+  disposition           CalendarAvailabilityAckDisposition
+  reason                String?
+  evaluationFingerprint String
+  ruleSetFingerprint    String
+  actorUserId           String?
+  createdAt             DateTime                           @default(now())
+
+  @@index([eventId, findingKey])
+  @@index([evaluationFingerprint])
+  @@schema("kelly_calendar")
+}
+
 model EventCalendarMembership {
   id                String              @id @default(cuid())
   eventId           String

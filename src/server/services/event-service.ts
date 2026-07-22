@@ -21,6 +21,10 @@ import { withTransaction } from "@/server/db/transaction";
 import { writeAttributedAudit } from "@/server/services/audit-write";
 import { ConflictError, NotFoundError, ValidationError } from "@/lib/security/safe-error";
 import { isStandingWorkBlockEvent } from "@/lib/campaign/standing-work-blocks";
+import {
+  assertAvailabilityAllowsSave,
+  type AvailabilityAcknowledgementInput,
+} from "@/server/services/availability-service";
 
 function mapAccessToViewer(
   level: string,
@@ -80,7 +84,10 @@ export async function getSafeEventForViewer(input: {
 
 export async function createEvent(input: {
   actor: AuthenticatedActor;
-  data: CreateEventInput & { weeklyOccurrences?: number };
+  data: CreateEventInput & {
+    weeklyOccurrences?: number;
+    availabilityAcknowledgement?: AvailabilityAcknowledgementInput;
+  };
 }) {
   return createEventWithOptionalRecurrence(input);
 }
@@ -88,17 +95,51 @@ export async function createEvent(input: {
 export async function updateEvent(input: {
   actor: AuthenticatedActor;
   eventId: string;
-  data: UpdateEventInput;
+  data: UpdateEventInput & {
+    availabilityAcknowledgement?: AvailabilityAcknowledgementInput;
+  };
 }) {
   await requireAuthorized(input.actor, {
     action: "EVENT_EDIT",
     resource: { type: "event", id: input.eventId },
   });
+
+  let availabilityAssessment: Awaited<
+    ReturnType<typeof assertAvailabilityAllowsSave>
+  >["assessment"] | undefined;
+
+  // CC-05: only re-evaluate availability when the schedule or status changes.
+  if (input.data.startsAt || input.data.endsAt || input.data.status) {
+    const existing = await prisma.event.findFirst({
+      where: { id: input.eventId, archivedAt: null },
+    });
+    if (!existing) throw new NotFoundError("Event not found.");
+    const startsAt = input.data.startsAt ?? existing.startsAt.toISOString();
+    const endsAt = input.data.endsAt ?? existing.endsAt.toISOString();
+    const timezone = input.data.timezone ?? existing.timezone;
+    const isAllDay =
+      input.data.isAllDay !== undefined ? input.data.isAllDay : existing.isAllDay;
+    const status = input.data.status ?? existing.status;
+    const result = await assertAvailabilityAllowsSave({
+      actor: input.actor,
+      eventId: input.eventId,
+      startsAt,
+      endsAt,
+      timezone,
+      isAllDay,
+      eventStatus: status,
+      acknowledgement: input.data.availabilityAcknowledgement,
+      requestId: input.data.requestId,
+    });
+    availabilityAssessment = result.assessment;
+  }
+
   const event = await updateCanonicalEvent(input);
-  return getSafeEventForViewer({
+  const safeEvent = await getSafeEventForViewer({
     eventId: event.id,
     viewerUserId: input.actor.userId,
   });
+  return { event: safeEvent, availabilityAssessment };
 }
 
 export async function archiveEvent(input: {

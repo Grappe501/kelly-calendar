@@ -17,6 +17,8 @@ export type SafeErrorBody = {
     code: SafeErrorCode;
     message: string;
     requestId: string;
+    /** Public-safe structured payload (e.g. an availability assessment for 409s). */
+    metadata?: unknown;
   };
 };
 
@@ -25,6 +27,8 @@ export class AppError extends Error {
   readonly status: number;
   readonly publicMessage: string;
   readonly severity: "debug" | "info" | "warn" | "error";
+  /** Public-safe structured payload attached to the serialized error response. */
+  readonly metadata?: unknown;
   requestId?: string;
 
   constructor(options: {
@@ -34,6 +38,7 @@ export class AppError extends Error {
     internalMessage?: string;
     severity?: "debug" | "info" | "warn" | "error";
     cause?: unknown;
+    metadata?: unknown;
   }) {
     super(options.internalMessage ?? options.publicMessage);
     this.name = "AppError";
@@ -41,6 +46,7 @@ export class AppError extends Error {
     this.status = options.status;
     this.publicMessage = options.publicMessage;
     this.severity = options.severity ?? "error";
+    this.metadata = options.metadata;
     if (options.cause !== undefined) {
       (this as Error & { cause?: unknown }).cause = options.cause;
     }
@@ -126,13 +132,18 @@ export class NotFoundError extends AppError {
 }
 
 export class ConflictError extends AppError {
-  constructor(message = "The request conflicts with the current state.", cause?: unknown) {
+  constructor(
+    message = "The request conflicts with the current state.",
+    cause?: unknown,
+    metadata?: unknown,
+  ) {
     super({
       code: "CONFLICT",
       status: 409,
       publicMessage: message,
       severity: "warn",
       cause,
+      metadata,
     });
     this.name = "ConflictError";
   }
@@ -172,6 +183,7 @@ export function toSafeErrorBody(error: unknown, requestId: string): SafeErrorBod
         code: error.code,
         message: error.publicMessage,
         requestId: error.requestId ?? requestId,
+        ...(error.metadata !== undefined ? { metadata: error.metadata } : {}),
       },
     };
   }

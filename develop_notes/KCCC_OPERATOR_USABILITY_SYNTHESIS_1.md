@@ -3,8 +3,13 @@
 ```text
 Status: EMPTY — fill after Kelly + Steve + Staff sessions
 Source: develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
-Gate: Required before Step 12 authorization
+Gate: Required before Step 12 authorization (default path)
 Do not fix during sessions — synthesize first, then review with Steve
+
+NOTE (2026-07-22): This Synthesis remains EMPTY / incomplete.
+Kelly waived the Synthesis gate for CC-05 ONLY (ADR-090 /
+develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md).
+That waiver does NOT complete this document and does NOT authorize CC-06.
 ```
 
 ## Instructions

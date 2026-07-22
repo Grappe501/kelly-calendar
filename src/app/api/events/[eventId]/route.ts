@@ -64,6 +64,13 @@ const patchSchema = z.object({
   isRecurring: z.boolean().optional(),
   recurrenceRule: z.string().nullable().optional(),
   recurrenceSeriesId: z.string().nullable().optional(),
+  availabilityAcknowledgement: z
+    .object({
+      disposition: z.enum(["ACKNOWLEDGED", "ACCEPTED_RISK"]),
+      reason: z.string().max(500).optional(),
+      evaluationFingerprint: z.string().min(1),
+    })
+    .optional(),
 });
 
 export async function GET(request: Request, context: Ctx) {
@@ -91,12 +98,12 @@ export async function PATCH(request: Request, context: Ctx) {
       if (!parsed.success) {
         throw new ValidationError("Invalid event update payload.");
       }
-      const event = await updateEvent({
+      const result = await updateEvent({
         actor,
         eventId,
         data: { ...parsed.data, requestId },
       });
-      return { event };
+      return result;
     },
   );
 }

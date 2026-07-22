@@ -34,9 +34,11 @@ describe("capability honesty", () => {
     expect(status.application.step10OperatingViewsStatus).toBe("COMPLETE");
     expect(status.application.step11EventEditingStatus).toBe("COMPLETE");
     expect(status.application.operatorUsabilityPassStatus).toBe("OPEN");
-    expect(status.application.step12AvailabilityStatus).toBe("NOT_AUTHORIZED");
+    expect(status.application.step12AvailabilityStatus).toBe(
+      "AUTHORIZED_CC05_WAIVER",
+    );
     expect(status.application.nextAuthorizedBuild).toBe(
-      "KCCC-CC-03-TIMEZONE-ALLDAY-OVERNIGHT-HARDENING-1.0",
+      "KCCC-CC-05-STANDING-AVAILABILITY-INPUTS-1.0",
     );
     expect(status.application.calendarCompletionProgramStatus).toBe("LOCKED");
     expect(status.application.unrelatedCampaignExpansionStatus).toBe("PAUSED");

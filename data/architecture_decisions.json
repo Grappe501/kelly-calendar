@@ -549,6 +549,14 @@
       "date": "2026-07-22",
       "decision": "The Calendar Integrity & Provenance Console (CC-02) surfaces duplicates, provenance gaps, import anomalies, drift, and lifecycle warnings through bounded scans and dispositions. Scans, views, and dispositions never automatically merge, delete, cancel, archive, restore, reschedule, or rewrite Events or Missions.",
       "boundary": "Time/recurrence corrections remain CC-03/CC-04. Explicit repairs require preview, auth, confirmation, and audit when later enabled."
+    },
+    {
+      "id": "ADR-090",
+      "title": "Kelly CC-05-Only Waiver of Unfinished Usability Synthesis Gate",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly explicitly waives the unfinished Operator Usability Synthesis gate for Calendar Completion CC-05 only, authorizing the calendar-only Standing Availability Inputs slice (rules, exceptions, evaluation, overlays, create/reschedule warnings). Evidence: develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md. Usability Synthesis remains EMPTY and is not marked complete by this waiver.",
+      "boundary": "CC-05 must not automatically move, cancel, confirm, or resolve Events; must not mutate Missions or external calendars; must not create persisted Conflict Engine records. CC-06 remains separately gated and is not authorized by this waiver."
     }
   ]
 }

@@ -38,9 +38,9 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Agenda view | COMPLETE (CC-03) | Campaign-local occupied days; continuation labels | N/A | CC-04 recurrence |
 | Day/Week/Month membership | COMPLETE (CC-03) | Interval ∩ day; overnight/multi-day visible | N/A | Polish in CC-08 |
 | Timezone / all-day / DST | COMPLETE (CC-03) | `src/lib/calendar/temporal/` + Event sheet | N/A | CC-04 DST-stable recurrence |
-| Availability rules | DOCUMENTED_ONLY | `availability-policy.ts` + status/env cards | Not materialized; not conflict inputs | Step 12 / CC-05 |
-| Tuesday Little Rock rule | DOCUMENTED_ONLY | Same policy | Same | Step 12 |
-| Vacation overrides | DOCUMENTED_ONLY | Policy text only; no model/UI | Same | Step 12 |
+| Availability rules | COMPLETE (CC-05) | `CalendarAvailabilityRule`/`Exception`/`Acknowledgement`, `availability-service.ts`, `/system/calendar/availability/**` | Input/warning only; no conflict persistence (CC-06 gated) | CC-06 |
+| Tuesday Little Rock rule | COMPLETE (CC-05) | Seeded standing rule via `standingPolicySeedRules` | Same | CC-06 |
+| Vacation overrides | COMPLETE (CC-05) | `CalendarAvailabilityException` + `/system/calendar/availability/exceptions` | Same | CC-06 |
 | Conflict detection | PARTIAL | `conflict-service.ts`, APIs, synthetic `/system/conflicts` | Not full scheduler UX | Step 13 |
 | Travel planning | PARTIAL | `EventTravelPlan`/`Segment`, mission travel, Google Routes estimate | Import-only Google; not core Today UX | Steps 14/17 |
 | Participants | PARTIAL | `Person`/`EventPerson`/`Organization` | Thin event UI | Step 15 |
@@ -88,7 +88,7 @@ Communications subsystem: advanced but disconnected / frozen
 
 1. Step 8 closeout: authenticate + certify candidate-data readiness (gate flip).
 2. Tracker drift (registry / README / EA constants / recovery roadmap).
-3. Availability rules not enforced in create/conflict paths.
+3. Availability rules now enforced in create/edit/reschedule paths (CC-05); conflict-engine (CC-06) enforcement remains gated.
 4. Agenda and event-detail UX gaps.
 5. Communications work must not consume the build center.
 

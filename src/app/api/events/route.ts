@@ -56,6 +56,13 @@ const createSchema = z.object({
   isRecurring: z.boolean().optional(),
   recurrenceRule: z.string().max(500).optional(),
   weeklyOccurrences: z.number().int().min(0).max(12).optional(),
+  availabilityAcknowledgement: z
+    .object({
+      disposition: z.enum(["ACKNOWLEDGED", "ACCEPTED_RISK"]),
+      reason: z.string().max(500).optional(),
+      evaluationFingerprint: z.string().min(1),
+    })
+    .optional(),
 });
 
 export async function GET(request: Request) {
@@ -73,7 +80,7 @@ export async function POST(request: Request) {
       throw new ValidationError("Invalid event create payload.");
     }
     const { virtualMeetingUrl, ...rest } = parsed.data;
-    const event = await createEvent({
+    const result = await createEvent({
       actor,
       data: {
         ...rest,
@@ -81,6 +88,6 @@ export async function POST(request: Request) {
         requestId,
       },
     });
-    return { event };
+    return result;
   });
 }

@@ -83,7 +83,12 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 - ADR-087 CC-01 Provenance Contracts Reusable by CC-02 Without Combining Deliverables
 - ADR-088 Calendar Completion Passes Must Measurably Improve the Calendar
 - ADR-089 CC-02 Integrity Console Detects Without Auto-Mutating Events
+- ADR-090 Kelly CC-05-Only Waiver of Unfinished Usability Synthesis Gate (2026-07-22) — `KCCC_CC_05_WAIVER_KELLY_2026-07-22.md`
+
+## CC-05 authorization
+
+Kelly waiver **ADR-090** authorizes **CC-05 only**. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-06 stays gated** and is not authorized by ADR-090.
 
 ## CC-02 status
 
-Calendar Integrity & Provenance Console (`KCCC-CC-02-…`) is **COMPLETE**. Next Calendar Completion build: **CC-03** Timezone / All-day / Overnight Hardening. CC-02 reports time/recurrence risks; it does not implement CC-03 corrections.
+Calendar Integrity & Provenance Console (`KCCC-CC-02-…`) is **COMPLETE**. CC-03 and CC-04 are complete. Active Calendar Completion build after ADR-090: **CC-05** Standing Availability Inputs.

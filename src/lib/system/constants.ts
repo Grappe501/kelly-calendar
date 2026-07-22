@@ -32,15 +32,16 @@ export const CALENDAR_FOUNDATION_V1_GATE = "OPERATOR_OBSERVATION_PASS_1";
 /**
  * Calendar Completion program (CC-01…CC-12) — locked 2026-07-21.
  * Primary engineering track while unrelated campaign expansion is paused.
- * CC-05/CC-06 still require Usability Synthesis or Kelly/Steve waiver.
+ * CC-05 authorized by Kelly waiver ADR-090 (2026-07-22). CC-06 remains gated.
+ * Usability Synthesis remains EMPTY — not completed by the CC-05 waiver.
  */
 export const CALENDAR_COMPLETION_PROGRAM_ID =
   "KCCC-CALENDAR-COMPLETION-PROGRAM-1.0";
 export const CALENDAR_COMPLETION_PROGRAM_STATUS = "LOCKED";
 export const CALENDAR_COMPLETION_BASELINE_COMMIT = "9c89012";
-export const CALENDAR_COMPLETION_NEXT = "CC-03";
+export const CALENDAR_COMPLETION_NEXT = "CC-05";
 export const CALENDAR_COMPLETION_NEXT_BUILD_ID =
-  "KCCC-CC-03-TIMEZONE-ALLDAY-OVERNIGHT-HARDENING-1.0";
+  "KCCC-CC-05-STANDING-AVAILABILITY-INPUTS-1.0";
 export const CALENDAR_COMPLETION_PROGRAM_DOC =
   "develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md";
 export const CALENDAR_COMPLETION_ASSESSMENT_DOC =
@@ -50,9 +51,22 @@ export const CC_01_STATUS = "COMPLETE";
 export const CC_02_BUILD_ID =
   "KCCC-CC-02-CALENDAR-INTEGRITY-PROVENANCE-CONSOLE-1.0";
 export const CC_02_STATUS = "COMPLETE";
+export const CC_03_BUILD_ID =
+  "KCCC-CC-03-TIMEZONE-ALLDAY-OVERNIGHT-HARDENING-1.0";
+export const CC_03_STATUS = "COMPLETE";
+export const CC_04_BUILD_ID =
+  "KCCC-CC-04-RECURRENCE-OCCURRENCE-EXCEPTIONS-1.0";
+export const CC_04_STATUS = "COMPLETE";
+export const CC_05_BUILD_ID =
+  "KCCC-CC-05-STANDING-AVAILABILITY-INPUTS-1.0";
+export const CC_05_STATUS = "AUTHORIZED";
+export const CC_05_WAIVER_ADR = "ADR-090";
+export const CC_05_WAIVER_DOC =
+  "develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md";
+export const CC_06_STATUS = "GATED";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
-export const STEP_12_AVAILABILITY_STATUS = "NOT_AUTHORIZED";
-/** Architecture mature; implementation waits on Step 12 availability inputs (CC-05). */
+export const STEP_12_AVAILABILITY_STATUS = "AUTHORIZED_CC05_WAIVER";
+/** Architecture mature; Conflict Engine (CC-06) remains separately gated. */
 export const STEP_13_CONFLICT_ENGINE_STATUS = "DESIGN_READY_IMPLEMENTATION_BLOCKED";
 export const STEP_13_CONFLICT_ENGINE_DOC =
   "develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md";
@@ -94,7 +108,7 @@ export const FURTHER_ARCHITECTURE_DOCTRINE_STATUS =
 export const SCHEDULE_MUTATION_GOVERNING_RULE =
   "DETECT_EXPLAIN_RECOMMEND_SIMULATE_NEVER_AUTO_MUTATE";
 export const NEXT_AUTHORIZED_BUILD =
-  "KCCC-CC-03-TIMEZONE-ALLDAY-OVERNIGHT-HARDENING-1.0";
+  "KCCC-CC-05-STANDING-AVAILABILITY-INPUTS-1.0";
 export const CALENDAR_ROADMAP_DOC =
   "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md";
 /** Prisma model name — the only top-level Event entity. */

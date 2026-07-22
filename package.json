@@ -118,6 +118,7 @@
     "calendar:integrity:validate": "node scripts/validate-calendar-integrity.mjs",
     "calendar:time:validate": "node scripts/validate-calendar-time.mjs",
     "calendar:recurrence:validate": "node scripts/validate-calendar-recurrence.mjs",
+    "calendar:availability:validate": "node scripts/validate-calendar-availability.mjs",
     "import:preview": "node scripts/preview-google-calendar-import.mjs",
     "import:preview:private-ical": "node scripts/run-with-h-drive-env.cjs node scripts/preview-private-ical-import.mjs",
     "import:staging:validate": "node scripts/validate-import-staging.mjs",

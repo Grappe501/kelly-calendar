@@ -51,4 +51,4 @@ npm run import:validate
 
 ## CC-05 handoff
 
-Standing Availability Inputs remain gated on Usability Synthesis or Kelly/Steve waiver. Do not begin CC-05 during CC-04.
+Standing Availability Inputs were gated on Usability Synthesis or a Kelly/Steve waiver. **CC-05 is now authorized** (Kelly waiver ADR-090, 2026-07-22) and implemented — see `KCCC_CC_05_STANDING_AVAILABILITY_INPUTS.md`. Usability Synthesis itself remains `EMPTY`; the waiver covers CC-05 only, and CC-06 (Conflict Engine) remains separately gated.

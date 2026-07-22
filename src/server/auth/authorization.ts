@@ -30,6 +30,7 @@ const VIEW_ACTIONS = new Set<MutationAction>([
   "HISTORICAL_IMPORT_VIEW",
   "CALENDAR_INTEGRITY_VIEW",
   "AUDIT_VIEW",
+  "AVAILABILITY_VIEW",
 ]);
 
 function needsMutatorRole(action: MutationAction): boolean {
@@ -46,6 +47,7 @@ function minRankForAction(action: MutationAction): number {
     case "HISTORICAL_IMPORT_VIEW":
     case "CALENDAR_INTEGRITY_VIEW":
     case "AUDIT_VIEW":
+    case "AVAILABILITY_VIEW":
       return 1;
     case "EVENT_CREATE":
     case "EVENT_EDIT":
@@ -67,6 +69,8 @@ function minRankForAction(action: MutationAction): number {
     case "HISTORICAL_IMPORT_MERGE":
     case "CALENDAR_INTEGRITY_SCAN":
     case "CALENDAR_INTEGRITY_DISPOSE":
+    case "AVAILABILITY_MANAGE":
+    case "AVAILABILITY_ACKNOWLEDGE":
       return 4; // CONTRIBUTE+
     case "EVENT_ARCHIVE":
     case "EVENT_RESTORE":
@@ -76,6 +80,7 @@ function minRankForAction(action: MutationAction): number {
     case "APPROVAL_RESOLVE":
     case "CONFLICT_OVERRIDE":
     case "CALENDAR_INTEGRITY_REPAIR":
+    case "AVAILABILITY_APPROVE":
       return 5; // EDIT+
     case "TEAM_MEMBERSHIP_MANAGE":
     case "SYSTEM_ROLE_MANAGE":
@@ -141,6 +146,15 @@ export async function authorize(
     ) {
       return { allowed: true, reason: "Calendar integrity mutation for mutator role" };
     }
+    if (
+      (input.action === "AVAILABILITY_MANAGE" ||
+        input.action === "AVAILABILITY_ACKNOWLEDGE") &&
+      roleMayMutate(actor.primarySystemRole)
+    ) {
+      return { allowed: true, reason: "Availability mutation for mutator role" };
+    }
+    // AVAILABILITY_APPROVE (and standing-rule seeding) requires leadership
+    // full calendar access, already granted above for KELLY/CAMPAIGN_MANAGER.
     return { allowed: false, reason: "System mutation denied" };
   }
 

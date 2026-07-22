@@ -11,9 +11,14 @@ import {
   type CreateEventInput,
 } from "@/server/repositories/event-mutation-repository";
 import { getSafeEventForViewer } from "@/server/services/event-service";
-import { ValidationError } from "@/lib/security/safe-error";
+import { NotFoundError, ValidationError } from "@/lib/security/safe-error";
 import { PUBLISH_TARGET_STATUSES } from "@/lib/calendar/event-status-transitions";
 import type { EventStatus } from "@prisma/client";
+import {
+  assertAvailabilityAllowsSave,
+  type AvailabilityAcknowledgementInput,
+} from "@/server/services/availability-service";
+import type { AvailabilityAssessment } from "@/lib/calendar/availability";
 
 async function returnSafe(actor: AuthenticatedActor, eventId: string) {
   return getSafeEventForViewer({
@@ -77,7 +82,27 @@ export async function rescheduleEvent(input: {
   scope?: "this" | "this_and_future" | "series";
   requestId?: string;
   seriesFingerprint?: string;
+  availabilityAcknowledgement?: AvailabilityAcknowledgementInput;
 }) {
+  const source = await prisma.event.findFirst({
+    where: { id: input.eventId, archivedAt: null },
+    select: { timezone: true, isAllDay: true, status: true },
+  });
+  if (!source) throw new NotFoundError("Event not found.");
+
+  // CC-05: input-only availability check — never auto-moves/cancels the Event.
+  const { assessment } = await assertAvailabilityAllowsSave({
+    actor: input.actor,
+    eventId: input.eventId,
+    startsAt: input.startsAt,
+    endsAt: input.endsAt,
+    timezone: input.timezone ?? source.timezone,
+    isAllDay: source.isAllDay,
+    eventStatus: source.status,
+    acknowledgement: input.availabilityAcknowledgement,
+    requestId: input.requestId,
+  });
+
   const { mutateRecurrenceScope } = await import(
     "@/server/services/recurrence-series-service"
   );
@@ -97,6 +122,7 @@ export async function rescheduleEvent(input: {
     updatedCount: result.updatedCount,
     scope: result.scope,
     seriesId: result.seriesId,
+    availabilityAssessment: assessment as AvailabilityAssessment,
   };
 }
 
@@ -135,6 +161,7 @@ export async function createEventWithOptionalRecurrence(input: {
     materializeCount?: number;
     untilLocal?: string;
     exdatesLocal?: string[];
+    availabilityAcknowledgement?: AvailabilityAcknowledgementInput;
   };
 }) {
   await requireAuthorized(input.actor, {
@@ -143,6 +170,20 @@ export async function createEventWithOptionalRecurrence(input: {
       type: "calendar",
       calendarId: input.data.primaryCalendarId,
     },
+  });
+
+  // CC-05: input-only availability check against the base occurrence.
+  // Never blocks on its own accord — only warns/requires acknowledgement.
+  // Recurring series are checked against their first occurrence only.
+  const { assessment } = await assertAvailabilityAllowsSave({
+    actor: input.actor,
+    startsAt: input.data.startsAt,
+    endsAt: input.data.endsAt,
+    timezone: input.data.timezone ?? "America/Chicago",
+    isAllDay: input.data.isAllDay ?? false,
+    eventStatus: input.data.status,
+    acknowledgement: input.data.availabilityAcknowledgement,
+    requestId: input.data.requestId,
   });
 
   const weeklyOccurrences = Math.min(
@@ -173,12 +214,18 @@ export async function createEventWithOptionalRecurrence(input: {
     if (!result.firstEventId) {
       throw new ValidationError("Series created without occurrences.");
     }
-    return returnSafe(input.actor, result.firstEventId);
+    return {
+      event: await returnSafe(input.actor, result.firstEventId),
+      availabilityAssessment: assessment as AvailabilityAssessment,
+    };
   }
 
   const first = await createCanonicalEvent({
     actor: input.actor,
     data: input.data,
   });
-  return returnSafe(input.actor, first.id);
+  return {
+    event: await returnSafe(input.actor, first.id),
+    availabilityAssessment: assessment as AvailabilityAssessment,
+  };
 }

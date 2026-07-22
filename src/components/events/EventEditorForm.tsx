@@ -13,6 +13,11 @@ import {
 } from "@/lib/calendar/temporal";
 import { chicagoDateKey, shiftChicagoDateKey } from "@/lib/calendar/chicago-date";
 import { eventSheetHref } from "@/lib/calendar/event-sheet-href";
+import {
+  AvailabilityWarningPanel,
+  type AvailabilityAcknowledgementPayload,
+  type AvailabilityAssessmentView,
+} from "@/components/events/AvailabilityWarningPanel";
 
 type HistoryPayload = {
   audits: Array<{
@@ -92,6 +97,9 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
   const [scope, setScope] = useState<"this" | "this_and_future" | "series">("this");
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [availabilityAssessment, setAvailabilityAssessment] =
+    useState<AvailabilityAssessmentView | null>(null);
+  const [availabilityBlocked, setAvailabilityBlocked] = useState(false);
   const [people, setPeople] = useState(initial.people);
   const [prep, setPrep] = useState(initial.prepActions);
   const [followUps, setFollowUps] = useState(initial.followUps);
@@ -110,10 +118,13 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
     if (next.status) setStatus(next.status as typeof status);
   }
 
-  async function saveBasics() {
+  async function saveBasics(
+    acknowledgement?: AvailabilityAcknowledgementPayload,
+  ) {
     if (!canMutate) return;
     setBusy(true);
     setMessage(null);
+    if (acknowledgement) setAvailabilityBlocked(false);
     try {
       let startsAt: Date;
       let endsAt: Date;
@@ -209,10 +220,23 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
             endsAt: endsAt.toISOString(),
             timezone,
             scope,
+            availabilityAcknowledgement: acknowledgement,
           }),
         });
         const json = await res.json();
-        if (!res.ok) throw new Error(json.error?.message ?? "Reschedule failed.");
+        if (!res.ok) {
+          if (res.status === 409 && json.error?.metadata?.availabilityAssessment) {
+            setAvailabilityAssessment(json.error.metadata.availabilityAssessment);
+            setAvailabilityBlocked(true);
+            setBusy(false);
+            return;
+          }
+          throw new Error(json.error?.message ?? "Reschedule failed.");
+        }
+        if (json.availabilityAssessment) {
+          setAvailabilityAssessment(json.availabilityAssessment);
+          setAvailabilityBlocked(false);
+        }
         setMessage(`Updated ${json.updatedCount ?? 1} occurrence(s).`);
         router.refresh();
         setBusy(false);
@@ -243,10 +267,23 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
           defaultVisibility: visibility,
           privateNotes: privateNotes.trim() || null,
           status,
+          availabilityAcknowledgement: acknowledgement,
         }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error?.message ?? "Save failed.");
+      if (!res.ok) {
+        if (res.status === 409 && json.error?.metadata?.availabilityAssessment) {
+          setAvailabilityAssessment(json.error.metadata.availabilityAssessment);
+          setAvailabilityBlocked(true);
+          setBusy(false);
+          return;
+        }
+        throw new Error(json.error?.message ?? "Save failed.");
+      }
+      if (json.availabilityAssessment) {
+        setAvailabilityAssessment(json.availabilityAssessment);
+        setAvailabilityBlocked(false);
+      }
       await refreshVersion({
         version: json.event?.version,
         status: status,
@@ -520,6 +557,15 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
           <p className="muted">Read-only for your role.</p>
         )}
       </section>
+
+      {availabilityAssessment ? (
+        <AvailabilityWarningPanel
+          assessment={availabilityAssessment}
+          requiresAction={availabilityBlocked}
+          busy={busy}
+          onAcknowledge={(ack) => void saveBasics(ack)}
+        />
+      ) : null}
 
       <section className="panel">
         <h2>Lifecycle actions</h2>

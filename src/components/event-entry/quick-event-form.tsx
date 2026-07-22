@@ -13,6 +13,11 @@ import {
   chicagoWallTimeToUtc,
   endsAtFromStartAndDuration,
 } from "@/lib/calendar/event-wall-time";
+import {
+  AvailabilityWarningPanel,
+  type AvailabilityAcknowledgementPayload,
+  type AvailabilityAssessmentView,
+} from "@/components/events/AvailabilityWarningPanel";
 
 const DURATIONS = [
   "15 minutes",
@@ -63,6 +68,9 @@ export function QuickEventForm() {
   const [weeklyOccurrences, setWeeklyOccurrences] = useState(0);
   const [message, setMessage] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [availabilityAssessment, setAvailabilityAssessment] =
+    useState<AvailabilityAssessmentView | null>(null);
+  const [availabilityBlocked, setAvailabilityBlocked] = useState(false);
 
   const types = useMemo(() => eventTypesForCalendar(primaryCalendar), [primaryCalendar]);
 
@@ -105,13 +113,14 @@ export function QuickEventForm() {
     return match.id;
   }
 
-  async function createLiveEvent() {
+  async function createLiveEvent(acknowledgement?: AvailabilityAcknowledgementPayload) {
     if (!title.trim()) {
       setMessage("Title is required.");
       return;
     }
     setSaving(true);
     setMessage(null);
+    if (acknowledgement) setAvailabilityBlocked(false);
     try {
       const primaryCalendarId = await resolveCalendarId();
       const startsAt = chicagoWallTimeToUtc(date, startTime);
@@ -134,14 +143,25 @@ export function QuickEventForm() {
           locationDisclosure: "CITY",
           weeklyOccurrences: weeklyOccurrences > 1 ? weeklyOccurrences : undefined,
           isRecurring: weeklyOccurrences > 1,
+          availabilityAcknowledgement: acknowledgement,
         }),
       });
       const json = (await res.json()) as {
         ok?: boolean;
         event?: { eventId?: string };
-        error?: { message?: string };
+        availabilityAssessment?: AvailabilityAssessmentView;
+        error?: {
+          message?: string;
+          metadata?: { availabilityAssessment?: AvailabilityAssessmentView };
+        };
       };
       if (!res.ok || !json.event?.eventId) {
+        if (res.status === 409 && json.error?.metadata?.availabilityAssessment) {
+          setAvailabilityAssessment(json.error.metadata.availabilityAssessment);
+          setAvailabilityBlocked(true);
+          setSaving(false);
+          return;
+        }
         throw new Error(json.error?.message ?? "Could not create event.");
       }
       router.push(`/events/${json.event.eventId}`);
@@ -297,6 +317,15 @@ export function QuickEventForm() {
         </div>
         {message ? <p className="muted">{message}</p> : null}
       </section>
+
+      {availabilityAssessment ? (
+        <AvailabilityWarningPanel
+          assessment={availabilityAssessment}
+          requiresAction={availabilityBlocked}
+          busy={saving}
+          onAcknowledge={(ack) => void createLiveEvent(ack)}
+        />
+      ) : null}
     </div>
   );
 }
