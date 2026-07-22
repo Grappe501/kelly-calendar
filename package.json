@@ -83,6 +83,8 @@
     "events:ingest:grossfeld-aug7": "node scripts/run-with-h-drive-env.cjs node scripts/ingest-grossfeld-aug7.mjs",
     "events:ingest:cleveland-forum-sep12": "node scripts/run-with-h-drive-env.cjs node scripts/ingest-cleveland-forum-sep12.mjs",
     "events:ingest:madison-sep3": "node scripts/run-with-h-drive-env.cjs node scripts/ingest-madison-sep3.mjs",
+    "events:dedupe:major": "node scripts/run-with-h-drive-env.cjs node scripts/dedupe-calendar-major.mjs",
+    "events:analyze:duplicates": "node scripts/run-with-h-drive-env.cjs node scripts/analyze-calendar-duplicates.mjs",
     "events:data-quality:operator-week": "node scripts/run-with-h-drive-env.cjs node scripts/operator-week-data-quality-pass.mjs",
     "events:data-quality:operator-pass3": "node scripts/run-with-h-drive-env.cjs node scripts/operator-pass3-data-quality-pass.mjs",
     "db:readiness": "node scripts/database-readiness-report.mjs",

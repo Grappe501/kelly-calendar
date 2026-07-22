@@ -1,0 +1,24 @@
+{
+  "activeCount": 65,
+  "duplicateIngestKeys": [],
+  "duplicateSameDayTitleCalendar": [],
+  "duplicateExactWindowTitle": [],
+  "nearOverlapSimilarTitle": [
+    {
+      "day": "2026-07-23",
+      "a": "KCCC-2026-0027 Kelly Working Remotely — Hot Springs Village",
+      "b": "KCCC-2026-0039 Hot Springs Village Democratic Club – Road to Blue Dinner"
+    },
+    {
+      "day": "2026-07-24",
+      "a": "KCCC-2026-0024 Cave City Watermelon Festival — Christy Low Volunteering",
+      "b": "KCCC-2026-0041 Cave City Watermelon Festival 2026"
+    }
+  ],
+  "counts": {
+    "ingestKeyGroups": 0,
+    "dayTitleGroups": 0,
+    "exactWindowGroups": 0,
+    "nearPairs": 2
+  }
+}

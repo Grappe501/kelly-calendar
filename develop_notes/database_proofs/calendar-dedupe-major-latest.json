@@ -1,0 +1,66 @@
+{
+  "pass": "DEDUPE-MAJOR-2026-07-21",
+  "cancelled": [
+    {
+      "eventNumber": "KCCC-2026-0038",
+      "ingestKey": "river-valley-choice-rally-2026-09-13",
+      "title": "The River Valley Has a Choice Campaign Rally",
+      "reason": "Alias of KCCC-2026-0160 (river-valley-rally-2026-09-13); kept ingestKey=river-valley-has-a-choice-rally-2026-09-13"
+    },
+    {
+      "eventNumber": "KCCC-2026-0032",
+      "ingestKey": "travel-eldorado-2026-08-04",
+      "title": "Travel to El Dorado",
+      "reason": "Alias of KCCC-2026-0048 (travel-eldorado-2026-08-04); kept ingestKey=travel-eldorado-position-2026-08-04"
+    },
+    {
+      "eventNumber": "KCCC-2026-0026",
+      "ingestKey": "lodging-hsv-deb-bryan-2026-07-22",
+      "title": "Overnight in Hot Springs Village",
+      "reason": "Alias of KCCC-2026-0040 (lodging-hsv-2026-07-22); kept ingestKey=lodging-hsv-host-2026-07-22"
+    },
+    {
+      "eventNumber": "KCCC-2026-0028",
+      "ingestKey": "hsv-democrats-kelly-2026-07-23",
+      "title": "Kelly Speaks — Hot Springs Village Democrats",
+      "reason": "Alias of KCCC-2026-0039 (hsv-dems-speaking-2026-07-23); kept ingestKey=hsv-dems-road-to-blue-2026-07-23"
+    },
+    {
+      "eventNumber": "KCCC-2026-0001",
+      "ingestKey": null,
+      "title": "KCCC Step 5.7 Synthetic Mutation Proof",
+      "reason": "Synthetic/seed junk — remove from live calendar"
+    },
+    {
+      "eventNumber": "KCCC-2026-0002",
+      "ingestKey": null,
+      "title": "KCCC Step 5.7 Synthetic Mutation Proof",
+      "reason": "Synthetic/seed junk — remove from live calendar"
+    }
+  ],
+  "kept": [
+    {
+      "group": "river-valley-rally-2026-09-13",
+      "eventNumber": "KCCC-2026-0160",
+      "ingestKey": "river-valley-has-a-choice-rally-2026-09-13"
+    },
+    {
+      "group": "travel-eldorado-2026-08-04",
+      "eventNumber": "KCCC-2026-0048",
+      "ingestKey": "travel-eldorado-position-2026-08-04"
+    },
+    {
+      "group": "lodging-hsv-2026-07-22",
+      "eventNumber": "KCCC-2026-0040",
+      "ingestKey": "lodging-hsv-host-2026-07-22"
+    },
+    {
+      "group": "hsv-dems-speaking-2026-07-23",
+      "eventNumber": "KCCC-2026-0039",
+      "ingestKey": "hsv-dems-road-to-blue-2026-07-23"
+    }
+  ],
+  "skipped": [],
+  "activeBefore": 71,
+  "activeAfter": 65
+}
