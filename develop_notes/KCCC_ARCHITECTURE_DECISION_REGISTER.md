@@ -84,11 +84,14 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 - ADR-088 Calendar Completion Passes Must Measurably Improve the Calendar
 - ADR-089 CC-02 Integrity Console Detects Without Auto-Mutating Events
 - ADR-090 Kelly CC-05-Only Waiver of Unfinished Usability Synthesis Gate (2026-07-22) — `KCCC_CC_05_WAIVER_KELLY_2026-07-22.md`
+- ADR-091 Post-CC-05 Next Pass Is Operator Usability Pass 1 and Synthesis 1 (2026-07-22) — `KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md`
 
-## CC-05 authorization
+## CC-05 baseline & next human pass
 
-Kelly waiver **ADR-090** authorizes **CC-05 only**. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-06 stays gated** and is not authorized by ADR-090.
+CC-05 is **COMPLETE** at `main` @ `46a72c3` (Netlify `6a60efa8f25804bc9b16f3f3`).  
+**Next pass:** Operator Usability Pass 1 + Synthesis 1 on the live CC-01–CC-05 calendar (**ADR-091**).  
+Usability Synthesis remains **EMPTY**. **CC-06 stays unauthorized** until Synthesis is completed, reviewed, and separately authorized.
 
 ## CC-02 status
 
-Calendar Integrity & Provenance Console (`KCCC-CC-02-…`) is **COMPLETE**. CC-03 and CC-04 are complete. Active Calendar Completion build after ADR-090: **CC-05** Standing Availability Inputs.
+Calendar Integrity & Provenance Console (`KCCC-CC-02-…`) is **COMPLETE**. CC-03, CC-04, and CC-05 are complete.

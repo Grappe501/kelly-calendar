@@ -10,18 +10,20 @@
 | Chapter 1 | **CLOSED** — [`KCCC_ENGINEERING_CHAPTER_1_CLOSED.md`](develop_notes/KCCC_ENGINEERING_CHAPTER_1_CLOSED.md) |
 | Baseline | **1.0 Frozen** — ready for observation |
 | Milestone | [`develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`](develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md) |
-| Active gate | **Operator Usability Pass 1** (bring evidence, not bugs) |
+| Active gate | **Operator Usability Pass 1 + Synthesis 1** (ADR-091; bring evidence, not bugs) |
 | Next authority | **Operator evidence** — not design intuition |
 | Canonical entity | **Prisma `Event` only** |
-| Step 11 | `KCCC-EA-11-EVENT-CREATION-EDITING-1.0` |
-| Step 12 | **Not authorized** until observation + synthesis reviewed |
+| Ship baseline | `main` @ `46a72c3` · Netlify `6a60efa8f25804bc9b16f3f3` (CC-01…CC-05) |
+| CC-05 | **Complete** under ADR-090 — Synthesis remains **EMPTY** |
+| CC-06 | **Unauthorized** until Synthesis reviewed + separate authorization |
 | Candidate data | **Enabled for authorized roles** |
 | Communications OS | **Frozen** |
 | Roadmap | [`develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md`](develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md) |
+| Post-CC-05 direction | [`develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md`](develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md) |
 | Usability pass | [`develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md`](develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md) |
-| Synthesis | [`develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`](develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md) |
+| Synthesis | [`develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`](develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md) — **EMPTY** |
 | Observation cadence | [`develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md`](develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md) |
-| Step 13 architecture | [`develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md`](develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md) — design only; blocked until Step 12 |
+| Step 13 architecture | [`develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md`](develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md) — design only; CC-06 unauthorized |
 | Layers | [`develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md`](develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md) |
 | Doctrine #1 | [`develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md`](develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md) — operator defines reality; system interprets |
 | Baseline 1.0 | [`develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md`](develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md) — frozen immutable snapshot |

@@ -38,7 +38,7 @@ describe("capability honesty", () => {
       "COMPLETE_CC05",
     );
     expect(status.application.nextAuthorizedBuild).toBe(
-      "NONE_CC06_GATED",
+      "KCCC-OPERATOR-USABILITY-PASS-1-AND-SYNTHESIS-1",
     );
     expect(status.application.calendarCompletionProgramStatus).toBe("LOCKED");
     expect(status.application.unrelatedCampaignExpansionStatus).toBe("PAUSED");

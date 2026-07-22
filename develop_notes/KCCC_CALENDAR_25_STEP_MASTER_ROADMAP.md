@@ -4,7 +4,7 @@
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE (Steps 1–25)
 Calendar Completion overlay: develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md (CC-01…CC-12 LOCKED)
-Updated: Calendar Completion program locked 2026-07-21 · baseline 9c89012
+Updated: CC-05 ship baseline 2026-07-22 · main@46a72c3 · ADR-091 usability next
 Runtime: src/lib/system/constants.ts
 ```
 
@@ -17,8 +17,9 @@ Campaign OS Phase: EVIDENCE_ACQUISITION + Calendar Completion (CC-01…CC-12)
 Primary engineering track: Calendar Completion (LOCKED)
   Assessment: develop_notes/KCCC_CALENDAR_COMPLETION_ASSESSMENT_BURT_2026-07-21.md
   Program:    develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md
-  Next build: CC-01 Import Approval → Canonical Apply
-  Baseline:   main @ 9c89012
+  Ship baseline: main @ 46a72c3 · Netlify 6a60efa8f25804bc9b16f3f3 (CC-01…CC-05)
+  Next human pass: Operator Usability Pass 1 + Synthesis 1 (ADR-091)
+  Next engineering: NONE until Synthesis reviewed + CC-06 authorized
 Unrelated campaign expansion: PAUSED
 Campaign OS Baseline: 1.0 FROZEN (immutable — do not rewrite after observation)
   (develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md)
@@ -29,8 +30,8 @@ Communications OS (D20–D26): FROZEN
 LG-1: PAUSED
 AI: disabled until Step 16 (proposal_only)
 Calendar Foundation v1: BUILD COMPLETE (Steps 8–11)
-Step 12 / CC-05: NOT AUTHORIZED until Usability Synthesis reviewed or Kelly/Steve waiver
-Step 13 / CC-06: blocked on CC-05 (or paired waiver)
+CC-05 / Step 12 calendar slice: COMPLETE (ADR-090 waiver; Synthesis still EMPTY)
+CC-06 / Step 13: UNAUTHORIZED until Usability Synthesis 1 reviewed + separate auth (ADR-091)
 CC-01…CC-04, CC-07…CC-12: may proceed independent of Mobilize credentials
 Cadence: Build → validate → observe → synthesize → refine → next phase
   (see develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md)
@@ -58,10 +59,10 @@ Schedule mutations: detect / explain / recommend / simulate — never without ex
 | **9** | **Canonical Calendar Data Model** | **✅ COMPLETE** |
 | **10** | **Calendar Operating Views** | **✅ COMPLETE** |
 | **11** | **Event Creation & Editing** | **✅ COMPLETE** |
-| **⏸** | **Operator Usability Pass 1** | **OPEN** — `KCCC_OPERATOR_USABILITY_PASS_1.md` |
-| | Synthesis (after sessions) | `KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md` — empty until sessions done |
-| **12** | **Availability & Standing Rules** | **⬜ BLOCKED** until synthesis reviewed |
-| **13** | **Conflict Engine** | **📐 DESIGN READY** · first **Intelligence Layer** slice · **⬜ IMPLEMENTATION BLOCKED** until Step 12 — `KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md` |
+| **⏸** | **Operator Usability Pass 1** | **OPEN (next)** — live CC-01–CC-05 · ADR-091 · `KCCC_OPERATOR_USABILITY_PASS_1.md` |
+| | Synthesis (after sessions) | `KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md` — **EMPTY** until sessions done |
+| **12 / CC-05** | **Availability & Standing Rules** | **✅ COMPLETE** (shipped under ADR-090; Synthesis still EMPTY) |
+| **13 / CC-06** | **Conflict Engine** | **📐 DESIGN READY** · **⬜ UNAUTHORIZED** until Synthesis reviewed + separate auth (ADR-091) |
 
 ---
 
@@ -112,16 +113,17 @@ Create/edit: `develop_notes/KCCC_EA_11_EVENT_CREATION_EDITING.md`
 Code lock: `src/lib/calendar/canonical-event.ts`  
 Validate: `npm run calendar:canonical:validate`
 
-## Next authorized build
+## Next authorized pass
 
 ```text
-HOLD — complete Operator Usability Pass 1 + Synthesis 1
+NEXT — Operator Usability Pass 1 + Synthesis 1 (ADR-091)
+Live baseline: main @ 46a72c3 · Netlify 6a60efa8f25804bc9b16f3f3 (CC-01…CC-05)
 develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
-develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md
+develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md  (EMPTY — fill honestly)
+develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md
 Standing cadence: develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md
 ```
 
-Step 12 (`KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`) is **not authorized** until the pass is synthesized and reviewed with Steve.
-Do not start automatically. Do not change the Pass 1 protocol further — run it.
-
-Step 13 (`KCCC-EA-13-CONFLICT-ENGINE-1.0`) **depends on Step 12**. Architecture may be matured now (`KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md`); **implementation is not authorized** until Step 12 availability is an input to conflict detection. Do not skip to Step 13 build.
+CC-05 calendar availability slice is **already shipped** (ADR-090). That waiver did **not** complete Synthesis.
+**CC-06 / Step 13 Conflict Engine remains UNAUTHORIZED** until Synthesis is written, reviewed, and separately authorized (ADR-091).
+Do not mark Synthesis complete because CC-05 shipped. Do not start CC-06 automatically.

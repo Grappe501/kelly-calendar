@@ -134,4 +134,6 @@ npm run test -- tests/unit/calendar-availability
 
 ## CC-06 handoff
 
-**CC-06: Conflict Engine — Calendar Slice** will consume CC-03 normalized intervals, CC-04 recurrence identities, and CC-05 availability assessments to persist explainable scheduling conflicts and operator dispositions. Do not begin CC-06 without its explicit authorization. ADR-090 does **not** authorize CC-06.
+**CC-06: Conflict Engine — Calendar Slice** will consume CC-03 normalized intervals, CC-04 recurrence identities, and CC-05 availability assessments to persist explainable scheduling conflicts and operator dispositions.
+
+**Do not begin CC-06.** Per ADR-091, the next pass is **Operator Usability Pass 1 + Usability Synthesis 1** on the live CC-01–CC-05 calendar. ADR-090 does **not** authorize CC-06. Do not mark Synthesis complete because CC-05 shipped.

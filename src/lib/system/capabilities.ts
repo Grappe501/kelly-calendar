@@ -123,7 +123,7 @@ export function getCapabilityStatus(options?: {
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
       primaryFocus:
-        "Calendar Completion — CC-05 complete; CC-06 Conflict Engine remains gated (ADR-090 did not authorize CC-06; Synthesis EMPTY)",
+        "Operator Usability Pass 1 + Synthesis 1 on live CC-01–CC-05 (ADR-091); CC-06 unauthorized; Synthesis EMPTY",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       calendarCompletionProgramStatus: CALENDAR_COMPLETION_PROGRAM_STATUS,
       unrelatedCampaignExpansionStatus: UNRELATED_CAMPAIGN_EXPANSION_STATUS,

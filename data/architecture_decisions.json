@@ -551,12 +551,12 @@
       "boundary": "Time/recurrence corrections remain CC-03/CC-04. Explicit repairs require preview, auth, confirmation, and audit when later enabled."
     },
     {
-      "id": "ADR-090",
-      "title": "Kelly CC-05-Only Waiver of Unfinished Usability Synthesis Gate",
+      "id": "ADR-091",
+      "title": "Post-CC-05 Next Pass Is Operator Usability Pass 1 and Synthesis 1",
       "status": "accepted",
       "date": "2026-07-22",
-      "decision": "Kelly explicitly waives the unfinished Operator Usability Synthesis gate for Calendar Completion CC-05 only, authorizing the calendar-only Standing Availability Inputs slice (rules, exceptions, evaluation, overlays, create/reschedule warnings). Evidence: develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md. Usability Synthesis remains EMPTY and is not marked complete by this waiver.",
-      "boundary": "CC-05 must not automatically move, cancel, confirm, or resolve Events; must not mutate Missions or external calendars; must not create persisted Conflict Engine records. CC-06 remains separately gated and is not authorized by this waiver."
+      "decision": "With CC-05 shipped at main@46a72c3 / Netlify 6a60efa8f25804bc9b16f3f3, the next authorized human pass is Operator Usability Pass 1 and Usability Synthesis 1 on the live CC-01–CC-05 calendar. ADR-090 authorized CC-05 only and did not complete Synthesis. CC-06 remains unauthorized until Synthesis is completed, reviewed, and separately authorized.",
+      "boundary": "Do not retroactively mark Synthesis complete because CC-05 shipped. Do not begin Conflict Engine (CC-06) implementation under this decision."
     }
   ]
 }

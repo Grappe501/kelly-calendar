@@ -4,10 +4,12 @@
 Build ID:     KCCC-CALENDAR-COMPLETION-PROGRAM-1.0
 Status:       LOCKED
 Locked:       2026-07-21
-Baseline:     main @ 9c89012
+Program baseline (lock): main @ 9c89012
+CC-05 ship baseline:     main @ 46a72c3 · Netlify 6a60efa8f25804bc9b16f3f3
 Source:       Burt discovery assessment (Option C)
 Authority:    Steve acceptance of Burt defaults + sequencing adjustment
 Assessment:   develop_notes/KCCC_CALENDAR_COMPLETION_ASSESSMENT_BURT_2026-07-21.md
+Post-CC-05:   ADR-091 · develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md
 ```
 
 ## Governing posture
@@ -21,19 +23,18 @@ Unrelated campaign expansion  PAUSED
 Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
-CC-05 ........................ COMPLETE (Kelly waiver ADR-090; Synthesis remains EMPTY)
-CC-06 ........................ GATED (separate authorization required; not covered by ADR-090)
-Usability Synthesis 1 ....... Remains EMPTY (not completed by CC-05 waiver)
-Next authorized build ....... None — CC-06 Conflict Engine remains GATED
-CC-01 status ................ COMPLETE
-CC-02 status ................ COMPLETE
-CC-03 status ................ COMPLETE
-CC-04 status ................ COMPLETE
-CC-05 status ................ COMPLETE
+CC-01…CC-05 ................. COMPLETE (CC-05 via Kelly waiver ADR-090)
+CC-06 ........................ UNAUTHORIZED / GATED (not covered by ADR-090)
+Usability Synthesis 1 ....... EMPTY — must be completed honestly (ADR-091)
+Next human pass ............. Operator Usability Pass 1 + Synthesis 1
+                              on live CC-01–CC-05 calendar (ADR-091)
+Next engineering build ...... None until Synthesis reviewed + CC-06 authorized
+CC-05 ship evidence ......... main@46a72c3 · deploy 6a60efa8f25804bc9b16f3f3
+                              · availability validate 44 passed · 0 auto mutations
 CC-05 waiver ................ develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md
 ```
 
-This program finishes the **calendar product** before shifting attention to broader campaign functions. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, and does **not** treat the CC-05 waiver as Usability Synthesis completion or as CC-06 authorization.
+This program finishes the **calendar product** before shifting attention to broader campaign functions. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat the CC-05 waiver as Usability Synthesis completion, and does **not** authorize CC-06 until Synthesis 1 is completed, reviewed, and separately authorized (ADR-091).
 
 ## Locked sequence (Option C)
 
@@ -43,8 +44,8 @@ This program finishes the **calendar product** before shifting attention to broa
 | **CC-02** | Calendar Integrity & Provenance Console | L | **COMPLETE** — detector + console; no auto Event mutation |
 | **CC-03** | Timezone, All-day & Overnight Hardening | M | **COMPLETE** — doctrine + temporal service; no schema migration |
 | **CC-04** | Recurrence & Occurrence Exceptions | XL | **COMPLETE** — Model B series + materialized Events; `rrule` |
-| **CC-05** | Standing Availability Inputs | L | **COMPLETE** — Kelly waiver ADR-090 (2026-07-22); Synthesis remains EMPTY |
-| **CC-06** | Conflict Engine | XL | **GATED** — requires separate authorization after CC-05; **not** covered by ADR-090 |
+| **CC-05** | Standing Availability Inputs | L | **COMPLETE** — ship baseline `46a72c3` / `6a60efa8f25804bc9b16f3f3`; Synthesis remains EMPTY |
+| **CC-06** | Conflict Engine | XL | **UNAUTHORIZED** until Usability Synthesis 1 completed, reviewed, and separately authorized (ADR-091) |
 | **CC-07** | Unified Search, Filters & Saved Views | M | Parallel after core |
 | **CC-08** | Advanced Day/Week Scheduling Workspace | L | Time grid first; drag-and-drop deferred |
 | **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | Parallel after core |

@@ -41,7 +41,7 @@ export const CALENDAR_COMPLETION_PROGRAM_STATUS = "LOCKED";
 export const CALENDAR_COMPLETION_BASELINE_COMMIT = "9c89012";
 export const CALENDAR_COMPLETION_NEXT = "CC-06";
 export const CALENDAR_COMPLETION_NEXT_BUILD_ID =
-  "KCCC-CC-06-CONFLICT-ENGINE-GATED";
+  "KCCC-CC-06-CONFLICT-ENGINE-UNAUTHORIZED";
 export const CALENDAR_COMPLETION_PROGRAM_DOC =
   "develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md";
 export const CALENDAR_COMPLETION_ASSESSMENT_DOC =
@@ -60,13 +60,18 @@ export const CC_04_STATUS = "COMPLETE";
 export const CC_05_BUILD_ID =
   "KCCC-CC-05-STANDING-AVAILABILITY-INPUTS-1.0";
 export const CC_05_STATUS = "COMPLETE";
+export const CC_05_SHIP_COMMIT = "46a72c3";
+export const CC_05_SHIP_DEPLOY_ID = "6a60efa8f25804bc9b16f3f3";
 export const CC_05_WAIVER_ADR = "ADR-090";
 export const CC_05_WAIVER_DOC =
   "develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md";
-export const CC_06_STATUS = "GATED";
+export const CC_06_STATUS = "UNAUTHORIZED";
+export const POST_CC05_DIRECTION_ADR = "ADR-091";
+export const POST_CC05_DIRECTION_DOC =
+  "develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
-/** Architecture mature; Conflict Engine (CC-06) remains separately gated. */
+/** Conflict Engine (CC-06) unauthorized until Usability Synthesis 1 (ADR-091). */
 export const STEP_13_CONFLICT_ENGINE_STATUS = "DESIGN_READY_IMPLEMENTATION_BLOCKED";
 export const STEP_13_CONFLICT_ENGINE_DOC =
   "develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md";
@@ -107,8 +112,9 @@ export const FURTHER_ARCHITECTURE_DOCTRINE_STATUS =
   "HOLD_UNTIL_OPERATOR_OBSERVATION_PASS_1";
 export const SCHEDULE_MUTATION_GOVERNING_RULE =
   "DETECT_EXPLAIN_RECOMMEND_SIMULATE_NEVER_AUTO_MUTATE";
+/** Next authorized work is human observation — not CC-06 engineering. */
 export const NEXT_AUTHORIZED_BUILD =
-  "NONE_CC06_GATED";
+  "KCCC-OPERATOR-USABILITY-PASS-1-AND-SYNTHESIS-1";
 export const CALENDAR_ROADMAP_DOC =
   "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md";
 /** Prisma model name — the only top-level Event entity. */

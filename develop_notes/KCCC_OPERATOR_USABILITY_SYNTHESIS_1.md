@@ -3,13 +3,18 @@
 ```text
 Status: EMPTY — fill after Kelly + Steve + Staff sessions
 Source: develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
-Gate: Required before Step 12 authorization (default path)
-Do not fix during sessions — synthesize first, then review with Steve
+Gate: Required before CC-06 authorization (ADR-091)
+Do not fix during sessions — synthesize first, then review with Kelly/Steve
 
 NOTE (2026-07-22): This Synthesis remains EMPTY / incomplete.
 Kelly waived the Synthesis gate for CC-05 ONLY (ADR-090 /
 develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md).
 That waiver does NOT complete this document and does NOT authorize CC-06.
+
+Post-CC-05 direction (ADR-091): Complete Pass 1 + this Synthesis on the live
+CC-01–CC-05 calendar (main@46a72c3 / deploy 6a60efa8f25804bc9b16f3f3)
+before deciding whether to authorize CC-06.
+Do NOT retroactively mark this Synthesis complete because CC-05 shipped.
 ```
 
 ## Instructions
@@ -19,7 +24,7 @@ After all three observation sessions:
 1. Do **not** implement fixes immediately.
 2. Fill this synthesis from the capture doc (evidence first).
 3. Classify every recommendation into **exactly one** of three buckets.
-4. Bring findings back for review **before** authorizing Step 12.
+4. Bring findings back for review **before** authorizing CC-06.
 
 **Do not bring a bug list.** Bring evidence in this shape:
 
@@ -49,6 +54,18 @@ Strong: “All three expected search as primary navigation.”
 | Which actions feel obvious? | |
 | Which actions require thought? | |
 | Where do they expect relationships, preparation, or travel info? | |
+
+### CC-05 availability focus (required for ADR-091 closeout)
+
+| Question | Answer (evidence-backed) |
+|----------|--------------------------|
+| Do operators understand availability classifications and overlays? | |
+| Can they create rules and exceptions correctly? | |
+| Do they understand warnings versus blockers? | |
+| Can they acknowledge / accept risk without assuming the conflict is resolved? | |
+| Can they distinguish availability inputs from actual Event conflicts? | |
+| Is create/edit/reschedule guidance useful rather than noisy? | |
+| Can they use the workflow on dense days and on mobile screens? | |
 
 ---
 

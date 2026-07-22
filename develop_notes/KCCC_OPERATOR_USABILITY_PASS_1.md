@@ -1,11 +1,14 @@
 # KCCC — Operator Usability Pass 1
 
 ```text
-Status: OPEN — observation in progress
-Gate: Blocks Step 12 (Availability & Standing Rules)
+Status: OPEN — observation required (post-CC-05)
+Gate: Blocks CC-06 Conflict Engine authorization (ADR-091)
+      (CC-05 already shipped under ADR-090 waiver; Synthesis still EMPTY)
 Live: https://kelly-calendar.netlify.app
-After: Step 11 Event Operations (d8bd594)
+Baseline: main @ 46a72c3 · Netlify deploy 6a60efa8f25804bc9b16f3f3
+Calendar Completion on baseline: CC-01…CC-05 COMPLETE · CC-06 UNAUTHORIZED
 Doc: develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
+Direction: develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md (ADR-091)
 Synthesis (after all sessions): develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md
 ```
 
@@ -25,6 +28,34 @@ _Establish before every session. One of the easiest ways to lose good usability 
 
 ---
 
+## Post-CC-05 focus (binding for this pass)
+
+Sessions run against the **live CC-01–CC-05 calendar**. In addition to the original Pass 1 scenarios, observers must capture evidence on whether operators:
+
+1. **Understand availability classifications and overlays** (AVAILABLE / PREFERRED / CONSTRAINED / UNAVAILABLE / UNKNOWN / REQUIRES_REVIEW — and that segments are not Events).
+2. **Can create rules and exceptions correctly** (`/system/calendar/availability` and related flows).
+3. **Understand warnings versus blockers** (informational / warning vs acknowledgement-required UNAVAILABLE).
+4. **Can acknowledge or accept risk without assuming resolution** (ACKNOWLEDGED / ACCEPTED_RISK does not clear or “fix” the schedule).
+5. **Can distinguish availability from actual Event conflicts** (CC-05 input vs future Conflict Engine / overlapping Events).
+6. **Find create/edit/reschedule guidance useful rather than noisy**.
+7. **Can use the workflow on dense days and mobile screens**.
+
+Do **not** mark Synthesis complete because CC-05 shipped. Do **not** authorize CC-06 from this pass alone — Synthesis must be written and reviewed first.
+
+Surfaces to leave discoverable (do not coach):
+
+| Surface | Path |
+|---------|------|
+| Availability workspace | `/system/calendar/availability` |
+| Preview / overlay | `/system/calendar/availability/preview` |
+| Exceptions | `/system/calendar/availability/exceptions` |
+| Quick create | `/add/quick` |
+| Event sheet | `/events/[id]` |
+| Day / week / month | `/calendar` |
+| Integrity (contrast) | `/system/calendar/integrity` |
+
+---
+
 ## Operator Context
 
 _Fill one block before each observation session. Context matters when reviewing later._
@@ -38,7 +69,7 @@ _Fill one block before each observation session. Context matters when reviewing 
 | Device | desktop · laptop · tablet · phone |
 | Browser | |
 | Experience level | first use · second use · other: ___ |
-| Campaign context | planning tomorrow · entering a new event · reviewing the week · other: ___ |
+| Campaign context | planning tomorrow · entering a new event · reviewing the week · availability rules · other: ___ |
 
 ### Session — Steve
 
@@ -49,7 +80,7 @@ _Fill one block before each observation session. Context matters when reviewing 
 | Device | desktop · laptop · tablet · phone |
 | Browser | |
 | Experience level | first use · second use · builder familiarity · other: ___ |
-| Campaign context | planning tomorrow · entering a new event · reviewing the week · stress / edge cases · other: ___ |
+| Campaign context | planning tomorrow · entering a new event · reviewing the week · stress / edge cases · availability · other: ___ |
 
 ### Session — Staff
 
@@ -60,7 +91,7 @@ _Fill one block before each observation session. Context matters when reviewing 
 | Device | desktop · laptop · tablet · phone |
 | Browser | |
 | Experience level | first use · second use · other: ___ |
-| Campaign context | planning tomorrow · entering a new event · reviewing the week · other: ___ |
+| Campaign context | planning tomorrow · entering a new event · reviewing the week · availability · other: ___ |
 
 ---
 
@@ -519,12 +550,17 @@ _Can wait until after Availability / Conflict work._
 ## Decision gate
 
 ```text
-Step 12 (Availability & Standing Rules) remains NOT AUTHORIZED
+CC-06 (Conflict Engine — Calendar Slice) remains UNAUTHORIZED
 until:
-  1. All three observation sessions are complete
+  1. All three observation sessions are complete (live CC-01–CC-05)
   2. Synthesis is written: develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md
-  3. Findings are reviewed here with Steve (evidence, not intuition)
+  3. Findings are reviewed with Kelly/Steve (evidence, not intuition)
   4. Must-fix items are cleared or explicitly deferred
+  5. CC-06 is separately authorized (ADR-091) — ADR-090 does not count
+
+Note: CC-05 already shipped under Kelly waiver ADR-090.
+That waiver did NOT complete this Synthesis and does NOT authorize CC-06.
+Do not retroactively mark Synthesis complete because CC-05 shipped.
 ```
 
 Do **not** fix anything immediately after sessions. Capture → synthesize → review → then decide.
@@ -536,16 +572,16 @@ When ready to close:
 - [ ] Kelly observation complete (timings + confidence + magic moment + one change + evidence/interpretation)
 - [ ] Steve edge-case session complete (same)
 - [ ] Staff “Schedule tomorrow” session complete (or waived with reason)
+- [ ] Post-CC-05 availability focus questions observed (classifications, rules/exceptions, warn vs block, ack ≠ resolve, availability ≠ Event conflict, noise, dense/mobile)
 - [ ] Closing-answer synthesis reviewed (convergent “one thing”?)
 - [ ] Magic-moment synthesis reviewed
 - [ ] Expected-vs-observed section filled
 - [ ] Repeated behaviors section filled
 - [ ] Success criteria answered
-- [ ] **Synthesis doc written** (`KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`)
-- [ ] Findings brought back for review **before** Step 12 authorization
+- [ ] **Synthesis doc written** (`KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`) — still EMPTY until honestly filled
+- [ ] Findings brought back for review **before** CC-06 authorization
 - [ ] Must-fix list reviewed
-- [ ] Steve authorizes Step 12: `KCCC-EA-12-AVAILABILITY-STANDING-RULES-1.0`
-
+- [ ] Kelly/Steve authorize CC-06 only after Synthesis review (separate decision)
 ---
 
 ## Step 12 preview (do not build yet)
