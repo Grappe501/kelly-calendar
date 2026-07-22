@@ -1,22 +1,21 @@
-import { NextResponse } from "next/server";
-import { getRequestIdFromHeaders } from "@/server/middleware/with-request-context";
+import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { listImportRunsForOperator } from "@/server/services/historical-import-service";
 
 export const dynamic = "force-dynamic";
 
-/** DB-backed import runs — list blocked until Step 4; staging import remains under /api/import/google-calendar. */
-export function GET(request: Request) {
-  const requestId = getRequestIdFromHeaders(request.headers);
-  return NextResponse.json(
-    {
-      ok: false,
-      error: {
-        code: "AUTHENTICATION_REQUIRED",
-        message:
-          "Canonical import persistence APIs require Step 4 authentication. Staging import UI remains available.",
-      },
-      historicalFloor: "2025-11-01",
-      requestId,
+/** List recent DB-backed import runs (CC-01). */
+export async function GET(request: Request) {
+  return withAuthenticatedQuery(
+    request,
+    "/api/imports",
+    async ({ actor }) => {
+      const runs = await listImportRunsForOperator(actor);
+      return {
+        historicalFloor: "2025-11-01",
+        importApplyEnabled: true,
+        buildId: "KCCC-CC-01-IMPORT-APPROVAL-CANONICAL-APPLY-1.0",
+        runs,
+      };
     },
-    { status: 401, headers: { "x-request-id": requestId } },
   );
 }

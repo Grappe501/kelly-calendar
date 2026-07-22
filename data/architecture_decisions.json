@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "decisions": [
     {
       "id": "ADR-015",
@@ -533,6 +533,14 @@
       "date": "2026-07-21",
       "decision": "CC-01 builds import approve/merge/reject first and designs provenance/audit contracts for CC-02 reuse, but does not combine the Integrity Console into CC-01.",
       "boundary": "CC-01 success is the decisive single-Event apply/idempotency test only."
+    },
+    {
+      "id": "ADR-088",
+      "title": "Calendar Completion Passes Must Measurably Improve the Calendar",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Every implementation pass during CC-01–CC-12 must measurably improve calendar correctness, usability, interoperability, or operational reliability. Neutral refactors and unrelated campaign expansion are forbidden unless they directly enable and verify a calendar improvement.",
+      "boundary": "Does not waive Architecture 1.0 ownership or Communications freeze."
     }
   ]
 }

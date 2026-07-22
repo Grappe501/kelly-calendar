@@ -36,7 +36,7 @@ describe("capability honesty", () => {
     expect(status.application.operatorUsabilityPassStatus).toBe("OPEN");
     expect(status.application.step12AvailabilityStatus).toBe("NOT_AUTHORIZED");
     expect(status.application.nextAuthorizedBuild).toBe(
-      "KCCC-CC-01-IMPORT-APPROVAL-CANONICAL-APPLY-1.0",
+      "KCCC-CC-02-CALENDAR-INTEGRITY-PROVENANCE-CONSOLE-1.0",
     );
     expect(status.application.calendarCompletionProgramStatus).toBe("LOCKED");
     expect(status.application.unrelatedCampaignExpansionStatus).toBe("PAUSED");

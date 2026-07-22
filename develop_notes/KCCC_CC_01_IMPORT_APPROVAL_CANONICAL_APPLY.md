@@ -3,8 +3,9 @@
 ```text
 Build ID:     KCCC-CC-01-IMPORT-APPROVAL-CANONICAL-APPLY-1.0
 Program:      KCCC-CALENDAR-COMPLETION-PROGRAM-1.0
-Status:       AUTHORIZED — next build
-Baseline:     main @ 9c89012
+Status:       COMPLETE
+Baseline:     main @ 7bba401
+Completed:    2026-07-22
 Size:         Large
 Depends on:   Existing import staging + fingerprints + auth mutation gate
 Feeds:        CC-02 provenance/audit reuse (contracts only — not combined scope)
@@ -86,6 +87,16 @@ Feature-flag or auth-gate disable approve/merge mutations; leave staging intact;
 - No PII in proofs  
 - CC-02 still a separate authorized deliverable  
 
-## Implementation note for agents
+## Completion evidence (2026-07-22)
 
-Do **not** expand this build into the Integrity Console. Extract shared provenance/audit helpers that CC-02 will import; keep the apply transaction narrow and rigorously tested.
+| Check | Result |
+|-------|--------|
+| Typecheck | PASS |
+| Unit tests (mapper + capabilities) | PASS |
+| `import:validate` / `import:staging:validate` | PASS |
+| `calendar:canonical:validate` | PASS |
+| `import:apply:proof` | PASS — approve +1 Event, re-approve +0, reject/merge +0, missions unchanged |
+| Surfaces | `/import/google-calendar/apply`, approve/reject/merge APIs |
+| Provenance contracts | `src/lib/calendar/import-provenance.ts` (CC-02 reusable) |
+| CC-02 | Still a separate deliverable |
+

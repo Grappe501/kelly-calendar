@@ -13,10 +13,17 @@ const req = [
   "src/features/calendar-import/staging-store.ts",
   "src/features/calendar-import/providers/google-public-ical.ts",
   "src/features/calendar-import/providers/google-calendar-api.ts",
+  "src/lib/calendar/import-provenance.ts",
+  "src/lib/calendar/import-apply-mapper.ts",
+  "src/server/services/import-approval-service.ts",
   "src/app/import/google-calendar/page.tsx",
+  "src/app/import/google-calendar/apply/page.tsx",
   "src/app/api/import/google-calendar/validate-source/route.ts",
   "src/app/api/import/google-calendar/preview/route.ts",
   "src/app/api/import/google-calendar/stage/route.ts",
+  "src/app/api/imports/[importRunId]/records/[recordId]/approve/route.ts",
+  "src/app/api/imports/[importRunId]/records/[recordId]/reject/route.ts",
+  "src/app/api/imports/[importRunId]/records/[recordId]/merge/route.ts",
   "data/ingest_staging/.gitignore",
 ];
 

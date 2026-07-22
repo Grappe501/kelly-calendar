@@ -81,3 +81,4 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 - ADR-085 Source-Deleted Events Remain CANCELLED History
 - ADR-086 Calendar Completion Program Locked CC-01 through CC-12
 - ADR-087 CC-01 Provenance Contracts Reusable by CC-02 Without Combining Deliverables
+- ADR-088 Calendar Completion Passes Must Measurably Improve the Calendar

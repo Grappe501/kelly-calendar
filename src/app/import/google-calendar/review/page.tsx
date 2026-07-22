@@ -16,13 +16,13 @@ export default function ImportReviewPage() {
       <header className="page-header">
         <h1>Review queue</h1>
         <p>
-          Imported events are not confirmed attendance. Approve, edit, merge, or reject before any
-          future canonical save.
+          Filesystem staging review (preview only). Canonical approve/merge/reject lives on the{" "}
+          <Link href="/import/google-calendar/apply">database apply queue</Link>.
         </p>
       </header>
 
       <section className="dev-banner" role="status">
-        {queue.length} staged item(s) awaiting review. Database writes remain disabled.
+        {queue.length} staged filesystem item(s). Database CC-01 apply is separate and enabled.
       </section>
 
       <section className="panel">
@@ -56,6 +56,9 @@ export default function ImportReviewPage() {
       </section>
 
       <section className="panel">
+        <Link className="button" href="/import/google-calendar/apply">
+          Database apply queue (CC-01)
+        </Link>{" "}
         <Link className="button secondary" href="/import/google-calendar">
           Back to import
         </Link>

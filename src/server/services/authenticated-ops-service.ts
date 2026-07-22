@@ -14,6 +14,11 @@ import { previewWorkflowExpansion } from "@/features/operational-intelligence/se
 import { getWorkflowById } from "@/features/operational-intelligence/workflow-definitions/registry";
 import { calculateEventReadiness } from "@/features/operational-intelligence/services/readiness-service";
 import { replaceObjectives, replacePacking, replaceProgramFlow, replaceStaffing, replaceActions, replaceCommunications } from "@/server/services/event-plan-service";
+import {
+  approveImportRecord,
+  mergeImportRecord,
+  rejectImportRecord,
+} from "@/server/services/import-approval-service";
 
 function coerceEnum(value: string | undefined, allowed: string[], fallback: string) {
   if (value && allowed.includes(value)) return value;
@@ -595,65 +600,33 @@ export async function decideImportRecord(input: {
   recordId: string;
   decision: "APPROVE" | "REJECT" | "MERGE";
   requestId?: string;
+  notes?: string;
+  canonicalEventId?: string;
 }) {
-  const action =
-    input.decision === "APPROVE"
-      ? "HISTORICAL_IMPORT_APPROVE"
-      : input.decision === "REJECT"
-        ? "HISTORICAL_IMPORT_REJECT"
-        : "HISTORICAL_IMPORT_MERGE";
-  await requireAuthorized(input.actor, {
-    action,
-    resource: { type: "import_record", id: input.recordId },
-  });
-
-  return withTransaction(async (tx) => {
-    const record = await tx.calendarImportRecord.findFirst({
-      where: { id: input.recordId, importRunId: input.importRunId },
-    });
-    if (!record) throw new NotFoundError("Import record not found.");
-
-    const reviewStatus =
-      input.decision === "APPROVE"
-        ? "APPROVED"
-        : input.decision === "REJECT"
-          ? "REJECTED"
-          : "MERGED";
-
-    const updated = await tx.calendarImportRecord.update({
-      where: { id: record.id },
-      data: {
-        reviewStatus: reviewStatus as never,
-        reviewedByUserId: input.actor.userId,
-        reviewedAt: new Date(),
-      },
-    });
-
-    await tx.calendarImportReviewAction.create({
-      data: {
-        importRecordId: record.id,
-        action: input.decision,
-        actorUserId: input.actor.userId,
-      },
-    });
-
-    await writeAttributedAudit({
+  if (input.decision === "APPROVE") {
+    return approveImportRecord({
       actor: input.actor,
-      action: `IMPORT_RECORD_${input.decision}`,
-      entityType: "CalendarImportRecord",
-      entityId: record.id,
+      importRunId: input.importRunId,
+      recordId: input.recordId,
       requestId: input.requestId,
-      newState: {
-        reviewStatus,
-        historicalAttendanceConfirmed: false,
-      },
-      tx,
+      notes: input.notes,
     });
-
-    return {
-      recordId: updated.id,
-      decision: input.decision,
-      historicalAttendanceConfirmed: false,
-    };
+  }
+  if (input.decision === "REJECT") {
+    return rejectImportRecord({
+      actor: input.actor,
+      importRunId: input.importRunId,
+      recordId: input.recordId,
+      requestId: input.requestId,
+      notes: input.notes,
+    });
+  }
+  return mergeImportRecord({
+    actor: input.actor,
+    importRunId: input.importRunId,
+    recordId: input.recordId,
+    canonicalEventId: input.canonicalEventId ?? "",
+    requestId: input.requestId,
+    notes: input.notes,
   });
 }

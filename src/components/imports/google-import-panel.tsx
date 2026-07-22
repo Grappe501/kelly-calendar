@@ -438,9 +438,12 @@ export function GoogleImportPanel() {
             </ul>
             {mode === "stage_review" && result.importId ? (
               <a className="button secondary" href="/import/google-calendar/review">
-                Open review queue
+                Open file staging review
               </a>
             ) : null}
+            <a className="button secondary" href="/import/google-calendar/apply">
+              Open database apply queue
+            </a>
           </div>
         ) : null}
       </section>

@@ -123,7 +123,7 @@ export function getCapabilityStatus(options?: {
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
       primaryFocus:
-        "Calendar Completion CC-01…CC-12 locked — next build CC-01 Import Approval → Canonical Apply",
+        "Calendar Completion — CC-01 complete; next CC-02 Integrity & Provenance Console",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       calendarCompletionProgramStatus: CALENDAR_COMPLETION_PROGRAM_STATUS,
       unrelatedCampaignExpansionStatus: UNRELATED_CAMPAIGN_EXPANSION_STATUS,

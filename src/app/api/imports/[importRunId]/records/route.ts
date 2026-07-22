@@ -1,17 +1,17 @@
-import { getRequestIdFromHeaders } from "@/server/middleware/with-request-context";
-import { jsonAuthRequired } from "@/lib/api/auth-required";
+import { withAuthenticatedQuery } from "@/server/auth/api-mutation";
+import { getImportRecordsForOperator } from "@/server/services/historical-import-service";
 
 export const dynamic = "force-dynamic";
-
 type Ctx = { params: Promise<{ importRunId: string }> };
 
 export async function GET(request: Request, context: Ctx) {
-  const requestId = getRequestIdFromHeaders(request.headers);
   const { importRunId } = await context.params;
-  void importRunId;
-  return jsonAuthRequired(
-    requestId,
-    "Import records require Step 4 authentication.",
+  return withAuthenticatedQuery(
+    request,
     "/api/imports/[importRunId]/records",
+    async ({ actor }) => {
+      const records = await getImportRecordsForOperator(actor, importRunId);
+      return { importRunId, records };
+    },
   );
 }

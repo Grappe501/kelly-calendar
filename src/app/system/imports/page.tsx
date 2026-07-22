@@ -26,12 +26,16 @@ export default function SystemImportsPage() {
             <strong>{summary.historicalFloor}</strong>
           </li>
           <li>
-            <span>Database writes</span>
-            <strong>disabled</strong>
+            <span>Database canonical apply (CC-01)</span>
+            <strong>enabled</strong>
           </li>
           <li>
-            <span>Live sync</span>
-            <strong>disabled</strong>
+            <span>Filesystem staging writes</span>
+            <strong>staging only</strong>
+          </li>
+          <li>
+            <span>Live sync / Google write-back</span>
+            <strong>disabled (IMPORT_ONLY)</strong>
           </li>
           <li>
             <span>Import runs</span>
@@ -50,6 +54,9 @@ export default function SystemImportsPage() {
 
       <section className="panel">
         <div className="button-row">
+          <Link className="button" href="/import/google-calendar/apply">
+            Open apply queue
+          </Link>
           <Link className="button" href="/import/google-calendar">
             Open import panel
           </Link>
