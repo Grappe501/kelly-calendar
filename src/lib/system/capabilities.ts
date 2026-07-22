@@ -17,6 +17,7 @@ import {
   STEP_10_OPERATING_VIEWS_STATUS,
   STEP_11_EVENT_EDITING_STATUS,
   STEP_12_AVAILABILITY_STATUS,
+  STEP_13_CONFLICT_ENGINE_STATUS,
   TOTAL_STEPS,
   UNRELATED_CAMPAIGN_EXPANSION_STATUS,
 } from "@/lib/system/constants";
@@ -39,6 +40,7 @@ export {
   STEP_10_OPERATING_VIEWS_STATUS,
   STEP_11_EVENT_EDITING_STATUS,
   STEP_12_AVAILABILITY_STATUS,
+  STEP_13_CONFLICT_ENGINE_STATUS,
   UNRELATED_CAMPAIGN_EXPANSION_STATUS,
 } from "@/lib/system/constants";
 
@@ -64,6 +66,7 @@ export type CapabilityStatus = {
     step11EventEditingStatus: string;
     operatorUsabilityPassStatus: string;
     step12AvailabilityStatus: string;
+    step13ConflictEngineStatus: string;
   };
   environment: {
     publicConfigurationValid: boolean;
@@ -123,7 +126,7 @@ export function getCapabilityStatus(options?: {
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
       primaryFocus:
-        "Calendar Completion — CC-06 Conflict Engine (ADR-092); Synthesis EMPTY; CC-07 design-only",
+        "Calendar Completion — CC-06 Conflict Engine COMPLETE (ADR-092); Synthesis EMPTY; CC-07 design-only",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       calendarCompletionProgramStatus: CALENDAR_COMPLETION_PROGRAM_STATUS,
       unrelatedCampaignExpansionStatus: UNRELATED_CAMPAIGN_EXPANSION_STATUS,
@@ -135,6 +138,7 @@ export function getCapabilityStatus(options?: {
       step11EventEditingStatus: STEP_11_EVENT_EDITING_STATUS,
       operatorUsabilityPassStatus: OPERATOR_USABILITY_PASS_STATUS,
       step12AvailabilityStatus: STEP_12_AVAILABILITY_STATUS,
+      step13ConflictEngineStatus: STEP_13_CONFLICT_ENGINE_STATUS,
     },
     environment: {
       publicConfigurationValid: envStatus.publicConfigurationValid,

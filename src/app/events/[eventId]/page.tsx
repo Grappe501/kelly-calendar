@@ -8,6 +8,8 @@ import {
   getEventEditorPayload,
 } from "@/server/services/event-editor-service";
 import { explainEventProvenance } from "@/server/services/calendar-integrity-service";
+import { getConflictsForEvent } from "@/server/services/conflict-engine-service";
+import { EventConflictsPanel } from "@/components/events/EventConflictsPanel";
 
 export const metadata: Metadata = {
   title: "Event",
@@ -37,6 +39,12 @@ export default async function EventSheetPage({ params }: { params: Params }) {
   } catch {
     provenance = null;
   }
+  let conflicts: Awaited<ReturnType<typeof getConflictsForEvent>> | null = null;
+  try {
+    conflicts = await getConflictsForEvent({ actor, eventId });
+  } catch {
+    conflicts = null;
+  }
 
   return (
     <>
@@ -45,6 +53,20 @@ export default async function EventSheetPage({ params }: { params: Params }) {
         initialHistory={history}
         canMutate={roleMayMutate(actor.primarySystemRole)}
       />
+      {conflicts ? (
+        <EventConflictsPanel
+          eventId={eventId}
+          initialPersisted={conflicts.persisted}
+          initialLive={conflicts.live.map((c) => ({
+            id: c.id,
+            conflictType: c.conflictType,
+            severity: c.severity,
+            explanation: c.explanation,
+            startsAt: c.startsAt,
+            endsAt: c.endsAt,
+          }))}
+        />
+      ) : null}
       {provenance ? <EventProvenancePanelView data={provenance} /> : null}
     </>
   );

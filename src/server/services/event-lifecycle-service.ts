@@ -19,6 +19,7 @@ import {
   type AvailabilityAcknowledgementInput,
 } from "@/server/services/availability-service";
 import type { AvailabilityAssessment } from "@/lib/calendar/availability";
+import { recomputeConflictsForEventBestEffort } from "@/server/services/conflict-engine-service";
 
 async function returnSafe(actor: AuthenticatedActor, eventId: string) {
   return getSafeEventForViewer({
@@ -117,6 +118,15 @@ export async function rescheduleEvent(input: {
     requestId: input.requestId,
     seriesFingerprint: input.seriesFingerprint,
   });
+
+  // CC-06: recompute conflicts for the affected window AFTER save. Never
+  // blocks or rolls back the reschedule — best-effort, logged on failure.
+  await recomputeConflictsForEventBestEffort({
+    actor: input.actor,
+    eventId: input.eventId,
+    requestId: input.requestId,
+  });
+
   return {
     event: await returnSafe(input.actor, input.eventId),
     updatedCount: result.updatedCount,
@@ -214,6 +224,12 @@ export async function createEventWithOptionalRecurrence(input: {
     if (!result.firstEventId) {
       throw new ValidationError("Series created without occurrences.");
     }
+    // CC-06: recompute conflicts for the base occurrence AFTER save.
+    await recomputeConflictsForEventBestEffort({
+      actor: input.actor,
+      eventId: result.firstEventId,
+      requestId: input.data.requestId,
+    });
     return {
       event: await returnSafe(input.actor, result.firstEventId),
       availabilityAssessment: assessment as AvailabilityAssessment,
@@ -223,6 +239,13 @@ export async function createEventWithOptionalRecurrence(input: {
   const first = await createCanonicalEvent({
     actor: input.actor,
     data: input.data,
+  });
+  // CC-06: recompute conflicts for the affected window AFTER save. Never
+  // blocks the create — best-effort, logged on failure.
+  await recomputeConflictsForEventBestEffort({
+    actor: input.actor,
+    eventId: first.id,
+    requestId: input.data.requestId,
   });
   return {
     event: await returnSafe(input.actor, first.id),

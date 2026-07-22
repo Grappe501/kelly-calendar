@@ -2,10 +2,16 @@
 
 ```text
 Build id:     KCCC-EA-13-CONFLICT-ENGINE-1.0
-Document:     ARCHITECTURE ONLY — not authorized for implementation
-Depends on:   Step 12 Availability & Scheduling Intelligence (authorized + materialized)
-Blocked by:   Operator Observation Pass 1 + Synthesis 1 → Step 12 gate
-Status:       DESIGN READY · IMPLEMENTATION HELD
+Document:     ARCHITECTURE + CALENDAR-SLICE IMPLEMENTATION RECORD
+Depends on:   Step 12 Availability & Scheduling Intelligence (CC-05, COMPLETE)
+Implemented:  CC-06 (ADR-092, 2026-07-22) — calendar slice only:
+              TIME_OVERLAP, AVAILABILITY_VIOLATION, BUFFER_CONFLICT,
+              TRAVEL_INFEASIBLE. See KCCC_CC_06_CONFLICT_ENGINE.md.
+Remaining:    PARTICIPANT_DOUBLE_BOOK, VENUE_CONFLICT, PRIORITY_COLLISION,
+              PREP_BUFFER_VIOLATION (beyond the buffer minimum),
+              FOLLOWUP_COLLISION, RESOURCE_CONFLICT — DESIGN ONLY, not
+              authorized for implementation.
+Status:       IMPLEMENTED (CC-06 CALENDAR SLICE) · REMAINDER DESIGN READY
 ```
 
 ## Purpose

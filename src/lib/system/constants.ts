@@ -32,14 +32,17 @@ export const CALENDAR_FOUNDATION_V1_GATE = "OPERATOR_OBSERVATION_PASS_1";
 /**
  * Calendar Completion program (CC-01…CC-12) — locked 2026-07-21.
  * Primary engineering track while unrelated campaign expansion is paused.
- * CC-05 authorized by Kelly waiver ADR-090 (2026-07-22). CC-06 remains gated.
- * Usability Synthesis remains EMPTY — not completed by the CC-05 waiver.
+ * CC-05 authorized by Kelly waiver ADR-090 (2026-07-22). CC-06 authorized by
+ * Kelly ADR-092 (2026-07-22) and now COMPLETE (calendar slice — minimum
+ * TIME_OVERLAP/AVAILABILITY_VIOLATION/BUFFER_CONFLICT/TRAVEL_INFEASIBLE
+ * detectors). CC-07 remains DESIGN ONLY — not implemented.
+ * Usability Synthesis remains EMPTY — not completed by CC-05 or CC-06.
  */
 export const CALENDAR_COMPLETION_PROGRAM_ID =
   "KCCC-CALENDAR-COMPLETION-PROGRAM-1.0";
 export const CALENDAR_COMPLETION_PROGRAM_STATUS = "LOCKED";
 export const CALENDAR_COMPLETION_BASELINE_COMMIT = "9c89012";
-export const CALENDAR_COMPLETION_NEXT = "CC-06";
+export const CALENDAR_COMPLETION_NEXT = "CC-07-DESIGN-ONLY";
 export const CALENDAR_COMPLETION_NEXT_BUILD_ID =
   "KCCC-CC-06-CONFLICT-ENGINE-1.0";
 export const CALENDAR_COMPLETION_PROGRAM_DOC =
@@ -66,10 +69,18 @@ export const CC_05_WAIVER_ADR = "ADR-090";
 export const CC_05_WAIVER_DOC =
   "develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md";
 export const CC_06_BUILD_ID = "KCCC-CC-06-CONFLICT-ENGINE-1.0";
-export const CC_06_STATUS = "AUTHORIZED";
+export const CC_06_STATUS = "COMPLETE";
 export const CC_06_AUTHORIZATION_ADR = "ADR-092";
 export const CC_06_AUTHORIZATION_DOC =
   "develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md";
+export const CC_06_CONFLICT_ENGINE_DOC =
+  "develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md";
+export const CC_06_CONFLICT_ENGINE_ROLLBACK_DOC =
+  "develop_notes/KCCC_CC_06_CONFLICT_ENGINE_ROLLBACK.md";
+export const CALENDAR_CONFLICT_DOCTRINE_DOC =
+  "develop_notes/KCCC_CALENDAR_CONFLICT_DOCTRINE.md";
+export const CALENDAR_CONFLICT_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_CALENDAR_CONFLICT_OPERATOR_GUIDE.md";
 export const CC_07_STATUS = "DESIGN_ONLY";
 export const CC_07_DESIGN_DOC =
   "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md";
@@ -78,8 +89,13 @@ export const POST_CC05_DIRECTION_DOC =
   "develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
-/** Conflict Engine (CC-06) authorized by Kelly ADR-092; never auto-mutate. */
-export const STEP_13_CONFLICT_ENGINE_STATUS = "AUTHORIZED_CC06";
+/**
+ * Conflict Engine (CC-06) authorized by Kelly ADR-092; calendar slice
+ * (TIME_OVERLAP, AVAILABILITY_VIOLATION, BUFFER_CONFLICT, TRAVEL_INFEASIBLE)
+ * is implemented. Remaining EA-13 conflict types (participant/venue/
+ * priority/prep/followup/resource) remain design-only. Never auto-mutate.
+ */
+export const STEP_13_CONFLICT_ENGINE_STATUS = "IMPLEMENTED_CC06_CALENDAR_SLICE";
 export const STEP_13_CONFLICT_ENGINE_DOC =
   "develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md";
 /** Step 13 is the first Intelligence Layer slice; Operational Layer ends at Step 12. */
@@ -119,8 +135,12 @@ export const FURTHER_ARCHITECTURE_DOCTRINE_STATUS =
   "HOLD_UNTIL_OPERATOR_OBSERVATION_PASS_1";
 export const SCHEDULE_MUTATION_GOVERNING_RULE =
   "DETECT_EXPLAIN_RECOMMEND_SIMULATE_NEVER_AUTO_MUTATE";
-/** Next authorized engineering build is CC-06 (ADR-092). Synthesis remains EMPTY. */
-export const NEXT_AUTHORIZED_BUILD = "KCCC-CC-06-CONFLICT-ENGINE-1.0";
+/**
+ * CC-06 (ADR-092) is COMPLETE. No further engineering build is authorized —
+ * CC-07 remains DESIGN ONLY until separately authorized. Synthesis remains
+ * EMPTY and is still required for usability evidence (ADR-091).
+ */
+export const NEXT_AUTHORIZED_BUILD = "NONE_AUTHORIZED_CC07_DESIGN_ONLY";
 export const CALENDAR_ROADMAP_DOC =
   "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md";
 /** Prisma model name — the only top-level Event entity. */

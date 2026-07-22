@@ -23,17 +23,17 @@ Unrelated campaign expansion  PAUSED
 Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
-CC-01…CC-05 ................. COMPLETE (CC-05 via Kelly waiver ADR-090)
-CC-06 ........................ AUTHORIZED (Kelly ADR-092, 2026-07-22)
-CC-07 ........................ DESIGN ONLY — not authorized with CC-06
-Usability Synthesis 1 ....... EMPTY — not completed by ADR-090 or ADR-092
-Next engineering build ....... CC-06 Conflict Engine — Calendar Slice
+CC-01…CC-06 ................. COMPLETE (CC-05 via Kelly waiver ADR-090; CC-06 via Kelly ADR-092)
+CC-07 ........................ DESIGN ONLY — no engineering authorized
+Usability Synthesis 1 ....... EMPTY — not completed by ADR-090 or ADR-092; still required for evidence
+Next engineering build ....... NONE AUTHORIZED — CC-07 remains design-only pending Synthesis + separate authorization
 CC-05 ship evidence ......... main@46a72c3 · deploy 6a60efa8f25804bc9b16f3f3
 CC-05 waiver ................ develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md
 CC-06 authorization ......... develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md
+CC-06 ship evidence ......... develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md (recorded on deploy)
 ```
 
-This program finishes the **calendar product** before shifting attention to broader campaign functions. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090 or ADR-092 as Usability Synthesis completion, and does **not** authorize CC-07 inside the CC-06 build.
+This program finishes the **calendar product** before shifting attention to broader campaign functions. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090 or ADR-092 as Usability Synthesis completion, and does **not** authorize CC-07 engineering.
 
 ## Locked sequence (Option C)
 
@@ -44,9 +44,8 @@ This program finishes the **calendar product** before shifting attention to broa
 | **CC-03** | Timezone, All-day & Overnight Hardening | M | **COMPLETE** — doctrine + temporal service; no schema migration |
 | **CC-04** | Recurrence & Occurrence Exceptions | XL | **COMPLETE** — Model B series + materialized Events; `rrule` |
 | **CC-05** | Standing Availability Inputs | L | **COMPLETE** — ship baseline `46a72c3` / `6a60efa8f25804bc9b16f3f3`; Synthesis remains EMPTY |
-| **CC-06** | Conflict Engine | XL | **AUTHORIZED** — Kelly ADR-092 (2026-07-22); Synthesis remains EMPTY; CC-07 not included |
-| **CC-07** | Unified Search, Filters & Saved Views | M | **DESIGN ONLY** — `KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md`; implement after CC-06 |
-| **CC-07** | Unified Search, Filters & Saved Views | M | Parallel after core |
+| **CC-06** | Conflict Engine | XL | **COMPLETE** — Kelly ADR-092 (2026-07-22); calendar slice validated; Synthesis remains EMPTY |
+| **CC-07** | Unified Search, Filters & Saved Views | M | **DESIGN ONLY** — `KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md`; no engineering until separately authorized |
 | **CC-08** | Advanced Day/Week Scheduling Workspace | L | Time grid first; drag-and-drop deferred |
 | **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | Parallel after core |
 | **CC-10** | ICS Export & Subscription Privacy | M | After CC-01; private signed feeds |

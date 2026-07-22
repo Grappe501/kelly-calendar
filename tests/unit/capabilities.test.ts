@@ -37,8 +37,11 @@ describe("capability honesty", () => {
     expect(status.application.step12AvailabilityStatus).toBe(
       "COMPLETE_CC05",
     );
+    expect(status.application.step13ConflictEngineStatus).toBe(
+      "IMPLEMENTED_CC06_CALENDAR_SLICE",
+    );
     expect(status.application.nextAuthorizedBuild).toBe(
-      "KCCC-CC-06-CONFLICT-ENGINE-1.0",
+      "NONE_AUTHORIZED_CC07_DESIGN_ONLY",
     );
     expect(status.application.calendarCompletionProgramStatus).toBe("LOCKED");
     expect(status.application.unrelatedCampaignExpansionStatus).toBe("PAUSED");

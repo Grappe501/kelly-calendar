@@ -26,7 +26,11 @@ After all three observation sessions:
 1. Do **not** implement fixes immediately.
 2. Fill this synthesis from the capture doc (evidence first).
 3. Classify every recommendation into **exactly one** of three buckets.
-4. Bring findings back for review **before** authorizing CC-06.
+4. Bring findings back for review. Kelly already authorized CC-06 directly
+   via ADR-092 (2026-07-22), separate from this Synthesis — CC-06 is now
+   COMPLETE. This Synthesis is still required as usability evidence
+   (ADR-091) and remains a gate for any further engineering (e.g. CC-07)
+   even though it did not block CC-06.
 
 **Do not bring a bug list.** Bring evidence in this shape:
 

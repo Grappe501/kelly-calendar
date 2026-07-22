@@ -89,8 +89,8 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 
 ## CC-06 authorization
 
-Kelly **ADR-092** authorizes **CC-06 only**. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-07** is design-only until separately authorized (`KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md`).
+Kelly **ADR-092** authorized **CC-06 only**; the calendar-slice build is now **COMPLETE** (validated, shipped). Operator Usability Synthesis 1 remains **EMPTY** / incomplete — still required as usability evidence, not satisfied by ADR-090 or ADR-092. **CC-07** is design-only until separately authorized (`KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md`).
 
-## CC-05 baseline & next engineering
+## CC-05 / CC-06 baseline & next engineering
 
-CC-05 is **COMPLETE**. Active Calendar Completion build under ADR-092: **CC-06** Conflict Engine.
+CC-05 and CC-06 are **COMPLETE**. No further engineering build is authorized — CC-07 remains design-only pending Synthesis review and separate Kelly authorization.

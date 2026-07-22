@@ -63,6 +63,9 @@ function minRankForAction(action: MutationAction): number {
     case "READINESS_RECALCULATE":
     case "READINESS_SNAPSHOT_WRITE":
     case "CONFLICT_ACKNOWLEDGE":
+    case "CONFLICT_RECOMPUTE":
+    case "CONFLICT_RESOLVE":
+    case "CONFLICT_NOT_APPLICABLE":
     case "APPROVAL_REQUEST":
     case "HISTORICAL_IMPORT_APPROVE":
     case "HISTORICAL_IMPORT_REJECT":
@@ -153,6 +156,9 @@ export async function authorize(
     ) {
       return { allowed: true, reason: "Availability mutation for mutator role" };
     }
+    if (input.action === "CONFLICT_RECOMPUTE" && roleMayMutate(actor.primarySystemRole)) {
+      return { allowed: true, reason: "Conflict recompute for mutator role" };
+    }
     // AVAILABILITY_APPROVE (and standing-rule seeding) requires leadership
     // full calendar access, already granted above for KELLY/CAMPAIGN_MANAGER.
     return { allowed: false, reason: "System mutation denied" };
@@ -210,6 +216,12 @@ export async function authorize(
       return {
         allowed: roleMayMutate(actor.primarySystemRole) || actor.primarySystemRole === "READ_ONLY_ADVISOR",
         reason: "Conflict view/ack",
+      };
+    }
+    if (input.action === "CONFLICT_RESOLVE" || input.action === "CONFLICT_NOT_APPLICABLE") {
+      return {
+        allowed: roleMayMutate(actor.primarySystemRole),
+        reason: "Conflict disposition for mutator role",
       };
     }
   }

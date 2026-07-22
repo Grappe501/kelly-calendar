@@ -44,7 +44,7 @@ import type {
   CalendarAvailabilitySubjectType,
 } from "@prisma/client";
 
-const DEFAULT_CAMPAIGN_KEY = "kelly";
+export const DEFAULT_CAMPAIGN_KEY = "kelly";
 
 export type AvailabilityAcknowledgementInput = {
   disposition: "ACKNOWLEDGED" | "ACCEPTED_RISK";
@@ -156,7 +156,8 @@ function serializeException(row: CalendarAvailabilityException) {
   };
 }
 
-async function loadActiveRulesAndExceptions(campaignKey: string) {
+/** Exported for CC-06 conflict engine — CC-05 remains the sole availability rule source. */
+export async function loadActiveRulesAndExceptions(campaignKey: string) {
   const [ruleRows, exceptionRows] = await Promise.all([
     prisma.calendarAvailabilityRule.findMany({
       where: { campaignKey, isActive: true, approvalState: "ACTIVE" },

@@ -1,7 +1,7 @@
 import "server-only";
 
-import { detectCandidateOverlaps } from "@/features/operational-intelligence/services/conflict-service";
 import type { OperationalConflict } from "@/features/operational-intelligence/types/conflict-types";
+import { loadConflictsForViewEvents } from "@/server/services/conflict-engine-service";
 import {
   CAMPAIGN_CALENDAR_TIMEZONE,
   chicagoDateKey,
@@ -257,7 +257,9 @@ export async function getCalendarMonthViewData(
     });
   });
 
-  const conflicts = detectCandidateOverlaps(
+  // CC-06: merges an in-memory TIME_OVERLAP scan with persisted, still-open
+  // conflicts (availability/buffer/travel) for the same Events.
+  const conflicts = await loadConflictsForViewEvents(
     monthEvents.map((e) => ({
       id: e.eventId,
       label: e.title,
@@ -265,7 +267,6 @@ export async function getCalendarMonthViewData(
       endsAt: new Date(e.endsAt),
       status: e.status,
       candidateAttending: true,
-      calendarType: e.primaryCalendar.type,
     })),
   );
 

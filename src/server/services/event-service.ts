@@ -25,6 +25,7 @@ import {
   assertAvailabilityAllowsSave,
   type AvailabilityAcknowledgementInput,
 } from "@/server/services/availability-service";
+import { recomputeConflictsForEventBestEffort } from "@/server/services/conflict-engine-service";
 
 function mapAccessToViewer(
   level: string,
@@ -135,6 +136,15 @@ export async function updateEvent(input: {
   }
 
   const event = await updateCanonicalEvent(input);
+
+  // CC-06: recompute conflicts for the affected window AFTER save. Never
+  // blocks or rolls back the update — best-effort, logged on failure.
+  await recomputeConflictsForEventBestEffort({
+    actor: input.actor,
+    eventId: event.id,
+    requestId: input.data.requestId,
+  });
+
   const safeEvent = await getSafeEventForViewer({
     eventId: event.id,
     viewerUserId: input.actor.userId,

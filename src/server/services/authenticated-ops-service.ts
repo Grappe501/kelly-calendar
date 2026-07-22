@@ -19,6 +19,7 @@ import {
   mergeImportRecord,
   rejectImportRecord,
 } from "@/server/services/import-approval-service";
+import { recheckConflictStillDetected } from "@/server/services/conflict-engine-service";
 
 function coerceEnum(value: string | undefined, allowed: string[], fallback: string) {
   if (value && allowed.includes(value)) return value;
@@ -430,6 +431,11 @@ export async function recalculateAndPersistReadiness(input: {
   return { readiness: result, snapshotId: snapshot.id };
 }
 
+/**
+ * CC-06: ACKNOWLEDGED never clears a blocker — `status` is intentionally
+ * left untouched. The disposition is recorded on the record and the action
+ * log only, for the operator queue to display "seen, still open."
+ */
 export async function acknowledgeConflict(input: {
   actor: AuthenticatedActor;
   conflictId: string;
@@ -448,8 +454,16 @@ export async function acknowledgeConflict(input: {
     data: {
       conflictId: conflict.id,
       action: "ACKNOWLEDGED",
+      disposition: "ACKNOWLEDGED",
       actorUserId: input.actor.userId,
       reason: input.reason ?? null,
+    },
+  });
+  await prisma.operationalConflictRecord.update({
+    where: { id: conflict.id },
+    data: {
+      disposition: "ACKNOWLEDGED",
+      dispositionReason: input.reason ?? null,
     },
   });
   await writeAttributedAudit({
@@ -460,9 +474,16 @@ export async function acknowledgeConflict(input: {
     requestId: input.requestId,
     reason: input.reason,
   });
-  return { conflictId: conflict.id, action: "ACKNOWLEDGED" };
+  return { conflictId: conflict.id, action: "ACKNOWLEDGED", disposition: "ACKNOWLEDGED" };
 }
 
+/**
+ * CC-06: override is the ACCEPTED_RISK disposition path. A reason is always
+ * required and recorded; `status` moves to `ACCEPTED_RISK` (not silently
+ * closed) so the operator queue keeps it visible until an explicit RESOLVED
+ * or NOT_APPLICABLE disposition. CONFLICT_OVERRIDE remains leadership-only
+ * (see `authorize()` — unchanged by this build).
+ */
 export async function overrideConflict(input: {
   actor: AuthenticatedActor;
   conflictId: string;
@@ -485,13 +506,18 @@ export async function overrideConflict(input: {
     data: {
       conflictId: conflict.id,
       action: "OVERRIDDEN",
+      disposition: "ACCEPTED_RISK",
       actorUserId: input.actor.userId,
       reason: input.reason.trim(),
     },
   });
   await prisma.operationalConflictRecord.update({
     where: { id: conflict.id },
-    data: { status: "OVERRIDDEN" },
+    data: {
+      status: "ACCEPTED_RISK",
+      disposition: "ACCEPTED_RISK",
+      dispositionReason: input.reason.trim(),
+    },
   });
   await writeAttributedAudit({
     actor: input.actor,
@@ -501,7 +527,112 @@ export async function overrideConflict(input: {
     requestId: input.requestId,
     reason: input.reason.trim(),
   });
-  return { conflictId: conflict.id, action: "OVERRIDDEN" };
+  return { conflictId: conflict.id, action: "OVERRIDDEN", disposition: "ACCEPTED_RISK" };
+}
+
+/**
+ * CC-06 RESOLVED disposition. Only granted without an explicit reason when
+ * a fresh recompute confirms the conflict is no longer detected from
+ * current stored facts. If recompute still finds it, an explicit reason is
+ * required (operator confirms facts changed in a way the engine cannot see,
+ * e.g. a manual mitigation) — never resolved merely because the Event ended.
+ */
+export async function resolveConflict(input: {
+  actor: AuthenticatedActor;
+  conflictId: string;
+  reason?: string;
+  requestId?: string;
+}) {
+  await requireAuthorized(input.actor, {
+    action: "CONFLICT_RESOLVE",
+    resource: { type: "conflict", id: input.conflictId },
+  });
+  const { stillDetected, record } = await recheckConflictStillDetected(input.conflictId);
+  if (!record) throw new NotFoundError("Conflict not found.");
+  if (stillDetected && !input.reason?.trim()) {
+    throw new ValidationError(
+      "Recompute still detects this conflict from current facts. Provide a reason to resolve anyway.",
+    );
+  }
+  await prisma.operationalConflictAction.create({
+    data: {
+      conflictId: record.id,
+      action: "RESOLVED",
+      disposition: "RESOLVED",
+      actorUserId: input.actor.userId,
+      reason: input.reason?.trim() || (stillDetected ? null : "Recompute no longer detects this conflict."),
+    },
+  });
+  await prisma.operationalConflictRecord.update({
+    where: { id: record.id },
+    data: {
+      status: "RESOLVED",
+      disposition: "RESOLVED",
+      dispositionReason: input.reason?.trim() ?? null,
+    },
+  });
+  await writeAttributedAudit({
+    actor: input.actor,
+    action: "CONFLICT_RESOLVED",
+    entityType: "OperationalConflictRecord",
+    entityId: record.id,
+    requestId: input.requestId,
+    reason: input.reason?.trim(),
+    metadata: { recomputeConfirmedAbsent: !stillDetected },
+  });
+  return {
+    conflictId: record.id,
+    action: "RESOLVED",
+    disposition: "RESOLVED",
+    recomputeConfirmedAbsent: !stillDetected,
+  };
+}
+
+/**
+ * CC-06 NOT_APPLICABLE disposition — operator marks a detected finding as a
+ * false positive for their context. Always requires a reason (audited).
+ */
+export async function markConflictNotApplicable(input: {
+  actor: AuthenticatedActor;
+  conflictId: string;
+  reason: string;
+  requestId?: string;
+}) {
+  if (!input.reason?.trim()) throw new ValidationError("A reason is required.");
+  await requireAuthorized(input.actor, {
+    action: "CONFLICT_NOT_APPLICABLE",
+    resource: { type: "conflict", id: input.conflictId },
+  });
+  const conflict = await prisma.operationalConflictRecord.findUnique({
+    where: { id: input.conflictId },
+  });
+  if (!conflict) throw new NotFoundError("Conflict not found.");
+  await prisma.operationalConflictAction.create({
+    data: {
+      conflictId: conflict.id,
+      action: "NOT_APPLICABLE",
+      disposition: "NOT_APPLICABLE",
+      actorUserId: input.actor.userId,
+      reason: input.reason.trim(),
+    },
+  });
+  await prisma.operationalConflictRecord.update({
+    where: { id: conflict.id },
+    data: {
+      status: "NOT_APPLICABLE",
+      disposition: "NOT_APPLICABLE",
+      dispositionReason: input.reason.trim(),
+    },
+  });
+  await writeAttributedAudit({
+    actor: input.actor,
+    action: "CONFLICT_MARKED_NOT_APPLICABLE",
+    entityType: "OperationalConflictRecord",
+    entityId: conflict.id,
+    requestId: input.requestId,
+    reason: input.reason.trim(),
+  });
+  return { conflictId: conflict.id, action: "NOT_APPLICABLE", disposition: "NOT_APPLICABLE" };
 }
 
 export async function requestApproval(input: {

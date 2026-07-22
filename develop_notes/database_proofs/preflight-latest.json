@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-22T05:54:40.653Z",
+  "generatedAt": "2026-07-22T17:54:35.628Z",
   "targetClass": "hosted postgresql",
   "hosted": true,
   "databaseReachable": true,
   "directUrlConfigured": true,
   "kellyCalendarSchemaPresent": true,
-  "kellyCalendarTableCount": 170,
+  "kellyCalendarTableCount": 179,
   "publicSchemaTableCount": 303,
   "pendingMigrations": [
     "20260718160000_kelly_calendar_foundation",
@@ -37,7 +37,10 @@
     "20260721120000_v21_communications_campaign_execution",
     "20260721140000_v21_communications_controlled_live_test",
     "20260721180000_event_planning_draft_store",
-    "20260722010000_cc02_calendar_integrity"
+    "20260722010000_cc02_calendar_integrity",
+    "20260722090000_cc04_recurrence_exceptions",
+    "20260722110000_cc05_standing_availability",
+    "20260722120000_cc06_conflict_engine"
   ],
   "authenticationComplete": false,
   "mutationsAuthorized": false,

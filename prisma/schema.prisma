@@ -2237,10 +2237,27 @@ model OperationalConflictRecord {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
+  /// CC-06 additive fields — Conflict Engine (ADR-092). Never backfilled destructively.
+  /// Single-campaign key today ("kelly"); reserved for future multi-campaign scoping.
+  campaignKey     String   @default("kelly")
+  /// Hash of the non-identity facts (severity/explanation/evidence) as of the last recompute.
+  factFingerprint String?
+  /// Latest operator disposition summary: ACKNOWLEDGED | ACCEPTED_RISK | RESOLVED | NOT_APPLICABLE.
+  disposition     String?
+  dispositionReason String?
+  /// Set on every recompute pass that scans this record's window, whether or not it is re-detected.
+  lastEvaluatedAt DateTime?
+  /// True when the most recent recompute of this record's window no longer detects it.
+  /// Never auto-deletes and never auto-sets status to RESOLVED — operator disposition required.
+  stale           Boolean  @default(false)
+
   actions OperationalConflictAction[]
 
   @@unique([conflictKey])
   @@index([severity, status])
+  @@index([campaignKey, status, stale])
+  @@index([primaryEntityId])
+  @@index([relatedEntityId])
   @@schema("kelly_calendar")
 }
 
@@ -2251,6 +2268,9 @@ model OperationalConflictAction {
   actorUserId String?
   reason      String?
   createdAt   DateTime @default(now())
+
+  /// CC-06 additive field — normalized disposition for this action row.
+  disposition String?
 
   conflict OperationalConflictRecord @relation(fields: [conflictId], references: [id])
 

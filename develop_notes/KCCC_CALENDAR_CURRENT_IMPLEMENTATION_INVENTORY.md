@@ -38,10 +38,10 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Agenda view | COMPLETE (CC-03) | Campaign-local occupied days; continuation labels | N/A | CC-04 recurrence |
 | Day/Week/Month membership | COMPLETE (CC-03) | Interval ∩ day; overnight/multi-day visible | N/A | Polish in CC-08 |
 | Timezone / all-day / DST | COMPLETE (CC-03) | `src/lib/calendar/temporal/` + Event sheet | N/A | CC-04 DST-stable recurrence |
-| Availability rules | COMPLETE (CC-05) | `CalendarAvailabilityRule`/`Exception`/`Acknowledgement`, `availability-service.ts`, `/system/calendar/availability/**` | Input/warning only; no conflict persistence (CC-06 gated) | CC-06 |
-| Tuesday Little Rock rule | COMPLETE (CC-05) | Seeded standing rule via `standingPolicySeedRules` | Same | CC-06 |
-| Vacation overrides | COMPLETE (CC-05) | `CalendarAvailabilityException` + `/system/calendar/availability/exceptions` | Same | CC-06 |
-| Conflict detection | PARTIAL | `conflict-service.ts`, APIs, synthetic `/system/conflicts` | Not full scheduler UX | Step 13 |
+| Availability rules | COMPLETE (CC-05) | `CalendarAvailabilityRule`/`Exception`/`Acknowledgement`, `availability-service.ts`, `/system/calendar/availability/**` | Input/warning only; conflict persistence now implemented (CC-06) | Operator observation |
+| Tuesday Little Rock rule | COMPLETE (CC-05) | Seeded standing rule via `standingPolicySeedRules` | Same | Operator observation |
+| Vacation overrides | COMPLETE (CC-05) | `CalendarAvailabilityException` + `/system/calendar/availability/exceptions` | Same | Operator observation |
+| Conflict detection | COMPLETE (CC-06, calendar slice) | `conflict-service.ts` detectors, `conflict-engine-service.ts`, `/api/conflicts*`, `/system/conflicts` operator queue, `EventConflictsPanel`, Day/Week/Month/Today `conflicts` merge | 4 of 8 EA-13 types (`TIME_OVERLAP`/`AVAILABILITY_VIOLATION`/`BUFFER_CONFLICT`/`TRAVEL_INFEASIBLE`); remaining EA-13 types design-only | Operator observation |
 | Travel planning | PARTIAL | `EventTravelPlan`/`Segment`, mission travel, Google Routes estimate | Import-only Google; not core Today UX | Steps 14/17 |
 | Participants | PARTIAL | `Person`/`EventPerson`/`Organization` | Thin event UI | Step 15 |
 | Staff assignments | PARTIAL | `EventStaffAssignment` + mission staffing | Same | Steps 11/21 |
@@ -88,7 +88,7 @@ Communications subsystem: advanced but disconnected / frozen
 
 1. Step 8 closeout: authenticate + certify candidate-data readiness (gate flip).
 2. Tracker drift (registry / README / EA constants / recovery roadmap).
-3. Availability rules now enforced in create/edit/reschedule paths (CC-05); conflict-engine (CC-06) enforcement remains gated.
+3. Availability rules now enforced in create/edit/reschedule paths (CC-05); conflict-engine calendar slice (CC-06, ADR-092) now detects/persists/surfaces conflicts post-save — still never auto-mutates Events/Missions.
 4. Agenda and event-detail UX gaps.
 5. Communications work must not consume the build center.
 
