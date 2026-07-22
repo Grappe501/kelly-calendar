@@ -1,0 +1,19 @@
+{
+  "pass": "MT-NEBO-LODGING-2026-08-28",
+  "lodging": {
+    "key": "travel-lodging-mt-nebo-2026-08-28",
+    "eventNumber": "KCCC-2026-0177",
+    "status": "HOLD",
+    "startsAt": "2026-08-28T21:00:00.000Z",
+    "endsAt": "2026-08-29T14:00:00.000Z"
+  },
+  "chickenFry": {
+    "key": "mt-nebo-chicken-fry-2026-08-29",
+    "eventNumber": "KCCC-2026-0070",
+    "status": "HOLD"
+  },
+  "openDecisions": [
+    "Book / confirm Airbnb in Mt. Nebo area (exact property TBD — do not invent address).",
+    "Lock depart time from home / Clark County return path on Aug 28."
+  ]
+}
