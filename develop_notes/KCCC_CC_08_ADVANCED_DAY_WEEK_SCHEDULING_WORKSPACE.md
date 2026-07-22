@@ -71,7 +71,9 @@ See `develop_notes/KCCC_CC_08_ADVANCED_DAY_WEEK_SCHEDULING_WORKSPACE_ROLLBACK.md
 | | |
 |--|--|
 | Feature commit | `7486aa9` |
-| Netlify deploy | `6a611dc19547e64f0fa7874d` |
+| Evidence commit | `1e7eff1` |
+| Netlify feature deploy | `6a611dc19547e64f0fa7874d` |
+| Netlify evidence deploy | `6a611f648426882fe7050d77` |
 | Live URL | https://kelly-calendar.netlify.app |
 | Validator | `calendar:scheduling-workspace:validate` — 102 passed |
 | Layout unit tests | 14 passed |
