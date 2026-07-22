@@ -1,0 +1,14 @@
+{
+  "pass": "JACKSONVILLE-FESTIVILLE-2026-09-05",
+  "event": {
+    "key": "jacksonville-festiville-naacp-2026-09-05",
+    "eventNumber": "KCCC-2026-0200",
+    "status": "HOLD",
+    "startsAt": "2026-09-05T15:00:00.000Z",
+    "endsAt": "2026-09-05T17:00:00.000Z"
+  },
+  "openDecisions": [
+    "Confirm Kelly role (speak / table / walk-through) and exact Festiville venue in Jacksonville.",
+    "Confirm NAACP chapter contact for day-of logistics (CRM only)."
+  ]
+}
