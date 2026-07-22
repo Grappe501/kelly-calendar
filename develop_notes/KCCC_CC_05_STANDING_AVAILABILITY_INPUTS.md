@@ -120,3 +120,18 @@ npm run test -- tests/unit/calendar-availability
 - `OperationalConflictRecord` rows created by CC-05 code: **0**
 - Events/Missions auto-moved or auto-cancelled by CC-05 code: **0**
 - Usability Synthesis marked complete by this build: **no** (`EMPTY`, unchanged)
+
+## Ship evidence (2026-07-22)
+
+| | |
+|--|--|
+| **Authorization** | ADR-090 · `KCCC_CC_05_WAIVER_KELLY_2026-07-22.md` · CC-05 only · Synthesis remains EMPTY · CC-06 still GATED |
+| **Git** | `main` · feature `06cd7aa` · status `d755da4` · pushed |
+| **Netlify** | https://kelly-calendar.netlify.app · deploy `6a60efa8f25804bc9b16f3f3` |
+| **Live check** | `/system/calendar/availability` → 307 login; `/api/calendar/availability/rules` → 401; `/api/calendar/availability/evaluate` POST → 401 |
+| **Validator** | `npm run calendar:availability:validate` — 44 passed |
+| **Schema** | Additive SQL applied (`CalendarAvailabilityRule` / Exception / Acknowledgement); `migrate deploy` still blocked by prior failed `20260719160000_google_oauth_and_routes` — resolve separately |
+
+## CC-06 handoff
+
+**CC-06: Conflict Engine — Calendar Slice** will consume CC-03 normalized intervals, CC-04 recurrence identities, and CC-05 availability assessments to persist explainable scheduling conflicts and operator dispositions. Do not begin CC-06 without its explicit authorization. ADR-090 does **not** authorize CC-06.
