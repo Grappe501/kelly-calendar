@@ -11,6 +11,7 @@ import {
 } from "@/lib/missions/today-readiness";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { roleMayMutate } from "@/lib/auth/system-roles";
+import { eventIntersectsCampaignDay } from "@/lib/calendar/temporal";
 import { listEventsForActor } from "@/server/services/event-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
 import type { SafeEventProjection } from "@/server/services/event-visibility-service";
@@ -58,12 +59,24 @@ export async function getTodayCommandShellData(
   const all = await listEventsForActor(actor);
 
   const eventsToday = all
-    .filter((e) => chicagoDateKey(e.startsAt) === todayKey)
+    .filter((e) =>
+      eventIntersectsCampaignDay({
+        startsAt: e.startsAt,
+        endsAt: e.endsAt,
+        isAllDay: Boolean(e.allDay),
+        dateKey: todayKey,
+      }),
+    )
     .sort(
       (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime(),
     );
-  const eventsTomorrowCount = all.filter(
-    (e) => chicagoDateKey(e.startsAt) === tomorrowKey,
+  const eventsTomorrowCount = all.filter((e) =>
+    eventIntersectsCampaignDay({
+      startsAt: e.startsAt,
+      endsAt: e.endsAt,
+      isAllDay: Boolean(e.allDay),
+      dateKey: tomorrowKey,
+    }),
   ).length;
 
   const upcomingToday = eventsToday.filter(

@@ -8,6 +8,7 @@ import { writeAttributedAudit } from "@/server/services/audit-write";
 import type { EventStatus, LocationDisclosure, EventVisibilityLevel } from "@prisma/client";
 import type { EventPersistenceStatus } from "@/lib/calendar/canonical-event";
 import { canTransitionEventStatus } from "@/lib/calendar/event-status-transitions";
+import { occupiedCampaignDateKeysForInterval } from "@/lib/calendar/temporal";
 
 export type CreateEventInput = {
   primaryCalendarId: string;
@@ -98,8 +99,11 @@ function assertTimeRange(startsAt: Date, endsAt: Date) {
   if (Number.isNaN(startsAt.getTime()) || Number.isNaN(endsAt.getTime())) {
     throw new ValidationError("Invalid start or end time.");
   }
-  if (endsAt.getTime() < startsAt.getTime()) {
-    throw new ValidationError("End time must be on or after start time.");
+  // CC-03: end must be strictly after start (equal rejected).
+  if (endsAt.getTime() <= startsAt.getTime()) {
+    throw new ValidationError(
+      "End time must be after start time. For overnight Events, set the end date to the next day.",
+    );
   }
 }
 
@@ -122,6 +126,9 @@ export async function createCanonicalEvent(input: {
   const year = startsAt.getFullYear();
   const title = input.data.internalTitle.trim();
   const display = (input.data.campaignDisplayTitle ?? title).trim();
+  const isAllDay = input.data.isAllDay ?? false;
+  const isMultiDay =
+    occupiedCampaignDateKeysForInterval(startsAt, endsAt, isAllDay).length > 1;
 
   return withTransaction(async (tx) => {
     const eventNumber = await allocateEventNumber(tx, year);
@@ -140,7 +147,8 @@ export async function createCanonicalEvent(input: {
         startsAt,
         endsAt,
         timezone: input.data.timezone ?? "America/Chicago",
-        isAllDay: input.data.isAllDay ?? false,
+        isAllDay,
+        isMultiDay,
         city: input.data.city ?? null,
         countyId: input.data.countyId ?? null,
         venueName: input.data.venueName ?? null,
@@ -238,6 +246,11 @@ export async function updateCanonicalEvent(input: {
       assertStatusTransition(existing.status, nextStatus);
     }
 
+    const isAllDay =
+      input.data.isAllDay !== undefined ? input.data.isAllDay : existing.isAllDay;
+    const isMultiDay =
+      occupiedCampaignDateKeysForInterval(startsAt, endsAt, isAllDay).length > 1;
+
     const updated = await tx.event.update({
       where: { id: input.eventId },
       data: {
@@ -253,8 +266,8 @@ export async function updateCanonicalEvent(input: {
         startsAt,
         endsAt,
         timezone: input.data.timezone ?? existing.timezone,
-        isAllDay:
-          input.data.isAllDay !== undefined ? input.data.isAllDay : existing.isAllDay,
+        isAllDay,
+        isMultiDay,
         city: input.data.city !== undefined ? input.data.city : existing.city,
         countyId:
           input.data.countyId !== undefined ? input.data.countyId : existing.countyId,

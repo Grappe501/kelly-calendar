@@ -26,6 +26,7 @@ import {
 } from "@/lib/missions/today-readiness";
 import { roleMayMutate } from "@/lib/auth/system-roles";
 import { OPERATING_VIEW_QUESTIONS } from "@/lib/calendar/operating-view-lenses";
+import { eventIntersectsCampaignDay } from "@/lib/calendar/temporal";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import {
   loadMissionContextForIds,
@@ -390,7 +391,15 @@ export async function getCalendarWeekViewData(
     dateKey,
     weekdayLabel: weekdayLabel(dateKey),
     isToday: dateKey === todayKey,
-    events: weekEvents.filter((e) => chicagoDateKey(e.startsAt) === dateKey),
+    // CC-03: include overnight/multi-day Events on every occupied day.
+    events: weekEvents.filter((e) =>
+      eventIntersectsCampaignDay({
+        startsAt: e.startsAt,
+        endsAt: e.endsAt,
+        isAllDay: Boolean(e.allDay),
+        dateKey,
+      }),
+    ),
   }));
 
   const missionRail: WeekMissionPriority[] = [...missions]

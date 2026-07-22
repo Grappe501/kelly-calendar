@@ -18,8 +18,6 @@ export function AgendaView({ data, focusEventId = null }: Props) {
     return data.items.filter((item) => item.searchText.includes(q));
   }, [data.items, query]);
 
-  let lastDate = "";
-
   return (
     <div className="page-stack calendar-agenda-view">
       <header className="page-header">
@@ -53,12 +51,12 @@ export function AgendaView({ data, focusEventId = null }: Props) {
         </section>
       ) : (
         <ol className="agenda-list">
-          {filtered.map((item) => {
-            const showDate = item.dateKey !== lastDate;
-            lastDate = item.dateKey;
+          {filtered.map((item, index) => {
+            const showDate =
+              index === 0 || item.dateKey !== filtered[index - 1]?.dateKey;
             return (
               <li
-                key={item.eventId}
+                key={`${item.dateKey}:${item.eventId}`}
                 className={
                   focusEventId && item.eventId === focusEventId
                     ? "calendar-event-focused"
@@ -71,9 +69,19 @@ export function AgendaView({ data, focusEventId = null }: Props) {
                 <div className="agenda-row">
                   <time dateTime={item.startsAt}>{item.timeLabel}</time>
                   <div>
-                    <Link href={item.href}>{item.title}</Link>
+                    <Link
+                      href={item.href}
+                      aria-label={
+                        item.membershipLabel
+                          ? `${item.title}, ${item.membershipLabel}`
+                          : item.title
+                      }
+                    >
+                      {item.title}
+                    </Link>
                     <p className="muted">
                       {item.calendarName}
+                      {item.membershipLabel ? ` · ${item.membershipLabel}` : ""}
                       {item.locationLabel ? ` · ${item.locationLabel}` : ""}
                       {item.people.length > 0 ? ` · ${item.people.join(", ")}` : ""}
                     </p>

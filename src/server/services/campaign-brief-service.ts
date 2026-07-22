@@ -13,6 +13,7 @@ import {
   buildTodayReadinessSummary,
 } from "@/lib/missions/today-readiness";
 import { roleMayMutate } from "@/lib/auth/system-roles";
+import { eventIntersectsCampaignDay } from "@/lib/calendar/temporal";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import { listEventsForActor } from "@/server/services/event-service";
 import { loadMissionContextForIds } from "@/server/services/mission-context-loader";
@@ -49,7 +50,14 @@ export async function getCampaignBrief(
 
   const all = await listEventsForActor(actor);
   const eventsToday = all
-    .filter((e) => chicagoDateKey(e.startsAt) === todayKey)
+    .filter((e) =>
+      eventIntersectsCampaignDay({
+        startsAt: e.startsAt,
+        endsAt: e.endsAt,
+        isAllDay: Boolean(e.allDay),
+        dateKey: todayKey,
+      }),
+    )
     .sort(
       (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime(),
     );

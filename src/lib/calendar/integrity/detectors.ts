@@ -1028,7 +1028,7 @@ export function detectLifecycleAndMembershipFindings(
           findingKey: stableIntegrityFindingKey("CROSS_MIDNIGHT_START_DAY_BIAS", [e.id]),
           severity: "WARNING",
           summary:
-            "Overnight/cross-midnight Event may only appear on its start Chicago day (CC-03 owns fix).",
+            "Overnight/cross-midnight Event — verify occupied-day membership across Day/Week/Month/Agenda (CC-03).",
           evidence: {
             eventNumber: e.eventNumber,
             startDay,

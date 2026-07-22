@@ -5,9 +5,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { EventEditorPayload } from "@/server/services/event-editor-service";
 import {
-  chicagoWallTimeToUtc,
-} from "@/lib/calendar/event-wall-time";
-import { chicagoDateKey } from "@/lib/calendar/chicago-date";
+  normalizeAllDayRange,
+  normalizeTimedRange,
+  occupiedCampaignDateKeysForInterval,
+  resolveWallTime,
+  type DstDisambiguation,
+} from "@/lib/calendar/temporal";
+import { chicagoDateKey, shiftChicagoDateKey } from "@/lib/calendar/chicago-date";
 import { eventSheetHref } from "@/lib/calendar/event-sheet-href";
 
 type HistoryPayload = {
@@ -57,11 +61,25 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
   const router = useRouter();
   const [version, setVersion] = useState(initial.version);
   const [title, setTitle] = useState(initial.title);
-  const [date, setDate] = useState(toDateInput(initial.startsAt, initial.timezone));
+  const [isAllDay, setIsAllDay] = useState(initial.isAllDay);
+  const [startDate, setStartDate] = useState(
+    toDateInput(initial.startsAt, initial.timezone),
+  );
+  const [endDate, setEndDate] = useState(() => {
+    const raw = toDateInput(initial.endsAt, initial.timezone);
+    // All-day stores exclusive end midnight → show inclusive last day in the editor.
+    if (initial.isAllDay) return shiftChicagoDateKey(raw, -1);
+    return raw;
+  });
   const [startTime, setStartTime] = useState(
     toTimeInput(initial.startsAt, initial.timezone),
   );
   const [endTime, setEndTime] = useState(toTimeInput(initial.endsAt, initial.timezone));
+  const [timezone, setTimezone] = useState(initial.timezone || "America/Chicago");
+  const [dstChoice, setDstChoice] = useState<DstDisambiguation>("EARLIER");
+  const [tzChangeMode, setTzChangeMode] = useState<"keep_instant" | "keep_wall">(
+    "keep_instant",
+  );
   const [venueName, setVenueName] = useState(initial.venueName ?? "");
   const [city, setCity] = useState(initial.city ?? "");
   const [streetAddress, setStreetAddress] = useState(initial.streetAddress ?? "");
@@ -97,11 +115,83 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
     setBusy(true);
     setMessage(null);
     try {
-      const startsAt = chicagoWallTimeToUtc(date, startTime);
-      const endsAt = chicagoWallTimeToUtc(date, endTime);
-      if (endsAt.getTime() < startsAt.getTime()) {
-        throw new Error("End time must be after start time.");
+      let startsAt: Date;
+      let endsAt: Date;
+      let nextIsAllDay = isAllDay;
+
+      if (isAllDay) {
+        if (initial.isAllDay === false) {
+          const ok = window.confirm(
+            `Convert to all-day?\n\nStart date: ${startDate}\nLast day (inclusive): ${endDate}\nStart/end clock times will no longer be shown.`,
+          );
+          if (!ok) {
+            setBusy(false);
+            return;
+          }
+        }
+        const normalized = normalizeAllDayRange({
+          startDateKey: startDate,
+          endDateKeyInclusive: endDate,
+          timezone,
+        });
+        if (!normalized.ok) throw new Error(normalized.message);
+        startsAt = normalized.value.startsAt;
+        endsAt = normalized.value.endsAt;
+        nextIsAllDay = true;
+      } else {
+        if (initial.isAllDay === true) {
+          if (!startTime || !endTime) {
+            throw new Error("Converting from all-day requires explicit start and end times.");
+          }
+          const ok = window.confirm(
+            `Convert to timed Event?\n\n${startDate} ${startTime} → ${endDate} ${endTime}\nTimezone: ${timezone}`,
+          );
+          if (!ok) {
+            setBusy(false);
+            return;
+          }
+        }
+        const startProbe = resolveWallTime({
+          dateKey: startDate,
+          time: startTime,
+          timeZone: timezone,
+          disambiguation: dstChoice,
+        });
+        if (startProbe.ok && startProbe.ambiguous && !dstChoice) {
+          throw new Error(
+            "That start time occurs twice on this date (daylight saving). Choose earlier or later occurrence.",
+          );
+        }
+        const normalized = normalizeTimedRange({
+          startDateKey: startDate,
+          startTime,
+          endDateKey: endDate,
+          endTime,
+          timezone,
+          disambiguation: dstChoice,
+        });
+        if (!normalized.ok) throw new Error(normalized.message);
+        if (normalized.value.ambiguousStart || normalized.value.ambiguousEnd) {
+          // Choice already applied via dstChoice; surface notice.
+          setMessage(
+            `Saved using the ${dstChoice === "LATER" ? "later" : "earlier"} daylight-saving occurrence.`,
+          );
+        }
+        startsAt = normalized.value.startsAt;
+        endsAt = normalized.value.endsAt;
+        nextIsAllDay = false;
       }
+
+      // Timezone change: keep_instant preserves stored UTC; keep_wall uses wall fields.
+      if (
+        !nextIsAllDay &&
+        timezone !== initial.timezone &&
+        tzChangeMode === "keep_instant"
+      ) {
+        startsAt = new Date(initial.startsAt);
+        endsAt = new Date(initial.endsAt);
+      }
+
       if (initial.isRecurring && scope !== "this") {
         const ok = window.confirm(
           "This will change multiple occurrences in the series. Continue?",
@@ -117,7 +207,7 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
             expectedVersion: version,
             startsAt: startsAt.toISOString(),
             endsAt: endsAt.toISOString(),
-            timezone: initial.timezone,
+            timezone,
             scope,
           }),
         });
@@ -129,6 +219,12 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
         return;
       }
 
+      const occupied = occupiedCampaignDateKeysForInterval(
+        startsAt,
+        endsAt,
+        nextIsAllDay,
+      );
+
       const res = await fetch(`/api/events/${initial.eventId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -138,6 +234,8 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
           campaignDisplayTitle: title.trim(),
           startsAt: startsAt.toISOString(),
           endsAt: endsAt.toISOString(),
+          timezone,
+          isAllDay: nextIsAllDay,
           venueName: venueName.trim() || null,
           city: city.trim() || null,
           streetAddress: streetAddress.trim() || null,
@@ -153,11 +251,12 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
         version: json.event?.version,
         status: status,
       });
-      // Safe projection may not include version — reload editor version via editor API
       const ed = await fetch(`/api/events/${initial.eventId}/editor`);
       const edJson = await ed.json();
       if (edJson.editor?.version) setVersion(edJson.editor.version);
-      setMessage("Saved.");
+      setMessage(
+        `Saved. Campaign dates: ${occupied.join(", ") || startDate}.`,
+      );
       router.refresh();
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Save failed.");
@@ -259,32 +358,106 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
           />
         </label>
         <label>
-          Date
+          <input
+            type="checkbox"
+            checked={isAllDay}
+            onChange={(e) => setIsAllDay(e.target.checked)}
+            disabled={!canMutate}
+          />{" "}
+          All-day Event
+        </label>
+        <label>
+          Start date
           <input
             type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            value={startDate}
+            onChange={(e) => {
+              setStartDate(e.target.value);
+              if (e.target.value > endDate) setEndDate(e.target.value);
+            }}
             disabled={!canMutate}
           />
         </label>
         <label>
-          Start
+          End date
           <input
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
             disabled={!canMutate}
           />
         </label>
+        {!isAllDay ? (
+          <>
+            <label>
+              Start time
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                disabled={!canMutate}
+              />
+            </label>
+            <label>
+              End time
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                disabled={!canMutate}
+              />
+            </label>
+          </>
+        ) : null}
         <label>
-          End
+          Timezone (IANA)
           <input
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
+            value={timezone}
+            onChange={(e) => setTimezone(e.target.value)}
             disabled={!canMutate}
+            list="iana-tz-suggestions"
+            aria-describedby="tz-help"
           />
         </label>
+        <datalist id="iana-tz-suggestions">
+          <option value="America/Chicago" />
+          <option value="America/New_York" />
+          <option value="America/Denver" />
+          <option value="America/Los_Angeles" />
+          <option value="UTC" />
+        </datalist>
+        <p id="tz-help" className="muted">
+          Campaign displays use America/Chicago. Changing timezone defaults to keeping
+          the same instant (wall clock labels update).
+        </p>
+        {timezone !== initial.timezone ? (
+          <label>
+            Timezone change mode
+            <select
+              value={tzChangeMode}
+              onChange={(e) =>
+                setTzChangeMode(e.target.value as "keep_instant" | "keep_wall")
+              }
+              disabled={!canMutate || isAllDay}
+            >
+              <option value="keep_instant">Keep same instant</option>
+              <option value="keep_wall">Keep same wall-clock times</option>
+            </select>
+          </label>
+        ) : null}
+        {!isAllDay ? (
+          <label>
+            Daylight-saving ambiguous time
+            <select
+              value={dstChoice}
+              onChange={(e) => setDstChoice(e.target.value as DstDisambiguation)}
+              disabled={!canMutate}
+            >
+              <option value="EARLIER">Earlier occurrence (first offset)</option>
+              <option value="LATER">Later occurrence (second offset)</option>
+            </select>
+          </label>
+        ) : null}
         <label>
           Venue
           <input

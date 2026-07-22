@@ -100,5 +100,7 @@ Feature-flag or auth-gate disable approve/merge mutations; leave staging intact;
 | `import:apply:proof` | PASS — approve +1 Event, re-approve +0, reject/merge +0, missions unchanged |
 | Surfaces | `/import/google-calendar/apply`, approve/reject/merge APIs |
 | Provenance contracts | `src/lib/calendar/import-provenance.ts` (CC-02 reusable) |
+| Temporal normalization | CC-03 `src/lib/calendar/temporal/` via import mapper |
 | CC-02 | Still a separate deliverable — **now COMPLETE**; reuses provenance contracts without combining scopes |
+| CC-03 | COMPLETE — import temporal normalization must remain green under `calendar:time:validate` |
 

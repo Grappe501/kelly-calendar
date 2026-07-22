@@ -3,6 +3,7 @@ import { MissionCardView } from "@/components/today/MissionCardView";
 import type { CalendarDayViewData } from "@/server/services/calendar-day-view-service";
 import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
+import { dayMembershipKind } from "@/lib/calendar/temporal";
 
 function formatDayLabel(dateKey: string): string {
   const [y, m, d] = dateKey.split("-").map(Number);
@@ -80,7 +81,21 @@ export function DayView({ data, focusEventId = null }: Props) {
           <p className="muted">No events for this day. Add one from Upload.</p>
         ) : (
           <ol className="calendar-day-schedule">
-            {data.schedule.map((event) => (
+            {data.schedule.map((event) => {
+              const kind = dayMembershipKind({
+                startsAt: event.startsAt,
+                endsAt: event.endsAt,
+                isAllDay: Boolean(event.allDay),
+                dateKey: data.dateKey,
+              });
+              const timeLabel = event.allDay
+                ? "All day"
+                : kind === "continues"
+                  ? `Continues · started ${formatClock(event.startsAt, data.timezone)}`
+                  : kind === "ends"
+                    ? `${formatClock(event.startsAt, data.timezone)} – ends ${formatClock(event.endsAt, data.timezone)}`
+                    : `${formatClock(event.startsAt, data.timezone)} – ${formatClock(event.endsAt, data.timezone)}`;
+              return (
               <li
                 key={event.eventId}
                 className={`schedule-event-card ${calendarTone(event.primaryCalendar.type)}${
@@ -89,16 +104,22 @@ export function DayView({ data, focusEventId = null }: Props) {
                     : ""
                 }`}
               >
-                <Link href={`/events/${event.eventId}`} className="schedule-event-link">
-                  <time dateTime={event.startsAt}>
-                    {event.allDay
-                      ? "All day"
-                      : `${formatClock(event.startsAt, data.timezone)} – ${formatClock(event.endsAt, data.timezone)}`}
-                  </time>
+                <Link
+                  href={`/events/${event.eventId}`}
+                  className="schedule-event-link"
+                  aria-label={
+                    kind === "continues" || kind === "ends"
+                      ? `${event.title}, ${kind === "continues" ? "continues from earlier" : "ends today"}`
+                      : event.title
+                  }
+                >
+                  <time dateTime={event.startsAt}>{timeLabel}</time>
                   <div>
                     <strong className="schedule-event-title">{event.title}</strong>
                     <p className="muted">
                       {event.primaryCalendar.name}
+                      {kind === "continues" ? " · Continues" : ""}
+                      {kind === "ends" ? " · Ends today" : ""}
                       {event.location?.label ? ` · ${event.location.label}` : ""}
                     </p>
                     {event.travel?.departureAt || event.travel?.travelRequired ? (
@@ -112,7 +133,8 @@ export function DayView({ data, focusEventId = null }: Props) {
                   </div>
                 </Link>
               </li>
-            ))}
+              );
+            })}
           </ol>
         )}
       </section>

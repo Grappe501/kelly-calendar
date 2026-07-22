@@ -1,6 +1,7 @@
 /**
  * Pure mapping from staged import payloads → canonical Event create fields.
  * Used by CC-01 apply; safe for unit tests without Prisma.
+ * CC-03: all-day / overnight / timezone normalization via temporal doctrine.
  */
 
 import { classifyImportedTitle } from "@/features/calendar-import/normalize-google-event";
@@ -9,6 +10,12 @@ import {
   eventAppearsManuallyRescheduled,
   IMPORT_FIELD_PRECEDENCE,
 } from "@/lib/calendar/import-provenance";
+import { shiftChicagoDateKey } from "@/lib/calendar/chicago-date";
+import {
+  CAMPAIGN_TIMEZONE,
+  isValidIanaTimeZone,
+  normalizeAllDayRange,
+} from "@/lib/calendar/temporal";
 
 export type GoogleNormalizedImportPayload = {
   sourceSystem?: string;
@@ -80,25 +87,37 @@ export function calendarSlugForProposal(
   return CALENDAR_TYPE_TO_SLUG[proposal] ?? "public-events";
 }
 
+function resolveImportTimezone(
+  startTz: string | undefined,
+  endTz: string | undefined,
+): { timezone: string; provenance: string } {
+  const candidate = (startTz || endTz || "").trim();
+  if (candidate && isValidIanaTimeZone(candidate)) {
+    return { timezone: candidate, provenance: "source_iana" };
+  }
+  if (candidate) {
+    return {
+      timezone: CAMPAIGN_TIMEZONE,
+      provenance: `unknown_source_tz:${candidate};defaulted_campaign`,
+    };
+  }
+  return {
+    timezone: CAMPAIGN_TIMEZONE,
+    provenance: "absent_source_tz;defaulted_campaign",
+  };
+}
+
 function parseGoogleInstant(
   value: { date?: string; dateTime?: string; timeZone?: string } | null | undefined,
-  endOfAllDay: boolean,
-): { at: Date; allDay: boolean; timezone: string } | null {
+): { at: Date; allDay: boolean; dateKey?: string; timezone?: string } | null {
   if (!value) return null;
-  const timezone = value.timeZone?.trim() || "America/Chicago";
   if (value.dateTime) {
     const at = new Date(value.dateTime);
     if (Number.isNaN(at.getTime())) return null;
-    return { at, allDay: false, timezone };
+    return { at, allDay: false, timezone: value.timeZone };
   }
-  if (value.date) {
-    // All-day: interpret as Chicago calendar date bounds (CST/CDT offset handled by wall clock).
-    const iso = endOfAllDay
-      ? `${value.date}T23:59:59-06:00`
-      : `${value.date}T00:00:00-06:00`;
-    const at = new Date(iso);
-    if (Number.isNaN(at.getTime())) return null;
-    return { at, allDay: true, timezone: "America/Chicago" };
+  if (value.date && /^\d{4}-\d{2}-\d{2}$/.test(value.date)) {
+    return { at: new Date(`${value.date}T12:00:00Z`), allDay: true, dateKey: value.date };
   }
   return null;
 }
@@ -117,13 +136,49 @@ export function mapNormalizedPayloadToEventFields(
     throw new Error("Import record has no normalizedPayload.");
   }
 
-  const start = parseGoogleInstant(payload.start, false);
-  const end = parseGoogleInstant(payload.end, true);
+  const start = parseGoogleInstant(payload.start);
+  const end = parseGoogleInstant(payload.end);
   if (!start || !end) {
     throw new Error("Import record is missing valid start/end.");
   }
-  if (end.at.getTime() < start.at.getTime()) {
-    throw new Error("Import record end is before start.");
+
+  const tzInfo = resolveImportTimezone(
+    start.timezone || payload.start?.timeZone,
+    end.timezone || payload.end?.timeZone,
+  );
+
+  let startsAt: Date;
+  let endsAt: Date;
+  let isAllDay = false;
+
+  if (start.allDay || end.allDay) {
+    // Google Calendar all-day end.date is exclusive.
+    const startKey = start.dateKey ?? payload.start?.date;
+    const endExclusive = end.dateKey ?? payload.end?.date;
+    if (!startKey || !endExclusive) {
+      throw new Error("All-day import missing date keys.");
+    }
+    const endInclusive =
+      endExclusive > startKey
+        ? shiftChicagoDateKey(endExclusive, -1)
+        : startKey;
+    const normalized = normalizeAllDayRange({
+      startDateKey: startKey,
+      endDateKeyInclusive: endInclusive,
+      timezone: tzInfo.timezone,
+    });
+    if (!normalized.ok) throw new Error(normalized.message);
+    startsAt = normalized.value.startsAt;
+    endsAt = normalized.value.endsAt;
+    isAllDay = true;
+  } else {
+    startsAt = start.at;
+    endsAt = end.at;
+    isAllDay = false;
+  }
+
+  if (endsAt.getTime() <= startsAt.getTime()) {
+    throw new Error("Import record end is not after start.");
   }
 
   const title = (payload.summary ?? "").trim() || "Imported event (untitled)";
@@ -138,10 +193,10 @@ export function mapNormalizedPayloadToEventFields(
     internalTitle: title,
     campaignDisplayTitle: title,
     status: sourceCancelled ? "CANCELLED" : "HOLD",
-    startsAt: start.at,
-    endsAt: end.at,
-    timezone: start.timezone || end.timezone || "America/Chicago",
-    isAllDay: start.allDay || end.allDay,
+    startsAt,
+    endsAt,
+    timezone: tzInfo.timezone,
+    isAllDay,
     city: cityFromLocation(location),
     venueName: null,
     locationNotes: location,
@@ -149,6 +204,7 @@ export function mapNormalizedPayloadToEventFields(
     privateNotes: [
       "SOURCE: Google Calendar import (IMPORT_ONLY).",
       "historicalAttendanceConfirmed=false — import does not prove attendance.",
+      `[timezoneProvenance:${tzInfo.provenance}]`,
       fingerprintNote,
       payload.sourceEventId ? `[sourceEventId:${payload.sourceEventId}]` : null,
     ]

@@ -13,6 +13,10 @@ import {
   weekDateKeys,
 } from "@/lib/calendar/chicago-date";
 import { OPERATING_VIEW_QUESTIONS } from "@/lib/calendar/operating-view-lenses";
+import {
+  eventIntersectsCampaignDay,
+  occupiedCampaignDateKeysForInterval,
+} from "@/lib/calendar/temporal";
 import { getElectionCountdown } from "@/lib/dates/election";
 import { toMissionCard, type MissionCard } from "@/lib/missions/mission-card";
 import { computeMissionTimeline } from "@/lib/missions/mission-timeline";
@@ -207,14 +211,24 @@ export async function getCalendarMonthViewData(
   const monthPrefix = monthStartKey.slice(0, 7);
   const cataloguePartial = graph.cataloguePartial;
 
+  // CC-03: include Events whose intervals intersect the month (not start-day-only).
   const monthEvents = graph.events
-    .filter((e) => monthKeySet.has(chicagoDateKey(e.startsAt)))
+    .filter((e) =>
+      monthKeys.some((dateKey) =>
+        eventIntersectsCampaignDay({
+          startsAt: e.startsAt,
+          endsAt: e.endsAt,
+          isAllDay: Boolean(e.allDay),
+          dateKey,
+        }),
+      ),
+    )
     .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
 
   const context = await loadMissionContextBatched(monthEvents.map((e) => e.eventId));
   const canMutate = roleMayMutate(actor.primarySystemRole);
 
-  const missions = monthEvents.map((event, index) => {
+  const missions = monthEvents.map((event) => {
     const travel = context.travel.get(event.eventId);
     const day = context.day.get(event.eventId);
     const timeline = computeMissionTimeline({
@@ -257,10 +271,17 @@ export async function getCalendarMonthViewData(
 
   const byDay = new Map<string, SafeEventProjection[]>();
   for (const event of monthEvents) {
-    const key = chicagoDateKey(event.startsAt);
-    const list = byDay.get(key) ?? [];
-    list.push(event);
-    byDay.set(key, list);
+    const occupied = occupiedCampaignDateKeysForInterval(
+      event.startsAt,
+      event.endsAt,
+      Boolean(event.allDay),
+    );
+    for (const key of occupied) {
+      if (!monthKeySet.has(key) && !gridKeys.includes(key)) continue;
+      const list = byDay.get(key) ?? [];
+      list.push(event);
+      byDay.set(key, list);
+    }
   }
 
   const grid: MonthDayCell[] = gridKeys.map((dateKey) => {

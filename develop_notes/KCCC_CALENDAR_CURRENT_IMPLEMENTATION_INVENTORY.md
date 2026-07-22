@@ -35,8 +35,10 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Day view | PARTIAL | `/calendar?view=day` + day-view service | Candidate-data; polish | Step 10 |
 | Week view | PARTIAL | `/calendar?view=week` | Same | Step 10 |
 | Month view | PARTIAL | `/calendar?view=month` | Same | Step 10 |
-| Agenda view | PLACEHOLDER | View switcher chip `ready: false` | Not built | Step 10 |
-| Availability rules | DOCUMENTED_ONLY | `availability-policy.ts` + status/env cards | Not materialized; not conflict inputs | Step 12 |
+| Agenda view | COMPLETE (CC-03) | Campaign-local occupied days; continuation labels | N/A | CC-04 recurrence |
+| Day/Week/Month membership | COMPLETE (CC-03) | Interval ∩ day; overnight/multi-day visible | N/A | Polish in CC-08 |
+| Timezone / all-day / DST | COMPLETE (CC-03) | `src/lib/calendar/temporal/` + Event sheet | N/A | CC-04 DST-stable recurrence |
+| Availability rules | DOCUMENTED_ONLY | `availability-policy.ts` + status/env cards | Not materialized; not conflict inputs | Step 12 / CC-05 |
 | Tuesday Little Rock rule | DOCUMENTED_ONLY | Same policy | Same | Step 12 |
 | Vacation overrides | DOCUMENTED_ONLY | Policy text only; no model/UI | Same | Step 12 |
 | Conflict detection | PARTIAL | `conflict-service.ts`, APIs, synthetic `/system/conflicts` | Not full scheduler UX | Step 13 |

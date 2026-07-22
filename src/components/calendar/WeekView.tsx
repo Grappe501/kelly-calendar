@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
+import { chicagoDateKey } from "@/lib/calendar/chicago-date";
+import { dayMembershipKind } from "@/lib/calendar/temporal";
 import type { CalendarWeekViewData } from "@/server/services/calendar-week-view-service";
 
 function formatClock(iso: string, timeZone: string): string {
@@ -9,6 +11,23 @@ function formatClock(iso: string, timeZone: string): string {
     hour: "numeric",
     minute: "2-digit",
   }).format(new Date(iso));
+}
+
+function dayTimeLabel(
+  event: { startsAt: string; endsAt: string; allDay: boolean },
+  dateKey: string,
+  timeZone: string,
+): string {
+  if (event.allDay) return "All day";
+  const kind = dayMembershipKind({
+    startsAt: event.startsAt,
+    endsAt: event.endsAt,
+    isAllDay: event.allDay,
+    dateKey,
+  });
+  if (kind === "continues") return "Continues";
+  if (kind === "ends") return `Ends ${formatClock(event.endsAt, timeZone)}`;
+  return formatClock(event.startsAt, timeZone);
 }
 
 type Props = {
@@ -64,23 +83,43 @@ export function WeekView({ data, focusEventId = null }: Props) {
                 <p className="muted week-day-empty">Open</p>
               ) : (
                 <ul className="week-day-events">
-                  {day.events.map((event) => (
-                    <li
-                      key={event.eventId}
-                      className={
-                        focusEventId && event.eventId === focusEventId
-                          ? "calendar-event-focused"
-                          : undefined
-                      }
-                    >
-                      <span className="week-event-time">
-                        {event.allDay ? "All day" : formatClock(event.startsAt, data.timezone)}
-                      </span>
-                      <Link href={`/events/${event.eventId}`} className="week-event-title">
-                        {event.title}
-                      </Link>
-                    </li>
-                  ))}
+                  {day.events.map((event) => {
+                    const kind = dayMembershipKind({
+                      startsAt: event.startsAt,
+                      endsAt: event.endsAt,
+                      isAllDay: Boolean(event.allDay),
+                      dateKey: day.dateKey,
+                    });
+                    const continues = kind === "continues" || kind === "ends";
+                    return (
+                      <li
+                        key={`${day.dateKey}:${event.eventId}`}
+                        className={
+                          focusEventId && event.eventId === focusEventId
+                            ? "calendar-event-focused"
+                            : undefined
+                        }
+                      >
+                        <span className="week-event-time">
+                          {dayTimeLabel(event, day.dateKey, data.timezone)}
+                        </span>
+                        <Link
+                          href={`/events/${event.eventId}`}
+                          className="week-event-title"
+                          aria-label={
+                            continues
+                              ? `${event.title}, continues from ${chicagoDateKey(event.startsAt)}`
+                              : event.title
+                          }
+                        >
+                          {event.title}
+                          {continues ? (
+                            <span className="muted"> (continues)</span>
+                          ) : null}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </article>

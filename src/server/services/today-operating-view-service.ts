@@ -4,6 +4,7 @@ import { detectCandidateOverlaps } from "@/features/operational-intelligence/ser
 import type { OperationalConflict } from "@/features/operational-intelligence/types/conflict-types";
 import {
   CAMPAIGN_CALENDAR_TIMEZONE,
+  chicagoDateKey,
   chicagoTodayKey,
 } from "@/lib/calendar/chicago-date";
 import { OPERATING_VIEW_QUESTIONS } from "@/lib/calendar/operating-view-lenses";
@@ -97,7 +98,7 @@ function toOperatorCard(
       ? "Travel required — departure not set"
       : null;
 
-  const dateKey = event.startsAt.slice(0, 10);
+  const dateKey = chicagoDateKey(event.startsAt);
 
   return {
     eventId: event.eventId,

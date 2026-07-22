@@ -1,20 +1,13 @@
 /**
  * Chicago wall-clock helpers for event create/edit forms.
- * Build: KCCC-EA-11-EVENT-CREATION-EDITING-1.0
+ * CC-03: delegates to authoritative temporal service (DST gap/ambiguity aware).
  */
 
-import { chicagoDateKey } from "@/lib/calendar/chicago-date";
+import { chicagoWallTimeToUtc as resolveChicago } from "@/lib/calendar/temporal";
 
 /** Convert a Chicago calendar date + HH:mm wall time to a UTC Date. */
 export function chicagoWallTimeToUtc(dateKey: string, hhmm: string): Date {
-  const normalized = hhmm.length === 5 ? `${hhmm}:00` : hhmm;
-  const candidates = [
-    new Date(`${dateKey}T${normalized}-05:00`),
-    new Date(`${dateKey}T${normalized}-06:00`),
-  ];
-  return (
-    candidates.find((d) => chicagoDateKey(d) === dateKey) ?? candidates[0]
-  );
+  return resolveChicago(dateKey, hhmm);
 }
 
 export function durationPresetToMinutes(preset: string): number {

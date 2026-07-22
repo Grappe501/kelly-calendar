@@ -2,7 +2,6 @@ import "server-only";
 
 import {
   CAMPAIGN_CALENDAR_TIMEZONE,
-  chicagoDateKey,
   chicagoDateKeyToUtcBounds,
   chicagoDateKeysToUtcRange,
   chicagoTodayKey,
@@ -11,6 +10,7 @@ import {
   shiftChicagoDateKey,
   weekDateKeys,
 } from "@/lib/calendar/chicago-date";
+import { eventIntersectsCampaignDay } from "@/lib/calendar/temporal";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import {
   listEventsForActorInRange,
@@ -125,8 +125,16 @@ export function eventsOnChicagoDate(
   events: OperatingEventRecord[],
   dateKey: string,
 ): OperatingEventRecord[] {
+  // CC-03: day membership is interval ∩ campaign-local day (not start-day-only).
   return events
-    .filter((e) => chicagoDateKey(e.startsAt) === dateKey)
+    .filter((e) =>
+      eventIntersectsCampaignDay({
+        startsAt: e.startsAt,
+        endsAt: e.endsAt,
+        isAllDay: Boolean(e.allDay),
+        dateKey,
+      }),
+    )
     .sort(
       (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime(),
     );

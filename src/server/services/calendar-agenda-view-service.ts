@@ -1,6 +1,13 @@
 import "server-only";
 
+import { chicagoDateKey } from "@/lib/calendar/chicago-date";
 import { OPERATING_VIEW_QUESTIONS } from "@/lib/calendar/operating-view-lenses";
+import {
+  dayMembershipKind,
+  eventIntersectsCampaignDay,
+  occupiedCampaignDateKeysForInterval,
+  type DayMembershipKind,
+} from "@/lib/calendar/temporal";
 import type { AuthenticatedActor } from "@/server/auth/actor";
 import type { OperatingEventRecord } from "@/server/services/event-service";
 import { loadEventGraphForAgenda } from "@/server/services/operating-views/load-event-graph";
@@ -12,6 +19,8 @@ export type AgendaItem = {
   endsAt: string;
   dateKey: string;
   timeLabel: string;
+  membershipKind: DayMembershipKind;
+  membershipLabel: string;
   calendarName: string;
   locationLabel: string | null;
   people: string[];
@@ -37,14 +46,34 @@ function formatClock(iso: string, timeZone: string): string {
   }).format(new Date(iso));
 }
 
-function toAgendaItem(
+function membershipLabel(kind: DayMembershipKind): string {
+  switch (kind) {
+    case "all_day":
+      return "All day";
+    case "continues":
+      return "Continues";
+    case "ends":
+      return "Ends today";
+    case "spans":
+      return "Spans day";
+    case "starts":
+    default:
+      return "";
+  }
+}
+
+function toAgendaItemsForOccupiedDays(
   event: OperatingEventRecord,
   timezone: string,
-): AgendaItem {
-  const dateKey = event.startsAt.slice(0, 10);
-  const timeLabel = event.allDay
-    ? "All day"
-    : formatClock(event.startsAt, timezone);
+  windowStartKey: string,
+  windowEndKey: string,
+): AgendaItem[] {
+  const occupied = occupiedCampaignDateKeysForInterval(
+    event.startsAt,
+    event.endsAt,
+    Boolean(event.allDay),
+  ).filter((key) => key >= windowStartKey && key <= windowEndKey);
+
   const locationLabel = event.location?.label ?? null;
   const searchText = [
     event.title,
@@ -56,23 +85,50 @@ function toAgendaItem(
     .join(" ")
     .toLowerCase();
 
-  return {
-    eventId: event.eventId,
-    title: event.title,
-    startsAt: event.startsAt,
-    endsAt: event.endsAt,
-    dateKey,
-    timeLabel,
-    calendarName: event.primaryCalendar.name,
-    locationLabel,
-    people: event.people,
-    searchText,
-    href: `/events/${event.eventId}`,
-  };
+  return occupied.map((dateKey) => {
+    const kind =
+      dayMembershipKind({
+        startsAt: event.startsAt,
+        endsAt: event.endsAt,
+        isAllDay: Boolean(event.allDay),
+        dateKey,
+      }) ?? "starts";
+    const baseTime = event.allDay
+      ? "All day"
+      : kind === "continues" || kind === "ends"
+        ? formatClock(event.startsAt, timezone)
+        : formatClock(event.startsAt, timezone);
+    const label = membershipLabel(kind);
+    const timeLabel =
+      event.allDay
+        ? "All day"
+        : kind === "continues"
+          ? `Continues · started ${formatClock(event.startsAt, timezone)}`
+          : kind === "ends"
+            ? `Ends ${formatClock(event.endsAt, timezone)}`
+            : baseTime;
+
+    return {
+      eventId: event.eventId,
+      title: event.title,
+      startsAt: event.startsAt,
+      endsAt: event.endsAt,
+      dateKey,
+      timeLabel: label && !event.allDay && kind === "starts" ? baseTime : timeLabel,
+      membershipKind: kind,
+      membershipLabel: label,
+      calendarName: event.primaryCalendar.name,
+      locationLabel,
+      people: event.people,
+      searchText,
+      href: `/events/${event.eventId}`,
+    };
+  });
 }
 
 /**
  * Agenda lens — chronological forward list from the canonical Event graph.
+ * CC-03: groups by campaign-local occupied day (not UTC date slice).
  */
 export async function getCalendarAgendaViewData(
   actor: AuthenticatedActor,
@@ -80,10 +136,27 @@ export async function getCalendarAgendaViewData(
   forwardDays = 90,
 ): Promise<CalendarAgendaViewData> {
   const graph = await loadEventGraphForAgenda(actor, dateKeyInput, forwardDays);
+  const windowEndKey = (() => {
+    const last = new Date(graph.rangeEnd.getTime() - 1);
+    return chicagoDateKey(last);
+  })();
+
   const items = graph.events
-    .slice()
-    .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime())
-    .map((e) => toAgendaItem(e, graph.timezone));
+    .flatMap((e) =>
+      toAgendaItemsForOccupiedDays(e, graph.timezone, graph.dateKey, windowEndKey),
+    )
+    .filter((item) =>
+      eventIntersectsCampaignDay({
+        startsAt: item.startsAt,
+        endsAt: item.endsAt,
+        dateKey: item.dateKey,
+      }),
+    )
+    .sort((a, b) => {
+      const day = a.dateKey.localeCompare(b.dateKey);
+      if (day !== 0) return day;
+      return new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime();
+    });
 
   return {
     dateKey: graph.dateKey,

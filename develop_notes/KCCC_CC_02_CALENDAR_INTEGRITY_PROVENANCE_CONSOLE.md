@@ -79,4 +79,4 @@ Make the calendar trustworthy by exposing duplicates, provenance gaps, import an
 
 ## CC-03 handoff
 
-CC-02 reports overnight/all-day/timezone/recurrence integrity risks. **CC-03** owns corrections for campaign-local day membership, multi-day rendering, all-day editing, overnight spans, and DST behavior. Do not begin CC-03 in the CC-02 pass.
+CC-02 reports overnight/all-day/timezone/recurrence integrity risks. **CC-03 is COMPLETE** — campaign-local day membership, multi-day rendering, all-day editing, overnight spans, and DST behavior are owned by the temporal doctrine (`KCCC_CALENDAR_TIME_DOCTRINE.md`). CC-02 remains read-only for Event/Mission mutation.
