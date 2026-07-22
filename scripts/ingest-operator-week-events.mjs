@@ -117,8 +117,8 @@ const SUPERSEDE_KEYS = [
   "steve-procedure-2026-07-24",
   "cave-city-watermelon-2026-07-25",
   "lodging-batesville-sat-2026-07-25",
-  "blytheville-churches-2026-07-26",
-  "blytheville-forum-2026-07-26",
+  // Blytheville Jul 26 church day + forum restored by operator (madison-travel-blytheville ingest).
+  // Do not re-cancel on re-run of this Pass-2 script.
   /** Fabricated 6:00 PM — Pass 2 requires UNKNOWN time → stage draft instead */
   "naacp-steve-jonesboro-2026-07-20",
 ];

@@ -1,0 +1,34 @@
+{
+  "pass": "MADISON-TRAVEL-BLYTHEVILLE-2026-07-21",
+  "madisonTravel": {
+    "key": "travel-madison-2026-09-02",
+    "eventNumber": "KCCC-2026-0178",
+    "status": "HOLD"
+  },
+  "madisonLodging": {
+    "key": "lodging-madison-airbnb-2026-09-02",
+    "eventNumber": "KCCC-2026-0179",
+    "status": "HOLD"
+  },
+  "madisonMeeting": {
+    "key": "madison-county-2026-09-03",
+    "eventNumber": "KCCC-2026-0164",
+    "status": "CONFIRMED"
+  },
+  "blythevilleChurch": {
+    "key": "blytheville-churches-2026-07-26",
+    "eventNumber": "KCCC-2026-0020",
+    "status": "CONFIRMED"
+  },
+  "blythevilleForum": {
+    "key": "blytheville-forum-2026-07-26",
+    "eventNumber": "KCCC-2026-0021",
+    "status": "CONFIRMED"
+  },
+  "openDecisions": [
+    "Book / confirm Madison County Airbnb (exact property TBD).",
+    "Lock Madison Sep 3 clock/venue/program subtype.",
+    "Lock Blytheville church names / visit order if needed for prep.",
+    "Confirm Blytheville forum venue + exact clock if different from Pass-1 placeholders."
+  ]
+}
