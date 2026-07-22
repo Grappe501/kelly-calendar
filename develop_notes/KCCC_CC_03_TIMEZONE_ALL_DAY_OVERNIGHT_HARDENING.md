@@ -59,6 +59,15 @@ npm run calendar:canonical:validate
 - Display-generated duplicate Events: **0**
 - Mission lifecycle mutations from CC-03: **0**
 
+## Ship evidence (2026-07-22)
+
+| | |
+|--|--|
+| **Git** | `main` · feature `976eaae` · pushed |
+| **Netlify** | https://kelly-calendar.netlify.app · deploy `6a60d99e386bb8697903a769` |
+| **Live check** | Today/Day/Week/Month/Agenda/Quick-add/Integrity → HTTP 307 login (auth gate intact) |
+| **Validator** | `npm run calendar:time:validate` — 34 passed |
+
 ## CC-04 handoff
 
 Recurrence and occurrence exceptions — series authority, RRULE, edit-one/future/series, EXDATE, DST-stable local-wall materialization. Do not begin during CC-03.
