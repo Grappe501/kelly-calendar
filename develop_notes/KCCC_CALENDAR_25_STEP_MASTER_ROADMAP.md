@@ -4,7 +4,7 @@
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE (Steps 1–25)
 Calendar Completion overlay: develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md (CC-01…CC-12 LOCKED)
-Updated: CC-05 ship baseline 2026-07-22 · main@46a72c3 · ADR-091 usability next
+Updated: ADR-093 Phase Two vision locked 2026-07-22 · CC-07…CC-12 intact first
 Runtime: src/lib/system/constants.ts
 ```
 
@@ -14,13 +14,17 @@ Runtime: src/lib/system/constants.ts
 Engineering Chapter 1: CLOSED
   (develop_notes/KCCC_ENGINEERING_CHAPTER_1_CLOSED.md)
 Campaign OS Phase: EVIDENCE_ACQUISITION + Calendar Completion (CC-01…CC-12)
-Primary engineering track: Calendar Completion (LOCKED)
+Primary engineering track: Calendar Completion (LOCKED) — finish CC-07…CC-12 intact
   Assessment: develop_notes/KCCC_CALENDAR_COMPLETION_ASSESSMENT_BURT_2026-07-21.md
   Program:    develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md
   Ship baseline: main @ 46a72c3 · Netlify 6a60efa8f25804bc9b16f3f3 (CC-01…CC-05)
   CC-06 Conflict Engine: COMPLETE (ADR-092)
   Next engineering: NONE AUTHORIZED — CC-07 remains DESIGN ONLY
-  Usability Synthesis 1: remains EMPTY (not completed by ADR-090/092); still required for evidence
+  Usability Synthesis 1: remains EMPTY (not completed by ADR-090/092/093)
+Phase Two (post–CC-12): VISION LOCKED (ADR-093)
+  Program: develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md
+  IC-01…IC-12 — design during CC-07…CC-12 OK; implement after CC-12 only
+  AI principle: deterministic facts/auth/consent/coverage/conflicts; AI explains/recommends
 Unrelated campaign expansion: PAUSED
 Campaign OS Baseline: 1.0 FROZEN (immutable — do not rewrite after observation)
   (develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md)
@@ -118,14 +122,17 @@ Validate: `npm run calendar:canonical:validate`
 
 ```text
 CC-06 Conflict Engine (ADR-092) — COMPLETE
-develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md
-develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md (ship evidence)
 NEXT ENGINEERING — NONE AUTHORIZED
+CC-07…CC-12 remain the locked Calendar Completion sequence (finish intact)
 CC-07 design only: develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md
-Usability Synthesis 1 remains EMPTY (ADR-091) — not completed by ADR-092; still required for evidence
+Usability Synthesis 1 remains EMPTY (ADR-091)
+Phase Two (IC-01…IC-12) VISION LOCKED (ADR-093) — design during CC-07…CC-12 OK;
+  implement ONLY after CC-12
+  develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md
 ```
 
-CC-05 and CC-06 are shipped. CC-06 was authorized under Kelly ADR-092 with hard no-auto-mutation
-restrictions and is now validated COMPLETE. No further engineering build is authorized.
-Do **not** implement CC-07 — it remains design-only pending Synthesis review and separate
+CC-05 and CC-06 are shipped. No further engineering build is authorized yet.
+Do **not** implement CC-07 or any IC-* build. Do **not** mark Synthesis complete
+because Phase Two was locked. Do **not** destabilize the calendar with premature
+Phase Two coding.
 Kelly authorization. Do **not** mark Synthesis complete because CC-06 shipped.

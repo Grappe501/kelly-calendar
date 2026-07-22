@@ -50,3 +50,5 @@ Full build script retained in operator conversation / agent transcript; implemen
 ## Handoff
 
 **CC-08** remains grid-first scheduling workspace. Do not begin CC-08 during CC-07.
+
+**Phase Two (ADR-093):** IC-01…IC-12 vision is locked for post–CC-12. Architecture notes for geography/coverage/search overlays may be refined while building CC-07, but **no IC implementation** starts here.

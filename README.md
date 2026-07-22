@@ -17,9 +17,11 @@
 | CC-05 | **Complete** under ADR-090 — Synthesis remains **EMPTY** |
 | CC-06 | **Complete** — Conflict Engine (calendar slice) under Kelly ADR-092; Synthesis remains **EMPTY** |
 | CC-07 | **Design only** — not authorized for engineering |
+| Phase Two | **Vision locked** (ADR-093) — IC-01…IC-12 after CC-12; design during CC-07…CC-12 OK |
 | Candidate data | **Enabled for authorized roles** |
 | Communications OS | **Frozen** |
 | Roadmap | [`develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md`](develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md) |
+| Phase Two program | [`develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md`](develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md) |
 | Post-CC-05 direction | [`develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md`](develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md) |
 | Usability pass | [`develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md`](develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md) |
 | Synthesis | [`develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`](develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md) — **EMPTY** |

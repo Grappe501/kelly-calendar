@@ -86,11 +86,17 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 - ADR-090 Kelly CC-05-Only Waiver of Unfinished Usability Synthesis Gate (2026-07-22) — `KCCC_CC_05_WAIVER_KELLY_2026-07-22.md`
 - ADR-091 Post-CC-05 Operator Usability Pass 1 and Synthesis 1 remain required; Synthesis stays EMPTY (2026-07-22) — `KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md`
 - ADR-092 Kelly Authorization of CC-06 Conflict Engine Calendar Slice (2026-07-22) — `KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md`
+- ADR-093 Phase Two Intelligent Statewide Campaign Calendar Vision Locked After CC-12 (2026-07-22) — `KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md`
 
 ## CC-06 authorization
 
 Kelly **ADR-092** authorized **CC-06 only**; the calendar-slice build is now **COMPLETE** (validated, shipped). Operator Usability Synthesis 1 remains **EMPTY** / incomplete — still required as usability evidence, not satisfied by ADR-090 or ADR-092. **CC-07** is design-only until separately authorized (`KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md`).
 
+## Phase Two (after CC-12)
+
+**ADR-093** locks the Intelligent Statewide Campaign Calendar vision (**IC-01…IC-12**). Program: `KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md`.  
+CC-07…CC-12 remain the primary engineering sequence. Phase Two may be **designed** during those builds; **implementation waits until CC-12 completes**. Deterministic services own facts/authorization/consent/coverage/conflicts/permissible actions; AI explains and recommends within confirmation boundaries.
+
 ## CC-05 / CC-06 baseline & next engineering
 
-CC-05 and CC-06 are **COMPLETE**. No further engineering build is authorized — CC-07 remains design-only pending Synthesis review and separate Kelly authorization.
+CC-05 and CC-06 are **COMPLETE**. No further engineering build is authorized — CC-07 remains design-only pending Synthesis review and separate Kelly authorization. Phase Two is vision-locked only (ADR-093).

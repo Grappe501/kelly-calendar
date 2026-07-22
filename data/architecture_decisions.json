@@ -573,6 +573,14 @@
       "date": "2026-07-22",
       "decision": "Kelly explicitly authorizes Calendar Completion CC-06 Conflict Engine — Calendar Slice (detect/persist explainable conflicts; consume CC-03/CC-04/CC-05; operator queue and dispositions). Evidence: develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md. Separate from ADR-090. Usability Synthesis remains incomplete and must not be marked complete because of this authorization. CC-07 remains a separate deliverable.",
       "boundary": "CC-06 must never automatically move/cancel/confirm/archive/restore/delete Events; change Event status, recurrence, availability, Missions, Travel/Logistics/Field Ops/Staffing/Closeout/Launch; invent travel facts; mark ACKNOWLEDGED as resolved; resolve because an Event ended; or write to external providers. ACKNOWLEDGED does not clear a blocker."
+    },
+    {
+      "id": "ADR-093",
+      "title": "Phase Two Intelligent Statewide Campaign Calendar Vision Locked After CC-12",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly locks Phase Two (IC-01…IC-12) as the major post–Calendar Completion program: an intelligent statewide campaign operating calendar for Mission meaning, geographic/strategic gaps, volunteers/travel coordination, and mobile action. Evidence: develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md and develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md. CC-07…CC-12 remain intact and primary; Phase Two may be designed during those builds but must not be implemented until CC-12 completes. Deterministic services own facts/authorization/consent/coverage/conflicts/permissible actions; AI explains and recommends within confirmation boundaries.",
+      "boundary": "Does not authorize IC implementation, RedDirt/Mobilize write-back, auto Event/Mission/assignment/contact mutation, or marking Usability Synthesis complete. AI must not invent travel or silently decide geographic priorities."
     }
   ]
 }

@@ -15,8 +15,10 @@ Post-CC-05 direction (ADR-091): Usability Pass 1 + this Synthesis remain
 required and this document stays EMPTY until honestly filled from sessions.
 Kelly authorized CC-06 separately (ADR-092 /
 develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md).
-Do NOT mark this Synthesis complete because CC-05 shipped or because CC-06
-was authorized. CC-07 is design-only until separately authorized.
+Do NOT mark this Synthesis complete because CC-05 shipped, because CC-06
+was authorized, or because Phase Two (ADR-093 / IC-01…IC-12) was vision-locked.
+CC-07 is design-only until separately authorized. Phase Two implementation
+waits until CC-12 completes.
 ```
 
 ## Instructions

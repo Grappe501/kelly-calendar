@@ -10,12 +10,13 @@ Source:       Burt discovery assessment (Option C)
 Authority:    Steve acceptance of Burt defaults + sequencing adjustment
 Assessment:   develop_notes/KCCC_CALENDAR_COMPLETION_ASSESSMENT_BURT_2026-07-21.md
 Post-CC-05:   ADR-091 · develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md
+Phase Two:    ADR-093 · develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md
 ```
 
 ## Governing posture
 
 ```text
-Primary track ............... Calendar Completion (CC-01…CC-12)
+Primary track ............... Calendar Completion (CC-01…CC-12) — finish intact
 Standing rule ............... Every pass must improve correctness, usability,
                               interoperability, or operational reliability
                               (ADR-088). No neutral refactors / unrelated expansion.
@@ -23,17 +24,28 @@ Unrelated campaign expansion  PAUSED
 Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
-CC-01…CC-06 ................. COMPLETE (CC-05 via Kelly waiver ADR-090; CC-06 via Kelly ADR-092)
-CC-07 ........................ DESIGN ONLY — no engineering authorized
-Usability Synthesis 1 ....... EMPTY — not completed by ADR-090 or ADR-092; still required for evidence
-Next engineering build ....... NONE AUTHORIZED — CC-07 remains design-only pending Synthesis + separate authorization
+CC-01…CC-06 ................. COMPLETE (CC-05 via ADR-090; CC-06 via ADR-092)
+CC-07…CC-12 ................. Remain LOCKED sequence — finish before Phase Two code
+CC-07 ........................ DESIGN ONLY — no engineering authorized yet
+Usability Synthesis 1 ....... EMPTY — still required for evidence
+Phase Two (IC-01…IC-12) ..... VISION LOCKED (ADR-093) — design OK during CC-07…CC-12;
+                              implement ONLY after CC-12
+Next engineering build ....... NONE AUTHORIZED — CC-07 design-only until separately authorized
 CC-05 ship evidence ......... main@46a72c3 · deploy 6a60efa8f25804bc9b16f3f3
-CC-05 waiver ................ develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md
 CC-06 authorization ......... develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md
-CC-06 ship evidence ......... develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md (recorded on deploy)
+CC-06 ship evidence ......... develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md
+Phase Two vision ............ develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md
 ```
 
-This program finishes the **calendar product** before shifting attention to broader campaign functions. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090 or ADR-092 as Usability Synthesis completion, and does **not** authorize CC-07 engineering.
+This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090/092/093 as Usability Synthesis completion, does **not** authorize CC-07 engineering yet, and does **not** authorize IC-01…IC-12 coding before CC-12.
+
+### Phase Two preview (post–CC-12)
+
+Vision: an intelligent statewide campaign operating calendar — Mission meaning, geographic/strategic gaps, volunteers/travel coordination, mobile action — while remaining calendar-centered.
+
+Binding AI principle: deterministic services establish facts, authorization, consent, coverage, conflicts, and permissible actions; AI understands and explains within confirmation boundaries.
+
+Full program: `develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md` (IC-01…IC-12).
 
 ## Locked sequence (Option C)
 
@@ -45,12 +57,12 @@ This program finishes the **calendar product** before shifting attention to broa
 | **CC-04** | Recurrence & Occurrence Exceptions | XL | **COMPLETE** — Model B series + materialized Events; `rrule` |
 | **CC-05** | Standing Availability Inputs | L | **COMPLETE** — ship baseline `46a72c3` / `6a60efa8f25804bc9b16f3f3`; Synthesis remains EMPTY |
 | **CC-06** | Conflict Engine | XL | **COMPLETE** — Kelly ADR-092 (2026-07-22); calendar slice validated; Synthesis remains EMPTY |
-| **CC-07** | Unified Search, Filters & Saved Views | M | **DESIGN ONLY** — `KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md`; no engineering until separately authorized |
+| **CC-07** | Unified Search, Filters & Saved Views | M | **DESIGN ONLY** — implement after separate authorization; Phase Two design may proceed in parallel docs only |
 | **CC-08** | Advanced Day/Week Scheduling Workspace | L | Time grid first; drag-and-drop deferred |
 | **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | Parallel after core |
 | **CC-10** | ICS Export & Subscription Privacy | M | After CC-01; private signed feeds |
 | **CC-11** | Calendar Health Dashboard & Forensic Automation | M | Prefer after CC-02 |
-| **CC-12** | Mobile, Print Day Sheets & Accessibility | M | Prefer after CC-07/CC-08 |
+| **CC-12** | Mobile, Print Day Sheets & Accessibility | M | Prefer after CC-07/CC-08; **gate before Phase Two IC implementation** |
 
 ## Sequencing adjustment (binding)
 

@@ -87,6 +87,17 @@ export const CC_07_DESIGN_DOC =
 export const POST_CC05_DIRECTION_ADR = "ADR-091";
 export const POST_CC05_DIRECTION_DOC =
   "develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md";
+/** Phase Two vision locked (ADR-093) — implement only after CC-12. */
+export const PHASE_TWO_PROGRAM_ID =
+  "KCCC-PHASE-TWO-INTELLIGENT-STATEWIDE-CAMPAIGN-CALENDAR-1.0";
+export const PHASE_TWO_PROGRAM_STATUS = "VISION_LOCKED_NOT_AUTHORIZED";
+export const PHASE_TWO_VISION_ADR = "ADR-093";
+export const PHASE_TWO_VISION_DOC =
+  "develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md";
+export const PHASE_TWO_PROGRAM_DOC =
+  "develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md";
+export const PHASE_TWO_AI_PRINCIPLE =
+  "DETERMINISTIC_FACTS_AI_EXPLAINS_WITHIN_CONFIRMATION_BOUNDARIES";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
 /**
@@ -138,7 +149,8 @@ export const SCHEDULE_MUTATION_GOVERNING_RULE =
 /**
  * CC-06 (ADR-092) is COMPLETE. No further engineering build is authorized —
  * CC-07 remains DESIGN ONLY until separately authorized. Synthesis remains
- * EMPTY and is still required for usability evidence (ADR-091).
+ * EMPTY (ADR-091). Phase Two IC-01…IC-12 is VISION LOCKED (ADR-093) — design
+ * during CC-07…CC-12 is allowed; implementation waits until after CC-12.
  */
 export const NEXT_AUTHORIZED_BUILD = "NONE_AUTHORIZED_CC07_DESIGN_ONLY";
 export const CALENDAR_ROADMAP_DOC =
