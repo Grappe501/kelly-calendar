@@ -68,4 +68,17 @@ See `develop_notes/KCCC_CC_08_ADVANCED_DAY_WEEK_SCHEDULING_WORKSPACE_ROLLBACK.md
 
 ## Ship evidence
 
-(Filled at end of ship cycle.)
+| | |
+|--|--|
+| Feature commit | `7486aa9` |
+| Netlify deploy | `6a611dc19547e64f0fa7874d` |
+| Live URL | https://kelly-calendar.netlify.app |
+| Validator | `calendar:scheduling-workspace:validate` — 102 passed |
+| Layout unit tests | 14 passed |
+| CC-03…CC-07 regressions | green |
+| Typecheck | green |
+| Production build | green |
+| Migration | none (layout prefs via CC-07 query/saved-view keys) |
+| Viewing mutations | 0 (layout pure; no Event create from grid render) |
+
+CC-07 closeout preserved: commit `a630c8c` · deploy `6a61167b80d9714ef4541631`.

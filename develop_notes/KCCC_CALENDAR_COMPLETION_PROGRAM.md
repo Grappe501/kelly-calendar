@@ -34,7 +34,7 @@ Standing execution .......... ADR-094 — approved scripts run full ship cycle w
 Next engineering build ....... CC-09 (not authorized by CC-08) — design handoff only
 CC-07 ship evidence ......... commit a630c8c · evidence fa46ae6 · deploy 6a61167b80d9714ef4541631
 CC-07 migration ............. 20260722140000_cc07_saved_views_query_contract · query-schema v1
-CC-08 ship evidence ......... (see impl doc — filled at ship)
+CC-08 ship evidence ......... commit 7486aa9 · deploy 6a611dc19547e64f0fa7874d
 CC-08 migration ............. none (layout prefs via CC-07 query/saved-view keys)
 CC-08 authorization ......... develop_notes/KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md
 CC-07 authorization ......... develop_notes/KCCC_CC_07_AUTHORIZATION_KELLY_2026-07-22.md

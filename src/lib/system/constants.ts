@@ -188,6 +188,8 @@ export const CALENDAR_DAY_WEEK_OPERATOR_GUIDE_DOC =
   "develop_notes/KCCC_CALENDAR_DAY_WEEK_OPERATOR_GUIDE.md";
 export const CC_07_SHIP_COMMIT = "a630c8c";
 export const CC_07_SHIP_DEPLOY_ID = "6a61167b80d9714ef4541631";
+export const CC_08_SHIP_COMMIT = "7486aa9";
+export const CC_08_SHIP_DEPLOY_ID = "6a611dc19547e64f0fa7874d";
 export const CC_09_STATUS = "NOT_AUTHORIZED";
 export const CC_07_IMPL_DOC =
   "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS.md";
