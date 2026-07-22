@@ -1,0 +1,113 @@
+{
+  "pass": "FALL-OPERATOR-BATCH-2026",
+  "events": [
+    {
+      "key": "travel-bentonville-little-flock-2026-09-27",
+      "eventNumber": "KCCC-2026-0206",
+      "status": "HOLD"
+    },
+    {
+      "key": "little-flock-picnic-2026-09-27",
+      "eventNumber": "KCCC-2026-0207",
+      "status": "HOLD"
+    },
+    {
+      "key": "hot-springs-candidate-forum-2026-09-29",
+      "eventNumber": "KCCC-2026-0208",
+      "status": "HOLD"
+    },
+    {
+      "key": "van-buren-moonshine-music-2026-10-03",
+      "eventNumber": "KCCC-2026-0209",
+      "status": "HOLD"
+    },
+    {
+      "key": "milestone-voter-registration-ends-2026-10-05",
+      "eventNumber": "KCCC-2026-0210",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "travel-mountain-home-baxter-2026-10-05",
+      "eventNumber": "KCCC-2026-0211",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-mountain-home-2026-10-05",
+      "eventNumber": "KCCC-2026-0212",
+      "status": "HOLD"
+    },
+    {
+      "key": "decision-oct10-triple-conflict-2026-10-10",
+      "eventNumber": "KCCC-2026-0213",
+      "status": "HOLD"
+    },
+    {
+      "key": "montgomery-county-event-2026-10-10",
+      "eventNumber": "KCCC-2026-0214",
+      "status": "HOLD"
+    },
+    {
+      "key": "turkey-drop-yellville-2026-10-10",
+      "eventNumber": "KCCC-2026-0215",
+      "status": "HOLD"
+    },
+    {
+      "key": "saline-old-fashioned-days-2026-10-10",
+      "eventNumber": "KCCC-2026-0216",
+      "status": "HOLD"
+    },
+    {
+      "key": "saline-county-2026-10-12",
+      "eventNumber": "KCCC-2026-0217",
+      "status": "HOLD"
+    },
+    {
+      "key": "stuttgart-event-2026-10-17",
+      "eventNumber": "KCCC-2026-0218",
+      "status": "HOLD"
+    },
+    {
+      "key": "flatrock-fish-fry-2026-10-17",
+      "eventNumber": "KCCC-2026-0219",
+      "status": "HOLD"
+    },
+    {
+      "key": "milestone-early-voting-begins-2026-10-19",
+      "eventNumber": "KCCC-2026-0220",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "central-ar-car-show-parade-2026-11-01",
+      "eventNumber": "KCCC-2026-0221",
+      "status": "HOLD"
+    },
+    {
+      "key": "milestone-election-day-2026-11-03",
+      "eventNumber": "KCCC-2026-0222",
+      "status": "CONFIRMED"
+    }
+  ],
+  "updates": [
+    {
+      "key": "goat-festival-perryville-2026-10-03",
+      "eventNumber": "KCCC-2026-0167",
+      "change": "hours → 09:00–12:00"
+    },
+    {
+      "key": "baxter-farm-bureau-2026-10-06",
+      "eventNumber": "KCCC-2026-0073",
+      "change": "6:00–9:00 PM + travel day before"
+    }
+  ],
+  "conflictsSurfaced": [
+    "Oct 10: Montgomery ∩ Yellville Turkey Drop ∩ Saline Old Fashioned Days",
+    "Oct 3: Goat Festival AM ∩ Van Buren Moonshine & Music PM (drive required)",
+    "Oct 17 assumed for Stuttgart + Flatrock (operator omitted date)"
+  ],
+  "openDecisions": [
+    "Navigate Oct 10 three-way geography (Kelly cannot cover all three alone).",
+    "Confirm Flatrock fish fry clock (typed %pm) and Saturday date (assumed Oct 17).",
+    "Confirm Little Flock picnic exact venue/time.",
+    "Confirm Hot Springs Sep 29 forum details."
+  ]
+}
