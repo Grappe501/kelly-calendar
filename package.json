@@ -121,6 +121,7 @@
     "calendar:availability:validate": "node scripts/validate-calendar-availability.mjs",
     "calendar:conflicts:validate": "node scripts/validate-calendar-conflicts.mjs",
     "calendar:search:validate": "node scripts/validate-calendar-search.mjs",
+    "calendar:scheduling-workspace:validate": "node scripts/validate-calendar-scheduling-workspace.mjs",
     "import:preview": "node scripts/preview-google-calendar-import.mjs",
     "import:preview:private-ical": "node scripts/run-with-h-drive-env.cjs node scripts/preview-private-ical-import.mjs",
     "import:staging:validate": "node scripts/validate-import-staging.mjs",

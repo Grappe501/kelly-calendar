@@ -37,6 +37,14 @@ const PRESERVE_KEYS = [
   "relativeDateMode",
   "forwardDays",
   "schemaVersion",
+  "layoutVisibleStartHour",
+  "layoutVisibleEndHour",
+  "layoutDensity",
+  "layoutShowWeekends",
+  "layoutAllDayExpanded",
+  "layoutShowAvailability",
+  "layoutShowConflicts",
+  "layoutWorkweekOnly",
 ] as const;
 
 type Props = {

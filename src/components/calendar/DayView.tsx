@@ -1,10 +1,7 @@
-import Link from "next/link";
-import { MissionCardView } from "@/components/today/MissionCardView";
+import { Suspense } from "react";
+import { SchedulingDayWorkspace } from "@/components/calendar/scheduling/SchedulingDayWorkspace";
 import type { CalendarDayViewData } from "@/server/services/calendar-day-view-service";
-import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
-import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
-import { CalendarSearchChromeHost } from "@/components/calendar/search/CalendarSearchChromeHost";
-import { dayMembershipKind } from "@/lib/calendar/temporal";
+import { eventSheetHref } from "@/lib/calendar/event-sheet-href";
 
 function formatDayLabel(dateKey: string): string {
   const [y, m, d] = dateKey.split("-").map(Number);
@@ -18,182 +15,42 @@ function formatDayLabel(dateKey: string): string {
   }).format(utc);
 }
 
-function formatClock(iso: string, timeZone: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    timeZone,
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(iso));
-}
-
-function calendarTone(type: string): string {
-  const t = type.toUpperCase();
-  if (t.includes("TRAVEL")) return "tone-travel";
-  if (t.includes("FIELD") || t.includes("COUNTY")) return "tone-field";
-  if (t.includes("FUNDRAIS")) return "tone-fundraising";
-  if (t.includes("PROTECT") || t.includes("PERSONAL")) return "tone-personal";
-  if (t.includes("PUBLIC") || t.includes("EVENT")) return "tone-public";
-  return "tone-default";
-}
-
 type Props = {
   data: CalendarDayViewData;
   focusEventId?: string | null;
 };
 
+/**
+ * CC-08 Day scheduling workspace — time grid (no drag/resize).
+ */
 export function DayView({ data, focusEventId = null }: Props) {
   const label = formatDayLabel(data.dateKey);
-  const { readiness } = data;
-  const readinessLabel =
-    readiness.missionCount === 0
-      ? "No missions"
-      : readiness.blockedCount > 0
-        ? "Blocked"
-        : readiness.needsAttentionCount > 0
-          ? "Needs attention"
-          : readiness.unknownCount > 0
-            ? "Unknown present"
-            : "Ready";
+  const events = data.schedule.map((event) => ({
+    eventId: event.eventId,
+    title: event.title,
+    startsAt: event.startsAt,
+    endsAt: event.endsAt,
+    allDay: Boolean(event.allDay),
+    status: event.status,
+    calendarName: event.primaryCalendar?.name,
+    locationLabel: event.location?.label ?? null,
+    missionId: event.missionId,
+    href: eventSheetHref(event.eventId),
+  }));
 
   return (
-    <div className="page-stack calendar-day-view">
-      <header className="page-header calendar-hero">
-        <p className="calendar-kicker">{data.isToday ? "Today’s schedule" : "Day schedule"}</p>
-        <h1>{label}</h1>
-        <p className="executive-question">{data.executiveQuestion}</p>
-      </header>
-
-      <CalendarViewSwitcher active="day" dateKey={data.dateKey} />
-      <CalendarSearchChromeHost compact />
-      <CalendarDateNav
+    <Suspense fallback={<div className="muted">Loading day grid…</div>}>
+      <SchedulingDayWorkspace
         dateKey={data.dateKey}
-        view="day"
-        label={label}
+        timezone={data.timezone}
         isToday={data.isToday}
+        label={label}
+        executiveQuestion={data.executiveQuestion}
+        events={events}
+        conflicts={data.conflicts}
+        focusEventId={focusEventId}
+        cataloguePartial={data.cataloguePartial}
       />
-
-      <section className="panel panel-hero" aria-labelledby="day-schedule-heading">
-        <div className="panel-hero-head">
-          <h2 id="day-schedule-heading">Schedule</h2>
-          <span className={`status-pill status-${readinessLabel.toLowerCase().replace(/\s+/g, "-")}`}>
-            {readinessLabel}
-          </span>
-        </div>
-        {data.schedule.length === 0 ? (
-          <p className="muted">No events for this day. Add one from Upload.</p>
-        ) : (
-          <ol className="calendar-day-schedule">
-            {data.schedule.map((event) => {
-              const kind = dayMembershipKind({
-                startsAt: event.startsAt,
-                endsAt: event.endsAt,
-                isAllDay: Boolean(event.allDay),
-                dateKey: data.dateKey,
-              });
-              const timeLabel = event.allDay
-                ? "All day"
-                : kind === "continues"
-                  ? `Continues · started ${formatClock(event.startsAt, data.timezone)}`
-                  : kind === "ends"
-                    ? `${formatClock(event.startsAt, data.timezone)} – ends ${formatClock(event.endsAt, data.timezone)}`
-                    : `${formatClock(event.startsAt, data.timezone)} – ${formatClock(event.endsAt, data.timezone)}`;
-              return (
-              <li
-                key={event.eventId}
-                className={`schedule-event-card ${calendarTone(event.primaryCalendar.type)}${
-                  focusEventId && event.eventId === focusEventId
-                    ? " calendar-event-focused"
-                    : ""
-                }`}
-              >
-                <Link
-                  href={`/events/${event.eventId}`}
-                  className="schedule-event-link"
-                  aria-label={
-                    kind === "continues" || kind === "ends"
-                      ? `${event.title}, ${kind === "continues" ? "continues from earlier" : "ends today"}`
-                      : event.title
-                  }
-                >
-                  <time dateTime={event.startsAt}>{timeLabel}</time>
-                  <div>
-                    <strong className="schedule-event-title">{event.title}</strong>
-                    <p className="muted">
-                      {event.primaryCalendar.name}
-                      {kind === "continues" ? " · Continues" : ""}
-                      {kind === "ends" ? " · Ends today" : ""}
-                      {event.location?.label ? ` · ${event.location.label}` : ""}
-                    </p>
-                    {event.travel?.departureAt || event.travel?.travelRequired ? (
-                      <p className="muted">
-                        Travel{" "}
-                        {event.travel.departureAt
-                          ? `leave ${formatClock(event.travel.departureAt, data.timezone)}`
-                          : "required"}
-                      </p>
-                    ) : null}
-                  </div>
-                </Link>
-              </li>
-              );
-            })}
-          </ol>
-        )}
-      </section>
-
-      <section className="panel" aria-labelledby="day-missions-heading">
-        <h2 id="day-missions-heading">Missions</h2>
-        {data.missions.length === 0 ? (
-          <p className="muted">No missions for this day.</p>
-        ) : (
-          <div className="mission-stack">
-            {data.missions.map((mission) => (
-              <MissionCardView key={mission.missionId} mission={mission} />
-            ))}
-          </div>
-        )}
-      </section>
-
-      {data.conflicts.length > 0 ? (
-        <section className="panel panel-alert" aria-labelledby="day-conflicts-heading">
-          <h2 id="day-conflicts-heading">Conflicts</h2>
-          <ul className="conflict-list">
-            {data.conflicts.map((c) => (
-              <li key={c.id}>
-                <strong>{c.primaryEntity.label}</strong>
-                {c.relatedEntity ? (
-                  <span className="muted"> ∩ {c.relatedEntity.label}</span>
-                ) : null}
-                <p className="muted">{c.explanation}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      <details className="panel calendar-more-tools">
-        <summary>Briefing &amp; day tools</summary>
-        <div className="button-row tools-grid">
-          <Link className="button secondary" href={`/system/briefing/${data.dateKey}`}>
-            Day briefing
-          </Link>
-          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/launch`}>
-            Morning launch
-          </Link>
-          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/movement`}>
-            Movement
-          </Link>
-          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/logistics`}>
-            Logistics
-          </Link>
-          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/field-ops`}>
-            Field ops
-          </Link>
-          <Link className="button secondary" href="/upload">
-            Upload / add
-          </Link>
-        </div>
-      </details>
-    </div>
+    </Suspense>
   );
 }

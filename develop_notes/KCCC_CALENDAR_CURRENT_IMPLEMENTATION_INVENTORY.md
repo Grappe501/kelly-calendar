@@ -32,8 +32,10 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Event editing | PARTIAL | `/api/events/[eventId]` mutations | Same | Step 11 |
 | Event cancellation | PARTIAL | Archive/restore paths (soft) | Product cancel UX incomplete | Step 11 cancel/reschedule flows |
 | Recurring events | COMPLETE (CC-04) | Series + exceptions + materialized Events; `/calendar/series/[id]` | Horizon extension is explicit | CC-05 gated |
-| Day view | PARTIAL | `/calendar?view=day` + day-view service | Candidate-data; polish | Step 10 |
-| Week view | PARTIAL | `/calendar?view=week` | Same | Step 10 |
+| Day view | COMPLETE (CC-08) | `/calendar?view=day` time grid | Grid-first ADR-096; no drag/resize | CC-12 a11y polish |
+| Week view | COMPLETE (CC-08) | `/calendar?view=week` multi-column grid | Same | CC-12 |
+| Search/filters/saved views | COMPLETE (CC-07) | query-schema v1 · `a630c8c` · deploy `6a61167b80d9714ef4541631` | N/A | CC-07 |
+
 | Month view | PARTIAL | `/calendar?view=month` | Same | Step 10 |
 | Agenda view | COMPLETE (CC-03) | Campaign-local occupied days; continuation labels | N/A | CC-04 recurrence |
 | Day/Week/Month membership | COMPLETE (CC-03) | Interval ∩ day; overnight/multi-day visible | N/A | Polish in CC-08 |

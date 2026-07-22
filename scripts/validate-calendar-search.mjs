@@ -129,8 +129,15 @@ if (constants.includes('CC_07_STATUS = "COMPLETE"') || constants.includes('CC_07
 if (constants.includes("ADR-094") || constants.includes("STANDING_KELLY_EXECUTION_ADR")) {
   pass("standing execution ADR referenced");
 } else fail("standing execution ADR missing from constants");
-if (constants.includes('CC_08_STATUS = "NOT_AUTHORIZED"')) pass("CC_08 not authorized");
-else fail("CC_08 must remain not authorized");
+// After CC-08 ships, CC-09 remains locked until separately authorized.
+if (
+  constants.includes('CC_09_STATUS = "NOT_AUTHORIZED"') ||
+  constants.includes('CC_08_STATUS = "NOT_AUTHORIZED"')
+) {
+  pass("next Calendar Completion build remains gated");
+} else {
+  fail("CC-09 (or pre-CC-08 lock) must remain not authorized");
+}
 
 console.log(`\nCC-07 search validator: ${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

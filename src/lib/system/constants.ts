@@ -169,10 +169,26 @@ export const SCHEDULE_MUTATION_GOVERNING_RULE =
  * Phase Two IC-01…IC-12 is VISION LOCKED (ADR-093) — design during CC-07…CC-12
  * is allowed; implementation waits until after CC-12.
  */
-export const NEXT_AUTHORIZED_BUILD = "NONE_AUTHORIZED_WAITING_CC08_SCRIPT";
-export const CC_08_STATUS = "NOT_AUTHORIZED";
+export const NEXT_AUTHORIZED_BUILD = "CC_09_NOT_AUTHORIZED";
+export const CC_08_STATUS = "COMPLETE";
+export const CC_08_BUILD_ID =
+  "KCCC-CC-08-ADVANCED-DAY-WEEK-SCHEDULING-WORKSPACE-1.0";
+export const CC_08_AUTHORIZATION_ADR = "ADR-096";
+export const CC_08_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md";
 export const CC_08_DESIGN_NOTE =
-  "Advanced Day/Week Scheduling Workspace — design handoff after CC-07 only";
+  "Advanced Day/Week Scheduling Workspace — grid-first; no drag/resize";
+export const CC_08_IMPL_DOC =
+  "develop_notes/KCCC_CC_08_ADVANCED_DAY_WEEK_SCHEDULING_WORKSPACE.md";
+export const CC_08_ROLLBACK_DOC =
+  "develop_notes/KCCC_CC_08_ADVANCED_DAY_WEEK_SCHEDULING_WORKSPACE_ROLLBACK.md";
+export const CALENDAR_SCHEDULING_WORKSPACE_DOCTRINE_DOC =
+  "develop_notes/KCCC_CALENDAR_SCHEDULING_WORKSPACE_DOCTRINE.md";
+export const CALENDAR_DAY_WEEK_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_CALENDAR_DAY_WEEK_OPERATOR_GUIDE.md";
+export const CC_07_SHIP_COMMIT = "a630c8c";
+export const CC_07_SHIP_DEPLOY_ID = "6a61167b80d9714ef4541631";
+export const CC_09_STATUS = "NOT_AUTHORIZED";
 export const CC_07_IMPL_DOC =
   "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS.md";
 export const CC_07_ROLLBACK_DOC =

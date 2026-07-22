@@ -597,6 +597,14 @@
       "date": "2026-07-22",
       "decision": "Kelly explicitly authorizes Calendar Completion CC-07 Unified Search, Filters, and Saved Views (permission-aware query contract, consistent filters, bookmarkable state, private/campaign-shared/role-restricted saved views; read-only CC-05/CC-06 consumption). Evidence: develop_notes/KCCC_CC_07_AUTHORIZATION_KELLY_2026-07-22.md. Standing ship-cycle execution under ADR-094. Usability Synthesis remains incomplete.",
       "boundary": "Must not implement CC-08 grid/drag/resize, bulk Event mutation, ICS/push/AI/RedDirt/Mobilize/volunteer/Phase Two features, or mutate Events/Missions/availability/conflicts/recurrence/imports/external systems from search/filter/saved-view reads."
+    },
+    {
+      "id": "ADR-096",
+      "title": "Kelly Authorization of CC-08 Advanced Day/Week Scheduling Workspace",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly explicitly authorizes Calendar Completion CC-08 Advanced Day/Week Scheduling Workspace (grid-first Day/Week; all-day lane; deterministic overlap layout; CC-05/CC-06 overlays; Event inspector; intentional slot creation; CC-07 query integration). Evidence: develop_notes/KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md. CC-07 accepted complete at a630c8c / deploy 6a61167b80d9714ef4541631. Standing execution under ADR-094. Usability Synthesis remains incomplete.",
+      "boundary": "Must not implement drag-and-drop or resize mutation, bulk operations (CC-09), ICS/push/AI/RedDirt/volunteer/Phase Two features, or view-triggered Event/Mission/availability/conflict mutations. Intentional create/edit only via canonical Event services."
     }
   ]
 }

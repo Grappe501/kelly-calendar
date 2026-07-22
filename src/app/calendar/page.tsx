@@ -16,6 +16,10 @@ import { resolveMissionDeepLink } from "@/server/services/mission-deep-link-serv
 import { searchCalendarEvents } from "@/server/services/calendar-search-service";
 import { getSavedViewForActor } from "@/server/services/calendar-saved-view-service";
 import { serializeCalendarQuery } from "@/lib/calendar/search";
+import {
+  shiftChicagoDateKey,
+  startOfWeekDateKey,
+} from "@/lib/calendar/chicago-date";
 
 export const metadata: Metadata = {
   title: "Calendar",
@@ -122,8 +126,14 @@ export default async function CalendarPage({
       }
     }
     if (!raw.dateFrom && date) {
-      raw.dateFrom = date;
-      raw.dateTo = date;
+      if (view === "week") {
+        const weekStart = startOfWeekDateKey(date);
+        raw.dateFrom = weekStart;
+        raw.dateTo = shiftChicagoDateKey(weekStart, 6);
+      } else {
+        raw.dateFrom = date;
+        raw.dateTo = date;
+      }
       if (view === "agenda") {
         raw.relativeDateMode = "NEXT_N_DAYS";
       }
@@ -155,11 +165,21 @@ export default async function CalendarPage({
 
   if (view === "week") {
     const data = await getCalendarWeekViewData(actor, date);
+    const filtered = allowedEventIds
+      ? {
+          ...data,
+          days: data.days.map((day) => ({
+            ...day,
+            events: day.events.filter((e) => allowedEventIds!.has(e.eventId)),
+          })),
+          cataloguePartial: data.cataloguePartial || serverFiltered,
+        }
+      : data;
     return (
       <>
         {banner}
         <Suspense>
-          <WeekView data={data} focusEventId={focusEventId} />
+          <WeekView data={filtered} focusEventId={focusEventId} />
         </Suspense>
       </>
     );
@@ -188,11 +208,18 @@ export default async function CalendarPage({
   }
 
   const data = await getCalendarDayViewData(actor, date);
+  const dayFiltered = allowedEventIds
+    ? {
+        ...data,
+        schedule: data.schedule.filter((e) => allowedEventIds!.has(e.eventId)),
+        cataloguePartial: data.cataloguePartial || serverFiltered,
+      }
+    : data;
   return (
     <>
       {banner}
       <Suspense>
-        <DayView data={data} focusEventId={focusEventId} />
+        <DayView data={dayFiltered} focusEventId={focusEventId} />
       </Suspense>
     </>
   );

@@ -24,30 +24,25 @@ Unrelated campaign expansion  PAUSED
 Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
-CC-01…CC-06 ................. COMPLETE (CC-05 via ADR-090; CC-06 via ADR-092)
-CC-07 ........................ COMPLETE (ADR-095 · standing ADR-094)
-CC-08…CC-12 .................. Remain LOCKED sequence — next is CC-08 (separate script)
+CC-01…CC-08 ................. COMPLETE (CC-08 ADR-096)
+CC-09…CC-12 .................. Remain LOCKED — not absorbed by CC-08
 Usability Synthesis 1 ....... EMPTY — still required for evidence
 Phase Two (IC-01…IC-12) ..... VISION LOCKED (ADR-093) — design OK during CC-07…CC-12;
                               implement ONLY after CC-12 + usability/AI-quality gate + IC auth
 Protected sequence .......... CC-07→08→09→10→11→12 → usability/AI-quality gate → IC auth
-CC-07…CC-12 extension points  Allowed (query contracts, tokens, mobile-safe layouts,
-                              provider-neutral interfaces, geographic identifiers)
-CC-07…CC-12 hard stop ....... No hidden Phase Two features; no widened data collection
 Standing execution .......... ADR-094 — approved scripts run full ship cycle without routine asks
-Next engineering build ....... NONE — waiting on separate CC-08 script
-Authoritative tip ............ main @ 68d6476 (Kelly-confirmed posture)
-Posture lock commit .......... 203bfe3 (protected sequence + extension boundary)
-CC-05 ship evidence ......... main@46a72c3 · deploy 6a60efa8f25804bc9b16f3f3
-CC-06 authorization ......... develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md
-CC-06 ship evidence ......... develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md
+Next engineering build ....... CC-09 (not authorized by CC-08) — design handoff only
+CC-07 ship evidence ......... commit a630c8c · evidence fa46ae6 · deploy 6a61167b80d9714ef4541631
+CC-07 migration ............. 20260722140000_cc07_saved_views_query_contract · query-schema v1
+CC-08 ship evidence ......... (see impl doc — filled at ship)
+CC-08 migration ............. none (layout prefs via CC-07 query/saved-view keys)
+CC-08 authorization ......... develop_notes/KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md
 CC-07 authorization ......... develop_notes/KCCC_CC_07_AUTHORIZATION_KELLY_2026-07-22.md
-CC-07 ship evidence ......... develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS.md
 Standing Kelly auth ......... develop_notes/KCCC_STANDING_KELLY_EXECUTION_AUTHORIZATION_2026-07-22.md
 Phase Two vision ............ develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md
 ```
 
-This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090/092/093/094/095 as Usability Synthesis completion, does **not** authorize CC-08 engineering as part of CC-07, and does **not** authorize IC-01…IC-12 coding before CC-12 plus the usability/AI-quality gate and separate IC authorization.### Phase Two preview (post–CC-12)
+This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090/092/093/094/095/096 as Usability Synthesis completion, does **not** authorize CC-09 engineering as part of CC-08, and does **not** authorize IC-01…IC-12 coding before CC-12 plus the usability/AI-quality gate and separate IC authorization.### Phase Two preview (post–CC-12)
 
 Vision: an intelligent statewide campaign operating calendar — Mission meaning, geographic/strategic gaps, volunteers/travel coordination, mobile action — while remaining calendar-centered.
 
@@ -65,9 +60,9 @@ Full program: `develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALEN
 | **CC-04** | Recurrence & Occurrence Exceptions | XL | **COMPLETE** — Model B series + materialized Events; `rrule` |
 | **CC-05** | Standing Availability Inputs | L | **COMPLETE** — ship baseline `46a72c3` / `6a60efa8f25804bc9b16f3f3`; Synthesis remains EMPTY |
 | **CC-06** | Conflict Engine | XL | **COMPLETE** — Kelly ADR-092 (2026-07-22); calendar slice validated; Synthesis remains EMPTY |
-| **CC-07** | Unified Search, Filters & Saved Views | M | **DESIGN ONLY** — implement after separate authorization; Phase Two design may proceed in parallel docs only |
-| **CC-08** | Advanced Day/Week Scheduling Workspace | L | Time grid first; drag-and-drop deferred |
-| **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | Parallel after core |
+| **CC-07** | Unified Search, Filters & Saved Views | M | **COMPLETE** — ADR-095; ship `a630c8c` / deploy `6a61167b80d9714ef4541631`; query-schema v1 |
+| **CC-08** | Advanced Day/Week Scheduling Workspace | L | **COMPLETE** — ADR-096; grid-first Day/Week; no drag/resize; no schema migration |
+| **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | Not authorized by CC-08 — design handoff only |
 | **CC-10** | ICS Export & Subscription Privacy | M | After CC-01; private signed feeds |
 | **CC-11** | Calendar Health Dashboard & Forensic Automation | M | Prefer after CC-02 |
 | **CC-12** | Mobile, Print Day Sheets & Accessibility | M | Prefer after CC-07/CC-08; **gate before Phase Two IC implementation** |
