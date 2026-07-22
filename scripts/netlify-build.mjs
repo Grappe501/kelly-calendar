@@ -26,9 +26,14 @@ function run(label, args) {
   }
 }
 
-if (!process.env.NODE_OPTIONS?.includes("max-old-space-size")) {
-  // Local `netlify deploy --build` on Windows routinely peaks above 4GB for this app.
-  process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=8192"]
+// Local `netlify deploy --build` on Windows routinely peaks above 4GB.
+// Force 8192 even when the H-drive wrapper already set a lower max-old-space-size.
+{
+  const withoutHeap = String(process.env.NODE_OPTIONS ?? "")
+    .split(/\s+/)
+    .filter((part) => part && !part.includes("max-old-space-size"))
+    .join(" ");
+  process.env.NODE_OPTIONS = [withoutHeap, "--max-old-space-size=8192"]
     .filter(Boolean)
     .join(" ");
 }
