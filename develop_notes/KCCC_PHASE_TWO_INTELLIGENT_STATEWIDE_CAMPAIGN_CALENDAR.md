@@ -18,10 +18,22 @@ Keep the product **calendar-centered**. Do not turn operational pages into campa
 ## Sequencing rule (binding)
 
 ```text
+Protected sequence:
+  CC-07 → CC-08 → CC-09 → CC-10 → CC-11 → CC-12
+  → usability / AI-quality gate
+  → IC phase authorization
+  → IC-01…IC-12
+
 Finish CC-07 → CC-12 first (Calendar Completion remains primary)
 Design IC architecture during those builds is allowed
-Implement IC-01…IC-12 only after CC-12 exits
+Clean extension points during CC-07…CC-12 are allowed
+  (query contracts, design tokens, mobile-safe layouts,
+   provider-neutral interfaces, geographic identifiers)
+Forbidden during CC-07…CC-12:
+  hidden Phase Two features · widened data collection
+Implement IC-01…IC-12 only after CC-12 + gate + separate IC auth
 Do not destabilize the calendar by premature Phase Two coding
+Next engineering requires separate CC-07 authorization
 ```
 
 ## Long-range sequence

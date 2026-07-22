@@ -87,7 +87,11 @@ export const CC_07_DESIGN_DOC =
 export const POST_CC05_DIRECTION_ADR = "ADR-091";
 export const POST_CC05_DIRECTION_DOC =
   "develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md";
-/** Phase Two vision locked (ADR-093) — implement only after CC-12. */
+/**
+ * Phase Two vision locked (ADR-093).
+ * Protected: CC-07→12 → usability/AI-quality gate → IC auth → IC-01…IC-12.
+ * During CC-07…CC-12: clean extension points only; no hidden Phase Two features.
+ */
 export const PHASE_TWO_PROGRAM_ID =
   "KCCC-PHASE-TWO-INTELLIGENT-STATEWIDE-CAMPAIGN-CALENDAR-1.0";
 export const PHASE_TWO_PROGRAM_STATUS = "VISION_LOCKED_NOT_AUTHORIZED";
@@ -96,8 +100,11 @@ export const PHASE_TWO_VISION_DOC =
   "develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md";
 export const PHASE_TWO_PROGRAM_DOC =
   "develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md";
+export const PHASE_TWO_PROTECTED_SEQUENCE =
+  "CC-07→CC-08→CC-09→CC-10→CC-11→CC-12→usability_ai_quality_gate→IC_phase_authorization";
 export const PHASE_TWO_AI_PRINCIPLE =
   "DETERMINISTIC_FACTS_AI_EXPLAINS_WITHIN_CONFIRMATION_BOUNDARIES";
+export const AUTHORITATIVE_TIP_COMMIT = "68d6476";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
 /**

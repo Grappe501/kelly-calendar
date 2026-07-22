@@ -26,19 +26,23 @@ LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
 CC-01…CC-06 ................. COMPLETE (CC-05 via ADR-090; CC-06 via ADR-092)
 CC-07…CC-12 ................. Remain LOCKED sequence — finish before Phase Two code
-CC-07 ........................ DESIGN ONLY — no engineering authorized yet
+CC-07 ........................ DESIGN ONLY — unauthorized until separate Kelly authorization
 Usability Synthesis 1 ....... EMPTY — still required for evidence
 Phase Two (IC-01…IC-12) ..... VISION LOCKED (ADR-093) — design OK during CC-07…CC-12;
-                              implement ONLY after CC-12
-Next engineering build ....... NONE AUTHORIZED — CC-07 design-only until separately authorized
+                              implement ONLY after CC-12 + usability/AI-quality gate + IC auth
+Protected sequence .......... CC-07→08→09→10→11→12 → usability/AI-quality gate → IC auth
+CC-07…CC-12 extension points  Allowed (query contracts, tokens, mobile-safe layouts,
+                              provider-neutral interfaces, geographic identifiers)
+CC-07…CC-12 hard stop ....... No hidden Phase Two features; no widened data collection
+Next engineering build ....... NONE AUTHORIZED — waiting on separate CC-07 authorization
+Authoritative tip ............ main @ 68d6476
 CC-05 ship evidence ......... main@46a72c3 · deploy 6a60efa8f25804bc9b16f3f3
 CC-06 authorization ......... develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md
 CC-06 ship evidence ......... develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md
 Phase Two vision ............ develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md
 ```
 
-This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090/092/093 as Usability Synthesis completion, does **not** authorize CC-07 engineering yet, and does **not** authorize IC-01…IC-12 coding before CC-12.
-
+This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090/092/093 as Usability Synthesis completion, does **not** authorize CC-07 engineering yet, and does **not** authorize IC-01…IC-12 coding before CC-12 plus the usability/AI-quality gate and separate IC authorization.
 ### Phase Two preview (post–CC-12)
 
 Vision: an intelligent statewide campaign operating calendar — Mission meaning, geographic/strategic gaps, volunteers/travel coordination, mobile action — while remaining calendar-centered.
