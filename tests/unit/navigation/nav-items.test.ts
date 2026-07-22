@@ -12,16 +12,19 @@ describe("Step 6 bottom nav contract", () => {
     ]);
   });
 
-  it("marks Add as prominent", () => {
+  it("marks Add as prominent and points at the upload hub", () => {
     const add = BOTTOM_NAV_ITEMS.find((i) => i.id === "add");
     expect(add?.prominent).toBe(true);
-    expect(add?.href).toBe("/add");
+    expect(add?.href).toBe("/upload");
   });
 
   it("resolves active ids for shell routes", () => {
     expect(resolveActiveNavId("/")).toBe("today");
     expect(resolveActiveNavId("/calendar")).toBe("calendar");
     expect(resolveActiveNavId("/add/quick")).toBe("add");
+    expect(resolveActiveNavId("/upload")).toBe("add");
+    expect(resolveActiveNavId("/import/google-calendar")).toBe("add");
+    expect(resolveActiveNavId("/events/abc")).toBe("calendar");
     expect(resolveActiveNavId("/search")).toBe("search");
     expect(resolveActiveNavId("/more")).toBe("more");
     expect(resolveActiveNavId("/system/status")).toBe("more");

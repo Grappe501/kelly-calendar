@@ -140,7 +140,7 @@ export function DayView({ data, focusEventId = null }: Props) {
                 </time>
                 <div>
                   <span>
-                    <Link href={`/events/${event.eventId}/edit`}>{event.title}</Link>
+                    <Link href={`/events/${event.eventId}`}>{event.title}</Link>
                   </span>
                   <p className="muted">
                     {event.primaryCalendar.name}

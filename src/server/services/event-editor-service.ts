@@ -40,6 +40,7 @@ export type EventEditorPayload = {
   prepActions: Array<{ id: string; title: string; phase: string; status: string }>;
   followUps: Array<{ id: string; title: string; status: string }>;
   staff: Array<{ id: string; roleType: string; label: string | null }>;
+  missionId: string | null;
 };
 
 export async function getEventEditorPayload(
@@ -55,6 +56,7 @@ export async function getEventEditorPayload(
     where: { id: eventId },
     include: {
       primaryCalendar: true,
+      campaignMission: { select: { id: true } },
       eventPeople: { include: { person: true }, take: 40 },
       objectives: { take: 20, orderBy: { createdAt: "asc" } },
       actionItems: {
@@ -129,6 +131,7 @@ export async function getEventEditorPayload(
       roleType: s.roleType,
       label: s.instructions,
     })),
+    missionId: event.campaignMission?.id ?? null,
   };
 }
 

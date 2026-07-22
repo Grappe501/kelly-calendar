@@ -8,7 +8,7 @@ export type NavItem = {
 export const BOTTOM_NAV_ITEMS: NavItem[] = [
   { id: "today", href: "/", label: "Today" },
   { id: "calendar", href: "/calendar", label: "Calendar" },
-  { id: "add", href: "/add", label: "Add", prominent: true },
+  { id: "add", href: "/upload", label: "Add", prominent: true },
   { id: "search", href: "/search", label: "Search" },
   { id: "more", href: "/more", label: "More" },
 ];
@@ -16,7 +16,14 @@ export const BOTTOM_NAV_ITEMS: NavItem[] = [
 export function resolveActiveNavId(pathname: string): NavItem["id"] {
   if (pathname === "/") return "today";
   if (pathname.startsWith("/calendar")) return "calendar";
-  if (pathname.startsWith("/add")) return "add";
+  if (
+    pathname.startsWith("/add") ||
+    pathname.startsWith("/upload") ||
+    pathname.startsWith("/import")
+  ) {
+    return "add";
+  }
+  if (pathname.startsWith("/events/")) return "calendar";
   if (pathname.startsWith("/search")) return "search";
   if (
     pathname.startsWith("/more") ||

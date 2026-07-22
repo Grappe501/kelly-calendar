@@ -144,7 +144,7 @@ export function QuickEventForm() {
       if (!res.ok || !json.event?.eventId) {
         throw new Error(json.error?.message ?? "Could not create event.");
       }
-      router.push(`/events/${json.event.eventId}/edit`);
+      router.push(`/events/${json.event.eventId}`);
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Create failed.");
       setSaving(false);

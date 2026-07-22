@@ -41,6 +41,21 @@ export default function MorePage() {
       </section>
 
       <section className="panel">
+        <h2>Schedule intake</h2>
+        <div className="button-row">
+          <Link className="button" href="/upload">
+            Upload events &amp; missions
+          </Link>
+          <Link className="button secondary" href="/import/google-calendar">
+            Google Calendar import
+          </Link>
+          <Link className="button secondary" href="/calendar">
+            Calendar
+          </Link>
+        </div>
+      </section>
+
+      <section className="panel">
         <h2>Command</h2>
         <div className="button-row">
           <Link className="button" href="/command">

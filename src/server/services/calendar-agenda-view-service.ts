@@ -67,7 +67,7 @@ function toAgendaItem(
     locationLabel,
     people: event.people,
     searchText,
-    href: `/calendar?view=day&date=${dateKey}&event=${event.eventId}`,
+    href: `/events/${event.eventId}`,
   };
 }
 

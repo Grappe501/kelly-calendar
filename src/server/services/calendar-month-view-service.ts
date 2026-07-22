@@ -36,7 +36,7 @@ export type MonthDayCell = {
   isToday: boolean;
   eventCount: number;
   density: ActivityDensity;
-  sampleTitles: string[];
+  sampleEvents: Array<{ eventId: string; title: string }>;
   weekHref: string;
   dayHref: string;
 };
@@ -273,7 +273,10 @@ export async function getCalendarMonthViewData(
       isToday: dateKey === todayKey,
       eventCount: events.length,
       density: densityForCount(events.length),
-      sampleTitles: events.slice(0, 2).map((e) => e.title),
+      sampleEvents: events.slice(0, 2).map((e) => ({
+        eventId: e.eventId,
+        title: e.title,
+      })),
       weekHref: `/calendar?view=week&date=${startOfWeekDateKey(dateKey)}`,
       dayHref: `/calendar?view=day&date=${dateKey}`,
     };

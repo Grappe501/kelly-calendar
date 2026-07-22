@@ -85,7 +85,7 @@ export function TodayOperatingView({ data }: Props) {
               <time dateTime={card.startsAt}>{card.timeLabel}</time>
             </p>
             <h2>
-              <Link href={`/events/${card.eventId}/edit`}>{card.title}</Link>
+              <Link href={`/events/${card.eventId}`}>{card.title}</Link>
             </h2>
             {card.locationLabel ? (
               <p className="muted">{card.locationLabel}</p>

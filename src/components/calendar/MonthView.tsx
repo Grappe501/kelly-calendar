@@ -74,7 +74,9 @@ export function MonthView({ data, focusEventId = null }: Props) {
                   focusEventId && h.missionId === focusEventId ? "true" : undefined
                 }
               >
-                <strong>{h.kind}</strong> — {h.title}
+                <Link href={`/events/${h.missionId}`}>
+                  <strong>{h.kind}</strong> — {h.title}
+                </Link>
                 <span className="muted"> · {h.whenLabel}</span>
               </li>
             ))}
@@ -118,8 +120,10 @@ export function MonthView({ data, focusEventId = null }: Props) {
                     {cell.eventCount} event{cell.eventCount === 1 ? "" : "s"}
                   </p>
                   <ul className="month-day-samples">
-                    {cell.sampleTitles.map((title) => (
-                      <li key={title}>{title}</li>
+                    {cell.sampleEvents.map((sample) => (
+                      <li key={sample.eventId}>
+                        <Link href={`/events/${sample.eventId}`}>{sample.title}</Link>
+                      </li>
                     ))}
                   </ul>
                 </>
@@ -130,8 +134,8 @@ export function MonthView({ data, focusEventId = null }: Props) {
           ))}
         </div>
         <p className="muted">
-          Density indicators only. Day opens Day View; W opens Week View. Month View is a hub, not
-          a management screen.
+          Click any event title to open its full sheet. Day number opens Day View; W opens Week
+          View.
         </p>
       </section>
 

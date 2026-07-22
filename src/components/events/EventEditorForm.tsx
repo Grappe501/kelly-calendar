@@ -8,6 +8,7 @@ import {
   chicagoWallTimeToUtc,
 } from "@/lib/calendar/event-wall-time";
 import { chicagoDateKey } from "@/lib/calendar/chicago-date";
+import { eventSheetHref } from "@/lib/calendar/event-sheet-href";
 
 type HistoryPayload = {
   audits: Array<{
@@ -221,7 +222,7 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
   return (
     <div className="page-stack event-editor">
       <header className="page-header">
-        <h1>Edit event</h1>
+        <h1>Event sheet</h1>
         <p className="muted">
           {initial.eventNumber} · {initial.primaryCalendar.name} · lifecycle{" "}
           {initial.operationalLifecycle} · v{version}
@@ -235,7 +236,15 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
             Day view
           </Link>
           {" · "}
+          <Link href="/upload">Upload</Link>
+          {" · "}
           <Link href="/add/quick">Add another</Link>
+          {initial.missionId ? (
+            <>
+              {" · "}
+              <Link href={`/system/missions/${initial.missionId}`}>Mission workspace</Link>
+            </>
+          ) : null}
         </p>
       </header>
 
@@ -379,7 +388,7 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
                   const json = await res.json();
                   if (!res.ok) throw new Error(json.error?.message ?? "Duplicate failed.");
                   if (json.event?.eventId) {
-                    router.push(`/events/${json.event.eventId}/edit`);
+                    router.push(eventSheetHref(json.event.eventId));
                     return;
                   }
                   setMessage("Duplicated.");

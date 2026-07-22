@@ -150,7 +150,12 @@ export function WeekView({ data, focusEventId = null }: Props) {
                       <span className="week-event-time">
                         {event.allDay ? "All day" : formatClock(event.startsAt, data.timezone)}
                       </span>
-                      <span className="week-event-title">{event.title}</span>
+                      <Link
+                        href={`/events/${event.eventId}`}
+                        className="week-event-title"
+                      >
+                        {event.title}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -168,7 +173,9 @@ export function WeekView({ data, focusEventId = null }: Props) {
           <ol className="mission-rail">
             {data.missionRail.map((item) => (
               <li key={item.missionId}>
-                <strong>Priority {item.priority}</strong> {item.title}
+                <Link href={`/events/${item.missionId}`}>
+                  <strong>Priority {item.priority}</strong> {item.title}
+                </Link>
                 <p className="muted">
                   {item.whenLabel} · {item.readinessLabel} · {item.riskLevel}
                 </p>
