@@ -59,9 +59,16 @@ Status, calendar, date/relative, county, source/imported, mission, timed/all-day
 
 Visibility enforced before results/counts/facets. Confidential Events omitted entirely. Shared views never grant Event access. Search terms not logged.
 
-## Non-goals preserved
+## Ship evidence
 
-No CC-08 grid/drag/resize · no Phase Two · no RedDirt/Mobilize writes · no bulk mutation.
+| Item | Value |
+|------|-------|
+| Feature commit | `a630c8c` |
+| Netlify deploy | `6a61167b80d9714ef4541631` |
+| Query schema | v1 |
+| `calendar:search:validate` | 60 passed |
+| CC-05 / CC-06 regressions | 44 / 45 passed |
+| TypeScript | `tsc --noEmit` clean |
 
 ## Rollback
 
