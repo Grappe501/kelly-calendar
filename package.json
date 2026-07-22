@@ -89,6 +89,7 @@
     "events:ingest:madison-travel-blytheville": "node scripts/run-with-h-drive-env.cjs node scripts/ingest-madison-travel-blytheville.mjs",
     "events:ingest:sep-operator-batch": "node scripts/run-with-h-drive-env.cjs node scripts/ingest-sep-operator-batch.mjs",
     "events:ingest:jacksonville-festiville-sep5": "node scripts/run-with-h-drive-env.cjs node scripts/ingest-jacksonville-festiville-sep5.mjs",
+    "events:ingest:rector-immersion-sep6": "node scripts/run-with-h-drive-env.cjs node scripts/ingest-rector-immersion-sep6.mjs",
     "events:dedupe:major": "node scripts/run-with-h-drive-env.cjs node scripts/dedupe-calendar-major.mjs",
     "events:analyze:duplicates": "node scripts/run-with-h-drive-env.cjs node scripts/analyze-calendar-duplicates.mjs",
     "events:data-quality:operator-week": "node scripts/run-with-h-drive-env.cjs node scripts/operator-week-data-quality-pass.mjs",

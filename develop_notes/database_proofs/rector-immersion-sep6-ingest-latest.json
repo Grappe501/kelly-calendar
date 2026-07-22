@@ -1,0 +1,34 @@
+{
+  "pass": "RECTOR-IMMERSION-2026-09-06",
+  "events": [
+    {
+      "key": "travel-rector-2026-09-06",
+      "eventNumber": "KCCC-2026-0201",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-rector-2026-09-06",
+      "eventNumber": "KCCC-2026-0202",
+      "status": "HOLD"
+    },
+    {
+      "key": "rector-immersion-2026-09-06",
+      "eventNumber": "KCCC-2026-0203",
+      "status": "HOLD"
+    },
+    {
+      "key": "return-rector-rosebud-2026-09-07",
+      "eventNumber": "KCCC-2026-0204",
+      "status": "HOLD"
+    }
+  ],
+  "conflictsSurfaced": [
+    "rector-immersion Sep 6–7 ∩ travel-nashville-howard-2026-09-07 / lodging-nashville-howard-2026-09-07 (operator must choose)"
+  ],
+  "openDecisions": [
+    "Resolve Rector immersion vs Howard County Nashville travel on Sep 7 — cannot do both as currently blocked.",
+    "Confirm lodging property in Rector (Airbnb/hotel TBD).",
+    "Lock Rector immersion hosts / stops (do not invent)."
+  ],
+  "calendarNote": "Operator said Saturday Sep 6; 2026-09-06 is Sunday. Date kept as stated."
+}
