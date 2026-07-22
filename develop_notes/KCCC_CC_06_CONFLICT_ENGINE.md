@@ -1,6 +1,6 @@
 # CC-06 — Conflict Engine: Calendar Slice
 
-**Status:** IMPLEMENTED (calendar slice)
+**Status:** COMPLETE (calendar slice — validated and shipped 2026-07-22)
 **Build:** `KCCC-CC-06-CONFLICT-ENGINE-1.0`
 **Authorization:** ADR-092 — `KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md` (Kelly authorization)
 **Doctrine:** `KCCC_CALENDAR_CONFLICT_DOCTRINE.md`
@@ -163,6 +163,20 @@ npm run test -- tests/unit/calendar-conflicts
   explicit reason: **0**
 - `TRAVEL_INFEASIBLE` conflicts raised without a stored
   `estimatedDurationMinutes`: **0**
+
+## Ship evidence (2026-07-22)
+
+| | |
+|--|--|
+| **Authorization** | ADR-092 · `KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md` · CC-06 only · Synthesis remains EMPTY |
+| **Git** | `main` · commit `5e76022` (pushed; parent `3a064ff` recorded ADR-092) |
+| **Netlify** | https://kelly-calendar.netlify.app · deploy `6a61057a9b33f84ebfa61871` |
+| **Live check** | `/system/conflicts` → 307 to `/login`; `/api/conflicts` GET/POST → 401; `/api/calendar/conflicts/recompute` POST → 401; `/api/conflicts/[id]/acknowledge` POST → 401 |
+| **Validator** | `npm run calendar:conflicts:validate` — 45 passed, 0 failed |
+| **Typecheck** | `npm run typecheck` — clean |
+| **Unit tests** | Full suite — 547 passed (88 files), including `tests/unit/calendar-conflicts/detectors.test.ts` (12) and `tests/unit/capabilities.test.ts` (3) |
+| **Schema** | Additive SQL (`OperationalConflictRecord`/`OperationalConflictAction` CC-06 columns + indexes) applied live via `prisma db execute` against `prisma/migrations/20260722120000_cc06_conflict_engine/migration.sql`; `prisma migrate deploy` still blocked by the prior failed `20260719160000_google_oauth_and_routes` migration (same pre-existing condition noted in the CC-05 ship record — resolve separately) |
+| **Program bookkeeping** | `CC_06_STATUS`/`data/build_state.json`/`README.md`/`KCCC_CALENDAR_COMPLETION_PROGRAM.md` marked CC-06 **COMPLETE**; `NEXT_AUTHORIZED_BUILD` repointed off CC-06 (no further engineering authorized; CC-07 remains DESIGN ONLY); duplicate CC-07 row removed from the program doc; Synthesis doc's stale "before authorizing CC-06" instruction corrected to note ADR-092 already authorized CC-06 while Synthesis is still required as usability evidence |
 
 ## Known limitations (honest, not hidden)
 
