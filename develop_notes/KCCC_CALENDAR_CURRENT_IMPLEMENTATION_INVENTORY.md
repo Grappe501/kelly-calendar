@@ -47,7 +47,8 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Mission conversion | PARTIAL | `CampaignMission` projection from Event | Downstream of usable events | Step 14 |
 | Follow-up | PARTIAL | `EventFollowup` + `MissionFollowUp` | Same | Step 19 |
 | Google Calendar scaffolding | PARTIAL | OAuth + IMPORT_ONLY sync; no push | Correct freeze for now | Step 23 |
-| Calendar import/export | PARTIAL | Import strong; export restricted | Export not productized | Step 22 |
+| Calendar import/export | PARTIAL | Import strong; export restricted | Export not productized | Step 22 / CC-10 |
+| Calendar integrity console | COMPLETE (CC-02) | `/system/calendar/integrity*`, detectors `CC-02-DETECTOR-1.0`, scan/disposition models | Findings may exist in data; no auto repair | CC-11 health automation |
 | Audit history | PARTIAL | `AuditLog` / `DataAccessLog` | No full operator browser | Step 8/24 |
 | Mobile usability | PARTIAL | Bottom nav + mobile shell | Not certified | Step 24 |
 | Communications OS (D20–D26) | COMPLETE (subsystem) / FROZEN | Deliverables + hard production blocks | Out of sequence | **No further work** until calendar Steps 14+ need it |

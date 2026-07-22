@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { EventEditorForm } from "@/components/events/EventEditorForm";
+import { EventProvenancePanelView } from "@/components/calendar/EventProvenancePanel";
 import { roleMayMutate } from "@/lib/auth/system-roles";
 import { requireActiveAuthenticatedActor } from "@/server/auth/actor";
 import {
   getEventAuditHistory,
   getEventEditorPayload,
 } from "@/server/services/event-editor-service";
+import { explainEventProvenance } from "@/server/services/calendar-integrity-service";
 
 export const metadata: Metadata = {
   title: "Event",
@@ -29,12 +31,21 @@ export default async function EventSheetPage({ params }: { params: Params }) {
   } catch {
     history = null;
   }
+  let provenance = null;
+  try {
+    provenance = await explainEventProvenance(actor, eventId);
+  } catch {
+    provenance = null;
+  }
 
   return (
-    <EventEditorForm
-      initial={editor}
-      initialHistory={history}
-      canMutate={roleMayMutate(actor.primarySystemRole)}
-    />
+    <>
+      <EventEditorForm
+        initial={editor}
+        initialHistory={history}
+        canMutate={roleMayMutate(actor.primarySystemRole)}
+      />
+      {provenance ? <EventProvenancePanelView data={provenance} /> : null}
+    </>
   );
 }

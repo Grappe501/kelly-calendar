@@ -1492,6 +1492,134 @@ model ExternalEventIdentity {
   @@schema("kelly_calendar")
 }
 
+// ─── CC-02 Calendar Integrity & Provenance ───────────────────────────
+
+enum CalendarIntegrityScanStatus {
+  STARTED
+  COMPLETED
+  PARTIAL
+  FAILED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarIntegrityFindingState {
+  OPEN
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+  STALE
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarIntegrityScan {
+  id                   String                      @id @default(cuid())
+  campaignKey          String                      @default("kelly")
+  scope                String
+  rangeStart           DateTime?
+  rangeEnd             DateTime?
+  sourceId             String?
+  importRunId          String?
+  eventId              String?
+  detectorVersion      String
+  status               CalendarIntegrityScanStatus @default(STARTED)
+  startedAt            DateTime                    @default(now())
+  completedAt          DateTime?
+  requestedByUserId    String?
+  eventsExamined       Int                         @default(0)
+  findingsTotal        Int                         @default(0)
+  findingsBySeverity   Json?
+  findingsByType       Json?
+  truncated            Boolean                     @default(false)
+  truncationNote       String?
+  errorSummaryRedacted String?
+  createdAt            DateTime                    @default(now())
+
+  findings CalendarIntegrityFinding[]
+
+  @@index([campaignKey, startedAt])
+  @@index([status])
+  @@schema("kelly_calendar")
+}
+
+model CalendarIntegrityFinding {
+  id                   String                        @id @default(cuid())
+  scanId               String
+  campaignKey          String                        @default("kelly")
+  findingKey           String
+  findingType          String
+  severity             String
+  summary              String
+  evidenceJson         Json
+  primaryEventId       String?
+  relatedEventIds      String[]
+  externalSourceId     String?
+  externalIdentityId   String?
+  importRunId          String?
+  importRecordId       String?
+  detectionVersion     String
+  state                CalendarIntegrityFindingState @default(OPEN)
+  repairAvailable      Boolean                       @default(false)
+  firstObservedAt      DateTime                      @default(now())
+  lastObservedAt       DateTime                      @default(now())
+  staleAt              DateTime?
+  resolvedAt           DateTime?
+  createdAt            DateTime                      @default(now())
+  updatedAt            DateTime                      @updatedAt
+
+  scan          CalendarIntegrityScan            @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  dispositions  CalendarIntegrityDisposition[]
+  repairAttempts CalendarIntegrityRepairAttempt[]
+
+  @@index([scanId])
+  @@index([findingKey])
+  @@index([findingType, severity])
+  @@index([state])
+  @@index([primaryEventId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarIntegrityDisposition {
+  id                    String   @id @default(cuid())
+  findingId             String
+  findingKey            String
+  disposition           String
+  reason                String?
+  actorUserId           String?
+  evidenceFingerprint   String?
+  superseded            Boolean  @default(false)
+  createdAt             DateTime @default(now())
+
+  finding CalendarIntegrityFinding @relation(fields: [findingId], references: [id], onDelete: Cascade)
+
+  @@index([findingId])
+  @@index([findingKey])
+  @@schema("kelly_calendar")
+}
+
+model CalendarIntegrityRepairAttempt {
+  id                 String   @id @default(cuid())
+  findingId          String
+  repairType         String
+  previewFingerprint String?
+  requestedByUserId  String?
+  confirmedByUserId  String?
+  status             String   @default("PREVIEWED")
+  affectedRecordIds  String[]
+  auditRef           String?
+  errorClass         String?
+  startedAt          DateTime @default(now())
+  completedAt        DateTime?
+  createdAt          DateTime @default(now())
+
+  finding CalendarIntegrityFinding @relation(fields: [findingId], references: [id], onDelete: Cascade)
+
+  @@index([findingId])
+  @@schema("kelly_calendar")
+}
+
 // ─── G. Templates ────────────────────────────────────────────────────
 
 model EventTemplate {

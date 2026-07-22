@@ -11,6 +11,8 @@ Purpose:      Exact forensic account of what is built vs gated — especially St
 Immutable:    Snapshot of reality at audit time; amend via new dated note if needed
 ```
 
+**Post-audit update (2026-07-22):** CC-01 import apply and CC-02 integrity/provenance console shipped on `main`. Forensic duplicate scripts remain valid; operator-facing trust surface is now `/system/calendar/integrity` (detection only — no auto Event mutation). See `KCCC_CC_02_CALENDAR_INTEGRITY_PROVENANCE_CONSOLE.md`.
+
 ---
 
 ## 0. Naming — stop the “Phase 13” confusion first

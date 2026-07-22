@@ -28,6 +28,7 @@ const VIEW_ACTIONS = new Set<MutationAction>([
   "READINESS_VIEW",
   "CONFLICT_VIEW",
   "HISTORICAL_IMPORT_VIEW",
+  "CALENDAR_INTEGRITY_VIEW",
   "AUDIT_VIEW",
 ]);
 
@@ -43,6 +44,7 @@ function minRankForAction(action: MutationAction): number {
     case "READINESS_VIEW":
     case "CONFLICT_VIEW":
     case "HISTORICAL_IMPORT_VIEW":
+    case "CALENDAR_INTEGRITY_VIEW":
     case "AUDIT_VIEW":
       return 1;
     case "EVENT_CREATE":
@@ -63,6 +65,8 @@ function minRankForAction(action: MutationAction): number {
     case "HISTORICAL_IMPORT_APPROVE":
     case "HISTORICAL_IMPORT_REJECT":
     case "HISTORICAL_IMPORT_MERGE":
+    case "CALENDAR_INTEGRITY_SCAN":
+    case "CALENDAR_INTEGRITY_DISPOSE":
       return 4; // CONTRIBUTE+
     case "EVENT_ARCHIVE":
     case "EVENT_RESTORE":
@@ -71,6 +75,7 @@ function minRankForAction(action: MutationAction): number {
     case "CALENDAR_MEMBERSHIP_MANAGE":
     case "APPROVAL_RESOLVE":
     case "CONFLICT_OVERRIDE":
+    case "CALENDAR_INTEGRITY_REPAIR":
       return 5; // EDIT+
     case "TEAM_MEMBERSHIP_MANAGE":
     case "SYSTEM_ROLE_MANAGE":
@@ -127,6 +132,14 @@ export async function authorize(
     // Draft staging and similar pre-calendar writes: mutator roles only.
     if (input.action === "EVENT_CREATE" && roleMayMutate(actor.primarySystemRole)) {
       return { allowed: true, reason: "System draft create for mutator role" };
+    }
+    if (
+      (input.action === "CALENDAR_INTEGRITY_SCAN" ||
+        input.action === "CALENDAR_INTEGRITY_DISPOSE" ||
+        input.action === "CALENDAR_INTEGRITY_REPAIR") &&
+      roleMayMutate(actor.primarySystemRole)
+    ) {
+      return { allowed: true, reason: "Calendar integrity mutation for mutator role" };
     }
     return { allowed: false, reason: "System mutation denied" };
   }

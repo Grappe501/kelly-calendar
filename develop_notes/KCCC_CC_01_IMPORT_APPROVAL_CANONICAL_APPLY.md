@@ -73,7 +73,7 @@ Extend only if required: review action enums / apply-result fields on import rec
 
 - Mark CC-01 complete in `KCCC_CALENDAR_COMPLETION_PROGRAM.md` / `build_state.json`  
 - Update import runbook  
-- Note inventory: import-apply COMPLETE; integrity console still CC-02  
+- Note inventory: import-apply COMPLETE; integrity console **CC-02 COMPLETE** (`KCCC_CC_02_CALENDAR_INTEGRITY_PROVENANCE_CONSOLE.md`)  
 
 ## Rollback
 
@@ -98,5 +98,5 @@ Feature-flag or auth-gate disable approve/merge mutations; leave staging intact;
 | `import:apply:proof` | PASS — approve +1 Event, re-approve +0, reject/merge +0, missions unchanged |
 | Surfaces | `/import/google-calendar/apply`, approve/reject/merge APIs |
 | Provenance contracts | `src/lib/calendar/import-provenance.ts` (CC-02 reusable) |
-| CC-02 | Still a separate deliverable |
+| CC-02 | Still a separate deliverable — **now COMPLETE**; reuses provenance contracts without combining scopes |
 

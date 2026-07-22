@@ -6,6 +6,7 @@
 **Google:** PAUSED — no dependency for V2.1  
 **Mobilize:** D18 attendance read — `KCCC_V2_1_MOBILIZE_SIGNUP_ATTENDANCE_READ_DELIVERABLE_18.md` · D17 publishing · D16 foundation · architecture `KCCC_V2_1_PROVIDER_INTEGRATION_MOBILIZE_ARCHITECTURE.md`  
 **Authority:** Event→Mission remains explicit. Mobilize signup/attendance never advances Execute or creates Missions. Person-level apply disabled pending consent-aware Person authority.
+**Calendar Completion:** CC-01/CC-02 do not create or mutate Missions. CC-02 may *report* Mission-boundary anomalies (orphaned/multi-Mission) but never repairs Mission data.
 **Deliverable 1 notes:** `KCCC_V2_1_MISSION_MODEL_DELIVERABLE_1.md` · rollback `KCCC_V2_1_MISSION_MODEL_ROLLBACK.md`  
 **Deliverable 2 notes:** `KCCC_V2_1_TODAYS_MISSION_DELIVERABLE_2.md`  
 **Deliverable 3 notes:** `KCCC_V2_1_PREPARE_MODE_DELIVERABLE_3.md` · rollback `KCCC_V2_1_PREPARE_MODE_ROLLBACK.md`  

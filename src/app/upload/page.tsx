@@ -65,6 +65,9 @@ export default function UploadEventsPage() {
           <Link className="button secondary" href="/system/imports">
             Import status
           </Link>
+          <Link className="button secondary" href="/system/calendar/integrity">
+            Calendar integrity
+          </Link>
         </div>
       </section>
 

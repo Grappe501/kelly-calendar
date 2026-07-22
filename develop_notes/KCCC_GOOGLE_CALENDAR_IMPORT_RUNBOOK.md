@@ -34,7 +34,7 @@ UI:  /import/google-calendar/apply
 Proof: npm run import:apply:proof
 ```
 
-Invariants: one approve → one Event; re-approve unchanged fingerprint → zero Events; merge/reject audited; no Mission or Google write-back. Provenance snapshot schema is shared with CC-02 (`src/lib/calendar/import-provenance.ts`).
+Invariants: one approve → one Event; re-approve unchanged fingerprint → zero Events; merge/reject audited; no Mission or Google write-back. Provenance snapshot schema is shared with CC-02 (`src/lib/calendar/import-provenance.ts`). Integrity console: `/system/calendar/integrity` (CC-02 — detection/disposition only).
 
 ## Reconciliation
 

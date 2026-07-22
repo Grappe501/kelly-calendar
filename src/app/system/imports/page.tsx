@@ -57,6 +57,9 @@ export default function SystemImportsPage() {
           <Link className="button" href="/import/google-calendar/apply">
             Open apply queue
           </Link>
+          <Link className="button" href="/system/calendar/integrity">
+            Calendar integrity
+          </Link>
           <Link className="button" href="/import/google-calendar">
             Open import panel
           </Link>
