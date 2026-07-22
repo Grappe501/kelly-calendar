@@ -26,10 +26,11 @@ export function WeekView({ data, focusEventId = null }: Props) {
   return (
     <div className="page-stack calendar-week-view">
       <header className="page-header">
-        <h1>Calendar</h1>
+        <h1>Week</h1>
         <p className="executive-question">{data.executiveQuestion}</p>
         <p className="muted">
-          Engineering Track A · Week View · presentation only · {data.viewerDisplayName}
+          {data.weekRangeLabel} · Campaign week {data.campaignWeekDisplay} ·{" "}
+          {data.viewerDisplayName}
         </p>
       </header>
 

@@ -14,11 +14,10 @@ export function MonthView({ data, focusEventId = null }: Props) {
   return (
     <div className="page-stack calendar-month-view">
       <header className="page-header">
-        <h1>Calendar</h1>
+        <h1>Month</h1>
         <p className="executive-question">{data.executiveQuestion}</p>
         <p className="muted">
-          Engineering Track A · Month View · strategic planning surface · presentation only ·{" "}
-          {data.viewerDisplayName}
+          {data.monthLabel} · {data.viewerDisplayName}
         </p>
       </header>
 

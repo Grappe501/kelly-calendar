@@ -1,0 +1,52 @@
+{
+  "pass": "BENTON-IMMERSION-WEEK-2026-08-17",
+  "created": [
+    {
+      "key": "travel-benton-2026-08-17",
+      "eventNumber": "KCCC-2026-0168"
+    },
+    {
+      "key": "travel-rosebud-after-benton-2026-08-20",
+      "eventNumber": "KCCC-2026-0169"
+    },
+    {
+      "key": "benton-immersion-day-2026-08-17",
+      "eventNumber": "KCCC-2026-0170"
+    },
+    {
+      "key": "benton-jp-district-evening-2026-08-17",
+      "eventNumber": "KCCC-2026-0171"
+    },
+    {
+      "key": "benton-immersion-day-2026-08-18",
+      "eventNumber": "KCCC-2026-0172"
+    },
+    {
+      "key": "benton-jp-district-evening-2026-08-18",
+      "eventNumber": "KCCC-2026-0173"
+    },
+    {
+      "key": "benton-immersion-day-2026-08-19",
+      "eventNumber": "KCCC-2026-0174"
+    },
+    {
+      "key": "benton-jp-district-evening-2026-08-19",
+      "eventNumber": "KCCC-2026-0175"
+    },
+    {
+      "key": "benton-immersion-day-2026-08-20",
+      "eventNumber": "KCCC-2026-0176"
+    }
+  ],
+  "updated": [
+    {
+      "key": "nwa-immersion-tour-2026-08-17",
+      "eventNumber": "KCCC-2026-0062"
+    }
+  ],
+  "openDecisions": [
+    "Lock JP host + district number for each evening gathering (Benton County has 15 JP districts — do not invent).",
+    "Lock evening venues and whether Kelly speaks or hosts listening format.",
+    "Accept/decline Shela Norman Bella Vista lodging for this week."
+  ]
+}

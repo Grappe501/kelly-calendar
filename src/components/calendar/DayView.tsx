@@ -36,10 +36,10 @@ export function DayView({ data, focusEventId = null }: Props) {
   return (
     <div className="page-stack calendar-day-view">
       <header className="page-header">
-        <h1>Calendar</h1>
+        <h1>Day</h1>
         <p className="executive-question">{data.executiveQuestion}</p>
         <p className="muted">
-          Engineering Track A · Day View · presentation only · {data.viewerDisplayName}
+          {label} · {data.viewerDisplayName}
         </p>
       </header>
 
