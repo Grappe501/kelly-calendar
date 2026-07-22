@@ -3330,19 +3330,43 @@ legend {
   color: var(--color-accent, #2f6fed);
 }
 
-@media (max-width: 900px) {
-  .sched-workspace-body {
-    grid-template-columns: 1fr;
-  }
-
-  .sched-week-columns.cols-7,
-  .sched-week-columns.cols-5 {
-    grid-template-columns: 1fr;
-  }
-
-  .app-main:has(.sched-workspace) {
-    width: min(100%, 72rem);
-  }
+.bulk-selection-bar {
+  position: sticky;
+  bottom: 0.5rem;
+  z-index: 5;
+  margin-top: var(--space-3);
 }
+
+.bulk-selection-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: end;
+}
+
+.bulk-selection-controls label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.bulk-select-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.agenda-row {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: var(--space-2);
+  align-items: start;
+}
+
+.bulk-check {
+  padding-top: 0.2rem;
+}
+
 
 

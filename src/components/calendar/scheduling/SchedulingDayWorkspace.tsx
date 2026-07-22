@@ -17,6 +17,11 @@ import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher
 import { CalendarSearchChromeHost } from "@/components/calendar/search/CalendarSearchChromeHost";
 import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import type { OperationalConflict } from "@/features/operational-intelligence/types/conflict-types";
+import {
+  BulkSelectionProvider,
+  useOptionalBulkSelection,
+} from "@/components/calendar/bulk/BulkSelectionProvider";
+import { BulkSelectionBar } from "@/components/calendar/bulk/BulkSelectionBar";
 
 export type SchedulingDayEvent = {
   eventId: string;
@@ -62,7 +67,15 @@ function conflictMeta(
   return { severity: best, count: related.length };
 }
 
-export function SchedulingDayWorkspace({
+export function SchedulingDayWorkspace(props: Props) {
+  return (
+    <BulkSelectionProvider>
+      <SchedulingDayWorkspaceInner {...props} />
+    </BulkSelectionProvider>
+  );
+}
+
+function SchedulingDayWorkspaceInner({
   dateKey,
   timezone,
   isToday,
@@ -75,6 +88,7 @@ export function SchedulingDayWorkspace({
 }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const bulk = useOptionalBulkSelection();
   const prefs = useMemo(() => {
     const raw: Record<string, string> = {};
     searchParams.forEach((v, k) => {
@@ -145,6 +159,7 @@ export function SchedulingDayWorkspace({
       <CalendarViewSwitcher active="day" dateKey={dateKey} />
       <CalendarSearchChromeHost compact resultCount={events.length} truncated={cataloguePartial} />
       <CalendarDateNav dateKey={dateKey} view="day" label={label} isToday={isToday} />
+      <BulkSelectionBar />
 
       <div className="sched-toolbar">
         <Link className="chip chip-link" href={`/add/quick?date=${dateKey}`}>
@@ -153,6 +168,15 @@ export function SchedulingDayWorkspace({
         <Link className="chip chip-link" href={`/calendar?view=agenda&date=${dateKey}`}>
           Agenda fallback
         </Link>
+        {selectedEventId && bulk ? (
+          <button
+            type="button"
+            className="chip"
+            onClick={() => bulk.toggle(selectedEventId)}
+          >
+            {bulk.isSelected(selectedEventId) ? "Deselect Event" : "Select for bulk"}
+          </button>
+        ) : null}
         {isToday ? (
           <button
             type="button"

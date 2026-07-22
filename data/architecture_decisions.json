@@ -605,6 +605,14 @@
       "date": "2026-07-22",
       "decision": "Kelly explicitly authorizes Calendar Completion CC-08 Advanced Day/Week Scheduling Workspace (grid-first Day/Week; all-day lane; deterministic overlap layout; CC-05/CC-06 overlays; Event inspector; intentional slot creation; CC-07 query integration). Evidence: develop_notes/KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md. CC-07 accepted complete at a630c8c / deploy 6a61167b80d9714ef4541631. Standing execution under ADR-094. Usability Synthesis remains incomplete.",
       "boundary": "Must not implement drag-and-drop or resize mutation, bulk operations (CC-09), ICS/push/AI/RedDirt/volunteer/Phase Two features, or view-triggered Event/Mission/availability/conflict mutations. Intentional create/edit only via canonical Event services."
+    },
+    {
+      "id": "ADR-097",
+      "title": "Kelly Authorization of CC-09 Bulk Operations, Archive/Restore, and Recovery",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly explicitly authorizes Calendar Completion CC-09 Bulk Operations, Archive/Restore, and Recovery (multi-select, server-authoritative preview, archive/restore/cancel, limited calendar membership actions, idempotent execution, partial-failure reporting, safe recovery). Evidence: develop_notes/KCCC_CC_09_AUTHORIZATION_KELLY_2026-07-22.md. CC-08 accepted complete at e1ddaa7 / tip deploy 6a612111e81d923c5e6c58ca (feature 7486aa9 / 6a611dc19547e64f0fa7874d). Standing execution under ADR-094. Usability Synthesis remains incomplete.",
+      "boundary": "Must not hard-delete Events, silently mutate Missions, bulk-reschedule, bulk-resolve conflicts, write external calendars/Mobilize, implement CC-10 ICS, or Phase Two IC features. Selection and preview must never mutate."
     }
   ]
 }

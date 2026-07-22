@@ -19,6 +19,11 @@ import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import type { OperationalConflict } from "@/features/operational-intelligence/types/conflict-types";
 import type { SchedulingDayEvent } from "@/components/calendar/scheduling/SchedulingDayWorkspace";
 import { chicagoTodayKey } from "@/lib/calendar/chicago-date";
+import {
+  BulkSelectionProvider,
+  useOptionalBulkSelection,
+} from "@/components/calendar/bulk/BulkSelectionProvider";
+import { BulkSelectionBar } from "@/components/calendar/bulk/BulkSelectionBar";
 
 type Props = {
   dateKey: string;
@@ -49,7 +54,15 @@ function conflictMeta(
   return { severity: best, count: related.length };
 }
 
-export function SchedulingWeekWorkspace({
+export function SchedulingWeekWorkspace(props: Props) {
+  return (
+    <BulkSelectionProvider>
+      <SchedulingWeekWorkspaceInner {...props} />
+    </BulkSelectionProvider>
+  );
+}
+
+function SchedulingWeekWorkspaceInner({
   dateKey,
   weekDateKeys,
   timezone,
@@ -62,6 +75,7 @@ export function SchedulingWeekWorkspace({
 }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const bulk = useOptionalBulkSelection();
   const prefs = useMemo(() => {
     const raw: Record<string, string> = {};
     searchParams.forEach((v, k) => {
@@ -134,6 +148,7 @@ export function SchedulingWeekWorkspace({
         stepDays={7}
         mode="week"
       />
+      <BulkSelectionBar />
 
       <div className="sched-toolbar">
         <Link className="chip chip-link" href={`/add/quick?date=${dateKey}`}>
@@ -142,6 +157,11 @@ export function SchedulingWeekWorkspace({
         <Link className="chip chip-link" href={`/calendar?view=agenda&date=${dateKey}`}>
           Agenda fallback
         </Link>
+        {selectedEventId && bulk ? (
+          <button type="button" className="chip" onClick={() => bulk.toggle(selectedEventId)}>
+            {bulk.isSelected(selectedEventId) ? "Deselect Event" : "Select for bulk"}
+          </button>
+        ) : null}
       </div>
 
       <div className="sched-workspace-body">
@@ -149,7 +169,9 @@ export function SchedulingWeekWorkspace({
           {layout.allDayRows.length > 0 ? (
             <div
               className="sched-week-allday"
-              style={{ gridTemplateColumns: `repeat(${layout.weekDateKeys.length}, minmax(0, 1fr))` }}
+              style={{
+                gridTemplateColumns: `repeat(${layout.weekDateKeys.length}, minmax(0, 1fr))`,
+              }}
               aria-label="Week all-day spans"
             >
               {layout.allDayRows.map((row) => (

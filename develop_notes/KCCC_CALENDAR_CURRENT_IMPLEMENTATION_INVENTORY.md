@@ -32,8 +32,9 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Event editing | PARTIAL | `/api/events/[eventId]` mutations | Same | Step 11 |
 | Event cancellation | PARTIAL | Archive/restore paths (soft) | Product cancel UX incomplete | Step 11 cancel/reschedule flows |
 | Recurring events | COMPLETE (CC-04) | Series + exceptions + materialized Events; `/calendar/series/[id]` | Horizon extension is explicit | CC-05 gated |
-| Day view | COMPLETE (CC-08) | `/calendar?view=day` time grid | Grid-first ADR-096; no drag/resize | CC-12 a11y polish |
-| Week view | COMPLETE (CC-08) | `/calendar?view=week` multi-column grid | Same | CC-12 |
+| Day view | COMPLETE (CC-08) | `/calendar?view=day` time grid + bulk select | Grid-first ADR-096; CC-09 multi-select | CC-12 |
+| Week view | COMPLETE (CC-08) | `/calendar?view=week` + bulk select | Same | CC-12 |
+| Bulk operations | COMPLETE (CC-09) | `/system/calendar/bulk` | Preview/confirm/recovery; max 50 | CC-10 handoff |
 | Search/filters/saved views | COMPLETE (CC-07) | query-schema v1 · `a630c8c` · deploy `6a61167b80d9714ef4541631` | N/A | CC-07 |
 
 | Month view | PARTIAL | `/calendar?view=month` | Same | Step 10 |

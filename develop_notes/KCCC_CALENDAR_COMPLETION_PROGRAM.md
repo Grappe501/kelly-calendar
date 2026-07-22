@@ -24,25 +24,20 @@ Unrelated campaign expansion  PAUSED
 Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
-CC-01…CC-08 ................. COMPLETE (CC-08 ADR-096)
-CC-09…CC-12 .................. Remain LOCKED — not absorbed by CC-08
+CC-01…CC-09 ................. COMPLETE (CC-09 ADR-097)
+CC-10…CC-12 .................. Remain LOCKED — not absorbed by CC-09
 Usability Synthesis 1 ....... EMPTY — still required for evidence
-Phase Two (IC-01…IC-12) ..... VISION LOCKED (ADR-093) — design OK during CC-07…CC-12;
-                              implement ONLY after CC-12 + usability/AI-quality gate + IC auth
+Phase Two (IC-01…IC-12) ..... VISION LOCKED (ADR-093)
 Protected sequence .......... CC-07→08→09→10→11→12 → usability/AI-quality gate → IC auth
-Standing execution .......... ADR-094 — approved scripts run full ship cycle without routine asks
-Next engineering build ....... CC-09 (not authorized by CC-08) — design handoff only
-CC-07 ship evidence ......... commit a630c8c · evidence fa46ae6 · deploy 6a61167b80d9714ef4541631
-CC-07 migration ............. 20260722140000_cc07_saved_views_query_contract · query-schema v1
-CC-08 ship evidence ......... commit 7486aa9 · deploy 6a611dc19547e64f0fa7874d
-CC-08 migration ............. none (layout prefs via CC-07 query/saved-view keys)
-CC-08 authorization ......... develop_notes/KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md
-CC-07 authorization ......... develop_notes/KCCC_CC_07_AUTHORIZATION_KELLY_2026-07-22.md
-Standing Kelly auth ......... develop_notes/KCCC_STANDING_KELLY_EXECUTION_AUTHORIZATION_2026-07-22.md
-Phase Two vision ............ develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md
+Standing execution .......... ADR-094
+Next engineering build ....... CC-10 (not authorized by CC-09) — design handoff only
+CC-08 ship evidence ......... tip e1ddaa7 · feature 7486aa9 · tip deploy 6a612111e81d923c5e6c58ca
+CC-09 ship evidence ......... (filled at ship)
+CC-09 migration ............. 20260722160000_cc09_bulk_operations (db execute + migrate resolve)
+CC-09 authorization ......... develop_notes/KCCC_CC_09_AUTHORIZATION_KELLY_2026-07-22.md
 ```
 
-This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, does **not** treat ADR-090/092/093/094/095/096 as Usability Synthesis completion, does **not** authorize CC-09 engineering as part of CC-08, and does **not** authorize IC-01…IC-12 coding before CC-12 plus the usability/AI-quality gate and separate IC authorization.### Phase Two preview (post–CC-12)
+This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. It does **not** authorize CC-10 as part of CC-09, and does **not** authorize IC-01…IC-12 before CC-12 plus the usability/AI-quality gate.### Phase Two preview (post–CC-12)
 
 Vision: an intelligent statewide campaign operating calendar — Mission meaning, geographic/strategic gaps, volunteers/travel coordination, mobile action — while remaining calendar-centered.
 
@@ -61,9 +56,9 @@ Full program: `develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALEN
 | **CC-05** | Standing Availability Inputs | L | **COMPLETE** — ship baseline `46a72c3` / `6a60efa8f25804bc9b16f3f3`; Synthesis remains EMPTY |
 | **CC-06** | Conflict Engine | XL | **COMPLETE** — Kelly ADR-092 (2026-07-22); calendar slice validated; Synthesis remains EMPTY |
 | **CC-07** | Unified Search, Filters & Saved Views | M | **COMPLETE** — ADR-095; ship `a630c8c` / deploy `6a61167b80d9714ef4541631`; query-schema v1 |
-| **CC-08** | Advanced Day/Week Scheduling Workspace | L | **COMPLETE** — ADR-096; grid-first Day/Week; no drag/resize; no schema migration |
-| **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | Not authorized by CC-08 — design handoff only |
-| **CC-10** | ICS Export & Subscription Privacy | M | After CC-01; private signed feeds |
+| **CC-08** | Advanced Day/Week Scheduling Workspace | L | **COMPLETE** — ADR-096; tip `e1ddaa7` / `6a612111e81d923c5e6c58ca`; no drag/resize; no schema migration |
+| **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | **COMPLETE** — ADR-097; no hard delete; migration `20260722160000_cc09_bulk_operations` |
+| **CC-10** | ICS Export & Subscription Privacy | M | Not authorized by CC-09 — design handoff only |
 | **CC-11** | Calendar Health Dashboard & Forensic Automation | M | Prefer after CC-02 |
 | **CC-12** | Mobile, Print Day Sheets & Accessibility | M | Prefer after CC-07/CC-08; **gate before Phase Two IC implementation** |
 

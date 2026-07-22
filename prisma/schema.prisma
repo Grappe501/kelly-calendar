@@ -665,6 +665,158 @@ model CalendarSavedView {
   @@schema("kelly_calendar")
 }
 
+// ─── CC-09 Bulk operations (archive / restore / cancel / calendar membership) ─
+
+enum CalendarBulkActionType {
+  ARCHIVE
+  RESTORE
+  CANCEL
+  ADD_CALENDAR
+  REMOVE_CALENDAR
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarBulkOperationStatus {
+  PREVIEW
+  CONFIRMED
+  RUNNING
+  COMPLETED
+  PARTIAL
+  FAILED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarBulkItemEligibility {
+  ELIGIBLE
+  INELIGIBLE
+  ALREADY_COMPLETE
+  REQUIRES_INDIVIDUAL_REVIEW
+  STALE
+  UNAUTHORIZED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarBulkItemResult {
+  PENDING
+  SUCCEEDED
+  SKIPPED
+  FAILED
+  STALE
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarBulkRecoveryState {
+  NONE
+  AVAILABLE
+  PREVIEWED
+  RUNNING
+  COMPLETED
+  PARTIAL
+  BLOCKED
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarBulkOperation {
+  id                    String                     @id @default(cuid())
+  campaignKey           String                     @default("kelly")
+  actionType            CalendarBulkActionType
+  status                CalendarBulkOperationStatus @default(PREVIEW)
+  selectionMode         String                     @default("EXPLICIT_IDS")
+  querySnapshotJson     Json?
+  previewFingerprint    String
+  idempotencyKey        String                     @unique
+  targetCalendarId      String?
+  reason                String?
+  requestedByUserId     String
+  confirmedByUserId     String?
+  previewExpiresAt      DateTime
+  confirmedAt           DateTime?
+  startedAt             DateTime?
+  completedAt           DateTime?
+  totalCount            Int                        @default(0)
+  eligibleCount         Int                        @default(0)
+  alreadyCompleteCount  Int                        @default(0)
+  ineligibleCount       Int                        @default(0)
+  reviewRequiredCount   Int                        @default(0)
+  succeededCount        Int                        @default(0)
+  skippedCount          Int                        @default(0)
+  failedCount           Int                        @default(0)
+  staleCount            Int                        @default(0)
+  truncated             Boolean                    @default(false)
+  recoveryState         CalendarBulkRecoveryState  @default(NONE)
+  recoveryFingerprint   String?
+  errorSummaryRedacted  String?
+  createdAt             DateTime                   @default(now())
+  updatedAt             DateTime                   @updatedAt
+
+  items             CalendarBulkOperationItem[]
+  recoveryActions   CalendarRecoveryAction[]
+
+  @@index([campaignKey, createdAt])
+  @@index([status])
+  @@index([requestedByUserId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarBulkOperationItem {
+  id                      String                     @id @default(cuid())
+  operationId             String
+  eventId                 String
+  recurrenceSeriesId      String?
+  occurrenceKey           String?
+  fingerprintAtPreview    String
+  fingerprintAtExecution  String?
+  eligibility             CalendarBulkItemEligibility
+  result                  CalendarBulkItemResult     @default(PENDING)
+  missionLinked           Boolean                    @default(false)
+  isImported              Boolean                    @default(false)
+  isRecurring             Boolean                    @default(false)
+  classificationNote      String?
+  errorClassification     String?
+  recoveryEligible        Boolean                    @default(false)
+  beforeStatus            String?
+  afterStatus             String?
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
+
+  operation CalendarBulkOperation @relation(fields: [operationId], references: [id], onDelete: Cascade)
+  event     Event                 @relation(fields: [eventId], references: [id])
+
+  @@unique([operationId, eventId])
+  @@index([eventId])
+  @@index([result])
+  @@schema("kelly_calendar")
+}
+
+model CalendarRecoveryAction {
+  id                 String                    @id @default(cuid())
+  operationId        String
+  recoveryAction     CalendarBulkActionType
+  previewFingerprint String
+  status             CalendarBulkOperationStatus @default(PREVIEW)
+  requestedByUserId  String
+  confirmedByUserId  String?
+  startedAt          DateTime?
+  completedAt        DateTime?
+  succeededCount     Int                       @default(0)
+  failedCount        Int                       @default(0)
+  skippedCount       Int                       @default(0)
+  resultSummaryJson  Json?
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+
+  operation CalendarBulkOperation @relation(fields: [operationId], references: [id], onDelete: Cascade)
+
+  @@index([operationId])
+  @@schema("kelly_calendar")
+}
+
 model CalendarViewLayer {
   id           String   @id @default(cuid())
   savedViewId  String
@@ -809,6 +961,7 @@ model Event {
   travelLegsFrom       CampaignTravelLeg[] @relation("TravelLegFrom")
   travelLegsTo         CampaignTravelLeg[] @relation("TravelLegTo")
   campaignMission      CampaignMission?
+  bulkOperationItems   CalendarBulkOperationItem[]
 
   @@index([startsAt, endsAt])
   @@index([status])
