@@ -20,7 +20,7 @@ import { prisma } from "@/server/db/prisma";
 import { withTransaction } from "@/server/db/transaction";
 import { writeAttributedAudit } from "@/server/services/audit-write";
 import { ConflictError, NotFoundError, ValidationError } from "@/lib/security/safe-error";
-import { excludeStandingWorkBlocksWhere } from "@/lib/campaign/standing-work-blocks";
+import { isStandingWorkBlockEvent } from "@/lib/campaign/standing-work-blocks";
 
 function mapAccessToViewer(
   level: string,
@@ -304,8 +304,6 @@ export async function listEventsForActorInRange(
     where: {
       archivedAt: null,
       status: { not: "CANCELLED" },
-      // Standing office hours are background busy time — never list or count them.
-      ...excludeStandingWorkBlocksWhere,
       // Overlap [rangeStart, rangeEnd)
       startsAt: { lt: input.rangeEnd },
       endsAt: { gt: input.rangeStart },
@@ -352,8 +350,18 @@ export async function listEventsForActorInRange(
       },
     },
   });
+  const listedEvents = events.filter(
+    (event) =>
+      !isStandingWorkBlockEvent({
+        eventType: event.eventType,
+        internalTitle: event.internalTitle,
+        campaignDisplayTitle: event.campaignDisplayTitle,
+        privateNotes: event.privateNotes,
+        sourceType: event.sourceType,
+      }),
+  );
   const out = [];
-  for (const event of events) {
+  for (const event of listedEvents) {
     const access = await canAccessEvent({
       eventId: event.id,
       viewerUserId: actor.userId,

@@ -162,7 +162,12 @@ export function DayView({ data, focusEventId = null }: Props) {
                   ) : null}
                   {event.openActions.length > 0 || event.openFollowUps.length > 0 ? (
                     <p className="muted">
-                      Prep {event.openActions.filter((a) => a.phase === "PRE_EVENT").length}
+                      Prep{" "}
+                      {
+                        event.openActions.filter(
+                          (action: { phase: string }) => action.phase === "PRE_EVENT",
+                        ).length
+                      }
                       {" · "}
                       After {event.openFollowUps.length}
                       {event.people.length > 0 ? ` · People ${event.people.length}` : ""}

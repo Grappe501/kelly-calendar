@@ -32,20 +32,3 @@ export function isStandingWorkBlockEvent(input: {
   }
   return false;
 }
-
-/** Prisma where clause fragment: exclude standing office blocks from calendar loads. */
-export const excludeStandingWorkBlocksWhere = {
-  NOT: {
-    OR: [
-      { eventType: STANDING_OFFICE_EVENT_TYPE },
-      { privateNotes: { startsWith: STANDING_OFFICE_INGEST_KEY_PREFIX } },
-      { privateNotes: { contains: STANDING_OFFICE_INGEST_KEY_PREFIX } },
-      {
-        AND: [
-          { sourceType: "SYSTEM" as const },
-          { internalTitle: { contains: "Campaign Office Hours" } },
-        ],
-      },
-    ],
-  },
-} as const;
