@@ -67,11 +67,15 @@ Make the calendar trustworthy by exposing duplicates, provenance gaps, import an
 | Check | Result |
 |-------|--------|
 | Feature commit | `68f8354` |
+| Harden / ADR-089 | `16b8fa0` |
+| Tip at re-verify | `7e5bf8e` |
 | Detector | `CC-02-DETECTOR-1.0` |
 | `calendar:integrity:validate` | PASS |
+| Detector unit tests | 8 PASS |
 | CC-01 `import:apply:proof` | PASS (regression) |
-| Typecheck / unit detectors | PASS |
-| Live route | `/system/calendar/integrity` → auth redirect (protected) |
+| `calendar:canonical:validate` / `import:validate` | PASS |
+| Live route | `/system/calendar/integrity` → 307 auth redirect (protected) |
+| Netlify | https://kelly-calendar.netlify.app · deploy `6a60d411386bb843f703a575` |
 
 ## CC-03 handoff
 
