@@ -39,6 +39,16 @@ npm run import:validate
 - Automatically created Missions: **0**
 - View-triggered recurrence writes: **0**
 
+## Ship evidence (2026-07-22)
+
+| | |
+|--|--|
+| **Git** | `main` · feature `564cea4` · pushed |
+| **Netlify** | https://kelly-calendar.netlify.app · deploy `6a60dfdb9b33f85409a6185d` |
+| **Live check** | Week/Agenda/Quick-add/Integrity → 307 login; `/api/calendar/recurrence` → 401 |
+| **Validator** | `npm run calendar:recurrence:validate` — 36 passed |
+| **Schema** | Additive SQL applied (`CalendarRecurrenceSeries` / exceptions); `migrate deploy` still blocked by prior failed `20260719160000_google_oauth_and_routes` — resolve separately |
+
 ## CC-05 handoff
 
 Standing Availability Inputs remain gated on Usability Synthesis or Kelly/Steve waiver. Do not begin CC-05 during CC-04.
