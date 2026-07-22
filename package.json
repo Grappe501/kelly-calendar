@@ -26,6 +26,7 @@
     "db:diagnose": "node scripts/check-red-dirt-db-connection.mjs",
     "auth:ensure-secret": "node scripts/ensure-app-session-secret.mjs",
     "auth:seed": "node scripts/seed-auth-users.mjs",
+    "auth:upsert-operator": "node scripts/upsert-operator-user.mjs",
     "auth:validate": "node scripts/validate-auth.mjs",
     "step4:validate": "node scripts/validate-step4.mjs",
     "step4:all": "npm run drive:validate && npm run auth:ensure-secret && npm run governance:validate && npm run env:validate && npm run auth:validate && npm run db:preflight && npm run db:sql:safety && npm run lint && npm run typecheck && npm run test && npm run build && npm run db:reddirt:integrity && npm run step4:validate",
