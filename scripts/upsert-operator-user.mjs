@@ -7,6 +7,7 @@
  * Optional:
  *   KCCC_OPERATOR_DISPLAY_NAME
  *   KCCC_OPERATOR_ROLE  (default KELLY)
+ *   KCCC_OPERATOR_ROLE_LABEL  (team membership label; defaults to role)
  *
  * Loads DATABASE_URL via approved env loaders (.env.local / RedDirt fallback).
  */
@@ -58,11 +59,14 @@ const email = String(process.env.KCCC_OPERATOR_EMAIL || "")
   .toLowerCase();
 const password = String(process.env.KCCC_OPERATOR_PASSWORD || "");
 const displayName = String(
-  process.env.KCCC_OPERATOR_DISPLAY_NAME || "Kelly Grappe",
+  process.env.KCCC_OPERATOR_DISPLAY_NAME || email,
 ).trim();
 const systemRole = String(process.env.KCCC_OPERATOR_ROLE || "KELLY")
   .trim()
   .toUpperCase();
+const roleLabel = String(
+  process.env.KCCC_OPERATOR_ROLE_LABEL || systemRole,
+).trim();
 
 if (!email || !email.includes("@")) {
   throw new Error("KCCC_OPERATOR_EMAIL is required");
@@ -99,23 +103,31 @@ try {
     },
   });
 
-  const leadership = await prisma.team.upsert({
-    where: { slug: "campaign-leadership" },
-    update: { name: "Campaign Leadership", isActive: true },
+  const useFieldOps =
+    systemRole === "STAFF" ||
+    systemRole === "SCHEDULER" ||
+    systemRole === "VOLUNTEER";
+  const teamSlug = useFieldOps ? "field-ops" : "campaign-leadership";
+  const teamName = useFieldOps ? "Field Operations" : "Campaign Leadership";
+  const team = await prisma.team.upsert({
+    where: { slug: teamSlug },
+    update: { name: teamName, isActive: true },
     create: {
-      slug: "campaign-leadership",
-      name: "Campaign Leadership",
-      description: "Campaign leadership team",
+      slug: teamSlug,
+      name: teamName,
+      description: useFieldOps
+        ? "Field and volunteer operations"
+        : "Campaign leadership team",
     },
   });
 
   await prisma.teamMembership.upsert({
-    where: { teamId_userId: { teamId: leadership.id, userId: user.id } },
-    update: { isActive: true, roleLabel: systemRole },
+    where: { teamId_userId: { teamId: team.id, userId: user.id } },
+    update: { isActive: true, roleLabel },
     create: {
-      teamId: leadership.id,
+      teamId: team.id,
       userId: user.id,
-      roleLabel: systemRole,
+      roleLabel,
       isActive: true,
     },
   });
@@ -129,8 +141,9 @@ try {
         email: user.email,
         displayName: user.displayName,
         systemRole: user.systemRole,
+        roleLabel,
         isActive: user.isActive,
-        team: "campaign-leadership",
+        team: teamSlug,
       },
       null,
       2,
