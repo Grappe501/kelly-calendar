@@ -4,8 +4,8 @@
   "description": "Kelly’s daily campaign operating system",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f3efe6",
-  "theme_color": "#0f4c5c",
+  "background_color": "#eaeaee",
+  "theme_color": "#000066",
   "lang": "en-US",
   "icons": [
     {

@@ -1,20 +1,28 @@
 :root {
-  --color-bg: #e6edf2;
-  --color-surface: #f5f8fb;
+  /* Brand tokens aligned to www.kellygrappe.com (Squarespace palette, 2026-07-22) */
+  --brand-navy: #000066; /* --black-hsl: 240,100%,20% */
+  --brand-navy-soft: #151579;
+  --brand-gold: #ca913d; /* --accent-hsl: 35.74,57.09%,51.57% */
+  --brand-gold-deep: #9b6c27;
+  --brand-sky: #8eb6dc; /* --darkAccent-hsl: 209.23,52.7%,70.98% */
+  --brand-mist: #eaeaee; /* --lightAccent-hsl: 240,10.53%,92.55% */
+
+  --color-bg: var(--brand-mist);
+  --color-surface: #f7f7fa;
   --color-surface-elevated: #ffffff;
-  --color-text: #0f1c24;
-  --color-text-muted: #4a5d6a;
-  --color-border: #c5d2db;
-  --color-primary: #0a2f3a;
-  --color-primary-soft: #134858;
-  --color-primary-contrast: #f4f8fa;
-  --color-accent: #d97706;
-  --color-accent-soft: rgba(217, 119, 6, 0.12);
-  --color-warning: #9a6b16;
-  --color-warning-bg: #fff6e0;
+  --color-text: var(--brand-navy);
+  --color-text-muted: #4f4f72;
+  --color-border: #c0c0ce;
+  --color-primary: var(--brand-navy);
+  --color-primary-soft: var(--brand-navy-soft);
+  --color-primary-contrast: #ffffff;
+  --color-accent: var(--brand-gold);
+  --color-accent-soft: rgba(202, 145, 61, 0.14);
+  --color-warning: #9b6c27;
+  --color-warning-bg: #f8efdf;
   --color-success: #1a6b4a;
   --color-danger: #9b2c2c;
-  --color-focus: #1d7a96;
+  --color-focus: #306da6;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -24,8 +32,8 @@
   --radius-sm: 0.4rem;
   --radius-md: 0.65rem;
   --radius-lg: 0.9rem;
-  --shadow-sm: 0 1px 2px rgba(15, 28, 36, 0.06);
-  --shadow-md: 0 12px 32px rgba(15, 28, 36, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 102, 0.06);
+  --shadow-md: 0 12px 32px rgba(0, 0, 102, 0.1);
   --nav-height: 4.25rem;
   --app-max-width: 44rem;
   --desktop-max-width: 88rem;
@@ -47,9 +55,10 @@ body {
   padding: 0;
   min-height: 100%;
   background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(10, 47, 58, 0.14), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(217, 119, 6, 0.08), transparent 45%),
-    linear-gradient(180deg, #dfe8ee 0%, var(--color-bg) 38%, #d5e0e8 100%);
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(0, 0, 102, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(202, 145, 61, 0.12), transparent 45%),
+    radial-gradient(ellipse 50% 35% at 70% 100%, rgba(142, 182, 220, 0.18), transparent 50%),
+    linear-gradient(180deg, #e4e4ec 0%, var(--color-bg) 38%, #dcdce5 100%);
   color: var(--color-text);
   font-family: var(--font-sans);
   line-height: 1.5;
@@ -290,10 +299,10 @@ input {
   gap: var(--space-1);
   min-height: var(--nav-height);
   padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom));
-  background: rgba(245, 248, 251, 0.92);
+  background: rgba(247, 247, 250, 0.94);
   border-top: 1px solid var(--color-border);
   backdrop-filter: blur(14px);
-  box-shadow: 0 -8px 24px rgba(15, 28, 36, 0.06);
+  box-shadow: 0 -8px 24px rgba(0, 0, 102, 0.06);
 }
 
 .bottom-nav a {
@@ -312,19 +321,19 @@ input {
 
 .bottom-nav a:hover {
   color: var(--color-text);
-  background: rgba(10, 47, 58, 0.06);
+  background: rgba(0, 0, 102, 0.06);
 }
 
 .bottom-nav a[aria-current="page"] {
   color: var(--color-primary);
-  background: rgba(10, 47, 58, 0.1);
+  background: rgba(0, 0, 102, 0.1);
   transform: translateY(-1px);
 }
 
 .bottom-nav .nav-add span {
-  background: linear-gradient(180deg, var(--color-accent), #b45309);
+  background: linear-gradient(180deg, var(--color-accent), var(--brand-gold-deep));
   color: #fff;
-  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+  box-shadow: 0 4px 12px rgba(202, 145, 61, 0.35);
 }
 
 .bottom-nav .nav-add {
@@ -1472,7 +1481,7 @@ legend {
 .week-day-today {
   border-color: var(--color-primary);
   background:
-    linear-gradient(180deg, rgba(10, 47, 58, 0.06), transparent 42%),
+    linear-gradient(180deg, rgba(0, 0, 102, 0.06), transparent 42%),
     var(--color-surface-elevated);
 }
 
@@ -1499,14 +1508,14 @@ legend {
   font-size: 0.78rem;
   padding: 0.35rem 0.4rem;
   border-radius: var(--radius-sm);
-  background: rgba(10, 47, 58, 0.04);
+  background: rgba(0, 0, 102, 0.04);
   border: 1px solid transparent;
   transition: background var(--motion-fast), border-color var(--motion-fast), transform var(--motion-fast);
 }
 
 .week-day-events li:hover {
-  background: rgba(10, 47, 58, 0.09);
-  border-color: rgba(10, 47, 58, 0.12);
+  background: rgba(0, 0, 102, 0.09);
+  border-color: rgba(0, 0, 102, 0.12);
   transform: translateY(-1px);
 }
 
@@ -2782,10 +2791,10 @@ legend {
 
 @keyframes focus-pulse {
   from {
-    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.45);
+    box-shadow: 0 0 0 0 rgba(202, 145, 61, 0.45);
   }
   to {
-    box-shadow: 0 0 0 10px rgba(217, 119, 6, 0);
+    box-shadow: 0 0 0 10px rgba(202, 145, 61, 0);
   }
 }
 
@@ -2835,7 +2844,7 @@ legend {
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 700;
-  background: rgba(10, 47, 58, 0.08);
+  background: rgba(0, 0, 102, 0.08);
   color: var(--color-primary);
   white-space: nowrap;
 }
@@ -2856,7 +2865,7 @@ legend {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.35rem;
   padding: 0.35rem;
-  background: rgba(15, 28, 36, 0.05);
+  background: rgba(0, 0, 102, 0.05);
   border-radius: var(--radius-lg);
   border: 1px solid transparent;
 }
@@ -2901,7 +2910,7 @@ legend {
   border-left-color: #15803d;
 }
 .schedule-event-card.tone-fundraising {
-  border-left-color: #b45309;
+  border-left-color: var(--brand-gold-deep);
 }
 .schedule-event-card.tone-personal {
   border-left-color: #64748b;
