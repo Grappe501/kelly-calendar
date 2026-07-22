@@ -62,6 +62,17 @@ Make the calendar trustworthy by exposing duplicates, provenance gaps, import an
 
 `npm run calendar:integrity:validate`
 
+## Ship evidence
+
+| Check | Result |
+|-------|--------|
+| Feature commit | `68f8354` |
+| Detector | `CC-02-DETECTOR-1.0` |
+| `calendar:integrity:validate` | PASS |
+| CC-01 `import:apply:proof` | PASS (regression) |
+| Typecheck / unit detectors | PASS |
+| Live route | `/system/calendar/integrity` → auth redirect (protected) |
+
 ## CC-03 handoff
 
 CC-02 reports overnight/all-day/timezone/recurrence integrity risks. **CC-03** owns corrections for campaign-local day membership, multi-day rendering, all-day editing, overnight spans, and DST behavior. Do not begin CC-03 in the CC-02 pass.

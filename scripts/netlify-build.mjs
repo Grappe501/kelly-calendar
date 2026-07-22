@@ -27,7 +27,8 @@ function run(label, args) {
 }
 
 if (!process.env.NODE_OPTIONS?.includes("max-old-space-size")) {
-  process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=4096"]
+  // Local `netlify deploy --build` on Windows routinely peaks above 4GB for this app.
+  process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=8192"]
     .filter(Boolean)
     .join(" ");
 }

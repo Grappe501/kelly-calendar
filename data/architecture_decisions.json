@@ -1,5 +1,5 @@
 {
-  "version": "1.6.0",
+  "version": "1.7.0",
   "decisions": [
     {
       "id": "ADR-015",
@@ -541,6 +541,14 @@
       "date": "2026-07-22",
       "decision": "Every implementation pass during CC-01–CC-12 must measurably improve calendar correctness, usability, interoperability, or operational reliability. Neutral refactors and unrelated campaign expansion are forbidden unless they directly enable and verify a calendar improvement.",
       "boundary": "Does not waive Architecture 1.0 ownership or Communications freeze."
+    },
+    {
+      "id": "ADR-089",
+      "title": "CC-02 Integrity Console Detects Without Auto-Mutating Events",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "The Calendar Integrity & Provenance Console (CC-02) surfaces duplicates, provenance gaps, import anomalies, drift, and lifecycle warnings through bounded scans and dispositions. Scans, views, and dispositions never automatically merge, delete, cancel, archive, restore, reschedule, or rewrite Events or Missions.",
+      "boundary": "Time/recurrence corrections remain CC-03/CC-04. Explicit repairs require preview, auth, confirmation, and audit when later enabled."
     }
   ]
 }

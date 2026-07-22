@@ -144,4 +144,86 @@ describe("CC-02 integrity detectors", () => {
       findings.some((f) => f.findingType === "SOURCE_DELETED_LOCAL_ACTIVE"),
     ).toBe(true);
   });
+
+  it("flags stranded staged import records", () => {
+    const findings = runAllIntegrityDetectors({
+      events: [],
+      identities: [],
+      importRecords: [
+        {
+          id: "rec1",
+          importRunId: "run1",
+          rawFingerprint: "fp1",
+          reviewStatus: "UNREVIEWED",
+          canonicalEventId: null,
+          externalEventIdentityId: null,
+        },
+      ],
+      importRuns: [
+        {
+          id: "run1",
+          externalSourceId: "src",
+          status: "STAGED",
+          stagedCount: 1,
+          approvedCount: 0,
+          rejectedCount: 0,
+          errorCount: 0,
+          recordIds: ["rec1"],
+        },
+      ],
+    });
+    expect(findings.some((f) => f.findingType === "STRANDED_STAGED_RECORD")).toBe(
+      true,
+    );
+  });
+
+  it("flags mission boundary when multiple missions claim one event", () => {
+    const findings = runAllIntegrityDetectors({
+      events: [
+        event({
+          id: "e1",
+          eventNumber: "6",
+          internalTitle: "Missioned",
+          missionId: "m1",
+        }),
+      ],
+      identities: [],
+      importRecords: [],
+      importRuns: [],
+      missions: [
+        { id: "m1", sourceEventId: "e1" },
+        { id: "m2", sourceEventId: "e1" },
+      ],
+    });
+    expect(findings.some((f) => f.findingType === "MISSION_BOUNDARY_ANOMALY")).toBe(
+      true,
+    );
+  });
+
+  it("flags near-duplicate candidates with overlapping time and same title", () => {
+    const findings = runAllIntegrityDetectors({
+      events: [
+        event({
+          id: "n1",
+          eventNumber: "7",
+          internalTitle: "County Fair Visit",
+          city: "Little Rock",
+        }),
+        event({
+          id: "n2",
+          eventNumber: "8",
+          internalTitle: "County Fair Visit",
+          city: "Little Rock",
+          startsAt: new Date("2026-09-15T14:30:00-05:00"),
+          endsAt: new Date("2026-09-15T15:30:00-05:00"),
+        }),
+      ],
+      identities: [],
+      importRecords: [],
+      importRuns: [],
+    });
+    expect(
+      findings.some((f) => f.findingType === "NEAR_DUPLICATE_CANDIDATE"),
+    ).toBe(true);
+  });
 });
