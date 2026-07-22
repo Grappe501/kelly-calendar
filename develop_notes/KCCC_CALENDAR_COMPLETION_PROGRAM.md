@@ -35,7 +35,8 @@ CC-07…CC-12 extension points  Allowed (query contracts, tokens, mobile-safe la
                               provider-neutral interfaces, geographic identifiers)
 CC-07…CC-12 hard stop ....... No hidden Phase Two features; no widened data collection
 Next engineering build ....... NONE AUTHORIZED — waiting on separate CC-07 authorization
-Authoritative tip ............ main @ 68d6476
+Authoritative tip ............ main @ 68d6476 (Kelly-confirmed posture)
+Posture lock commit .......... 203bfe3 (protected sequence + extension boundary)
 CC-05 ship evidence ......... main@46a72c3 · deploy 6a60efa8f25804bc9b16f3f3
 CC-06 authorization ......... develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md
 CC-06 ship evidence ......... develop_notes/KCCC_CC_06_CONFLICT_ENGINE.md

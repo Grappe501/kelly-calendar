@@ -61,7 +61,8 @@ CC-07 remains design-only and unauthorized until that decision is recorded.
 
 | Item | Value |
 |------|-------|
-| Git tip | `main` @ `68d6476` |
+| Git tip (Kelly-confirmed) | `main` @ `68d6476` |
+| Posture lock commit | `203bfe3` (this boundary reinforcement) |
 | Phase Two | ADR-093 — vision/architecture only |
 | IC-01…IC-12 | No implementation before CC-12 |
 | CC-07 | Design-only · unauthorized |
