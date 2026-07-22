@@ -1,3 +1,5 @@
+import { isStandingWorkBlockEvent } from "@/lib/campaign/standing-work-blocks";
+
 export type WorkloadDay = {
   date: string;
   eventCount: number;
@@ -19,10 +21,19 @@ export function analyzeCandidateWorkload(input: {
     endsAt: Date;
     isTravel?: boolean;
     isPublicFacing?: boolean;
+    eventType?: string | null;
+    title?: string | null;
   }>;
 }): CandidateWorkloadSummary {
-  const byDay = new Map<string, typeof input.events>();
-  for (const e of input.events) {
+  const countable = input.events.filter(
+    (e) =>
+      !isStandingWorkBlockEvent({
+        eventType: e.eventType,
+        title: e.title,
+      }),
+  );
+  const byDay = new Map<string, typeof countable>();
+  for (const e of countable) {
     const key = e.startsAt.toISOString().slice(0, 10);
     const list = byDay.get(key) ?? [];
     list.push(e);

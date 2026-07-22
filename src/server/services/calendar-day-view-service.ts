@@ -2,7 +2,6 @@ import "server-only";
 
 import { detectCandidateOverlaps } from "@/features/operational-intelligence/services/conflict-service";
 import type { OperationalConflict } from "@/features/operational-intelligence/types/conflict-types";
-import { getStandingAvailabilityPolicy } from "@/lib/campaign/availability-policy";
 import {
   CAMPAIGN_CALENDAR_TIMEZONE,
   chicagoTodayKey,
@@ -114,7 +113,8 @@ export async function getCalendarDayViewData(
     missions,
     readiness,
     conflicts,
-    standingReminders: getStandingAvailabilityPolicy().rules.map((r) => r.summary),
+    // Office hours are background busy blocks — do not list the work schedule on the day lens.
+    standingReminders: [],
     weatherStatus: "NOT_INTEGRATED",
     viewerDisplayName: actor.displayName,
     cataloguePartial: graph.cataloguePartial,

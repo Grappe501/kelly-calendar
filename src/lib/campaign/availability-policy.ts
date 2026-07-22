@@ -125,8 +125,11 @@ export function getStandingAvailabilityPolicy() {
     timezone: "America/Chicago" as const,
     rules: STANDING_AVAILABILITY_RULES,
     officeHoursTitle: "Kelly Grappe – Secretary of State Campaign Office Hours",
-    materialization: "event_materialization_supported" as const,
-    databaseEventsCreated: true,
+    /** Office hours block time in policy only — not listed calendar Events. */
+    materialization: "policy_busy_blocks_only" as const,
+    databaseEventsCreated: false,
+    listedOnCalendar: false,
+    countedInWorkload: false,
     candidateData: flags.candidateDataReady,
   };
 }

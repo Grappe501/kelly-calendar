@@ -2,7 +2,6 @@ import "server-only";
 
 import { detectCandidateOverlaps } from "@/features/operational-intelligence/services/conflict-service";
 import type { OperationalConflict } from "@/features/operational-intelligence/types/conflict-types";
-import { getStandingAvailabilityPolicy } from "@/lib/campaign/availability-policy";
 import {
   CAMPAIGN_CALENDAR_TIMEZONE,
   chicagoDateKey,
@@ -562,7 +561,8 @@ export async function getCalendarWeekViewData(
         "Week-scoped change log not available — see Executive Brief for today's owned brief.",
       fullBriefHref: "/brief",
     },
-    standingReminders: getStandingAvailabilityPolicy().rules.map((r) => r.summary),
+    // Office hours are background busy blocks — do not list the work schedule on the week lens.
+    standingReminders: [],
     conflicts,
     cataloguePartial,
     isCurrentWeek: weekKeySet.has(todayKey),

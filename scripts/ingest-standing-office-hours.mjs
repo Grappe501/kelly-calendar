@@ -1,6 +1,7 @@
 /**
- * Materialize Mon–Fri Campaign Office Hours as Busy calendar events.
- * Skips windows that already overlap a non-standing campaign/travel/mission event.
+ * Standing office hours are POLICY busy blocks only — not calendar Events.
+ * This script CANCELS any previously materialized standing-office rows so they
+ * no longer fill the calendar or inflate counts.
  *
  * Usage: npm run events:ingest:standing-office-hours
  */
@@ -10,19 +11,14 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const PASS = "STANDING-OFFICE-2026-07-21";
-const SOURCE = "standing-office-hours-ingest";
-const TITLE = "Kelly Grappe – Secretary of State Campaign Office Hours";
-
-/** Inclusive materialization window (America/Chicago calendar dates). */
-const RANGE_START = "2026-07-22";
-const RANGE_END = "2026-09-30";
+const PASS = "STANDING-OFFICE-HIDE-2026-07-21";
+const SOURCE = "standing-office-hours-retire";
 
 const isDeployRuntime =
   process.env.NETLIFY === "true" || process.env.CONTEXT === "production";
 if (isDeployRuntime && process.env.KCCC_ALLOW_OPERATOR_LIVE_INGEST !== "true") {
   console.error(
-    "REFUSED: standing office ingest blocked on Netlify/production without KCCC_ALLOW_OPERATOR_LIVE_INGEST=true",
+    "REFUSED: standing office retire blocked on Netlify/production without KCCC_ALLOW_OPERATOR_LIVE_INGEST=true",
   );
   process.exit(1);
 }
@@ -62,335 +58,85 @@ childEnv.DATABASE_URL = process.env.DATABASE_URL;
 childEnv.DIRECT_URL = process.env.DIRECT_URL;
 childEnv.APP_SESSION_SECRET = process.env.APP_SESSION_SECRET;
 
-for (const script of ["scripts/seed-auth-users.mjs", "scripts/database-seed-reference.mjs"]) {
-  const r = spawnSync(process.execPath, [script], {
-    cwd: root,
-    stdio: "inherit",
-    env: childEnv,
-  });
-  if (r.status !== 0) process.exit(r.status ?? 1);
-}
-
 const { PrismaClient } = await import("@prisma/client");
 const prisma = new PrismaClient();
 
-function chicagoLocalToDate(localIso) {
-  return new Date(`${localIso}-05:00`);
-}
-
-function notes(ingestKey, text) {
-  return `[ingestKey:${ingestKey}]\n[pass:${PASS}]\n${text}`;
-}
-
-function eachWeekday(startYmd, endYmd) {
-  const out = [];
-  const [ys, ms, ds] = startYmd.split("-").map(Number);
-  const [ye, me, de] = endYmd.split("-").map(Number);
-  const cur = new Date(Date.UTC(ys, ms - 1, ds));
-  const end = new Date(Date.UTC(ye, me - 1, de));
-  while (cur <= end) {
-    const dow = cur.getUTCDay(); // 0 Sun … 6 Sat
-    if (dow >= 1 && dow <= 5) {
-      const y = cur.getUTCFullYear();
-      const m = String(cur.getUTCMonth() + 1).padStart(2, "0");
-      const d = String(cur.getUTCDate()).padStart(2, "0");
-      const ymd = `${y}-${m}-${d}`;
-      out.push({
-        ymd,
-        weekday: dow,
-        isTuesday: dow === 2,
-        isMonday: dow === 1,
-        isLastTuesdayOfMonth: dow === 2 && isLastTuesdayOfMonth(y, cur.getUTCMonth(), cur.getUTCDate()),
-        isMondayBeforeLastTuesday: false,
-      });
-    }
-    cur.setUTCDate(cur.getUTCDate() + 1);
-  }
-  // Mark Mondays that precede the last Tuesday of their month
-  for (const day of out) {
-    if (!day.isMonday) continue;
-    const [y, m, d] = day.ymd.split("-").map(Number);
-    const lastTue = lastTuesdayDate(y, m - 1);
-    if (d === lastTue - 1) day.isMondayBeforeLastTuesday = true;
-  }
-  return out;
-}
-
-function lastTuesdayDate(year, monthIndex0) {
-  const last = new Date(Date.UTC(year, monthIndex0 + 1, 0));
-  const dow = last.getUTCDay();
-  const offset = (dow + 7 - 2) % 7; // days since Tuesday
-  return last.getUTCDate() - offset;
-}
-
-function isLastTuesdayOfMonth(year, monthIndex0, dayOfMonth) {
-  return dayOfMonth === lastTuesdayDate(year, monthIndex0);
-}
-
-async function allocateEventNumber(tx, year) {
-  const existing = await tx.eventNumberCounter.findUnique({ where: { year } });
-  if (!existing) {
-    await tx.eventNumberCounter.create({ data: { year, nextValue: 2 } });
-    return `KCCC-${year}-0001`;
-  }
-  const current = existing.nextValue;
-  await tx.eventNumberCounter.update({
-    where: { year },
-    data: { nextValue: { increment: 1 } },
-  });
-  return `KCCC-${year}-${String(current).padStart(4, "0")}`;
-}
-
 const proof = {
   pass: PASS,
-  range: { start: RANGE_START, end: RANGE_END },
-  created: [],
-  updated: [],
-  skippedOverride: [],
-  cancelledStanding: [],
+  mode: "retire_listed_office_hours",
+  policy: "Weekday 8–12 / 1–5 remain blocked as background availability only — not listed Events.",
+  cancelled: [],
+  alreadyCancelled: 0,
 };
 
-async function findByIngestKey(key) {
-  return prisma.event.findFirst({
-    where: { archivedAt: null, privateNotes: { startsWith: `[ingestKey:${key}]` } },
-  });
-}
-
-async function hasOverride(startsAt, endsAt) {
-  const hits = await prisma.event.findMany({
+try {
+  const rows = await prisma.event.findMany({
     where: {
       archivedAt: null,
-      status: { not: "CANCELLED" },
-      startsAt: { lt: endsAt },
-      endsAt: { gt: startsAt },
-      NOT: { privateNotes: { contains: `[pass:${PASS}]` } },
+      OR: [
+        { eventType: "Campaign Office Hours" },
+        { privateNotes: { contains: "[ingestKey:standing-office-" } },
+        {
+          AND: [
+            { sourceType: "SYSTEM" },
+            { internalTitle: { contains: "Campaign Office Hours" } },
+          ],
+        },
+      ],
     },
-    select: { eventNumber: true, internalTitle: true, privateNotes: true },
-    take: 5,
-  });
-  return hits.filter((h) => !h.privateNotes?.includes("[ingestKey:standing-office-"));
-}
-
-async function upsertBlock(actorUser, calendarId, spec) {
-  const overrides = await hasOverride(spec.startsAt, spec.endsAt);
-  const existing = await findByIngestKey(spec.key);
-
-  if (overrides.length > 0) {
-    if (existing && existing.status !== "CANCELLED") {
-      await prisma.event.update({
-        where: { id: existing.id },
-        data: {
-          status: "CANCELLED",
-          privateNotes: `${existing.privateNotes}\n[SUPERSEDED:${PASS}] Mission/event override — office hours not applied.`,
-          version: { increment: 1 },
-        },
-      });
-      proof.cancelledStanding.push({
-        key: spec.key,
-        overriddenBy: overrides.map((o) => o.eventNumber),
-      });
-      console.log(`CANCEL standing (override): ${spec.key}`);
-    } else {
-      proof.skippedOverride.push({
-        key: spec.key,
-        overriddenBy: overrides.map((o) => o.eventNumber),
-      });
-      console.log(`SKIP (override): ${spec.key}`);
-    }
-    return;
-  }
-
-  const data = {
-    internalTitle: TITLE,
-    campaignDisplayTitle: TITLE,
-    eventType: "Campaign Office Hours",
-    status: "CONFIRMED",
-    priority: "High",
-    startsAt: spec.startsAt,
-    endsAt: spec.endsAt,
-    timezone: "America/Chicago",
-    city: spec.city,
-    venueName: spec.venueName,
-    locationDisclosure: "CITY",
-    defaultVisibility: "TITLE_LOCATION",
-    privateNotes: spec.privateNotes,
-    primaryCalendarId: calendarId,
-  };
-
-  if (existing && existing.status !== "CANCELLED") {
-    const updated = await prisma.event.update({
-      where: { id: existing.id },
-      data: { ...data, version: { increment: 1 } },
-    });
-    proof.updated.push({ key: spec.key, eventNumber: updated.eventNumber });
-    console.log(`UPDATED: ${spec.key} → ${updated.eventNumber}`);
-    return;
-  }
-
-  if (existing?.status === "CANCELLED") {
-    const revived = await prisma.event.update({
-      where: { id: existing.id },
-      data: { ...data, status: "CONFIRMED", version: { increment: 1 } },
-    });
-    proof.updated.push({ key: spec.key, eventNumber: revived.eventNumber, revived: true });
-    console.log(`REVIVED: ${spec.key} → ${revived.eventNumber}`);
-    return;
-  }
-
-  const created = await prisma.$transaction(async (tx) => {
-    const year = spec.startsAt.getFullYear();
-    const eventNumber = await allocateEventNumber(tx, year);
-    const event = await tx.event.create({
-      data: {
-        eventNumber,
-        sourceType: "SYSTEM",
-        createdByUserId: actorUser.id,
-        ownerUserId: actorUser.id,
-        ...data,
-        version: 1,
-      },
-    });
-    await tx.eventCalendarMembership.create({
-      data: {
-        eventId: event.id,
-        calendarId,
-        membershipType: "PRIMARY",
-        isPrimary: true,
-        createdByUserId: actorUser.id,
-      },
-    });
-    await tx.eventStatusHistory.create({
-      data: {
-        eventId: event.id,
-        fromStatus: null,
-        toStatus: "CONFIRMED",
-        changedByUserId: actorUser.id,
-        reason: `Standing office hours ${PASS}`,
-      },
-    });
-    await tx.auditLog.create({
-      data: {
-        actorUserId: actorUser.id,
-        actorType: "USER",
-        action: "EVENT_CREATED",
-        entityType: "Event",
-        entityId: event.id,
-        source: SOURCE,
-        reason: `Standing office hours ${PASS}`,
-        newStateRedacted: {
-          eventNumber: event.eventNumber,
-          ingestKey: spec.key,
-          status: "CONFIRMED",
-        },
-      },
-    });
-    return event;
+    select: {
+      id: true,
+      eventNumber: true,
+      status: true,
+      privateNotes: true,
+    },
   });
 
-  proof.created.push({ key: spec.key, eventNumber: created.eventNumber });
-  console.log(`CREATED: ${spec.key} → ${created.eventNumber}`);
-}
+  console.log(`--- ${PASS} retire ${rows.length} standing office rows ---`);
 
-try {
-  const actorUser = await prisma.user.findFirst({
-    where: { email: "kelly.command@example.invalid", isActive: true },
-  });
-  if (!actorUser) throw new Error("Kelly synthetic user missing");
-
-  const calendar = await prisma.calendar.findFirst({
-    where: { slug: "candidate", archivedAt: null },
-  });
-  if (!calendar) throw new Error("candidate calendar missing");
-
-  const days = eachWeekday(RANGE_START, RANGE_END);
-  console.log(`--- ${PASS} materialize ${days.length} weekdays ${RANGE_START}→${RANGE_END} ---`);
-
-  for (const day of days) {
-    // Last Tuesday of month: skip Tue office blocks (field/immersion day).
-    // Preceding Monday: treat as Little Rock office day.
-    const forceLittleRock = day.isTuesday || day.isMondayBeforeLastTuesday;
-    const skipDay = day.isLastTuesdayOfMonth;
-
-    if (skipDay) {
-      for (const half of ["am", "pm"]) {
-        const key = `standing-office-${half}-${day.ymd}`;
-        const existing = await findByIngestKey(key);
-        if (existing && existing.status !== "CANCELLED") {
-          await prisma.event.update({
-            where: { id: existing.id },
-            data: {
-              status: "CANCELLED",
-              privateNotes: `${existing.privateNotes}\n[SUPERSEDED:${PASS}] Last Tuesday of month — LR office shifted to Monday; Tuesday reserved for field/immersion.`,
-              version: { increment: 1 },
-            },
-          });
-          proof.cancelledStanding.push({ key, reason: "last_tuesday_field_day" });
-          console.log(`CANCEL standing (last Tue): ${key}`);
-        } else {
-          proof.skippedOverride.push({ key, reason: "last_tuesday_skip" });
-          console.log(`SKIP (last Tue): ${key}`);
-        }
-      }
+  for (const row of rows) {
+    if (row.status === "CANCELLED") {
+      proof.alreadyCancelled += 1;
       continue;
     }
-
-    const locLine = forceLittleRock
-      ? day.isMondayBeforeLastTuesday
-        ? "Location: Little Rock Campaign Office (Monday before last Tuesday of month — office-day shift)."
-        : "Location: Little Rock Campaign Office (Tuesday default)."
-      : "Location: As Scheduled.";
-    const amKey = `standing-office-am-${day.ymd}`;
-    const pmKey = `standing-office-pm-${day.ymd}`;
-
-    await upsertBlock(actorUser, calendar.id, {
-      key: amKey,
-      startsAt: chicagoLocalToDate(`${day.ymd}T08:00:00`),
-      endsAt: chicagoLocalToDate(`${day.ymd}T12:00:00`),
-      city: forceLittleRock ? "Little Rock" : null,
-      venueName: forceLittleRock ? "Little Rock Campaign Office" : null,
-      privateNotes: notes(
-        amKey,
-        [
-          "STANDING: Morning Campaign Office Hours (Busy).",
-          locLine,
-          "Lunch 12:00–1:00 remains open unless separately scheduled.",
-          "OVERRIDE: campaign missions/travel/events replace this block when overlapping.",
-        ].join("\n"),
-      ),
+    await prisma.event.update({
+      where: { id: row.id },
+      data: {
+        status: "CANCELLED",
+        privateNotes: `${row.privateNotes ?? ""}\n[RETIRED:${PASS}] Office hours are policy busy blocks only — not listed on calendar or counted.`,
+        version: { increment: 1 },
+      },
     });
-
-    await upsertBlock(actorUser, calendar.id, {
-      key: pmKey,
-      startsAt: chicagoLocalToDate(`${day.ymd}T13:00:00`),
-      endsAt: chicagoLocalToDate(`${day.ymd}T17:00:00`),
-      city: forceLittleRock ? "Little Rock" : null,
-      venueName: forceLittleRock ? "Little Rock Campaign Office" : null,
-      privateNotes: notes(
-        pmKey,
-        [
-          "STANDING: Afternoon Campaign Office Hours (Busy).",
-          locLine,
-          "OVERRIDE: campaign missions/travel/events replace this block when overlapping.",
-        ].join("\n"),
-      ),
-    });
+    proof.cancelled.push(row.eventNumber);
+    console.log(`CANCEL listed office block: ${row.eventNumber}`);
   }
 
-  const outPath = path.join(
-    root,
-    "develop_notes",
-    "database_proofs",
-    "standing-office-hours-ingest-latest.json",
-  );
-  fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  fs.writeFileSync(outPath, JSON.stringify(proof, null, 2));
-  console.log(`PASS: wrote ${path.relative(root, outPath)}`);
+  await prisma.auditLog.create({
+    data: {
+      actorType: "SYSTEM",
+      action: "STANDING_OFFICE_RETIRED",
+      entityType: "Event",
+      entityId: "standing-office-hours",
+      source: SOURCE,
+      reason: `Retired ${proof.cancelled.length} listed office-hour Events (${PASS})`,
+      newStateRedacted: {
+        cancelledCount: proof.cancelled.length,
+        alreadyCancelled: proof.alreadyCancelled,
+      },
+    },
+  });
+
+  const outDir = path.join(root, "develop_notes", "database_proofs");
+  fs.mkdirSync(outDir, { recursive: true });
+  const outPath = path.join(outDir, "standing-office-hours-ingest-latest.json");
+  fs.writeFileSync(outPath, `${JSON.stringify(proof, null, 2)}\n`, "utf8");
   console.log(
-    `PASS: created=${proof.created.length} updated=${proof.updated.length} skipped=${proof.skippedOverride.length} cancelled=${proof.cancelledStanding.length}`,
+    `PASS: cancelled=${proof.cancelled.length} alreadyCancelled=${proof.alreadyCancelled}`,
   );
+  console.log(`PASS: wrote ${path.relative(root, outPath)}`);
 } catch (err) {
-  console.error("FAIL:", err instanceof Error ? err.message : String(err));
-  process.exit(1);
+  console.error("FAIL:", err);
+  process.exitCode = 1;
 } finally {
   await prisma.$disconnect();
 }

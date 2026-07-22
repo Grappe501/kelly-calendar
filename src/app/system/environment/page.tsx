@@ -38,7 +38,8 @@ export default function EnvironmentPage() {
       <section className="panel">
         <h2>Standing availability policy</h2>
         <p className="muted">
-          Encoded for all future calendar views. Not written as database events until Step 5+.
+          Weekday office hours block time in the background. They are not listed as
+          calendar events and are not included in event counts.
         </p>
         <ul>
           {availability.rules.map((rule) => (

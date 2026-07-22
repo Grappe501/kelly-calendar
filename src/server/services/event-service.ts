@@ -20,6 +20,7 @@ import { prisma } from "@/server/db/prisma";
 import { withTransaction } from "@/server/db/transaction";
 import { writeAttributedAudit } from "@/server/services/audit-write";
 import { ConflictError, NotFoundError, ValidationError } from "@/lib/security/safe-error";
+import { excludeStandingWorkBlocksWhere } from "@/lib/campaign/standing-work-blocks";
 
 function mapAccessToViewer(
   level: string,
@@ -302,6 +303,9 @@ export async function listEventsForActorInRange(
   const events = await prisma.event.findMany({
     where: {
       archivedAt: null,
+      status: { not: "CANCELLED" },
+      // Standing office hours are background busy time — never list or count them.
+      ...excludeStandingWorkBlocksWhere,
       // Overlap [rangeStart, rangeEnd)
       startsAt: { lt: input.rangeEnd },
       endsAt: { gt: input.rangeStart },
