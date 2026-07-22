@@ -1,0 +1,123 @@
+{
+  "pass": "SEP-OPERATOR-BATCH-2026-09",
+  "events": [
+    {
+      "key": "return-madison-rosebud-2026-09-03",
+      "eventNumber": "KCCC-2026-0180",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-nashville-howard-2026-09-07",
+      "eventNumber": "KCCC-2026-0181",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-nashville-howard-2026-09-07",
+      "eventNumber": "KCCC-2026-0182",
+      "status": "HOLD"
+    },
+    {
+      "key": "howard-county-dem-meeting-2026-09-08",
+      "eventNumber": "KCCC-2026-0183",
+      "status": "HOLD"
+    },
+    {
+      "key": "return-nashville-littlerock-2026-09-08",
+      "eventNumber": "KCCC-2026-0184",
+      "status": "HOLD"
+    },
+    {
+      "key": "kelly-work-lr-2026-09-09",
+      "eventNumber": "KCCC-2026-0185",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "kelly-leave-work-howard-2026-09-10",
+      "eventNumber": "KCCC-2026-0186",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-howard-roundtrip-2026-09-10",
+      "eventNumber": "KCCC-2026-0187",
+      "status": "HOLD"
+    },
+    {
+      "key": "howard-county-dem-meeting-2026-09-10",
+      "eventNumber": "KCCC-2026-0188",
+      "status": "HOLD"
+    },
+    {
+      "key": "russellville-voter-reg-mary-ella-2026-09-15",
+      "eventNumber": "KCCC-2026-0189",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-hsv-after-work-2026-09-15",
+      "eventNumber": "KCCC-2026-0190",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-hsv-2026-09-15",
+      "eventNumber": "KCCC-2026-0191",
+      "status": "HOLD"
+    },
+    {
+      "key": "kelly-vacation-hsv-forum-2026-09-16",
+      "eventNumber": "KCCC-2026-0192",
+      "status": "CONFIRMED"
+    },
+    {
+      "key": "hsv-candidate-forum-2026-09-16",
+      "eventNumber": "KCCC-2026-0193",
+      "status": "HOLD"
+    },
+    {
+      "key": "grassroots-guitar-strings-sherwood-2026-09-17",
+      "eventNumber": "KCCC-2026-0194",
+      "status": "HOLD"
+    },
+    {
+      "key": "comic-con-littlerock-table-2026-09-19",
+      "eventNumber": "KCCC-2026-0195",
+      "status": "HOLD"
+    },
+    {
+      "key": "travel-arkadelphia-2026-09-19",
+      "eventNumber": "KCCC-2026-0196",
+      "status": "HOLD"
+    },
+    {
+      "key": "lodging-arkadelphia-2026-09-19",
+      "eventNumber": "KCCC-2026-0197",
+      "status": "HOLD"
+    },
+    {
+      "key": "arkadelphia-church-tours-2026-09-20",
+      "eventNumber": "KCCC-2026-0198",
+      "status": "HOLD"
+    },
+    {
+      "key": "press-freedom-gala-littlerock-2026-09-22",
+      "eventNumber": "KCCC-2026-0199",
+      "status": "HOLD"
+    }
+  ],
+  "conflictsSurfaced": [
+    "russellville-voter-reg-mary-ella-2026-09-15 (all day) ∩ travel/lodging HSV evening Sep 15",
+    "howard-county-dem-meeting-2026-09-08 ∩ howard-county-dem-meeting-2026-09-10 (verify which date)"
+  ],
+  "openDecisions": [
+    "Howard County Dem: Sep 8 overnight, Sep 10 same-day, or both?",
+    "Reconcile Sep 15 Russellville all-day vs HSV after-work drive.",
+    "Complete Paragould Sep 26 details (operator message cut off) — greene-community-forum already HOLD.",
+    "Lock Sherwood rally venue/time/run-of-show with Jay Powell & Christy Low.",
+    "Book Arkadelphia lodging; pull Bruce Bell church list into CRM notes."
+  ],
+  "planGuide": "develop_notes/KCCC_GRASSROOTS_GUITAR_STRINGS_SEP17_2026_PLAN.md",
+  "paragouldSep26": {
+    "key": "greene-community-forum-2026-09-26",
+    "eventNumber": "KCCC-2026-0157",
+    "status": "HOLD",
+    "note": "Awaiting operator completion of truncated message"
+  }
+}
