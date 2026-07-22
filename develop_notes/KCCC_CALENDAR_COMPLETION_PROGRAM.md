@@ -22,10 +22,11 @@ Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
 CC-05 / CC-06 ............... GATED (Usability Synthesis or Kelly/Steve waiver)
-Next authorized build ....... CC-04 Recurrence & Occurrence Exceptions
+Next authorized build ....... CC-05 Standing Availability Inputs (GATED)
 CC-01 status ................ COMPLETE
 CC-02 status ................ COMPLETE
 CC-03 status ................ COMPLETE
+CC-04 status ................ COMPLETE
 ```
 
 This program finishes the **calendar product** before shifting attention to broader campaign functions. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, and does **not** replace the Operator Usability Synthesis gate for intelligence work (CC-05 / CC-06).
@@ -37,8 +38,8 @@ This program finishes the **calendar product** before shifting attention to broa
 | **CC-01** | Import Approval → Canonical Apply | L | **COMPLETE** |
 | **CC-02** | Calendar Integrity & Provenance Console | L | **COMPLETE** — detector + console; no auto Event mutation |
 | **CC-03** | Timezone, All-day & Overnight Hardening | M | **COMPLETE** — doctrine + temporal service; no schema migration |
-| **CC-04** | Recurrence & Occurrence Exceptions | XL | **NEXT** — prefer after CC-03 |
-| **CC-05** | Standing Availability Inputs | L | **GATED** — Usability Synthesis complete **or** Kelly/Steve waiver |
+| **CC-04** | Recurrence & Occurrence Exceptions | XL | **COMPLETE** — Model B series + materialized Events; `rrule` |
+| **CC-05** | Standing Availability Inputs | L | **NEXT (GATED)** — Usability Synthesis complete **or** Kelly/Steve waiver |
 | **CC-06** | Conflict Engine | XL | **GATED** — requires CC-05 (or explicit waiver of both) |
 | **CC-07** | Unified Search, Filters & Saved Views | M | Parallel after core |
 | **CC-08** | Advanced Day/Week Scheduling Workspace | L | Time grid first; drag-and-drop deferred |

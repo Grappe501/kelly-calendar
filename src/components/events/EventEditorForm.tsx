@@ -344,6 +344,14 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
               <Link href={`/system/missions/${initial.missionId}`}>Mission workspace</Link>
             </>
           ) : null}
+          {initial.recurrenceSeriesId ? (
+            <>
+              {" · "}
+              <Link href={`/calendar/series/${initial.recurrenceSeriesId}`}>
+                View series
+              </Link>
+            </>
+          ) : null}
         </p>
       </header>
 
@@ -546,6 +554,30 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
           >
             Cancel event
           </button>
+          {initial.isRecurring ? (
+            <button
+              type="button"
+              className="button"
+              disabled={!canMutate || busy || status === "CANCELLED"}
+              onClick={() => {
+                const ok = window.confirm(
+                  "Cancel only this occurrence? The series continues. History is retained.",
+                );
+                if (!ok) return;
+                void runAction(
+                  `/api/events/${initial.eventId}/occurrence`,
+                  {
+                    expectedVersion: version,
+                    action: "cancel",
+                    reason: "Occurrence cancelled from event sheet",
+                  },
+                  "Occurrence cancelled.",
+                );
+              }}
+            >
+              Cancel this occurrence
+            </button>
+          ) : null}
           <button
             type="button"
             className="button"

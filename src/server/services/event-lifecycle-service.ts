@@ -14,7 +14,6 @@ import { getSafeEventForViewer } from "@/server/services/event-service";
 import { ValidationError } from "@/lib/security/safe-error";
 import { PUBLISH_TARGET_STATUSES } from "@/lib/calendar/event-status-transitions";
 import type { EventStatus } from "@prisma/client";
-import { randomUUID } from "crypto";
 
 async function returnSafe(actor: AuthenticatedActor, eventId: string) {
   return getSafeEventForViewer({
@@ -77,84 +76,27 @@ export async function rescheduleEvent(input: {
   /** this | this_and_future | series — series edits require recurrenceSeriesId */
   scope?: "this" | "this_and_future" | "series";
   requestId?: string;
+  seriesFingerprint?: string;
 }) {
-  await requireAuthorized(input.actor, {
-    action: "EVENT_EDIT",
-    resource: { type: "event", id: input.eventId },
+  const { mutateRecurrenceScope } = await import(
+    "@/server/services/recurrence-series-service"
+  );
+  const result = await mutateRecurrenceScope({
+    actor: input.actor,
+    eventId: input.eventId,
+    expectedVersion: input.expectedVersion,
+    scope: input.scope ?? "this",
+    startsAt: input.startsAt,
+    endsAt: input.endsAt,
+    timezone: input.timezone,
+    requestId: input.requestId,
+    seriesFingerprint: input.seriesFingerprint,
   });
-
-  const scope = input.scope ?? "this";
-  const source = await prisma.event.findFirst({
-    where: { id: input.eventId, archivedAt: null },
-  });
-  if (!source) {
-    throw new ValidationError("Event not found.");
-  }
-
-  if (scope === "this" || !source.recurrenceSeriesId) {
-    const event = await updateCanonicalEvent({
-      actor: input.actor,
-      eventId: input.eventId,
-      data: {
-        expectedVersion: input.expectedVersion,
-        startsAt: input.startsAt,
-        endsAt: input.endsAt,
-        timezone: input.timezone,
-        statusChangeReason: "Rescheduled",
-        requestId: input.requestId,
-      },
-    });
-    return { event: await returnSafe(input.actor, event.id), updatedCount: 1 };
-  }
-
-  const deltaMs =
-    new Date(input.startsAt).getTime() - source.startsAt.getTime();
-  const durationMs = source.endsAt.getTime() - source.startsAt.getTime();
-
-  const siblings = await prisma.event.findMany({
-    where: {
-      recurrenceSeriesId: source.recurrenceSeriesId,
-      archivedAt: null,
-      status: { not: "CANCELLED" },
-      ...(scope === "this_and_future"
-        ? { startsAt: { gte: source.startsAt } }
-        : {}),
-    },
-    orderBy: { startsAt: "asc" },
-  });
-
-  let updatedCount = 0;
-  let primarySafe = null as Awaited<ReturnType<typeof returnSafe>> | null;
-
-  for (const sibling of siblings) {
-    const nextStart = new Date(sibling.startsAt.getTime() + deltaMs);
-    const nextEnd = new Date(nextStart.getTime() + durationMs);
-    const updated = await updateCanonicalEvent({
-      actor: input.actor,
-      eventId: sibling.id,
-      data: {
-        expectedVersion: sibling.version,
-        startsAt: nextStart.toISOString(),
-        endsAt: nextEnd.toISOString(),
-        timezone: input.timezone ?? sibling.timezone,
-        statusChangeReason:
-          scope === "series"
-            ? "Rescheduled (full series)"
-            : "Rescheduled (this and future)",
-        requestId: input.requestId,
-      },
-    });
-    updatedCount += 1;
-    if (sibling.id === input.eventId) {
-      primarySafe = await returnSafe(input.actor, updated.id);
-    }
-  }
-
   return {
-    event:
-      primarySafe ??
-      (await returnSafe(input.actor, input.eventId)),
-    updatedCount,
+    event: await returnSafe(input.actor, input.eventId),
+    updatedCount: result.updatedCount,
+    scope: result.scope,
+    seriesId: result.seriesId,
   };
 }
 
@@ -182,12 +124,18 @@ export async function duplicateEvent(input: {
 }
 
 /**
- * Create event; optionally expand a simple weekly RRULE into sibling Events.
+ * Create event; optionally expand a recurrence rule into sibling Events (CC-04).
  * All instances are canonical Event rows sharing recurrenceSeriesId.
+ * Prefer createRecurringSeries when a full RRULE + series row is required.
  */
 export async function createEventWithOptionalRecurrence(input: {
   actor: AuthenticatedActor;
-  data: CreateEventInput & { weeklyOccurrences?: number };
+  data: CreateEventInput & {
+    weeklyOccurrences?: number;
+    materializeCount?: number;
+    untilLocal?: string;
+    exdatesLocal?: string[];
+  };
 }) {
   await requireAuthorized(input.actor, {
     action: "EVENT_CREATE",
@@ -201,47 +149,36 @@ export async function createEventWithOptionalRecurrence(input: {
     Math.max(input.data.weeklyOccurrences ?? 0, 0),
     12,
   );
-  const seriesId =
-    weeklyOccurrences > 1 || input.data.isRecurring || input.data.recurrenceRule
-      ? input.data.recurrenceSeriesId ?? randomUUID()
-      : undefined;
+
+  // Full CC-04 path when an explicit RRULE is provided (or weekly count > 1).
+  if (input.data.recurrenceRule || weeklyOccurrences > 1) {
+    const { createRecurringSeries } = await import(
+      "@/server/services/recurrence-series-service"
+    );
+    const rule =
+      input.data.recurrenceRule?.trim() || "FREQ=WEEKLY;INTERVAL=1";
+    const result = await createRecurringSeries({
+      actor: input.actor,
+      data: {
+        ...input.data,
+        recurrenceRule: rule,
+        materializeCount:
+          input.data.materializeCount ??
+          (weeklyOccurrences > 1 ? weeklyOccurrences : 8),
+        untilLocal: input.data.untilLocal,
+        exdatesLocal: input.data.exdatesLocal,
+      },
+      requestId: input.data.requestId,
+    });
+    if (!result.firstEventId) {
+      throw new ValidationError("Series created without occurrences.");
+    }
+    return returnSafe(input.actor, result.firstEventId);
+  }
 
   const first = await createCanonicalEvent({
     actor: input.actor,
-    data: {
-      ...input.data,
-      isRecurring: Boolean(seriesId),
-      recurrenceSeriesId: seriesId,
-      recurrenceRule:
-        input.data.recurrenceRule ??
-        (weeklyOccurrences > 1 ? "FREQ=WEEKLY;INTERVAL=1" : undefined),
-    },
+    data: input.data,
   });
-
-  if (seriesId && weeklyOccurrences > 1) {
-    const duration =
-      new Date(input.data.endsAt).getTime() -
-      new Date(input.data.startsAt).getTime();
-    for (let i = 1; i < weeklyOccurrences; i += 1) {
-      const starts = new Date(
-        new Date(input.data.startsAt).getTime() + i * 7 * 24 * 60 * 60 * 1000,
-      );
-      const ends = new Date(starts.getTime() + duration);
-      await createCanonicalEvent({
-        actor: input.actor,
-        data: {
-          ...input.data,
-          startsAt: starts.toISOString(),
-          endsAt: ends.toISOString(),
-          status: input.data.status ?? "DRAFT",
-          isRecurring: true,
-          recurrenceSeriesId: seriesId,
-          recurrenceRule: "FREQ=WEEKLY;INTERVAL=1",
-          requestId: input.data.requestId,
-        },
-      });
-    }
-  }
-
   return returnSafe(input.actor, first.id);
 }

@@ -147,6 +147,8 @@ export type ParsedIcalEvent = {
   dtend?: string;
   dtstartValueType?: "DATE" | "DATE-TIME";
   rrule?: string;
+  exdate?: string;
+  rdate?: string;
   recurrenceId?: string;
   sequence?: number;
   lastModified?: string;

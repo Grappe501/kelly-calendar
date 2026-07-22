@@ -31,7 +31,7 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Event creation | PARTIAL | `/api/events` POST, `/add/*` UI, drafts | Candidate-data gate; draft-era copy | Unlock after Step 8; finish operator UX in Step 11 |
 | Event editing | PARTIAL | `/api/events/[eventId]` mutations | Same | Step 11 |
 | Event cancellation | PARTIAL | Archive/restore paths (soft) | Product cancel UX incomplete | Step 11 cancel/reschedule flows |
-| Recurring events | PARTIAL | Schema `isRecurring`/`recurrenceRule`/`seriesId`; import RRULE | No first-class recurrence UX | Step 11 |
+| Recurring events | COMPLETE (CC-04) | Series + exceptions + materialized Events; `/calendar/series/[id]` | Horizon extension is explicit | CC-05 gated |
 | Day view | PARTIAL | `/calendar?view=day` + day-view service | Candidate-data; polish | Step 10 |
 | Week view | PARTIAL | `/calendar?view=week` | Same | Step 10 |
 | Month view | PARTIAL | `/calendar?view=month` | Same | Step 10 |

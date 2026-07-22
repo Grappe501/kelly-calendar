@@ -801,6 +801,97 @@ model Event {
   @@index([ownerUserId])
   @@index([historicalReviewStatus])
   @@index([archivedAt])
+  @@index([recurrenceSeriesId])
+  @@index([recurrenceSeriesId, originalOccurrenceAt])
+  @@schema("kelly_calendar")
+}
+
+// ─── CC-04 Recurrence series authority (Model B: materialized Events) ─
+
+enum CalendarRecurrenceSeriesStatus {
+  ACTIVE
+  ENDED
+  CANCELLED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarOccurrenceExceptionType {
+  MODIFIED
+  CANCELLED
+  EXCLUDED
+  ADDED
+  DETACHED
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarRecurrenceSeries {
+  id                        String                         @id @default(cuid())
+  campaignKey               String                         @default("kelly")
+  primaryCalendarId         String?
+  templateEventId           String?
+  timezone                  String                         @default("America/Chicago")
+  isAllDay                  Boolean                        @default(false)
+  /// Local wall start YYYY-MM-DDTHH:mm or date-only for all-day
+  baseLocalStart            String
+  baseDurationMinutes       Int
+  rruleOriginal             String
+  rruleNormalized           String
+  ruleFingerprint           String
+  dtstartLocal              String
+  untilLocal                String?
+  countLimit                Int?
+  wkst                      String?
+  dstDisambiguation         String                         @default("EARLIER")
+  status                    CalendarRecurrenceSeriesStatus @default(ACTIVE)
+  materializationHorizonEnd DateTime?
+  materializationVersion    Int                            @default(1)
+  sourceSystem              String?
+  externalUid               String?
+  externalRecurringEventId  String?
+  unsupportedComponents     String[]
+  createdByUserId           String?
+  updatedByUserId           String?
+  createdAt                 DateTime                       @default(now())
+  updatedAt                 DateTime                       @updatedAt
+  archivedAt                DateTime?
+
+  exceptions CalendarOccurrenceException[]
+
+  @@index([campaignKey, status])
+  @@index([ruleFingerprint])
+  @@index([externalUid])
+  @@schema("kelly_calendar")
+}
+
+model CalendarOccurrenceException {
+  id                    String                           @id @default(cuid())
+  seriesId              String
+  occurrenceKey         String
+  originalOccurrenceAt  DateTime
+  exceptionType         CalendarOccurrenceExceptionType
+  eventId               String?
+  overrideStartsAt      DateTime?
+  overrideEndsAt        DateTime?
+  overrideIsAllDay      Boolean?
+  overrideTitle         String?
+  overrideTimezone      String?
+  reason                String?
+  sourceSystem          String?
+  externalRecurrenceId  String?
+  createdByUserId       String?
+  updatedByUserId       String?
+  createdAt             DateTime                         @default(now())
+  updatedAt             DateTime                         @updatedAt
+  restoredAt            DateTime?
+
+  series CalendarRecurrenceSeries @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  @@unique([seriesId, occurrenceKey])
+  @@index([eventId])
+  @@index([exceptionType])
   @@schema("kelly_calendar")
 }
 

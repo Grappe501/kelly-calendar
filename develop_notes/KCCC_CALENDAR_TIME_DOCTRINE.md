@@ -76,7 +76,7 @@ Applied to Today, Day, Week, Month, Agenda, brief, command summary.
 
 ## Boundaries
 
-- **CC-04** owns recurrence exceptions / RRULE editing
+- **CC-04** owns recurrence exceptions / RRULE editing — **COMPLETE** (`KCCC_CALENDAR_RECURRENCE_DOCTRINE.md`)
 - **CC-05/06** own availability / conflict engine
 - Mission: Event remains schedule SoR; no Mission create/lifecycle mutation from time edits alone
 

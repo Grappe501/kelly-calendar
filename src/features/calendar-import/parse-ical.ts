@@ -102,6 +102,12 @@ export function parseIcalEvents(rawIcs: string): ParsedIcalEvent[] {
         case "RRULE":
           event.rrule = value.trim();
           break;
+        case "EXDATE":
+          event.exdate = [event.exdate, value.trim()].filter(Boolean).join(",");
+          break;
+        case "RDATE":
+          event.rdate = [event.rdate, value.trim()].filter(Boolean).join(",");
+          break;
         case "RECURRENCE-ID":
           event.recurrenceId = value.trim();
           break;
