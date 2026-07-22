@@ -3,6 +3,8 @@ import { getEnvironmentCapabilityStatus } from "@/lib/env/environment-status";
 import { getSecurityCapabilityStatus } from "@/lib/security/security-status";
 import { getSharedAuthFlags } from "@/lib/auth/auth-flags";
 import {
+  CALENDAR_COMPLETION_NEXT_BUILD_ID,
+  CALENDAR_COMPLETION_PROGRAM_STATUS,
   CALENDAR_RECOVERY_BUILD_ID,
   COMMUNICATIONS_OS_TRACK_STATUS,
   CURRENT_STEP_ID,
@@ -16,6 +18,7 @@ import {
   STEP_11_EVENT_EDITING_STATUS,
   STEP_12_AVAILABILITY_STATUS,
   TOTAL_STEPS,
+  UNRELATED_CAMPAIGN_EXPANSION_STATUS,
 } from "@/lib/system/constants";
 
 export {
@@ -24,6 +27,8 @@ export {
   TOTAL_STEPS,
   PRODUCT_CODE,
   SERVICE_NAME,
+  CALENDAR_COMPLETION_NEXT_BUILD_ID,
+  CALENDAR_COMPLETION_PROGRAM_STATUS,
   CALENDAR_RECOVERY_BUILD_ID,
   COMMUNICATIONS_OS_TRACK_STATUS,
   LG1_CONTROLLED_LIVE_TEST_STATUS,
@@ -34,6 +39,7 @@ export {
   STEP_10_OPERATING_VIEWS_STATUS,
   STEP_11_EVENT_EDITING_STATUS,
   STEP_12_AVAILABILITY_STATUS,
+  UNRELATED_CAMPAIGN_EXPANSION_STATUS,
 } from "@/lib/system/constants";
 
 export type CapabilityStatus = {
@@ -48,6 +54,8 @@ export type CapabilityStatus = {
     recoveryBuildId: string;
     primaryFocus: string;
     nextAuthorizedBuild: string;
+    calendarCompletionProgramStatus: string;
+    unrelatedCampaignExpansionStatus: string;
     communicationsTrack: string;
     lg1Status: string;
     step8CloseoutStatus: string;
@@ -114,8 +122,11 @@ export function getCapabilityStatus(options?: {
       environment: process.env.NODE_ENV ?? "development",
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
-      primaryFocus: "Operator usability pass — Step 12 blocked until reviewed",
+      primaryFocus:
+        "Calendar Completion CC-01…CC-12 locked — next build CC-01 Import Approval → Canonical Apply",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
+      calendarCompletionProgramStatus: CALENDAR_COMPLETION_PROGRAM_STATUS,
+      unrelatedCampaignExpansionStatus: UNRELATED_CAMPAIGN_EXPANSION_STATUS,
       communicationsTrack: COMMUNICATIONS_OS_TRACK_STATUS,
       lg1Status: LG1_CONTROLLED_LIVE_TEST_STATUS,
       step8CloseoutStatus: STEP_8_CLOSEOUT_STATUS,

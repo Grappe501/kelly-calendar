@@ -69,3 +69,15 @@ Burt Step 5.7 ADR labels 068–073 map here to avoid collisions:
 - ADR-078 Operator Acceptance Is a Separate Gate
 - ADR-079 Step 6 Depends on Deployed Mutation Proof
 - ADR-080 Proof Records Must Be Isolated
+
+## Calendar Completion program (ADR-081–087)
+
+Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLETION_PROGRAM.md`):
+
+- ADR-081 Import Field Precedence on Fingerprint Change
+- ADR-082 ICS Feeds Are Private and Signed
+- ADR-083 CC-08 Ships Time Grid Before Drag-and-Drop
+- ADR-084 Feed Redaction of Private Residences
+- ADR-085 Source-Deleted Events Remain CANCELLED History
+- ADR-086 Calendar Completion Program Locked CC-01 through CC-12
+- ADR-087 CC-01 Provenance Contracts Reusable by CC-02 Without Combining Deliverables

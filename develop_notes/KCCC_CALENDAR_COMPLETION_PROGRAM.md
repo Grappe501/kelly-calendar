@@ -1,0 +1,104 @@
+# KCCC Calendar Completion Program (CC-01…CC-12)
+
+```text
+Build ID:     KCCC-CALENDAR-COMPLETION-PROGRAM-1.0
+Status:       LOCKED
+Locked:       2026-07-21
+Baseline:     main @ 9c89012
+Source:       Burt discovery assessment (Option C)
+Authority:    Steve acceptance of Burt defaults + sequencing adjustment
+Assessment:   develop_notes/KCCC_CALENDAR_COMPLETION_ASSESSMENT_BURT_2026-07-21.md
+```
+
+## Governing posture
+
+```text
+Primary track ............... Calendar Completion (CC-01…CC-12)
+Unrelated campaign expansion  PAUSED
+Communications OS (D20–D26) . FROZEN (unchanged)
+LG-1 ........................ PAUSED (unchanged)
+Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
+CC-05 / CC-06 ............... GATED (Usability Synthesis or Kelly/Steve waiver)
+Next authorized build ....... CC-01 Import Approval → Canonical Apply
+```
+
+This program finishes the **calendar product** before shifting attention to broader campaign functions. It does **not** reopen Architecture 1.0 ownership, does **not** authorize Communications production, and does **not** replace the Operator Usability Synthesis gate for intelligence work (CC-05 / CC-06).
+
+## Locked sequence (Option C)
+
+| # | Deliverable | Size | Gate / notes |
+|---|-------------|------|--------------|
+| **CC-01** | Import Approval → Canonical Apply | L | **NEXT** — keep small; reusable provenance/audit contracts for CC-02 |
+| **CC-02** | Calendar Integrity & Provenance Console | L | After CC-01; **do not merge into CC-01** |
+| **CC-03** | Timezone, All-day & Overnight Hardening | M | Independent of Mobilize |
+| **CC-04** | Recurrence & Occurrence Exceptions | XL | Prefer after CC-03 |
+| **CC-05** | Standing Availability Inputs | L | **GATED** — Usability Synthesis complete **or** Kelly/Steve waiver |
+| **CC-06** | Conflict Engine | XL | **GATED** — requires CC-05 (or explicit waiver of both) |
+| **CC-07** | Unified Search, Filters & Saved Views | M | Parallel after core |
+| **CC-08** | Advanced Day/Week Scheduling Workspace | L | Time grid first; drag-and-drop deferred |
+| **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | Parallel after core |
+| **CC-10** | ICS Export & Subscription Privacy | M | After CC-01; private signed feeds |
+| **CC-11** | Calendar Health Dashboard & Forensic Automation | M | Prefer after CC-02 |
+| **CC-12** | Mobile, Print Day Sheets & Accessibility | M | Prefer after CC-07/CC-08 |
+
+## Sequencing adjustment (binding)
+
+1. **Build CC-01 first.**  
+2. Design CC-01 provenance and audit contracts so **CC-02 can reuse them**.  
+3. **Do not combine** CC-01 and CC-02 into one deliverable. The import apply path must stay small enough to validate rigorously.
+
+```text
+CC-01 = approve / merge / reject → exactly one canonical Event path
+CC-02 = integrity + provenance console over the whole Event graph
+Shared = provenance records, audit action vocabulary, fingerprint language
+```
+
+## Adopted defaults (ADR-081–085)
+
+| Decision | Locked default |
+|----------|----------------|
+| Import field precedence | Local edits win for **title, notes, status**; source timing wins **only** when an imported Event has **never** been manually rescheduled |
+| ICS feeds | **Private and signed** — no public anonymous subscription URL |
+| CC-08 interaction | Ship **time grid** before drag-and-drop |
+| Feed locations | Redact exact **private/residential** locations (CITY or BUSY_ONLY) |
+| Source-deleted Events | Remain as **`CANCELLED` history** with provenance |
+
+## Decisive success test — CC-01
+
+> Approve one staged import and create exactly one canonical Event; repeat the same import and create zero additional Events; merge and reject paths remain explicit and audited; no Mission or external calendar mutation occurs.
+
+Full build brief: `develop_notes/KCCC_CC_01_IMPORT_APPROVAL_CANONICAL_APPLY.md`
+
+## Dependency map
+
+```mermaid
+flowchart TD
+  CC01[CC-01 Import Apply] --> CC02[CC-02 Integrity Console]
+  CC01 --> CC10[CC-10 ICS Export]
+  CC03[CC-03 Time Hardening] --> CC04[CC-04 Recurrence]
+  CC03 --> CC08[CC-08 Scheduling Workspace]
+  CC02 --> CC11[CC-11 Health Dashboard]
+  Synth[Usability Synthesis / waiver] --> CC05[CC-05 Availability]
+  CC05 --> CC06[CC-06 Conflict Engine]
+  CC04 --> CC06
+  CC07[CC-07 Search/Filters] --> CC08
+  CC09[CC-09 Bulk/Recovery] --> CC11
+  CC08 --> CC12[CC-12 Mobile/Print/A11y]
+  CC07 --> CC12
+```
+
+## Out of scope until Calendar Completion exits
+
+- Communications production enablement / D27+  
+- Broad campaign ops expansion beyond Event↔Mission boundary already shipped  
+- Google write-back / two-way sync  
+- Treating Mobilize as a calendar sync dependency  
+- Combining CC-01 with integrity console or Mission lifecycle work  
+
+## Relationship to 25-step roadmap
+
+CC items map onto Steps 11 polish / 12 / 13 / 22 / 23 / 24 without renumbering the frozen 25-step tracker. Runtime `CURRENT_STEP` for operator usability remains distinct from the Calendar Completion build pointer (`next_engineering_deliverable` / `calendar_completion_next`).
+
+## Architecture 1.0 conformance
+
+One canonical `Event`. Import apply writes Events only through the owned mutation stack. Missions are projections. External sources remain IMPORT_ONLY until a later, separately authorized sync program. Intelligence (CC-05/CC-06) never auto-mutates schedule without explicit approval.

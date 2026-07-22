@@ -21,9 +21,15 @@ Version 1 .................... FEATURE COMPLETE
 
 Audit Constitution ........... ACTIVE
 
-Audit Program ................ IN PROGRESS
+Calendar Completion .......... LOCKED (CC-01…CC-12)
+  Next build ................. CC-01 Import Approval → Canonical Apply
+  Baseline ................... main @ 9c89012
 
-Feature Development .......... FROZEN
+Unrelated campaign expansion . PAUSED
+
+Communications OS ............ FROZEN
+
+Feature Development .......... Calendar Completion only (not V2 reopen)
 
 Platform Stabilization ....... ACTIVE
 

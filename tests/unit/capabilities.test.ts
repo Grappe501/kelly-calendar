@@ -36,8 +36,10 @@ describe("capability honesty", () => {
     expect(status.application.operatorUsabilityPassStatus).toBe("OPEN");
     expect(status.application.step12AvailabilityStatus).toBe("NOT_AUTHORIZED");
     expect(status.application.nextAuthorizedBuild).toBe(
-      "HOLD-UNTIL-OPERATOR-USABILITY-PASS-1",
+      "KCCC-CC-01-IMPORT-APPROVAL-CANONICAL-APPLY-1.0",
     );
+    expect(status.application.calendarCompletionProgramStatus).toBe("LOCKED");
+    expect(status.application.unrelatedCampaignExpansionStatus).toBe("PAUSED");
     expect(status.security.candidateDataReady).toBe(true);
   });
 

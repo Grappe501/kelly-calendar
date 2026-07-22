@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "decisions": [
     {
       "id": "ADR-015",
@@ -477,6 +477,62 @@
       "status": "accepted",
       "date": "2026-07-18",
       "decision": "Synthetic deployment-proof records must not affect real operational summaries, county metrics, candidate workload, sync, or public surfaces."
+    },
+    {
+      "id": "ADR-081",
+      "title": "Import Field Precedence on Fingerprint Change",
+      "status": "accepted",
+      "date": "2026-07-21",
+      "decision": "On re-import when an external fingerprint changes, local operator edits win for title, notes, and status; source timing wins only when the imported Event has never been manually rescheduled.",
+      "boundary": "Does not authorize Google write-back or silent Mission mutation."
+    },
+    {
+      "id": "ADR-082",
+      "title": "ICS Feeds Are Private and Signed",
+      "status": "accepted",
+      "date": "2026-07-21",
+      "decision": "Calendar subscription feeds (CC-10) are private and signed; no public anonymous subscription URL.",
+      "boundary": "Public filtered calendars require a separate RFC and aggressive redaction."
+    },
+    {
+      "id": "ADR-083",
+      "title": "CC-08 Ships Time Grid Before Drag-and-Drop",
+      "status": "accepted",
+      "date": "2026-07-21",
+      "decision": "Advanced Day/Week Scheduling Workspace delivers a true time grid and click-to-edit first; drag-and-drop is a follow-on.",
+      "boundary": "Does not block click-to-edit reschedule already owned by Event lifecycle."
+    },
+    {
+      "id": "ADR-084",
+      "title": "Feed Redaction of Private Residences",
+      "status": "accepted",
+      "date": "2026-07-21",
+      "decision": "ICS and subscription feeds redact exact private or residential locations; feeds may expose CITY or BUSY_ONLY equivalents only.",
+      "boundary": "Internal Event sheet visibility remains governed by existing visibility doctrine."
+    },
+    {
+      "id": "ADR-085",
+      "title": "Source-Deleted Events Remain CANCELLED History",
+      "status": "accepted",
+      "date": "2026-07-21",
+      "decision": "When an external source deletes an event previously applied to KCCC, the canonical Event remains as CANCELLED history with provenance rather than being hidden or hard-deleted.",
+      "boundary": "Does not auto-create Missions or invent schedule replacements."
+    },
+    {
+      "id": "ADR-086",
+      "title": "Calendar Completion Program Locked CC-01 through CC-12",
+      "status": "accepted",
+      "date": "2026-07-21",
+      "decision": "The primary engineering track is Calendar Completion CC-01…CC-12 (Burt Option C). Unrelated campaign expansion is paused. Communications OS remains frozen.",
+      "boundary": "CC-05 and CC-06 remain gated by Usability Synthesis or explicit Kelly/Steve waiver."
+    },
+    {
+      "id": "ADR-087",
+      "title": "CC-01 Provenance Contracts Reusable by CC-02 Without Combining Deliverables",
+      "status": "accepted",
+      "date": "2026-07-21",
+      "decision": "CC-01 builds import approve/merge/reject first and designs provenance/audit contracts for CC-02 reuse, but does not combine the Integrity Console into CC-01.",
+      "boundary": "CC-01 success is the decisive single-Event apply/idempotency test only."
     }
   ]
 }

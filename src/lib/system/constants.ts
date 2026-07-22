@@ -26,11 +26,28 @@ export const OPERATOR_OBSERVATION_CADENCE_DOC =
   "develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md";
 export const OPERATOR_USABILITY_SYNTHESIS_DOC =
   "develop_notes/KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md";
-/** Steps 8–11 shipped; further calendar work waits on observation evidence. */
+/** Steps 8–11 shipped; Steps 12–13 remain gated by Usability Synthesis. */
 export const CALENDAR_FOUNDATION_V1_STATUS = "BUILD_COMPLETE";
 export const CALENDAR_FOUNDATION_V1_GATE = "OPERATOR_OBSERVATION_PASS_1";
+/**
+ * Calendar Completion program (CC-01…CC-12) — locked 2026-07-21.
+ * Primary engineering track while unrelated campaign expansion is paused.
+ * CC-05/CC-06 still require Usability Synthesis or Kelly/Steve waiver.
+ */
+export const CALENDAR_COMPLETION_PROGRAM_ID =
+  "KCCC-CALENDAR-COMPLETION-PROGRAM-1.0";
+export const CALENDAR_COMPLETION_PROGRAM_STATUS = "LOCKED";
+export const CALENDAR_COMPLETION_BASELINE_COMMIT = "9c89012";
+export const CALENDAR_COMPLETION_NEXT = "CC-01";
+export const CALENDAR_COMPLETION_NEXT_BUILD_ID =
+  "KCCC-CC-01-IMPORT-APPROVAL-CANONICAL-APPLY-1.0";
+export const CALENDAR_COMPLETION_PROGRAM_DOC =
+  "develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md";
+export const CALENDAR_COMPLETION_ASSESSMENT_DOC =
+  "develop_notes/KCCC_CALENDAR_COMPLETION_ASSESSMENT_BURT_2026-07-21.md";
+export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "NOT_AUTHORIZED";
-/** Architecture mature; implementation waits on Step 12 availability inputs. */
+/** Architecture mature; implementation waits on Step 12 availability inputs (CC-05). */
 export const STEP_13_CONFLICT_ENGINE_STATUS = "DESIGN_READY_IMPLEMENTATION_BLOCKED";
 export const STEP_13_CONFLICT_ENGINE_DOC =
   "develop_notes/KCCC_EA_13_CONFLICT_ENGINE_ARCHITECTURE.md";
@@ -72,7 +89,7 @@ export const FURTHER_ARCHITECTURE_DOCTRINE_STATUS =
 export const SCHEDULE_MUTATION_GOVERNING_RULE =
   "DETECT_EXPLAIN_RECOMMEND_SIMULATE_NEVER_AUTO_MUTATE";
 export const NEXT_AUTHORIZED_BUILD =
-  "HOLD-UNTIL-OPERATOR-USABILITY-PASS-1";
+  "KCCC-CC-01-IMPORT-APPROVAL-CANONICAL-APPLY-1.0";
 export const CALENDAR_ROADMAP_DOC =
   "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md";
 /** Prisma model name — the only top-level Event entity. */

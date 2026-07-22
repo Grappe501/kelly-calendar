@@ -17,7 +17,7 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
           {
             label: "Primary status",
             value: candidateReady
-              ? "Secure calendar foundation certified — Step 9 next"
+              ? "Calendar Completion program locked — CC-01 next"
               : "Calendar foundation in progress",
           },
           {
@@ -27,6 +27,14 @@ export function SystemStatusDashboard({ status }: SystemStatusDashboardProps) {
           {
             label: "Real candidate data",
             value: candidateReady ? "Permitted for authorized roles" : "Prohibited",
+          },
+          {
+            label: "Calendar Completion",
+            value: status.application.calendarCompletionProgramStatus,
+          },
+          {
+            label: "Campaign expansion",
+            value: status.application.unrelatedCampaignExpansionStatus,
           },
           {
             label: "Step 8 closeout",

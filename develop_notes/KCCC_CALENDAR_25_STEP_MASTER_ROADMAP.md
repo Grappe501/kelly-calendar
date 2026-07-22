@@ -2,8 +2,9 @@
 
 ```text
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
-Canonical tracker: THIS FILE
-Updated: Engineering Chapter 1 CLOSED · Baseline 1.0 FROZEN · Phase EVIDENCE_ACQUISITION
+Canonical tracker: THIS FILE (Steps 1–25)
+Calendar Completion overlay: develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md (CC-01…CC-12 LOCKED)
+Updated: Calendar Completion program locked 2026-07-21 · baseline 9c89012
 Runtime: src/lib/system/constants.ts
 ```
 
@@ -12,30 +13,31 @@ Runtime: src/lib/system/constants.ts
 ```text
 Engineering Chapter 1: CLOSED
   (develop_notes/KCCC_ENGINEERING_CHAPTER_1_CLOSED.md)
-Campaign OS Phase: EVIDENCE_ACQUISITION
-Next Authority: OPERATOR_EVIDENCE
-Governing cycle: Observe → Record → Synthesize → Decide → Build → Observe Again
+Campaign OS Phase: EVIDENCE_ACQUISITION + Calendar Completion (CC-01…CC-12)
+Primary engineering track: Calendar Completion (LOCKED)
+  Assessment: develop_notes/KCCC_CALENDAR_COMPLETION_ASSESSMENT_BURT_2026-07-21.md
+  Program:    develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md
+  Next build: CC-01 Import Approval → Canonical Apply
+  Baseline:   main @ 9c89012
+Unrelated campaign expansion: PAUSED
 Campaign OS Baseline: 1.0 FROZEN (immutable — do not rewrite after observation)
   (develop_notes/KCCC_CAMPAIGN_OS_BASELINE_1_0_FROZEN.md)
 Next baseline: 1.1 from observation evidence (version-defining, not bug fixes)
-  Closeout: Engineering Chapter 1 CLOSED
-  (develop_notes/KCCC_ENGINEERING_CHAPTER_CLOSEOUT_BASELINE_1_0.md)
-  Post-observation review: Evidence → Patterns → Baseline 1.1 Requirements → Authorization
 Primary product: Kelly Campaign Calendar → Campaign Operating System (calendar as center)
 Canonical schedule entity: Prisma Event ONLY
 Communications OS (D20–D26): FROZEN
 LG-1: PAUSED
 AI: disabled until Step 16 (proposal_only)
 Calendar Foundation v1: BUILD COMPLETE (Steps 8–11)
-Step 12: NOT AUTHORIZED until operator observation + evidence synthesis reviewed
+Step 12 / CC-05: NOT AUTHORIZED until Usability Synthesis reviewed or Kelly/Steve waiver
+Step 13 / CC-06: blocked on CC-05 (or paired waiver)
+CC-01…CC-04, CC-07…CC-12: may proceed independent of Mobilize credentials
 Cadence: Build → validate → observe → synthesize → refine → next phase
   (see develop_notes/KCCC_OPERATOR_OBSERVATION_CADENCE.md)
 Layers: Operational (operator defines reality) vs Intelligence (system interprets)
   Doctrine #1: develop_notes/KCCC_CAMPAIGN_OS_DOCTRINE_1.md
   (see also develop_notes/KCCC_OPERATIONAL_VS_INTELLIGENCE_LAYERS.md)
 Schedule mutations: detect / explain / recommend / simulate — never without explicit approval
-Further doctrine: HOLD until observation + synthesis complete
-Review return: evidence patterns, not bug lists
 ```
 
 ---
