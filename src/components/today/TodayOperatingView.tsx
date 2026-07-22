@@ -41,29 +41,25 @@ function PrepList({
 export function TodayOperatingView({ data }: Props) {
   return (
     <div className="page-stack today-operating-view">
-      <header className="page-header">
+      <header className="page-header calendar-hero">
+        <p className="calendar-kicker">Operating day</p>
         <h1>Today</h1>
         <p className="executive-question">{data.executiveQuestion}</p>
-        <p className="muted">
-          Operating view · one Event graph · {data.viewerDisplayName}
-        </p>
       </header>
 
       <CalendarViewSwitcher active="today" dateKey={data.dateKey} />
 
-      <p className="muted">
-        <Link href="/add/quick">Add event</Link>
-        {" · "}
-        <Link href={`/calendar?view=day&date=${data.dateKey}`}>Day flow</Link>
-        {" · "}
-        <Link href={`/calendar?view=agenda&date=${data.dateKey}`}>Agenda</Link>
-        {" · "}
-        <Link href="/calendar/ops/travel">Travel</Link>
-        {" · "}
-        <Link href="/calendar/ops/preparation">Preparation</Link>
-        {" · "}
-        <Link href="/calendar/ops/follow_up">Follow-up</Link>
-      </p>
+      <div className="today-quick-links">
+        <Link className="button" href="/upload">
+          Upload / add
+        </Link>
+        <Link className="button secondary" href={`/calendar?view=day&date=${data.dateKey}`}>
+          Day view
+        </Link>
+        <Link className="button secondary" href={`/calendar?view=week&date=${data.dateKey}`}>
+          Week
+        </Link>
+      </div>
 
       {data.cataloguePartial ? (
         <p className="muted">Schedule load may be partial — treat gaps as Unknown.</p>

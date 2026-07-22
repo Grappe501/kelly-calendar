@@ -13,11 +13,13 @@ type Props = {
 export function MonthView({ data, focusEventId = null }: Props) {
   return (
     <div className="page-stack calendar-month-view">
-      <header className="page-header">
-        <h1>Month</h1>
+      <header className="page-header calendar-hero">
+        <p className="calendar-kicker">Month plan</p>
+        <h1>{data.monthLabel}</h1>
         <p className="executive-question">{data.executiveQuestion}</p>
         <p className="muted">
-          {data.monthLabel} · {data.viewerDisplayName}
+          {data.scheduledEventCount} events · {data.campaignPhase}
+          {data.majorFocus ? ` · Focus: ${data.majorFocus}` : ""}
         </p>
       </header>
 

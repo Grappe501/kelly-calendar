@@ -24,6 +24,16 @@ function formatClock(iso: string, timeZone: string): string {
   }).format(new Date(iso));
 }
 
+function calendarTone(type: string): string {
+  const t = type.toUpperCase();
+  if (t.includes("TRAVEL")) return "tone-travel";
+  if (t.includes("FIELD") || t.includes("COUNTY")) return "tone-field";
+  if (t.includes("FUNDRAIS")) return "tone-fundraising";
+  if (t.includes("PROTECT") || t.includes("PERSONAL")) return "tone-personal";
+  if (t.includes("PUBLIC") || t.includes("EVENT")) return "tone-public";
+  return "tone-default";
+}
+
 type Props = {
   data: CalendarDayViewData;
   focusEventId?: string | null;
@@ -32,15 +42,23 @@ type Props = {
 export function DayView({ data, focusEventId = null }: Props) {
   const label = formatDayLabel(data.dateKey);
   const { readiness } = data;
+  const readinessLabel =
+    readiness.missionCount === 0
+      ? "No missions"
+      : readiness.blockedCount > 0
+        ? "Blocked"
+        : readiness.needsAttentionCount > 0
+          ? "Needs attention"
+          : readiness.unknownCount > 0
+            ? "Unknown present"
+            : "Ready";
 
   return (
     <div className="page-stack calendar-day-view">
-      <header className="page-header">
-        <h1>Day</h1>
+      <header className="page-header calendar-hero">
+        <p className="calendar-kicker">{data.isToday ? "Today’s schedule" : "Day schedule"}</p>
+        <h1>{label}</h1>
         <p className="executive-question">{data.executiveQuestion}</p>
-        <p className="muted">
-          {label} · {data.viewerDisplayName}
-        </p>
       </header>
 
       <CalendarViewSwitcher active="day" dateKey={data.dateKey} />
@@ -50,130 +68,49 @@ export function DayView({ data, focusEventId = null }: Props) {
         label={label}
         isToday={data.isToday}
       />
-      <p className="muted calendar-briefing-link">
-        <Link href={`/system/briefing/${data.dateKey}`}>
-          {data.isToday ? "Today’s Briefing" : "Campaign Day Briefing"}
-        </Link>
-        {" · "}
-        <Link href={`/system/briefing/${data.dateKey}/launch`}>
-          {data.isToday ? "Launch Today" : "Morning Launch Review"}
-        </Link>
-        {" · "}
-        <Link href={`/system/briefing/${data.dateKey}/movement`}>
-          Day Movement
-        </Link>
-        {" · "}
-        <Link href={`/system/briefing/${data.dateKey}/logistics`}>
-          Day Logistics
-        </Link>
-        {" · "}
-        <Link href={`/system/briefing/${data.dateKey}/field-ops`}>
-          Day Field Ops
-        </Link>
-        {" · "}
-        <Link href={`/system/briefing/${data.dateKey}/staffing`}>
-          Day Staffing
-        </Link>
-        {" · "}
-        <Link href={`/system/briefing/${data.dateKey}/incidents`}>
-          Day Incidents
-        </Link>
-        {" · "}
-        <Link href={`/system/briefing/${data.dateKey}/exceptions`}>
-          Exception Digest
-        </Link>
-        {" · "}
-        <Link href="/system/missions/command-center">Mission Command Center</Link>
-      </p>
 
-      <section className="panel" aria-labelledby="day-readiness-heading">
-        <h2 id="day-readiness-heading">Readiness</h2>
-        <p>
-          <strong>
-            {readiness.missionCount === 0
-              ? "No missions"
-              : readiness.blockedCount > 0
-                ? "Blocked"
-                : readiness.needsAttentionCount > 0
-                  ? "Needs attention"
-                  : readiness.unknownCount > 0
-                    ? "Unknown present"
-                    : "Ready"}
-          </strong>
-          <span className="muted">
-            {" "}
-            · Ready {readiness.readyCount} · Needs attention {readiness.needsAttentionCount} ·
-            Blocked {readiness.blockedCount} · Unknown {readiness.unknownCount}
+      <section className="panel panel-hero" aria-labelledby="day-schedule-heading">
+        <div className="panel-hero-head">
+          <h2 id="day-schedule-heading">Schedule</h2>
+          <span className={`status-pill status-${readinessLabel.toLowerCase().replace(/\s+/g, "-")}`}>
+            {readinessLabel}
           </span>
-        </p>
-        {readiness.topIssue ? <p>Top issue: {readiness.topIssue}</p> : null}
-        {readiness.nextAction ? (
-          <p>
-            Next action:{" "}
-            <Link href={readiness.nextAction.href}>{readiness.nextAction.label}</Link>
-          </p>
-        ) : null}
-      </section>
-
-      <section className="panel" aria-labelledby="day-schedule-heading">
-        <h2 id="day-schedule-heading">Schedule</h2>
+        </div>
         {data.schedule.length === 0 ? (
-          <p className="muted">No events for this day.</p>
+          <p className="muted">No events for this day. Add one from Upload.</p>
         ) : (
           <ol className="calendar-day-schedule">
             {data.schedule.map((event) => (
               <li
                 key={event.eventId}
-                className={
+                className={`schedule-event-card ${calendarTone(event.primaryCalendar.type)}${
                   focusEventId && event.eventId === focusEventId
-                    ? "calendar-event-focused"
-                    : undefined
-                }
-                data-event-focused={
-                  focusEventId && event.eventId === focusEventId ? "true" : undefined
-                }
+                    ? " calendar-event-focused"
+                    : ""
+                }`}
               >
-                <time dateTime={event.startsAt}>
-                  {event.allDay
-                    ? "All day"
-                    : `${formatClock(event.startsAt, data.timezone)} – ${formatClock(event.endsAt, data.timezone)}`}
-                </time>
-                <div>
-                  <span>
-                    <Link href={`/events/${event.eventId}`}>{event.title}</Link>
-                  </span>
-                  <p className="muted">
-                    {event.primaryCalendar.name}
-                    {event.location?.label ? ` · ${event.location.label}` : ""}
-                  </p>
-                  {event.travel?.departureAt || event.travel?.travelRequired ? (
+                <Link href={`/events/${event.eventId}`} className="schedule-event-link">
+                  <time dateTime={event.startsAt}>
+                    {event.allDay
+                      ? "All day"
+                      : `${formatClock(event.startsAt, data.timezone)} – ${formatClock(event.endsAt, data.timezone)}`}
+                  </time>
+                  <div>
+                    <strong className="schedule-event-title">{event.title}</strong>
                     <p className="muted">
-                      Travel:{" "}
-                      {event.travel.departureAt
-                        ? `leave ${formatClock(event.travel.departureAt, data.timezone)}`
-                        : "required"}
-                      {event.travel.estimatedDurationMinutes != null
-                        ? ` · ~${event.travel.estimatedDurationMinutes} min`
-                        : ""}
-                      {event.travel.bufferMinutes != null
-                        ? ` · ${event.travel.bufferMinutes} min buffer`
-                        : ""}
+                      {event.primaryCalendar.name}
+                      {event.location?.label ? ` · ${event.location.label}` : ""}
                     </p>
-                  ) : null}
-                  {event.openActions.length > 0 || event.openFollowUps.length > 0 ? (
-                    <p className="muted">
-                      Prep{" "}
-                      {
-                        event.openActions.filter(
-                          (action: { phase: string }) => action.phase === "PRE_EVENT",
-                        ).length
-                      }
-                      {" · "}
-                      After {event.openFollowUps.length}
-                      {event.people.length > 0 ? ` · People ${event.people.length}` : ""}
-                    </p>
-                  ) : null}
-                </div>
+                    {event.travel?.departureAt || event.travel?.travelRequired ? (
+                      <p className="muted">
+                        Travel{" "}
+                        {event.travel.departureAt
+                          ? `leave ${formatClock(event.travel.departureAt, data.timezone)}`
+                          : "required"}
+                      </p>
+                    ) : null}
+                  </div>
+                </Link>
               </li>
             ))}
           </ol>
@@ -187,61 +124,52 @@ export function DayView({ data, focusEventId = null }: Props) {
         ) : (
           <div className="mission-stack">
             {data.missions.map((mission) => (
-              <MissionCardView
-                key={mission.missionId}
-                mission={mission}
-                compact
-                focused={Boolean(focusEventId && mission.missionId === focusEventId)}
-              />
+              <MissionCardView key={mission.missionId} mission={mission} />
             ))}
           </div>
         )}
       </section>
 
-      <section className="panel" aria-labelledby="day-conflicts-heading">
-        <h2 id="day-conflicts-heading">Conflicts</h2>
-        {data.conflicts.length === 0 ? (
-          <p className="muted">No schedule overlaps detected for this day.</p>
-        ) : (
-          <ul>
+      {data.conflicts.length > 0 ? (
+        <section className="panel panel-alert" aria-labelledby="day-conflicts-heading">
+          <h2 id="day-conflicts-heading">Conflicts</h2>
+          <ul className="conflict-list">
             {data.conflicts.map((c) => (
               <li key={c.id}>
-                <strong>{c.severity}</strong> — {c.explanation}
-                {c.primaryEntity?.label && c.relatedEntity?.label
-                  ? ` (${c.primaryEntity.label} ↔ ${c.relatedEntity.label})`
-                  : null}
+                <strong>{c.primaryEntity.label}</strong>
+                {c.relatedEntity ? (
+                  <span className="muted"> ∩ {c.relatedEntity.label}</span>
+                ) : null}
+                <p className="muted">{c.explanation}</p>
               </li>
             ))}
           </ul>
-        )}
-        <p className="muted">
-          Conflicts are signals for operators — not autonomous rescheduling.
-        </p>
-      </section>
+        </section>
+      ) : null}
 
-      <section className="panel" aria-labelledby="day-brief-heading">
-        <h2 id="day-brief-heading">Campaign brief</h2>
-        <p className="muted">Day View links to the brief experience; it does not own brief truth.</p>
-        <Link className="button" href="/brief">
-          Open today&apos;s campaign brief
-        </Link>
-      </section>
-
-      <section className="panel" aria-labelledby="day-reminders-heading">
-        <h2 id="day-reminders-heading">Standing reminders</h2>
-        <ul>
-          {data.standingReminders.map((reminder) => (
-            <li key={reminder}>{reminder}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="panel" aria-labelledby="day-weather-heading">
-        <h2 id="day-weather-heading">Weather</h2>
-        <p className="muted">
-          Future integration · Advisory Only · not canonical ({data.weatherStatus}).
-        </p>
-      </section>
+      <details className="panel calendar-more-tools">
+        <summary>Briefing &amp; day tools</summary>
+        <div className="button-row tools-grid">
+          <Link className="button secondary" href={`/system/briefing/${data.dateKey}`}>
+            Day briefing
+          </Link>
+          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/launch`}>
+            Morning launch
+          </Link>
+          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/movement`}>
+            Movement
+          </Link>
+          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/logistics`}>
+            Logistics
+          </Link>
+          <Link className="button secondary" href={`/system/briefing/${data.dateKey}/field-ops`}>
+            Field ops
+          </Link>
+          <Link className="button secondary" href="/upload">
+            Upload / add
+          </Link>
+        </div>
+      </details>
     </div>
   );
 }

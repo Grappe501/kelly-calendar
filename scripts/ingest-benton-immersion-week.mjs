@@ -221,33 +221,24 @@ try {
   });
   const calendarBySlug = Object.fromEntries(calendars.map((c) => [c.slug, c]));
 
+  // Keep umbrella as CANCELLED — day + JP evenings are the visible schedule.
+  // Re-assert cancel so re-runs do not revive the multi-day blanket.
+  {
+    const umbrella = await findByIngestKey(UMBRELLA_KEY);
+    if (umbrella && umbrella.status !== "CANCELLED") {
+      await prisma.event.update({
+        where: { id: umbrella.id },
+        data: {
+          status: "CANCELLED",
+          privateNotes: `${umbrella.privateNotes ?? ""}\n[CANCELLED:${PASS}] Multi-day umbrella not listed — use daytime immersion + JP district evenings.`,
+          version: { increment: 1 },
+        },
+      });
+      console.log(`CANCELLED umbrella: ${UMBRELLA_KEY} → ${umbrella.eventNumber}`);
+    }
+  }
+
   const specs = [
-    {
-      key: UMBRELLA_KEY,
-      calendarSlug: "county-activity",
-      internalTitle: "Benton County Immersion Week",
-      campaignDisplayTitle: "Benton County Immersion Week",
-      eventType: "County Immersion Week / Relationship Building",
-      status: "HOLD",
-      priority: "High",
-      isMultiDay: true,
-      startsAt: chicagoLocalToDate("2026-08-17T08:00:00"),
-      endsAt: chicagoLocalToDate("2026-08-20T21:00:00"),
-      city: "Bentonville",
-      candidateAttendance: true,
-      privateNotes: notes(
-        UMBRELLA_KEY,
-        [
-          "MISSION: Benton County Immersion Week (Aug 17–20, 2026). Tier 1.",
-          "STRUCTURE: Daytime immersion (leaders, business, courthouse, churches, volunteers, intelligence) + evening JP-district community gatherings.",
-          "Benton County Quorum Court has 15 JP districts — evening hosts/districts LOCK WITH OPERATOR; do not invent names.",
-          "Mon travel in · Thu evening return Rose Bud.",
-          "REQUIRED: nightly intelligence report; end-of-week Benton County Summary + 90-day plan.",
-          "Child events: travel-benton-2026-08-17, benton-immersion-day-*, benton-jp-district-evening-*, travel-rosebud-after-benton-2026-08-20.",
-          "LODGING: Shela Norman Bella Vista Airbnb OFFERED — see draft_obs_benton_aug_trip_2026.",
-        ].join("\n"),
-      ),
-    },
     {
       key: "travel-benton-2026-08-17",
       calendarSlug: "travel",

@@ -1,5 +1,5 @@
 {
-  "activeCount": 65,
+  "activeCount": 75,
   "duplicateIngestKeys": [],
   "duplicateSameDayTitleCalendar": [],
   "duplicateExactWindowTitle": [],
@@ -13,12 +13,22 @@
       "day": "2026-07-24",
       "a": "KCCC-2026-0024 Cave City Watermelon Festival — Christy Low Volunteering",
       "b": "KCCC-2026-0041 Cave City Watermelon Festival 2026"
+    },
+    {
+      "day": "2026-08-17",
+      "a": "KCCC-2026-0062 Benton County Immersion Week",
+      "b": "KCCC-2026-0168 Travel to Benton County (immersion week)"
+    },
+    {
+      "day": "2026-08-17",
+      "a": "KCCC-2026-0062 Benton County Immersion Week",
+      "b": "KCCC-2026-0170 Benton County Immersion – Mon daytime"
     }
   ],
   "counts": {
     "ingestKeyGroups": 0,
     "dayTitleGroups": 0,
     "exactWindowGroups": 0,
-    "nearPairs": 2
+    "nearPairs": 4
   }
 }
