@@ -135,4 +135,3 @@ CC-05 and CC-06 are shipped. No further engineering build is authorized yet.
 Do **not** implement CC-07 or any IC-* build. Do **not** mark Synthesis complete
 because Phase Two was locked. Do **not** destabilize the calendar with premature
 Phase Two coding.
-Kelly authorization. Do **not** mark Synthesis complete because CC-06 shipped.
