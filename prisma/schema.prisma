@@ -628,24 +628,40 @@ model CalendarRollupRule {
 }
 
 model CalendarSavedView {
-  id               String   @id @default(cuid())
-  ownerUserId      String?
-  name             String
-  description      String?
-  isDefault        Boolean  @default(false)
-  isShared         Boolean  @default(false)
-  isSystemView     Boolean  @default(false)
-  sharedWithTeamId String?
-  dateRangeMode    String?
-  viewMode         String?
-  filtersJson      Json?
-  sortOrder        Int      @default(0)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  archivedAt       DateTime?
+  id                 String    @id @default(cuid())
+  ownerUserId        String?
+  name               String
+  description        String?
+  isDefault          Boolean   @default(false)
+  isShared           Boolean   @default(false)
+  isSystemView       Boolean   @default(false)
+  sharedWithTeamId   String?
+  dateRangeMode      String?
+  viewMode           String?
+  filtersJson        Json?
+  /// CC-07 canonical query JSON (schema-versioned). Prefer over filtersJson.
+  queryJson          Json?
+  querySchemaVersion Int       @default(1)
+  campaignKey        String?
+  /// PRIVATE | CAMPAIGN_SHARED | ROLE_RESTRICTED
+  visibility         String    @default("PRIVATE")
+  roleScope          Json?
+  isPinned           Boolean   @default(false)
+  /// null | NEEDS_MIGRATION | UNSUPPORTED_SCHEMA | STALE
+  staleState         String?
+  createdByUserId    String?
+  updatedByUserId    String?
+  sortOrder          Int       @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  archivedAt         DateTime?
 
   layers CalendarViewLayer[]
 
+  @@index([ownerUserId])
+  @@index([campaignKey])
+  @@index([visibility])
+  @@index([archivedAt])
   @@schema("kelly_calendar")
 }
 

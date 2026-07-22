@@ -31,6 +31,7 @@ const VIEW_ACTIONS = new Set<MutationAction>([
   "CALENDAR_INTEGRITY_VIEW",
   "AUDIT_VIEW",
   "AVAILABILITY_VIEW",
+  "SAVED_VIEW_VIEW",
 ]);
 
 function needsMutatorRole(action: MutationAction): boolean {
@@ -48,6 +49,7 @@ function minRankForAction(action: MutationAction): number {
     case "CALENDAR_INTEGRITY_VIEW":
     case "AUDIT_VIEW":
     case "AVAILABILITY_VIEW":
+    case "SAVED_VIEW_VIEW":
       return 1;
     case "EVENT_CREATE":
     case "EVENT_EDIT":
@@ -74,6 +76,7 @@ function minRankForAction(action: MutationAction): number {
     case "CALENDAR_INTEGRITY_DISPOSE":
     case "AVAILABILITY_MANAGE":
     case "AVAILABILITY_ACKNOWLEDGE":
+    case "SAVED_VIEW_MANAGE":
       return 4; // CONTRIBUTE+
     case "EVENT_ARCHIVE":
     case "EVENT_RESTORE":
@@ -158,6 +161,9 @@ export async function authorize(
     }
     if (input.action === "CONFLICT_RECOMPUTE" && roleMayMutate(actor.primarySystemRole)) {
       return { allowed: true, reason: "Conflict recompute for mutator role" };
+    }
+    if (input.action === "SAVED_VIEW_MANAGE" && roleMayMutate(actor.primarySystemRole)) {
+      return { allowed: true, reason: "Saved view mutation for mutator role" };
     }
     // AVAILABILITY_APPROVE (and standing-rule seeding) requires leadership
     // full calendar access, already granted above for KELLY/CAMPAIGN_MANAGER.

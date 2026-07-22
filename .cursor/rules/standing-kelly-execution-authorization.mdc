@@ -1,0 +1,35 @@
+# Standing Kelly execution authorization (Calendar Completion)
+
+```text
+ADR:           ADR-094
+Effective:     2026-07-22
+Applies when:  Kelly supplies or approves a Calendar Completion build script
+```
+
+## Rule
+
+When an approved build script for CC-07…CC-12 (or the usability/AI-quality gate) is in the active user message, execute the **full ship cycle** without asking for routine confirmation to run, commit, push, or deploy.
+
+## Ship cycle
+
+Inspect → plan → edit in-scope → forward-only migrations → validators/tests/typecheck/build/lint/scans → repair defects → commit → push `main` → Netlify prod deploy → monitor → correct → redeploy → verify live routes → record evidence.
+
+## Do not stop for
+
+Routine difficulty, test failures, build failures, deploy failures, or correctable defects — diagnose, repair, revalidate, continue.
+
+## Hard stops (hand off)
+
+Destructive prod-data ops not in script · missing credentials · purchase/contract · material scope expansion · unrecoverable merge/data conflict · privacy/consent/legal/security decision not governed · production-data damage risk · unresolved platform permission barrier.
+
+## Phase Two
+
+ADR-093: no IC-01…IC-12 product implementation before CC-12. Extension points only during CC-07…CC-12.
+
+## Synthesis
+
+Do not mark Operator Usability Synthesis complete.
+
+## Per-deliverable
+
+One script = one deliverable. Do not absorb CC-08 while implementing CC-07.

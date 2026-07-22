@@ -4,7 +4,7 @@
 Build: KCCC-CALENDAR-RECOVERY-RETURN-TO-CORE-1.0
 Canonical tracker: THIS FILE (Steps 1–25)
 Calendar Completion overlay: develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md (CC-01…CC-12 LOCKED)
-Updated: ADR-093 Phase Two vision locked 2026-07-22 · CC-07…CC-12 intact first
+Updated: ADR-094 standing execution · ADR-095 CC-07 authorized 2026-07-22
 Runtime: src/lib/system/constants.ts
 ```
 
@@ -19,8 +19,9 @@ Primary engineering track: Calendar Completion (LOCKED) — finish CC-07…CC-12
   Program:    develop_notes/KCCC_CALENDAR_COMPLETION_PROGRAM.md
   Ship baseline: main @ 46a72c3 · Netlify 6a60efa8f25804bc9b16f3f3 (CC-01…CC-05)
   CC-06 Conflict Engine: COMPLETE (ADR-092)
-  Next engineering: NONE AUTHORIZED — CC-07 remains DESIGN ONLY
-  Usability Synthesis 1: remains EMPTY (not completed by ADR-090/092/093)
+  Standing execution: ADR-094 (approved scripts ship without routine confirmation)
+  Next engineering: CC-07 COMPLETE (ADR-095) — waiting on separate CC-08 script
+  Usability Synthesis 1: remains EMPTY (not completed by ADR-090/092/093/094/095)
 Phase Two (post–CC-12): VISION LOCKED (ADR-093)
   Program: develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md
   IC-01…IC-12 — design during CC-07…CC-12 OK; implement after CC-12 only

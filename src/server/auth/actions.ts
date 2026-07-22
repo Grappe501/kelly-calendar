@@ -44,6 +44,8 @@ export const MUTATION_ACTIONS = [
   "AVAILABILITY_MANAGE",
   "AVAILABILITY_APPROVE",
   "AVAILABILITY_ACKNOWLEDGE",
+  "SAVED_VIEW_VIEW",
+  "SAVED_VIEW_MANAGE",
 ] as const;
 
 export type MutationAction = (typeof MUTATION_ACTIONS)[number];

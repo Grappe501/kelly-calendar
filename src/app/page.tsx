@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { TodayOperatingView } from "@/components/today/TodayOperatingView";
 import { requireActiveAuthenticatedActor } from "@/server/auth/actor";
 import { getTodayOperatingViewData } from "@/server/services/today-operating-view-service";
@@ -18,5 +19,9 @@ export default async function TodayPage({
   const actor = await requireActiveAuthenticatedActor();
   const data = await getTodayOperatingViewData(actor, params.date);
 
-  return <TodayOperatingView data={data} />;
+  return (
+    <Suspense>
+      <TodayOperatingView data={data} />
+    </Suspense>
+  );
 }

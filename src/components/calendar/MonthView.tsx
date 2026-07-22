@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
+import { CalendarSearchChromeHost } from "@/components/calendar/search/CalendarSearchChromeHost";
 import type { CalendarMonthViewData } from "@/server/services/calendar-month-view-service";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
@@ -24,6 +25,7 @@ export function MonthView({ data, focusEventId = null }: Props) {
       </header>
 
       <CalendarViewSwitcher active="month" dateKey={data.dateKey} />
+      <CalendarSearchChromeHost compact />
       <CalendarDateNav
         dateKey={data.monthStartKey}
         view="month"

@@ -580,7 +580,23 @@
       "status": "accepted",
       "date": "2026-07-22",
       "decision": "Kelly locks Phase Two (IC-01…IC-12) as the major post–Calendar Completion program: an intelligent statewide campaign operating calendar for Mission meaning, geographic/strategic gaps, volunteers/travel coordination, and mobile action. Evidence: develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md and develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md. Protected sequence: CC-07→CC-08→CC-09→CC-10→CC-11→CC-12→usability/AI-quality gate→IC phase authorization. During CC-07…CC-12, clean extension points (query contracts, design tokens, mobile-safe layouts, provider-neutral interfaces, geographic identifiers) are allowed; hidden Phase Two features and widened data collection are forbidden. Deterministic services own facts/authorization/consent/coverage/conflicts/permissible actions; AI explains and recommends within confirmation boundaries.",
-      "boundary": "Does not authorize CC-07 or IC implementation. Does not authorize RedDirt/Mobilize write-back, auto Event/Mission/assignment/contact mutation, or marking Usability Synthesis complete. AI must not invent travel or silently decide geographic priorities. Next engineering requires separate CC-07 authorization."
+      "boundary": "Does not authorize IC implementation. Does not authorize RedDirt/Mobilize write-back, auto Event/Mission/assignment/contact mutation, or marking Usability Synthesis complete. AI must not invent travel or silently decide geographic priorities. CC-07 engineering is separately authorized by ADR-095 under standing execution ADR-094."
+    },
+    {
+      "id": "ADR-094",
+      "title": "Standing Kelly Execution Authorization for Calendar Completion Ship Cycles",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly authorizes Burt/Cursor to execute approved Calendar Completion build scripts (CC-07…CC-12, then usability/AI-quality gate) through the full ship cycle—inspect, plan, edit, forward-only migrations, validate, repair, commit, push main, Netlify deploy, monitor, correct, redeploy, verify live routes, record evidence—without routine confirmation. The build script itself is authorization. Evidence: develop_notes/KCCC_STANDING_KELLY_EXECUTION_AUTHORIZATION_2026-07-22.md. One deliverable per script; next queued script may start without another auth exchange.",
+      "boundary": "Does not authorize destructive production-data ops outside the script, credentials invention, purchases, material scope expansion, or Phase Two IC implementation before CC-12. Hard stops remain for privacy/legal/security decisions, unrecoverable conflicts, and production-data damage risk. Usability Synthesis remains EMPTY."
+    },
+    {
+      "id": "ADR-095",
+      "title": "Kelly Authorization of CC-07 Unified Search, Filters, and Saved Views",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly explicitly authorizes Calendar Completion CC-07 Unified Search, Filters, and Saved Views (permission-aware query contract, consistent filters, bookmarkable state, private/campaign-shared/role-restricted saved views; read-only CC-05/CC-06 consumption). Evidence: develop_notes/KCCC_CC_07_AUTHORIZATION_KELLY_2026-07-22.md. Standing ship-cycle execution under ADR-094. Usability Synthesis remains incomplete.",
+      "boundary": "Must not implement CC-08 grid/drag/resize, bulk Event mutation, ICS/push/AI/RedDirt/Mobilize/volunteer/Phase Two features, or mutate Events/Missions/availability/conflicts/recurrence/imports/external systems from search/filter/saved-view reads."
     }
   ]
 }

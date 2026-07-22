@@ -81,9 +81,18 @@ export const CALENDAR_CONFLICT_DOCTRINE_DOC =
   "develop_notes/KCCC_CALENDAR_CONFLICT_DOCTRINE.md";
 export const CALENDAR_CONFLICT_OPERATOR_GUIDE_DOC =
   "develop_notes/KCCC_CALENDAR_CONFLICT_OPERATOR_GUIDE.md";
-export const CC_07_STATUS = "DESIGN_ONLY";
+export const CC_07_STATUS = "COMPLETE";
+export const CC_07_BUILD_ID =
+  "KCCC-CC-07-UNIFIED-SEARCH-FILTERS-SAVED-VIEWS-1.0";
 export const CC_07_DESIGN_DOC =
   "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md";
+export const CC_07_AUTHORIZATION_ADR = "ADR-095";
+export const CC_07_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_CC_07_AUTHORIZATION_KELLY_2026-07-22.md";
+export const STANDING_KELLY_EXECUTION_ADR = "ADR-094";
+export const STANDING_KELLY_EXECUTION_DOC =
+  "develop_notes/KCCC_STANDING_KELLY_EXECUTION_AUTHORIZATION_2026-07-22.md";
+export const CALENDAR_QUERY_SCHEMA_VERSION = 1;
 export const POST_CC05_DIRECTION_ADR = "ADR-091";
 export const POST_CC05_DIRECTION_DOC =
   "develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md";
@@ -155,12 +164,23 @@ export const FURTHER_ARCHITECTURE_DOCTRINE_STATUS =
 export const SCHEDULE_MUTATION_GOVERNING_RULE =
   "DETECT_EXPLAIN_RECOMMEND_SIMULATE_NEVER_AUTO_MUTATE";
 /**
- * CC-06 (ADR-092) is COMPLETE. No further engineering build is authorized —
- * CC-07 remains DESIGN ONLY until separately authorized. Synthesis remains
- * EMPTY (ADR-091). Phase Two IC-01…IC-12 is VISION LOCKED (ADR-093) — design
- * during CC-07…CC-12 is allowed; implementation waits until after CC-12.
+ * CC-07 (ADR-095) authorized under standing execution ADR-094.
+ * CC-08 is not absorbed by this build. Synthesis remains EMPTY (ADR-091).
+ * Phase Two IC-01…IC-12 is VISION LOCKED (ADR-093) — design during CC-07…CC-12
+ * is allowed; implementation waits until after CC-12.
  */
-export const NEXT_AUTHORIZED_BUILD = "NONE_AUTHORIZED_CC07_DESIGN_ONLY";
+export const NEXT_AUTHORIZED_BUILD = "NONE_AUTHORIZED_WAITING_CC08_SCRIPT";
+export const CC_08_STATUS = "NOT_AUTHORIZED";
+export const CC_08_DESIGN_NOTE =
+  "Advanced Day/Week Scheduling Workspace — design handoff after CC-07 only";
+export const CC_07_IMPL_DOC =
+  "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS.md";
+export const CC_07_ROLLBACK_DOC =
+  "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_ROLLBACK.md";
+export const CALENDAR_SEARCH_FILTER_DOCTRINE_DOC =
+  "develop_notes/KCCC_CALENDAR_SEARCH_FILTER_DOCTRINE.md";
+export const CALENDAR_SAVED_VIEWS_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_CALENDAR_SAVED_VIEWS_OPERATOR_GUIDE.md";
 export const CALENDAR_ROADMAP_DOC =
   "develop_notes/KCCC_CALENDAR_25_STEP_MASTER_ROADMAP.md";
 /** Prisma model name — the only top-level Event entity. */

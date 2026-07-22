@@ -2,10 +2,11 @@
 
 ```text
 Build:        KCCC-CC-07-UNIFIED-SEARCH-FILTERS-SAVED-VIEWS-1.0
-Status:       DESIGN ONLY — NOT AUTHORIZED FOR IMPLEMENTATION
+Status:       DESIGN COMPLETE — IMPLEMENTED UNDER ADR-095
 Designed:     2026-07-22 (alongside CC-06 authorization)
+Implemented:  2026-07-22
 Depends on:   CC-06 complete, pushed, deployed, and documented
-Does not:     Implement during CC-06 · absorb CC-08 grid/drag work
+Does not:     Absorb CC-08 grid/drag work
 ```
 
 ## Measurable improvement (when authorized)

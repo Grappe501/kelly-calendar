@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
+import { CalendarSearchChromeHost } from "@/components/calendar/search/CalendarSearchChromeHost";
 import { chicagoDateKey } from "@/lib/calendar/chicago-date";
 import { dayMembershipKind } from "@/lib/calendar/temporal";
 import type { CalendarWeekViewData } from "@/server/services/calendar-week-view-service";
@@ -56,6 +57,7 @@ export function WeekView({ data, focusEventId = null }: Props) {
       </header>
 
       <CalendarViewSwitcher active="week" dateKey={data.dateKey} />
+      <CalendarSearchChromeHost />
       <CalendarDateNav
         dateKey={data.weekStartKey}
         view="week"

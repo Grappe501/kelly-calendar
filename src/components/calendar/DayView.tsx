@@ -3,6 +3,7 @@ import { MissionCardView } from "@/components/today/MissionCardView";
 import type { CalendarDayViewData } from "@/server/services/calendar-day-view-service";
 import { CalendarDateNav } from "@/components/calendar/CalendarDateNav";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
+import { CalendarSearchChromeHost } from "@/components/calendar/search/CalendarSearchChromeHost";
 import { dayMembershipKind } from "@/lib/calendar/temporal";
 
 function formatDayLabel(dateKey: string): string {
@@ -63,6 +64,7 @@ export function DayView({ data, focusEventId = null }: Props) {
       </header>
 
       <CalendarViewSwitcher active="day" dateKey={data.dateKey} />
+      <CalendarSearchChromeHost compact />
       <CalendarDateNav
         dateKey={data.dateKey}
         view="day"

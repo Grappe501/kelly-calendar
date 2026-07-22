@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
+import { CalendarSearchChromeHost } from "@/components/calendar/search/CalendarSearchChromeHost";
 import type { TodayOperatingViewData } from "@/server/services/today-operating-view-service";
 
 type Props = {
@@ -48,6 +49,7 @@ export function TodayOperatingView({ data }: Props) {
       </header>
 
       <CalendarViewSwitcher active="today" dateKey={data.dateKey} />
+      <CalendarSearchChromeHost />
 
       <div className="today-quick-links">
         <Link className="button" href="/upload">

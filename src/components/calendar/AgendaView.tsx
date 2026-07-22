@@ -3,20 +3,33 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CalendarViewSwitcher } from "@/components/calendar/CalendarViewSwitcher";
+import { CalendarSearchChromeHost } from "@/components/calendar/search/CalendarSearchChromeHost";
 import type { CalendarAgendaViewData } from "@/server/services/calendar-agenda-view-service";
 
 type Props = {
   data: CalendarAgendaViewData;
   focusEventId?: string | null;
+  /** Server-prefiltered when unified query is present. */
+  serverFiltered?: boolean;
 };
 
-export function AgendaView({ data, focusEventId = null }: Props) {
+export function AgendaView({
+  data,
+  focusEventId = null,
+  serverFiltered = false,
+}: Props) {
   const [query, setQuery] = useState("");
   const filtered = useMemo(() => {
+    if (serverFiltered) return data.items;
     const q = query.trim().toLowerCase();
     if (!q) return data.items;
     return data.items.filter((item) => item.searchText.includes(q));
-  }, [data.items, query]);
+  }, [data.items, query, serverFiltered]);
+
+  const uniqueCount = useMemo(
+    () => new Set(filtered.map((i) => i.eventId)).size,
+    [filtered],
+  );
 
   return (
     <div className="page-stack calendar-agenda-view">
@@ -29,17 +42,23 @@ export function AgendaView({ data, focusEventId = null }: Props) {
       </header>
 
       <CalendarViewSwitcher active="agenda" dateKey={data.dateKey} />
+      <CalendarSearchChromeHost
+        resultCount={uniqueCount}
+        truncated={Boolean(data.cataloguePartial)}
+      />
 
-      <label className="agenda-search">
-        <span className="muted">Search</span>
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Title, place, people…"
-          aria-label="Search agenda"
-        />
-      </label>
+      {!serverFiltered ? (
+        <label className="agenda-search">
+          <span className="muted">Local refine</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Title, place, people…"
+            aria-label="Refine agenda locally"
+          />
+        </label>
+      ) : null}
 
       {data.cataloguePartial ? (
         <p className="muted">Agenda load may be partial (loader cap).</p>
@@ -47,7 +66,10 @@ export function AgendaView({ data, focusEventId = null }: Props) {
 
       {filtered.length === 0 ? (
         <section className="panel">
-          <p className="muted">No events in this window{query ? " match your search" : ""}.</p>
+          <p className="muted">
+            No events in this window
+            {query || serverFiltered ? " match your filters" : ""}.
+          </p>
         </section>
       ) : (
         <ol className="agenda-list">
