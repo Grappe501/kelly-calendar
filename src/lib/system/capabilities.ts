@@ -123,7 +123,7 @@ export function getCapabilityStatus(options?: {
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
       primaryFocus:
-        "Calendar Completion — CC-05 Standing Availability Inputs (ADR-090 waiver; CC-06 gated; Synthesis EMPTY)",
+        "Calendar Completion — CC-05 complete; CC-06 Conflict Engine remains gated (ADR-090 did not authorize CC-06; Synthesis EMPTY)",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       calendarCompletionProgramStatus: CALENDAR_COMPLETION_PROGRAM_STATUS,
       unrelatedCampaignExpansionStatus: UNRELATED_CAMPAIGN_EXPANSION_STATUS,

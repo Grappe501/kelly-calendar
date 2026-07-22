@@ -21,14 +21,15 @@ Unrelated campaign expansion  PAUSED
 Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
-CC-05 ........................ AUTHORIZED (Kelly waiver ADR-090, 2026-07-22)
-CC-06 ........................ GATED (separate authorization required)
+CC-05 ........................ COMPLETE (Kelly waiver ADR-090; Synthesis remains EMPTY)
+CC-06 ........................ GATED (separate authorization required; not covered by ADR-090)
 Usability Synthesis 1 ....... Remains EMPTY (not completed by CC-05 waiver)
-Next authorized build ....... CC-05 Standing Availability Inputs
+Next authorized build ....... None — CC-06 Conflict Engine remains GATED
 CC-01 status ................ COMPLETE
 CC-02 status ................ COMPLETE
 CC-03 status ................ COMPLETE
 CC-04 status ................ COMPLETE
+CC-05 status ................ COMPLETE
 CC-05 waiver ................ develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md
 ```
 
@@ -42,7 +43,7 @@ This program finishes the **calendar product** before shifting attention to broa
 | **CC-02** | Calendar Integrity & Provenance Console | L | **COMPLETE** — detector + console; no auto Event mutation |
 | **CC-03** | Timezone, All-day & Overnight Hardening | M | **COMPLETE** — doctrine + temporal service; no schema migration |
 | **CC-04** | Recurrence & Occurrence Exceptions | XL | **COMPLETE** — Model B series + materialized Events; `rrule` |
-| **CC-05** | Standing Availability Inputs | L | **AUTHORIZED** — Kelly waiver ADR-090 (2026-07-22); Synthesis remains EMPTY |
+| **CC-05** | Standing Availability Inputs | L | **COMPLETE** — Kelly waiver ADR-090 (2026-07-22); Synthesis remains EMPTY |
 | **CC-06** | Conflict Engine | XL | **GATED** — requires separate authorization after CC-05; **not** covered by ADR-090 |
 | **CC-07** | Unified Search, Filters & Saved Views | M | Parallel after core |
 | **CC-08** | Advanced Day/Week Scheduling Workspace | L | Time grid first; drag-and-drop deferred |
