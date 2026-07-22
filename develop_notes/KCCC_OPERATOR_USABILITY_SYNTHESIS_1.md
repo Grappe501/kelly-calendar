@@ -3,18 +3,20 @@
 ```text
 Status: EMPTY — fill after Kelly + Steve + Staff sessions
 Source: develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
-Gate: Required before CC-06 authorization (ADR-091)
+Gate: Still required for usability evidence (ADR-091); not a blocker for CC-06 after ADR-092
 Do not fix during sessions — synthesize first, then review with Kelly/Steve
 
 NOTE (2026-07-22): This Synthesis remains EMPTY / incomplete.
 Kelly waived the Synthesis gate for CC-05 ONLY (ADR-090 /
 develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md).
-That waiver does NOT complete this document and does NOT authorize CC-06.
+That waiver does NOT complete this document.
 
-Post-CC-05 direction (ADR-091): Complete Pass 1 + this Synthesis on the live
-CC-01–CC-05 calendar (main@46a72c3 / deploy 6a60efa8f25804bc9b16f3f3)
-before deciding whether to authorize CC-06.
-Do NOT retroactively mark this Synthesis complete because CC-05 shipped.
+Post-CC-05 direction (ADR-091): Usability Pass 1 + this Synthesis remain
+required and this document stays EMPTY until honestly filled from sessions.
+Kelly authorized CC-06 separately (ADR-092 /
+develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md).
+Do NOT mark this Synthesis complete because CC-05 shipped or because CC-06
+was authorized. CC-07 is design-only until separately authorized.
 ```
 
 ## Instructions

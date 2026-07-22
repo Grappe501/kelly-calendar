@@ -123,7 +123,7 @@ export function getCapabilityStatus(options?: {
       commitRef: process.env.COMMIT_REF ?? process.env.VERCEL_GIT_COMMIT_SHA ?? null,
       recoveryBuildId: CALENDAR_RECOVERY_BUILD_ID,
       primaryFocus:
-        "Operator Usability Pass 1 + Synthesis 1 on live CC-01–CC-05 (ADR-091); CC-06 unauthorized; Synthesis EMPTY",
+        "Calendar Completion — CC-06 Conflict Engine (ADR-092); Synthesis EMPTY; CC-07 design-only",
       nextAuthorizedBuild: NEXT_AUTHORIZED_BUILD,
       calendarCompletionProgramStatus: CALENDAR_COMPLETION_PROGRAM_STATUS,
       unrelatedCampaignExpansionStatus: UNRELATED_CAMPAIGN_EXPANSION_STATUS,

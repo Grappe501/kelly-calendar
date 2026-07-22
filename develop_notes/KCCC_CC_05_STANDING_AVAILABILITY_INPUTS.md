@@ -134,6 +134,8 @@ npm run test -- tests/unit/calendar-availability
 
 ## CC-06 handoff
 
-**CC-06: Conflict Engine — Calendar Slice** will consume CC-03 normalized intervals, CC-04 recurrence identities, and CC-05 availability assessments to persist explainable scheduling conflicts and operator dispositions.
+**CC-06: Conflict Engine — Calendar Slice** is **authorized** by Kelly **ADR-092** (`KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md`).
 
-**Do not begin CC-06.** Per ADR-091, the next pass is **Operator Usability Pass 1 + Usability Synthesis 1** on the live CC-01–CC-05 calendar. ADR-090 does **not** authorize CC-06. Do not mark Synthesis complete because CC-05 shipped.
+It will consume CC-03 normalized intervals, CC-04 recurrence identities, and CC-05 availability assessments to persist explainable scheduling conflicts and operator dispositions — without automatically mutating Events, Missions, travel, or external calendars.
+
+Usability Synthesis remains **EMPTY**. CC-07 is **design-only** (`KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS_DESIGN.md`) and must not be implemented inside CC-06.

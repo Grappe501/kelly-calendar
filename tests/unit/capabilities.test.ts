@@ -38,7 +38,7 @@ describe("capability honesty", () => {
       "COMPLETE_CC05",
     );
     expect(status.application.nextAuthorizedBuild).toBe(
-      "KCCC-OPERATOR-USABILITY-PASS-1-AND-SYNTHESIS-1",
+      "KCCC-CC-06-CONFLICT-ENGINE-1.0",
     );
     expect(status.application.calendarCompletionProgramStatus).toBe("LOCKED");
     expect(status.application.unrelatedCampaignExpansionStatus).toBe("PAUSED");

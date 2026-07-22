@@ -551,12 +551,28 @@
       "boundary": "Time/recurrence corrections remain CC-03/CC-04. Explicit repairs require preview, auth, confirmation, and audit when later enabled."
     },
     {
+      "id": "ADR-090",
+      "title": "Kelly CC-05-Only Waiver of Unfinished Usability Synthesis Gate",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly explicitly waives the unfinished Operator Usability Synthesis gate for Calendar Completion CC-05 only, authorizing the calendar-only Standing Availability Inputs slice (rules, exceptions, evaluation, overlays, create/reschedule warnings). Evidence: develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md. Usability Synthesis remains EMPTY and is not marked complete by this waiver.",
+      "boundary": "CC-05 must not automatically move, cancel, confirm, or resolve Events; must not mutate Missions or external calendars; must not create persisted Conflict Engine records. CC-06 remains separately gated and is not authorized by this waiver."
+    },
+    {
       "id": "ADR-091",
       "title": "Post-CC-05 Next Pass Is Operator Usability Pass 1 and Synthesis 1",
       "status": "accepted",
       "date": "2026-07-22",
-      "decision": "With CC-05 shipped at main@46a72c3 / Netlify 6a60efa8f25804bc9b16f3f3, the next authorized human pass is Operator Usability Pass 1 and Usability Synthesis 1 on the live CC-01–CC-05 calendar. ADR-090 authorized CC-05 only and did not complete Synthesis. CC-06 remains unauthorized until Synthesis is completed, reviewed, and separately authorized.",
-      "boundary": "Do not retroactively mark Synthesis complete because CC-05 shipped. Do not begin Conflict Engine (CC-06) implementation under this decision."
+      "decision": "With CC-05 shipped at main@46a72c3 / Netlify 6a60efa8f25804bc9b16f3f3, Operator Usability Pass 1 and Usability Synthesis 1 remain required and Synthesis remains EMPTY. Do not mark Synthesis complete because CC-05 shipped.",
+      "boundary": "Usability observation remains OPEN. CC-06 engineering authorization is separately recorded in ADR-092 (2026-07-22); ADR-091 does not itself authorize CC-06 and does not complete Synthesis."
+    },
+    {
+      "id": "ADR-092",
+      "title": "Kelly Authorization of CC-06 Conflict Engine Calendar Slice",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly explicitly authorizes Calendar Completion CC-06 Conflict Engine — Calendar Slice (detect/persist explainable conflicts; consume CC-03/CC-04/CC-05; operator queue and dispositions). Evidence: develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md. Separate from ADR-090. Usability Synthesis remains incomplete and must not be marked complete because of this authorization. CC-07 remains a separate deliverable.",
+      "boundary": "CC-06 must never automatically move/cancel/confirm/archive/restore/delete Events; change Event status, recurrence, availability, Missions, Travel/Logistics/Field Ops/Staffing/Closeout/Launch; invent travel facts; mark ACKNOWLEDGED as resolved; resolve because an Event ended; or write to external providers. ACKNOWLEDGED does not clear a blocker."
     }
   ]
 }
