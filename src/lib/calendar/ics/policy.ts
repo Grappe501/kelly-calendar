@@ -136,6 +136,13 @@ export function assertNoExactAddress(projection: {
   if (/privateNotes/i.test(blob)) {
     throw new Error("ICS projection must not include privateNotes");
   }
+  if (
+    /EventOutcomeReview|EventHotWashEntry|EventEncounter|attendanceOutcome|operationalOutcome|whatHappened|hotWash|hot-wash/i.test(
+      blob,
+    )
+  ) {
+    throw new Error("ICS projection must not include Event outcome / hot-wash private content");
+  }
   if (/"streetAddress"\s*:/i.test(blob)) {
     throw new Error("ICS projection must not include streetAddress");
   }

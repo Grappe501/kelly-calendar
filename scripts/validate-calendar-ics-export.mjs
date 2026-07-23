@@ -154,9 +154,10 @@ if (
 }
 if (
   constants.includes('PHASE_TWO_PROGRAM_STATUS = "VISION_LOCKED_NOT_AUTHORIZED"') ||
-  constants.includes("VISION_LOCKED_NOT_AUTHORIZED")
+  constants.includes("VISION_LOCKED_NOT_AUTHORIZED") ||
+  constants.includes('PHASE_TWO_PROGRAM_STATUS = "IC_PHASE_AUTHORIZED"')
 ) {
-  pass("Phase Two remains VISION_LOCKED_NOT_AUTHORIZED");
+  pass("Phase Two locked or IC-phase authorized");
 } else {
   fail("Phase Two must remain locked while CC-12 progresses");
 }

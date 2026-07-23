@@ -26,6 +26,10 @@ import {
   eventIntersectsCampaignDay,
   occupiedCampaignDateKeysForInterval,
 } from "@/lib/calendar/temporal";
+import {
+  evaluateEventReviewEligibility,
+  outcomeIndicatorLabel,
+} from "@/lib/calendar/event-outcomes";
 import { accessLevelRank } from "@/lib/auth/access-level";
 import type { SystemRoleName } from "@/lib/auth/system-roles";
 import {
@@ -155,12 +159,21 @@ async function loadAuthorizedPrintRows(input: {
     include: {
       primaryCalendar: true,
       campaignMission: { select: { id: true } },
+      outcomeReview: {
+        select: {
+          status: true,
+          scheduledFingerprint: true,
+          archivedAt: true,
+          followUpNeeded: true,
+        },
+      },
     },
   });
 
   const truncated = events.length > take;
   const slice = truncated ? events.slice(0, take) : events;
   const rows: PrintEventRow[] = [];
+  const now = new Date();
 
   for (const event of slice) {
     const access = await canAccessEvent({
@@ -184,6 +197,29 @@ async function loadAuthorizedPrintRows(input: {
         )
       : {};
 
+    const eligibility = evaluateEventReviewEligibility({
+      schedule: {
+        startsAt: event.startsAt,
+        endsAt: event.endsAt,
+        timezone: event.timezone,
+        isAllDay: event.isAllDay,
+        status: event.status,
+      },
+      now,
+      existing: event.outcomeReview
+        ? {
+            status: event.outcomeReview.status,
+            scheduledFingerprint: event.outcomeReview.scheduledFingerprint,
+            archivedAt: event.outcomeReview.archivedAt,
+          }
+        : null,
+    });
+    const outcomeReviewLabel =
+      outcomeIndicatorLabel(
+        eligibility.eligibility,
+        event.outcomeReview?.followUpNeeded,
+      ) ?? undefined;
+
     rows.push(
       applyPrintPrivacy(input.profile, {
         eventId: event.id,
@@ -201,6 +237,7 @@ async function loadAuthorizedPrintRows(input: {
         privateNotes: event.privateNotes,
         calendarName: event.primaryCalendar.name,
         missionLinked: Boolean(event.campaignMission?.id),
+        outcomeReviewLabel,
         ...membership,
       }),
     );

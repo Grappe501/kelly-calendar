@@ -162,7 +162,25 @@ export const IC_03_DESIGN_HANDOFF_DOC =
   "develop_notes/KCCC_IC_03_DESIGN_HANDOFF.md";
 export const IC_02_SHIP_COMMIT = "3c7e835";
 export const IC_02_SHIP_DEPLOY_ID = "6a6244c0a320c841310f11bd";
-export const AUTHORITATIVE_TIP_COMMIT = "aef0183";
+export const IC_02A_STATUS = "COMPLETE";
+export const IC_02A_BUILD_ID =
+  "KCCC-IC-02A-EVENT-OUTCOME-HOT-WASH-1.0";
+export const IC_02A_AUTHORIZATION_ADR = "ADR-105";
+export const IC_02A_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_IC_02A_AUTHORIZATION_KELLY_2026-07-23.md";
+export const IC_02A_IMPL_DOC =
+  "develop_notes/KCCC_IC_02A_EVENT_OUTCOME_HOT_WASH.md";
+export const IC_02A_ROLLBACK_DOC =
+  "develop_notes/KCCC_IC_02A_EVENT_OUTCOME_HOT_WASH_ROLLBACK.md";
+export const IC_02A_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_EVENT_OUTCOME_HOT_WASH_OPERATOR_GUIDE.md";
+export const IC_02A_ENCOUNTER_PRIVACY_DOC =
+  "develop_notes/KCCC_EVENT_ENCOUNTER_PRIVACY_POLICY.md";
+export const IC_02A_ADR_DOC =
+  "develop_notes/ADR-105_EVENT_OUTCOME_INDEPENDENT_FACTS.md";
+export const IC_02A_SHIP_COMMIT = "";
+export const IC_02A_SHIP_DEPLOY_ID = "";
+export const AUTHORITATIVE_TIP_COMMIT = "c7e43db";
 export const POSTURE_LOCK_COMMIT = "203bfe3";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
@@ -247,7 +265,7 @@ export const CC_08_TIP_COMMIT = "e1ddaa7";
 export const CC_08_TIP_DEPLOY_ID = "6a612111e81d923c5e6c58ca";
 export const CC_09_SHIP_COMMIT = "f8186be";
 export const CC_09_SHIP_DEPLOY_ID = "6a612a7cba0c57774db91b5f";
-/** IC-01 COMPLETE; IC-02 COMPLETE (ADR-104); IC-03 not authorized. */
+/** IC-01 COMPLETE; IC-02 COMPLETE; IC-02A COMPLETE (ADR-105); IC-03 not authorized. */
 export const NEXT_AUTHORIZED_BUILD = "IC_03_NOT_AUTHORIZED";
 export const CC_09_STATUS = "COMPLETE";
 export const CC_09_BUILD_ID =

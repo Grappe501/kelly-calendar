@@ -28,6 +28,7 @@ export type PrintPolicyEventInput = {
   isOvernight?: boolean;
   continuesFromPrior?: boolean;
   continuesIntoNext?: boolean;
+  outcomeReviewLabel?: string;
 };
 
 function cityOnlyLabel(event: PrintPolicyEventInput): string | undefined {
@@ -82,6 +83,9 @@ export function applyPrintPrivacy(
   }
   if (event.continuesIntoNext != null) {
     base.continuesIntoNext = event.continuesIntoNext;
+  }
+  if (event.outcomeReviewLabel) {
+    base.outcomeReviewLabel = event.outcomeReviewLabel;
   }
 
   if (profile === "WEEK_OVERVIEW") {

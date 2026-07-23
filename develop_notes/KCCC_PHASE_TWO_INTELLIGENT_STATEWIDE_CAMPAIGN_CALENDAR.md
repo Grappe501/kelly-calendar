@@ -2,11 +2,11 @@
 
 ```text
 Program ID:   KCCC-PHASE-TWO-INTELLIGENT-STATEWIDE-CAMPAIGN-CALENDAR-1.0
-Status:       IC_PHASE_AUTHORIZED — IC-01 COMPLETE · IC-02…IC-12 NOT_AUTHORIZED
+Status:       IC_PHASE_AUTHORIZED — IC-01 COMPLETE · IC-02 COMPLETE · IC-02A COMPLETE · IC-03…IC-12 NOT_AUTHORIZED
 Locked:       2026-07-22 (vision) · IC phase opened 2026-07-23 (ADR-101/103/102)
-Authority:    Kelly · ADR-093 · ADR-101 · ADR-103 · ADR-102
+Authority:    Kelly · ADR-093 · ADR-101 · ADR-103 · ADR-102 · ADR-104 · ADR-105
 Prerequisite: Calendar Completion CC-01…CC-12 technically complete + post-CC-12 gates
-Posture:      Calendar-centered · IC-01 shipped · IC-02 design handoff only
+Posture:      Calendar-centered · IC-01/IC-02/IC-02A shipped · IC-03 design handoff only
 ```
 
 ## Product vision
@@ -41,17 +41,18 @@ Next engineering requires separate CC-07 authorization
 1. Finish **CC-07…CC-12**
 2. **IC-01** Arkansas Campaign Geography Foundation
 3. **IC-02** RedDirt Read Integration
-4. **IC-03** Mission Intelligence Profile
-5. **IC-04** Statewide Coverage Intelligence
-6. **IC-05** Travel Pattern and Corridor Intelligence
-7. **IC-06** Statewide Opportunity and Gap Engine
-8. **IC-07** Kelly Calendar AI Copilot
-9. **IC-08** Volunteer Identity, Consent, and Skills Foundation
-10. **IC-09** Volunteer Manager Workspace
-11. **IC-10** Mobilize Activation and Low-Touch Automation
-12. **IC-11** Mobile Action Center and Push Notifications
-13. **IC-12** Brand, Delight, and Product Identity
-14. Dedicated **operator-usability + AI-quality gate** before broader automation
+4. **IC-02A** Event Outcome and Hot Wash (authorized calendar improvement; does not renumber IC-03)
+5. **IC-03** Mission Intelligence Profile
+6. **IC-04** Statewide Coverage Intelligence
+7. **IC-05** Travel Pattern and Corridor Intelligence
+8. **IC-06** Statewide Opportunity and Gap Engine
+9. **IC-07** Kelly Calendar AI Copilot
+10. **IC-08** Volunteer Identity, Consent, and Skills Foundation
+11. **IC-09** Volunteer Manager Workspace
+12. **IC-10** Mobilize Activation and Low-Touch Automation
+13. **IC-11** Mobile Action Center and Push Notifications
+14. **IC-12** Brand, Delight, and Product Identity
+15. Dedicated **operator-usability + AI-quality gate** before broader automation
 
 ## Governing AI principle
 
@@ -95,6 +96,14 @@ Build: external identity mapping · dry-run imports · provenance · privacy all
 
 **Hard rule:** No blind sync; no RedDirt writes; no OpenAI; no people import; no Event/Mission mutation; no AI direct database access.
 
+## IC-02A — Event Outcome and Hot Wash
+
+**Status: COMPLETE** (ADR-105) — `KCCC_IC_02A_EVENT_OUTCOME_HOT_WASH.md`.
+
+Post-Event review after scheduled end: attendance + operational outcomes, hot wash, encounters, follow-up linkage. Time passing → `REVIEW_DUE` only — never auto-complete / auto not-attended. Does not renumber IC-03.
+
+**Hard rule:** Schedule ≠ attendance ≠ operational completion ≠ Mission execution ≠ review completion (ADR-105).
+
 ## IC-03 — Mission Intelligence Profile
 
 **Status: NOT_AUTHORIZED** — design handoff only: `KCCC_IC_03_DESIGN_HANDOFF.md`.
@@ -102,6 +111,7 @@ Build: external identity mapping · dry-run imports · provenance · privacy all
 Structured, reviewable strategic profile per Mission. AI may **propose** purpose, value, coverage, audience, focus-area/travel/volunteer/prep needs, related Missions, confidence, missing info, citations.
 
 Must distinguish: stored facts · deterministic calculations · AI inference · campaign-approved judgment.
+Must distinguish **planned intent** from **IC-02A reviewed outcomes** when consuming Event evidence.
 
 **Hard rule:** AI suggestions never silently change the Mission.
 

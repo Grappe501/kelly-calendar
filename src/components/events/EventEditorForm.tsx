@@ -381,6 +381,12 @@ export function EventEditorForm({ initial, initialHistory, canMutate }: Props) {
               <Link href={`/system/missions/${initial.missionId}`}>Mission workspace</Link>
             </>
           ) : null}
+          {" · "}
+          <Link href={`/system/events/${initial.eventId}/outcome`}>
+            Outcome / hot wash
+          </Link>
+          {" · "}
+          <Link href="/system/calendar/reviews">Review queue</Link>
           {initial.recurrenceSeriesId ? (
             <>
               {" · "}

@@ -82,7 +82,8 @@ if (
   constants.includes('NEXT_AUTHORIZED_BUILD = "NONE"') ||
   constants.includes('NEXT_AUTHORIZED_BUILD = "POST_CC12_HUMAN_USABILITY_GATE"') ||
   constants.includes('NEXT_AUTHORIZED_BUILD = "IC_01"') ||
-  constants.includes('NEXT_AUTHORIZED_BUILD = "IC_02_NOT_AUTHORIZED"')
+  constants.includes('NEXT_AUTHORIZED_BUILD = "IC_02_NOT_AUTHORIZED"') ||
+  constants.includes('NEXT_AUTHORIZED_BUILD = "IC_03_NOT_AUTHORIZED"')
 ) {
   pass("NEXT_AUTHORIZED_BUILD references CC_12 program, post-CC12 gate, or IC phase");
 } else {

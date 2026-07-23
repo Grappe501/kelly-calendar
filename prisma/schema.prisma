@@ -1230,6 +1230,7 @@ model Event {
   notes                EventNote[]
   outcomes             EventOutcome[]
   followups            EventFollowup[]
+  outcomeReview        EventOutcomeReview?
   eventPeople          EventPerson[]
   eventOrganizations   EventOrganization[]
   geographies          EventGeography[]
@@ -1890,6 +1891,218 @@ model EventFollowup {
   @@schema("kelly_calendar")
 }
 
+/// IC-02A — post-Event review status (independent of EventStatus and Mission lifecycle).
+enum EventOutcomeReviewStatus {
+  DRAFT
+  REVIEWED
+  STALE
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+/// IC-02A — attendance disposition (independent of operational completion).
+enum EventAttendanceOutcome {
+  ATTENDED
+  PARTIALLY_ATTENDED
+  NOT_ATTENDED
+  CANCELLED
+  POSTPONED
+  EVENT_DID_NOT_OCCUR
+  UNKNOWN
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+/// IC-02A — operational result (independent of attendance and Mission execution).
+enum EventOperationalOutcome {
+  COMPLETED
+  PARTIALLY_COMPLETED
+  UNSUCCESSFUL
+  RESCHEDULE_NEEDED
+  FOLLOW_UP_REQUIRED
+  NO_CAMPAIGN_ACTION
+  UNKNOWN
+
+  @@schema("kelly_calendar")
+}
+
+enum EventHotWashEntryType {
+  WHAT_HAPPENED
+  TAKEAWAY
+  WIN
+  CHALLENGE
+  COMMITMENT
+  FOLLOW_UP
+  CONTACT_ENCOUNTER
+  ORGANIZATION_ENCOUNTER
+  ISSUE
+  CORRECTION
+  NOTE
+
+  @@schema("kelly_calendar")
+}
+
+enum EventOutcomePrivacyClass {
+  INTERNAL
+  LEADERSHIP
+  CONFIDENTIAL
+
+  @@schema("kelly_calendar")
+}
+
+enum EventEncounterContactReviewStatus {
+  NOT_REQUESTED
+  AWAITING_REVIEW
+  DECLINED
+  CONVERTED_TO_CONTACT_WORKFLOW
+
+  @@schema("kelly_calendar")
+}
+
+/// IC-02A — optional 1:1 lazy-created Event outcome review. Never seeded by reads or elapsed time.
+model EventOutcomeReview {
+  id                   String                   @id @default(cuid())
+  campaignScopeKey     String                   @default("KELLY")
+  eventId              String                   @unique
+  campaignDateKey      String
+  status               EventOutcomeReviewStatus @default(DRAFT)
+  attendanceOutcome    EventAttendanceOutcome?
+  operationalOutcome   EventOperationalOutcome?
+  reviewedAt           DateTime?
+  reviewedByUserId     String?
+  summary              String?
+  whatHappened         String?
+  attendanceEstimate   Int?
+  notableIssues        String?
+  missionWorkNeeded    Boolean                  @default(false)
+  followUpNeeded       Boolean                  @default(false)
+  scheduledFingerprint String
+  sourceFingerprint    String?
+  staleAt              DateTime?
+  staleReason          String?
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+  archivedAt           DateTime?
+
+  event      Event                 @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  hotWash    EventHotWashEntry[]
+  encounters EventEncounter[]
+  audits     EventOutcomeAuditEntry[]
+  followupLinks EventOutcomeFollowUpLink[]
+
+  @@index([campaignScopeKey, status])
+  @@index([campaignScopeKey, campaignDateKey])
+  @@index([attendanceOutcome])
+  @@index([operationalOutcome])
+  @@index([reviewedAt])
+  @@schema("kelly_calendar")
+}
+
+/// IC-02A — append-oriented hot-wash entries. Corrections append; never silent rewrite.
+model EventHotWashEntry {
+  id                   String                  @id @default(cuid())
+  campaignScopeKey     String                  @default("KELLY")
+  outcomeReviewId      String
+  entryType            EventHotWashEntryType
+  content              String
+  importance           Int                     @default(0)
+  occurredAt           DateTime?
+  authorUserId         String?
+  privacyClassification EventOutcomePrivacyClass @default(INTERNAL)
+  correctsEntryId      String?
+  sourceLabel          String?
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+  archivedAt           DateTime?
+
+  outcomeReview EventOutcomeReview @relation(fields: [outcomeReviewId], references: [id], onDelete: Cascade)
+  correctsEntry EventHotWashEntry? @relation("HotWashCorrection", fields: [correctsEntryId], references: [id])
+  corrections   EventHotWashEntry[] @relation("HotWashCorrection")
+  followupLinks EventOutcomeFollowUpLink[]
+
+  @@index([outcomeReviewId, entryType])
+  @@index([campaignScopeKey, createdAt])
+  @@index([archivedAt])
+  @@schema("kelly_calendar")
+}
+
+/// IC-02A — people/orgs met. Name alone never creates Person or consent.
+model EventEncounter {
+  id                         String                          @id @default(cuid())
+  campaignScopeKey           String                          @default("KELLY")
+  outcomeReviewId            String
+  displayName                String
+  organizationName           String?
+  roleTitle                  String?
+  meetingContext             String?
+  whyItMatters               String?
+  campaignCommitments        String?
+  personCommitments          String?
+  suggestedNextAction        String?
+  followUpDueAt              DateTime?
+  privacyClassification      EventOutcomePrivacyClass        @default(INTERNAL)
+  contactDetailsProvided     Boolean                         @default(false)
+  contactReviewStatus        EventEncounterContactReviewStatus @default(NOT_REQUESTED)
+  linkedPersonId             String?
+  linkedOrganizationId       String?
+  externalReference          String?
+  recordedByUserId           String?
+  recordedAt                 DateTime                        @default(now())
+  createdAt                  DateTime                        @default(now())
+  updatedAt                  DateTime                        @updatedAt
+  archivedAt                 DateTime?
+
+  outcomeReview EventOutcomeReview @relation(fields: [outcomeReviewId], references: [id], onDelete: Cascade)
+  linkedPerson  Person?            @relation(fields: [linkedPersonId], references: [id])
+  followupLinks EventOutcomeFollowUpLink[]
+
+  @@index([outcomeReviewId])
+  @@index([campaignScopeKey, contactReviewStatus])
+  @@index([linkedPersonId])
+  @@index([archivedAt])
+  @@schema("kelly_calendar")
+}
+
+/// Soft link from outcome/hot-wash/encounter → EventFollowup (confirmation required to create).
+model EventOutcomeFollowUpLink {
+  id              String   @id @default(cuid())
+  campaignScopeKey String  @default("KELLY")
+  outcomeReviewId String
+  hotWashEntryId  String?
+  encounterId     String?
+  eventFollowupId String
+  reason          String?
+  createdByUserId String?
+  createdAt       DateTime @default(now())
+
+  outcomeReview EventOutcomeReview @relation(fields: [outcomeReviewId], references: [id], onDelete: Cascade)
+  hotWashEntry  EventHotWashEntry? @relation(fields: [hotWashEntryId], references: [id])
+  encounter     EventEncounter?    @relation(fields: [encounterId], references: [id])
+
+  @@unique([outcomeReviewId, eventFollowupId])
+  @@index([campaignScopeKey])
+  @@schema("kelly_calendar")
+}
+
+/// Append-only audit for attendance/operational/review/encounter actions.
+model EventOutcomeAuditEntry {
+  id              String   @id @default(cuid())
+  campaignScopeKey String  @default("KELLY")
+  outcomeReviewId String
+  action          String
+  actorUserId     String?
+  detailJson      Json     @default("{}")
+  createdAt       DateTime @default(now())
+
+  outcomeReview EventOutcomeReview @relation(fields: [outcomeReviewId], references: [id], onDelete: Cascade)
+
+  @@index([outcomeReviewId, createdAt])
+  @@index([campaignScopeKey, action])
+  @@schema("kelly_calendar")
+}
+
 // ─── D. People / orgs ────────────────────────────────────────────────
 
 model Person {
@@ -1914,6 +2127,7 @@ model Person {
   organization Organization? @relation(fields: [organizationId], references: [id])
   eventPeople  EventPerson[]
   contactMethods ContactMethod[]
+  eventEncounters EventEncounter[]
 
   @@schema("kelly_calendar")
 }

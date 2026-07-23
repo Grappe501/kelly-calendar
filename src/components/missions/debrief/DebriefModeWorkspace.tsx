@@ -131,6 +131,7 @@ export function DebriefModeWorkspace({ initial }: Props) {
           <Link href={`/system/missions/${mission.missionId}`}>
             Full record
           </Link>
+          <Link href="/system/calendar/reviews">Event outcome reviews</Link>
           {(debrief.debriefStatus === "COMPLETED" ||
             debrief.debriefStatus === "APPROVED") && (
             <Link href={`/system/missions/${mission.missionId}/debrief/report`}>

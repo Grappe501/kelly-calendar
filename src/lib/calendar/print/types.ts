@@ -30,6 +30,8 @@ export type PrintEventRow = {
   missionLinked?: boolean;
   conflictIndicator?: boolean;
   availabilityIndicator?: boolean;
+  /** IC-02A — concise review status for past Events; never private hot-wash text. */
+  outcomeReviewLabel?: string;
 };
 
 export type PrintDayProjection = {

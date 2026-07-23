@@ -111,6 +111,9 @@ export default async function CalendarPrintDayPage({
                   {event.continuesFromPrior ? " · Continues from prior day" : null}
                   {event.continuesIntoNext ? " · Continues into next day" : null}
                   {event.missionLinked ? " · Mission linked" : null}
+                  {event.outcomeReviewLabel
+                    ? ` · ${event.outcomeReviewLabel}`
+                    : null}
                   {event.conflictIndicator ? " · Conflict flag" : null}
                   {event.availabilityIndicator ? " · Availability flag" : null}
                 </p>
