@@ -7,6 +7,10 @@ Build:        KCCC-IC-02A-EVENT-OUTCOME-HOT-WASH-1.0
 Migration:    20260723150000_ic02a_event_outcome_hot_wash
 Validator:    npm run calendar:event-outcomes:validate
 Baseline tip: c7e43db (pre-ship)
+Feature:      b8c1e1c
+Evidence tip: (see AUTHORITATIVE_TIP_COMMIT)
+Deploy:       6a624c99e879a0702cdbee2d
+Production:   https://kelly-calendar.netlify.app
 ```
 
 ## Product outcome
@@ -14,6 +18,17 @@ Baseline tip: c7e43db (pre-ship)
 Mobile-friendly post-Event review after scheduled end (or cancelled/postponed
 disposition). Operators record attendance outcome, operational outcome, what
 happened, takeaways, encounters, commitments, and follow-up needs.
+
+## Ship evidence (2026-07-23)
+
+- Feature commit: `b8c1e1c`
+- Netlify production deploy: `6a624c99e879a0702cdbee2d`
+- Validator: `npm run calendar:event-outcomes:validate` (55 pass)
+- DB decisive proof: `npm run calendar:event-outcomes:validate:db` (11 pass; cleanup restores counts)
+- TypeScript `--noEmit`: green
+- Production build: green
+- Secret scan: clean
+- ICS / CC-12 validators: green after IC-phase gate updates
 
 ## Fundamental rule
 
