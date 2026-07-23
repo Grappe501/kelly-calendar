@@ -37,6 +37,7 @@ CC-09 migration ............. 20260722160000_cc09_bulk_operations (db execute + 
 CC-09 authorization ......... develop_notes/KCCC_CC_09_AUTHORIZATION_KELLY_2026-07-22.md
 CC-10 authorization ......... develop_notes/KCCC_CC_10_AUTHORIZATION_KELLY_2026-07-22.md (ADR-098)
 CC-10 migration ............. 20260722180000_cc10_ics_export_subscription
+CC-10 ship evidence ......... commit 0bbf751 · deploy 6a619fa32d949535124cbabc
 ```
 
 This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. CC-10 is **COMPLETE** (ADR-098) under standing execution ADR-094. It does **not** authorize CC-11 implementation or IC-01…IC-12 before CC-12 plus the usability/AI-quality gate. Usability Synthesis remains **EMPTY**.

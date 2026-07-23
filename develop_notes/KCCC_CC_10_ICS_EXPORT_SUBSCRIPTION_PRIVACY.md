@@ -104,5 +104,11 @@ npm run calendar:ics:validate
 | Migration | `20260722180000_cc10_ics_export_subscription` |
 | Validator | `calendar:ics:validate` |
 | Hard deletes / Mission lifecycle / public anonymous / Phase Two | **0** |
+| Feature commit | `0bbf751` |
+| Netlify deploy | `6a619fa32d949535124cbabc` |
+| Live URL | https://kelly-calendar.netlify.app |
+
 
 CC-09 release preserved: `f8186be` · deploy `6a612a7cba0c57774db91b5f`.
+
+CC-10 shipped: feature `0bbf751` · Netlify deploy `6a619fa32d949535124cbabc`.

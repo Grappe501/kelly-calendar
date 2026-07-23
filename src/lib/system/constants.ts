@@ -229,8 +229,8 @@ export const CALENDAR_ICS_CLIENT_COMPATIBILITY_DOC =
 export const CC_11_STATUS = "NOT_AUTHORIZED";
 export const CC_11_DESIGN_HANDOFF =
   "Calendar Health Dashboard and Forensic Automation — observe/explain only; no auto Event repair";
-export const CC_10_SHIP_COMMIT = "";
-export const CC_10_SHIP_DEPLOY_ID = "";
+export const CC_10_SHIP_COMMIT = "0bbf751";
+export const CC_10_SHIP_DEPLOY_ID = "6a619fa32d949535124cbabc";
 export const CC_07_IMPL_DOC =
   "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS.md";
 export const CC_07_ROLLBACK_DOC =
