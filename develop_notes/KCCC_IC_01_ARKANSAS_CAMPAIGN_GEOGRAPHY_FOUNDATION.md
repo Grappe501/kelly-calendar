@@ -125,8 +125,8 @@ CC-07 already accepts `countyIds` against `Event.countyId`. Full **EventGeograph
 | Migration | `20260723120000_ic01_arkansas_campaign_geography_foundation` |
 | Authorization | ADR-102 |
 | Status | COMPLETE |
-| Feature commit | *(filled at ship)* |
-| Netlify deploy | *(filled at ship)* |
+| Feature commit | `53d0f016d5e5b53d2368bdcbb0f2babde4f30e63` (`53d0f01`) |
+| Netlify deploy | `6a622880ca69994d8d655023` — https://kelly-calendar.netlify.app |
 | Counties / places | 75 / 250 |
 | Event schedule mutations from reconcile | **0** |
 | OpenAI / RedDirt / Mobilize | **0** |

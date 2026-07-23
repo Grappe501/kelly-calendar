@@ -2,7 +2,7 @@
 
 ```text
 Checked:     2026-07-23 (IC-01 attempt) · 2026-07-23 (IC-02 attempt) · 2026-07-23 (gate resolution) · 2026-07-23 (IC-01 COMPLETE)
-Tip:         main @ PENDING_SHIP (update after IC-01 feature + evidence commits)
+Tip:         main @ 53d0f01 (feature) + evidence commit (this docs commit); deploy 6a622880ca69994d8d655023
 Verdict:     CLEARED for IC-01 via ADR-101 + ADR-103 + ADR-102 — IC-01 COMPLETE
 Authority:   ADR-093 prerequisite sequence · resolved by ADR-101 / ADR-103 / ADR-102
 IC-02…IC-12: NOT authorized (design handoff only for IC-02)
@@ -37,7 +37,7 @@ This file records durable evidence. It does **not** fabricate human observations
 | IC-01 OpenAI calls | **Zero** (forbidden) |
 | Geography models / migration | **Shipped** (`20260723120000_ic01_arkansas_campaign_geography_foundation`) |
 | `geography:foundation:validate` | **Green** (75 / 250) |
-| IC-01 ship commit / Netlify | **Filled at evidence commit** |
+| IC-01 ship commit / Netlify | **`53d0f01`** / deploy **`6a622880ca69994d8d655023`** |
 
 ## IC-02 specific block (unchanged intent)
 
