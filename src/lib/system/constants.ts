@@ -280,8 +280,8 @@ export const CC_12_DESIGN_HANDOFF =
 export const CALENDAR_COMPLETION_TECHNICAL_STATUS =
   "TECHNICALLY_COMPLETE_HUMAN_USABILITY_GATE_PENDING";
 export const HUMAN_USABILITY_GATE_STATUS = "PENDING";
-export const CC_12_SHIP_COMMIT = "";
-export const CC_12_SHIP_DEPLOY_ID = "";
+export const CC_12_SHIP_COMMIT = "36dae8b";
+export const CC_12_SHIP_DEPLOY_ID = "6a6213be8f93db1c79f4b538";
 export const CC_10_SHIP_COMMIT = "0bbf751";
 export const CC_10_SHIP_DEPLOY_ID = "6a619fa32d949535124cbabc";
 export const CC_11_SHIP_COMMIT = "d570dc6";

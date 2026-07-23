@@ -48,6 +48,13 @@ Harden calendar operator surfaces for phones and print, and improve accessibilit
 npm run calendar:mobile-print-a11y:validate
 ```
 
-## Ship posture
+## Ship evidence
 
-Flip `CC_12_STATUS` to `COMPLETE` only after validator green, docs present, and ship commit/deploy recorded. Human usability gate remains **PENDING** after technical closeout (`KCCC_POST_CC12_HUMAN_USABILITY_GATE.md`).
+| | |
+|--|--|
+| Migration | none (presentation-only) |
+| Authorization | ADR-100 |
+| Status | COMPLETE |
+| Feature commit | `36dae8b` |
+| Netlify deploy | `6a6213be8f93db1c79f4b538` |
+| Hard Event/Mission mutation from print service | **0** |

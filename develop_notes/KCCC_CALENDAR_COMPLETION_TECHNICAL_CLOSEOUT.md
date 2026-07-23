@@ -24,6 +24,6 @@ That technical closeout does **not** authorize Phase Two IC-01…IC-12.
 - [x] `CC_12_STATUS = "COMPLETE"`
 - [x] `npm run calendar:mobile-print-a11y:validate` green
 - [x] ADR-100 registered
-- [ ] Ship commit + Netlify deploy recorded (at ship)
+- [x] Ship commit + Netlify deploy recorded (`36dae8b` / `6a6213be8f93db1c79f4b538`)
 - [x] No CalendarPrint* migration shipped
 - [x] Phase Two remains `VISION_LOCKED_NOT_AUTHORIZED`

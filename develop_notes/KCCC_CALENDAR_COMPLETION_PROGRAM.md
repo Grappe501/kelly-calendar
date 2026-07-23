@@ -42,7 +42,7 @@ CC-11 migration ............. 20260723100000_cc11_calendar_health
 CC-11 ship evidence ......... commit d570dc6 · deploy 6a61aa30fc4c865f2bd3c628
 CC-12 authorization ......... develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md (ADR-100)
 CC-12 migration ............. none (presentation-only)
-CC-12 ship evidence ......... (recorded at ship)
+CC-12 ship evidence ......... commit 36dae8b · deploy 6a6213be8f93db1c79f4b538
 CC-12 authorization ......... develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md (ADR-100)
 CC-12 migration ............. NONE (print projection only)
 ```
