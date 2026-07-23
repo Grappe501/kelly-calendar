@@ -95,7 +95,7 @@ Never prints `DATABASE_URL`. Resolves Events by `ingestKey` prefix in `privateNo
 
 ## Commit
 
-See git log for `fix(calendar): align HSV ingest source placement`.
+`ceed4b5` — `fix(calendar): align HSV ingest source placement` (pushed `main`).
 
 ## Return path
 
