@@ -923,6 +923,178 @@ model CalendarExportAudit {
   @@schema("kelly_calendar")
 }
 
+// ─── CC-11 Calendar Health Dashboard & Forensic Automation ───────────
+// Observe/explain only — never auto-mutate Events/Missions/conflicts/feeds.
+
+enum CalendarHealthRunStatus {
+  STARTED
+  RUNNING
+  COMPLETED
+  PARTIAL
+  FAILED
+  CANCELLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarHealthOverallState {
+  HEALTHY
+  DEGRADED
+  UNHEALTHY
+  UNKNOWN
+  PARTIAL
+  NOT_CONFIGURED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarHealthRunType {
+  MANUAL
+  SCHEDULED
+  FOCUSED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarHealthAlertStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED
+  SUPPRESSED
+  STALE
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarHealthRun {
+  id                       String                     @id @default(cuid())
+  campaignKey              String                     @default("kelly")
+  runType                  CalendarHealthRunType
+  /// FULL | DATE_RANGE | IMPORT_RUN | EVENT | SOURCE | BULK_OPERATION | FEED | LIGHTWEIGHT
+  scope                    String
+  /// string[] of domain ids
+  domainsJson              Json
+  detectorVersion          String
+  status                   CalendarHealthRunStatus    @default(STARTED)
+  overallState             CalendarHealthOverallState @default(UNKNOWN)
+  startedAt                DateTime                   @default(now())
+  completedAt              DateTime?
+  heartbeatAt              DateTime?
+  requestedByUserId        String?
+  systemJobId              String?
+  leaseOwner               String?
+  leaseExpiresAt           DateTime?
+  mandatoryExpected        Int                        @default(0)
+  mandatoryCompleted       Int                        @default(0)
+  mandatoryFailed          Int                        @default(0)
+  mandatorySkipped         Int                        @default(0)
+  recordsExamined          Int                        @default(0)
+  findingsBySeverity       Json?
+  findingsByDomain         Json?
+  truncated                Boolean                    @default(false)
+  truncationNote           String?
+  previousComparableRunId  String?
+  resultFingerprint        String?
+  errorSummaryRedacted     String?
+  /// OK | MISSING_DATABASE | MISSING_SECRET | etc
+  configState              String?
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+
+  findings CalendarHealthFinding[]
+
+  @@index([campaignKey, startedAt])
+  @@index([status])
+  @@index([overallState])
+  @@index([systemJobId])
+  @@index([leaseExpiresAt])
+  @@schema("kelly_calendar")
+}
+
+model CalendarHealthFinding {
+  id                   String   @id @default(cuid())
+  runId                String
+  campaignKey          String   @default("kelly")
+  domain               String
+  /// Stable coalescing key across runs
+  findingKey           String
+  findingType          String
+  /// INFO | WARNING | CRITICAL | ...
+  severity             String
+  certainty            String   @default("CONFIRMED")
+  /// OPEN | RESOLVED | STALE | UNKNOWN
+  status               String   @default("OPEN")
+  /// Redacted-safe operator summary
+  summary              String
+  evidenceFingerprint  String
+  /// Event | ImportRun | Feed | BulkOp | ...
+  relatedRefType       String?
+  relatedRefId         String?
+  /// Optional link to CC-02 CalendarIntegrityFinding id
+  integrityFindingId   String?
+  /// NEW | CONTINUING | WORSENED | IMPROVED | RESOLVED | REOPENED | STALE | UNKNOWN
+  trend                String?
+  firstObservedAt      DateTime @default(now())
+  lastObservedAt       DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  run CalendarHealthRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+  @@index([campaignKey, findingKey])
+  @@index([domain, severity])
+  @@index([status])
+  @@index([relatedRefType, relatedRefId])
+  @@index([integrityFindingId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarHealthAlert {
+  id                   String                   @id @default(cuid())
+  campaignKey          String                   @default("kelly")
+  findingKey           String
+  alertType            String
+  severity             String
+  status               CalendarHealthAlertStatus @default(OPEN)
+  summary              String
+  firstTriggeredAt     DateTime                 @default(now())
+  lastTriggeredAt      DateTime                 @default(now())
+  acknowledgedByUserId String?
+  acknowledgedAt       DateTime?
+  resolvedAt           DateTime?
+  suppressedUntil      DateTime?
+  suppressionReason    String?
+  escalationState      String?
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+
+  @@unique([campaignKey, findingKey])
+  @@index([campaignKey, status])
+  @@index([severity])
+  @@index([lastTriggeredAt])
+  @@schema("kelly_calendar")
+}
+
+model CalendarHealthCheckpoint {
+  id                   String   @id @default(cuid())
+  campaignKey          String   @default("kelly")
+  /// last_successful_full | last_lightweight | ...
+  checkpointKey        String
+  lastSuccessfulRunId  String?
+  lastCompleteRunId    String?
+  lastAttemptedRunId   String?
+  consecutiveFailures  Int      @default(0)
+  nextExpectedAt       DateTime?
+  metaJson             Json?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@unique([campaignKey, checkpointKey])
+  @@index([nextExpectedAt])
+  @@schema("kelly_calendar")
+}
+
 model CalendarViewLayer {
   id           String   @id @default(cuid())
   savedViewId  String

@@ -92,14 +92,19 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 - ADR-096 Kelly Authorization of CC-08 Advanced Day/Week Scheduling Workspace (2026-07-22) — `KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md`
 - ADR-097 Kelly Authorization of CC-09 Bulk Operations, Archive/Restore, and Recovery (2026-07-22) — `KCCC_CC_09_AUTHORIZATION_KELLY_2026-07-22.md`
 - ADR-098 Kelly Authorization of CC-10 ICS Export & Subscription Privacy (2026-07-22) — `KCCC_CC_10_AUTHORIZATION_KELLY_2026-07-22.md`
+- ADR-099 Kelly Authorization of CC-11 Calendar Health Dashboard & Forensic Automation (2026-07-23) — `KCCC_CC_11_AUTHORIZATION_KELLY_2026-07-23.md`
 
 ## Standing execution (ADR-094)
 
 Approved Calendar Completion build scripts authorize the full ship cycle without routine confirmation. Hard stops remain for destructive prod-data ops, missing credentials, purchases, scope expansion, and privacy/legal barriers. Phase Two IC implementation remains blocked until after CC-12 (ADR-093).
 
+## CC-11 authorization
+
+Kelly **ADR-099** authorizes **CC-11 only** under standing execution **ADR-094**. Observe/explain health runs, findings, alerts, and scheduled ingress — no auto Event/Mission repair, no ICS feed rotate/revoke, no conflict auto-resolve writes. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-12** remains design handoff only until separately authorized.
+
 ## CC-10 authorization
 
-Kelly **ADR-098** authorizes **CC-10 only** under standing execution **ADR-094**. Private signed feeds; no public anonymous ICS; no exact residential addresses in export. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-11** is design handoff only until separately authorized after CC-10.
+Kelly **ADR-098** authorizes **CC-10 only** under standing execution **ADR-094**. Private signed feeds; no public anonymous ICS; no exact residential addresses in export. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-11** is authorized separately under ADR-099 (IN PROGRESS).
 
 ## CC-07 authorization
 
@@ -114,6 +119,6 @@ Kelly **ADR-092** authorized **CC-06 only**; the calendar-slice build is now **C
 **ADR-093** locks the Intelligent Statewide Campaign Calendar vision (**IC-01…IC-12**). Program: `KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md`.  
 CC-07…CC-12 remain the primary engineering sequence. Phase Two may be **designed** during those builds; **implementation waits until CC-12 completes**. Deterministic services own facts/authorization/consent/coverage/conflicts/permissible actions; AI explains and recommends within confirmation boundaries.
 
-## CC-05 / CC-06 / CC-10 baseline & next engineering
+## CC-05 / CC-06 / CC-10 / CC-11 baseline & next engineering
 
-CC-05…CC-09 are **COMPLETE**. CC-10 is **IN PROGRESS** (ADR-098). CC-11 remains design handoff only. Phase Two is vision-locked only (ADR-093).
+CC-05…CC-10 are **COMPLETE**. CC-11 is **IN PROGRESS** (ADR-099). CC-12 remains design handoff only (NOT AUTHORIZED). Phase Two is vision-locked only (ADR-093).

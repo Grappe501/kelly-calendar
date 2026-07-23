@@ -25,12 +25,13 @@ Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
 CC-01…CC-10 ................. COMPLETE (CC-10 ADR-098)
-CC-11…CC-12 .................. Remain LOCKED — CC-11 design handoff only (not authorized for implementation)
+CC-11 ......................... COMPLETE (ADR-099) — observe/explain only
+CC-12 ......................... LOCKED — design handoff only (NOT AUTHORIZED)
 Usability Synthesis 1 ....... EMPTY — still required for evidence
 Phase Two (IC-01…IC-12) ..... VISION LOCKED (ADR-093)
 Protected sequence .......... CC-11→12 → usability/AI-quality gate → IC auth
 Standing execution .......... ADR-094
-Next engineering build ....... CC-11 (not authorized by CC-10) — design handoff only
+Next engineering build ....... CC-12 design handoff only (NOT AUTHORIZED); CC-11 COMPLETE
 CC-08 ship evidence ......... tip e1ddaa7 · feature 7486aa9 · tip deploy 6a612111e81d923c5e6c58ca
 CC-09 ship evidence ......... commit f8186be · deploy 6a612a7cba0c57774db91b5f
 CC-09 migration ............. 20260722160000_cc09_bulk_operations (db execute + migrate resolve)
@@ -38,9 +39,12 @@ CC-09 authorization ......... develop_notes/KCCC_CC_09_AUTHORIZATION_KELLY_2026-
 CC-10 authorization ......... develop_notes/KCCC_CC_10_AUTHORIZATION_KELLY_2026-07-22.md (ADR-098)
 CC-10 migration ............. 20260722180000_cc10_ics_export_subscription
 CC-10 ship evidence ......... commit 0bbf751 · deploy 6a619fa32d949535124cbabc
+CC-11 authorization ......... develop_notes/KCCC_CC_11_AUTHORIZATION_KELLY_2026-07-23.md (ADR-099)
+CC-11 migration ............. 20260723100000_cc11_calendar_health
+CC-11 ship evidence ......... (pending Phase G)
 ```
 
-This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. CC-10 is **COMPLETE** (ADR-098) under standing execution ADR-094. It does **not** authorize CC-11 implementation or IC-01…IC-12 before CC-12 plus the usability/AI-quality gate. Usability Synthesis remains **EMPTY**.
+This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. CC-10 is **COMPLETE** (ADR-098). CC-11 is **COMPLETE** (ADR-099) under standing execution ADR-094 — observe/explain only. It does **not** authorize CC-12 or IC-01…IC-12 before CC-12 plus the usability/AI-quality gate. Usability Synthesis remains **EMPTY**.
 
 ### Phase Two preview (post–CC-12)
 
@@ -64,8 +68,8 @@ Full program: `develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALEN
 | **CC-08** | Advanced Day/Week Scheduling Workspace | L | **COMPLETE** — ADR-096; tip `e1ddaa7` / `6a612111e81d923c5e6c58ca`; no drag/resize; no schema migration |
 | **CC-09** | Bulk Operations, Archive/Restore & Recovery | M | **COMPLETE** — ADR-097; no hard delete; migration `20260722160000_cc09_bulk_operations` |
 | **CC-10** | ICS Export & Subscription Privacy | M | **COMPLETE** — ADR-098; migration `20260722180000_cc10_ics_export_subscription` |
-| **CC-11** | Calendar Health Dashboard & Forensic Automation | M | Design handoff only — not authorized for implementation |
-| **CC-12** | Mobile, Print Day Sheets & Accessibility | M | Prefer after CC-07/CC-08; **gate before Phase Two IC implementation** |
+| **CC-11** | Calendar Health Dashboard & Forensic Automation | M | **COMPLETE** - ADR-099; migration `20260723100000_cc11_calendar_health`; observe/explain only |
+| **CC-12** | Mobile, Print Day Sheets & Accessibility | M | **LOCKED** — design handoff only; **gate before Phase Two IC implementation** |
 
 ## Sequencing adjustment (binding)
 

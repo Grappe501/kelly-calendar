@@ -34,3 +34,10 @@
 # ENV_FALLBACK_TO_REDDIRT=false  (required in Netlify - no RedDirt filesystem)
 # KCCC_DEPLOYMENT_PROOF_MODE=true  (optional, temporary Step 5.7 proof window only)
 # Never set KCCC_ALLOW_PRODUCTION_SEED unless explicit proof approval
+#
+# CC-11 Calendar Health scheduled ingress (foundation — observe/explain only):
+# KCCC_CALENDAR_HEALTH_SCHEDULE_SECRET (preferred) or reuse KCCC_SCHEDULED_EXECUTION_SECRET
+# Intended path: Netlify scheduled HTTP POST to /api/internal/calendar/health/scheduled
+# with header x-kccc-calendar-health-secret matching the configured secret.
+# Fail closed when secret/DATABASE_URL missing — never report HEALTHY without them.
+# Do not commit secret values here.

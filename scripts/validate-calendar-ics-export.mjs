@@ -142,10 +142,10 @@ const cc10Ok =
 if (cc10Ok) pass("CC_10_STATUS IN_PROGRESS or COMPLETE");
 else fail("CC_10_STATUS must be IN_PROGRESS or COMPLETE");
 
-if (constants.includes('CC_11_STATUS = "NOT_AUTHORIZED"')) {
-  pass("CC_11_STATUS NOT_AUTHORIZED");
+if (constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"')) {
+  pass("CC_12_STATUS NOT_AUTHORIZED");
 } else {
-  fail("CC_11 must remain NOT_AUTHORIZED");
+  fail("CC_12 must remain NOT_AUTHORIZED");
 }
 
 if (

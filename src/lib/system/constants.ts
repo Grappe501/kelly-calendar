@@ -166,7 +166,8 @@ export const SCHEDULE_MUTATION_GOVERNING_RULE =
 /**
  * CC-07…CC-10 complete under standing execution ADR-094.
  * CC-10 ICS export & subscription privacy is COMPLETE (ADR-098).
- * CC-11 remains NOT_AUTHORIZED (design handoff only).
+ * CC-11 Calendar Health is IN_PROGRESS (ADR-099) — observe/explain only.
+ * CC-12 remains NOT_AUTHORIZED.
  * Synthesis remains EMPTY (ADR-091).
  * Phase Two IC-01…IC-12 is VISION LOCKED (ADR-093) — design during CC-07…CC-12
  * is allowed; implementation waits until after CC-12.
@@ -195,7 +196,7 @@ export const CC_08_TIP_COMMIT = "e1ddaa7";
 export const CC_08_TIP_DEPLOY_ID = "6a612111e81d923c5e6c58ca";
 export const CC_09_SHIP_COMMIT = "f8186be";
 export const CC_09_SHIP_DEPLOY_ID = "6a612a7cba0c57774db91b5f";
-export const NEXT_AUTHORIZED_BUILD = "CC_11_NOT_AUTHORIZED";
+export const NEXT_AUTHORIZED_BUILD = "CC_12_NOT_AUTHORIZED";
 export const CC_09_STATUS = "COMPLETE";
 export const CC_09_BUILD_ID =
   "KCCC-CC-09-BULK-OPERATIONS-ARCHIVE-RESTORE-RECOVERY-1.0";
@@ -226,11 +227,31 @@ export const CALENDAR_ICS_EXPORT_OPERATOR_GUIDE_DOC =
   "develop_notes/KCCC_CALENDAR_SUBSCRIPTION_OPERATOR_GUIDE.md";
 export const CALENDAR_ICS_CLIENT_COMPATIBILITY_DOC =
   "develop_notes/KCCC_CALENDAR_ICS_CLIENT_COMPATIBILITY.md";
-export const CC_11_STATUS = "NOT_AUTHORIZED";
+export const CC_11_STATUS = "COMPLETE";
+export const CC_11_BUILD_ID =
+  "KCCC-CC-11-CALENDAR-HEALTH-FORENSIC-AUTOMATION-1.0";
+export const CC_11_AUTHORIZATION_ADR = "ADR-099";
+export const CC_11_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_CC_11_AUTHORIZATION_KELLY_2026-07-23.md";
+export const CC_11_IMPL_DOC =
+  "develop_notes/KCCC_CC_11_CALENDAR_HEALTH_FORENSIC_AUTOMATION.md";
+export const CC_11_ROLLBACK_DOC =
+  "develop_notes/KCCC_CC_11_CALENDAR_HEALTH_FORENSIC_AUTOMATION_ROLLBACK.md";
+export const CALENDAR_HEALTH_DOCTRINE_DOC =
+  "develop_notes/KCCC_CALENDAR_HEALTH_DOCTRINE.md";
+export const CALENDAR_HEALTH_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_CALENDAR_HEALTH_OPERATOR_GUIDE.md";
+export const CALENDAR_HEALTH_SCHEDULER_RUNBOOK_DOC =
+  "develop_notes/KCCC_CALENDAR_HEALTH_SCHEDULER_RUNBOOK.md";
 export const CC_11_DESIGN_HANDOFF =
   "Calendar Health Dashboard and Forensic Automation — observe/explain only; no auto Event repair";
+export const CC_12_STATUS = "NOT_AUTHORIZED";
+export const CC_12_DESIGN_HANDOFF =
+  "develop_notes/KCCC_CC_12_DESIGN_HANDOFF.md";
 export const CC_10_SHIP_COMMIT = "0bbf751";
 export const CC_10_SHIP_DEPLOY_ID = "6a619fa32d949535124cbabc";
+export const CC_11_SHIP_COMMIT = "";
+export const CC_11_SHIP_DEPLOY_ID = "";
 export const CC_07_IMPL_DOC =
   "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS.md";
 export const CC_07_ROLLBACK_DOC =

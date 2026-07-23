@@ -34,8 +34,8 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Recurring events | COMPLETE (CC-04) | Series + exceptions + materialized Events; `/calendar/series/[id]` | Horizon extension is explicit | CC-05 gated |
 | Day view | COMPLETE (CC-08) | `/calendar?view=day` time grid + bulk select | Grid-first ADR-096; CC-09 multi-select | CC-12 |
 | Week view | COMPLETE (CC-08) | `/calendar?view=week` + bulk select | Same | CC-12 |
-| Bulk operations | COMPLETE (CC-09) | `/system/calendar/bulk` | Preview/confirm/recovery; max 50 | CC-10 shipping |
-| Search/filters/saved views | COMPLETE (CC-07) | query-schema v1 · `a630c8c` · deploy `6a61167b80d9714ef4541631` | N/A | CC-07 |
+| Bulk operations | COMPLETE (CC-09) | `/system/calendar/bulk` | Preview/confirm/recovery; max 50 | N/A |
+| Search/filters/saved views | COMPLETE (CC-07) | query-schema v1 · `a630c8c` · deploy `6a61167b80d9714ef4541631` | N/A | N/A |
 
 | Month view | PARTIAL | `/calendar?view=month` | Same | Step 10 |
 | Agenda view | COMPLETE (CC-03) | Campaign-local occupied days; continuation labels | N/A | CC-04 recurrence |
@@ -52,8 +52,9 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Mission conversion | PARTIAL | `CampaignMission` projection from Event | Downstream of usable events | Step 14 |
 | Follow-up | PARTIAL | `EventFollowup` + `MissionFollowUp` | Same | Step 19 |
 | Google Calendar scaffolding | PARTIAL | OAuth + IMPORT_ONLY sync; no push | Correct freeze for now | Step 23 |
-| Calendar import/export | SHIPPING (CC-10) | Import strong; ICS one-time export + private signed subscriptions | ADR-098 · migration `20260722180000_cc10_ics_export_subscription` | Finish CC-10 ship / validate |
-| Calendar integrity console | COMPLETE (CC-02) | `/system/calendar/integrity*`, detectors `CC-02-DETECTOR-1.0`, scan/disposition models | Findings may exist in data; no auto repair | CC-11 health automation |
+| Calendar import/export | COMPLETE (CC-10) | Import strong; ICS one-time export + private signed subscriptions | ADR-098 · migration `20260722180000_cc10_ics_export_subscription` | N/A |
+| Calendar integrity console | COMPLETE (CC-02) | `/system/calendar/integrity*`, detectors `CC-02-DETECTOR-1.0`, scan/disposition models | Findings may exist in data; no auto repair | Dispositions stay on integrity; CC-11 observes |
+| Calendar health dashboard | IN PROGRESS (CC-11) | `/system/calendar/health*`, `CC-11-HEALTH-1.0`, migration `20260723100000_cc11_calendar_health` | Observe/explain only (ADR-099); no auto repair | Finish ship / validate |
 | Audit history | PARTIAL | `AuditLog` / `DataAccessLog` | No full operator browser | Step 8/24 |
 | Mobile usability | PARTIAL | Bottom nav + mobile shell | Not certified | Step 24 |
 | Communications OS (D20–D26) | COMPLETE (subsystem) / FROZEN | Deliverables + hard production blocks | Out of sequence | **No further work** until calendar Steps 14+ need it |

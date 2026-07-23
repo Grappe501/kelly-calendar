@@ -29,6 +29,7 @@ const VIEW_ACTIONS = new Set<MutationAction>([
   "CONFLICT_VIEW",
   "HISTORICAL_IMPORT_VIEW",
   "CALENDAR_INTEGRITY_VIEW",
+  "CALENDAR_HEALTH_VIEW",
   "AUDIT_VIEW",
   "AVAILABILITY_VIEW",
   "SAVED_VIEW_VIEW",
@@ -47,6 +48,7 @@ function minRankForAction(action: MutationAction): number {
     case "CONFLICT_VIEW":
     case "HISTORICAL_IMPORT_VIEW":
     case "CALENDAR_INTEGRITY_VIEW":
+    case "CALENDAR_HEALTH_VIEW":
     case "AUDIT_VIEW":
     case "AVAILABILITY_VIEW":
     case "SAVED_VIEW_VIEW":
@@ -74,6 +76,9 @@ function minRankForAction(action: MutationAction): number {
     case "HISTORICAL_IMPORT_MERGE":
     case "CALENDAR_INTEGRITY_SCAN":
     case "CALENDAR_INTEGRITY_DISPOSE":
+    case "CALENDAR_HEALTH_RUN":
+    case "CALENDAR_HEALTH_ALERT_ACK":
+    case "CALENDAR_HEALTH_ALERT_SUPPRESS":
     case "AVAILABILITY_MANAGE":
     case "AVAILABILITY_ACKNOWLEDGE":
     case "SAVED_VIEW_MANAGE":
@@ -151,6 +156,14 @@ export async function authorize(
       roleMayMutate(actor.primarySystemRole)
     ) {
       return { allowed: true, reason: "Calendar integrity mutation for mutator role" };
+    }
+    if (
+      (input.action === "CALENDAR_HEALTH_RUN" ||
+        input.action === "CALENDAR_HEALTH_ALERT_ACK" ||
+        input.action === "CALENDAR_HEALTH_ALERT_SUPPRESS") &&
+      roleMayMutate(actor.primarySystemRole)
+    ) {
+      return { allowed: true, reason: "Calendar health mutation for mutator role" };
     }
     if (
       (input.action === "AVAILABILITY_MANAGE" ||

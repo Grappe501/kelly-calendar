@@ -25,6 +25,9 @@ export default async function BulkOperationsIndexPage() {
       <p>
         <Link className="chip chip-link" href="/calendar?view=agenda">
           Select from Agenda
+        </Link>{" "}
+        <Link className="chip chip-link" href="/system/calendar/health">
+          Health
         </Link>
       </p>
       <section className="panel">

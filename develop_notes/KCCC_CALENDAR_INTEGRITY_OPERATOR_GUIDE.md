@@ -38,3 +38,7 @@ Each Event sheet includes **Why this Event exists** (origin, fingerprint, import
 - Fix overnight/all-day rendering (that is CC-03)
 - Fix recurrence exceptions (that is CC-04)
 - Mutate Missions
+
+## CC-11 health (observe only)
+
+`/system/calendar/health` may report integrity trends and link to findings. Health runs **do not** auto-repair Events or replace dispositions on this console.

@@ -6,12 +6,14 @@ Detector:     CC-02-DETECTOR-1.0
 Status:       COMPLETE
 Baseline:     main after CC-01 (a77c9a9 / 095d30d)
 Depends on:   CC-01 provenance contracts (src/lib/calendar/import-provenance.ts)
-Feeds:        CC-11 health automation (future)
+Feeds:        CC-11 health automation (ADR-099) — observes integrity; does not replace this console
 ```
 
 ## Mission
 
 Make the calendar trustworthy by exposing duplicates, provenance gaps, import anomalies, source/local drift, lifecycle inconsistencies, membership issues, and time/recurrence warnings — without automatically deleting or rewriting Events or Missions.
+
+**CC-11 note:** Calendar health (ADR-099) may reuse detectors and surface trends; it **observes only** and never auto-repairs. Dispositions remain on this integrity console.
 
 ## Measurable improvements
 

@@ -106,6 +106,9 @@ export default async function CalendarIntegrityPage() {
           <Link className="button secondary" href="/api/calendar/integrity/export">
             Diagnostic export
           </Link>
+          <Link className="button secondary" href="/system/calendar/health">
+            Calendar health
+          </Link>
         </div>
       </section>
     </div>

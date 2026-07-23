@@ -112,3 +112,5 @@ npm run calendar:ics:validate
 CC-09 release preserved: `f8186be` · deploy `6a612a7cba0c57774db91b5f`.
 
 CC-10 shipped: feature `0bbf751` · Netlify deploy `6a619fa32d949535124cbabc`.
+
+**CC-11:** Health monitors subscription feeds (counts/status/access) without rotating or revoking tokens — feed lifecycle remains CC-10 operator actions.

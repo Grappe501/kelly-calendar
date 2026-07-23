@@ -17,6 +17,11 @@ export const PUBLIC_PATH_PREFIXES = [
    * not campaign session cookie.
    */
   "/api/calendar/feeds/",
+  /**
+   * CC-11 calendar health scheduled ingress — authenticated by shared secret
+   * header (x-kccc-calendar-health-secret), not campaign session cookie.
+   */
+  "/api/internal/calendar/health/",
   "/manifest.webmanifest",
   "/icons/",
 ] as const;

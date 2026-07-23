@@ -298,6 +298,9 @@ export function CalendarSearchChrome({
         <Link className="chip chip-link" href="/system/calendar/exports">
           Export ICS
         </Link>
+        <Link className="chip chip-link" href="/system/calendar/health">
+          Health
+        </Link>
         {resultCount != null ? (
           <span className="muted" aria-live="polite">
             {resultCount} event{resultCount === 1 ? "" : "s"}
