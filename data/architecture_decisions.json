@@ -637,6 +637,30 @@
       "date": "2026-07-23",
       "decision": "Kelly explicitly authorizes Calendar Completion CC-12 Mobile Hardening, Print Day Sheets & Accessibility (mobile-safe layouts, print projections with privacy profiles, accessibility hardening, operator print routes). Evidence: develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md. No CalendarPrint* migration. Standing execution under ADR-094. Presentation/usability only. After technical COMPLETE, human usability gate remains PENDING before Phase Two IC authorization. Usability Synthesis remains incomplete.",
       "boundary": "Must not migrate CalendarPrint* models, mutate Events/Missions from print/mobile chrome, reopen CC-11 auto-repair or ICS privacy defaults, add push/gcm_sender_id, expose print routes on public-paths, or implement Phase Two IC-01…IC-12. CC-11 remains COMPLETE."
+    },
+    {
+      "id": "ADR-101",
+      "title": "Kelly Product-Owner Acceptance of CC-01–CC-12 Baseline and Post–CC-12 Gate Resolution",
+      "status": "accepted",
+      "date": "2026-07-23",
+      "decision": "Kelly accepts the completed Calendar Completion baseline (CC-01…CC-12) for operational use after using/reviewing the live calendar through CC-12, and directs engineering to fix whatever is needed to move forward. Evidence: develop_notes/KCCC_POST_CC12_PRODUCT_OWNER_ACCEPTANCE_AND_PHASE_TWO_AUTHORIZATION_KELLY_2026-07-23.md. Human usability gate Result = ACCEPTED_BY_PRODUCT_OWNER_WITH_CONTINUING_OBSERVATION. Operator Usability Pass 1 remains blank and Synthesis 1 remains EMPTY as truthful facts — not fabricated multi-operator research. Structured pass continues as ongoing improvement evidence. Supersedes Synthesis as a blocking invent-to-pass gate for Phase Two foundation.",
+      "boundary": "Must not invent usability session observations or mark Synthesis complete. Does not authorize IC-02…IC-12, OpenAI feature enablement, RedDirt/Mobilize integration, or Event/Mission auto-mutation. Per-IC authorization still required (ADR-102 for IC-01)."
+    },
+    {
+      "id": "ADR-102",
+      "title": "Kelly Authorization of IC-01 Arkansas Campaign Geography Foundation",
+      "status": "accepted",
+      "date": "2026-07-23",
+      "decision": "Kelly explicitly authorizes Phase Two IC-01 Arkansas Campaign Geography Foundation only (deterministic statewide geography graph, provenance-tagged priorities, validators, documentation, and ship cycle under ADR-094). Evidence: develop_notes/KCCC_IC_01_AUTHORIZATION_KELLY_2026-07-23.md. Prerequisites: ADR-101 owner acceptance and ADR-103 AI quality foundation gate. IC-01 has zero OpenAI calls.",
+      "boundary": "Must not call OpenAI, integrate RedDirt or Mobilize, build people/volunteer identity platform, silently auto-set geographic priority as campaign policy, create Events or Missions from geography features, or implement IC-02…IC-12. Those remain separately sequenced."
+    },
+    {
+      "id": "ADR-103",
+      "title": "Phase Two AI Quality Gate Accepted for Foundation",
+      "status": "accepted",
+      "date": "2026-07-23",
+      "decision": "Phase Two AI quality gate is reviewed and accepted for Phase Two foundation (Status REVIEWED_AND_ACCEPTED_FOR_PHASE_TWO_FOUNDATION). Locks deterministic-facts / no-silent-mutation / server-only OpenAI / schema validation / confirmation boundaries / sixteen evaluation categories. Evidence: develop_notes/KCCC_PHASE_TWO_AI_QUALITY_GATE.md and develop_notes/KCCC_PHASE_TWO_AI_EVALUATION_STANDARD.md. Foundation IC work may begin; each AI-using feature requires its own eval before enablement. IC-01 has zero OpenAI calls.",
+      "boundary": "Must not treat foundation acceptance as OpenAI production enablement. Must not skip per-feature eval, kill switches, or schema validation. Must not allow unrestricted DB access or client-side OpenAI keys."
     }
   ]
 }

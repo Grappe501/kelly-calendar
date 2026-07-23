@@ -1,9 +1,11 @@
 # KCCC — Operator Usability Synthesis 1
 
 ```text
-Status: EMPTY — fill after Kelly + Steve + Staff sessions
+Status: SUPERSEDED_AS_BLOCKING_GATE — see ADR-101
+        (develop_notes/KCCC_POST_CC12_PRODUCT_OWNER_ACCEPTANCE_AND_PHASE_TWO_AUTHORIZATION_KELLY_2026-07-23.md)
+Body status: EMPTY — contents were never filled; keep EMPTY body intact
 Source: develop_notes/KCCC_OPERATOR_USABILITY_PASS_1.md
-Gate: Still required for usability evidence (ADR-091); not a blocker for CC-06 after ADR-092
+Evidence role: Ongoing improvement evidence (ADR-091); not a fabricate-to-pass blocker after ADR-101
 Do not fix during sessions — synthesize first, then review with Kelly/Steve
 
 NOTE (2026-07-22): This Synthesis remains EMPTY / incomplete.
@@ -11,14 +13,19 @@ Kelly waived the Synthesis gate for CC-05 ONLY (ADR-090 /
 develop_notes/KCCC_CC_05_WAIVER_KELLY_2026-07-22.md).
 That waiver does NOT complete this document.
 
+NOTE (2026-07-23): ADR-101 records product-owner operational acceptance of the
+CC-01…CC-12 baseline and supersedes this Synthesis as a *blocking invent-to-pass
+gate* for Phase Two foundation. The body below was never filled and must stay
+EMPTY until honestly completed from real sessions. Do NOT invent observations.
+
 Post-CC-05 direction (ADR-091): Usability Pass 1 + this Synthesis remain
-required and this document stays EMPTY until honestly filled from sessions.
+required as usability *evidence* workstreams and this document stays EMPTY
+until honestly filled from sessions.
 Kelly authorized CC-06 separately (ADR-092 /
 develop_notes/KCCC_CC_06_AUTHORIZATION_KELLY_2026-07-22.md).
 Do NOT mark this Synthesis complete because CC-05 shipped, because CC-06
-was authorized, or because Phase Two (ADR-093 / IC-01…IC-12) was vision-locked.
-CC-07 is design-only until separately authorized. Phase Two implementation
-waits until CC-12 completes.
+was authorized, because Phase Two (ADR-093 / IC-01…IC-12) was vision-locked,
+or because ADR-101 accepted the calendar baseline.
 ```
 
 ## Instructions

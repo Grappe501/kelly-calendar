@@ -2,12 +2,14 @@
 
 ```text
 Prerequisite: CC-12 technical COMPLETE
-Phase Two:    Still VISION LOCKED until this gate + IC authorization
+Phase Two:    IC phase foundation authorized via ADR-101 + ADR-103 + per-IC ADRs
 ```
 
 ## Purpose
 
-Operators (not only engineers) confirm the calendar is usable on real devices and with assistive technology before Phase Two IC work starts.
+Operators (not only engineers) confirm the calendar is usable on real devices and with assistive technology. Structured observation continues as **ongoing improvement evidence**.
+
+Product-owner operational acceptance of the CC-01…CC-12 baseline is recorded in **ADR-101** without inventing multi-operator session notes.
 
 ## Checklist — do not invent observations
 
@@ -29,9 +31,11 @@ Complete only with real operator/tester notes. Leave blank until performed.
 ## Gate result
 
 ```text
-Result:     PENDING
-Authority:  Kelly / Steve after checklist evidence
-Next:       IC phase authorization only if Result = PASS
+Result:     ACCEPTED_BY_PRODUCT_OWNER_WITH_CONTINUING_OBSERVATION
+Authority:  ADR-101 — develop_notes/KCCC_POST_CC12_PRODUCT_OWNER_ACCEPTANCE_AND_PHASE_TWO_AUTHORIZATION_KELLY_2026-07-23.md
+Evidence:   Kelly used/reviewed live calendar through CC-12; directed “fix whatever we need to fix to move forward”
+Not claimed: Fabricated multi-operator Pass 1 / Synthesis research
+Next:       Structured Pass / Synthesis remain ongoing improvement evidence (rows stay blank until real sessions)
 ```
 
-Do not mark PASS without filled rows above. Do not invent observations.
+Checklist rows above remain **blank** by design. Do not invent observations. Do not mark a fabricated PASS.
