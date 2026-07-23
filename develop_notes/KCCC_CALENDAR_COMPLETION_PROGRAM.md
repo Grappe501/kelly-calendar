@@ -43,8 +43,6 @@ CC-11 ship evidence ......... commit d570dc6 · deploy 6a61aa30fc4c865f2bd3c628
 CC-12 authorization ......... develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md (ADR-100)
 CC-12 migration ............. none (presentation-only)
 CC-12 ship evidence ......... commit 36dae8b · deploy 6a6213be8f93db1c79f4b538
-CC-12 authorization ......... develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md (ADR-100)
-CC-12 migration ............. NONE (print projection only)
 ```
 
 This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. CC-10…CC-12 are **COMPLETE** under ADR-098…ADR-100 (standing ADR-094). Calendar Completion is **TECHNICALLY COMPLETE — HUMAN USABILITY GATE PENDING**. Usability Synthesis remains **EMPTY**. Phase Two IC-01…IC-12 remain vision-locked (ADR-093) until the post-CC-12 usability/AI-quality gate and separate IC authorization.
