@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "title": "Arkansas Geography Source Register",
+    "purpose": "Provenance registry for IC-01 geography foundation datasets",
+    "createdAt": "2026-07-23"
+  },
+  "sources": [
+    {
+      "sourceKey": "census-ar-counties-fips-2020",
+      "publisher": "U.S. Census Bureau",
+      "title": "Arkansas County FIPS / ANSI codes",
+      "url": "https://www.census.gov/library/reference/code-lists/ansi.html",
+      "vintage": "2020",
+      "retrievalDate": "2026-07-23",
+      "localPath": "data/geography/arkansas-counties-authority.json",
+      "contentFingerprint": "cd714ec7f42908e307eb19ed7c17fdeb6e32cffecef24883b6b63691f212b871"
+    },
+    {
+      "sourceKey": "census-ar-places-pop-2020",
+      "publisher": "U.S. Census Bureau",
+      "title": "Arkansas Census Places population (Decennial 2020)",
+      "url": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html",
+      "vintage": "2020 Decennial",
+      "retrievalDate": "2026-07-23",
+      "localPath": "data/geography/arkansas-top250-places-planning.json",
+      "contentFingerprint": "ba07ed7ae587eb421314a4d44b11a174b55eac14f3b9d55f05a37d1c7afb139e"
+    },
+    {
+      "sourceKey": "ar-county-seats-primary",
+      "publisher": "Arkansas county governments / SOS listings",
+      "title": "Arkansas county seats (primary)",
+      "url": "https://www.arkansas.gov/",
+      "vintage": "2024",
+      "retrievalDate": "2026-07-23",
+      "localPath": "data/geography/arkansas-counties-authority.json",
+      "contentFingerprint": "cd714ec7f42908e307eb19ed7c17fdeb6e32cffecef24883b6b63691f212b871"
+    }
+  ]
+}

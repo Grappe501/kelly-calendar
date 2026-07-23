@@ -1990,18 +1990,34 @@ model ArkansasRegion {
 }
 
 model ArkansasCounty {
-  id       String  @id @default(cuid())
-  fipsCode String  @unique
-  name     String
-  slug     String  @unique
-  regionId String?
-  isActive Boolean @default(true)
+  id             String  @id @default(cuid())
+  fipsCode       String  @unique
+  name           String
+  slug           String  @unique
+  regionId       String?
+  isActive       Boolean @default(true)
+  stateFips      String  @default("05")
+  geoid          String? @unique
+  normalizedName String?
+  countySeat     String?
+  sourceKey      String?
+  dataVintage    String?
+  /// CONFIRMED | NEEDS_REVIEW
+  seatReviewState String?
 
   region        ArkansasRegion? @relation(fields: [regionId], references: [id])
   events        Event[]
   places        Place[]
   organizations Organization[]
   geographies   EventGeography[]
+  placeAuthorities GeographyPlaceCounty[]
+  aliases       GeographyAlias[]
+  regionMembers CampaignGeographyRegionMember[]
+  corridorNodes CampaignTravelCorridorNode[]
+  countyPriorities CampaignCountyPriority[]
+  focusAreaLinks CampaignFocusAreaGeography[]
+  missionGeographies MissionGeography[]
+  reconciliationCandidates GeographyReconciliationCandidate[]
 
   @@schema("kelly_calendar")
 }
@@ -2033,15 +2049,293 @@ model Place {
 }
 
 model EventGeography {
-  id       String  @id @default(cuid())
-  eventId  String
-  countyId String?
-  placeId  String?
+  id                  String    @id @default(cuid())
+  eventId             String
+  countyId            String?
+  placeId             String?
+  /// AUTHORITATIVE_ID | EXACT_NORMALIZED | ALIAS | OPERATOR_CONFIRMED | ...
+  matchMethod         String?
+  sourceKey           String?
+  evidenceFingerprint String?
+  confirmedByUserId   String?
+  confirmedAt         DateTime?
+  /// EXACT | MAPPED | AMBIGUOUS | UNMATCHED | SUPERSEDED
+  outcome             String?
+  isActive            Boolean   @default(true)
+  supersededAt        DateTime?
+  placeAuthorityId    String?
 
-  event  Event           @relation(fields: [eventId], references: [id])
-  county ArkansasCounty? @relation(fields: [countyId], references: [id])
-  place  Place?          @relation(fields: [placeId], references: [id])
+  event          Event                    @relation(fields: [eventId], references: [id])
+  county         ArkansasCounty?          @relation(fields: [countyId], references: [id])
+  place          Place?                   @relation(fields: [placeId], references: [id])
+  placeAuthority GeographyPlaceAuthority? @relation(fields: [placeAuthorityId], references: [id])
 
+  @@index([eventId, isActive])
+  @@index([evidenceFingerprint])
+  @@schema("kelly_calendar")
+}
+
+// ─── IC-01 Arkansas Campaign Geography Foundation ────────────────────
+
+/// Census place authority (not venue Place).
+model GeographyPlaceAuthority {
+  id                 String   @id @default(cuid())
+  name               String
+  slug               String   @unique
+  placeType          String
+  censusPlaceGeoid   String   @unique
+  population         Int?
+  populationRank     Int?
+  populationVintage  String?
+  normalizedName     String?
+  sourceKey          String?
+  dataVintage        String?
+  isTop250           Boolean  @default(false)
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  counties             GeographyPlaceCounty[]
+  aliases              GeographyAlias[]
+  regionMembers        CampaignGeographyRegionMember[]
+  corridorNodes        CampaignTravelCorridorNode[]
+  focusAreaLinks       CampaignFocusAreaGeography[]
+  eventGeographies     EventGeography[]
+  missionGeographies   MissionGeography[]
+  reconciliationCandidates GeographyReconciliationCandidate[]
+
+  @@index([populationRank])
+  @@index([normalizedName])
+  @@schema("kelly_calendar")
+}
+
+model GeographyPlaceCounty {
+  id               String  @id @default(cuid())
+  placeAuthorityId String
+  countyId         String
+  isPrimary        Boolean @default(false)
+
+  placeAuthority GeographyPlaceAuthority @relation(fields: [placeAuthorityId], references: [id], onDelete: Cascade)
+  county         ArkansasCounty          @relation(fields: [countyId], references: [id], onDelete: Cascade)
+
+  @@unique([placeAuthorityId, countyId])
+  @@index([countyId])
+  @@schema("kelly_calendar")
+}
+
+model GeographyAlias {
+  id               String  @id @default(cuid())
+  aliasText        String
+  normalizedAlias  String
+  aliasType        String  @default("COMMON")
+  countyId         String?
+  placeAuthorityId String?
+  isActive         Boolean @default(true)
+  sourceKey        String?
+
+  county         ArkansasCounty?          @relation(fields: [countyId], references: [id])
+  placeAuthority GeographyPlaceAuthority? @relation(fields: [placeAuthorityId], references: [id])
+
+  @@index([normalizedAlias])
+  @@schema("kelly_calendar")
+}
+
+model CampaignGeographyRegion {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  regionKind  String   @default("CAMPAIGN")
+  isActive    Boolean  @default(true)
+  sourceKey   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members CampaignGeographyRegionMember[]
+
+  @@schema("kelly_calendar")
+}
+
+model CampaignGeographyRegionMember {
+  id               String  @id @default(cuid())
+  regionId         String
+  countyId         String?
+  placeAuthorityId String?
+  memberRole       String  @default("MEMBER")
+
+  region         CampaignGeographyRegion  @relation(fields: [regionId], references: [id], onDelete: Cascade)
+  county         ArkansasCounty?          @relation(fields: [countyId], references: [id])
+  placeAuthority GeographyPlaceAuthority? @relation(fields: [placeAuthorityId], references: [id])
+
+  @@index([regionId])
+  @@schema("kelly_calendar")
+}
+
+model CampaignTravelCorridor {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  sourceKey   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  nodes CampaignTravelCorridorNode[]
+
+  @@schema("kelly_calendar")
+}
+
+model CampaignTravelCorridorNode {
+  id               String  @id @default(cuid())
+  corridorId       String
+  sequence         Int
+  countyId         String?
+  placeAuthorityId String?
+  nodeLabel        String?
+
+  corridor       CampaignTravelCorridor   @relation(fields: [corridorId], references: [id], onDelete: Cascade)
+  county         ArkansasCounty?          @relation(fields: [countyId], references: [id])
+  placeAuthority GeographyPlaceAuthority? @relation(fields: [placeAuthorityId], references: [id])
+
+  @@unique([corridorId, sequence])
+  @@schema("kelly_calendar")
+}
+
+model CampaignCountyPriority {
+  id           String   @id @default(cuid())
+  countyId     String
+  priorityTier String
+  rationale    String?
+  /// CAMPAIGN_ENTERED | PUBLIC_DATA | HISTORICAL_ACTIVITY | OPERATOR_JUDGMENT
+  provenance   String
+  sourceKey    String?
+  isActive     Boolean  @default(true)
+  effectiveAt  DateTime @default(now())
+  retiredAt    DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  county ArkansasCounty @relation(fields: [countyId], references: [id])
+
+  @@index([countyId, isActive])
+  @@schema("kelly_calendar")
+}
+
+model CampaignFocusArea {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  focusKind   String   @default("CAMPAIGN")
+  provenance  String   @default("CAMPAIGN_ENTERED")
+  isActive    Boolean  @default(true)
+  sourceKey   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  geographies CampaignFocusAreaGeography[]
+
+  @@schema("kelly_calendar")
+}
+
+model CampaignFocusAreaGeography {
+  id               String  @id @default(cuid())
+  focusAreaId      String
+  countyId         String?
+  placeAuthorityId String?
+
+  focusArea      CampaignFocusArea         @relation(fields: [focusAreaId], references: [id], onDelete: Cascade)
+  county         ArkansasCounty?           @relation(fields: [countyId], references: [id])
+  placeAuthority GeographyPlaceAuthority?  @relation(fields: [placeAuthorityId], references: [id])
+
+  @@index([focusAreaId])
+  @@schema("kelly_calendar")
+}
+
+model MissionGeography {
+  id                  String    @id @default(cuid())
+  missionId           String
+  countyId            String?
+  placeAuthorityId    String?
+  matchMethod         String?
+  sourceKey           String?
+  evidenceFingerprint String?
+  confirmedByUserId   String?
+  confirmedAt         DateTime?
+  outcome             String?
+  isActive            Boolean   @default(true)
+  supersededAt        DateTime?
+
+  mission        CampaignMission          @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  county         ArkansasCounty?          @relation(fields: [countyId], references: [id])
+  placeAuthority GeographyPlaceAuthority? @relation(fields: [placeAuthorityId], references: [id])
+
+  @@index([missionId, isActive])
+  @@index([evidenceFingerprint])
+  @@schema("kelly_calendar")
+}
+
+model GeographySource {
+  id                 String    @id @default(cuid())
+  sourceKey          String    @unique
+  publisher          String
+  title              String
+  url                String?
+  vintage            String?
+  retrievalDate      DateTime?
+  localPath          String?
+  contentFingerprint String?
+  notes              String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  importRuns GeographyImportRun[]
+
+  @@schema("kelly_calendar")
+}
+
+model GeographyImportRun {
+  id              String    @id @default(cuid())
+  sourceId        String?
+  runKind         String    @default("FOUNDATION_SEED")
+  startedAt       DateTime  @default(now())
+  completedAt     DateTime?
+  status          String    @default("STARTED")
+  countiesUpserted Int      @default(0)
+  placesUpserted  Int       @default(0)
+  countiesCreated Int       @default(0)
+  placesCreated   Int       @default(0)
+  manifestJson    Json?
+  proofPath       String?
+  errorSummary    String?
+
+  source GeographySource? @relation(fields: [sourceId], references: [id])
+
+  @@schema("kelly_calendar")
+}
+
+model GeographyReconciliationCandidate {
+  id               String   @id @default(cuid())
+  subjectType      String
+  subjectId        String
+  inputText        String?
+  normalizedInput  String?
+  proposedCountyId String?
+  proposedPlaceAuthorityId String?
+  matchMethod      String?
+  outcome          String?
+  confidence       String?
+  evidenceJson     Json?
+  status           String   @default("OPEN")
+  createdAt        DateTime @default(now())
+  resolvedAt       DateTime?
+
+  proposedCounty         ArkansasCounty?          @relation(fields: [proposedCountyId], references: [id])
+  proposedPlaceAuthority GeographyPlaceAuthority? @relation(fields: [proposedPlaceAuthorityId], references: [id])
+
+  @@index([subjectType, subjectId])
+  @@index([status])
   @@schema("kelly_calendar")
 }
 
@@ -3078,6 +3372,7 @@ model CampaignMission {
   staffingPlan MissionStaffingPlan?
   communications CampaignCommunication[]
   incidents    MissionIncident[]
+  geographies  MissionGeography[]
 
   @@index([missionStatus])
   @@index([lifecyclePhase])

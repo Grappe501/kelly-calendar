@@ -109,6 +109,9 @@ export default async function CalendarIntegrityPage() {
           <Link className="button secondary" href="/system/calendar/health">
             Calendar health
           </Link>
+          <Link className="button secondary" href="/system/geography">
+            Arkansas geography
+          </Link>
         </div>
       </section>
     </div>

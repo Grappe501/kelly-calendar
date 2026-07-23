@@ -49,7 +49,11 @@ Title, venue, city, county, organization, tags, calendar, event reference, sourc
 
 ## Filter groups
 
-Status, calendar, date/relative, county, source/imported, mission, timed/all-day, recurrence, availability (CC-05), conflict (CC-06), integrity, cancelled/archived, tags.
+Status, calendar, date/relative, county (`countyIds` on `Event.countyId`), source/imported, mission, timed/all-day, recurrence, availability (CC-05), conflict (CC-06), integrity, cancelled/archived, tags.
+
+### IC-01 geography note (2026-07-23)
+
+CC-07 already wires `countyIds` against `Event.countyId`. **EventGeography-backed** county/place facets from IC-01 are deferred — use `/system/geography` for authoritative county/place labels until a later authorized pass extends search without breaking query-schema v1.
 
 ## Saved-view visibility
 

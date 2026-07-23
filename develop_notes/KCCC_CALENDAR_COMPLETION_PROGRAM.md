@@ -25,11 +25,11 @@ Communications OS (D20–D26) . FROZEN (unchanged)
 LG-1 ........................ PAUSED (unchanged)
 Mobilize credentials ........ NOT required for CC-01…CC-04, CC-07…CC-12
 CC-01…CC-12 ................. TECHNICALLY COMPLETE (CC-12 ADR-100)
-Usability Synthesis 1 ....... EMPTY — HUMAN USABILITY GATE PENDING
-Phase Two (IC-01…IC-12) ..... VISION LOCKED (ADR-093)
-Protected sequence .......... Post-CC-12 human usability + AI-quality gate → IC auth
+Usability Synthesis 1 ....... EMPTY — continuing observation (ADR-101 acceptance)
+Phase Two (IC-01…IC-12) ..... IC_PHASE_AUTHORIZED (ADR-101 + ADR-103); IC-01 COMPLETE (ADR-102)
+Protected sequence .......... Post-CC-12 gates cleared → IC-01 shipped → IC-02+ separately authorized
 Standing execution .......... ADR-094
-Next authorized action ....... Post-CC-12 Human Usability and AI-Quality Gate (not IC-01)
+Next authorized action ....... IC-02 NOT_AUTHORIZED (design handoff only)
 CC-08 ship evidence ......... tip e1ddaa7 · feature 7486aa9 · tip deploy 6a612111e81d923c5e6c58ca
 CC-09 ship evidence ......... commit f8186be · deploy 6a612a7cba0c57774db91b5f
 CC-09 migration ............. 20260722160000_cc09_bulk_operations (db execute + migrate resolve)
@@ -43,9 +43,11 @@ CC-11 ship evidence ......... commit d570dc6 · deploy 6a61aa30fc4c865f2bd3c628
 CC-12 authorization ......... develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md (ADR-100)
 CC-12 migration ............. none (presentation-only)
 CC-12 ship evidence ......... commit 36dae8b · deploy 6a6213be8f93db1c79f4b538
+IC phase .................... started 2026-07-23; Calendar Completion remains technically complete
+IC-01 ....................... COMPLETE (ADR-102) — geography foundation; ship evidence in IC-01 impl doc
 ```
 
-This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. CC-10…CC-12 are **COMPLETE** under ADR-098…ADR-100 (standing ADR-094). Calendar Completion is **TECHNICALLY COMPLETE — HUMAN USABILITY GATE PENDING**. Usability Synthesis remains **EMPTY**. Phase Two IC-01…IC-12 remain vision-locked (ADR-093) until the post-CC-12 usability/AI-quality gate and separate IC authorization.
+This program finished the **calendar product** (CC-01…CC-12). CC-10…CC-12 remain **COMPLETE**. Calendar Completion stays **TECHNICALLY COMPLETE** with human usability accepted under continuing observation (ADR-101). Phase Two IC phase is **authorized**; **IC-01 is COMPLETE**; **IC-02…IC-12 remain unauthorized** pending separate ADRs.
 
 ### Phase Two preview (post–CC-12)
 

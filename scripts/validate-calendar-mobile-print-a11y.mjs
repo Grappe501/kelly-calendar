@@ -80,11 +80,13 @@ if (constants.includes("ADR-100") || constants.includes("CC_12_AUTHORIZATION")) 
 if (
   constants.includes('NEXT_AUTHORIZED_BUILD = "CC_12"') ||
   constants.includes('NEXT_AUTHORIZED_BUILD = "NONE"') ||
-  constants.includes('NEXT_AUTHORIZED_BUILD = "POST_CC12_HUMAN_USABILITY_GATE"')
+  constants.includes('NEXT_AUTHORIZED_BUILD = "POST_CC12_HUMAN_USABILITY_GATE"') ||
+  constants.includes('NEXT_AUTHORIZED_BUILD = "IC_01"') ||
+  constants.includes('NEXT_AUTHORIZED_BUILD = "IC_02_NOT_AUTHORIZED"')
 ) {
-  pass("NEXT_AUTHORIZED_BUILD references CC_12 program or post-CC12 gate");
+  pass("NEXT_AUTHORIZED_BUILD references CC_12 program, post-CC12 gate, or IC phase");
 } else {
-  fail("NEXT_AUTHORIZED_BUILD not CC_12");
+  fail("NEXT_AUTHORIZED_BUILD not CC_12 / post-CC12 / IC phase");
 }
 
 const adrJson = fs.readFileSync(

@@ -2,11 +2,11 @@
 
 ```text
 Program ID:   KCCC-PHASE-TWO-INTELLIGENT-STATEWIDE-CAMPAIGN-CALENDAR-1.0
-Status:       VISION LOCKED — NOT AUTHORIZED FOR IMPLEMENTATION
-Locked:       2026-07-22
-Authority:    Kelly · ADR-093 · KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md
-Prerequisite: Calendar Completion CC-07…CC-12 finished
-Posture:      Calendar-centered · design during CC builds · implement after CC-12
+Status:       IC_PHASE_AUTHORIZED — IC-01 COMPLETE · IC-02…IC-12 NOT_AUTHORIZED
+Locked:       2026-07-22 (vision) · IC phase opened 2026-07-23 (ADR-101/103/102)
+Authority:    Kelly · ADR-093 · ADR-101 · ADR-103 · ADR-102
+Prerequisite: Calendar Completion CC-01…CC-12 technically complete + post-CC-12 gates
+Posture:      Calendar-centered · IC-01 shipped · IC-02 design handoff only
 ```
 
 ## Product vision
@@ -71,18 +71,23 @@ OpenAI API keys remain **server-only**. Models use **controlled application tool
 
 ## IC-01 — Arkansas Campaign Geography Foundation
 
+**Status: COMPLETE (ADR-102)** — 75 counties · top 250 Census places · regions/corridors/priorities/focus overlays · Event/Mission geography reconciliation without schedule mutation. Docs: `KCCC_IC_01_ARKANSAS_CAMPAIGN_GEOGRAPHY_FOUNDATION.md`.
+
 Authoritative statewide planning graph:
 
 - All 75 counties · top 250 cities/communities · regions · travel corridors · county seats
 - Priority counties · focus areas · campaign geographic tiers
-- RedDirt external identities and provenance
-- Event / Mission / volunteer / contact geographic relationships
+- Provenance / source tagging (campaign-entered · public data · historical activity · operator judgment)
+- Event / Mission geographic relationship extension points (no people-platform build-out in IC-01)
+- RedDirt external identities deferred to **IC-02** (not in IC-01)
 
-Every geographic priority must identify its **source**: campaign-entered · RedDirt · public data · historical activity · operator judgment · AI suggestion.
+Every geographic priority must identify its **source**: campaign-entered · RedDirt (later) · public data · historical activity · operator judgment · AI suggestion (suggestion only; never silent policy).
 
 **Hard rule:** County/city prioritization remains campaign policy — AI does not silently decide who matters.
 
 ## IC-02 — RedDirt Read Integration
+
+**Status: NOT_AUTHORIZED** — design handoff only: `KCCC_IC_02_DESIGN_HANDOFF.md`.
 
 Server-only, **read-first** RedDirt adapter.
 

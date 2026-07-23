@@ -1,0 +1,691 @@
+{
+  "meta": {
+    "title": "Arkansas Counties Authority",
+    "state": "Arkansas",
+    "stateFips": "05",
+    "count": 75,
+    "source": "U.S. Census Bureau county FIPS codes (ANSI/FIPS)",
+    "publisher": "U.S. Census Bureau",
+    "vintage": "Census 2020 / ANSI county codes",
+    "retrievalDate": "2026-07-23",
+    "seatSource": "Arkansas Secretary of State / county government (primary seat when dual-seat)",
+    "limitations": "Dual-seat counties list the historically primary / commonly cited seat only."
+  },
+  "counties": [
+    {
+      "name": "Arkansas",
+      "slug": "arkansas",
+      "fipsCode": "05001",
+      "stateFips": "05",
+      "geoid": "05001",
+      "countySeat": "De Witt",
+      "normalizedName": "arkansas"
+    },
+    {
+      "name": "Ashley",
+      "slug": "ashley",
+      "fipsCode": "05003",
+      "stateFips": "05",
+      "geoid": "05003",
+      "countySeat": "Hamburg",
+      "normalizedName": "ashley"
+    },
+    {
+      "name": "Baxter",
+      "slug": "baxter",
+      "fipsCode": "05005",
+      "stateFips": "05",
+      "geoid": "05005",
+      "countySeat": "Mountain Home",
+      "normalizedName": "baxter"
+    },
+    {
+      "name": "Benton",
+      "slug": "benton",
+      "fipsCode": "05007",
+      "stateFips": "05",
+      "geoid": "05007",
+      "countySeat": "Bentonville",
+      "normalizedName": "benton"
+    },
+    {
+      "name": "Boone",
+      "slug": "boone",
+      "fipsCode": "05009",
+      "stateFips": "05",
+      "geoid": "05009",
+      "countySeat": "Harrison",
+      "normalizedName": "boone"
+    },
+    {
+      "name": "Bradley",
+      "slug": "bradley",
+      "fipsCode": "05011",
+      "stateFips": "05",
+      "geoid": "05011",
+      "countySeat": "Warren",
+      "normalizedName": "bradley"
+    },
+    {
+      "name": "Calhoun",
+      "slug": "calhoun",
+      "fipsCode": "05013",
+      "stateFips": "05",
+      "geoid": "05013",
+      "countySeat": "Hampton",
+      "normalizedName": "calhoun"
+    },
+    {
+      "name": "Carroll",
+      "slug": "carroll",
+      "fipsCode": "05015",
+      "stateFips": "05",
+      "geoid": "05015",
+      "countySeat": "Berryville",
+      "normalizedName": "carroll"
+    },
+    {
+      "name": "Chicot",
+      "slug": "chicot",
+      "fipsCode": "05017",
+      "stateFips": "05",
+      "geoid": "05017",
+      "countySeat": "Lake Village",
+      "normalizedName": "chicot"
+    },
+    {
+      "name": "Clark",
+      "slug": "clark",
+      "fipsCode": "05019",
+      "stateFips": "05",
+      "geoid": "05019",
+      "countySeat": "Arkadelphia",
+      "normalizedName": "clark"
+    },
+    {
+      "name": "Clay",
+      "slug": "clay",
+      "fipsCode": "05021",
+      "stateFips": "05",
+      "geoid": "05021",
+      "countySeat": "Piggott",
+      "normalizedName": "clay"
+    },
+    {
+      "name": "Cleburne",
+      "slug": "cleburne",
+      "fipsCode": "05023",
+      "stateFips": "05",
+      "geoid": "05023",
+      "countySeat": "Heber Springs",
+      "normalizedName": "cleburne"
+    },
+    {
+      "name": "Cleveland",
+      "slug": "cleveland",
+      "fipsCode": "05025",
+      "stateFips": "05",
+      "geoid": "05025",
+      "countySeat": "Rison",
+      "normalizedName": "cleveland"
+    },
+    {
+      "name": "Columbia",
+      "slug": "columbia",
+      "fipsCode": "05027",
+      "stateFips": "05",
+      "geoid": "05027",
+      "countySeat": "Magnolia",
+      "normalizedName": "columbia"
+    },
+    {
+      "name": "Conway",
+      "slug": "conway",
+      "fipsCode": "05029",
+      "stateFips": "05",
+      "geoid": "05029",
+      "countySeat": "Morrilton",
+      "normalizedName": "conway"
+    },
+    {
+      "name": "Craighead",
+      "slug": "craighead",
+      "fipsCode": "05031",
+      "stateFips": "05",
+      "geoid": "05031",
+      "countySeat": "Jonesboro",
+      "normalizedName": "craighead"
+    },
+    {
+      "name": "Crawford",
+      "slug": "crawford",
+      "fipsCode": "05033",
+      "stateFips": "05",
+      "geoid": "05033",
+      "countySeat": "Van Buren",
+      "normalizedName": "crawford"
+    },
+    {
+      "name": "Crittenden",
+      "slug": "crittenden",
+      "fipsCode": "05035",
+      "stateFips": "05",
+      "geoid": "05035",
+      "countySeat": "Marion",
+      "normalizedName": "crittenden"
+    },
+    {
+      "name": "Cross",
+      "slug": "cross",
+      "fipsCode": "05037",
+      "stateFips": "05",
+      "geoid": "05037",
+      "countySeat": "Wynne",
+      "normalizedName": "cross"
+    },
+    {
+      "name": "Dallas",
+      "slug": "dallas",
+      "fipsCode": "05039",
+      "stateFips": "05",
+      "geoid": "05039",
+      "countySeat": "Fordyce",
+      "normalizedName": "dallas"
+    },
+    {
+      "name": "Desha",
+      "slug": "desha",
+      "fipsCode": "05041",
+      "stateFips": "05",
+      "geoid": "05041",
+      "countySeat": "Arkansas City",
+      "normalizedName": "desha"
+    },
+    {
+      "name": "Drew",
+      "slug": "drew",
+      "fipsCode": "05043",
+      "stateFips": "05",
+      "geoid": "05043",
+      "countySeat": "Monticello",
+      "normalizedName": "drew"
+    },
+    {
+      "name": "Faulkner",
+      "slug": "faulkner",
+      "fipsCode": "05045",
+      "stateFips": "05",
+      "geoid": "05045",
+      "countySeat": "Conway",
+      "normalizedName": "faulkner"
+    },
+    {
+      "name": "Franklin",
+      "slug": "franklin",
+      "fipsCode": "05047",
+      "stateFips": "05",
+      "geoid": "05047",
+      "countySeat": "Charleston",
+      "normalizedName": "franklin"
+    },
+    {
+      "name": "Fulton",
+      "slug": "fulton",
+      "fipsCode": "05049",
+      "stateFips": "05",
+      "geoid": "05049",
+      "countySeat": "Salem",
+      "normalizedName": "fulton"
+    },
+    {
+      "name": "Garland",
+      "slug": "garland",
+      "fipsCode": "05051",
+      "stateFips": "05",
+      "geoid": "05051",
+      "countySeat": "Hot Springs",
+      "normalizedName": "garland"
+    },
+    {
+      "name": "Grant",
+      "slug": "grant",
+      "fipsCode": "05053",
+      "stateFips": "05",
+      "geoid": "05053",
+      "countySeat": "Sheridan",
+      "normalizedName": "grant"
+    },
+    {
+      "name": "Greene",
+      "slug": "greene",
+      "fipsCode": "05055",
+      "stateFips": "05",
+      "geoid": "05055",
+      "countySeat": "Paragould",
+      "normalizedName": "greene"
+    },
+    {
+      "name": "Hempstead",
+      "slug": "hempstead",
+      "fipsCode": "05057",
+      "stateFips": "05",
+      "geoid": "05057",
+      "countySeat": "Hope",
+      "normalizedName": "hempstead"
+    },
+    {
+      "name": "Hot Spring",
+      "slug": "hot-spring",
+      "fipsCode": "05059",
+      "stateFips": "05",
+      "geoid": "05059",
+      "countySeat": "Malvern",
+      "normalizedName": "hot spring"
+    },
+    {
+      "name": "Howard",
+      "slug": "howard",
+      "fipsCode": "05061",
+      "stateFips": "05",
+      "geoid": "05061",
+      "countySeat": "Nashville",
+      "normalizedName": "howard"
+    },
+    {
+      "name": "Independence",
+      "slug": "independence",
+      "fipsCode": "05063",
+      "stateFips": "05",
+      "geoid": "05063",
+      "countySeat": "Batesville",
+      "normalizedName": "independence"
+    },
+    {
+      "name": "Izard",
+      "slug": "izard",
+      "fipsCode": "05065",
+      "stateFips": "05",
+      "geoid": "05065",
+      "countySeat": "Melbourne",
+      "normalizedName": "izard"
+    },
+    {
+      "name": "Jackson",
+      "slug": "jackson",
+      "fipsCode": "05067",
+      "stateFips": "05",
+      "geoid": "05067",
+      "countySeat": "Newport",
+      "normalizedName": "jackson"
+    },
+    {
+      "name": "Jefferson",
+      "slug": "jefferson",
+      "fipsCode": "05069",
+      "stateFips": "05",
+      "geoid": "05069",
+      "countySeat": "Pine Bluff",
+      "normalizedName": "jefferson"
+    },
+    {
+      "name": "Johnson",
+      "slug": "johnson",
+      "fipsCode": "05071",
+      "stateFips": "05",
+      "geoid": "05071",
+      "countySeat": "Clarksville",
+      "normalizedName": "johnson"
+    },
+    {
+      "name": "Lafayette",
+      "slug": "lafayette",
+      "fipsCode": "05073",
+      "stateFips": "05",
+      "geoid": "05073",
+      "countySeat": "Lewisville",
+      "normalizedName": "lafayette"
+    },
+    {
+      "name": "Lawrence",
+      "slug": "lawrence",
+      "fipsCode": "05075",
+      "stateFips": "05",
+      "geoid": "05075",
+      "countySeat": "Walnut Ridge",
+      "normalizedName": "lawrence"
+    },
+    {
+      "name": "Lee",
+      "slug": "lee",
+      "fipsCode": "05077",
+      "stateFips": "05",
+      "geoid": "05077",
+      "countySeat": "Marianna",
+      "normalizedName": "lee"
+    },
+    {
+      "name": "Lincoln",
+      "slug": "lincoln",
+      "fipsCode": "05079",
+      "stateFips": "05",
+      "geoid": "05079",
+      "countySeat": "Star City",
+      "normalizedName": "lincoln"
+    },
+    {
+      "name": "Little River",
+      "slug": "little-river",
+      "fipsCode": "05081",
+      "stateFips": "05",
+      "geoid": "05081",
+      "countySeat": "Ashdown",
+      "normalizedName": "little river"
+    },
+    {
+      "name": "Logan",
+      "slug": "logan",
+      "fipsCode": "05083",
+      "stateFips": "05",
+      "geoid": "05083",
+      "countySeat": "Paris",
+      "normalizedName": "logan"
+    },
+    {
+      "name": "Lonoke",
+      "slug": "lonoke",
+      "fipsCode": "05085",
+      "stateFips": "05",
+      "geoid": "05085",
+      "countySeat": "Lonoke",
+      "normalizedName": "lonoke"
+    },
+    {
+      "name": "Madison",
+      "slug": "madison",
+      "fipsCode": "05087",
+      "stateFips": "05",
+      "geoid": "05087",
+      "countySeat": "Huntsville",
+      "normalizedName": "madison"
+    },
+    {
+      "name": "Marion",
+      "slug": "marion",
+      "fipsCode": "05089",
+      "stateFips": "05",
+      "geoid": "05089",
+      "countySeat": "Yellville",
+      "normalizedName": "marion"
+    },
+    {
+      "name": "Miller",
+      "slug": "miller",
+      "fipsCode": "05091",
+      "stateFips": "05",
+      "geoid": "05091",
+      "countySeat": "Texarkana",
+      "normalizedName": "miller"
+    },
+    {
+      "name": "Mississippi",
+      "slug": "mississippi",
+      "fipsCode": "05093",
+      "stateFips": "05",
+      "geoid": "05093",
+      "countySeat": "Blytheville",
+      "normalizedName": "mississippi"
+    },
+    {
+      "name": "Monroe",
+      "slug": "monroe",
+      "fipsCode": "05095",
+      "stateFips": "05",
+      "geoid": "05095",
+      "countySeat": "Clarendon",
+      "normalizedName": "monroe"
+    },
+    {
+      "name": "Montgomery",
+      "slug": "montgomery",
+      "fipsCode": "05097",
+      "stateFips": "05",
+      "geoid": "05097",
+      "countySeat": "Mount Ida",
+      "normalizedName": "montgomery"
+    },
+    {
+      "name": "Nevada",
+      "slug": "nevada",
+      "fipsCode": "05099",
+      "stateFips": "05",
+      "geoid": "05099",
+      "countySeat": "Prescott",
+      "normalizedName": "nevada"
+    },
+    {
+      "name": "Newton",
+      "slug": "newton",
+      "fipsCode": "05101",
+      "stateFips": "05",
+      "geoid": "05101",
+      "countySeat": "Jasper",
+      "normalizedName": "newton"
+    },
+    {
+      "name": "Ouachita",
+      "slug": "ouachita",
+      "fipsCode": "05103",
+      "stateFips": "05",
+      "geoid": "05103",
+      "countySeat": "Camden",
+      "normalizedName": "ouachita"
+    },
+    {
+      "name": "Perry",
+      "slug": "perry",
+      "fipsCode": "05105",
+      "stateFips": "05",
+      "geoid": "05105",
+      "countySeat": "Perryville",
+      "normalizedName": "perry"
+    },
+    {
+      "name": "Phillips",
+      "slug": "phillips",
+      "fipsCode": "05107",
+      "stateFips": "05",
+      "geoid": "05107",
+      "countySeat": "Helena-West Helena",
+      "normalizedName": "phillips"
+    },
+    {
+      "name": "Pike",
+      "slug": "pike",
+      "fipsCode": "05109",
+      "stateFips": "05",
+      "geoid": "05109",
+      "countySeat": "Murfreesboro",
+      "normalizedName": "pike"
+    },
+    {
+      "name": "Poinsett",
+      "slug": "poinsett",
+      "fipsCode": "05111",
+      "stateFips": "05",
+      "geoid": "05111",
+      "countySeat": "Harrisburg",
+      "normalizedName": "poinsett"
+    },
+    {
+      "name": "Polk",
+      "slug": "polk",
+      "fipsCode": "05113",
+      "stateFips": "05",
+      "geoid": "05113",
+      "countySeat": "Mena",
+      "normalizedName": "polk"
+    },
+    {
+      "name": "Pope",
+      "slug": "pope",
+      "fipsCode": "05115",
+      "stateFips": "05",
+      "geoid": "05115",
+      "countySeat": "Russellville",
+      "normalizedName": "pope"
+    },
+    {
+      "name": "Prairie",
+      "slug": "prairie",
+      "fipsCode": "05117",
+      "stateFips": "05",
+      "geoid": "05117",
+      "countySeat": "Des Arc",
+      "normalizedName": "prairie"
+    },
+    {
+      "name": "Pulaski",
+      "slug": "pulaski",
+      "fipsCode": "05119",
+      "stateFips": "05",
+      "geoid": "05119",
+      "countySeat": "Little Rock",
+      "normalizedName": "pulaski"
+    },
+    {
+      "name": "Randolph",
+      "slug": "randolph",
+      "fipsCode": "05121",
+      "stateFips": "05",
+      "geoid": "05121",
+      "countySeat": "Pocahontas",
+      "normalizedName": "randolph"
+    },
+    {
+      "name": "St. Francis",
+      "slug": "st-francis",
+      "fipsCode": "05123",
+      "stateFips": "05",
+      "geoid": "05123",
+      "countySeat": "Forrest City",
+      "normalizedName": "saint francis"
+    },
+    {
+      "name": "Saline",
+      "slug": "saline",
+      "fipsCode": "05125",
+      "stateFips": "05",
+      "geoid": "05125",
+      "countySeat": "Benton",
+      "normalizedName": "saline"
+    },
+    {
+      "name": "Scott",
+      "slug": "scott",
+      "fipsCode": "05127",
+      "stateFips": "05",
+      "geoid": "05127",
+      "countySeat": "Waldron",
+      "normalizedName": "scott"
+    },
+    {
+      "name": "Searcy",
+      "slug": "searcy",
+      "fipsCode": "05129",
+      "stateFips": "05",
+      "geoid": "05129",
+      "countySeat": "Marshall",
+      "normalizedName": "searcy"
+    },
+    {
+      "name": "Sebastian",
+      "slug": "sebastian",
+      "fipsCode": "05131",
+      "stateFips": "05",
+      "geoid": "05131",
+      "countySeat": "Fort Smith",
+      "normalizedName": "sebastian"
+    },
+    {
+      "name": "Sevier",
+      "slug": "sevier",
+      "fipsCode": "05133",
+      "stateFips": "05",
+      "geoid": "05133",
+      "countySeat": "De Queen",
+      "normalizedName": "sevier"
+    },
+    {
+      "name": "Sharp",
+      "slug": "sharp",
+      "fipsCode": "05135",
+      "stateFips": "05",
+      "geoid": "05135",
+      "countySeat": "Ash Flat",
+      "normalizedName": "sharp"
+    },
+    {
+      "name": "Stone",
+      "slug": "stone",
+      "fipsCode": "05137",
+      "stateFips": "05",
+      "geoid": "05137",
+      "countySeat": "Mountain View",
+      "normalizedName": "stone"
+    },
+    {
+      "name": "Union",
+      "slug": "union",
+      "fipsCode": "05139",
+      "stateFips": "05",
+      "geoid": "05139",
+      "countySeat": "El Dorado",
+      "normalizedName": "union"
+    },
+    {
+      "name": "Van Buren",
+      "slug": "van-buren",
+      "fipsCode": "05141",
+      "stateFips": "05",
+      "geoid": "05141",
+      "countySeat": "Clinton",
+      "normalizedName": "van buren"
+    },
+    {
+      "name": "Washington",
+      "slug": "washington",
+      "fipsCode": "05143",
+      "stateFips": "05",
+      "geoid": "05143",
+      "countySeat": "Fayetteville",
+      "normalizedName": "washington"
+    },
+    {
+      "name": "White",
+      "slug": "white",
+      "fipsCode": "05145",
+      "stateFips": "05",
+      "geoid": "05145",
+      "countySeat": "Searcy",
+      "normalizedName": "white"
+    },
+    {
+      "name": "Woodruff",
+      "slug": "woodruff",
+      "fipsCode": "05147",
+      "stateFips": "05",
+      "geoid": "05147",
+      "countySeat": "Augusta",
+      "normalizedName": "woodruff"
+    },
+    {
+      "name": "Yell",
+      "slug": "yell",
+      "fipsCode": "05149",
+      "stateFips": "05",
+      "geoid": "05149",
+      "countySeat": "Danville",
+      "normalizedName": "yell"
+    }
+  ]
+}

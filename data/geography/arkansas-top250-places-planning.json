@@ -1,0 +1,2288 @@
+{
+  "meta": {
+    "title": "Arkansas Top 250 Places (Planning)",
+    "definition": "Highest-population Arkansas Census places (incorporated cities/towns + CDPs) by Census 2020 Decennial population; deterministic tie-break by censusPlaceGeoid ascending; exactly 250 entries.",
+    "count": 250,
+    "populationVintage": "Census 2020 Decennial",
+    "geographyVintage": "Census 2020 Places",
+    "publisher": "U.S. Census Bureau",
+    "sourceUrl": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html",
+    "retrievalDate": "2026-07-23",
+    "limitations": "Populations are publicly documented Census 2020 figures curated offline for IC-01. Multi-county places list primaryCountyFips as the county containing the majority of 2020 population when known; additionalCountyFips may be incomplete for some multi-county places. A small number of lower-rank entries may use county-seat fill markers if the curated unique-place set was short of 250; those are flagged in note when present. ACS 2022 estimates are NOT used for ranking."
+  },
+  "places": [
+    {
+      "name": "Little Rock",
+      "placeType": "city",
+      "censusPlaceGeoid": "0541000",
+      "population": 202591,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 1
+    },
+    {
+      "name": "Fayetteville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0523290",
+      "population": 93949,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [],
+      "populationRank": 2
+    },
+    {
+      "name": "Fort Smith",
+      "placeType": "city",
+      "censusPlaceGeoid": "0524450",
+      "population": 89142,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [
+        "05033"
+      ],
+      "populationRank": 3
+    },
+    {
+      "name": "Springdale",
+      "placeType": "city",
+      "censusPlaceGeoid": "0566080",
+      "population": 84161,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [
+        "05007"
+      ],
+      "populationRank": 4
+    },
+    {
+      "name": "Jonesboro",
+      "placeType": "city",
+      "censusPlaceGeoid": "0535710",
+      "population": 78576,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 5
+    },
+    {
+      "name": "Rogers",
+      "placeType": "city",
+      "censusPlaceGeoid": "0560400",
+      "population": 69908,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 6
+    },
+    {
+      "name": "North Little Rock",
+      "placeType": "city",
+      "censusPlaceGeoid": "0550450",
+      "population": 64591,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 7
+    },
+    {
+      "name": "Conway",
+      "placeType": "city",
+      "censusPlaceGeoid": "0515150",
+      "population": 64134,
+      "primaryCountyFips": "05045",
+      "additionalCountyFips": [],
+      "populationRank": 8
+    },
+    {
+      "name": "Bentonville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0505320",
+      "population": 54164,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 9
+    },
+    {
+      "name": "Pine Bluff",
+      "placeType": "city",
+      "censusPlaceGeoid": "0555310",
+      "population": 41253,
+      "primaryCountyFips": "05069",
+      "additionalCountyFips": [],
+      "populationRank": 10
+    },
+    {
+      "name": "Hot Springs",
+      "placeType": "city",
+      "censusPlaceGeoid": "0533410",
+      "population": 37930,
+      "primaryCountyFips": "05051",
+      "additionalCountyFips": [],
+      "populationRank": 11
+    },
+    {
+      "name": "Benton",
+      "placeType": "city",
+      "censusPlaceGeoid": "0505290",
+      "population": 35014,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 12
+    },
+    {
+      "name": "Sherwood",
+      "placeType": "city",
+      "censusPlaceGeoid": "0563780",
+      "population": 32731,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 13
+    },
+    {
+      "name": "Bella Vista",
+      "placeType": "city",
+      "censusPlaceGeoid": "0504840",
+      "population": 30104,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 14
+    },
+    {
+      "name": "Paragould",
+      "placeType": "city",
+      "censusPlaceGeoid": "0553390",
+      "population": 29537,
+      "primaryCountyFips": "05055",
+      "additionalCountyFips": [],
+      "populationRank": 15
+    },
+    {
+      "name": "Jacksonville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0534750",
+      "population": 29477,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 16
+    },
+    {
+      "name": "Texarkana",
+      "placeType": "city",
+      "censusPlaceGeoid": "0568830",
+      "population": 29387,
+      "primaryCountyFips": "05091",
+      "additionalCountyFips": [],
+      "populationRank": 17
+    },
+    {
+      "name": "Russellville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0561660",
+      "population": 28940,
+      "primaryCountyFips": "05115",
+      "additionalCountyFips": [],
+      "populationRank": 18
+    },
+    {
+      "name": "Cabot",
+      "placeType": "city",
+      "censusPlaceGeoid": "0510320",
+      "population": 26569,
+      "primaryCountyFips": "05085",
+      "additionalCountyFips": [],
+      "populationRank": 19
+    },
+    {
+      "name": "West Memphis",
+      "placeType": "city",
+      "censusPlaceGeoid": "0574480",
+      "population": 24520,
+      "primaryCountyFips": "05035",
+      "additionalCountyFips": [],
+      "populationRank": 20
+    },
+    {
+      "name": "Van Buren",
+      "placeType": "city",
+      "censusPlaceGeoid": "0571540",
+      "population": 23128,
+      "primaryCountyFips": "05033",
+      "additionalCountyFips": [],
+      "populationRank": 21
+    },
+    {
+      "name": "Searcy",
+      "placeType": "city",
+      "censusPlaceGeoid": "0563020",
+      "population": 22937,
+      "primaryCountyFips": "05145",
+      "additionalCountyFips": [],
+      "populationRank": 22
+    },
+    {
+      "name": "Bryant",
+      "placeType": "city",
+      "censusPlaceGeoid": "0509480",
+      "population": 20663,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 23
+    },
+    {
+      "name": "Maumelle",
+      "placeType": "city",
+      "censusPlaceGeoid": "0544600",
+      "population": 19251,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 24
+    },
+    {
+      "name": "Centerton",
+      "placeType": "city",
+      "censusPlaceGeoid": "0512550",
+      "population": 17867,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 25
+    },
+    {
+      "name": "El Dorado",
+      "placeType": "city",
+      "censusPlaceGeoid": "0521050",
+      "population": 17756,
+      "primaryCountyFips": "05139",
+      "additionalCountyFips": [],
+      "populationRank": 26
+    },
+    {
+      "name": "Siloam Springs",
+      "placeType": "city",
+      "censusPlaceGeoid": "0564370",
+      "population": 17287,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 27
+    },
+    {
+      "name": "Hot Springs Village",
+      "placeType": "cdp",
+      "censusPlaceGeoid": "0533460",
+      "population": 15861,
+      "primaryCountyFips": "05051",
+      "additionalCountyFips": [
+        "05125"
+      ],
+      "populationRank": 28
+    },
+    {
+      "name": "Marion",
+      "placeType": "city",
+      "censusPlaceGeoid": "0544180",
+      "population": 13804,
+      "primaryCountyFips": "05035",
+      "additionalCountyFips": [],
+      "populationRank": 29
+    },
+    {
+      "name": "Blytheville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0507330",
+      "population": 13406,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 30
+    },
+    {
+      "name": "Harrison",
+      "placeType": "city",
+      "censusPlaceGeoid": "0530400",
+      "population": 13069,
+      "primaryCountyFips": "05009",
+      "additionalCountyFips": [],
+      "populationRank": 31
+    },
+    {
+      "name": "Forrest City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0524420",
+      "population": 13015,
+      "primaryCountyFips": "05123",
+      "additionalCountyFips": [],
+      "populationRank": 32
+    },
+    {
+      "name": "Mountain Home",
+      "placeType": "city",
+      "censusPlaceGeoid": "0547400",
+      "population": 12825,
+      "primaryCountyFips": "05005",
+      "additionalCountyFips": [],
+      "populationRank": 33
+    },
+    {
+      "name": "Batesville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0504010",
+      "population": 11191,
+      "primaryCountyFips": "05063",
+      "additionalCountyFips": [],
+      "populationRank": 34
+    },
+    {
+      "name": "Magnolia",
+      "placeType": "city",
+      "censusPlaceGeoid": "0543440",
+      "population": 11169,
+      "primaryCountyFips": "05027",
+      "additionalCountyFips": [],
+      "populationRank": 35
+    },
+    {
+      "name": "Camden",
+      "placeType": "city",
+      "censusPlaceGeoid": "0510700",
+      "population": 11117,
+      "primaryCountyFips": "05103",
+      "additionalCountyFips": [],
+      "populationRank": 36
+    },
+    {
+      "name": "Malvern",
+      "placeType": "city",
+      "censusPlaceGeoid": "0543600",
+      "population": 10867,
+      "primaryCountyFips": "05059",
+      "additionalCountyFips": [],
+      "populationRank": 37
+    },
+    {
+      "name": "Arkadelphia",
+      "placeType": "city",
+      "censusPlaceGeoid": "0501870",
+      "population": 10380,
+      "primaryCountyFips": "05019",
+      "additionalCountyFips": [],
+      "populationRank": 38
+    },
+    {
+      "name": "Lowell",
+      "placeType": "city",
+      "censusPlaceGeoid": "0541920",
+      "population": 9839,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 39
+    },
+    {
+      "name": "Hope",
+      "placeType": "city",
+      "censusPlaceGeoid": "0533190",
+      "population": 9684,
+      "primaryCountyFips": "05057",
+      "additionalCountyFips": [],
+      "populationRank": 40
+    },
+    {
+      "name": "Helena-West Helena",
+      "placeType": "city",
+      "censusPlaceGeoid": "0531180",
+      "population": 9519,
+      "primaryCountyFips": "05107",
+      "additionalCountyFips": [],
+      "populationRank": 41
+    },
+    {
+      "name": "Greenwood",
+      "placeType": "city",
+      "censusPlaceGeoid": "0528590",
+      "population": 9516,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 42
+    },
+    {
+      "name": "Clarksville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0514140",
+      "population": 9381,
+      "primaryCountyFips": "05071",
+      "additionalCountyFips": [],
+      "populationRank": 43
+    },
+    {
+      "name": "Monticello",
+      "placeType": "city",
+      "censusPlaceGeoid": "0546580",
+      "population": 8442,
+      "primaryCountyFips": "05043",
+      "additionalCountyFips": [],
+      "populationRank": 44
+    },
+    {
+      "name": "Beebe",
+      "placeType": "city",
+      "censusPlaceGeoid": "0504800",
+      "population": 8419,
+      "primaryCountyFips": "05145",
+      "additionalCountyFips": [],
+      "populationRank": 45
+    },
+    {
+      "name": "Wynne",
+      "placeType": "city",
+      "censusPlaceGeoid": "0577110",
+      "population": 8314,
+      "primaryCountyFips": "05037",
+      "additionalCountyFips": [],
+      "populationRank": 46
+    },
+    {
+      "name": "Stuttgart",
+      "placeType": "city",
+      "censusPlaceGeoid": "0567450",
+      "population": 8264,
+      "primaryCountyFips": "05001",
+      "additionalCountyFips": [],
+      "populationRank": 47
+    },
+    {
+      "name": "Newport",
+      "placeType": "city",
+      "censusPlaceGeoid": "0549580",
+      "population": 8005,
+      "primaryCountyFips": "05067",
+      "additionalCountyFips": [],
+      "populationRank": 48
+    },
+    {
+      "name": "Farmington",
+      "placeType": "city",
+      "censusPlaceGeoid": "0523160",
+      "population": 7584,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [],
+      "populationRank": 49
+    },
+    {
+      "name": "Trumann",
+      "placeType": "city",
+      "censusPlaceGeoid": "0570100",
+      "population": 7399,
+      "primaryCountyFips": "05111",
+      "additionalCountyFips": [],
+      "populationRank": 50
+    },
+    {
+      "name": "East End",
+      "placeType": "cdp",
+      "censusPlaceGeoid": "0519930",
+      "population": 7137,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 51
+    },
+    {
+      "name": "Prairie Grove",
+      "placeType": "city",
+      "censusPlaceGeoid": "0557170",
+      "population": 7045,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [],
+      "populationRank": 52
+    },
+    {
+      "name": "Morrilton",
+      "placeType": "city",
+      "censusPlaceGeoid": "0546900",
+      "population": 6992,
+      "primaryCountyFips": "05029",
+      "additionalCountyFips": [],
+      "populationRank": 53
+    },
+    {
+      "name": "Osceola",
+      "placeType": "city",
+      "censusPlaceGeoid": "0552580",
+      "population": 6976,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 54
+    },
+    {
+      "name": "Pocahontas",
+      "placeType": "city",
+      "censusPlaceGeoid": "0556400",
+      "population": 6971,
+      "primaryCountyFips": "05121",
+      "additionalCountyFips": [],
+      "populationRank": 55
+    },
+    {
+      "name": "Heber Springs",
+      "placeType": "city",
+      "censusPlaceGeoid": "0531060",
+      "population": 6969,
+      "primaryCountyFips": "05023",
+      "additionalCountyFips": [],
+      "populationRank": 56
+    },
+    {
+      "name": "Pea Ridge",
+      "placeType": "city",
+      "censusPlaceGeoid": "0554200",
+      "population": 6559,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 57
+    },
+    {
+      "name": "De Queen",
+      "placeType": "city",
+      "censusPlaceGeoid": "0518490",
+      "population": 6125,
+      "primaryCountyFips": "05133",
+      "additionalCountyFips": [],
+      "populationRank": 58
+    },
+    {
+      "name": "Ward",
+      "placeType": "city",
+      "censusPlaceGeoid": "0573100",
+      "population": 6052,
+      "primaryCountyFips": "05085",
+      "additionalCountyFips": [],
+      "populationRank": 59
+    },
+    {
+      "name": "Alma",
+      "placeType": "city",
+      "censusPlaceGeoid": "0500940",
+      "population": 5825,
+      "primaryCountyFips": "05033",
+      "additionalCountyFips": [],
+      "populationRank": 60
+    },
+    {
+      "name": "Greenbrier",
+      "placeType": "city",
+      "censusPlaceGeoid": "0528450",
+      "population": 5707,
+      "primaryCountyFips": "05045",
+      "additionalCountyFips": [],
+      "populationRank": 61
+    },
+    {
+      "name": "Berryville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0505520",
+      "population": 5682,
+      "primaryCountyFips": "05015",
+      "additionalCountyFips": [],
+      "populationRank": 62
+    },
+    {
+      "name": "Mena",
+      "placeType": "city",
+      "censusPlaceGeoid": "0545200",
+      "population": 5589,
+      "primaryCountyFips": "05113",
+      "additionalCountyFips": [],
+      "populationRank": 63
+    },
+    {
+      "name": "White Hall",
+      "placeType": "city",
+      "censusPlaceGeoid": "0575170",
+      "population": 5526,
+      "primaryCountyFips": "05069",
+      "additionalCountyFips": [],
+      "populationRank": 64
+    },
+    {
+      "name": "Cave Springs",
+      "placeType": "city",
+      "censusPlaceGeoid": "0512320",
+      "population": 5495,
+      "primaryCountyFips": "05007",
+      "additionalCountyFips": [],
+      "populationRank": 65
+    },
+    {
+      "name": "Warren",
+      "placeType": "city",
+      "censusPlaceGeoid": "0573320",
+      "population": 5453,
+      "primaryCountyFips": "05011",
+      "additionalCountyFips": [],
+      "populationRank": 66
+    },
+    {
+      "name": "Walnut Ridge",
+      "placeType": "city",
+      "censusPlaceGeoid": "0572890",
+      "population": 5106,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 67
+    },
+    {
+      "name": "Sheridan",
+      "placeType": "city",
+      "censusPlaceGeoid": "0563710",
+      "population": 4923,
+      "primaryCountyFips": "05053",
+      "additionalCountyFips": [],
+      "populationRank": 68
+    },
+    {
+      "name": "Crossett",
+      "placeType": "city",
+      "censusPlaceGeoid": "0516240",
+      "population": 4892,
+      "primaryCountyFips": "05003",
+      "additionalCountyFips": [],
+      "populationRank": 69
+    },
+    {
+      "name": "Barling",
+      "placeType": "city",
+      "censusPlaceGeoid": "0503660",
+      "population": 4782,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 70
+    },
+    {
+      "name": "Cherokee Village",
+      "placeType": "city",
+      "censusPlaceGeoid": "0513450",
+      "population": 4780,
+      "primaryCountyFips": "05135",
+      "additionalCountyFips": [
+        "05049"
+      ],
+      "populationRank": 71
+    },
+    {
+      "name": "Dardanelle",
+      "placeType": "city",
+      "censusPlaceGeoid": "0517860",
+      "population": 4570,
+      "primaryCountyFips": "05149",
+      "additionalCountyFips": [],
+      "populationRank": 72
+    },
+    {
+      "name": "Tontitown",
+      "placeType": "city",
+      "censusPlaceGeoid": "0569580",
+      "population": 4536,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [],
+      "populationRank": 73
+    },
+    {
+      "name": "Vilonia",
+      "placeType": "city",
+      "censusPlaceGeoid": "0572140",
+      "population": 4288,
+      "primaryCountyFips": "05045",
+      "additionalCountyFips": [],
+      "populationRank": 74
+    },
+    {
+      "name": "Lonoke",
+      "placeType": "city",
+      "censusPlaceGeoid": "0541420",
+      "population": 4276,
+      "primaryCountyFips": "05085",
+      "additionalCountyFips": [],
+      "populationRank": 75
+    },
+    {
+      "name": "Ashdown",
+      "placeType": "city",
+      "censusPlaceGeoid": "0502380",
+      "population": 4242,
+      "primaryCountyFips": "05081",
+      "additionalCountyFips": [],
+      "populationRank": 76
+    },
+    {
+      "name": "Nashville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0548560",
+      "population": 4153,
+      "primaryCountyFips": "05061",
+      "additionalCountyFips": [],
+      "populationRank": 77
+    },
+    {
+      "name": "Brookland",
+      "placeType": "city",
+      "censusPlaceGeoid": "0509100",
+      "population": 4064,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 78
+    },
+    {
+      "name": "Austin",
+      "placeType": "city",
+      "censusPlaceGeoid": "0502860",
+      "population": 4049,
+      "primaryCountyFips": "05085",
+      "additionalCountyFips": [],
+      "populationRank": 79
+    },
+    {
+      "name": "Dumas",
+      "placeType": "city",
+      "censusPlaceGeoid": "0519990",
+      "population": 4001,
+      "primaryCountyFips": "05041",
+      "additionalCountyFips": [],
+      "populationRank": 80
+    },
+    {
+      "name": "Shannon Hills",
+      "placeType": "city",
+      "censusPlaceGeoid": "0563480",
+      "population": 3990,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 81
+    },
+    {
+      "name": "Haskell",
+      "placeType": "city",
+      "censusPlaceGeoid": "0530640",
+      "population": 3957,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 82
+    },
+    {
+      "name": "McGehee",
+      "placeType": "city",
+      "censusPlaceGeoid": "0543070",
+      "population": 3821,
+      "primaryCountyFips": "05041",
+      "additionalCountyFips": [],
+      "populationRank": 83
+    },
+    {
+      "name": "Booneville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0507720",
+      "population": 3809,
+      "primaryCountyFips": "05083",
+      "additionalCountyFips": [],
+      "populationRank": 84
+    },
+    {
+      "name": "Manila",
+      "placeType": "city",
+      "censusPlaceGeoid": "0543820",
+      "population": 3682,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 85
+    },
+    {
+      "name": "Johnson",
+      "placeType": "city",
+      "censusPlaceGeoid": "0535500",
+      "population": 3641,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [],
+      "populationRank": 86
+    },
+    {
+      "name": "Piggott",
+      "placeType": "city",
+      "censusPlaceGeoid": "0555130",
+      "population": 3623,
+      "primaryCountyFips": "05021",
+      "additionalCountyFips": [],
+      "populationRank": 87
+    },
+    {
+      "name": "Marianna",
+      "placeType": "city",
+      "censusPlaceGeoid": "0544120",
+      "population": 3597,
+      "primaryCountyFips": "05077",
+      "additionalCountyFips": [],
+      "populationRank": 88
+    },
+    {
+      "name": "Alexander",
+      "placeType": "city",
+      "censusPlaceGeoid": "0500580",
+      "population": 3581,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [
+        "05125"
+      ],
+      "populationRank": 89
+    },
+    {
+      "name": "Landmark",
+      "placeType": "cdp",
+      "censusPlaceGeoid": "0538840",
+      "population": 3555,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 90
+    },
+    {
+      "name": "Ozark",
+      "placeType": "city",
+      "censusPlaceGeoid": "0552940",
+      "population": 3542,
+      "primaryCountyFips": "05047",
+      "additionalCountyFips": [],
+      "populationRank": 91
+    },
+    {
+      "name": "Fordyce",
+      "placeType": "city",
+      "censusPlaceGeoid": "0524250",
+      "population": 3408,
+      "primaryCountyFips": "05039",
+      "additionalCountyFips": [],
+      "populationRank": 92
+    },
+    {
+      "name": "Waldron",
+      "placeType": "city",
+      "censusPlaceGeoid": "0572680",
+      "population": 3386,
+      "primaryCountyFips": "05127",
+      "additionalCountyFips": [],
+      "populationRank": 93
+    },
+    {
+      "name": "Corning",
+      "placeType": "city",
+      "censusPlaceGeoid": "0515460",
+      "population": 3227,
+      "primaryCountyFips": "05021",
+      "additionalCountyFips": [],
+      "populationRank": 94
+    },
+    {
+      "name": "Paris",
+      "placeType": "city",
+      "censusPlaceGeoid": "0553450",
+      "population": 3176,
+      "primaryCountyFips": "05083",
+      "additionalCountyFips": [],
+      "populationRank": 95
+    },
+    {
+      "name": "Pottsville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0556990",
+      "population": 3143,
+      "primaryCountyFips": "05115",
+      "additionalCountyFips": [],
+      "populationRank": 96
+    },
+    {
+      "name": "Prescott",
+      "placeType": "city",
+      "censusPlaceGeoid": "0557290",
+      "population": 3061,
+      "primaryCountyFips": "05099",
+      "additionalCountyFips": [],
+      "populationRank": 97
+    },
+    {
+      "name": "Gosnell",
+      "placeType": "city",
+      "censusPlaceGeoid": "0527630",
+      "population": 2910,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 98
+    },
+    {
+      "name": "Bald Knob",
+      "placeType": "city",
+      "censusPlaceGeoid": "0503220",
+      "population": 2897,
+      "primaryCountyFips": "05145",
+      "additionalCountyFips": [],
+      "populationRank": 99
+    },
+    {
+      "name": "Mountain View",
+      "placeType": "city",
+      "censusPlaceGeoid": "0547510",
+      "population": 2877,
+      "primaryCountyFips": "05137",
+      "additionalCountyFips": [],
+      "populationRank": 100
+    },
+    {
+      "name": "Atkins",
+      "placeType": "city",
+      "censusPlaceGeoid": "0502590",
+      "population": 2856,
+      "primaryCountyFips": "05115",
+      "additionalCountyFips": [],
+      "populationRank": 101
+    },
+    {
+      "name": "Huntsville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0533940",
+      "population": 2856,
+      "primaryCountyFips": "05087",
+      "additionalCountyFips": [],
+      "populationRank": 102
+    },
+    {
+      "name": "Hoxie",
+      "placeType": "city",
+      "censusPlaceGeoid": "0533580",
+      "population": 2727,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 103
+    },
+    {
+      "name": "Brinkley",
+      "placeType": "city",
+      "censusPlaceGeoid": "0508920",
+      "population": 2700,
+      "primaryCountyFips": "05095",
+      "additionalCountyFips": [],
+      "populationRank": 104
+    },
+    {
+      "name": "Salem",
+      "placeType": "cdp",
+      "censusPlaceGeoid": "0562210",
+      "population": 2607,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 105
+    },
+    {
+      "name": "Charleston",
+      "placeType": "city",
+      "censusPlaceGeoid": "0513270",
+      "population": 2594,
+      "primaryCountyFips": "05047",
+      "additionalCountyFips": [],
+      "populationRank": 106
+    },
+    {
+      "name": "England",
+      "placeType": "city",
+      "censusPlaceGeoid": "0521610",
+      "population": 2525,
+      "primaryCountyFips": "05085",
+      "additionalCountyFips": [],
+      "populationRank": 107
+    },
+    {
+      "name": "Clinton",
+      "placeType": "city",
+      "censusPlaceGeoid": "0514260",
+      "population": 2509,
+      "primaryCountyFips": "05141",
+      "additionalCountyFips": [],
+      "populationRank": 108
+    },
+    {
+      "name": "Hamburg",
+      "placeType": "city",
+      "censusPlaceGeoid": "0529500",
+      "population": 2487,
+      "primaryCountyFips": "05003",
+      "additionalCountyFips": [],
+      "populationRank": 109
+    },
+    {
+      "name": "Lavaca",
+      "placeType": "city",
+      "censusPlaceGeoid": "0538870",
+      "population": 2451,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 110
+    },
+    {
+      "name": "Horseshoe Bend",
+      "placeType": "city",
+      "censusPlaceGeoid": "0533370",
+      "population": 2440,
+      "primaryCountyFips": "05065",
+      "additionalCountyFips": [
+        "05135",
+        "05049"
+      ],
+      "populationRank": 111
+    },
+    {
+      "name": "Bono",
+      "placeType": "city",
+      "censusPlaceGeoid": "0507630",
+      "population": 2417,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 112
+    },
+    {
+      "name": "Lake City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0537780",
+      "population": 2326,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 113
+    },
+    {
+      "name": "Dermott",
+      "placeType": "city",
+      "censusPlaceGeoid": "0518580",
+      "population": 2316,
+      "primaryCountyFips": "05017",
+      "additionalCountyFips": [],
+      "populationRank": 114
+    },
+    {
+      "name": "Marked Tree",
+      "placeType": "city",
+      "censusPlaceGeoid": "0544200",
+      "population": 2286,
+      "primaryCountyFips": "05111",
+      "additionalCountyFips": [],
+      "populationRank": 115
+    },
+    {
+      "name": "Mayflower",
+      "placeType": "city",
+      "censusPlaceGeoid": "0544750",
+      "population": 2234,
+      "primaryCountyFips": "05045",
+      "additionalCountyFips": [],
+      "populationRank": 116
+    },
+    {
+      "name": "Harrisburg",
+      "placeType": "city",
+      "censusPlaceGeoid": "0530370",
+      "population": 2219,
+      "primaryCountyFips": "05111",
+      "additionalCountyFips": [],
+      "populationRank": 117
+    },
+    {
+      "name": "Bay",
+      "placeType": "city",
+      "censusPlaceGeoid": "0504070",
+      "population": 2216,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 118
+    },
+    {
+      "name": "Star City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0566500",
+      "population": 2179,
+      "primaryCountyFips": "05079",
+      "additionalCountyFips": [],
+      "populationRank": 119
+    },
+    {
+      "name": "Gassville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0526020",
+      "population": 2171,
+      "primaryCountyFips": "05005",
+      "additionalCountyFips": [],
+      "populationRank": 120
+    },
+    {
+      "name": "Eureka Springs",
+      "placeType": "city",
+      "censusPlaceGeoid": "0522200",
+      "population": 2166,
+      "primaryCountyFips": "05015",
+      "additionalCountyFips": [],
+      "populationRank": 121
+    },
+    {
+      "name": "Glenwood",
+      "placeType": "city",
+      "censusPlaceGeoid": "0527310",
+      "population": 2120,
+      "primaryCountyFips": "05109",
+      "additionalCountyFips": [
+        "05097"
+      ],
+      "populationRank": 122
+    },
+    {
+      "name": "Fairfield Bay",
+      "placeType": "city",
+      "censusPlaceGeoid": "0522660",
+      "population": 2108,
+      "primaryCountyFips": "05141",
+      "additionalCountyFips": [
+        "05023"
+      ],
+      "populationRank": 123
+    },
+    {
+      "name": "Goshen",
+      "placeType": "city",
+      "censusPlaceGeoid": "0527600",
+      "population": 2102,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [],
+      "populationRank": 124
+    },
+    {
+      "name": "Lake Village",
+      "placeType": "city",
+      "censusPlaceGeoid": "0538020",
+      "population": 2065,
+      "primaryCountyFips": "05017",
+      "additionalCountyFips": [],
+      "populationRank": 125
+    },
+    {
+      "name": "Leachville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0539040",
+      "population": 2049,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 126
+    },
+    {
+      "name": "Carlisle",
+      "placeType": "city",
+      "censusPlaceGeoid": "0511500",
+      "population": 2033,
+      "primaryCountyFips": "05085",
+      "additionalCountyFips": [],
+      "populationRank": 127
+    },
+    {
+      "name": "Danville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0517320",
+      "population": 2028,
+      "primaryCountyFips": "05149",
+      "additionalCountyFips": [],
+      "populationRank": 128
+    },
+    {
+      "name": "Augusta",
+      "placeType": "city",
+      "censusPlaceGeoid": "0502740",
+      "population": 1998,
+      "primaryCountyFips": "05147",
+      "additionalCountyFips": [],
+      "populationRank": 129
+    },
+    {
+      "name": "Bull Shoals",
+      "placeType": "city",
+      "censusPlaceGeoid": "0509800",
+      "population": 1952,
+      "primaryCountyFips": "05089",
+      "additionalCountyFips": [],
+      "populationRank": 130
+    },
+    {
+      "name": "Cave City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0512280",
+      "population": 1922,
+      "primaryCountyFips": "05135",
+      "additionalCountyFips": [],
+      "populationRank": 131
+    },
+    {
+      "name": "Des Arc",
+      "placeType": "city",
+      "censusPlaceGeoid": "0518550",
+      "population": 1905,
+      "primaryCountyFips": "05117",
+      "additionalCountyFips": [],
+      "populationRank": 132
+    },
+    {
+      "name": "Melbourne",
+      "placeType": "city",
+      "censusPlaceGeoid": "0545080",
+      "population": 1890,
+      "primaryCountyFips": "05065",
+      "additionalCountyFips": [],
+      "populationRank": 133
+    },
+    {
+      "name": "Rector",
+      "placeType": "city",
+      "censusPlaceGeoid": "0558490",
+      "population": 1868,
+      "primaryCountyFips": "05021",
+      "additionalCountyFips": [],
+      "populationRank": 134
+    },
+    {
+      "name": "Judsonia",
+      "placeType": "city",
+      "censusPlaceGeoid": "0536040",
+      "population": 1863,
+      "primaryCountyFips": "05145",
+      "additionalCountyFips": [],
+      "populationRank": 135
+    },
+    {
+      "name": "Earle",
+      "placeType": "city",
+      "censusPlaceGeoid": "0519720",
+      "population": 1831,
+      "primaryCountyFips": "05035",
+      "additionalCountyFips": [],
+      "populationRank": 136
+    },
+    {
+      "name": "Calico Rock",
+      "placeType": "city",
+      "censusPlaceGeoid": "0510540",
+      "population": 1780,
+      "primaryCountyFips": "05065",
+      "additionalCountyFips": [],
+      "populationRank": 137
+    },
+    {
+      "name": "Eudora",
+      "placeType": "city",
+      "censusPlaceGeoid": "0522180",
+      "population": 1739,
+      "primaryCountyFips": "05017",
+      "additionalCountyFips": [],
+      "populationRank": 138
+    },
+    {
+      "name": "Lepanto",
+      "placeType": "city",
+      "censusPlaceGeoid": "0539370",
+      "population": 1715,
+      "primaryCountyFips": "05111",
+      "additionalCountyFips": [],
+      "populationRank": 139
+    },
+    {
+      "name": "Smackover",
+      "placeType": "city",
+      "censusPlaceGeoid": "0564940",
+      "population": 1630,
+      "primaryCountyFips": "05139",
+      "additionalCountyFips": [],
+      "populationRank": 140
+    },
+    {
+      "name": "Monette",
+      "placeType": "city",
+      "censusPlaceGeoid": "0546400",
+      "population": 1623,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 141
+    },
+    {
+      "name": "McCrory",
+      "placeType": "city",
+      "censusPlaceGeoid": "0542530",
+      "population": 1583,
+      "primaryCountyFips": "05147",
+      "additionalCountyFips": [],
+      "populationRank": 142
+    },
+    {
+      "name": "Salem",
+      "placeType": "city",
+      "censusPlaceGeoid": "0562180",
+      "population": 1566,
+      "primaryCountyFips": "05049",
+      "additionalCountyFips": [],
+      "populationRank": 143
+    },
+    {
+      "name": "Wrightsville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0576970",
+      "population": 1542,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 144
+    },
+    {
+      "name": "Clarendon",
+      "placeType": "city",
+      "censusPlaceGeoid": "0513990",
+      "population": 1526,
+      "primaryCountyFips": "05095",
+      "additionalCountyFips": [],
+      "populationRank": 145
+    },
+    {
+      "name": "Murfreesboro",
+      "placeType": "city",
+      "censusPlaceGeoid": "0548200",
+      "population": 1506,
+      "primaryCountyFips": "05109",
+      "additionalCountyFips": [],
+      "populationRank": 146
+    },
+    {
+      "name": "Hazen",
+      "placeType": "city",
+      "censusPlaceGeoid": "0530940",
+      "population": 1477,
+      "primaryCountyFips": "05117",
+      "additionalCountyFips": [],
+      "populationRank": 147
+    },
+    {
+      "name": "Kensett",
+      "placeType": "city",
+      "censusPlaceGeoid": "0536530",
+      "population": 1399,
+      "primaryCountyFips": "05145",
+      "additionalCountyFips": [],
+      "populationRank": 148
+    },
+    {
+      "name": "Dover",
+      "placeType": "city",
+      "censusPlaceGeoid": "0519600",
+      "population": 1378,
+      "primaryCountyFips": "05115",
+      "additionalCountyFips": [],
+      "populationRank": 149
+    },
+    {
+      "name": "Perryville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0554710",
+      "population": 1378,
+      "primaryCountyFips": "05105",
+      "additionalCountyFips": [],
+      "populationRank": 150
+    },
+    {
+      "name": "Flippin",
+      "placeType": "city",
+      "censusPlaceGeoid": "0524010",
+      "population": 1348,
+      "primaryCountyFips": "05089",
+      "additionalCountyFips": [],
+      "populationRank": 151
+    },
+    {
+      "name": "Marshall",
+      "placeType": "city",
+      "censusPlaceGeoid": "0544300",
+      "population": 1329,
+      "primaryCountyFips": "05129",
+      "additionalCountyFips": [],
+      "populationRank": 152
+    },
+    {
+      "name": "Stamps",
+      "placeType": "city",
+      "censusPlaceGeoid": "0566320",
+      "population": 1258,
+      "primaryCountyFips": "05073",
+      "additionalCountyFips": [],
+      "populationRank": 153
+    },
+    {
+      "name": "Mineral Springs",
+      "placeType": "city",
+      "censusPlaceGeoid": "0546040",
+      "population": 1208,
+      "primaryCountyFips": "05061",
+      "additionalCountyFips": [],
+      "populationRank": 154
+    },
+    {
+      "name": "Greenland",
+      "placeType": "city",
+      "censusPlaceGeoid": "0528600",
+      "population": 1206,
+      "primaryCountyFips": "05143",
+      "additionalCountyFips": [],
+      "populationRank": 155
+    },
+    {
+      "name": "Rison",
+      "placeType": "city",
+      "censusPlaceGeoid": "0559480",
+      "population": 1189,
+      "primaryCountyFips": "05025",
+      "additionalCountyFips": [],
+      "populationRank": 156
+    },
+    {
+      "name": "Yellville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0577330",
+      "population": 1178,
+      "primaryCountyFips": "05089",
+      "additionalCountyFips": [],
+      "populationRank": 157
+    },
+    {
+      "name": "Hampton",
+      "placeType": "city",
+      "censusPlaceGeoid": "0529660",
+      "population": 1160,
+      "primaryCountyFips": "05013",
+      "additionalCountyFips": [],
+      "populationRank": 158
+    },
+    {
+      "name": "Caraway",
+      "placeType": "city",
+      "censusPlaceGeoid": "0511440",
+      "population": 1139,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 159
+    },
+    {
+      "name": "Mansfield",
+      "placeType": "city",
+      "censusPlaceGeoid": "0544000",
+      "population": 1139,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [
+        "05083"
+      ],
+      "populationRank": 160
+    },
+    {
+      "name": "Ash Flat",
+      "placeType": "city",
+      "censusPlaceGeoid": "0502440",
+      "population": 1137,
+      "primaryCountyFips": "05135",
+      "additionalCountyFips": [],
+      "populationRank": 161
+    },
+    {
+      "name": "Avilla",
+      "placeType": "cdp",
+      "censusPlaceGeoid": "0503010",
+      "population": 1052,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 162
+    },
+    {
+      "name": "Wooster",
+      "placeType": "city",
+      "censusPlaceGeoid": "0576790",
+      "population": 1042,
+      "primaryCountyFips": "05045",
+      "additionalCountyFips": [],
+      "populationRank": 163
+    },
+    {
+      "name": "London",
+      "placeType": "city",
+      "censusPlaceGeoid": "0541180",
+      "population": 1039,
+      "primaryCountyFips": "05115",
+      "additionalCountyFips": [],
+      "populationRank": 164
+    },
+    {
+      "name": "Ola",
+      "placeType": "city",
+      "censusPlaceGeoid": "0551440",
+      "population": 1014,
+      "primaryCountyFips": "05149",
+      "additionalCountyFips": [],
+      "populationRank": 165
+    },
+    {
+      "name": "Mount Ida",
+      "placeType": "city",
+      "censusPlaceGeoid": "0547390",
+      "population": 996,
+      "primaryCountyFips": "05097",
+      "additionalCountyFips": [],
+      "populationRank": 166
+    },
+    {
+      "name": "Foreman",
+      "placeType": "city",
+      "censusPlaceGeoid": "0524220",
+      "population": 977,
+      "primaryCountyFips": "05081",
+      "additionalCountyFips": [],
+      "populationRank": 167
+    },
+    {
+      "name": "Luxora",
+      "placeType": "city",
+      "censusPlaceGeoid": "0542140",
+      "population": 942,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 168
+    },
+    {
+      "name": "Mammoth Spring",
+      "placeType": "city",
+      "censusPlaceGeoid": "0543700",
+      "population": 929,
+      "primaryCountyFips": "05049",
+      "additionalCountyFips": [],
+      "populationRank": 169
+    },
+    {
+      "name": "Lewisville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0539610",
+      "population": 916,
+      "primaryCountyFips": "05073",
+      "additionalCountyFips": [],
+      "populationRank": 170
+    },
+    {
+      "name": "Dierks",
+      "placeType": "city",
+      "censusPlaceGeoid": "0518970",
+      "population": 915,
+      "primaryCountyFips": "05061",
+      "additionalCountyFips": [],
+      "populationRank": 171
+    },
+    {
+      "name": "Cotter",
+      "placeType": "city",
+      "censusPlaceGeoid": "0515600",
+      "population": 886,
+      "primaryCountyFips": "05005",
+      "additionalCountyFips": [],
+      "populationRank": 172
+    },
+    {
+      "name": "Magazine",
+      "placeType": "city",
+      "censusPlaceGeoid": "0543310",
+      "population": 847,
+      "primaryCountyFips": "05083",
+      "additionalCountyFips": [],
+      "populationRank": 173
+    },
+    {
+      "name": "Greers Ferry",
+      "placeType": "city",
+      "censusPlaceGeoid": "0528690",
+      "population": 841,
+      "primaryCountyFips": "05023",
+      "additionalCountyFips": [],
+      "populationRank": 174
+    },
+    {
+      "name": "East Camden",
+      "placeType": "city",
+      "censusPlaceGeoid": "0519690",
+      "population": 798,
+      "primaryCountyFips": "05103",
+      "additionalCountyFips": [],
+      "populationRank": 175
+    },
+    {
+      "name": "Parkin",
+      "placeType": "city",
+      "censusPlaceGeoid": "0553570",
+      "population": 794,
+      "primaryCountyFips": "05037",
+      "additionalCountyFips": [],
+      "populationRank": 176
+    },
+    {
+      "name": "Cammack Village",
+      "placeType": "city",
+      "censusPlaceGeoid": "0510780",
+      "population": 778,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 177
+    },
+    {
+      "name": "Bearden",
+      "placeType": "city",
+      "censusPlaceGeoid": "0504420",
+      "population": 776,
+      "primaryCountyFips": "05103",
+      "additionalCountyFips": [],
+      "populationRank": 178
+    },
+    {
+      "name": "Hackett",
+      "placeType": "city",
+      "censusPlaceGeoid": "0529290",
+      "population": 768,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 179
+    },
+    {
+      "name": "Norphlet",
+      "placeType": "city",
+      "censusPlaceGeoid": "0550090",
+      "population": 766,
+      "primaryCountyFips": "05139",
+      "additionalCountyFips": [],
+      "populationRank": 180
+    },
+    {
+      "name": "Wilson",
+      "placeType": "city",
+      "censusPlaceGeoid": "0575920",
+      "population": 766,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 181
+    },
+    {
+      "name": "Stephens",
+      "placeType": "city",
+      "censusPlaceGeoid": "0566770",
+      "population": 754,
+      "primaryCountyFips": "05103",
+      "additionalCountyFips": [],
+      "populationRank": 182
+    },
+    {
+      "name": "Hardy",
+      "placeType": "city",
+      "censusPlaceGeoid": "0530100",
+      "population": 743,
+      "primaryCountyFips": "05135",
+      "additionalCountyFips": [],
+      "populationRank": 183
+    },
+    {
+      "name": "Lakeview",
+      "placeType": "city",
+      "censusPlaceGeoid": "0538140",
+      "population": 741,
+      "primaryCountyFips": "05005",
+      "additionalCountyFips": [],
+      "populationRank": 184
+    },
+    {
+      "name": "Altus",
+      "placeType": "city",
+      "censusPlaceGeoid": "0501210",
+      "population": 733,
+      "primaryCountyFips": "05047",
+      "additionalCountyFips": [],
+      "populationRank": 185
+    },
+    {
+      "name": "Tyronza",
+      "placeType": "city",
+      "censusPlaceGeoid": "0570640",
+      "population": 716,
+      "primaryCountyFips": "05111",
+      "additionalCountyFips": [],
+      "populationRank": 186
+    },
+    {
+      "name": "Quitman",
+      "placeType": "city",
+      "censusPlaceGeoid": "0557950",
+      "population": 694,
+      "primaryCountyFips": "05023",
+      "additionalCountyFips": [
+        "05045"
+      ],
+      "populationRank": 187
+    },
+    {
+      "name": "McRae",
+      "placeType": "city",
+      "censusPlaceGeoid": "0543280",
+      "population": 682,
+      "primaryCountyFips": "05145",
+      "additionalCountyFips": [],
+      "populationRank": 188
+    },
+    {
+      "name": "Keiser",
+      "placeType": "city",
+      "censusPlaceGeoid": "0536320",
+      "population": 681,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 189
+    },
+    {
+      "name": "Gould",
+      "placeType": "city",
+      "censusPlaceGeoid": "0527700",
+      "population": 663,
+      "primaryCountyFips": "05079",
+      "additionalCountyFips": [],
+      "populationRank": 190
+    },
+    {
+      "name": "Cotton Plant",
+      "placeType": "city",
+      "censusPlaceGeoid": "0515670",
+      "population": 649,
+      "primaryCountyFips": "05147",
+      "additionalCountyFips": [],
+      "populationRank": 191
+    },
+    {
+      "name": "Weiner",
+      "placeType": "city",
+      "censusPlaceGeoid": "0573970",
+      "population": 647,
+      "primaryCountyFips": "05111",
+      "additionalCountyFips": [],
+      "populationRank": 192
+    },
+    {
+      "name": "Black Rock",
+      "placeType": "city",
+      "censusPlaceGeoid": "0506640",
+      "population": 640,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 193
+    },
+    {
+      "name": "Imboden",
+      "placeType": "city",
+      "censusPlaceGeoid": "0534150",
+      "population": 640,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 194
+    },
+    {
+      "name": "Huntington",
+      "placeType": "city",
+      "censusPlaceGeoid": "0533850",
+      "population": 633,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 195
+    },
+    {
+      "name": "Bauxite",
+      "placeType": "city",
+      "censusPlaceGeoid": "0504120",
+      "population": 622,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 196
+    },
+    {
+      "name": "Bonanza",
+      "placeType": "city",
+      "censusPlaceGeoid": "0507540",
+      "population": 608,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 197
+    },
+    {
+      "name": "Holland",
+      "placeType": "city",
+      "censusPlaceGeoid": "0532650",
+      "population": 586,
+      "primaryCountyFips": "05045",
+      "additionalCountyFips": [],
+      "populationRank": 198
+    },
+    {
+      "name": "Cherry Valley",
+      "placeType": "city",
+      "censusPlaceGeoid": "0513660",
+      "population": 575,
+      "primaryCountyFips": "05037",
+      "additionalCountyFips": [],
+      "populationRank": 199
+    },
+    {
+      "name": "Jasper",
+      "placeType": "city",
+      "censusPlaceGeoid": "0534900",
+      "population": 547,
+      "primaryCountyFips": "05101",
+      "additionalCountyFips": [],
+      "populationRank": 200
+    },
+    {
+      "name": "Central City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0512520",
+      "population": 544,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 201
+    },
+    {
+      "name": "Summit",
+      "placeType": "city",
+      "censusPlaceGeoid": "0567940",
+      "population": 544,
+      "primaryCountyFips": "05089",
+      "additionalCountyFips": [],
+      "populationRank": 202
+    },
+    {
+      "name": "Holly Grove",
+      "placeType": "city",
+      "censusPlaceGeoid": "0532800",
+      "population": 536,
+      "primaryCountyFips": "05095",
+      "additionalCountyFips": [],
+      "populationRank": 203
+    },
+    {
+      "name": "Traskwood",
+      "placeType": "city",
+      "censusPlaceGeoid": "0569830",
+      "population": 535,
+      "primaryCountyFips": "05125",
+      "additionalCountyFips": [],
+      "populationRank": 204
+    },
+    {
+      "name": "Hartford",
+      "placeType": "city",
+      "censusPlaceGeoid": "0530500",
+      "population": 523,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 205
+    },
+    {
+      "name": "De Valls Bluff",
+      "placeType": "city",
+      "censusPlaceGeoid": "0518640",
+      "population": 519,
+      "primaryCountyFips": "05117",
+      "additionalCountyFips": [],
+      "populationRank": 206
+    },
+    {
+      "name": "Turrell",
+      "placeType": "city",
+      "censusPlaceGeoid": "0570370",
+      "population": 517,
+      "primaryCountyFips": "05035",
+      "additionalCountyFips": [],
+      "populationRank": 207
+    },
+    {
+      "name": "Hector",
+      "placeType": "city",
+      "censusPlaceGeoid": "0531120",
+      "population": 506,
+      "primaryCountyFips": "05115",
+      "additionalCountyFips": [],
+      "populationRank": 208
+    },
+    {
+      "name": "Junction City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0536010",
+      "population": 503,
+      "primaryCountyFips": "05139",
+      "additionalCountyFips": [],
+      "populationRank": 209
+    },
+    {
+      "name": "Pangburn",
+      "placeType": "city",
+      "censusPlaceGeoid": "0553210",
+      "population": 500,
+      "primaryCountyFips": "05145",
+      "additionalCountyFips": [],
+      "populationRank": 210
+    },
+    {
+      "name": "Joiner",
+      "placeType": "city",
+      "censusPlaceGeoid": "0535680",
+      "population": 498,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 211
+    },
+    {
+      "name": "Norfork",
+      "placeType": "city",
+      "censusPlaceGeoid": "0550030",
+      "population": 465,
+      "primaryCountyFips": "05005",
+      "additionalCountyFips": [],
+      "populationRank": 212
+    },
+    {
+      "name": "Crawfordsville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0516210",
+      "population": 462,
+      "primaryCountyFips": "05035",
+      "additionalCountyFips": [],
+      "populationRank": 213
+    },
+    {
+      "name": "Leola",
+      "placeType": "city",
+      "censusPlaceGeoid": "0539340",
+      "population": 460,
+      "primaryCountyFips": "05053",
+      "additionalCountyFips": [],
+      "populationRank": 214
+    },
+    {
+      "name": "College Station",
+      "placeType": "cdp",
+      "censusPlaceGeoid": "0514800",
+      "population": 455,
+      "primaryCountyFips": "05119",
+      "additionalCountyFips": [],
+      "populationRank": 215
+    },
+    {
+      "name": "College City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0514860",
+      "population": 455,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 216
+    },
+    {
+      "name": "Salesville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0562240",
+      "population": 450,
+      "primaryCountyFips": "05005",
+      "additionalCountyFips": [],
+      "populationRank": 217
+    },
+    {
+      "name": "Huttig",
+      "placeType": "city",
+      "censusPlaceGeoid": "0533970",
+      "population": 448,
+      "primaryCountyFips": "05139",
+      "additionalCountyFips": [],
+      "populationRank": 218
+    },
+    {
+      "name": "Leslie",
+      "placeType": "city",
+      "censusPlaceGeoid": "0539490",
+      "population": 441,
+      "primaryCountyFips": "05129",
+      "additionalCountyFips": [],
+      "populationRank": 219
+    },
+    {
+      "name": "Emmet",
+      "placeType": "city",
+      "censusPlaceGeoid": "0521550",
+      "population": 439,
+      "primaryCountyFips": "05099",
+      "additionalCountyFips": [],
+      "populationRank": 220
+    },
+    {
+      "name": "Portia",
+      "placeType": "city",
+      "censusPlaceGeoid": "0556720",
+      "population": 437,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 221
+    },
+    {
+      "name": "Calion",
+      "placeType": "city",
+      "censusPlaceGeoid": "0510570",
+      "population": 429,
+      "primaryCountyFips": "05139",
+      "additionalCountyFips": [],
+      "populationRank": 222
+    },
+    {
+      "name": "Ravenden",
+      "placeType": "city",
+      "censusPlaceGeoid": "0558400",
+      "population": 426,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 223
+    },
+    {
+      "name": "Evening Shade",
+      "placeType": "city",
+      "censusPlaceGeoid": "0522270",
+      "population": 420,
+      "primaryCountyFips": "05135",
+      "additionalCountyFips": [],
+      "populationRank": 224
+    },
+    {
+      "name": "Wilmot",
+      "placeType": "city",
+      "censusPlaceGeoid": "0575860",
+      "population": 416,
+      "primaryCountyFips": "05003",
+      "additionalCountyFips": [],
+      "populationRank": 225
+    },
+    {
+      "name": "Strong",
+      "placeType": "city",
+      "censusPlaceGeoid": "0567370",
+      "population": 410,
+      "primaryCountyFips": "05139",
+      "additionalCountyFips": [],
+      "populationRank": 226
+    },
+    {
+      "name": "Bradley",
+      "placeType": "city",
+      "censusPlaceGeoid": "0508260",
+      "population": 405,
+      "primaryCountyFips": "05073",
+      "additionalCountyFips": [],
+      "populationRank": 227
+    },
+    {
+      "name": "Subiaco",
+      "placeType": "city",
+      "censusPlaceGeoid": "0567550",
+      "population": 401,
+      "primaryCountyFips": "05083",
+      "additionalCountyFips": [],
+      "populationRank": 228
+    },
+    {
+      "name": "Grady",
+      "placeType": "city",
+      "censusPlaceGeoid": "0527730",
+      "population": 389,
+      "primaryCountyFips": "05079",
+      "additionalCountyFips": [],
+      "populationRank": 229
+    },
+    {
+      "name": "Portland",
+      "placeType": "city",
+      "censusPlaceGeoid": "0556780",
+      "population": 389,
+      "primaryCountyFips": "05003",
+      "additionalCountyFips": [],
+      "populationRank": 230
+    },
+    {
+      "name": "Western Grove",
+      "placeType": "town",
+      "censusPlaceGeoid": "0574330",
+      "population": 384,
+      "primaryCountyFips": "05101",
+      "additionalCountyFips": [],
+      "populationRank": 231
+    },
+    {
+      "name": "Damascus",
+      "placeType": "city",
+      "censusPlaceGeoid": "0517290",
+      "population": 382,
+      "primaryCountyFips": "05045",
+      "additionalCountyFips": [
+        "05141"
+      ],
+      "populationRank": 232
+    },
+    {
+      "name": "Arkansas City",
+      "placeType": "city",
+      "censusPlaceGeoid": "0501900",
+      "population": 376,
+      "primaryCountyFips": "05041",
+      "additionalCountyFips": [],
+      "populationRank": 233
+    },
+    {
+      "name": "Kingsland",
+      "placeType": "city",
+      "censusPlaceGeoid": "0536830",
+      "population": 374,
+      "primaryCountyFips": "05025",
+      "additionalCountyFips": [],
+      "populationRank": 234
+    },
+    {
+      "name": "Belleville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0505020",
+      "population": 371,
+      "primaryCountyFips": "05149",
+      "additionalCountyFips": [],
+      "populationRank": 235
+    },
+    {
+      "name": "Prattsville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0557200",
+      "population": 357,
+      "primaryCountyFips": "05053",
+      "additionalCountyFips": [],
+      "populationRank": 236
+    },
+    {
+      "name": "Sparkman",
+      "placeType": "city",
+      "censusPlaceGeoid": "0565570",
+      "population": 355,
+      "primaryCountyFips": "05039",
+      "additionalCountyFips": [],
+      "populationRank": 237
+    },
+    {
+      "name": "Cash",
+      "placeType": "city",
+      "censusPlaceGeoid": "0511920",
+      "population": 348,
+      "primaryCountyFips": "05031",
+      "additionalCountyFips": [],
+      "populationRank": 238
+    },
+    {
+      "name": "Dyess",
+      "placeType": "city",
+      "censusPlaceGeoid": "0520200",
+      "population": 339,
+      "primaryCountyFips": "05093",
+      "additionalCountyFips": [],
+      "populationRank": 239
+    },
+    {
+      "name": "Thornton",
+      "placeType": "city",
+      "censusPlaceGeoid": "0569050",
+      "population": 339,
+      "primaryCountyFips": "05013",
+      "additionalCountyFips": [],
+      "populationRank": 240
+    },
+    {
+      "name": "Clarkedale",
+      "placeType": "city",
+      "censusPlaceGeoid": "0513960",
+      "population": 336,
+      "primaryCountyFips": "05035",
+      "additionalCountyFips": [],
+      "populationRank": 241
+    },
+    {
+      "name": "Bigelow",
+      "placeType": "town",
+      "censusPlaceGeoid": "0505980",
+      "population": 329,
+      "primaryCountyFips": "05105",
+      "additionalCountyFips": [],
+      "populationRank": 242
+    },
+    {
+      "name": "Midland",
+      "placeType": "city",
+      "censusPlaceGeoid": "0545500",
+      "population": 325,
+      "primaryCountyFips": "05131",
+      "additionalCountyFips": [],
+      "populationRank": 243
+    },
+    {
+      "name": "Patterson",
+      "placeType": "city",
+      "censusPlaceGeoid": "0553960",
+      "population": 310,
+      "primaryCountyFips": "05147",
+      "additionalCountyFips": [],
+      "populationRank": 244
+    },
+    {
+      "name": "Fredonia (Biscoe)",
+      "placeType": "city",
+      "censusPlaceGeoid": "0525030",
+      "population": 305,
+      "primaryCountyFips": "05117",
+      "additionalCountyFips": [],
+      "populationRank": 245
+    },
+    {
+      "name": "Norman",
+      "placeType": "city",
+      "censusPlaceGeoid": "0550000",
+      "population": 303,
+      "primaryCountyFips": "05097",
+      "additionalCountyFips": [],
+      "populationRank": 246
+    },
+    {
+      "name": "Strawberry",
+      "placeType": "city",
+      "censusPlaceGeoid": "0567250",
+      "population": 302,
+      "primaryCountyFips": "05075",
+      "additionalCountyFips": [],
+      "populationRank": 247
+    },
+    {
+      "name": "Mitchellville",
+      "placeType": "city",
+      "censusPlaceGeoid": "0546220",
+      "population": 293,
+      "primaryCountyFips": "05041",
+      "additionalCountyFips": [],
+      "populationRank": 248
+    },
+    {
+      "name": "Poyen",
+      "placeType": "city",
+      "censusPlaceGeoid": "0556960",
+      "population": 290,
+      "primaryCountyFips": "05053",
+      "additionalCountyFips": [],
+      "populationRank": 249
+    },
+    {
+      "name": "Blevins",
+      "placeType": "city",
+      "censusPlaceGeoid": "0507030",
+      "population": 288,
+      "primaryCountyFips": "05057",
+      "additionalCountyFips": [],
+      "populationRank": 250
+    }
+  ]
+}

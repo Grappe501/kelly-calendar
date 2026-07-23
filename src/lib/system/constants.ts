@@ -97,22 +97,53 @@ export const POST_CC05_DIRECTION_ADR = "ADR-091";
 export const POST_CC05_DIRECTION_DOC =
   "develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md";
 /**
- * Phase Two vision locked (ADR-093).
- * Protected: CC-07→12 → usability/AI-quality gate → IC auth → IC-01…IC-12.
- * During CC-07…CC-12: clean extension points only; no hidden Phase Two features.
+ * Phase Two IC phase authorized (ADR-101 + ADR-103 + ADR-102).
+ * Vision: ADR-093. IC-01 COMPLETE; IC-02…IC-12 NOT_AUTHORIZED.
+ * AI features still require per-feature eval before enablement (ADR-103).
  */
 export const PHASE_TWO_PROGRAM_ID =
   "KCCC-PHASE-TWO-INTELLIGENT-STATEWIDE-CAMPAIGN-CALENDAR-1.0";
-export const PHASE_TWO_PROGRAM_STATUS = "VISION_LOCKED_NOT_AUTHORIZED";
+export const PHASE_TWO_PROGRAM_STATUS = "IC_PHASE_AUTHORIZED";
 export const PHASE_TWO_VISION_ADR = "ADR-093";
 export const PHASE_TWO_VISION_DOC =
   "develop_notes/KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md";
 export const PHASE_TWO_PROGRAM_DOC =
   "develop_notes/KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md";
 export const PHASE_TWO_PROTECTED_SEQUENCE =
-  "CC-07→CC-08→CC-09→CC-10→CC-11→CC-12→usability_ai_quality_gate→IC_phase_authorization";
+  "CC-07→CC-08→CC-09→CC-10→CC-11→CC-12→usability_ai_quality_gate→IC_phase_authorization→IC-01…IC-12";
 export const PHASE_TWO_AI_PRINCIPLE =
   "DETERMINISTIC_FACTS_AI_EXPLAINS_WITHIN_CONFIRMATION_BOUNDARIES";
+export const AI_QUALITY_GATE_STATUS =
+  "REVIEWED_AND_ACCEPTED_FOR_PHASE_TWO_FOUNDATION";
+export const AI_QUALITY_GATE_ADR = "ADR-103";
+export const PHASE_TWO_AI_QUALITY_GATE_DOC =
+  "develop_notes/KCCC_PHASE_TWO_AI_QUALITY_GATE.md";
+export const PHASE_TWO_AI_EVALUATION_STANDARD_DOC =
+  "develop_notes/KCCC_PHASE_TWO_AI_EVALUATION_STANDARD.md";
+export const POST_CC12_PRODUCT_OWNER_ACCEPTANCE_ADR = "ADR-101";
+export const POST_CC12_PRODUCT_OWNER_ACCEPTANCE_DOC =
+  "develop_notes/KCCC_POST_CC12_PRODUCT_OWNER_ACCEPTANCE_AND_PHASE_TWO_AUTHORIZATION_KELLY_2026-07-23.md";
+export const IC_01_STATUS = "COMPLETE";
+export const IC_01_BUILD_ID =
+  "KCCC-IC-01-ARKANSAS-CAMPAIGN-GEOGRAPHY-FOUNDATION-1.0";
+export const IC_01_AUTHORIZATION_ADR = "ADR-102";
+export const IC_01_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_IC_01_AUTHORIZATION_KELLY_2026-07-23.md";
+export const IC_01_IMPL_DOC =
+  "develop_notes/KCCC_IC_01_ARKANSAS_CAMPAIGN_GEOGRAPHY_FOUNDATION.md";
+export const IC_01_ROLLBACK_DOC =
+  "develop_notes/KCCC_IC_01_ARKANSAS_CAMPAIGN_GEOGRAPHY_FOUNDATION_ROLLBACK.md";
+export const IC_01_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_IC_01_GEOGRAPHY_OPERATOR_GUIDE.md";
+export const IC_01_SOURCE_REGISTER_DOC =
+  "develop_notes/KCCC_IC_01_GEOGRAPHY_SOURCE_REGISTER.md";
+export const ARKANSAS_GEOGRAPHY_DATA_DOCTRINE_DOC =
+  "develop_notes/KCCC_ARKANSAS_GEOGRAPHY_DATA_DOCTRINE.md";
+export const IC_01_SHIP_COMMIT = "PENDING_SHIP";
+export const IC_01_SHIP_DEPLOY_ID = "PENDING_DEPLOY";
+export const IC_02_STATUS = "NOT_AUTHORIZED";
+export const IC_02_DESIGN_HANDOFF_DOC =
+  "develop_notes/KCCC_IC_02_DESIGN_HANDOFF.md";
 export const AUTHORITATIVE_TIP_COMMIT = "68d6476";
 export const POSTURE_LOCK_COMMIT = "203bfe3";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
@@ -198,7 +229,8 @@ export const CC_08_TIP_COMMIT = "e1ddaa7";
 export const CC_08_TIP_DEPLOY_ID = "6a612111e81d923c5e6c58ca";
 export const CC_09_SHIP_COMMIT = "f8186be";
 export const CC_09_SHIP_DEPLOY_ID = "6a612a7cba0c57774db91b5f";
-export const NEXT_AUTHORIZED_BUILD = "POST_CC12_HUMAN_USABILITY_GATE";
+/** IC-01 COMPLETE; IC-02 design handoff only — not authorized to implement. */
+export const NEXT_AUTHORIZED_BUILD = "IC_02_NOT_AUTHORIZED";
 export const CC_09_STATUS = "COMPLETE";
 export const CC_09_BUILD_ID =
   "KCCC-CC-09-BULK-OPERATIONS-ARCHIVE-RESTORE-RECOVERY-1.0";
@@ -249,9 +281,10 @@ export const CC_11_DESIGN_HANDOFF =
   "Calendar Health Dashboard and Forensic Automation — observe/explain only; no auto Event repair";
 /**
  * CC-12 COMPLETE (ADR-100) — mobile/print/a11y presentation only.
- * Calendar Completion technical status: TECHNICALLY_COMPLETE.
- * Human usability gate remains PENDING (Synthesis 1 EMPTY).
- * Phase Two remains VISION_LOCKED_NOT_AUTHORIZED (ADR-093).
+ * Calendar Completion technical status unchanged (TECHNICALLY_COMPLETE…).
+ * Human usability gate: ACCEPTED_BY_PRODUCT_OWNER_WITH_CONTINUING_OBSERVATION (ADR-101).
+ * Synthesis 1 remains EMPTY. Phase Two: IC_PHASE_AUTHORIZED; IC-01 COMPLETE (ADR-102);
+ * IC-02 remains NOT_AUTHORIZED (design handoff only).
  */
 export const CC_12_STATUS = "COMPLETE";
 export const CC_12_BUILD_ID =
@@ -275,11 +308,14 @@ export const CALENDAR_COMPLETION_TECHNICAL_CLOSEOUT_DOC =
   "develop_notes/KCCC_CALENDAR_COMPLETION_TECHNICAL_CLOSEOUT.md";
 export const POST_CC12_HUMAN_USABILITY_GATE_DOC =
   "develop_notes/KCCC_POST_CC12_HUMAN_USABILITY_GATE.md";
+export const POST_CC12_PHASE_TWO_GATE_EVIDENCE_DOC =
+  "develop_notes/KCCC_POST_CC12_PHASE_TWO_GATE_EVIDENCE.md";
 export const CC_12_DESIGN_HANDOFF =
   "develop_notes/KCCC_CC_12_DESIGN_HANDOFF.md";
 export const CALENDAR_COMPLETION_TECHNICAL_STATUS =
   "TECHNICALLY_COMPLETE_HUMAN_USABILITY_GATE_PENDING";
-export const HUMAN_USABILITY_GATE_STATUS = "PENDING";
+export const HUMAN_USABILITY_GATE_STATUS =
+  "ACCEPTED_BY_PRODUCT_OWNER_WITH_CONTINUING_OBSERVATION";
 export const CC_12_SHIP_COMMIT = "36dae8b";
 export const CC_12_SHIP_DEPLOY_ID = "6a6213be8f93db1c79f4b538";
 export const CC_10_SHIP_COMMIT = "0bbf751";

@@ -1,0 +1,21 @@
+{
+  "startedAt": "2026-07-23T14:21:34.638Z",
+  "countiesExpected": 75,
+  "placesExpected": 250,
+  "countiesCreated": 0,
+  "countiesUpdated": 0,
+  "countiesUnchanged": 75,
+  "placesCreated": 0,
+  "placesUpdated": 0,
+  "placesUnchanged": 250,
+  "placeCountyLinksUpserted": 0,
+  "sourcesUpserted": 3,
+  "eventsCreated": 0,
+  "missionsCreated": 0,
+  "fingerprints": {
+    "counties": "cd714ec7f42908e307eb19ed7c17fdeb6e32cffecef24883b6b63691f212b871",
+    "places": "ba07ed7ae587eb421314a4d44b11a174b55eac14f3b9d55f05a37d1c7afb139e"
+  },
+  "completedAt": "2026-07-23T14:22:01.906Z",
+  "secondRunExpectation": "Second run should report countiesCreated=0 and placesCreated=0"
+}

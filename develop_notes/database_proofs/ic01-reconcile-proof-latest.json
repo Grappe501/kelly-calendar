@@ -1,0 +1,45 @@
+{
+  "startedAt": "2026-07-23T14:38:44.846Z",
+  "build": "KCCC-IC-01-ARKANSAS-CAMPAIGN-GEOGRAPHY-FOUNDATION-1.0",
+  "authorizationAdr": "ADR-102",
+  "subject": {
+    "eventId": "cmrv692gf00gavlcj2o03x2ks",
+    "eventNumber": "KCCC-2026-0147",
+    "city": "Little Rock",
+    "status": "CANCELLED"
+  },
+  "place": {
+    "id": "geo_mrxlm9lp_u54f1udg",
+    "name": "Little Rock",
+    "censusPlaceGeoid": "0541000"
+  },
+  "county": {
+    "id": "cmrqi6fxr003i93906moq8rx1",
+    "name": "Pulaski",
+    "fipsCode": "05119"
+  },
+  "apply1": {
+    "idempotent": false,
+    "geographyId": "cmrxm9t560001gc2v12o3s70n",
+    "fingerprint": "6f916b001f578f2c59703fdf53a2757b"
+  },
+  "apply2": {
+    "idempotent": true,
+    "geographyId": "cmrxm9t560001gc2v12o3s70n",
+    "fingerprint": "6f916b001f578f2c59703fdf53a2757b"
+  },
+  "startsAtBefore": "2026-09-29T18:00:00.000Z",
+  "startsAtAfter": "2026-09-29T18:00:00.000Z",
+  "startsAtUnchanged": true,
+  "activeEventGeographyCount": 1,
+  "duplicateActiveSameFingerprint": 0,
+  "eventScheduleMutations": 0,
+  "completedAt": "2026-07-23T14:38:46.523Z",
+  "ok": true,
+  "reconcileOutcome": {
+    "matchMethod": "AUTHORITATIVE_ID",
+    "outcome": "EXACT",
+    "countyId": "cmrqi6fxr003i93906moq8rx1",
+    "placeAuthorityId": "geo_mrxlm9lp_u54f1udg"
+  }
+}

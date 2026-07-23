@@ -1,21 +1,22 @@
 # Post-CC-12 / Phase Two gate evidence — IC readiness
 
 ```text
-Checked:     2026-07-23 (IC-01 attempt) · 2026-07-23 (IC-02 attempt)
-Tip:         main @ e1e4b14
-Verdict:     BLOCKED — IC-01 and IC-02 must not start
-Authority:   ADR-093 prerequisite sequence
+Checked:     2026-07-23 (IC-01 attempt) · 2026-07-23 (IC-02 attempt) · 2026-07-23 (gate resolution) · 2026-07-23 (IC-01 COMPLETE)
+Tip:         main @ PENDING_SHIP (update after IC-01 feature + evidence commits)
+Verdict:     CLEARED for IC-01 via ADR-101 + ADR-103 + ADR-102 — IC-01 COMPLETE
+Authority:   ADR-093 prerequisite sequence · resolved by ADR-101 / ADR-103 / ADR-102
+IC-02…IC-12: NOT authorized (design handoff only for IC-02)
 ```
 
 ## Binding sequence (ADR-093)
 
 1. CC-01…CC-12 complete  
 2. CC-12 live and technically verified  
-3. Human Calendar Usability Pass and Synthesis complete and reviewed  
-4. Phase Two AI-quality gate defined and reviewed  
-5. Explicit IC-phase / deliverable authorization  
+3. Human Calendar Usability Pass and Synthesis — owner acceptance with continuing observation (ADR-101); Pass/Synthesis body remain blank/EMPTY  
+4. Phase Two AI-quality gate defined and reviewed (ADR-103)  
+5. Explicit IC-phase / deliverable authorization (ADR-102 = IC-01 only)  
 
-This file records durable evidence. It does **not** fabricate human observations or AI-quality acceptance.
+This file records durable evidence. It does **not** fabricate human observations. Blank Pass 1 / EMPTY Synthesis are preserved as facts.
 
 ## Gate matrix
 
@@ -23,49 +24,50 @@ This file records durable evidence. It does **not** fabricate human observations
 |---|--------------|--------|----------|
 | 1 | CC-01…CC-12 complete | **PASS** | All `CC_*_STATUS = "COMPLETE"` |
 | 2 | CC-12 live / technically verified | **PASS (technical)** | `36dae8b` / deploy `6a6213be8f93db1c79f4b538` |
-| 3 | Human usability Pass + Synthesis complete & reviewed | **FAIL** | Pass 1 OPEN/blank · Synthesis 1 **EMPTY** · human gate **PENDING** |
-| 4 | AI-quality gate defined & reviewed | **FAIL** | No REVIEWED/ACCEPTED gate artifact |
-| 5a | IC-01 authorization + COMPLETE | **FAIL** | No IC-01 ADR, models, migration, validator, or ship |
-| 5b | IC-02 authorization contingent on IC-01 | **BLOCKED** | IC-02 script authorizes IC-02 only; IC-01 incomplete → no IC-02 code |
+| 3 | Human usability gate | **PASS (owner acceptance)** | ADR-101 · Result `ACCEPTED_BY_PRODUCT_OWNER_WITH_CONTINUING_OBSERVATION` · Pass 1 blank · Synthesis 1 **EMPTY** (truthful) |
+| 4 | AI-quality gate defined & reviewed | **PASS (foundation)** | ADR-103 · `KCCC_PHASE_TWO_AI_QUALITY_GATE.md` = `REVIEWED_AND_ACCEPTED_FOR_PHASE_TWO_FOUNDATION` |
+| 5a | IC-01 authorization + ship | **PASS (COMPLETE)** | ADR-102 · `IC_01_STATUS = COMPLETE` · 75 counties / 250 places · geography validate green |
+| 5b | IC-02 authorization contingent on IC-01 | **NOT_AUTHORIZED** | Design handoff `KCCC_IC_02_DESIGN_HANDOFF.md` only |
 
-## IC-02 specific block
+## IC-01 posture (ship)
 
 | Need | Status |
 |------|--------|
-| IC-01 geography foundation COMPLETE | **MISSING** |
-| `GeographyCounty` / place / region / corridor / priority models | **MISSING** |
-| `geography:foundation:validate` | **MISSING** |
-| IC-01 ship commit / Netlify | **MISSING** |
-| `ExternalProvider.REDDIRT` | **MISSING** (Mobilize/ICS/etc. only) |
-| IC-02 adapter / docs / migration | **NOT STARTED** (correctly) |
+| Gate clearance for IC-01 | **CLEARED** (ADR-101 + ADR-103 + ADR-102) |
+| IC-01 OpenAI calls | **Zero** (forbidden) |
+| Geography models / migration | **Shipped** (`20260723120000_ic01_arkansas_campaign_geography_foundation`) |
+| `geography:foundation:validate` | **Green** (75 / 250) |
+| IC-01 ship commit / Netlify | **Filled at evidence commit** |
 
-Reusable later (when unlocked): Mobilize `ExternalIntegrationConnection` / `ExternalSyncRun` / server-only adapter patterns under `src/features/mobilize-integration/` and related services.
+## IC-02 specific block (unchanged intent)
 
-## Constants (truthful)
+| Need | Status |
+|------|--------|
+| IC-01 geography foundation COMPLETE | **COMPLETE** |
+| `ExternalProvider.REDDIRT` | **MISSING** (Mobilize/ICS/etc. only) — correct until IC-02 ADR |
+| IC-02 adapter / migration | **NOT STARTED** (correctly) |
+
+## Constants (truthful after IC-01 ship)
 
 ```text
 CALENDAR_COMPLETION_TECHNICAL_STATUS = TECHNICALLY_COMPLETE_HUMAN_USABILITY_GATE_PENDING
-HUMAN_USABILITY_GATE_STATUS          = PENDING
-PHASE_TWO_PROGRAM_STATUS             = VISION_LOCKED_NOT_AUTHORIZED
-NEXT_AUTHORIZED_BUILD                = POST_CC12_HUMAN_USABILITY_GATE
+HUMAN_USABILITY_GATE_STATUS          = ACCEPTED_BY_PRODUCT_OWNER_WITH_CONTINUING_OBSERVATION
+PHASE_TWO_PROGRAM_STATUS             = IC_PHASE_AUTHORIZED
+AI_QUALITY_GATE_STATUS               = REVIEWED_AND_ACCEPTED_FOR_PHASE_TWO_FOUNDATION
+NEXT_AUTHORIZED_BUILD                = IC_02_NOT_AUTHORIZED
+IC_01_STATUS                         = COMPLETE
+IC_01_AUTHORIZATION_ADR              = ADR-102
+IC_02_STATUS                         = NOT_AUTHORIZED
 ```
-
-## Exact repository actions to clear the gate (in order)
-
-1. Fill `KCCC_OPERATOR_USABILITY_PASS_1.md` with real operator sessions  
-2. Fill and review `KCCC_OPERATOR_USABILITY_SYNTHESIS_1.md`  
-3. Complete `KCCC_POST_CC12_HUMAN_USABILITY_GATE.md` → Result **PASS**  
-4. Accept durable AI-quality gate (new ADR or `KCCC_PHASE_TWO_AI_QUALITY_GATE.md`)  
-5. Authorize and ship **IC-01** (Arkansas geography foundation) end-to-end  
-6. Only then run the IC-02 RedDirt script  
 
 ## Explicit non-actions
 
-- No IC-01 or IC-02 Prisma models, migrations, or feature code  
-- No RedDirt credentials probing or invented API  
-- No OpenAI / person-level import / Event-Mission mutation  
-- No agent-invented usability or AI-quality “PASS”  
+- No IC-02 RedDirt adapter, credentials, or network calls  
+- No OpenAI / person-level import / Event-Mission schedule mutation from geography  
+- No agent-invented usability session observations  
 
 ## Verdict
 
-**IC-02 RedDirt Read Integration is blocked** until IC-01 is genuinely COMPLETE and ADR-093 human + AI-quality gates pass.
+**IC-01 COMPLETE** under **ADR-102**. Phase Two remains **IC_PHASE_AUTHORIZED**.  
+
+**IC-02…IC-12 remain unauthorized.** See `KCCC_IC_02_DESIGN_HANDOFF.md`.
