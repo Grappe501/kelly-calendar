@@ -7,11 +7,24 @@ Build:        KCCC-IC-02B-MISSION-ACTIVATION-PLAYBOOKS-1.0
 Migration:    20260723160000_ic02b_mission_activation_department_operations
 Validator:    npm run operations:activation:validate
 Baseline:     55cfdab
+Feature:      f65f701
+Deploy:       6a625302ec18d79a68dcc0bf
+Production:   https://kelly-calendar.netlify.app
 ```
 
 ## Product
 
 Every Mission can optionally apply an Activation Playbook (None / Minimal / Standard / Major / Custom). Apply generates dated department tasks. Preview and Mission page reads create **zero** records.
+
+## Ship evidence (2026-07-23)
+
+- Feature commit: `f65f701`
+- Netlify deploy: `6a625302ec18d79a68dcc0bf`
+- `operations:activation:validate` 48 pass
+- DB proof 8 pass (counts restored)
+- tsc / build / secret scan green
+- IC-02A validator remains green
+
 
 ## Playbook options
 
