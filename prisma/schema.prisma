@@ -2236,6 +2236,8 @@ model ArkansasCounty {
   focusAreaLinks CampaignFocusAreaGeography[]
   missionGeographies MissionGeography[]
   reconciliationCandidates GeographyReconciliationCandidate[]
+  clusterMemberships CampaignClusterCounty[]
+  orgPositions CampaignOrgPosition[]
 
   @@schema("kelly_calendar")
 }
@@ -4013,6 +4015,286 @@ model MissionActivationNotification {
 
   @@index([campaignScopeKey, recipientUserId, readAt])
   @@index([createdAt])
+  @@schema("kelly_calendar")
+}
+
+// ─── IC-02C Campaign Operating Structure Scaffold ────────────────────
+
+enum CampaignOrgPositionStatus {
+  VACANT
+  FILLED
+  INTERIM
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignOrgAssignmentStatus {
+  PROPOSED
+  INVITED
+  ACCEPTED
+  ACTIVE
+  INTERIM
+  PAUSED
+  ENDED
+  DECLINED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignOrgScopeType {
+  STATEWIDE
+  CLUSTER
+  COUNTY
+  PLACE
+  CUSTOM
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignOrgPrivacyLevel {
+  INTERNAL
+  LEADERSHIP
+  FINANCE_RESTRICTED
+  CONFIDENTIAL
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignClusterMembershipStatus {
+  DRAFT
+  APPROVED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum CountyOrganizingMaturity {
+  UNCONTACTED
+  INITIAL_RELATIONSHIPS
+  EMERGING_TEAM
+  LEADERSHIP_ESTABLISHED
+  ACTIVE_RECURRING_ORGANIZATION
+  DURABLE_LOCAL_NETWORK
+
+  @@schema("kelly_calendar")
+}
+
+/// Versioned organization template install record (idempotent by code+version).
+model CampaignOrgTemplateInstall {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  templateCode     String
+  templateVersion  String
+  installedAt      DateTime @default(now())
+  installedByUserId String?
+  fingerprint      String
+  createdAt        DateTime @default(now())
+
+  @@unique([campaignScopeKey, templateCode, templateVersion])
+  @@index([campaignScopeKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignOrgDepartment {
+  id               String                   @id @default(cuid())
+  campaignScopeKey String                   @default("KELLY")
+  key              String
+  displayName      String
+  purpose          String?
+  parentKey        String?
+  sortOrder        Int                      @default(0)
+  privacyLevel     CampaignOrgPrivacyLevel  @default(INTERNAL)
+  status           String                   @default("ACTIVE")
+  templateVersion  String
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+
+  functions CampaignOrgFunction[]
+  positions CampaignOrgPosition[]
+
+  @@unique([campaignScopeKey, key])
+  @@index([campaignScopeKey, sortOrder])
+  @@schema("kelly_calendar")
+}
+
+model CampaignOrgFunction {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  departmentId     String
+  key              String
+  displayName      String
+  purpose          String?
+  sortOrder        Int      @default(0)
+  templateVersion  String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  department CampaignOrgDepartment @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  positions  CampaignOrgPosition[]
+
+  @@unique([campaignScopeKey, key])
+  @@index([departmentId])
+  @@schema("kelly_calendar")
+}
+
+/// A seat in the org chart — not a person.
+model CampaignOrgPosition {
+  id                   String                    @id @default(cuid())
+  campaignScopeKey     String                    @default("KELLY")
+  key                  String
+  title                String
+  departmentId         String?
+  functionId           String?
+  reportsToPositionKey String?
+  scopeType            CampaignOrgScopeType      @default(STATEWIDE)
+  arkansasCountyId     String?
+  clusterId            String?
+  permissionsProfile   String                    @default("COORDINATOR")
+  status               CampaignOrgPositionStatus @default(VACANT)
+  maxHolders           Int                       @default(1)
+  privacyLevel         CampaignOrgPrivacyLevel   @default(INTERNAL)
+  templateVersion      String
+  sortOrder            Int                       @default(0)
+  createdAt            DateTime                  @default(now())
+  updatedAt            DateTime                  @updatedAt
+
+  department CampaignOrgDepartment? @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+  function   CampaignOrgFunction?   @relation(fields: [functionId], references: [id], onDelete: SetNull)
+  county     ArkansasCounty?        @relation(fields: [arkansasCountyId], references: [id])
+  cluster    CampaignOrgCluster?    @relation(fields: [clusterId], references: [id])
+  assignments CampaignOrgPositionAssignment[]
+  delegationsGranted CampaignOrgDelegation[] @relation("DelegationGrantorPosition")
+  delegationsHeld    CampaignOrgDelegation[] @relation("DelegationRecipientPosition")
+
+  @@unique([campaignScopeKey, key])
+  @@index([departmentId, status])
+  @@index([arkansasCountyId])
+  @@index([clusterId])
+  @@index([reportsToPositionKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignOrgPositionAssignment {
+  id               String                       @id @default(cuid())
+  campaignScopeKey String                       @default("KELLY")
+  positionId       String
+  userId           String?
+  /// Optional Person link — never created by name-only match.
+  personId         String?
+  status           CampaignOrgAssignmentStatus  @default(PROPOSED)
+  isInterim        Boolean                      @default(false)
+  startsAt         DateTime?
+  endsAt           DateTime?
+  assignedByUserId String?
+  reason           String?
+  acceptedAt       DateTime?
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+
+  position CampaignOrgPosition @relation(fields: [positionId], references: [id], onDelete: Cascade)
+
+  @@index([positionId, status])
+  @@index([userId, status])
+  @@index([campaignScopeKey, status])
+  @@schema("kelly_calendar")
+}
+
+model CampaignOrgCluster {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  key              String
+  displayName      String
+  description      String?
+  membershipStatus CampaignClusterMembershipStatus @default(DRAFT)
+  membershipVersion String  @default("1")
+  templateVersion  String
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  counties  CampaignClusterCounty[]
+  positions CampaignOrgPosition[]
+
+  @@unique([campaignScopeKey, key])
+  @@index([campaignScopeKey, membershipStatus])
+  @@schema("kelly_calendar")
+}
+
+model CampaignClusterCounty {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  clusterId        String
+  arkansasCountyId String
+  isPrimary        Boolean  @default(true)
+  membershipStatus CampaignClusterMembershipStatus @default(DRAFT)
+  effectiveFrom    DateTime?
+  effectiveTo      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  cluster CampaignOrgCluster @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+  county  ArkansasCounty     @relation(fields: [arkansasCountyId], references: [id])
+
+  @@unique([clusterId, arkansasCountyId])
+  @@index([arkansasCountyId, isPrimary])
+  @@schema("kelly_calendar")
+}
+
+model CampaignOrgDelegation {
+  id                     String   @id @default(cuid())
+  campaignScopeKey       String   @default("KELLY")
+  grantorPositionId      String
+  recipientPositionId    String?
+  recipientUserId        String?
+  permissionKeys         String[] @default([])
+  scopeType              CampaignOrgScopeType @default(STATEWIDE)
+  arkansasCountyId       String?
+  clusterId              String?
+  reason                 String?
+  startsAt               DateTime @default(now())
+  endsAt                 DateTime?
+  revokedAt              DateTime?
+  revokedByUserId        String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  grantorPosition   CampaignOrgPosition  @relation("DelegationGrantorPosition", fields: [grantorPositionId], references: [id], onDelete: Cascade)
+  recipientPosition CampaignOrgPosition? @relation("DelegationRecipientPosition", fields: [recipientPositionId], references: [id])
+
+  @@index([grantorPositionId])
+  @@index([recipientUserId])
+  @@index([campaignScopeKey, revokedAt])
+  @@schema("kelly_calendar")
+}
+
+model CampaignOrgAuditEvent {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  action           String
+  actorUserId      String?
+  detailJson       Json     @default("{}")
+  createdAt        DateTime @default(now())
+
+  @@index([campaignScopeKey, createdAt])
+  @@index([action])
+  @@schema("kelly_calendar")
+}
+
+/// Deterministic county organizing assessment contract — facts only; no auto-advance from Events.
+model CampaignCountyOrganizingAssessment {
+  id               String                   @id @default(cuid())
+  campaignScopeKey String                   @default("KELLY")
+  arkansasCountyId String
+  maturity         CountyOrganizingMaturity @default(UNCONTACTED)
+  factsJson        Json                     @default("{}")
+  assessedAt       DateTime?
+  assessedByUserId String?
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+
+  @@unique([campaignScopeKey, arkansasCountyId])
+  @@index([maturity])
   @@schema("kelly_calendar")
 }
 

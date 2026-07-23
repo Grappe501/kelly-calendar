@@ -3,6 +3,7 @@ import type { MissionHomeViewModel } from "@/lib/missions/v21/mission-home-view-
 import { MissionIntelligencePanel } from "@/components/missions/MissionIntelligencePanel";
 import { MissionReadinessList } from "@/components/missions/MissionReadinessList";
 import { MissionSuccessBlock } from "@/components/missions/MissionSuccessBlock";
+import { MissionOperatingTeamPanel } from "@/components/missions/MissionOperatingTeamPanel";
 
 type Props = {
   mission: MissionHomeViewModel;
@@ -39,6 +40,10 @@ export function MissionDetailView({ mission, mode }: Props) {
           <span aria-hidden="true"> · </span>
           <Link href={`/system/missions/${mission.missionId}/activation`}>
             Activate Mission
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <Link href={`/system/missions/${mission.missionId}?panel=operating-team`}>
+            Operating Team
           </Link>
           <span aria-hidden="true"> · </span>
           <Link href={`/system/missions/${mission.missionId}/execute`}>
@@ -82,6 +87,8 @@ export function MissionDetailView({ mission, mode }: Props) {
       ) : null}
 
       <MissionSuccessBlock mission={mission} />
+
+      <MissionOperatingTeamPanel missionId={mission.missionId} />
 
       <section className="panel" aria-labelledby="detail-readiness-heading">
         <h2 id="detail-readiness-heading">Mission readiness</h2>

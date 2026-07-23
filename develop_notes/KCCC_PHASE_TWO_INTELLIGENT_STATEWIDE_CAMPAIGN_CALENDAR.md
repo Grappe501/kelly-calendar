@@ -2,11 +2,11 @@
 
 ```text
 Program ID:   KCCC-PHASE-TWO-INTELLIGENT-STATEWIDE-CAMPAIGN-CALENDAR-1.0
-Status:       IC_PHASE_AUTHORIZED — IC-01 COMPLETE · IC-02 COMPLETE · IC-02A COMPLETE · IC-02B COMPLETE · IC-03…IC-12 NOT_AUTHORIZED
+Status:       IC_PHASE_AUTHORIZED — IC-01…IC-02C COMPLETE · IC-03…IC-12 NOT_AUTHORIZED
 Locked:       2026-07-22 (vision) · IC phase opened 2026-07-23 (ADR-101/103/102)
-Authority:    Kelly · ADR-093 · ADR-101 · ADR-103 · ADR-102 · ADR-104 · ADR-105 · ADR-106
+Authority:    Kelly · ADR-093 · ADR-101 · ADR-103 · ADR-102 · ADR-104 · ADR-105 · ADR-106 · ADR-107
 Prerequisite: Calendar Completion CC-01…CC-12 technically complete + post-CC-12 gates
-Posture:      Calendar-centered · IC-01…IC-02B shipped · IC-03 design handoff only
+Posture:      Calendar-centered · IC-01…IC-02C shipped · IC-03 design handoff only
 ```
 
 ## Product vision
@@ -43,17 +43,18 @@ Next engineering requires separate CC-07 authorization
 3. **IC-02** RedDirt Read Integration
 4. **IC-02A** Event Outcome and Hot Wash (authorized calendar improvement; does not renumber IC-03)
 5. **IC-02B** Mission Activation Playbooks and Department Operations
-6. **IC-03** Mission Intelligence Profile
-7. **IC-04** Statewide Coverage Intelligence
-8. **IC-05** Travel Pattern and Corridor Intelligence
-9. **IC-06** Statewide Opportunity and Gap Engine
-10. **IC-07** Kelly Calendar AI Copilot
-11. **IC-08** Volunteer Identity, Consent, and Skills Foundation
-12. **IC-09** Volunteer Manager Workspace
-13. **IC-10** Mobilize Activation and Low-Touch Automation
-14. **IC-11** Mobile Action Center and Push Notifications
-15. **IC-12** Brand, Delight, and Product Identity
-16. Dedicated **operator-usability + AI-quality gate** before broader automation
+6. **IC-02C** Campaign Operating Structure Scaffold
+7. **IC-03** Mission Intelligence Profile
+8. **IC-04** Statewide Coverage Intelligence
+9. **IC-05** Travel Pattern and Corridor Intelligence
+10. **IC-06** Statewide Opportunity and Gap Engine
+11. **IC-07** Kelly Calendar AI Copilot
+12. **IC-08** Volunteer Identity, Consent, and Skills Foundation
+13. **IC-09** Volunteer Manager Workspace
+14. **IC-10** Mobilize Activation and Low-Touch Automation
+15. **IC-11** Mobile Action Center and Push Notifications
+16. **IC-12** Brand, Delight, and Product Identity
+17. Dedicated **operator-usability + AI-quality gate** before broader automation
 
 ## Governing AI principle
 
@@ -113,6 +114,12 @@ Optional Activation Playbooks generate dated department work plans. Internal tas
 
 **Hard rule:** Activation plan independent of Mission lifecycle; internal generation ≠ external action.
 
+## IC-02C — Campaign Operating Structure Scaffold
+
+**Status: COMPLETE** (ADR-107) — `KCCC_IC_02C_CAMPAIGN_OPERATING_STRUCTURE.md`.
+
+Four management lanes + vacant positions, six draft clusters, 75 County Captains. No fabricated people. IC-02B routes work to positions when installed.
+
 ## IC-03 — Mission Intelligence Profile
 
 **Status: NOT_AUTHORIZED** — design handoff only: `KCCC_IC_03_DESIGN_HANDOFF.md`.
@@ -120,7 +127,7 @@ Optional Activation Playbooks generate dated department work plans. Internal tas
 Structured, reviewable strategic profile per Mission. AI may **propose** purpose, value, coverage, audience, focus-area/travel/volunteer/prep needs, related Missions, confidence, missing info, citations.
 
 Must distinguish: stored facts · deterministic calculations · AI inference · campaign-approved judgment.
-Must distinguish **planned intent**, **IC-02B activation readiness**, and **IC-02A reviewed outcomes**.
+Must distinguish **planned intent**, **IC-02B activation readiness**, **IC-02C org gaps**, and **IC-02A reviewed outcomes**.
 
 **Hard rule:** AI suggestions never silently change the Mission.
 

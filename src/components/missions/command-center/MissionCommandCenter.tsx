@@ -140,6 +140,7 @@ export function MissionCommandCenter({ model }: Props) {
           <Link href="/system/briefing/closeout">Day Closeout</Link>
           <Link href="/system/calendar/reviews">Event reviews</Link>
           <Link href="/system/operations">Campaign operations</Link>
+          <Link href="/system/organization">Organization</Link>
           <Link href="/calendar">Calendar</Link>
           <Link href="/system/missions">Mission index</Link>
           <Link href={viewHref("overview", filters)}>Refresh</Link>

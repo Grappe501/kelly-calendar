@@ -45,6 +45,12 @@ Every Mission can optionally apply an Activation Playbook (None / Minimal / Stan
 - purchased advertisements: 0
 - RedDirt writes: 0
 - OpenAI calls: 0
+
+## Organization alignment (IC-02C)
+
+Generated tasks should target accountable **positions** from the IC-02C scaffold
+(`OPERATIONS_DATA_COORDINATOR`, department managers, etc.). Vacant positions
+surface staffing blockers — never silent reassignment.
 - fabricated delivery results: 0
 
 ## Routes

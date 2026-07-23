@@ -7,6 +7,8 @@ export const metadata: Metadata = { title: "Campaign operations" };
 export const dynamic = "force-dynamic";
 
 const BOARDS = [
+  { href: "/system/operations/finance", title: "Finance", blurb: "Compliance & fundraising posture (restricted)" },
+  { href: "/system/operations/data", title: "Operations & Data", blurb: "Calendar, activation routing, systems" },
   { href: "/system/operations/events", title: "Events Management", blurb: "Hosts, RSVP, posture, readiness" },
   { href: "/system/operations/communications", title: "Communications Manager", blurb: "Email, SMS, social, press — D20 coordinated" },
   { href: "/system/operations/volunteers", title: "Volunteer Manager", blurb: "Needs, shifts, confirmations — no auto-assign" },

@@ -685,6 +685,14 @@
       "date": "2026-07-23",
       "decision": "Authorize IC-02B Mission Activation Playbooks and Department Operations. Activation plans are optional overlays independent of Mission lifecycle. Deterministic automation may generate internal department tasks, drafts, and volunteer needs; it must not silently send, publish, purchase ads, infer consent, auto-assign people, or mutate Event/Mission schedules. Evidence: develop_notes/ADR-106_MISSION_ACTIVATION_INDEPENDENT_OF_LIFECYCLE.md.",
       "boundary": "Must not implement IC-03, claim push delivery, auto-dispatch D20 communications, purchase advertising, or treat ACKNOWLEDGED as clearing blockers."
+    },
+    {
+      "id": "ADR-107",
+      "title": "Four-Department Campaign Operating Structure Scaffold",
+      "status": "accepted",
+      "date": "2026-07-23",
+      "decision": "Authorize IC-02C Campaign Operating Structure: Candidate + Campaign Manager lanes and four operating departments (Volunteer and Organizing, Communications, Finance, Operations and Data), vacant positions, six draft clusters, 75 County Captains linked to IC-01, hierarchy-derived access. No fabricated people or automatic assignments. Evidence: develop_notes/ADR-107_FOUR_DEPARTMENT_OPERATING_STRUCTURE.md.",
+      "boundary": "Must not invent cluster membership, auto-assign users by name, advance county maturity from Events alone, implement IC-03, or grant PROPOSED assignments operational access."
     }
   ]
 }
