@@ -178,9 +178,9 @@ export const IC_02A_ENCOUNTER_PRIVACY_DOC =
   "develop_notes/KCCC_EVENT_ENCOUNTER_PRIVACY_POLICY.md";
 export const IC_02A_ADR_DOC =
   "develop_notes/ADR-105_EVENT_OUTCOME_INDEPENDENT_FACTS.md";
-export const IC_02A_SHIP_COMMIT = "";
+export const IC_02A_SHIP_COMMIT = "b8c1e1c";
 export const IC_02A_SHIP_DEPLOY_ID = "";
-export const AUTHORITATIVE_TIP_COMMIT = "c7e43db";
+export const AUTHORITATIVE_TIP_COMMIT = "b8c1e1c";
 export const POSTURE_LOCK_COMMIT = "203bfe3";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
