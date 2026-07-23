@@ -250,8 +250,8 @@ export const CC_12_DESIGN_HANDOFF =
   "develop_notes/KCCC_CC_12_DESIGN_HANDOFF.md";
 export const CC_10_SHIP_COMMIT = "0bbf751";
 export const CC_10_SHIP_DEPLOY_ID = "6a619fa32d949535124cbabc";
-export const CC_11_SHIP_COMMIT = "";
-export const CC_11_SHIP_DEPLOY_ID = "";
+export const CC_11_SHIP_COMMIT = "d570dc6";
+export const CC_11_SHIP_DEPLOY_ID = "6a61aa30fc4c865f2bd3c628";
 export const CC_07_IMPL_DOC =
   "develop_notes/KCCC_CC_07_UNIFIED_SEARCH_FILTERS_SAVED_VIEWS.md";
 export const CC_07_ROLLBACK_DOC =
