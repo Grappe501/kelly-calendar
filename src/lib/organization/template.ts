@@ -1,11 +1,13 @@
 /**
- * IC-02C locked organization template — versioned, installable, no people.
+ * IC-02C/D locked organization template — versioned, installable, no people.
+ * 1.1.0 adds Assistant Campaign Manager + Campaign Logistics board (ADR-108).
  */
 
 export const ORG_TEMPLATE_CODE = "KCCC_CAMPAIGN_OPERATING_STRUCTURE" as const;
-export const ORG_TEMPLATE_VERSION = "1.0.0" as const;
+export const ORG_TEMPLATE_VERSION = "1.1.0" as const;
 export const ORG_CAMPAIGN_SCOPE = "KELLY" as const;
-export const ORG_BUILD_ID = "KCCC-IC-02C-CAMPAIGN-OPERATING-STRUCTURE-1.0" as const;
+export const ORG_BUILD_ID =
+  "KCCC-IC-02D-VOLUNTEER-OPERATIONS-CAMPAIGN-WORK-1.0" as const;
 
 export type OrgDepartmentDef = {
   key: string;
@@ -59,6 +61,12 @@ export const ORG_DEPARTMENTS: OrgDepartmentDef[] = [
         purpose: "Cross-department coordination and sensitive decisions.",
         sortOrder: 10,
       },
+      {
+        key: "CAMPAIGN_LOGISTICS",
+        displayName: "Campaign Logistics",
+        purpose: "Campaign-wide travel, lodging, materials, movement — reports to Campaign Manager.",
+        sortOrder: 20,
+      },
     ],
   },
   {
@@ -103,7 +111,7 @@ export const ORG_DEPARTMENTS: OrgDepartmentDef[] = [
   {
     key: "OPERATIONS_AND_DATA",
     displayName: "Operations and Data",
-    purpose: "Calendar, activation routing, logistics, systems, reporting — connective tissue.",
+    purpose: "Calendar, activation routing, logistics execution support, systems, reporting — connective tissue.",
     sortOrder: 60,
     privacyLevel: "INTERNAL",
     functions: [
@@ -116,10 +124,37 @@ export const ORG_DEPARTMENTS: OrgDepartmentDef[] = [
   },
 ];
 
+/** Positions added in template 1.1.0 (upgrade upserts these). */
+export const ORG_V11_POSITIONS: OrgPositionDef[] = [
+  {
+    key: "ASSISTANT_CAMPAIGN_MANAGER",
+    title: "Assistant Campaign Manager",
+    departmentKey: "CAMPAIGN_MANAGEMENT",
+    functionKey: "CAMPAIGN_MANAGER_OFFICE",
+    reportsToPositionKey: "CAMPAIGN_MANAGER",
+    scopeType: "STATEWIDE",
+    permissionsProfile: "ASSISTANT_CAMPAIGN_MANAGER",
+    privacyLevel: "LEADERSHIP",
+    sortOrder: 21,
+  },
+  {
+    key: "CAMPAIGN_LOGISTICS_LEAD",
+    title: "Campaign Logistics Lead",
+    departmentKey: "CAMPAIGN_MANAGEMENT",
+    functionKey: "CAMPAIGN_LOGISTICS",
+    reportsToPositionKey: "CAMPAIGN_MANAGER",
+    scopeType: "STATEWIDE",
+    permissionsProfile: "LOGISTICS_BOARD",
+    privacyLevel: "INTERNAL",
+    sortOrder: 22,
+  },
+];
+
 /** Core statewide positions (county captains generated from IC-01 at install). */
 export const ORG_CORE_POSITIONS: OrgPositionDef[] = [
   { key: "CANDIDATE", title: "Candidate — Kelly Grappe", departmentKey: "CANDIDATE", functionKey: "CANDIDATE_LEADERSHIP", scopeType: "STATEWIDE", permissionsProfile: "CANDIDATE", privacyLevel: "LEADERSHIP", sortOrder: 10 },
   { key: "CAMPAIGN_MANAGER", title: "Campaign Manager", departmentKey: "CAMPAIGN_MANAGEMENT", functionKey: "CAMPAIGN_MANAGER_OFFICE", reportsToPositionKey: "CANDIDATE", scopeType: "STATEWIDE", permissionsProfile: "CAMPAIGN_MANAGER", privacyLevel: "LEADERSHIP", sortOrder: 20 },
+  ...ORG_V11_POSITIONS,
   { key: "VOLUNTEER_ORGANIZING_MANAGER", title: "Volunteer and Organizing Manager", departmentKey: "VOLUNTEER_AND_ORGANIZING", reportsToPositionKey: "CAMPAIGN_MANAGER", scopeType: "STATEWIDE", permissionsProfile: "DEPARTMENT_MANAGER", sortOrder: 30 },
   { key: "VOLUNTEER_INTAKE_PLACEMENT_COORD", title: "Volunteer Intake and Placement Coordinator", departmentKey: "VOLUNTEER_AND_ORGANIZING", functionKey: "VOLUNTEER_INTAKE_TRAINING_PLACEMENT", reportsToPositionKey: "VOLUNTEER_ORGANIZING_MANAGER", scopeType: "STATEWIDE", permissionsProfile: "COORDINATOR", sortOrder: 31 },
   { key: "VOLUNTEER_TRAINING_COORD", title: "Volunteer Training Coordinator", departmentKey: "VOLUNTEER_AND_ORGANIZING", functionKey: "VOLUNTEER_INTAKE_TRAINING_PLACEMENT", reportsToPositionKey: "VOLUNTEER_ORGANIZING_MANAGER", scopeType: "STATEWIDE", permissionsProfile: "COORDINATOR", sortOrder: 32 },
@@ -151,7 +186,6 @@ export const ORG_CLUSTER_KEYS = [
   { key: "CLUSTER_6", displayName: "Cluster 6", sortOrder: 6 },
 ] as const;
 
-/** Top-level operating departments (excludes Candidate / Campaign Management lanes). */
 export const TOP_OPERATING_DEPARTMENT_KEYS = [
   "VOLUNTEER_AND_ORGANIZING",
   "COMMUNICATIONS",
@@ -160,5 +194,5 @@ export const TOP_OPERATING_DEPARTMENT_KEYS = [
 ] as const;
 
 export function buildOrgTemplateFingerprint(): string {
-  return `${ORG_TEMPLATE_CODE}@${ORG_TEMPLATE_VERSION}|depts:${ORG_DEPARTMENTS.length}|positions:${ORG_CORE_POSITIONS.length}|clusters:6|captains:75`;
+  return `${ORG_TEMPLATE_CODE}@${ORG_TEMPLATE_VERSION}|depts:${ORG_DEPARTMENTS.length}|positions:${ORG_CORE_POSITIONS.length}|clusters:6|captains:75|acm:1|logistics:1`;
 }

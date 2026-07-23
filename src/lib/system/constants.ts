@@ -206,7 +206,19 @@ export const IC_02C_ROLLBACK_DOC =
   "develop_notes/KCCC_IC_02C_CAMPAIGN_OPERATING_STRUCTURE_ROLLBACK.md";
 export const IC_02C_SHIP_COMMIT = "dcef32e";
 export const IC_02C_SHIP_DEPLOY_ID = "6a625cc30b28c5d10769e3fe";
-export const AUTHORITATIVE_TIP_COMMIT = "176db91";
+export const IC_02D_STATUS = "COMPLETE";
+export const IC_02D_BUILD_ID =
+  "KCCC-IC-02D-VOLUNTEER-OPERATIONS-CAMPAIGN-WORK-1.0";
+export const IC_02D_AUTHORIZATION_ADR = "ADR-108";
+export const IC_02D_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_IC_02D_AUTHORIZATION_KELLY_2026-07-23.md";
+export const IC_02D_IMPL_DOC =
+  "develop_notes/KCCC_IC_02D_VOLUNTEER_OPERATIONS.md";
+export const IC_02D_ROLLBACK_DOC =
+  "develop_notes/KCCC_IC_02D_VOLUNTEER_OPERATIONS_ROLLBACK.md";
+export const IC_02D_SHIP_COMMIT = "";
+export const IC_02D_SHIP_DEPLOY_ID = "";
+export const AUTHORITATIVE_TIP_COMMIT = "d6d266a";
 export const POSTURE_LOCK_COMMIT = "203bfe3";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
@@ -291,7 +303,7 @@ export const CC_08_TIP_COMMIT = "e1ddaa7";
 export const CC_08_TIP_DEPLOY_ID = "6a612111e81d923c5e6c58ca";
 export const CC_09_SHIP_COMMIT = "f8186be";
 export const CC_09_SHIP_DEPLOY_ID = "6a612a7cba0c57774db91b5f";
-/** IC-01…IC-02C COMPLETE (ADR-107); IC-03 not authorized. */
+/** IC-01…IC-02D COMPLETE (ADR-108); IC-03 not authorized. */
 export const NEXT_AUTHORIZED_BUILD = "IC_03_NOT_AUTHORIZED";
 export const CC_09_STATUS = "COMPLETE";
 export const CC_09_BUILD_ID =

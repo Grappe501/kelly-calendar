@@ -2128,6 +2128,7 @@ model Person {
   eventPeople  EventPerson[]
   contactMethods ContactMethod[]
   eventEncounters EventEncounter[]
+  volunteerProfiles CampaignVolunteerProfile[]
 
   @@schema("kelly_calendar")
 }
@@ -4295,6 +4296,316 @@ model CampaignCountyOrganizingAssessment {
 
   @@unique([campaignScopeKey, arkansasCountyId])
   @@index([maturity])
+  @@schema("kelly_calendar")
+}
+
+// ─── IC-02D Volunteer Operations + Campaign Work Management (ADR-108) ───
+
+enum CampaignVolunteerLifecycleStatus {
+  PROSPECT
+  INTAKE_NEEDED
+  ONBOARDING
+  READY
+  ACTIVE
+  PAUSED
+  INACTIVE
+  DO_NOT_ASSIGN
+  ENDED
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignVolunteerSkillLevel {
+  INTERESTED
+  BEGINNER
+  EXPERIENCED
+  TRAINER
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignVolunteerAssignmentStatus {
+  PROPOSED
+  INVITED
+  ASSIGNED
+  CONFIRMED
+  CHECKED_IN
+  COMPLETED
+  CANCELLED
+  DECLINED
+  NO_SHOW
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignVolunteerNoteClassification {
+  OPERATIONAL
+  RESTRICTED
+  LEADERSHIP_ONLY
+  CONSENT_PRIVACY_SENSITIVE
+
+  @@schema("kelly_calendar")
+}
+
+enum CampaignWorkSourceType {
+  MISSION_ACTIVATION_TASK
+  MISSION_ACTIVATION_VOLUNTEER_NEED
+  MISSION_STAFFING_ASSIGNMENT
+  VOLUNTEER_ASSIGNMENT
+  MISSION_TRAVEL
+  MISSION_LOGISTICS
+  MISSION_FIELD_OPS
+  FOLLOW_UP
+  COMMUNICATION_QUEUE
+  TRAINING
+  MANUAL
+
+  @@schema("kelly_calendar")
+}
+
+/// Campaign-scoped volunteer profile — intentional link to Person; never name-matched.
+model CampaignVolunteerProfile {
+  id                       String                           @id @default(cuid())
+  campaignScopeKey         String                           @default("KELLY")
+  localPersonId            String
+  preferredDisplayName     String
+  lifecycleStatus          CampaignVolunteerLifecycleStatus @default(PROSPECT)
+  arkansasCountyId         String?
+  geographicServiceNote    String?
+  remoteOk                 Boolean                          @default(true)
+  inPersonOk               Boolean                          @default(true)
+  travelWillingness        String?
+  accessibilityNotes       String?
+  leadershipInterest       Boolean                          @default(false)
+  preferredWorkTypesJson   Json                             @default("[]")
+  supervisorLabel          String?
+  lastMeaningfulActionAt   DateTime?
+  nextRecommendedAction    String?
+  archivedAt               DateTime?
+  createdByUserId          String?
+  createdAt                DateTime                         @default(now())
+  updatedAt                DateTime                         @updatedAt
+
+  localPerson Person @relation(fields: [localPersonId], references: [id])
+  interests   CampaignVolunteerInterest[]
+  skills      CampaignVolunteerSkill[]
+  availability CampaignVolunteerAvailability[]
+  trainings   CampaignVolunteerTraining[]
+  preferences CampaignVolunteerPreference[]
+  notes       CampaignVolunteerNote[]
+  statusHistory CampaignVolunteerStatusHistory[]
+  assignments CampaignVolunteerAssignment[]
+
+  @@unique([campaignScopeKey, localPersonId])
+  @@index([campaignScopeKey, lifecycleStatus])
+  @@index([arkansasCountyId])
+  @@schema("kelly_calendar")
+}
+
+model CampaignVolunteerInterest {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  profileId        String
+  interestKey      String
+  label            String
+  createdAt        DateTime @default(now())
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, interestKey])
+  @@index([campaignScopeKey, interestKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignVolunteerSkill {
+  id               String                     @id @default(cuid())
+  campaignScopeKey String                     @default("KELLY")
+  profileId        String
+  skillKey         String
+  label            String
+  level            CampaignVolunteerSkillLevel @default(INTERESTED)
+  createdAt        DateTime                   @default(now())
+  updatedAt        DateTime                   @updatedAt
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, skillKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignVolunteerAvailability {
+  id                 String    @id @default(cuid())
+  campaignScopeKey   String    @default("KELLY")
+  profileId          String
+  kind               String    @default("RECURRING")
+  weekday            Int?
+  startLocalTime     String?
+  endLocalTime       String?
+  specificDate       DateTime?
+  unavailable        Boolean   @default(false)
+  remoteOk           Boolean?
+  inPersonOk         Boolean?
+  travelRadiusMiles  Int?
+  willingToDrive     Boolean?
+  maxFrequencyNote   String?
+  reviewBy           DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@schema("kelly_calendar")
+}
+
+model CampaignVolunteerTraining {
+  id               String    @id @default(cuid())
+  campaignScopeKey String    @default("KELLY")
+  profileId        String
+  trainingKey      String
+  title            String
+  completedAt      DateTime?
+  completedByUserId String?
+  evidenceNote     String?
+  externalLink     String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, trainingKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignVolunteerPreference {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  profileId        String
+  preferenceKey    String
+  valueJson        Json     @default("{}")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, preferenceKey])
+  @@schema("kelly_calendar")
+}
+
+model CampaignVolunteerNote {
+  id               String                              @id @default(cuid())
+  campaignScopeKey String                              @default("KELLY")
+  profileId        String
+  classification   CampaignVolunteerNoteClassification @default(OPERATIONAL)
+  body             String
+  createdByUserId  String?
+  createdAt        DateTime                            @default(now())
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, classification])
+  @@schema("kelly_calendar")
+}
+
+model CampaignVolunteerStatusHistory {
+  id               String                           @id @default(cuid())
+  campaignScopeKey String                           @default("KELLY")
+  profileId        String
+  fromStatus       CampaignVolunteerLifecycleStatus?
+  toStatus         CampaignVolunteerLifecycleStatus
+  reason           String?
+  actorUserId      String?
+  createdAt        DateTime                         @default(now())
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, createdAt])
+  @@schema("kelly_calendar")
+}
+
+/// Human-reviewed volunteer assignment — distinct from Mobilize RSVP, check-in, and Mission execution.
+model CampaignVolunteerAssignment {
+  id                       String                            @id @default(cuid())
+  campaignScopeKey         String                            @default("KELLY")
+  profileId                String
+  status                   CampaignVolunteerAssignmentStatus @default(PROPOSED)
+  opportunityTitle         String
+  whyItMatters             String?
+  definitionOfDone         String?
+  missionId                String?
+  eventId                  String?
+  activationVolunteerNeedId String?
+  staffingAssignmentId     String?
+  departmentKey            String?
+  geographyNote            String?
+  remoteOrInPerson         String?
+  startsAt                 DateTime?
+  endsAt                   DateTime?
+  estimatedMinutes         Int?
+  supervisorLabel          String?
+  privacyLevel             String                            @default("INTERNAL")
+  proposedByUserId         String?
+  confirmedAt              DateTime?
+  confirmedByUserId        String?
+  checkedInAt              DateTime?
+  completedAt              DateTime?
+  cancelledAt              DateTime?
+  declineReason            String?
+  idempotencyKey           String?
+  createdAt                DateTime                          @default(now())
+  updatedAt                DateTime                          @updatedAt
+
+  profile CampaignVolunteerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignScopeKey, idempotencyKey])
+  @@index([profileId, status])
+  @@index([missionId, status])
+  @@index([activationVolunteerNeedId])
+  @@index([startsAt])
+  @@schema("kelly_calendar")
+}
+
+/// Lightweight work-index reference — not copied mutable truth from source records.
+model CampaignWorkItemIndex {
+  id                 String                 @id @default(cuid())
+  campaignScopeKey   String                 @default("KELLY")
+  sourceType         CampaignWorkSourceType
+  sourceRecordId     String
+  title              String
+  missionId          String?
+  eventId            String?
+  departmentKey      String?
+  accountablePositionKey String?
+  assigneeUserId     String?
+  geographyNote      String?
+  dueAt              DateTime?
+  status             String
+  priorityTierHint  Int?
+  privacyLevel       String                 @default("INTERNAL")
+  sourceHref         String
+  fingerprint        String
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+
+  @@unique([campaignScopeKey, sourceType, sourceRecordId])
+  @@index([campaignScopeKey, dueAt])
+  @@index([departmentKey, status])
+  @@index([assigneeUserId, status])
+  @@schema("kelly_calendar")
+}
+
+model CampaignTrainingCatalogItem {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  trainingKey      String
+  title            String
+  description      String?
+  sortOrder        Int      @default(0)
+  active           Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([campaignScopeKey, trainingKey])
   @@schema("kelly_calendar")
 }
 

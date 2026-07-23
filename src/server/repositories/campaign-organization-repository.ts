@@ -9,6 +9,7 @@ import {
   ORG_DEPARTMENTS,
   ORG_TEMPLATE_CODE,
   ORG_TEMPLATE_VERSION,
+  ORG_V11_POSITIONS,
   TOP_OPERATING_DEPARTMENT_KEYS,
   buildOrgTemplateFingerprint,
 } from "@/lib/organization/template";
@@ -48,13 +49,15 @@ export async function countOrgScaffold() {
 }
 
 /**
- * Explicit idempotent install. Creates vacant structure only.
+ * Explicit idempotent install / upgrade to current template version.
+ * Creates vacant structure only — never people or assignments.
  */
 export async function installOrganizationTemplate(actorUserId?: string | null) {
   const existing = await findTemplateInstall();
   if (existing) {
     return {
       installed: false,
+      upgraded: false,
       idempotentHit: true,
       templateCode: ORG_TEMPLATE_CODE,
       templateVersion: ORG_TEMPLATE_VERSION,
@@ -69,6 +72,13 @@ export async function installOrganizationTemplate(actorUserId?: string | null) {
         people: 0,
       },
     };
+  }
+
+  const priorScaffold = await prisma.campaignOrgDepartment.count({
+    where: { campaignScopeKey: ORG_CAMPAIGN_SCOPE },
+  });
+  if (priorScaffold > 0) {
+    return upgradeOrganizationTemplate(actorUserId);
   }
 
   const counties = await prisma.arkansasCounty.findMany({
@@ -120,7 +130,6 @@ export async function installOrganizationTemplate(actorUserId?: string | null) {
       }
     }
 
-    const clusterMap = new Map<string, string>();
     for (const c of ORG_CLUSTER_KEYS) {
       const row = await tx.campaignOrgCluster.create({
         data: {
@@ -134,7 +143,6 @@ export async function installOrganizationTemplate(actorUserId?: string | null) {
           sortOrder: c.sortOrder,
         },
       });
-      clusterMap.set(c.key, row.id);
       await tx.campaignOrgPosition.create({
         data: {
           campaignScopeKey: ORG_CAMPAIGN_SCOPE,
@@ -229,6 +237,7 @@ export async function installOrganizationTemplate(actorUserId?: string | null) {
 
   return {
     installed: true,
+    upgraded: false,
     idempotentHit: false,
     templateCode: ORG_TEMPLATE_CODE,
     templateVersion: ORG_TEMPLATE_VERSION,
@@ -239,6 +248,182 @@ export async function installOrganizationTemplate(actorUserId?: string | null) {
       positions: result.corePositions + result.clusterManagers + result.countyCaptains,
       clusters: 6,
       countyCaptains: result.countyCaptains,
+      assignments: 0,
+      people: 0,
+    },
+  };
+}
+
+/**
+ * Upgrade existing 1.0.0 scaffold to current version — upserts new seats only.
+ */
+export async function upgradeOrganizationTemplate(actorUserId?: string | null) {
+  const existing = await findTemplateInstall();
+  if (existing) {
+    return {
+      installed: false,
+      upgraded: false,
+      idempotentHit: true,
+      templateCode: ORG_TEMPLATE_CODE,
+      templateVersion: ORG_TEMPLATE_VERSION,
+      counts: await countOrgScaffold(),
+      created: {
+        departments: 0,
+        functions: 0,
+        positions: 0,
+        clusters: 0,
+        countyCaptains: 0,
+        assignments: 0,
+        people: 0,
+      },
+    };
+  }
+
+  const fingerprint = createHash("sha256")
+    .update(buildOrgTemplateFingerprint(), "utf8")
+    .digest("hex")
+    .slice(0, 32);
+
+  let positionsCreated = 0;
+  let functionsCreated = 0;
+
+  await prisma.$transaction(
+    async (tx) => {
+      const cmDept = await tx.campaignOrgDepartment.findUnique({
+        where: {
+          campaignScopeKey_key: {
+            campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+            key: "CAMPAIGN_MANAGEMENT",
+          },
+        },
+      });
+      if (!cmDept) {
+        throw new Error("Campaign Management department missing — install 1.0.0 first.");
+      }
+
+      const logisticsFn = await tx.campaignOrgFunction.upsert({
+        where: {
+          campaignScopeKey_key: {
+            campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+            key: "CAMPAIGN_LOGISTICS",
+          },
+        },
+        create: {
+          campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+          departmentId: cmDept.id,
+          key: "CAMPAIGN_LOGISTICS",
+          displayName: "Campaign Logistics",
+          purpose:
+            "Campaign-wide travel, lodging, materials, movement — reports to Campaign Manager.",
+          sortOrder: 20,
+          templateVersion: ORG_TEMPLATE_VERSION,
+        },
+        update: {
+          templateVersion: ORG_TEMPLATE_VERSION,
+          displayName: "Campaign Logistics",
+        },
+      });
+      if (logisticsFn.createdAt.getTime() === logisticsFn.updatedAt.getTime()) {
+        functionsCreated += 1;
+      }
+
+      const officeFn = await tx.campaignOrgFunction.findUnique({
+        where: {
+          campaignScopeKey_key: {
+            campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+            key: "CAMPAIGN_MANAGER_OFFICE",
+          },
+        },
+      });
+
+      const fnMap = new Map<string, string>([
+        ["CAMPAIGN_LOGISTICS", logisticsFn.id],
+        ...(officeFn ? [["CAMPAIGN_MANAGER_OFFICE", officeFn.id] as const] : []),
+      ]);
+
+      for (const p of ORG_V11_POSITIONS) {
+        const found = await tx.campaignOrgPosition.findUnique({
+          where: {
+            campaignScopeKey_key: {
+              campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+              key: p.key,
+            },
+          },
+        });
+        if (found) {
+          await tx.campaignOrgPosition.update({
+            where: { id: found.id },
+            data: {
+              templateVersion: ORG_TEMPLATE_VERSION,
+              reportsToPositionKey: p.reportsToPositionKey ?? null,
+              permissionsProfile: p.permissionsProfile,
+            },
+          });
+          continue;
+        }
+        await tx.campaignOrgPosition.create({
+          data: {
+            campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+            key: p.key,
+            title: p.title,
+            departmentId: cmDept.id,
+            functionId: p.functionKey ? fnMap.get(p.functionKey) ?? null : null,
+            reportsToPositionKey: p.reportsToPositionKey ?? null,
+            scopeType: p.scopeType,
+            permissionsProfile: p.permissionsProfile,
+            privacyLevel: p.privacyLevel ?? "INTERNAL",
+            status: "VACANT",
+            templateVersion: ORG_TEMPLATE_VERSION,
+            sortOrder: p.sortOrder,
+          },
+        });
+        positionsCreated += 1;
+      }
+
+      await tx.campaignOrgTemplateInstall.create({
+        data: {
+          campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+          templateCode: ORG_TEMPLATE_CODE,
+          templateVersion: ORG_TEMPLATE_VERSION,
+          installedByUserId: actorUserId ?? null,
+          fingerprint,
+        },
+      });
+
+      await tx.campaignOrgAuditEvent.create({
+        data: {
+          campaignScopeKey: ORG_CAMPAIGN_SCOPE,
+          action: "UPGRADE_TEMPLATE",
+          actorUserId: actorUserId ?? null,
+          detailJson: {
+            templateCode: ORG_TEMPLATE_CODE,
+            templateVersion: ORG_TEMPLATE_VERSION,
+            positionsCreated,
+            functionsCreated,
+            assignments: 0,
+            people: 0,
+            assistantCampaignManager: "VACANT",
+            campaignLogisticsReportsTo: "CAMPAIGN_MANAGER",
+          },
+        },
+      });
+    },
+    { timeout: 60_000 },
+  );
+
+  return {
+    installed: true,
+    upgraded: true,
+    idempotentHit: false,
+    templateCode: ORG_TEMPLATE_CODE,
+    templateVersion: ORG_TEMPLATE_VERSION,
+    counts: await countOrgScaffold(),
+    created: {
+      departments: 0,
+      functions: functionsCreated,
+      positions: positionsCreated,
+      clusters: 0,
+      countyCaptains: 0,
       assignments: 0,
       people: 0,
     },

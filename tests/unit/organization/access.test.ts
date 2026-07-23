@@ -45,7 +45,7 @@ describe("IC-02C organization access", () => {
 
   it("template has four top operating departments", () => {
     expect(TOP_OPERATING_DEPARTMENT_KEYS).toHaveLength(4);
-    expect(ORG_TEMPLATE_VERSION).toBe("1.0.0");
+    expect(ORG_TEMPLATE_VERSION).toBe("1.1.0");
     expect(ORG_DEPARTMENTS.map((d) => d.key)).toEqual(
       expect.arrayContaining([...TOP_OPERATING_DEPARTMENT_KEYS]),
     );

@@ -136,6 +136,8 @@
     "operations:activation:validate:db": "node scripts/run-with-h-drive-env.cjs node scripts/validate-operations-activation-db.mjs",
     "organization:structure:validate": "node scripts/validate-organization-structure.mjs",
     "organization:structure:validate:db": "node scripts/run-with-h-drive-env.cjs node scripts/validate-organization-structure-db.mjs",
+    "volunteers:operations:validate": "node scripts/validate-volunteers-operations.mjs",
+    "volunteers:operations:validate:db": "node scripts/run-with-h-drive-env.cjs node scripts/validate-volunteers-operations-db.mjs",
     "import:preview": "node scripts/preview-google-calendar-import.mjs",
     "import:preview:private-ical": "node scripts/run-with-h-drive-env.cjs node scripts/preview-private-ical-import.mjs",
     "import:staging:validate": "node scripts/validate-import-staging.mjs",

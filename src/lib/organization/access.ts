@@ -1,14 +1,16 @@
 /**
- * IC-02C hierarchy-derived access — server-side contracts.
+ * IC-02C/D hierarchy-derived access — server-side contracts.
  * Titles alone never grant access; ACTIVE/INTERIM assignments do.
  */
 
 export type OrgBoardKey =
   | "campaign_manager"
+  | "assistant_campaign_manager"
   | "volunteer_organizing"
   | "communications"
   | "finance"
   | "operations_data"
+  | "campaign_logistics"
   | "cluster"
   | "county"
   | "volunteer"
@@ -18,16 +20,28 @@ const PROFILE_BOARDS: Record<string, OrgBoardKey[]> = {
   CANDIDATE: ["campaign_manager", "organization_directory"],
   CAMPAIGN_MANAGER: [
     "campaign_manager",
+    "assistant_campaign_manager",
     "volunteer_organizing",
     "communications",
     "finance",
     "operations_data",
+    "campaign_logistics",
+    "organization_directory",
+  ],
+  ASSISTANT_CAMPAIGN_MANAGER: [
+    "assistant_campaign_manager",
+    "campaign_manager",
+    "volunteer_organizing",
+    "communications",
+    "operations_data",
+    "campaign_logistics",
     "organization_directory",
   ],
   DEPARTMENT_MANAGER: ["organization_directory"],
   COORDINATOR: ["organization_directory"],
   FINANCE_MANAGER: ["finance", "organization_directory"],
   FINANCE_COORDINATOR: ["finance"],
+  LOGISTICS_BOARD: ["campaign_logistics", "organization_directory"],
   CLUSTER_MANAGER: ["cluster", "organization_directory"],
   COUNTY_CAPTAIN: ["county", "organization_directory"],
   VOLUNTEER: ["volunteer"],
@@ -38,6 +52,7 @@ const DEPT_MANAGER_BOARD: Record<string, OrgBoardKey> = {
   COMMUNICATIONS: "communications",
   FINANCE: "finance",
   OPERATIONS_AND_DATA: "operations_data",
+  CAMPAIGN_MANAGEMENT: "campaign_manager",
 };
 
 export function boardsForPermissionsProfile(
@@ -68,6 +83,11 @@ export function financeBoardRequiresRestrictedProfile(profile: string): boolean 
     profile === "CAMPAIGN_MANAGER" ||
     profile === "CANDIDATE"
   );
+}
+
+/** ACM may coordinate ordinary boards but not see restricted finance detail. */
+export function assistantMaySeeFinanceRestrictedDetail(profile: string): boolean {
+  return financeBoardRequiresRestrictedProfile(profile);
 }
 
 export const COUNTY_MATURITY_STAGES = [
