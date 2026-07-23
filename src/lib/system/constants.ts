@@ -216,9 +216,9 @@ export const IC_02D_IMPL_DOC =
   "develop_notes/KCCC_IC_02D_VOLUNTEER_OPERATIONS.md";
 export const IC_02D_ROLLBACK_DOC =
   "develop_notes/KCCC_IC_02D_VOLUNTEER_OPERATIONS_ROLLBACK.md";
-export const IC_02D_SHIP_COMMIT = "";
-export const IC_02D_SHIP_DEPLOY_ID = "";
-export const AUTHORITATIVE_TIP_COMMIT = "d6d266a";
+export const IC_02D_SHIP_COMMIT = "128f879";
+export const IC_02D_SHIP_DEPLOY_ID = "6a62658ef8507e23ed7cfdc2";
+export const AUTHORITATIVE_TIP_COMMIT = "128f879";
 export const POSTURE_LOCK_COMMIT = "203bfe3";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
 export const STEP_12_AVAILABILITY_STATUS = "COMPLETE_CC05";
