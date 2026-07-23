@@ -6,6 +6,9 @@ Template: KCCC_CAMPAIGN_OPERATING_STRUCTURE @ 1.0.0
 Migration: 20260723170000_ic02c_campaign_operating_structure
 Validator: npm run organization:structure:validate
 Baseline: ce04800
+Feature commit: dcef32e
+Production deploy: 6a625cc30b28c5d10769e3fe
+Production URL: https://kelly-calendar.netlify.app
 ```
 
 ## Decisive zeros
