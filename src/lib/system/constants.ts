@@ -164,9 +164,9 @@ export const FURTHER_ARCHITECTURE_DOCTRINE_STATUS =
 export const SCHEDULE_MUTATION_GOVERNING_RULE =
   "DETECT_EXPLAIN_RECOMMEND_SIMULATE_NEVER_AUTO_MUTATE";
 /**
- * CC-07…CC-10 complete under standing execution ADR-094.
+ * CC-07…CC-11 complete under standing execution ADR-094.
  * CC-10 ICS export & subscription privacy is COMPLETE (ADR-098).
- * CC-11 Calendar Health is IN_PROGRESS (ADR-099) — observe/explain only.
+ * CC-11 Calendar Health is COMPLETE (ADR-099) — observe/explain only.
  * CC-12 remains NOT_AUTHORIZED.
  * Synthesis remains EMPTY (ADR-091).
  * Phase Two IC-01…IC-12 is VISION LOCKED (ADR-093) — design during CC-07…CC-12

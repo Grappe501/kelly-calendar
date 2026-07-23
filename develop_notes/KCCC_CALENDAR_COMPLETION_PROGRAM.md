@@ -41,7 +41,7 @@ CC-10 migration ............. 20260722180000_cc10_ics_export_subscription
 CC-10 ship evidence ......... commit 0bbf751 · deploy 6a619fa32d949535124cbabc
 CC-11 authorization ......... develop_notes/KCCC_CC_11_AUTHORIZATION_KELLY_2026-07-23.md (ADR-099)
 CC-11 migration ............. 20260723100000_cc11_calendar_health
-CC-11 ship evidence ......... (pending Phase G)
+CC-11 ship evidence ......... commit d570dc6 · deploy 6a61aa30fc4c865f2bd3c628
 ```
 
 This program finishes the **calendar product** (CC-01…CC-12) before Phase Two implementation. CC-10 is **COMPLETE** (ADR-098). CC-11 is **COMPLETE** (ADR-099) under standing execution ADR-094 — observe/explain only. It does **not** authorize CC-12 or IC-01…IC-12 before CC-12 plus the usability/AI-quality gate. Usability Synthesis remains **EMPTY**.

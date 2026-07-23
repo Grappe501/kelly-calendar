@@ -1,7 +1,7 @@
 # CC-12 design handoff — Mobile Hardening, Print Day Sheets & Accessibility
 
 **Status:** Design handoff only — **NOT AUTHORIZED** for implementation  
-**Predecessor:** CC-11 IN PROGRESS (ADR-099) — must complete before CC-12 auth  
+**Predecessor:** CC-11 COMPLETE (ADR-099) — ship `d570dc6` / deploy `6a61aa30fc4c865f2bd3c628`  
 **Authority required:** Separate Kelly execution script
 
 ## Intent

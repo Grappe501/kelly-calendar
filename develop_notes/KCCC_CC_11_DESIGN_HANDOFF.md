@@ -1,6 +1,6 @@
 # CC-11 design handoff — Calendar Health Dashboard and Forensic Automation
 
-**Status:** SUPERSEDED — implementation **AUTHORIZED** and **IN PROGRESS** under ADR-099  
+**Status:** SUPERSEDED — implementation **COMPLETE** under ADR-099 (ship `d570dc6` / deploy `6a61aa30fc4c865f2bd3c628`)  
 **Authorization:** `develop_notes/KCCC_CC_11_AUTHORIZATION_KELLY_2026-07-23.md`  
 **Impl:** `develop_notes/KCCC_CC_11_CALENDAR_HEALTH_FORENSIC_AUTOMATION.md`  
 **Predecessor:** CC-10 COMPLETE (ADR-098)  

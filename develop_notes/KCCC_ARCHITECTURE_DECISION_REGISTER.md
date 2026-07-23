@@ -104,7 +104,7 @@ Kelly **ADR-099** authorizes **CC-11 only** under standing execution **ADR-094**
 
 ## CC-10 authorization
 
-Kelly **ADR-098** authorizes **CC-10 only** under standing execution **ADR-094**. Private signed feeds; no public anonymous ICS; no exact residential addresses in export. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-11** is authorized separately under ADR-099 (IN PROGRESS).
+Kelly **ADR-098** authorizes **CC-10 only** under standing execution **ADR-094**. Private signed feeds; no public anonymous ICS; no exact residential addresses in export. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-11** is COMPLETE under ADR-099.
 
 ## CC-07 authorization
 
@@ -121,4 +121,4 @@ CC-07…CC-12 remain the primary engineering sequence. Phase Two may be **design
 
 ## CC-05 / CC-06 / CC-10 / CC-11 baseline & next engineering
 
-CC-05…CC-10 are **COMPLETE**. CC-11 is **IN PROGRESS** (ADR-099). CC-12 remains design handoff only (NOT AUTHORIZED). Phase Two is vision-locked only (ADR-093).
+CC-05…CC-11 are **COMPLETE**. CC-12 remains design handoff only (NOT AUTHORIZED). Phase Two is vision-locked only (ADR-093).

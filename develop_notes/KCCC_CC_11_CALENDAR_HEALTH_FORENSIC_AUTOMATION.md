@@ -64,4 +64,6 @@ CC-02 integrity console remains the disposition surface for integrity findings. 
 | Migration | `20260723100000_cc11_calendar_health` |
 | Authorization | ADR-099 |
 | Status | COMPLETE |
+| Feature commit | `d570dc6` |
+| Netlify deploy | `6a61aa30fc4c865f2bd3c628` |
 | Hard Event/Mission mutation / feed rotate / auto-resolve | **0** |

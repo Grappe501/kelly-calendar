@@ -54,7 +54,7 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Google Calendar scaffolding | PARTIAL | OAuth + IMPORT_ONLY sync; no push | Correct freeze for now | Step 23 |
 | Calendar import/export | COMPLETE (CC-10) | Import strong; ICS one-time export + private signed subscriptions | ADR-098 · migration `20260722180000_cc10_ics_export_subscription` | N/A |
 | Calendar integrity console | COMPLETE (CC-02) | `/system/calendar/integrity*`, detectors `CC-02-DETECTOR-1.0`, scan/disposition models | Findings may exist in data; no auto repair | Dispositions stay on integrity; CC-11 observes |
-| Calendar health dashboard | IN PROGRESS (CC-11) | `/system/calendar/health*`, `CC-11-HEALTH-1.0`, migration `20260723100000_cc11_calendar_health` | Observe/explain only (ADR-099); no auto repair | Finish ship / validate |
+| Calendar health dashboard | COMPLETE (CC-11) | `/system/calendar/health*`, `CC-11-HEALTH-1.0`, migration `20260723100000_cc11_calendar_health` | Observe/explain only (ADR-099); no auto repair | CC-12 handoff |
 | Audit history | PARTIAL | `AuditLog` / `DataAccessLog` | No full operator browser | Step 8/24 |
 | Mobile usability | PARTIAL | Bottom nav + mobile shell | Not certified | Step 24 |
 | Communications OS (D20–D26) | COMPLETE (subsystem) / FROZEN | Deliverables + hard production blocks | Out of sequence | **No further work** until calendar Steps 14+ need it |
