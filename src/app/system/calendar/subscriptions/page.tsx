@@ -30,6 +30,9 @@ export default async function CalendarSubscriptionsPage() {
           </Link>{" "}
           <Link className="chip chip-link" href="/system/calendar/health">
             Health
+          </Link>{" "}
+          <Link className="chip chip-link" href="/system/calendar/print/preview">
+            Print
           </Link>
         </p>
       </header>

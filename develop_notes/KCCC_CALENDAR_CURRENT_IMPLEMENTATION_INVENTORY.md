@@ -32,8 +32,8 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Event editing | PARTIAL | `/api/events/[eventId]` mutations | Same | Step 11 |
 | Event cancellation | PARTIAL | Archive/restore paths (soft) | Product cancel UX incomplete | Step 11 cancel/reschedule flows |
 | Recurring events | COMPLETE (CC-04) | Series + exceptions + materialized Events; `/calendar/series/[id]` | Horizon extension is explicit | CC-05 gated |
-| Day view | COMPLETE (CC-08) | `/calendar?view=day` time grid + bulk select | Grid-first ADR-096; CC-09 multi-select | CC-12 |
-| Week view | COMPLETE (CC-08) | `/calendar?view=week` + bulk select | Same | CC-12 |
+| Day view | COMPLETE (CC-08) | `/calendar?view=day` time grid + bulk select + agenda fallback | Grid-first ADR-096; CC-09 multi-select; CC-12 mobile | Human usability gate |
+| Week view | COMPLETE (CC-08) | `/calendar?view=week` + bulk select + mobile day selector | Same | Human usability gate |
 | Bulk operations | COMPLETE (CC-09) | `/system/calendar/bulk` | Preview/confirm/recovery; max 50 | N/A |
 | Search/filters/saved views | COMPLETE (CC-07) | query-schema v1 · `a630c8c` · deploy `6a61167b80d9714ef4541631` | N/A | N/A |
 
@@ -54,9 +54,10 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Google Calendar scaffolding | PARTIAL | OAuth + IMPORT_ONLY sync; no push | Correct freeze for now | Step 23 |
 | Calendar import/export | COMPLETE (CC-10) | Import strong; ICS one-time export + private signed subscriptions | ADR-098 · migration `20260722180000_cc10_ics_export_subscription` | N/A |
 | Calendar integrity console | COMPLETE (CC-02) | `/system/calendar/integrity*`, detectors `CC-02-DETECTOR-1.0`, scan/disposition models | Findings may exist in data; no auto repair | Dispositions stay on integrity; CC-11 observes |
-| Calendar health dashboard | COMPLETE (CC-11) | `/system/calendar/health*`, `CC-11-HEALTH-1.0`, migration `20260723100000_cc11_calendar_health` | Observe/explain only (ADR-099); no auto repair | CC-12 handoff |
+| Calendar health dashboard | COMPLETE (CC-11) | `/system/calendar/health*`, `CC-11-HEALTH-1.0`, migration `20260723100000_cc11_calendar_health` | Observe/explain only (ADR-099); no auto repair | N/A |
+| Mobile / print / a11y | IN_PROGRESS (CC-12) | `/system/calendar/print/**`, ADR-100, no CalendarPrint* migration | Presentation only; human gate pending | Flip COMPLETE at ship |
 | Audit history | PARTIAL | `AuditLog` / `DataAccessLog` | No full operator browser | Step 8/24 |
-| Mobile usability | PARTIAL | Bottom nav + mobile shell | Not certified | Step 24 |
+| Mobile usability | IN_PROGRESS (CC-12) | Touch targets, week day selector, agenda fallback, reduced-motion | Human usability gate pending | COMPLETE flip at ship |
 | Communications OS (D20–D26) | COMPLETE (subsystem) / FROZEN | Deliverables + hard production blocks | Out of sequence | **No further work** until calendar Steps 14+ need it |
 | LG-1 live test | BLOCKED / PAUSED | Phase B correctly blocked; credentials not installed | Recovery freeze | Do not configure |
 

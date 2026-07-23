@@ -31,6 +31,15 @@ import type { SafeEventProjection } from "@/server/services/event-visibility-ser
 
 const TIMEZONE = CAMPAIGN_CALENDAR_TIMEZONE;
 
+function monthSampleTimeLabel(event: SafeEventProjection): string {
+  if (event.allDay) return "All day";
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: TIMEZONE,
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(event.startsAt));
+}
+
 export type ActivityDensity = "none" | "light" | "moderate" | "heavy";
 
 export type MonthDayCell = {
@@ -40,7 +49,7 @@ export type MonthDayCell = {
   isToday: boolean;
   eventCount: number;
   density: ActivityDensity;
-  sampleEvents: Array<{ eventId: string; title: string }>;
+  sampleEvents: Array<{ eventId: string; title: string; timeLabel: string }>;
   weekHref: string;
   dayHref: string;
 };
@@ -298,6 +307,7 @@ export async function getCalendarMonthViewData(
       sampleEvents: events.slice(0, 2).map((e) => ({
         eventId: e.eventId,
         title: e.title,
+        timeLabel: monthSampleTimeLabel(e),
       })),
       weekHref: `/calendar?view=week&date=${startOfWeekDateKey(dateKey)}`,
       dayHref: `/calendar?view=day&date=${dateKey}`,

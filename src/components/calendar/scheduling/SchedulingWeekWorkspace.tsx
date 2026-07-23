@@ -24,6 +24,7 @@ import {
   useOptionalBulkSelection,
 } from "@/components/calendar/bulk/BulkSelectionProvider";
 import { BulkSelectionBar } from "@/components/calendar/bulk/BulkSelectionBar";
+import { MobileAgendaFallbackLink } from "@/components/calendar/MobileAgendaFallbackLink";
 
 type Props = {
   dateKey: string;
@@ -150,19 +151,34 @@ function SchedulingWeekWorkspaceInner({
       />
       <BulkSelectionBar />
 
-      <div className="sched-toolbar">
-        <Link className="chip chip-link" href={`/add/quick?date=${dateKey}`}>
+      <div className="sched-toolbar" aria-label="Week schedule tools">
+        <Link className="chip chip-link touch-target" href={`/add/quick?date=${dateKey}`}>
           Add Event
         </Link>
-        <Link className="chip chip-link" href={`/calendar?view=agenda&date=${dateKey}`}>
-          Agenda fallback
-        </Link>
+        <MobileAgendaFallbackLink dateKey={dateKey} />
         {selectedEventId && bulk ? (
-          <button type="button" className="chip" onClick={() => bulk.toggle(selectedEventId)}>
+          <button type="button" className="chip touch-target" onClick={() => bulk.toggle(selectedEventId)}>
             {bulk.isSelected(selectedEventId) ? "Deselect Event" : "Select for bulk"}
           </button>
         ) : null}
       </div>
+
+      <nav
+        className="mobile-week-day-selector"
+        aria-label="Week day selector"
+      >
+        {layout.weekDateKeys.map((key) => (
+          <Link
+            key={key}
+            className={`chip chip-link touch-target${key === todayKey ? " is-today" : ""}${key === dateKey ? " is-active" : ""}`}
+            href={`/calendar?view=day&date=${key}`}
+            aria-label={`Open day ${key}`}
+            aria-current={key === dateKey ? "date" : undefined}
+          >
+            {key.slice(5)}
+          </Link>
+        ))}
+      </nav>
 
       <div className="sched-workspace-body">
         <div className="sched-week-main">
@@ -183,6 +199,7 @@ function SchedulingWeekWorkspaceInner({
                     gridColumn: `${row.columnStart + 1} / span ${row.columnSpan}`,
                   }}
                   onClick={() => setSelectedEventId(row.id)}
+                  aria-label={row.ariaLabel ?? row.title}
                 >
                   {row.title}
                 </button>
@@ -194,7 +211,12 @@ function SchedulingWeekWorkspaceInner({
             {layout.days.map((day) => (
               <div key={day.dateKey} className="sched-week-col">
                 <h2 className={day.dateKey === todayKey ? "is-today" : undefined}>
-                  <Link href={`/calendar?view=day&date=${day.dateKey}`}>{day.dateKey}</Link>
+                  <Link
+                    href={`/calendar?view=day&date=${day.dateKey}`}
+                    aria-label={`Open day schedule for ${day.dateKey}`}
+                  >
+                    {day.dateKey}
+                  </Link>
                   <span className="muted"> · {day.timed.length + day.allDay.length}</span>
                 </h2>
                 <DayTimeGrid

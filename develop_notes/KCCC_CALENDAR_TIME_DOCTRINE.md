@@ -79,6 +79,7 @@ Applied to Today, Day, Week, Month, Agenda, brief, command summary.
 - **CC-04** owns recurrence exceptions / RRULE editing — **COMPLETE** (`KCCC_CALENDAR_RECURRENCE_DOCTRINE.md`)
 - **CC-05/06** own availability / conflict engine
 - **CC-10** ICS export/subscription consumes CC-03 timing **read-only** (exclusive all-day ends, overnight timed, TZID floating) — never mutates Event times
+- **CC-12** print projections consume the same campaign-local day membership and Chicago timezone labels **read-only** — never invent times or street addresses for sheets
 - Mission: Event remains schedule SoR; no Mission create/lifecycle mutation from time edits alone
 
 ## Validation

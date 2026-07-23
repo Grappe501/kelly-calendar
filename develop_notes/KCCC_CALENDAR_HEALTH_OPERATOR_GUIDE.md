@@ -36,3 +36,7 @@ Alerts never merge, delete, cancel, or edit Events.
 - Cancel stuck bulk operations or recover them
 - Mutate Missions
 - Replace the CC-02 integrity console (use integrity for dispositions)
+
+## Print (CC-12)
+
+Health observes schedule quality; it does not print for you. Use `/system/calendar/print/preview` (also linked from the health header) for operator day sheets. Print never repairs Events and never rotates ICS feeds — see `KCCC_CALENDAR_PRINT_OPERATOR_GUIDE.md`.

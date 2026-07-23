@@ -77,7 +77,10 @@ export function MonthView({ data, focusEventId = null }: Props) {
                   focusEventId && h.missionId === focusEventId ? "true" : undefined
                 }
               >
-                <Link href={`/events/${h.missionId}`}>
+                <Link
+                  href={`/events/${h.missionId}`}
+                  aria-label={`${h.kind} — ${h.title}, ${h.whenLabel}`}
+                >
                   <strong>{h.kind}</strong> — {h.title}
                 </Link>
                 <span className="muted"> · {h.whenLabel}</span>
@@ -110,10 +113,10 @@ export function MonthView({ data, focusEventId = null }: Props) {
                 .join(" ")}
             >
               <header className="month-day-cell-header">
-                <Link href={cell.dayHref} className="month-day-number">
+                <Link href={cell.dayHref} className="month-day-number" aria-label={`Open day ${cell.dateKey}`}>
                   {cell.dayNumber}
                 </Link>
-                <Link href={cell.weekHref} className="month-week-link" title="Open week">
+                <Link href={cell.weekHref} className="month-week-link" aria-label={`Open week containing ${cell.dateKey}`} title="Open week">
                   W
                 </Link>
               </header>
@@ -125,7 +128,12 @@ export function MonthView({ data, focusEventId = null }: Props) {
                   <ul className="month-day-samples">
                     {cell.sampleEvents.map((sample) => (
                       <li key={sample.eventId}>
-                        <Link href={`/events/${sample.eventId}`}>{sample.title}</Link>
+                        <Link
+                          href={`/events/${sample.eventId}`}
+                          aria-label={`${sample.title}, ${sample.timeLabel}`}
+                        >
+                          {sample.title}
+                        </Link>
                       </li>
                     ))}
                   </ul>

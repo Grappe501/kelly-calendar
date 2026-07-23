@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { CalendarPrintLink } from "@/components/calendar/CalendarPrintLink";
 
 const VIEWS = [
   { id: "today", label: "Today", path: (dateKey: string) => `/`, dateParam: true },
@@ -54,9 +55,18 @@ type Props = {
 
 export function CalendarViewSwitcher({ active, dateKey }: Props) {
   const searchParams = useSearchParams();
+  const printView =
+    active === "week" ? "week" : active === "agenda" ? "agenda" : "day";
 
   return (
-    <nav className="view-chips calendar-view-switcher" aria-label="Calendar views">
+    <nav
+      className="view-chips calendar-view-switcher"
+      role="navigation"
+      aria-label="Calendar views"
+    >
+      <span id="calendar-current-date" className="sr-only" aria-live="polite">
+        Current calendar date {dateKey}
+      </span>
       {VIEWS.map((view) => {
         const params = new URLSearchParams();
         params.set("date", dateKey);
@@ -74,13 +84,14 @@ export function CalendarViewSwitcher({ active, dateKey }: Props) {
           <Link
             key={view.id}
             href={href}
-            className={`chip chip-link${isActive ? " chip-link-active" : ""}`}
+            className={`chip chip-link touch-target${isActive ? " chip-link-active" : ""}`}
             aria-current={isActive ? "page" : undefined}
           >
             {view.label}
           </Link>
         );
       })}
+      <CalendarPrintLink dateKey={dateKey} view={printView} />
     </nav>
   );
 }

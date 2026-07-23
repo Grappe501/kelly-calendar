@@ -104,3 +104,7 @@ Out of scope for V2.1: Google sync, Routes, full War Room, full relationship gra
 - No Google requirement
 - Phone-first Execute / Debrief
 - Reuse existing Mission Card / day-action surfaces where they already fit
+
+## Calendar print / mobile (CC-12)
+
+Mission dashboards remain the action surface; printable calendar day sheets are a separate operator projection of Events (not Mission mutation). Mobile calendar hardening (agenda fallback, week day selector, touch targets) supports phone-first ops without changing Event→Mission projection rules — see `KCCC_CALENDAR_PRINT_OPERATOR_GUIDE.md` and `KCCC_CALENDAR_MOBILE_USABILITY_DOCTRINE.md`.

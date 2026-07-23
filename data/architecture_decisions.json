@@ -628,7 +628,15 @@
       "status": "accepted",
       "date": "2026-07-23",
       "decision": "Kelly explicitly authorizes Calendar Completion CC-11 Calendar Health Dashboard & Forensic Automation (bounded health runs, findings/alerts/checkpoints, operator dashboard, secret-authenticated scheduled ingress, redacted export). Evidence: develop_notes/KCCC_CC_11_AUTHORIZATION_KELLY_2026-07-23.md. Migration 20260723100000_cc11_calendar_health. Standing execution under ADR-094. Observe/explain only. Usability Synthesis remains incomplete.",
-      "boundary": "Must not auto-repair/merge/delete Events or Missions, write automaticallyResolved on conflicts, rotate/revoke ICS feeds, implement CC-12 mobile/print/a11y, or Phase Two IC features. CC-10 remains COMPLETE. CC-02 integrity dispositions remain operator-owned."
+      "boundary": "Must not auto-repair/merge/delete Events or Missions, write automaticallyResolved on conflicts, rotate/revoke ICS feeds, implement Phase Two IC features. CC-10 remains COMPLETE. CC-02 integrity dispositions remain operator-owned. CC-12 authorized separately under ADR-100."
+    },
+    {
+      "id": "ADR-100",
+      "title": "Kelly Authorization of CC-12 Mobile Hardening, Print Day Sheets and Accessibility",
+      "status": "accepted",
+      "date": "2026-07-23",
+      "decision": "Kelly explicitly authorizes Calendar Completion CC-12 Mobile Hardening, Print Day Sheets & Accessibility (mobile-safe layouts, print projections with privacy profiles, accessibility hardening, operator print routes). Evidence: develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md. No CalendarPrint* migration. Standing execution under ADR-094. Presentation/usability only. After technical COMPLETE, human usability gate remains PENDING before Phase Two IC authorization. Usability Synthesis remains incomplete.",
+      "boundary": "Must not migrate CalendarPrint* models, mutate Events/Missions from print/mobile chrome, reopen CC-11 auto-repair or ICS privacy defaults, add push/gcm_sender_id, expose print routes on public-paths, or implement Phase Two IC-01…IC-12. CC-11 remains COMPLETE."
     }
   ]
 }

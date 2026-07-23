@@ -167,10 +167,12 @@ export const SCHEDULE_MUTATION_GOVERNING_RULE =
  * CC-07…CC-11 complete under standing execution ADR-094.
  * CC-10 ICS export & subscription privacy is COMPLETE (ADR-098).
  * CC-11 Calendar Health is COMPLETE (ADR-099) — observe/explain only.
- * CC-12 remains NOT_AUTHORIZED.
+ * CC-12 IN_PROGRESS — Mobile Hardening, Print Day Sheets & Accessibility
+ * (ADR-100 via standing ADR-094). Presentation/usability only; no Event mutation;
+ * no Phase Two IC implementation in this build.
  * Synthesis remains EMPTY (ADR-091).
  * Phase Two IC-01…IC-12 is VISION LOCKED (ADR-093) — design during CC-07…CC-12
- * is allowed; implementation waits until after CC-12.
+ * is allowed; implementation waits until after CC-12 + usability/AI gate.
  */
 export const CC_08_STATUS = "COMPLETE";
 export const CC_08_BUILD_ID =
@@ -196,7 +198,7 @@ export const CC_08_TIP_COMMIT = "e1ddaa7";
 export const CC_08_TIP_DEPLOY_ID = "6a612111e81d923c5e6c58ca";
 export const CC_09_SHIP_COMMIT = "f8186be";
 export const CC_09_SHIP_DEPLOY_ID = "6a612a7cba0c57774db91b5f";
-export const NEXT_AUTHORIZED_BUILD = "CC_12_NOT_AUTHORIZED";
+export const NEXT_AUTHORIZED_BUILD = "POST_CC12_HUMAN_USABILITY_GATE";
 export const CC_09_STATUS = "COMPLETE";
 export const CC_09_BUILD_ID =
   "KCCC-CC-09-BULK-OPERATIONS-ARCHIVE-RESTORE-RECOVERY-1.0";
@@ -245,9 +247,41 @@ export const CALENDAR_HEALTH_SCHEDULER_RUNBOOK_DOC =
   "develop_notes/KCCC_CALENDAR_HEALTH_SCHEDULER_RUNBOOK.md";
 export const CC_11_DESIGN_HANDOFF =
   "Calendar Health Dashboard and Forensic Automation — observe/explain only; no auto Event repair";
-export const CC_12_STATUS = "NOT_AUTHORIZED";
+/**
+ * CC-12 COMPLETE (ADR-100) — mobile/print/a11y presentation only.
+ * Calendar Completion technical status: TECHNICALLY_COMPLETE.
+ * Human usability gate remains PENDING (Synthesis 1 EMPTY).
+ * Phase Two remains VISION_LOCKED_NOT_AUTHORIZED (ADR-093).
+ */
+export const CC_12_STATUS = "COMPLETE";
+export const CC_12_BUILD_ID =
+  "KCCC-CC-12-MOBILE-PRINT-ACCESSIBILITY-1.0";
+export const CC_12_AUTHORIZATION_ADR = "ADR-100";
+export const CC_12_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_CC_12_AUTHORIZATION_KELLY_2026-07-23.md";
+export const CC_12_IMPL_DOC =
+  "develop_notes/KCCC_CC_12_MOBILE_PRINT_ACCESSIBILITY.md";
+export const CC_12_ROLLBACK_DOC =
+  "develop_notes/KCCC_CC_12_MOBILE_PRINT_ACCESSIBILITY_ROLLBACK.md";
+export const CALENDAR_PRINT_DOCTRINE_DOC =
+  "develop_notes/KCCC_CALENDAR_PRINT_DOCTRINE.md";
+export const CALENDAR_PRINT_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_CALENDAR_PRINT_OPERATOR_GUIDE.md";
+export const CALENDAR_MOBILE_A11Y_CONFORMANCE_DOC =
+  "develop_notes/KCCC_CALENDAR_ACCESSIBILITY_CONFORMANCE_REPORT.md";
+export const CALENDAR_MOBILE_USABILITY_DOCTRINE_DOC =
+  "develop_notes/KCCC_CALENDAR_MOBILE_USABILITY_DOCTRINE.md";
+export const CALENDAR_COMPLETION_TECHNICAL_CLOSEOUT_DOC =
+  "develop_notes/KCCC_CALENDAR_COMPLETION_TECHNICAL_CLOSEOUT.md";
+export const POST_CC12_HUMAN_USABILITY_GATE_DOC =
+  "develop_notes/KCCC_POST_CC12_HUMAN_USABILITY_GATE.md";
 export const CC_12_DESIGN_HANDOFF =
   "develop_notes/KCCC_CC_12_DESIGN_HANDOFF.md";
+export const CALENDAR_COMPLETION_TECHNICAL_STATUS =
+  "TECHNICALLY_COMPLETE_HUMAN_USABILITY_GATE_PENDING";
+export const HUMAN_USABILITY_GATE_STATUS = "PENDING";
+export const CC_12_SHIP_COMMIT = "";
+export const CC_12_SHIP_DEPLOY_ID = "";
 export const CC_10_SHIP_COMMIT = "0bbf751";
 export const CC_10_SHIP_DEPLOY_ID = "6a619fa32d949535124cbabc";
 export const CC_11_SHIP_COMMIT = "d570dc6";

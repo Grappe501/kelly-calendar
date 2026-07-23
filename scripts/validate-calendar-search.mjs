@@ -129,14 +129,24 @@ if (constants.includes('CC_07_STATUS = "COMPLETE"') || constants.includes('CC_07
 if (constants.includes("ADR-094") || constants.includes("STANDING_KELLY_EXECUTION_ADR")) {
   pass("standing execution ADR referenced");
 } else fail("standing execution ADR missing from constants");
-// After CC-11 ships, CC-12 remains the next gated build.
+// CC-12 may be IN_PROGRESS or COMPLETE; Phase Two stays locked.
 if (
   constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"') ||
+  constants.includes('CC_12_STATUS = "IN_PROGRESS"') ||
+  constants.includes('CC_12_STATUS = "COMPLETE"') ||
   constants.includes('CC_11_STATUS = "NOT_AUTHORIZED"')
 ) {
-  pass("next Calendar Completion build remains gated");
+  pass("CC-12 gated, IN_PROGRESS, or COMPLETE (or prior lock)");
 } else {
-  fail("CC-12 (or prior lock) must remain not authorized");
+  fail("CC-12 status missing from constants");
+}
+if (
+  constants.includes('PHASE_TWO_PROGRAM_STATUS = "VISION_LOCKED_NOT_AUTHORIZED"') ||
+  constants.includes("VISION_LOCKED_NOT_AUTHORIZED")
+) {
+  pass("Phase Two remains VISION_LOCKED_NOT_AUTHORIZED");
+} else {
+  fail("Phase Two must remain locked");
 }
 
 console.log(`\nCC-07 search validator: ${passed} passed, ${failed} failed`);

@@ -22,6 +22,7 @@ import {
   useOptionalBulkSelection,
 } from "@/components/calendar/bulk/BulkSelectionProvider";
 import { BulkSelectionBar } from "@/components/calendar/bulk/BulkSelectionBar";
+import { MobileAgendaFallbackLink } from "@/components/calendar/MobileAgendaFallbackLink";
 
 export type SchedulingDayEvent = {
   eventId: string;
@@ -161,13 +162,11 @@ function SchedulingDayWorkspaceInner({
       <CalendarDateNav dateKey={dateKey} view="day" label={label} isToday={isToday} />
       <BulkSelectionBar />
 
-      <div className="sched-toolbar">
-        <Link className="chip chip-link" href={`/add/quick?date=${dateKey}`}>
+      <div className="sched-toolbar" aria-label="Day schedule tools">
+        <Link className="chip chip-link touch-target" href={`/add/quick?date=${dateKey}`}>
           Add Event
         </Link>
-        <Link className="chip chip-link" href={`/calendar?view=agenda&date=${dateKey}`}>
-          Agenda fallback
-        </Link>
+        <MobileAgendaFallbackLink dateKey={dateKey} />
         {selectedEventId && bulk ? (
           <button
             type="button"

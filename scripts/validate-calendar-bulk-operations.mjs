@@ -83,9 +83,23 @@ const cc11Ok =
   constants.includes('CC_11_STATUS = "IN_PROGRESS"') ||
   constants.includes('CC_11_STATUS = "COMPLETE"') ||
   constants.includes('CC_11_STATUS = "NOT_AUTHORIZED"');
-if (cc11Ok && constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"')) {
-  pass("CC-11 authorized or gated; CC-12 NOT_AUTHORIZED");
-} else fail("CC-12 must remain not authorized; CC-11 must be in progress, complete, or gated");
+const cc12Ok =
+  constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"') ||
+  constants.includes('CC_12_STATUS = "IN_PROGRESS"') ||
+  constants.includes('CC_12_STATUS = "COMPLETE"');
+if (cc11Ok && cc12Ok) {
+  pass("CC-11 authorized or gated; CC-12 gated, IN_PROGRESS, or COMPLETE");
+} else {
+  fail("CC-11/CC-12 status missing from constants");
+}
+if (
+  constants.includes('PHASE_TWO_PROGRAM_STATUS = "VISION_LOCKED_NOT_AUTHORIZED"') ||
+  constants.includes("VISION_LOCKED_NOT_AUTHORIZED")
+) {
+  pass("Phase Two remains VISION_LOCKED_NOT_AUTHORIZED");
+} else {
+  fail("Phase Two must remain locked");
+}
 if (constants.includes("ADR-097") || constants.includes("CC_09_AUTHORIZATION")) {
   pass("CC-09 authorization referenced");
 } else fail("CC-09 authorization missing");

@@ -125,6 +125,7 @@
     "calendar:bulk-operations:validate": "node scripts/validate-calendar-bulk-operations.mjs",
     "calendar:ics:validate": "node scripts/validate-calendar-ics-export.mjs",
     "calendar:health:validate": "node scripts/validate-calendar-health.mjs",
+    "calendar:mobile-print-a11y:validate": "node scripts/validate-calendar-mobile-print-a11y.mjs",
     "calendar:hsv-placement:validate": "node scripts/run-with-h-drive-env.cjs node scripts/validate-hsv-ingest-placement.mjs --dry-run",
     "import:preview": "node scripts/preview-google-calendar-import.mjs",
     "import:preview:private-ical": "node scripts/run-with-h-drive-env.cjs node scripts/preview-private-ical-import.mjs",

@@ -14,3 +14,7 @@ Hard deletion is never offered. Missions are never cancelled by bulk Event actio
 ## ICS export / subscriptions (CC-10)
 
 After bulk archive/restore, external calendars are not updated automatically. Use `/system/calendar/exports` for a one-time ICS snapshot or `/system/calendar/subscriptions` for a private live feed (rotate/revoke as needed). See `KCCC_CALENDAR_SUBSCRIPTION_OPERATOR_GUIDE.md`.
+
+## Print / mobile (CC-12)
+
+Bulk selection stays on Agenda/Day/Week; printable sheets are a separate read-only path (`/system/calendar/print/preview`). Print does not archive, restore, or cancel. On phones, prefer Agenda list view before dense bulk work — see `KCCC_CALENDAR_PRINT_OPERATOR_GUIDE.md`.

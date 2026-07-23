@@ -44,3 +44,7 @@ Clients poll on their own interval; Kelly serves ETag/`304` when unchanged.
 | **Two-way** | **Not supported** in CC-10 — no write-back to Google/Outlook |
 
 Further detail: `KCCC_CALENDAR_ICS_CLIENT_COMPATIBILITY.md` · doctrine `KCCC_CALENDAR_ICS_EXPORT_DOCTRINE.md`.
+
+## Print sheets (CC-12)
+
+Subscriptions sync live calendars; printable day/week/agenda sheets are a separate operator path at `/system/calendar/print/preview` (session auth). Print uses redacted location labels and never includes feed tokens. A small **Print** chip is also on the subscriptions header for convenience — see `KCCC_CALENDAR_PRINT_OPERATOR_GUIDE.md`.

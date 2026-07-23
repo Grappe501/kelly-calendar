@@ -33,3 +33,7 @@ If a view’s query schema is older than the current version, the system may sho
 ## ICS export / subscriptions (CC-10)
 
 Saved views can scope a private subscription feed. Manage feeds at `/system/calendar/subscriptions` (create / rotate / revoke) and one-time downloads at `/system/calendar/exports`. Feed URLs are secrets — see `KCCC_CALENDAR_SUBSCRIPTION_OPERATOR_GUIDE.md`.
+
+## Print / mobile (CC-12)
+
+Saved views restore filters on screen; printable day sheets are opened from Print preview (or the view-switcher Print chip) and do not persist as a saved view type. Mobile operators can jump to Agenda list view from Day/Week toolbars — see `KCCC_CALENDAR_PRINT_OPERATOR_GUIDE.md`.

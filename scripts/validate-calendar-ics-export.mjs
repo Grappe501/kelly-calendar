@@ -142,10 +142,23 @@ const cc10Ok =
 if (cc10Ok) pass("CC_10_STATUS IN_PROGRESS or COMPLETE");
 else fail("CC_10_STATUS must be IN_PROGRESS or COMPLETE");
 
-if (constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"')) {
-  pass("CC_12_STATUS NOT_AUTHORIZED");
+// CC-12 may be IN_PROGRESS or COMPLETE; Phase Two remains locked separately.
+if (
+  constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"') ||
+  constants.includes('CC_12_STATUS = "IN_PROGRESS"') ||
+  constants.includes('CC_12_STATUS = "COMPLETE"')
+) {
+  pass("CC_12_STATUS gated, IN_PROGRESS, or COMPLETE");
 } else {
-  fail("CC_12 must remain NOT_AUTHORIZED");
+  fail("CC_12_STATUS missing from constants");
+}
+if (
+  constants.includes('PHASE_TWO_PROGRAM_STATUS = "VISION_LOCKED_NOT_AUTHORIZED"') ||
+  constants.includes("VISION_LOCKED_NOT_AUTHORIZED")
+) {
+  pass("Phase Two remains VISION_LOCKED_NOT_AUTHORIZED");
+} else {
+  fail("Phase Two must remain locked while CC-12 progresses");
 }
 
 if (

@@ -36,3 +36,7 @@
 ## Filters and saved views
 
 Search chrome and saved views from CC-07 apply to Day and Week. Bookmarking the URL restores authorized filters and compatible layout preferences.
+
+## Print and mobile (CC-12)
+
+Use the **Print** chip on the view switcher (or `/system/calendar/print/preview`) for privacy-aware day/week/agenda sheets — city/venue labels only; never street addresses. On narrow screens, use **Agenda list view** from the Day/Week toolbar and the week day selector chips; print does not mutate Events. See `KCCC_CALENDAR_PRINT_OPERATOR_GUIDE.md`.

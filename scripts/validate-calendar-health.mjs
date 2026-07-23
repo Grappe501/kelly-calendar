@@ -126,10 +126,14 @@ const cc11Ok =
 if (cc11Ok) pass("CC_11_STATUS IN_PROGRESS or COMPLETE");
 else fail("CC_11_STATUS must be IN_PROGRESS or COMPLETE");
 
-if (constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"')) {
-  pass("CC_12_STATUS NOT_AUTHORIZED");
+if (
+  constants.includes('CC_12_STATUS = "IN_PROGRESS"') ||
+  constants.includes('CC_12_STATUS = "COMPLETE"') ||
+  constants.includes('CC_12_STATUS = "NOT_AUTHORIZED"')
+) {
+  pass("CC_12 status gated or authorized");
 } else {
-  fail("CC_12 must remain NOT_AUTHORIZED");
+  fail("CC_12 status missing from constants");
 }
 
 if (

@@ -127,8 +127,8 @@ function AgendaBody({
                       href={item.href}
                       aria-label={
                         item.membershipLabel
-                          ? `${item.title}, ${item.membershipLabel}`
-                          : item.title
+                          ? `${item.title}, ${item.timeLabel}, ${item.membershipLabel}`
+                          : `${item.title}, ${item.timeLabel}`
                       }
                     >
                       {item.title}

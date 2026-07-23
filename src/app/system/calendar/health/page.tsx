@@ -35,6 +35,9 @@ export default async function CalendarHealthPage() {
           </Link>{" "}
           <Link className="chip chip-link" href="/system/calendar/integrity">
             Integrity
+          </Link>{" "}
+          <Link className="chip chip-link" href="/system/calendar/print/preview">
+            Print
           </Link>
         </p>
       </header>
