@@ -200,11 +200,21 @@ if (constants.includes('IC_01_AUTHORIZATION_ADR = "ADR-102"')) pass("ADR-102 con
 else fail("ADR-102 constant missing");
 if (constants.includes('IC_01_STATUS = "COMPLETE"')) pass("IC_01 COMPLETE");
 else fail("IC_01_STATUS must be COMPLETE");
-if (constants.includes('IC_02_STATUS = "NOT_AUTHORIZED"')) pass("IC_02 NOT_AUTHORIZED");
-else fail("IC_02 must remain NOT_AUTHORIZED");
-if (constants.includes('NEXT_AUTHORIZED_BUILD = "IC_02_NOT_AUTHORIZED"'))
-  pass("NEXT_AUTHORIZED_BUILD IC_02_NOT_AUTHORIZED");
-else fail("NEXT_AUTHORIZED_BUILD must be IC_02_NOT_AUTHORIZED");
+if (
+  constants.includes('IC_02_STATUS = "IN_PROGRESS"') ||
+  constants.includes('IC_02_STATUS = "COMPLETE"')
+)
+  pass("IC_02 authorized (IN_PROGRESS or COMPLETE)");
+else fail("IC_02_STATUS must be IN_PROGRESS or COMPLETE under ADR-104");
+if (
+  constants.includes('NEXT_AUTHORIZED_BUILD = "IC_02_REDDIRT_READ_INTEGRATION"') ||
+  constants.includes('NEXT_AUTHORIZED_BUILD = "IC_03_NOT_AUTHORIZED"')
+)
+  pass("NEXT_AUTHORIZED_BUILD IC-02/IC-03 gate");
+else fail("NEXT_AUTHORIZED_BUILD must reflect IC-02 ship gate");
+if (constants.includes('IC_03_STATUS = "NOT_AUTHORIZED"'))
+  pass("IC_03 NOT_AUTHORIZED");
+else fail("IC_03 must remain NOT_AUTHORIZED");
 if (constants.includes('PHASE_TWO_PROGRAM_STATUS = "IC_PHASE_AUTHORIZED"'))
   pass("IC_PHASE_AUTHORIZED");
 else fail("PHASE_TWO_PROGRAM_STATUS must be IC_PHASE_AUTHORIZED");

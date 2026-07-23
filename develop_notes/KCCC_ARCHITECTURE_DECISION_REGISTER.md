@@ -97,16 +97,18 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 - ADR-101 Kelly Product-Owner Acceptance of CC-01–CC-12 Baseline & Post–CC-12 Gate Resolution (2026-07-23) — `KCCC_POST_CC12_PRODUCT_OWNER_ACCEPTANCE_AND_PHASE_TWO_AUTHORIZATION_KELLY_2026-07-23.md`
 - ADR-102 Kelly Authorization of IC-01 Arkansas Campaign Geography Foundation (2026-07-23) — `KCCC_IC_01_AUTHORIZATION_KELLY_2026-07-23.md`
 - ADR-103 Phase Two AI Quality Gate Accepted for Foundation (2026-07-23) — `KCCC_PHASE_TWO_AI_QUALITY_GATE.md`
+- ADR-104 Kelly Authorization of IC-02 RedDirt Read Integration (2026-07-23) — `KCCC_IC_02_AUTHORIZATION_KELLY_2026-07-23.md`
 
 ## Standing execution (ADR-094)
 
 Approved Calendar Completion and authorized IC build scripts authorize the full ship cycle without routine confirmation. Hard stops remain for destructive prod-data ops, missing credentials, purchases, scope expansion, and privacy/legal barriers.
 
-## Post–CC-12 / Phase Two authorization (ADR-101…103)
+## Post–CC-12 / Phase Two authorization (ADR-101…104)
 
 - **ADR-101** — Product-owner operational acceptance of CC-01…CC-12; human gate `ACCEPTED_BY_PRODUCT_OWNER_WITH_CONTINUING_OBSERVATION`; Pass 1 blank / Synthesis EMPTY preserved; not fabricated research.
 - **ADR-103** — AI quality gate `REVIEWED_AND_ACCEPTED_FOR_PHASE_TWO_FOUNDATION`; sixteen eval categories; per-feature eval before AI enablement; IC-01 has zero OpenAI calls.
 - **ADR-102** — **IC-01 only**; no OpenAI, RedDirt, Mobilize, people platform, auto priority, or Event/Mission create; IC-02…IC-12 separately sequenced.
+- **ADR-104** — **IC-02 only** (RedDirt read integration); no RedDirt writes, OpenAI, people import, Event/Mission mutation, or IC-03+.
 
 ## CC-12 authorization
 
@@ -131,8 +133,8 @@ Kelly **ADR-092** authorized **CC-06 only**; the calendar-slice build is now **C
 ## Phase Two (after CC-12)
 
 **ADR-093** locks the Intelligent Statewide Campaign Calendar vision (**IC-01…IC-12**). Program: `KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md`.  
-CC-01…CC-12 are **COMPLETE**. Phase Two foundation is **IC_PHASE_AUTHORIZED** (ADR-101 + ADR-103); **IC-01** is **COMPLETE** (ADR-102). Deterministic services own facts/authorization/consent/coverage/conflicts/permissible actions; AI explains and recommends within confirmation boundaries.
+CC-01…CC-12 are **COMPLETE**. Phase Two foundation is **IC_PHASE_AUTHORIZED** (ADR-101 + ADR-103); **IC-01** is **COMPLETE** (ADR-102); **IC-02** is authorized under **ADR-104**. Deterministic services own facts/authorization/consent/coverage/conflicts/permissible actions; AI explains and recommends within confirmation boundaries.
 
 ## CC-05 / CC-06 / CC-10 / CC-11 / CC-12 baseline & next engineering
 
-CC-01…CC-12 are **COMPLETE**. **IC-01** is **COMPLETE** (ADR-102). Next: **IC-02 NOT_AUTHORIZED** (design handoff only). IC-03…IC-12 remain **NOT_AUTHORIZED**.
+CC-01…CC-12 are **COMPLETE**. **IC-01** is **COMPLETE** (ADR-102). **IC-02** ships under ADR-104 (RedDirt read-only). Next: **IC-03 NOT_AUTHORIZED** (design handoff only). IC-04…IC-12 remain **NOT_AUTHORIZED**.

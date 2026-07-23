@@ -183,6 +183,7 @@ enum ExternalProvider {
   ICS
   MANUAL
   MOBILIZE
+  REDDIRT
   OTHER
 
   @@schema("kelly_calendar")
@@ -198,6 +199,9 @@ enum ExternalObjectType {
   ATTENDANCE
   PERSON
   ORGANIZATION
+  GEOGRAPHY_COUNTY
+  GEOGRAPHY_PLACE
+  STRATEGIC_FACT
   OTHER
 
   @@schema("kelly_calendar")
@@ -4800,6 +4804,83 @@ model ExternalSyncCheckpoint {
   createdAt            DateTime         @default(now())
 
   @@unique([campaignScopeKey, provider, scope])
+  @@schema("kelly_calendar")
+}
+
+/// IC-02 — RedDirt (and future strategic providers) source observation ledger.
+/// Does not retain complete raw sensitive payloads by default.
+model StrategicSourceObservation {
+  id                     String                 @id @default(cuid())
+  campaignScopeKey       String                 @default("KELLY")
+  provider               ExternalProvider
+  externalObjectType     ExternalObjectType
+  externalObjectId       String
+  remoteUpdatedAt        DateTime?
+  observedAt             DateTime               @default(now())
+  normalizedFingerprint  String
+  sourceVersion          String?
+  /// Allowlisted normalized fields only — never secrets or denied PII.
+  allowedFieldsJson      Json                   @default("{}")
+  payloadHash            String?
+  /// PUBLIC_GEOGRAPHY | CAMPAIGN_STRATEGIC | VOLUNTEER_AGGREGATE | PERSONAL_CONTACT | SENSITIVE_PERSONAL | UNKNOWN
+  privacyClassification  String
+  remoteDeleted          Boolean                @default(false)
+  provenance             ExternalSyncProvenance @default(IMPORT)
+  retentionStatus        String                 @default("ACTIVE")
+  syncRunId              String?
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+
+  strategicFacts StrategicGeographyFact[]
+
+  @@unique([campaignScopeKey, provider, externalObjectType, externalObjectId, normalizedFingerprint])
+  @@index([campaignScopeKey, provider, observedAt])
+  @@index([syncRunId])
+  @@schema("kelly_calendar")
+}
+
+/// IC-02 — applied, source-attributed strategic geography fact (RedDirt-sourced).
+/// Does not mutate IC-01 county/place authority rows or Events/Missions.
+model StrategicGeographyFact {
+  id                          String                 @id @default(cuid())
+  campaignScopeKey            String                 @default("KELLY")
+  provider                    ExternalProvider       @default(REDDIRT)
+  externalObjectType          ExternalObjectType
+  externalObjectId            String
+  externalObjectReferenceId   String?
+  observationId               String?
+  arkansasCountyId            String?
+  geographyPlaceAuthorityId   String?
+  /// COUNTY_PRIORITY | PLACE_PRIORITY | PRIORITY_TIER | FOCUS_AREA | REGION | etc.
+  factKind                    String
+  factValue                   String
+  factUnits                   String?
+  /// Always clarify RedDirt-sourced — never "objective" system truth.
+  sourceAttributionLabel      String                 @default("RedDirt-sourced")
+  effectiveFrom               DateTime?
+  effectiveTo                 DateTime?
+  providerTimestamp           DateTime?
+  observedAt                  DateTime
+  contentFingerprint          String
+  /// ACTIVE | REMOTE_DELETED | SUPERSEDED | ARCHIVED
+  sourceStatus                String                 @default("ACTIVE")
+  /// APPLIED | PENDING_REVIEW | REJECTED
+  reviewStatus                String                 @default("APPLIED")
+  provenance                  ExternalSyncProvenance @default(IMPORT)
+  archivedAt                  DateTime?
+  appliedByUserId             String?
+  appliedAt                   DateTime?
+  syncRunId                   String?
+  createdAt                   DateTime               @default(now())
+  updatedAt                   DateTime               @updatedAt
+
+  observation StrategicSourceObservation? @relation(fields: [observationId], references: [id])
+
+  @@unique([campaignScopeKey, provider, externalObjectId, factKind, contentFingerprint])
+  @@index([arkansasCountyId, sourceStatus])
+  @@index([geographyPlaceAuthorityId, sourceStatus])
+  @@index([campaignScopeKey, provider, sourceStatus])
+  @@index([syncRunId])
   @@schema("kelly_calendar")
 }
 

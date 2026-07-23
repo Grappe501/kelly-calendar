@@ -97,8 +97,8 @@ export const POST_CC05_DIRECTION_ADR = "ADR-091";
 export const POST_CC05_DIRECTION_DOC =
   "develop_notes/KCCC_POST_CC05_USABILITY_PASS_DIRECTION.md";
 /**
- * Phase Two IC phase authorized (ADR-101 + ADR-103 + ADR-102).
- * Vision: ADR-093. IC-01 COMPLETE; IC-02…IC-12 NOT_AUTHORIZED.
+ * Phase Two IC phase authorized (ADR-101 + ADR-103 + ADR-102 + ADR-104).
+ * Vision: ADR-093. IC-01 COMPLETE; IC-02 COMPLETE at ship; IC-03…IC-12 NOT_AUTHORIZED.
  * AI features still require per-feature eval before enablement (ADR-103).
  */
 export const PHASE_TWO_PROGRAM_ID =
@@ -141,9 +141,27 @@ export const ARKANSAS_GEOGRAPHY_DATA_DOCTRINE_DOC =
   "develop_notes/KCCC_ARKANSAS_GEOGRAPHY_DATA_DOCTRINE.md";
 export const IC_01_SHIP_COMMIT = "53d0f01";
 export const IC_01_SHIP_DEPLOY_ID = "6a622880ca69994d8d655023";
-export const IC_02_STATUS = "NOT_AUTHORIZED";
+export const IC_02_STATUS = "COMPLETE";
+export const IC_02_BUILD_ID =
+  "KCCC-IC-02-REDDIRT-READ-INTEGRATION-1.0";
+export const IC_02_AUTHORIZATION_ADR = "ADR-104";
+export const IC_02_AUTHORIZATION_DOC =
+  "develop_notes/KCCC_IC_02_AUTHORIZATION_KELLY_2026-07-23.md";
+export const IC_02_IMPL_DOC =
+  "develop_notes/KCCC_IC_02_REDDIRT_READ_INTEGRATION.md";
+export const IC_02_ROLLBACK_DOC =
+  "develop_notes/KCCC_IC_02_REDDIRT_READ_INTEGRATION_ROLLBACK.md";
+export const IC_02_OPERATOR_GUIDE_DOC =
+  "develop_notes/KCCC_IC_02_REDDIRT_OPERATOR_GUIDE.md";
+export const IC_02_PRIVACY_POLICY_DOC =
+  "develop_notes/KCCC_IC_02_REDDIRT_DATA_PRIVACY_POLICY.md";
 export const IC_02_DESIGN_HANDOFF_DOC =
   "develop_notes/KCCC_IC_02_DESIGN_HANDOFF.md";
+export const IC_03_STATUS = "NOT_AUTHORIZED";
+export const IC_03_DESIGN_HANDOFF_DOC =
+  "develop_notes/KCCC_IC_03_DESIGN_HANDOFF.md";
+export const IC_02_SHIP_COMMIT = "PENDING";
+export const IC_02_SHIP_DEPLOY_ID = "PENDING";
 export const AUTHORITATIVE_TIP_COMMIT = "68d6476";
 export const POSTURE_LOCK_COMMIT = "203bfe3";
 export const UNRELATED_CAMPAIGN_EXPANSION_STATUS = "PAUSED";
@@ -229,8 +247,8 @@ export const CC_08_TIP_COMMIT = "e1ddaa7";
 export const CC_08_TIP_DEPLOY_ID = "6a612111e81d923c5e6c58ca";
 export const CC_09_SHIP_COMMIT = "f8186be";
 export const CC_09_SHIP_DEPLOY_ID = "6a612a7cba0c57774db91b5f";
-/** IC-01 COMPLETE; IC-02 design handoff only — not authorized to implement. */
-export const NEXT_AUTHORIZED_BUILD = "IC_02_NOT_AUTHORIZED";
+/** IC-01 COMPLETE; IC-02 COMPLETE (ADR-104); IC-03 not authorized. */
+export const NEXT_AUTHORIZED_BUILD = "IC_03_NOT_AUTHORIZED";
 export const CC_09_STATUS = "COMPLETE";
 export const CC_09_BUILD_ID =
   "KCCC-CC-09-BULK-OPERATIONS-ARCHIVE-RESTORE-RECOVERY-1.0";

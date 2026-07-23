@@ -144,6 +144,11 @@ async function buildAuthorityIndex(): Promise<GeographyAuthorityIndex> {
   };
 }
 
+/** Shared IC-01 authority index for other Phase Two readers (e.g. IC-02). */
+export async function loadGeographyAuthorityIndex(): Promise<GeographyAuthorityIndex> {
+  return buildAuthorityIndex();
+}
+
 export async function getGeographyDashboard(actor: AuthenticatedActor) {
   assertLeadership(actor);
   const [

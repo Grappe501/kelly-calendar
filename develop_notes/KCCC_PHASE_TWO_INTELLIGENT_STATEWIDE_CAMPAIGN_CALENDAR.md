@@ -87,17 +87,17 @@ Every geographic priority must identify its **source**: campaign-entered · RedD
 
 ## IC-02 — RedDirt Read Integration
 
-**Status: NOT_AUTHORIZED** — design handoff only: `KCCC_IC_02_DESIGN_HANDOFF.md`.
+**Status: COMPLETE** (ADR-104) — `KCCC_IC_02_REDDIRT_READ_INTEGRATION.md`.
 
-Server-only, **read-first** RedDirt adapter.
+Server-only, **read-first** RedDirt adapter. Ships safely as `NOT_CONFIGURED` when credentials or official API docs are absent; fixture + approved-export dry-run paths remain available. IC-01 owns FIPS/GEOID identity.
 
-Before implementation, Burt inspects: API docs, auth, objects/fields, counties/cities, contacts, volunteers, participation, tags/focus areas, timestamps, pagination, rate limits, export restrictions, consent/suppression, permitted uses.
+Build: external identity mapping · dry-run imports · provenance · privacy allowlist · IC-01 reconciliation · explicit apply of strategic geography facts · audit.
 
-Build: external identity mapping · dry-run imports · provenance · incremental checkpoints · conflict detection · data minimization · privacy/role restrictions · audit.
-
-**Hard rule:** No blind sync; no AI direct database access.
+**Hard rule:** No blind sync; no RedDirt writes; no OpenAI; no people import; no Event/Mission mutation; no AI direct database access.
 
 ## IC-03 — Mission Intelligence Profile
+
+**Status: NOT_AUTHORIZED** — design handoff only: `KCCC_IC_03_DESIGN_HANDOFF.md`.
 
 Structured, reviewable strategic profile per Mission. AI may **propose** purpose, value, coverage, audience, focus-area/travel/volunteer/prep needs, related Missions, confidence, missing info, citations.
 

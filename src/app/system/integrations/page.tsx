@@ -24,6 +24,10 @@ export default async function IntegrationsIndexPage() {
             reconcile foundation (D16)
           </li>
           <li>
+            <Link href="/system/integrations/reddirt">RedDirt</Link> — read-only
+            strategic geography (IC-02)
+          </li>
+          <li>
             <Link href="/system/google-integration">Google Calendar</Link>
           </li>
         </ul>

@@ -1,0 +1,28 @@
+{
+  "_label": "FIXTURE — not live RedDirt data. Contract sample for IC-02 automated tests only.",
+  "_source": "Kelly-calendar fixture (ADR-104). Do not treat as provider truth.",
+  "records": [
+    {
+      "externalObjectId": "rd-fixture-county-pulaski-priority",
+      "objectType": "GEOGRAPHY_COUNTY",
+      "countyFips": "05119",
+      "countyName": "Pulaski",
+      "factKind": "COUNTY_PRIORITY",
+      "factValue": "HIGH",
+      "factUnits": "tier",
+      "updatedAt": "2026-07-01T12:00:00.000Z",
+      "focusArea": "Central Arkansas"
+    },
+    {
+      "externalObjectId": "rd-fixture-county-washington-priority",
+      "objectType": "GEOGRAPHY_COUNTY",
+      "countyFips": "05143",
+      "countyName": "Washington",
+      "factKind": "COUNTY_PRIORITY",
+      "factValue": "MEDIUM",
+      "factUnits": "tier",
+      "updatedAt": "2026-07-01T12:00:00.000Z",
+      "focusArea": "Northwest Arkansas"
+    }
+  ]
+}

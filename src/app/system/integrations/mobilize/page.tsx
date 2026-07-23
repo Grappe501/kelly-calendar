@@ -47,6 +47,12 @@ export default async function MobilizeIntegrationPage() {
           <Link className="button secondary" href="/system/integrations/mobilize/runs">
             Sync runs
           </Link>
+          <Link
+            className="button secondary"
+            href="/system/integrations/reddirt"
+          >
+            RedDirt (IC-02)
+          </Link>
           <Link className="button secondary" href="/system/missions/command-center">
             Command Center
           </Link>

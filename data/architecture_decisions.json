@@ -661,6 +661,14 @@
       "date": "2026-07-23",
       "decision": "Phase Two AI quality gate is reviewed and accepted for Phase Two foundation (Status REVIEWED_AND_ACCEPTED_FOR_PHASE_TWO_FOUNDATION). Locks deterministic-facts / no-silent-mutation / server-only OpenAI / schema validation / confirmation boundaries / sixteen evaluation categories. Evidence: develop_notes/KCCC_PHASE_TWO_AI_QUALITY_GATE.md and develop_notes/KCCC_PHASE_TWO_AI_EVALUATION_STANDARD.md. Foundation IC work may begin; each AI-using feature requires its own eval before enablement. IC-01 has zero OpenAI calls.",
       "boundary": "Must not treat foundation acceptance as OpenAI production enablement. Must not skip per-feature eval, kill switches, or schema validation. Must not allow unrestricted DB access or client-side OpenAI keys."
+    },
+    {
+      "id": "ADR-104",
+      "title": "Kelly Authorization of IC-02 RedDirt Read Integration",
+      "status": "accepted",
+      "date": "2026-07-23",
+      "decision": "Kelly explicitly authorizes Phase Two IC-02 RedDirt Read Integration only (server-only read-first adapter, dry-run/export ingestion, IC-01 geography reconciliation, approved strategic geography facts, validators, documentation, and ship cycle under ADR-094). Evidence: develop_notes/KCCC_IC_02_AUTHORIZATION_KELLY_2026-07-23.md. Prerequisite: IC-01 COMPLETE (ADR-102 / 53d0f01). Missing credentials ship as NOT_CONFIGURED; no invented live API contract.",
+      "boundary": "Must not write to RedDirt, call OpenAI, import people or infer consent, mutate Events or Missions, activate Mobilize writes, reopen IC-01 authority seeding as IC-02 work, or implement IC-03…IC-12. No NEXT_PUBLIC_REDDIRT_* secrets."
     }
   ]
 }

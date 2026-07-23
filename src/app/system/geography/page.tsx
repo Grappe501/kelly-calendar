@@ -59,6 +59,9 @@ export default async function GeographyDashboardPage() {
           <li>
             <Link href="/system/geography/sources">Sources</Link>
           </li>
+          <li>
+            <Link href="/system/integrations/reddirt">RedDirt read integration (IC-02)</Link>
+          </li>
         </ul>
       </nav>
     </div>

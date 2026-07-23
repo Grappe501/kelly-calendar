@@ -51,6 +51,11 @@ export const SERVER_ONLY_ENV_KEYS = [
   "MOBILIZE_DELETE_ENABLED",
   "MOBILIZE_DEFAULT_CONTACT_EMAIL",
   "MOBILIZE_IMPORT_ATTENDANCE_ENABLED",
+  /** RedDirt read integration (IC-02) — server-only; never log or return values. */
+  "REDDIRT_API_KEY",
+  "REDDIRT_BASE_URL",
+  "REDDIRT_ORGANIZATION_ID",
+  "REDDIRT_READ_ENABLED",
   /** Communications providers (D22) — values never logged or returned to clients. */
   "KCCC_COMMUNICATIONS_PROVIDER_KEY",
   "KCCC_RESEND_API_KEY",
@@ -69,4 +74,5 @@ export const FORBIDDEN_PUBLIC_PREFIX_KEYS = [
   "NEXT_PUBLIC_INTERNAL_API_SECRET",
   "NEXT_PUBLIC_KCCC_GOOGLE_CALENDAR_ICAL_URL",
   "NEXT_PUBLIC_MOBILIZE_API_KEY",
+  "NEXT_PUBLIC_REDDIRT_API_KEY",
 ] as const;

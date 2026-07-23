@@ -129,6 +129,7 @@
     "calendar:hsv-placement:validate": "node scripts/run-with-h-drive-env.cjs node scripts/validate-hsv-ingest-placement.mjs --dry-run",
     "geography:foundation:seed": "node scripts/run-with-h-drive-env.cjs node scripts/seed-arkansas-geography-foundation.mjs",
     "geography:foundation:validate": "node scripts/validate-geography-foundation.mjs",
+    "intelligence:reddirt:validate": "node scripts/validate-intelligence-reddirt.mjs",
     "import:preview": "node scripts/preview-google-calendar-import.mjs",
     "import:preview:private-ical": "node scripts/run-with-h-drive-env.cjs node scripts/preview-private-ical-import.mjs",
     "import:staging:validate": "node scripts/validate-import-staging.mjs",
