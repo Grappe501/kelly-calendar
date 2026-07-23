@@ -147,7 +147,17 @@ const LIVE_EVENTS = [
     candidateRole: "ATTENDING",
     privateNotes: notes(
       "travel-hsv-2026-07-22",
-      "CONFIRMED commitment; departure time TENTATIVE.\nTravelers: Kelly Grappe, Steve Grappe\nOrigin: Farm\nDestination: Hot Springs Village, Arkansas\nStart: After Kelly finishes work\nDeparture time: UNKNOWN\nArrival time: UNKNOWN\nExact route: UNKNOWN\nRestore: newer email evidence after Pass-2 broad supersession.\nKelly and Steve travel Wednesday evening so Kelly can work remotely Thursday before the Democratic meeting.",
+      [
+        "CONFIRMED commitment; departure time TENTATIVE.",
+        "Travelers: Kelly Grappe, Steve Grappe",
+        "Origin: Farm / after work",
+        "Destination: Hot Springs Village, Arkansas (host lodging — Deb Bryan / Deborah Bryan)",
+        "Start: After Kelly finishes work",
+        "Departure time: UNKNOWN · Arrival time: UNKNOWN · Exact route: UNKNOWN",
+        "Kelly and Steve travel Wednesday evening so Kelly can work remotely Thursday before the Democratic meeting.",
+        "GATE: Have Hot Springs Village gate-access email available for Gate Security (sponsor DEBORAH BRYAN). Full gate text on lodging Event lodging-hsv-host-2026-07-22 (KCCC-2026-0040).",
+        "Do not duplicate lodging-gate or Road to Blue host-ops text on this travel Event.",
+      ].join("\n"),
     ),
   },
   {

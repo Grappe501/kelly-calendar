@@ -63,6 +63,10 @@ Meet dial-in/PIN → `privateNotes` only.
 Host residential addresses → not in public fields.  
 Opaque GCal template URLs → staged/source metadata only.
 
+## HSV travel pointer (2026-07-22)
+
+`travel-hsv-2026-07-22` → `KCCC-2026-0025` may point gate security to lodging Event `lodging-hsv-host-2026-07-22` (`KCCC-2026-0040`). Do not duplicate full lodging-gate text or Road-to-Blue host-ops on travel. Validate: `npm run calendar:hsv-placement:validate`.
+
 ## Key conflict
 
 Jim Bob Bramlett fundraiser (CONFIRMED 4–7pm) ∩ Faulkner County fundraiser (HOLD 5–7:30pm) on Aug 2 — not auto-resolved.

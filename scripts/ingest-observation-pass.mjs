@@ -8,6 +8,11 @@
  * - Undated work → EventPlanningDraft rows (Postgres), not fake calendar days
  *
  * Usage: npm run events:ingest:observation-pass
+ *
+ * HSV placement (lodging-gate / host-ops / travel pointer):
+ *   npm run calendar:hsv-placement:validate
+ * Do not blind re-ingest HSV keys when DB already has richer provenance markers;
+ * the placement validator is the safe dry-run / no-op path.
  */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -124,11 +129,12 @@ const LIVE_EVENTS = [
     privateNotes: notes(
       "hsv-dems-road-to-blue-2026-07-23",
       [
-        "MISSION: Speaking + relationship dinner.",
-        "OBJECTIVE: Introduce SOS campaign; ~7 min remarks; materials table; networking.",
-        "SCHEDULE: Social 3–4 · Dinner 4–5 · Speaking ~4:15–5:15 · Close ~6:30–7:00. Arrive ~2:45.",
-        "HOST: Deb Bryan (President, HSV Democratic Club). Contact details in operator CRM only — not stored here.",
-        "LODGING: Overnight Jul 22 with host (Lake Desoto residence). Offer accepted.",
+        "MISSION: Speaking + relationship dinner (Road to Blue).",
+        "OBJECTIVE: Introduce SOS campaign; ~7 min remarks; materials/signs space; networking.",
+        "SCHEDULE (host Deb Bryan, HSV Democrats): Social 3–4 · Dinner 4–5 (fajitas; Road to Victory Cake) · Speeches ~4:15–5:15 · Silent auction/mingling ~6:30–7:00. Arrive ~2:45. Reserved seating near stage.",
+        "HOST: Deb Bryan (President, HSV Democrats). Gate sponsor / lodging contact on lodging Event — cell not duplicated here.",
+        "GUEST: Advise host if bringing a guest (Steve Grappe campaign support — confirm).",
+        "LODGING: Overnight Jul 22 with host (Lake Desoto area). HSV gate access required — see lodging Event.",
         "WORK BLOCK: Morning Jul 23 remote from host home (quiet workspace / internet) — PTO conservation.",
         "PREP: 7-min remarks; SOS priorities; signs; merch; literature; phone/camera/charger.",
         "FOLLOW-UP: Thank-you card; photos; contacts; volunteer/donor commitments.",
@@ -140,7 +146,7 @@ const LIVE_EVENTS = [
     key: "lodging-hsv-host-2026-07-22",
     calendarSlug: "travel",
     internalTitle: "Overnight lodging – Hot Springs Village (host)",
-    campaignDisplayTitle: "Overnight – Hot Springs Village",
+    campaignDisplayTitle: "Overnight – Hot Springs Village (host)",
     eventType: "Travel / Lodging",
     status: "CONFIRMED",
     priority: "High",
@@ -151,7 +157,13 @@ const LIVE_EVENTS = [
     defaultVisibility: "TITLE_LOCATION",
     privateNotes: notes(
       "lodging-hsv-host-2026-07-22",
-      "SUPPORT for hsv-dems-road-to-blue-2026-07-23. Host lodging (Deb Bryan). Street address not stored in git. Morning work block before 2:45 campaign arrival.",
+      [
+        "SUPPORT for hsv-dems-road-to-blue-2026-07-23. Host lodging (Deb Bryan / Deborah Bryan).",
+        "Street address not stored in git. Morning work block before 2:45 campaign arrival.",
+        "GATE ACCESS: Visitor Kelly Grappe · Sponsored by DEBORAH BRYAN · Authorized days 2026-07-22, 2026-07-23, 2026-07-24.",
+        "Have gate-access email available for Hot Springs Village Gate Security.",
+        "Sponsor contact cell: operator CRM / Event privateNotes only — never commit digits to git.",
+      ].join("\n"),
     ),
   },
 

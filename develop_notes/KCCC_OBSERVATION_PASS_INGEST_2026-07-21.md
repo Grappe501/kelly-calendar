@@ -25,3 +25,22 @@ Those stay in operator CRM / live private notes as appropriate.
 ## Proof
 
 `develop_notes/database_proofs/observation-pass-ingest-latest.json`
+
+## HSV placement rule (2026-07-22)
+
+Resolve by stable ingest keys — not titles or array index:
+
+| Role | ingestKey | Canonical Event |
+|------|-----------|-----------------|
+| Lodging + gate | `lodging-hsv-host-2026-07-22` | `KCCC-2026-0040` |
+| Host meeting ops | `hsv-dems-road-to-blue-2026-07-23` | `KCCC-2026-0039` |
+
+Travel pointer lives in Pass 3 (`travel-hsv-2026-07-22` → `KCCC-2026-0025`).
+
+Validate without blind overwrite:
+
+```bash
+npm run calendar:hsv-placement:validate
+```
+
+Repair note: `develop_notes/KCCC_HSV_INGEST_SOURCE_ALIGNMENT_REPAIR_2026-07-22.md`

@@ -1,0 +1,50 @@
+{
+  "pass": "HSV-INGEST-SOURCE-ALIGNMENT-2026-07-22",
+  "at": "2026-07-23T04:27:23.913Z",
+  "dryRun": false,
+  "apply": true,
+  "examined": [
+    "KCCC-2026-0040",
+    "KCCC-2026-0039",
+    "KCCC-2026-0025"
+  ],
+  "proposed": [],
+  "noop": [
+    "KCCC-2026-0040",
+    "KCCC-2026-0039",
+    "KCCC-2026-0025"
+  ],
+  "missing": [],
+  "mismatchedNumber": [],
+  "counts": {
+    "before": {
+      "events": 235,
+      "missions": 37
+    },
+    "after": {
+      "events": 235,
+      "missions": 37
+    }
+  },
+  "note": "tmp-hsv-verify.mjs is not valid evidence (DATABASE_URL missing).",
+  "fingerprints": {
+    "lodging": {
+      "eventNumber": "KCCC-2026-0040",
+      "notesFp": "e8349eaca00e9003",
+      "version": 7,
+      "missionLinked": false
+    },
+    "speaking": {
+      "eventNumber": "KCCC-2026-0039",
+      "notesFp": "b445f3282df306e1",
+      "version": 2,
+      "missionLinked": false
+    },
+    "travel": {
+      "eventNumber": "KCCC-2026-0025",
+      "notesFp": "6c3e203ff90f0148",
+      "version": 6,
+      "missionLinked": true
+    }
+  }
+}

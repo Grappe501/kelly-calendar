@@ -123,6 +123,7 @@
     "calendar:search:validate": "node scripts/validate-calendar-search.mjs",
     "calendar:scheduling-workspace:validate": "node scripts/validate-calendar-scheduling-workspace.mjs",
     "calendar:bulk-operations:validate": "node scripts/validate-calendar-bulk-operations.mjs",
+    "calendar:hsv-placement:validate": "node scripts/run-with-h-drive-env.cjs node scripts/validate-hsv-ingest-placement.mjs --dry-run",
     "import:preview": "node scripts/preview-google-calendar-import.mjs",
     "import:preview:private-ical": "node scripts/run-with-h-drive-env.cjs node scripts/preview-private-ical-import.mjs",
     "import:staging:validate": "node scripts/validate-import-staging.mjs",
