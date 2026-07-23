@@ -12,6 +12,11 @@ export const PUBLIC_PATH_PREFIXES = [
   "/api/health/db",
   /** Provider webhooks — authenticated by signature, not campaign session. */
   "/api/webhooks/communications/",
+  /**
+   * CC-10 private ICS subscription feeds — authenticated by feed token,
+   * not campaign session cookie.
+   */
+  "/api/calendar/feeds/",
   "/manifest.webmanifest",
   "/icons/",
 ] as const;

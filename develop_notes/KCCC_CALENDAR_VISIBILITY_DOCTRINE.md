@@ -69,3 +69,7 @@ Default authenticated campaign visibility: **TITLE_LOCATION**.
 - Status API: `GET /api/system/visibility`
 
 Live calendar data and real candidate schedules remain prohibited until Step 4+ protections exist.
+
+## CC-10 ICS export (ADR-082 / ADR-084 / ADR-098)
+
+Private signed subscription feeds and authenticated one-time ICS export apply the same server-side omission rules: exact private/residential addresses never appear; profiles are `BUSY_ONLY`, `CITY_ONLY`, or `OPERATIONAL_REDACTED` only (no unrestricted FULL). See `KCCC_CALENDAR_ICS_EXPORT_DOCTRINE.md`.

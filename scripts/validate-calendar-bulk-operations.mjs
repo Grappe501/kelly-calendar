@@ -77,8 +77,15 @@ for (const forbidden of [
 }
 
 const constants = fs.readFileSync(path.join(root, "src/lib/system/constants.ts"), "utf8");
-if (constants.includes('CC_10_STATUS = "NOT_AUTHORIZED"')) pass("CC-10 not authorized");
-else fail("CC-10 must remain not authorized");
+if (constants.includes('CC_09_STATUS = "COMPLETE"')) pass("CC-09 remains COMPLETE");
+else fail("CC-09 must remain COMPLETE");
+if (
+  constants.includes('CC_11_STATUS = "NOT_AUTHORIZED"') ||
+  constants.includes('CC_10_STATUS = "IN_PROGRESS"') ||
+  constants.includes('CC_10_STATUS = "COMPLETE"')
+) {
+  pass("CC-11 gated; CC-10 authorized or complete");
+} else fail("CC-11 must remain not authorized while CC-10 ships");
 if (constants.includes("ADR-097") || constants.includes("CC_09_AUTHORIZATION")) {
   pass("CC-09 authorization referenced");
 } else fail("CC-09 authorization missing");

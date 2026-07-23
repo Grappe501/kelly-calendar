@@ -817,6 +817,112 @@ model CalendarRecoveryAction {
   @@schema("kelly_calendar")
 }
 
+// ─── CC-10 ICS export & private subscription feeds ───────────────────
+
+enum CalendarSubscriptionFeedStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+  DISABLED
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarFeedScopeType {
+  DATE_RANGE
+  RELATIVE_WINDOW
+  SAVED_VIEW
+  CANONICAL_QUERY
+
+  @@schema("kelly_calendar")
+}
+
+enum CalendarFeedPrivacyProfile {
+  BUSY_ONLY
+  CITY_ONLY
+  OPERATIONAL_REDACTED
+
+  @@schema("kelly_calendar")
+}
+
+model CalendarSubscriptionFeed {
+  id                   String                         @id @default(cuid())
+  campaignKey          String                         @default("kelly")
+  ownerUserId          String
+  createdByUserId      String
+  name                 String
+  description          String?
+  status               CalendarSubscriptionFeedStatus @default(ACTIVE)
+  scopeType            CalendarFeedScopeType
+  savedViewId          String?
+  queryJson            Json?
+  querySchemaVersion   Int                            @default(1)
+  dateWindowPolicyJson Json?
+  privacyProfile       CalendarFeedPrivacyProfile
+  /// JSON string[] of EventStatus values included in the feed.
+  includedStatusesJson Json
+  includeCancelledHistory Boolean                     @default(false)
+  /// Ceiling visibility grant fixed at creation (e.g. VIEW_LIMITED, VIEW_FULL, FULL).
+  maxVisibilityGrant   String
+  tokenHash            String
+  tokenPrefix          String
+  tokenVersion         Int                            @default(1)
+  feedFingerprint      String?
+  lastRotatedAt        DateTime?
+  lastAccessedAt       DateTime?
+  expiresAt            DateTime?
+  revokedAt            DateTime?
+  revokedByUserId      String?
+  revocationReason     String?
+  createdAt            DateTime                       @default(now())
+  updatedAt            DateTime                       @updatedAt
+
+  accessAudits CalendarSubscriptionAccessAudit[]
+
+  @@unique([tokenHash])
+  @@index([campaignKey, status])
+  @@index([ownerUserId])
+  @@index([tokenPrefix])
+  @@index([savedViewId])
+  @@schema("kelly_calendar")
+}
+
+model CalendarSubscriptionAccessAudit {
+  id                     String   @id @default(cuid())
+  feedId                 String
+  accessedAt             DateTime @default(now())
+  /// OK | NOT_MODIFIED | REVOKED | EXPIRED | DISABLED | RATE_LIMITED | INVALID | ERROR | TRUNCATED
+  resultCategory         String
+  conditionalNotModified Boolean  @default(false)
+  clientCategory         String?
+  rateLimited            Boolean  @default(false)
+  eventCount             Int?
+  createdAt              DateTime @default(now())
+
+  feed CalendarSubscriptionFeed @relation(fields: [feedId], references: [id], onDelete: Cascade)
+
+  @@index([feedId, accessedAt])
+  @@index([accessedAt])
+  @@schema("kelly_calendar")
+}
+
+model CalendarExportAudit {
+  id              String   @id @default(cuid())
+  campaignKey     String   @default("kelly")
+  actorUserId     String
+  /// ONE_TIME
+  exportMode      String   @default("ONE_TIME")
+  privacyProfile  String
+  scopeSummary    String
+  eventCount      Int      @default(0)
+  truncated       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@index([campaignKey, createdAt])
+  @@index([actorUserId])
+  @@schema("kelly_calendar")
+}
+
 model CalendarViewLayer {
   id           String   @id @default(cuid())
   savedViewId  String

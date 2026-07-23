@@ -54,6 +54,9 @@ export function rateLimitPolicyForRoute(pathname: string): {
   if (pathname.startsWith("/api/ai")) {
     return { limit: 10, windowMs: 60_000, mode: "strict", distributed: false };
   }
+  if (pathname.startsWith("/api/calendar/feeds")) {
+    return { limit: 60, windowMs: 60_000, mode: "strict", distributed: false };
+  }
   if (pathname.startsWith("/api/system")) {
     return { limit: 60, windowMs: 60_000, mode: "moderate", distributed: false };
   }

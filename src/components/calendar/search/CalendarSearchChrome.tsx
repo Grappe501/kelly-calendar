@@ -292,6 +292,12 @@ export function CalendarSearchChrome({
         <Link className="chip chip-link" href="/system/calendar/saved-views">
           Saved views
         </Link>
+        <Link className="chip chip-link" href="/system/calendar/subscriptions">
+          Subscriptions
+        </Link>
+        <Link className="chip chip-link" href="/system/calendar/exports">
+          Export ICS
+        </Link>
         {resultCount != null ? (
           <span className="muted" aria-live="polite">
             {resultCount} event{resultCount === 1 ? "" : "s"}

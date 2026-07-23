@@ -68,3 +68,7 @@ ADR-081 still protects local title/notes/status.
 ## Mission boundary
 
 Series create / expand / materialize / cancel → **zero** automatic Missions. Mission lifecycle services remain authoritative.
+
+## ICS export (CC-10)
+
+ICS serialization consumes CC-04 recurrence **read-only**: emit series `RRULE` when present and safe; otherwise a single occurrence VEVENT with stable UID. Unsupported rules are omitted — never silently simplified. See `KCCC_CALENDAR_ICS_EXPORT_DOCTRINE.md`.

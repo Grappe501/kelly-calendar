@@ -34,7 +34,7 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Recurring events | COMPLETE (CC-04) | Series + exceptions + materialized Events; `/calendar/series/[id]` | Horizon extension is explicit | CC-05 gated |
 | Day view | COMPLETE (CC-08) | `/calendar?view=day` time grid + bulk select | Grid-first ADR-096; CC-09 multi-select | CC-12 |
 | Week view | COMPLETE (CC-08) | `/calendar?view=week` + bulk select | Same | CC-12 |
-| Bulk operations | COMPLETE (CC-09) | `/system/calendar/bulk` | Preview/confirm/recovery; max 50 | CC-10 handoff |
+| Bulk operations | COMPLETE (CC-09) | `/system/calendar/bulk` | Preview/confirm/recovery; max 50 | CC-10 shipping |
 | Search/filters/saved views | COMPLETE (CC-07) | query-schema v1 · `a630c8c` · deploy `6a61167b80d9714ef4541631` | N/A | CC-07 |
 
 | Month view | PARTIAL | `/calendar?view=month` | Same | Step 10 |
@@ -52,7 +52,7 @@ Communications D20–D26 remain **preserved and frozen**. They are out of sequen
 | Mission conversion | PARTIAL | `CampaignMission` projection from Event | Downstream of usable events | Step 14 |
 | Follow-up | PARTIAL | `EventFollowup` + `MissionFollowUp` | Same | Step 19 |
 | Google Calendar scaffolding | PARTIAL | OAuth + IMPORT_ONLY sync; no push | Correct freeze for now | Step 23 |
-| Calendar import/export | PARTIAL | Import strong; export restricted | Export not productized | Step 22 / CC-10 |
+| Calendar import/export | SHIPPING (CC-10) | Import strong; ICS one-time export + private signed subscriptions | ADR-098 · migration `20260722180000_cc10_ics_export_subscription` | Finish CC-10 ship / validate |
 | Calendar integrity console | COMPLETE (CC-02) | `/system/calendar/integrity*`, detectors `CC-02-DETECTOR-1.0`, scan/disposition models | Findings may exist in data; no auto repair | CC-11 health automation |
 | Audit history | PARTIAL | `AuditLog` / `DataAccessLog` | No full operator browser | Step 8/24 |
 | Mobile usability | PARTIAL | Bottom nav + mobile shell | Not certified | Step 24 |

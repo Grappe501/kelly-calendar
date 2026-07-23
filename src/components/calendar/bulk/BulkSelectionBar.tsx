@@ -107,10 +107,15 @@ export function BulkSelectionBar() {
         <Link className="chip chip-link" href="/system/calendar/bulk">
           Bulk history
         </Link>
+        <Link className="chip chip-link" href="/system/calendar/exports">
+          Export ICS
+        </Link>
       </div>
       {error ? <p className="muted">{error}</p> : null}
       <p className="muted">
         Selection and preview never mutate Events. Confirmation happens on the preview page.
+        Selection-to-subscription needs confirmation — use Export ICS for a one-time download
+        of a date range, or create a subscription from the subscriptions page.
       </p>
     </div>
   );

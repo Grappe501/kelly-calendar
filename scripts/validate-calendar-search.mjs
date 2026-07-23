@@ -129,15 +129,14 @@ if (constants.includes('CC_07_STATUS = "COMPLETE"') || constants.includes('CC_07
 if (constants.includes("ADR-094") || constants.includes("STANDING_KELLY_EXECUTION_ADR")) {
   pass("standing execution ADR referenced");
 } else fail("standing execution ADR missing from constants");
-// After CC-08/CC-09 ships, the next locked build remains gated.
+// After CC-10 ships, CC-11 remains the next gated build.
 if (
-  constants.includes('CC_10_STATUS = "NOT_AUTHORIZED"') ||
-  constants.includes('CC_09_STATUS = "NOT_AUTHORIZED"') ||
-  constants.includes('CC_08_STATUS = "NOT_AUTHORIZED"')
+  constants.includes('CC_11_STATUS = "NOT_AUTHORIZED"') ||
+  constants.includes('CC_10_STATUS = "NOT_AUTHORIZED"')
 ) {
   pass("next Calendar Completion build remains gated");
 } else {
-  fail("CC-10 (or prior lock) must remain not authorized");
+  fail("CC-11 (or prior lock) must remain not authorized");
 }
 
 console.log(`\nCC-07 search validator: ${passed} passed, ${failed} failed`);

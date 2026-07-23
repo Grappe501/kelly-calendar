@@ -89,10 +89,17 @@ Locked 2026-07-21 from Burt discovery + Steve acceptance (`KCCC_CALENDAR_COMPLET
 - ADR-093 Phase Two Intelligent Statewide Campaign Calendar Vision Locked After CC-12 (2026-07-22) — `KCCC_PHASE_TWO_VISION_LOCK_KELLY_2026-07-22.md`
 - ADR-094 Standing Kelly Execution Authorization for Calendar Completion Ship Cycles (2026-07-22) — `KCCC_STANDING_KELLY_EXECUTION_AUTHORIZATION_2026-07-22.md`
 - ADR-095 Kelly Authorization of CC-07 Unified Search, Filters, and Saved Views (2026-07-22) — `KCCC_CC_07_AUTHORIZATION_KELLY_2026-07-22.md`
+- ADR-096 Kelly Authorization of CC-08 Advanced Day/Week Scheduling Workspace (2026-07-22) — `KCCC_CC_08_AUTHORIZATION_KELLY_2026-07-22.md`
+- ADR-097 Kelly Authorization of CC-09 Bulk Operations, Archive/Restore, and Recovery (2026-07-22) — `KCCC_CC_09_AUTHORIZATION_KELLY_2026-07-22.md`
+- ADR-098 Kelly Authorization of CC-10 ICS Export & Subscription Privacy (2026-07-22) — `KCCC_CC_10_AUTHORIZATION_KELLY_2026-07-22.md`
 
 ## Standing execution (ADR-094)
 
 Approved Calendar Completion build scripts authorize the full ship cycle without routine confirmation. Hard stops remain for destructive prod-data ops, missing credentials, purchases, scope expansion, and privacy/legal barriers. Phase Two IC implementation remains blocked until after CC-12 (ADR-093).
+
+## CC-10 authorization
+
+Kelly **ADR-098** authorizes **CC-10 only** under standing execution **ADR-094**. Private signed feeds; no public anonymous ICS; no exact residential addresses in export. Operator Usability Synthesis 1 remains **EMPTY** / incomplete. **CC-11** is design handoff only until separately authorized after CC-10.
 
 ## CC-07 authorization
 
@@ -107,6 +114,6 @@ Kelly **ADR-092** authorized **CC-06 only**; the calendar-slice build is now **C
 **ADR-093** locks the Intelligent Statewide Campaign Calendar vision (**IC-01…IC-12**). Program: `KCCC_PHASE_TWO_INTELLIGENT_STATEWIDE_CAMPAIGN_CALENDAR.md`.  
 CC-07…CC-12 remain the primary engineering sequence. Phase Two may be **designed** during those builds; **implementation waits until CC-12 completes**. Deterministic services own facts/authorization/consent/coverage/conflicts/permissible actions; AI explains and recommends within confirmation boundaries.
 
-## CC-05 / CC-06 baseline & next engineering
+## CC-05 / CC-06 / CC-10 baseline & next engineering
 
-CC-05 and CC-06 are **COMPLETE**. CC-07 is **authorized in progress** (ADR-095). Phase Two is vision-locked only (ADR-093).
+CC-05…CC-09 are **COMPLETE**. CC-10 is **IN PROGRESS** (ADR-098). CC-11 remains design handoff only. Phase Two is vision-locked only (ADR-093).

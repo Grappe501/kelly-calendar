@@ -613,6 +613,14 @@
       "date": "2026-07-22",
       "decision": "Kelly explicitly authorizes Calendar Completion CC-09 Bulk Operations, Archive/Restore, and Recovery (multi-select, server-authoritative preview, archive/restore/cancel, limited calendar membership actions, idempotent execution, partial-failure reporting, safe recovery). Evidence: develop_notes/KCCC_CC_09_AUTHORIZATION_KELLY_2026-07-22.md. CC-08 accepted complete at e1ddaa7 / tip deploy 6a612111e81d923c5e6c58ca (feature 7486aa9 / 6a611dc19547e64f0fa7874d). Standing execution under ADR-094. Usability Synthesis remains incomplete.",
       "boundary": "Must not hard-delete Events, silently mutate Missions, bulk-reschedule, bulk-resolve conflicts, write external calendars/Mobilize, implement CC-10 ICS, or Phase Two IC features. Selection and preview must never mutate."
+    },
+    {
+      "id": "ADR-098",
+      "title": "Kelly Authorization of CC-10 ICS Export and Subscription Privacy",
+      "status": "accepted",
+      "date": "2026-07-22",
+      "decision": "Kelly explicitly authorizes Calendar Completion CC-10 ICS Export & Subscription Privacy (one-time export, private signed subscription feeds, privacy profiles BUSY_ONLY/CITY_ONLY/OPERATIONAL_REDACTED, token hash-at-rest, rotate/revoke, ETag/304, rate limits, RFC 5545 subset). Evidence: develop_notes/KCCC_CC_10_AUTHORIZATION_KELLY_2026-07-22.md. Migration 20260722180000_cc10_ics_export_subscription. Standing execution under ADR-094. Usability Synthesis remains incomplete.",
+      "boundary": "Must not offer public anonymous feeds (ADR-082), emit exact residential/street addresses in ICS (ADR-084), hard-delete Events/Missions, implement Google write-back/two-way sync, implement CC-11 Health Dashboard, or Phase Two IC features. CC-09 remains COMPLETE."
     }
   ]
 }

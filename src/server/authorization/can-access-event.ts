@@ -2,6 +2,7 @@ import "server-only";
 
 import { prisma } from "@/server/db/prisma";
 import { refreshAuthStatus } from "@/server/auth/auth-status";
+import { getRequestActor } from "@/server/auth/actor-context";
 import { getSessionViewer } from "@/server/auth/session";
 import { resolveCalendarAccess } from "@/server/authorization/resolve-calendar-access";
 import { maxAccessLevel } from "@/lib/auth/access-level";
@@ -10,6 +11,9 @@ import { roleHasFullCalendarAccess } from "@/lib/auth/system-roles";
 /**
  * Event access derives from primary + connected calendar memberships,
  * with system-role full access for Kelly / Campaign Manager.
+ *
+ * Prefer request-scoped actor (ALS) when present so token-authenticated
+ * ICS feed generation can re-evaluate as the feed owner without a cookie.
  */
 export async function canAccessEvent(input: {
   eventId: string;
@@ -24,7 +28,7 @@ export async function canAccessEvent(input: {
     };
   }
 
-  const viewer = await getSessionViewer();
+  const viewer = getRequestActor() ?? (await getSessionViewer());
   if (!viewer) {
     return {
       allowed: false,
