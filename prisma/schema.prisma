@@ -3591,11 +3591,428 @@ model CampaignMission {
   communications CampaignCommunication[]
   incidents    MissionIncident[]
   geographies  MissionGeography[]
+  activationPlans MissionActivationPlan[]
 
   @@index([missionStatus])
   @@index([lifecyclePhase])
   @@index([startsAt, endsAt])
   @@index([sourceEventNumber])
+  @@schema("kelly_calendar")
+}
+
+// ─── IC-02B Mission Activation Playbooks & Department Operations ─────
+
+enum MissionActivationPlaybookLevel {
+  NONE
+  MINIMAL
+  STANDARD
+  MAJOR
+  CUSTOM
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationDepartment {
+  EVENTS
+  COMMUNICATIONS
+  GRAPHICS
+  SOCIAL_MEDIA
+  DIGITAL
+  PRESS
+  FIELD_CANVASS
+  PHONE_BANK
+  TEXTING
+  VOLUNTEER_MANAGEMENT
+  FUNDRAISING
+  LOGISTICS
+  TRAVEL
+  LODGING
+  DINING
+  MATERIALS
+  CANDIDATE
+  LEADERSHIP
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationWorkstreamCode {
+  EVENT_MANAGEMENT
+  COMMUNICATIONS
+  EMAIL
+  SMS_TEXTING
+  PHONE_BANK
+  VOLUNTEER_RECRUITMENT
+  DOOR_HANGER_CANVASSING
+  CANDIDATE_CANVASSING
+  SOCIAL_MEDIA
+  GRAPHIC_DESIGN
+  DIGITAL_ADVERTISING
+  ARKANSAS_PRESS_ASSOCIATION
+  RADIO
+  NEWSPAPER
+  HOSTS_AND_PARTNERS
+  LOGISTICS
+  TRAVEL
+  LODGING
+  DINING
+  MATERIALS
+  FUNDRAISING_SUPPORT
+  FOLLOW_UP
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationPlanStatus {
+  ACTIVE
+  DEACTIVATED
+  ARCHIVED
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationTaskStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  BLOCKED
+  WAITING
+  READY_FOR_REVIEW
+  COMPLETE
+  CANCELLED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationTimingAnchor {
+  EVENT_CREATED
+  MISSION_CREATED
+  ACTIVATION_APPLIED
+  EVENT_START
+  EVENT_END
+  WEEKEND_BEFORE_EVENT
+  CUSTOM
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationWindowLabel {
+  DUE_IMMEDIATELY
+  MISSED_WINDOW
+  NOT_APPLICABLE
+  OPERATOR_REVIEW
+  ON_SCHEDULE
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationBlockerDisposition {
+  ACKNOWLEDGED
+  ACCEPTED_RISK
+  RESOLVED
+  NOT_APPLICABLE
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationAdvertisingTactic {
+  NO_PAID_ADVERTISING
+  DIGITAL_DISPLAY
+  SOCIAL_MEDIA_ADVERTISING
+  SEARCH_ADVERTISING
+  ARKANSAS_PRESS_ASSOCIATION_DIGITAL
+  RADIO
+  NEWSPAPER_PRINT
+  NEWSPAPER_DIGITAL
+  LOCAL_PUBLICATION
+  OTHER
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationVolunteerNeedStatus {
+  OPEN
+  PROPOSED
+  ASSIGNED
+  CONFIRMED
+  CHECKED_IN
+  COMPLETED
+  CANCELLED
+  DECLINED
+  NO_SHOW
+
+  @@schema("kelly_calendar")
+}
+
+enum MissionActivationCommCoordStatus {
+  WORK_REQUESTED
+  DRAFT
+  AWAITING_FACTS
+  AWAITING_GRAPHIC
+  AWAITING_CONTENT_APPROVAL
+  AWAITING_AUDIENCE_APPROVAL
+  APPROVED
+  QUEUE_READY
+  HANDED_OFF
+  VERIFIED_SENT
+  FAILED
+  CANCELLED
+  STALE
+
+  @@schema("kelly_calendar")
+}
+
+/// Versioned campaign-owned playbook template. Seed does not create Mission plans.
+model MissionActivationTemplate {
+  id               String                        @id @default(cuid())
+  campaignScopeKey String                        @default("KELLY")
+  code             String
+  version          String
+  title            String
+  description      String?
+  playbookLevel    MissionActivationPlaybookLevel
+  isActive         Boolean                       @default(true)
+  createdAt        DateTime                      @default(now())
+  updatedAt        DateTime                      @updatedAt
+
+  steps MissionActivationTemplateStep[]
+  plans MissionActivationPlan[]
+
+  @@unique([campaignScopeKey, code, version])
+  @@index([campaignScopeKey, playbookLevel, isActive])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationTemplateStep {
+  id                        String                       @id @default(cuid())
+  templateId                String
+  stepKey                   String
+  department                MissionActivationDepartment
+  workstream                MissionActivationWorkstreamCode
+  title                     String
+  instructions              String?
+  timingAnchor              MissionActivationTimingAnchor
+  offsetHours               Int                          @default(0)
+  defaultPriority           String                       @default("NORMAL")
+  required                  Boolean                      @default(true)
+  blockingDependencyKeys    String[]                     @default([])
+  requiresConsent           Boolean                      @default(false)
+  requiresContentApproval   Boolean                      @default(false)
+  requiresAudienceApproval  Boolean                      @default(false)
+  requiresExternalProvider  Boolean                      @default(false)
+  volunteerEligible         Boolean                      @default(false)
+  requiresGeographyRadius   Boolean                      @default(false)
+  requiresCompletionProof   Boolean                      @default(false)
+  sortOrder                 Int                          @default(0)
+  createdAt                 DateTime                     @default(now())
+  updatedAt                 DateTime                     @updatedAt
+
+  template MissionActivationTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([templateId, stepKey])
+  @@index([templateId, department])
+  @@schema("kelly_calendar")
+}
+
+/// Lazy-created only on intentional apply. Unique per mission + template version + schedule fingerprint.
+model MissionActivationPlan {
+  id                   String                        @id @default(cuid())
+  campaignScopeKey     String                        @default("KELLY")
+  missionId            String
+  eventId              String
+  templateId           String?
+  templateCode         String
+  templateVersion      String
+  playbookLevel        MissionActivationPlaybookLevel
+  status               MissionActivationPlanStatus   @default(ACTIVE)
+  scheduleFingerprint  String
+  appliedAt            DateTime                      @default(now())
+  appliedByUserId      String?
+  deactivatedAt        DateTime?
+  deactivatedByUserId  String?
+  advertisingTactics   MissionActivationAdvertisingTactic[] @default([])
+  notes                String?
+  createdAt            DateTime                      @default(now())
+  updatedAt            DateTime                      @updatedAt
+
+  mission      CampaignMission                 @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  template     MissionActivationTemplate?      @relation(fields: [templateId], references: [id])
+  workstreams  MissionActivationWorkstream[]
+  tasks        MissionActivationTask[]
+  volunteerNeeds MissionActivationVolunteerNeed[]
+  acknowledgements MissionActivationAcknowledgement[]
+  audits       MissionActivationAuditEvent[]
+  notifications MissionActivationNotification[]
+
+  @@unique([missionId, templateCode, templateVersion, scheduleFingerprint])
+  @@index([campaignScopeKey, status])
+  @@index([eventId])
+  @@index([playbookLevel])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationWorkstream {
+  id               String                         @id @default(cuid())
+  planId           String
+  workstream       MissionActivationWorkstreamCode
+  enabled          Boolean                        @default(true)
+  department       MissionActivationDepartment?
+  createdAt        DateTime                       @default(now())
+  updatedAt        DateTime                       @updatedAt
+
+  plan MissionActivationPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, workstream])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationTask {
+  id                      String                       @id @default(cuid())
+  planId                  String
+  campaignScopeKey        String                       @default("KELLY")
+  stepKey                 String
+  department              MissionActivationDepartment
+  workstream              MissionActivationWorkstreamCode
+  title                   String
+  instructions            String?
+  timingAnchor            MissionActivationTimingAnchor
+  dueAt                   DateTime?
+  dueLocked               Boolean                      @default(false)
+  windowLabel             MissionActivationWindowLabel @default(ON_SCHEDULE)
+  priority                String                       @default("NORMAL")
+  status                  MissionActivationTaskStatus  @default(NOT_STARTED)
+  required                Boolean                      @default(true)
+  requiresConsent         Boolean                      @default(false)
+  requiresContentApproval Boolean                      @default(false)
+  requiresAudienceApproval Boolean                     @default(false)
+  requiresExternalProvider Boolean                     @default(false)
+  volunteerEligible       Boolean                      @default(false)
+  accountableOwnerUserId  String?
+  supportingDepartments   MissionActivationDepartment[] @default([])
+  commCoordStatus         MissionActivationCommCoordStatus?
+  completedAt             DateTime?
+  completedByUserId       String?
+  staleAt                 DateTime?
+  createdAt               DateTime                     @default(now())
+  updatedAt               DateTime                     @updatedAt
+
+  plan          MissionActivationPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  dependencies  MissionActivationTaskDependency[] @relation("TaskDepends")
+  dependents    MissionActivationTaskDependency[] @relation("TaskBlocks")
+  assignments   MissionActivationAssignment[]
+  volunteerNeeds MissionActivationVolunteerNeed[]
+
+  @@unique([planId, stepKey])
+  @@index([campaignScopeKey, department, status])
+  @@index([dueAt])
+  @@index([workstream])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationTaskDependency {
+  id              String @id @default(cuid())
+  taskId          String
+  dependsOnTaskId String
+  blockerKey      String?
+  createdAt       DateTime @default(now())
+
+  task      MissionActivationTask @relation("TaskDepends", fields: [taskId], references: [id], onDelete: Cascade)
+  dependsOn MissionActivationTask @relation("TaskBlocks", fields: [dependsOnTaskId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, dependsOnTaskId])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationAssignment {
+  id         String   @id @default(cuid())
+  taskId     String
+  userId     String?
+  roleLabel  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  task MissionActivationTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationVolunteerNeed {
+  id                 String                            @id @default(cuid())
+  planId             String
+  taskId             String?
+  role               String
+  description        String?
+  skillsNeeded       String?
+  numberNeeded       Int                               @default(1)
+  shiftStartsAt      DateTime?
+  shiftEndsAt        DateTime?
+  locationOrRemote   String?
+  supervisorLabel    String?
+  trainingMaterials  String?
+  status             MissionActivationVolunteerNeedStatus @default(OPEN)
+  /// Assignment requires explicit operator action — never auto-filled from RSVP.
+  assignedPersonId   String?
+  createdAt          DateTime                          @default(now())
+  updatedAt          DateTime                          @updatedAt
+
+  plan MissionActivationPlan  @relation(fields: [planId], references: [id], onDelete: Cascade)
+  task MissionActivationTask? @relation(fields: [taskId], references: [id])
+
+  @@index([planId, status])
+  @@index([taskId])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationAcknowledgement {
+  id           String                             @id @default(cuid())
+  planId       String
+  blockerKey   String
+  disposition  MissionActivationBlockerDisposition
+  note         String?
+  actorUserId  String?
+  /// ACKNOWLEDGED alone never clears readiness blockers.
+  clearsBlocker Boolean                           @default(false)
+  createdAt    DateTime                           @default(now())
+
+  plan MissionActivationPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId, blockerKey])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationAuditEvent {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  planId           String
+  action           String
+  actorUserId      String?
+  detailJson       Json     @default("{}")
+  createdAt        DateTime @default(now())
+
+  plan MissionActivationPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId, createdAt])
+  @@index([campaignScopeKey, action])
+  @@schema("kelly_calendar")
+}
+
+model MissionActivationNotification {
+  id               String   @id @default(cuid())
+  campaignScopeKey String   @default("KELLY")
+  planId           String?
+  taskId           String?
+  recipientUserId  String?
+  kind             String
+  title            String
+  body             String?
+  deepLink         String
+  readAt           DateTime?
+  createdAt        DateTime @default(now())
+
+  plan MissionActivationPlan? @relation(fields: [planId], references: [id], onDelete: SetNull)
+
+  @@index([campaignScopeKey, recipientUserId, readAt])
+  @@index([createdAt])
   @@schema("kelly_calendar")
 }
 

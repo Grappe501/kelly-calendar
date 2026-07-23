@@ -3525,3 +3525,79 @@ legend {
   }
 }
 
+/* IC-02B Campaign operations — department boards & super header
+ * Brand sources inspected 2026-07-23: kellygrappe.com, /about-kelly, /our-vision
+ * Themes: People over politics · Serve all 75 counties · Transparency · Clarity
+ */
+:root {
+  --dept-events: #000066;
+  --dept-comms: #306da6;
+  --dept-graphics: #ca913d;
+  --dept-field: #1a6b4a;
+  --dept-logistics: #4f4f72;
+  --dept-volunteer: #151579;
+}
+
+.campaign-ops-superheader {
+  display: grid;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.campaign-ops-principle {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.ops-board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: var(--space-4);
+}
+
+.ops-board-card {
+  display: block;
+  padding: var(--space-4);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-fast), box-shadow var(--motion-fast);
+}
+
+.ops-board-card:hover,
+.ops-board-card:focus-visible {
+  box-shadow: var(--shadow-md);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.ops-board-card h2 {
+  margin: 0 0 var(--space-2);
+  font-size: 1.15rem;
+}
+
+.ops-board-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.activation-workspace .eyebrow,
+.campaign-ops-superheader .eyebrow {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--brand-gold-deep);
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ops-board-card {
+    transition: none;
+  }
+}
+

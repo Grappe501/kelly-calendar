@@ -37,6 +37,10 @@ export function MissionDetailView({ mission, mode }: Props) {
             Prepare
           </Link>
           <span aria-hidden="true"> · </span>
+          <Link href={`/system/missions/${mission.missionId}/activation`}>
+            Activate Mission
+          </Link>
+          <span aria-hidden="true"> · </span>
           <Link href={`/system/missions/${mission.missionId}/execute`}>
             Execute
           </Link>

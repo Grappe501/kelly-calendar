@@ -677,6 +677,14 @@
       "date": "2026-07-23",
       "decision": "Authorize IC-02A Event Outcome and Hot Wash between IC-02 and IC-03 without renumbering IC-03. Scheduled time, attendance outcome, operational outcome, Mission execution, and review completion are independent facts. Elapsed schedule end yields REVIEW_DUE eligibility only — never auto-complete, auto not-attended, Mission lifecycle mutation, or fabricated Person/consent/communications. Evidence: develop_notes/ADR-105_EVENT_OUTCOME_INDEPENDENT_FACTS.md and develop_notes/KCCC_IC_02A_AUTHORIZATION_KELLY_2026-07-23.md.",
       "boundary": "Must not implement IC-03, call OpenAI, write RedDirt, silently convert encounters to Person/consent, overload EventStatus for attendance/ops completion, or invent attendance from elapsed time."
+    },
+    {
+      "id": "ADR-106",
+      "title": "Mission Activation Independent of Lifecycle and External Action",
+      "status": "accepted",
+      "date": "2026-07-23",
+      "decision": "Authorize IC-02B Mission Activation Playbooks and Department Operations. Activation plans are optional overlays independent of Mission lifecycle. Deterministic automation may generate internal department tasks, drafts, and volunteer needs; it must not silently send, publish, purchase ads, infer consent, auto-assign people, or mutate Event/Mission schedules. Evidence: develop_notes/ADR-106_MISSION_ACTIVATION_INDEPENDENT_OF_LIFECYCLE.md.",
+      "boundary": "Must not implement IC-03, claim push delivery, auto-dispatch D20 communications, purchase advertising, or treat ACKNOWLEDGED as clearing blockers."
     }
   ]
 }
